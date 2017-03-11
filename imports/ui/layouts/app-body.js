@@ -1,2 +1,2 @@
 import './app-body.html';
-import './app-body.css';
+import './app-body.less';
