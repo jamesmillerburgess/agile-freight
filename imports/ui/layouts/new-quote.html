@@ -1,5 +1,20 @@
 <template name="NewQuote">
-  <h2>AIA Engineering Ltd</h2>
-  <h3>New Quote</h3>
-  {{> ProductButton product="Air"}}{{> ProductButton product="Ocean"}}{{> ProductButton product="Road"}}
+  <div class="container new-quote">
+    <h2>AIA Engineering Ltd</h2>
+    <h3>New Quote</h3>
+    {{> ProductButton product="air"}}{{> ProductButton product="ocean"}}{{> ProductButton product="road"}}
+    <div class="row">
+      <div class="col-6">
+        {{> Input type="location"}}
+      </div>
+      <div class="col-6">
+        {{> Input type="location"}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        {{> Input type="carrier"}}
+      </div>
+    </div>
+  </div>
 </template>

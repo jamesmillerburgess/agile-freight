@@ -8,7 +8,8 @@ import '../../ui/components/mention.js';
 import '../../ui/components/collapse-button.js';
 
 import '../../ui/layouts/new-quote.js';
-import '../../ui/components/product-button.html';
+import '../../ui/components/product-button.js';
+import '../../ui/components/input.js';
 
 BlazeLayout.setRoot('body');
 
