@@ -1,0 +1,41 @@
+.form-group-container {
+  margin: 0;
+}
+
+.form-group-container .col-4,
+.form-group-container .col-12 {
+  padding: 5px;
+}
+
+
+.form-group {
+  border: 1px solid #990000;
+  border-radius: 5px;
+  padding: 0;
+  margin: 0;
+}
+
+.form-group-header {
+  font-weight: bold;
+  background-color: #f7ebc3;
+  color: #786010;
+  border-radius: 5px 5px 0 0;
+  padding: 3px 3px 3px 5px;
+}
+
+.form-group-body {
+}
+
+.form-group-body-inner {
+  display: flex;
+  padding: 7px;
+}
+
+.form-group-tasks {
+  border-right: 1px solid rgb(223, 206, 160);
+  padding-right: 7px;
+}
+
+.form-group-fields {
+  margin-left: 7px;
+}

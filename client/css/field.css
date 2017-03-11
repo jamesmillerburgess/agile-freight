@@ -1,0 +1,19 @@
+.field {
+  margin: 3px 0;
+}
+
+.label {
+  display: block;
+  text-align: left;
+  font-size: 10px;
+  font-style: italic;
+}
+
+.value {
+  font-weight: bold;
+  min-width: 100px;
+}
+
+.value:hover {
+
+}

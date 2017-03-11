@@ -1,0 +1,32 @@
+.modal {
+  font-family: Verdana,Helvetica,Arial,sans-serif;
+}
+
+.modal-dialog {
+}
+
+.modal-content {
+  border-radius: 0;
+
+}
+
+.modal-header {
+  height: 26px;
+  padding: 0 5px 0 5px;
+  background-color: rgb(247, 235, 195);
+}
+
+.modal-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #786010;
+}
+
+.modal-body {
+  max-height: 343px;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  height: 31px;
+}

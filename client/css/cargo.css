@@ -1,0 +1,59 @@
+.cargo-totals {
+  font-size: 14px;
+  padding: 0;
+  text-align: right;
+  margin: auto;
+}
+
+.cargo-totals a, .cargo-totals a:visited {
+  color: inherit;
+}
+
+.collapse-button {
+  font-size: 22px;
+  color: #786010;
+}
+
+.unit-total {
+
+}
+
+.cargo-inputs {
+  text-align: right;
+}
+
+.cargo-content {
+  margin-top: 7px;
+  font-family: Arial, sans-serif;
+}
+
+.cargo-column-headers {
+  border: 1px solid #decea0;
+  padding: 3px;
+  margin: 0;
+  font-size: 10px;
+  font-style: italic;
+}
+
+.cargo-content .col-1,
+.cargo-content .col-2,
+.cargo-content .col-3 {
+  padding: 0px;
+  margin: 0;
+}
+
+.cargo-row {
+  border-left: 1px solid #decea0;
+  border-right: 1px solid #decea0;
+  border-bottom: 1px solid #decea0;
+  padding: 3px;
+  margin: 0;
+}
+
+.packages, .gross-weight, .volume {
+  text-align: right;
+}
+
+.cargo-content .packages {
+  padding-right: 5px;
+}
