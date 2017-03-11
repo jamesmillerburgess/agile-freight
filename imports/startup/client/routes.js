@@ -7,12 +7,16 @@ import '../../ui/components/dropdown.js';
 import '../../ui/components/mention.js';
 import '../../ui/components/collapse-button.js';
 
+import '../../ui/layouts/new-quote.js';
+import '../../ui/components/product-button.html';
+
 BlazeLayout.setRoot('body');
 
 FlowRouter.route('/', {
   name: 'App.home',
   action() {
-    BlazeLayout.render('App-Body', { main: 'App_rootRedirector' });
+    BlazeLayout.render('NewQuote', { main: 'App_rootRedirector' });
+
   },
 });
 
