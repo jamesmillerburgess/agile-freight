@@ -1,2 +1,6 @@
 import './input.html';
-import './input.css';
+import './input.less';
+
+Template.Input.onRendered(function onRendered() {
+  const input = this.find('input');
+});
