@@ -1,3 +1,1 @@
-import '../../api/jobs/methods.js';
-
-
+import '../../api/rates/methods';

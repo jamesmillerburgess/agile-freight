@@ -35,14 +35,14 @@ FlowRouter.route('/customers', {
   name: 'Customers',
   action() {
     BlazeLayout.render('AppBody', { content: 'Customers'});
-  }
+  },
 });
 
 FlowRouter.route('/customer/:_id', {
   name: 'Customer',
   action() {
     BlazeLayout.render('AppBody', { content: 'Customer' });
-  }
+  },
 });
 
 FlowRouter.route('/new-quote:customer', {
@@ -52,7 +52,7 @@ FlowRouter.route('/new-quote:customer', {
   },
 });
 
-FlowRouter.route('/get-rates:customer', {
+FlowRouter.route('/get-rates', {
   name: 'Customer.show',
   action() {
     BlazeLayout.render('AppBody', { content: 'GetRates' });
@@ -66,7 +66,7 @@ FlowRouter.route('/quotes', {
   name: 'Quotes',
   action() {
     BlazeLayout.render('AppBody', { content: 'Quotes'});
-  }
+  },
 });
 
 /**
@@ -76,14 +76,14 @@ FlowRouter.route('/rates', {
   name: 'Rates',
   action() {
     BlazeLayout.render('AppBody', { content: 'Rates'});
-  }
+  },
 });
 
 FlowRouter.route('/user-profile/:_id', {
   name: 'UserProfile',
   action() {
     BlazeLayout.render('AppBody', { content: 'UserProfile'});
-  }
+  },
 });
 
 /*

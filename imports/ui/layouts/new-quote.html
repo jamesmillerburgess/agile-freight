@@ -1,7 +1,9 @@
 <template name="NewQuote">
   <div class="new-quote">
     <h1>New Quote</h1>
-    <h2><i class="fa fa-address-card"></i> AIA Engineering Ltd</h2><br/>
+    <div class="customer-name">
+      <h2><i class="fa fa-address-card"></i> AIA Engineering Ltd</h2><br/>
+    </div>
     <div class="row product-button-row">
       <div class="col-4">
         <button id="air" class="btn btn-lg btn-outline-warning product-button" aria-pressed="false"
@@ -54,7 +56,7 @@
                 autocomplete="off">
           <div class="row">
             <div class="col-lg-2 col icon">
-              <i class="fa fa-fw fa-th-list"></i>
+              <i class="fa fa-fw fa-reorder"></i>
             </div>
             <span class="col-10 hidden-md-down text">Multi</span>
           </div>
@@ -74,10 +76,10 @@
     </div>
     <div id="singleInput">
       <div class="row input-row">
-        <div class="col-12 col-lg-6">
+        <div id="single-from" class="col-12 col-lg-6">
           {{> Input type="location" placeholder="From"}}
         </div>
-        <div class="col-12 col-lg-6">
+        <div id="single-to" class="col-12 col-lg-6">
           {{> Input type="location" placeholder="To"}}
         </div>
       </div>
@@ -111,28 +113,18 @@
         </div>
       </div>
     </div>
-    <!--<div class="row input-row">-->
-    <!--<div class="col-12 col-lg-6">-->
-    <!--{{> Input type="location" placeholder="From"}}-->
-    <!--</div>-->
-    <!--<div class="col-12 col-lg-6">-->
-    <!--{{> Input type="location" placeholder="To"}}-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="row input-row">-->
-    <!--<div class="col-12 col-lg-6">-->
-    <!--{{> Input type="carrier" placeholder="Carrier"}}-->
-    <!--</div>-->
-    <!--</div>-->
     <div class="row justify-content-end">
       <div class="col-2">
-        <a href="/get-rates&cus=1&p=a&f=innsa&t=gbfxt&c=maeu">
-          <button class="btn btn-primary">
-            <i class="fa fa-calculator"></i>
-            <span class="hidden-md-down">Get Rates</span>
-          </button>
-        </a>
+        <button id="get-rates" class="btn btn-primary">
+          <i class="fa fa-calculator"></i>
+          <span class="hidden-md-down">Get Rates</span>
+        </button>
       </div>
+    </div>
+    <div class="row">
+      {{#each rate in rates}}
+        {{rate.carrier}} {{rate.price20DC}} {{rate.currency}}<br/>
+      {{/each}}
     </div>
   </div>
 </template>
