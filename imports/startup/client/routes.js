@@ -8,9 +8,13 @@ import '../../ui/components/mention.js';
 import '../../ui/components/collapse-button.js';
 
 import '../../ui/layouts/customers.js';
+import '../../ui/layouts/customer.js';
 import '../../ui/layouts/quotes.js';
 import '../../ui/layouts/rates.js';
 import '../../ui/layouts/user-profile.js';
+
+import '../../ui/components/customer-list-item';
+
 import '../../ui/layouts/new-quote.js';
 import '../../ui/components/product-button.js';
 import '../../ui/components/input.js';
@@ -24,6 +28,9 @@ FlowRouter.route('/', {
   },
 });
 
+/**
+ *  CUSTOMERS
+ **/
 FlowRouter.route('/customers', {
   name: 'Customers',
   action() {
@@ -31,6 +38,16 @@ FlowRouter.route('/customers', {
   }
 });
 
+FlowRouter.route('/customer/:_id', {
+  name: 'Customer',
+  action() {
+    BlazeLayout.render('AppBody', { content: 'Customer' });
+  }
+});
+
+/**
+ *  QUOTES
+ **/
 FlowRouter.route('/quotes', {
   name: 'Quotes',
   action() {
@@ -38,6 +55,9 @@ FlowRouter.route('/quotes', {
   }
 });
 
+/**
+ *  RATES
+ **/
 FlowRouter.route('/rates', {
   name: 'Rates',
   action() {
