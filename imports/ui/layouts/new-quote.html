@@ -1,37 +1,137 @@
 <template name="NewQuote">
-  <div class="container new-quote">
-    <h1><i class="fa fa-address-card"></i> AIA Engineering Ltd</h1>
-    <h2>New Quote</h2>
+  <div class="new-quote">
+    <h1>New Quote</h1>
+    <h2><i class="fa fa-address-card"></i> AIA Engineering Ltd</h2><br/>
     <div class="row product-button-row">
       <div class="col-4">
-        {{> ProductButton product="air"}}
+        <button id="air" class="btn btn-lg btn-outline-warning product-button" aria-pressed="false"
+                autocomplete="off">
+          <div class="row">
+            <div class="col-lg-2 col icon">
+              <i class="fa fa-fw fa-plane"></i>
+            </div>
+            <span class="col-10 hidden-md-down text">Air</span>
+          </div>
+        </button>
       </div>
       <div class="col-4">
-        {{> ProductButton product="ocean"}}
+        <button id="ocean" class="btn btn-lg btn-outline-warning product-button" aria-pressed="false"
+                autocomplete="off">
+          <div class="row">
+            <div class="col-lg-2 col icon">
+              <i class="fa fa-fw fa-ship"></i>
+            </div>
+            <span class="col-10 hidden-md-down text">Ocean</span>
+          </div>
+        </button>
       </div>
       <div class="col-4">
-        {{> ProductButton product="road"}}
+        <button id="road" class="btn btn-lg btn-outline-warning product-button" aria-pressed="false"
+                autocomplete="off">
+          <div class="row">
+            <div class="col-lg-2 col icon">
+              <i class="fa fa-fw fa-truck"></i>
+            </div>
+            <span class="col-10 hidden-md-down text">Road</span>
+          </div>
+        </button>
       </div>
     </div>
-    <div class="row input-row">
-      <div class="col-12 col-lg-6">
-        {{> Input type="location" placeholder="From"}}
+    <div class="row product-button-row">
+      <div class="col-4">
+        <button id="single" class="btn btn-lg btn-outline-warning product-button" aria-pressed="false"
+                autocomplete="off">
+          <div class="row">
+            <div class="col-lg-2 col icon">
+              <i class="fa fa-fw fa-arrows-h"></i>
+            </div>
+            <span class="col-10 hidden-md-down text">Single</span>
+          </div>
+        </button>
       </div>
-      <div class="col-12 col-lg-6">
-        {{> Input type="location" placeholder="To"}}
+      <div class="col-4">
+        <button id="multi" class="btn btn-lg btn-outline-warning product-button" aria-pressed="false"
+                autocomplete="off">
+          <div class="row">
+            <div class="col-lg-2 col icon">
+              <i class="fa fa-fw fa-th-list"></i>
+            </div>
+            <span class="col-10 hidden-md-down text">Multi</span>
+          </div>
+        </button>
+      </div>
+      <div class="col-4">
+        <button id="matrix" class="btn btn-lg btn-outline-warning product-button" aria-pressed="false"
+                autocomplete="off">
+          <div class="row">
+            <div class="col-lg-2 col icon">
+              <i class="fa fa-fw fa-th"></i>
+            </div>
+            <span class="col-10 hidden-md-down text">Matrix</span>
+          </div>
+        </button>
       </div>
     </div>
-    <div class="row input-row">
-      <div class="col-12 col-lg-6">
-        {{> Input type="carrier" placeholder="Carrier"}}
+    <div id="singleInput">
+      <div class="row input-row">
+        <div class="col-12 col-lg-6">
+          {{> Input type="location" placeholder="From"}}
+        </div>
+        <div class="col-12 col-lg-6">
+          {{> Input type="location" placeholder="To"}}
+        </div>
       </div>
     </div>
+    <div id="multiInput">
+      {{#each multiRoute in multiRoutes}}
+        <div class="row input-row">
+          <div class="col-12 col-lg-6">
+            {{> Input type="location" placeholder="From"}}
+          </div>
+          <div class="col-12 col-lg-6">
+            {{> Input type="location" placeholder="To"}}
+          </div>
+        </div>
+      {{/each}}
+      <button id="add-multi-route" class="btn btn-secondary add-button">Add Route</button>
+    </div>
+    <div id="matrixInput">
+      <div class="row input-row">
+        <div class="col-12 col-lg-6">
+          {{#each matrixFrom in matrixFroms}}
+            {{> Input type="location" placeholder="From"}}
+          {{/each}}
+          <button id="add-matrix-from" class="btn btn-secondary add-button">Add From Location</button>
+        </div>
+        <div class="col-12 col-lg-6">
+          {{#each matrixTo in matrixTos}}
+            {{> Input type="location" placeholder="To"}}
+          {{/each}}
+          <button id="add-matrix-to" class="btn btn-secondary add-button">Add To Location</button>
+        </div>
+      </div>
+    </div>
+    <!--<div class="row input-row">-->
+    <!--<div class="col-12 col-lg-6">-->
+    <!--{{> Input type="location" placeholder="From"}}-->
+    <!--</div>-->
+    <!--<div class="col-12 col-lg-6">-->
+    <!--{{> Input type="location" placeholder="To"}}-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row input-row">-->
+    <!--<div class="col-12 col-lg-6">-->
+    <!--{{> Input type="carrier" placeholder="Carrier"}}-->
+    <!--</div>-->
+    <!--</div>-->
     <div class="row justify-content-end">
       <div class="col-2">
-        <button class="btn btn-primary">
-          <i class="fa fa-calculator"></i>
-          <span class="hidden-md-down">Get Rates</span>
-        </button>
+        <a href="/get-rates&cus=1&p=a&f=innsa&t=gbfxt&c=maeu">
+          <button class="btn btn-primary">
+            <i class="fa fa-calculator"></i>
+            <span class="hidden-md-down">Get Rates</span>
+          </button>
+        </a>
       </div>
     </div>
   </div>

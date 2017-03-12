@@ -13,10 +13,10 @@ import '../../ui/layouts/quotes.js';
 import '../../ui/layouts/rates.js';
 import '../../ui/layouts/user-profile.js';
 
-import '../../ui/components/customer-list-item';
+import '../../ui/components/customer-list-item.js';
 
 import '../../ui/layouts/new-quote.js';
-import '../../ui/components/product-button.js';
+import '../../ui/layouts/get-rates.js';
 import '../../ui/components/input.js';
 
 BlazeLayout.setRoot('body');
@@ -45,6 +45,20 @@ FlowRouter.route('/customer/:_id', {
   }
 });
 
+FlowRouter.route('/new-quote:customer', {
+  name: 'Customer.show',
+  action() {
+    BlazeLayout.render('AppBody', { content: 'NewQuote' });
+  },
+});
+
+FlowRouter.route('/get-rates:customer', {
+  name: 'Customer.show',
+  action() {
+    BlazeLayout.render('AppBody', { content: 'GetRates' });
+  },
+});
+
 /**
  *  QUOTES
  **/
@@ -71,16 +85,6 @@ FlowRouter.route('/user-profile/:_id', {
     BlazeLayout.render('AppBody', { content: 'UserProfile'});
   }
 });
-
-
-FlowRouter.route('/:customer/new-quote', {
-  name: 'Customer.show',
-  action() {
-    BlazeLayout.render('AppBody', { content: 'NewQuote' });
-  },
-});
-
-
 
 /*
 FlowRouter.notFound = {
