@@ -22,6 +22,7 @@ Template.NewQuote.helpers({
   matrixFroms: () => matrixFroms.get(),
   matrixTos: () => matrixTos.get(),
   rates: () => {
+    // return Rates.find({ originPort: 'NOSVG', destinationPort: 'MGTOA' });
     return Rates.find(searchQuery.get());
   },
 });
@@ -51,9 +52,9 @@ Template.NewQuote.events({
   'click #single' () {
     quoteType.set('single');
 
-    $('#singleInput').show();
-    $('#multiInput').hide();
-    $('#matrixInput').hide();
+    $('#single-input').show();
+    $('#multi-input').hide();
+    $('#matrix-input').hide();
 
     $('#single').addClass('active');
     $('#multi').removeClass('active');
@@ -62,9 +63,9 @@ Template.NewQuote.events({
   'click #multi' () {
     quoteType.set('multi');
 
-    $('#singleInput').hide();
-    $('#multiInput').show();
-    $('#matrixInput').hide();
+    $('#single-input').hide();
+    $('#multi-input').show();
+    $('#matrix-input').hide();
 
     $('#single').removeClass('active');
     $('#multi').addClass('active');
@@ -74,9 +75,9 @@ Template.NewQuote.events({
   'click #matrix' () {
     quoteType.set('matrix');
 
-    $('#singleInput').hide();
-    $('#multiInput').hide();
-    $('#matrixInput').show();
+    $('#single-input').hide();
+    $('#multi-input').hide();
+    $('#matrix-input').show();
 
     $('#single').removeClass('active');
     $('#multi').removeClass('active');
@@ -98,15 +99,28 @@ Template.NewQuote.events({
     matrixTos.set(temp);
   },
   'click #get-rates' () {
-    let originPort = 'n/a';
-    let destinationPort = 'n/a';
-
     if (quoteType.get() === 'single') {
-      originPort = $('#single-from').find('input')[0].value;
-      destinationPort = $('#single-to').find('input')[0].value;
+      const originPort = $('#single-from').find('input')[0].value;
+      const destinationPort = $('#single-to').find('input')[0].value;
+      searchQuery.set({ originPort, destinationPort });
+
     } else if (quoteType.get() === 'multi') {
+      const rows = $('#multi-input .row');
+      const routes = [];
+      console.log(rows);
+      for (let i = 0; i < rows.length; i += 1) {
+        console.log(i);
+        routes.push({
+          originPort: $(rows[i]).find('input')[0].value,
+          destinationPort: $(rows[i]).find('input')[1].value,
+        });
+      }
+      console.log(routes);
+      searchQuery.set({ $or: routes });
+
+
     } else if (quoteType.get() === 'matrix') {
     }
-    searchQuery.set({ originPort, destinationPort });
+
   },
 });

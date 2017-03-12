@@ -74,7 +74,7 @@
         </button>
       </div>
     </div>
-    <div id="singleInput">
+    <div id="single-input">
       <div class="row input-row">
         <div id="single-from" class="col-12 col-lg-6">
           {{> Input type="location" placeholder="From"}}
@@ -84,7 +84,7 @@
         </div>
       </div>
     </div>
-    <div id="multiInput">
+    <div id="multi-input">
       {{#each multiRoute in multiRoutes}}
         <div class="row input-row">
           <div class="col-12 col-lg-6">
@@ -97,7 +97,7 @@
       {{/each}}
       <button id="add-multi-route" class="btn btn-secondary add-button">Add Route</button>
     </div>
-    <div id="matrixInput">
+    <div id="matrix-input">
       <div class="row input-row">
         <div class="col-12 col-lg-6">
           {{#each matrixFrom in matrixFroms}}
@@ -121,10 +121,23 @@
         </button>
       </div>
     </div>
-    <div class="row">
-      {{#each rate in rates}}
-        {{rate.carrier}} {{rate.price20DC}} {{rate.currency}}<br/>
-      {{/each}}
+    <div class="row rate-header">
+      <div class="col-1">From</div>
+      <div class="col-1">To</div>
+      <div class="col-1">Carrier</div>
+      <div class="col-3">20' DC</div>
+      <div class="col-3">40' DC</div>
+      <div class="col-3">40' HC</div>
     </div>
+    {{#each rate in rates}}
+      <div class="row rate-result">
+        <div class="col-1">{{rate.originPort}}</div>
+        <div class="col-1">{{rate.destinationPort}}</div>
+        <div class="col-1">{{rate.carrier}}</div>
+        <div class="col-3">{{rate.price20DC}} {{rate.currency}}</div>
+        <div class="col-3">{{rate.price40DC}} {{rate.currency}}</div>
+        <div class="col-3">{{rate.price40HC}} {{rate.currency}}</div>
+      </div>
+    {{/each}}
   </div>
 </template>
