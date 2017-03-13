@@ -77,7 +77,7 @@ FlowRouter.route('/quotes', {
 FlowRouter.route('/job/:jobNumber', {
   name: 'Job',
   action() {
-    BlazeLayout.render('AppBody', { content: 'Job'});
+    BlazeLayout.render('AppBody', { content: 'job' });
   },
 });
 

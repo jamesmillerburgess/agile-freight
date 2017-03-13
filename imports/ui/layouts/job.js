@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import './job.html';
 import './job.less';
 
-Template.Job.onCreated(function onRendered() {
+Template.job.onCreated(function onRendered() {
   this.data.incoterm = 'FOB';
   this.data.incotermOptions = ['CFR', 'CIF', 'CIP', 'CPT', 'DAF', 'DAP', 'DAT', 'DDP', 'DDU', 'EXW', 'FAS', 'FCA', 'FOB', ''];
   this.data.contract = 'MyContract';
@@ -18,4 +18,4 @@ Template.Job.onCreated(function onRendered() {
   this.data.numOriginals = 3;
 });
 
-Template.Job.helpers({});
+Template.job.helpers({});
