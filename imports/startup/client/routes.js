@@ -2,23 +2,24 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
 // Import to load templates
-import '../../ui/layouts/app-body.js';
-import '../../ui/components/dropdown.js';
-import '../../ui/components/mention.js';
-import '../../ui/components/collapse-button.js';
+import '../../ui/layouts/app-body';
 
-import '../../ui/layouts/customers.js';
-import '../../ui/layouts/customer.js';
-import '../../ui/layouts/quotes.js';
-import '../../ui/layouts/rates.js';
-import '../../ui/layouts/user-profile.js';
+import '../../ui/layouts/customers';
+import '../../ui/layouts/customer';
+import '../../ui/layouts/quotes';
+import '../../ui/layouts/rates';
+import '../../ui/layouts/user-profile';
 
-import '../../ui/components/customer-list-item.js';
+import '../../ui/components/customer-list-item';
 
-import '../../ui/layouts/new-quote.js';
-import '../../ui/layouts/get-rates.js';
-import '../../ui/layouts/job.js';
-import '../../ui/components/input.js';
+import '../../ui/layouts/new-quote';
+import '../../ui/layouts/get-rates';
+import '../../ui/layouts/job';
+import '../../ui/components/input';
+import '../../ui/components/free-text-field';
+import '../../ui/components/dropdown';
+import '../../ui/components/mention';
+import '../../ui/components/collapse-button';
 
 BlazeLayout.setRoot('body');
 

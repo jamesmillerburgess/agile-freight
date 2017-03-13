@@ -1,14 +1,15 @@
 <template name="Dropdown">
-  <div class="dropdown field-dropdown">
-    <span class="value dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      {{value}}
-    </span>
-    <div class="dropdown-menu filterless">
-      <a class="dropdown-item first" name="FOB">FOB</a>
-      <a class="dropdown-item" name="FAS">FAS</a>
-      <a class="dropdown-item" name="DAP">DAP</a>
-      <a class="dropdown-item" name="DAF">DAF</a>
-      <a class="dropdown-item" name="DDP">DDP</a>
+  <div class="field dropdown-field">
+    <span class="label">{{label}}</span>
+    <div class="dropdown dropdown-dropdown">
+      <div class="value-container dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="value"></span>
+      </div>
+      <div class="dropdown-menu filterless">
+        {{#each option in options}}
+          <a class="dropdown-item">{{option}}</a>
+        {{/each}}
+      </div>
     </div>
   </div>
 </template>

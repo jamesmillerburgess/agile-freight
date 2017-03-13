@@ -21,10 +21,8 @@ Template.NewQuote.helpers({
   multiRoutes: () => multiRoutes.get(),
   matrixFroms: () => matrixFroms.get(),
   matrixTos: () => matrixTos.get(),
-  rates: () => {
-    // return Rates.find({ originPort: 'NOSVG', destinationPort: 'MGTOA' });
-    return Rates.find(searchQuery.get());
-  },
+  rates: () => Rates.find(searchQuery.get()),
+  // return Rates.find({ originPort: 'NOSVG', destinationPort: 'MGTOA' });
 });
 
 Template.NewQuote.events({

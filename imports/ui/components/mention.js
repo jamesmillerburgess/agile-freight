@@ -41,7 +41,7 @@ Template.Mention.events({
     event.preventDefault();
     $('.latest-updates-input')[0].value = '@'+event.target.name+' '+$('.latest-updates-input')[0].value;
     $('.latest-updates-input').focus();
-  }
+  },
 });
 
 var users = [
