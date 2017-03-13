@@ -33,6 +33,8 @@ Template.Mention.events({
         $('.latest-update-list').prepend(listItem);
       }
       event.target.value = '';
+      event.target.style.height = '1px';
+      event.target.style.height = event.target.scrollHeight + 'px';
     }
   },
   'click #mention-button a'(event) {
