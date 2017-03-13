@@ -17,6 +17,7 @@ import '../../ui/components/customer-list-item.js';
 
 import '../../ui/layouts/new-quote.js';
 import '../../ui/layouts/get-rates.js';
+import '../../ui/layouts/job.js';
 import '../../ui/components/input.js';
 
 BlazeLayout.setRoot('body');
@@ -66,6 +67,16 @@ FlowRouter.route('/quotes', {
   name: 'Quotes',
   action() {
     BlazeLayout.render('AppBody', { content: 'Quotes'});
+  },
+});
+
+/**
+ * JOBS
+ */
+FlowRouter.route('/job/:jobNumber', {
+  name: 'Job',
+  action() {
+    BlazeLayout.render('AppBody', { content: 'Job'});
   },
 });
 

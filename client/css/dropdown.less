@@ -3,6 +3,7 @@
 
 .dropdown-button {
   font-family: Verdana,Helvetica,Arial,sans-serif;
+  transition: all .2s ease-in-out;
   padding: 3px;
   margin: 0 0 0 -3px;
   border-radius: 3px;
@@ -11,7 +12,7 @@
 }
 
 .dropdown-button:hover {
-  background-color: #E6EAEC;
+  background-color: rgb(248, 246, 240);
 }
 
 .dropdown-menu {
@@ -26,7 +27,7 @@
 }
 
 .filterless {
-  margin-top: 0px;
+  margin-top: 0;
   margin-left: -3px;
 }
 
@@ -35,7 +36,7 @@
   font-family: Verdana,Helvetica,Arial,sans-serif;
   border: 1px solid #ccc;
   padding: 0 3px 0 3px;
-  margin: 0px 0 3px 0;
+  margin: 0 0 3px 0;
   width: 100%;
 }
 
@@ -46,6 +47,11 @@
 .dropdown-item {
   padding: 0;
   cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.dropdown-item:hover {
+  background-color: rgb(248, 246, 240);
 }
 
 .stakeholder-dropdown {
