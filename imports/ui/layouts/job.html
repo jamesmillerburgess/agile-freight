@@ -401,12 +401,6 @@ Shipment Total
                     </div>
                     <div class="form-group-body">
                       <div class="form-group-body-inner">
-                        <div class="form-group-tasks">
-                          <div class="task"><i class="fa fa-check checkmark"></i> Schedules</div>
-                          <div class="task"><i class="fa fa-check checkmark"></i> Request</div>
-                          <div class="task"><i class="fa fa-check checkmark"></i> Carrier Conf</div>
-                          <div class="task"><i class="fa fa-check checkmark"></i> Customer Conf</div>
-                        </div>
                         <div class="form-group-fields">
                           <div class="field">
                             <span class="label">Contract / Spot Rate</span>
@@ -425,6 +419,27 @@ AGL12345
                             <span class="value">ABC1234</span>
                           </div>
                         </div>
+                        <div class="form-group-tasks dropdown">
+                          <div class="task-list-container">
+                            <div class="task-list">
+                              <div class="current-task">
+                                <i class="fa fa-fw fa-clock-o"></i> Confirmation to Customer
+                              </div>
+                              <div class="task-list-spacer"></div>
+                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
+                                <i class="fa fa-fw fa-caret-down"></i>
+                              </div>
+                              <div class="dropdown-menu">
+                                <div class="task"><i class="fa fa-fw fa-check checkmark"></i> Schedule Selection</div>
+                                <div class="task"><i class="fa fa-fw fa-check checkmark"></i> Request Submission</div>
+                                <div class="task"><i class="fa fa-fw fa-check checkmark"></i> Confirmation from Carrier
+                                </div>
+                                <div class="task"><i class="fa fa-fw fa-clock-o"></i> Confirmation to Customer</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -436,11 +451,6 @@ AGL12345
                     </div>
                     <div class="form-group-body">
                       <div class="form-group-body-inner">
-                        <div class="form-group-tasks">
-                          <div class="task"><i class="fa fa-check checkmark"></i> Instructions</div>
-                          <div class="task"><i class="fa fa-clock-o"></i> Draft Approval</div>
-                          <div class="task"><i class="fa fa-clock-o"></i> Final Receipt</div>
-                        </div>
                         <div class="form-group-fields">
                           <div class="field">
                             <span class="label">MBL Type</span>
@@ -473,6 +483,18 @@ Prepaid
                             <span class="value">MAEU12345</span>
                           </div>
                         </div>
+                        <div class="form-group-tasks">
+                          <div class="task-list dropdown">
+                            <div class="task " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                class="fa fa-fw fa-clock-o"></i> Instructions
+                            </div>
+                            <div class="dropdown-menu">
+                              <div class="task"><i class="fa fa-fw fa-clock-o"></i> Instructions</div>
+                              <div class="task"><i class="fa fa-fw fa-clock-o"></i> Draft Approval</div>
+                              <div class="task"><i class="fa fa-fw fa-clock-o"></i> Final Receipt</div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -485,10 +507,10 @@ Prepaid
                     <div class="form-group-body">
                       <div class="form-group-body-inner">
                         <div class="form-group-tasks">
-                          <div class="task"><i class="fa fa-check checkmark"></i> Draft</div>
-                          <div class="task"><i class="fa fa-clock-o"></i> Draft Approval</div>
-                          <div class="task"><i class="fa fa-clock-o"></i> Final</div>
-                          <div class="task"><i class="fa fa-clock-o"></i> Surrender</div>
+                          <div class="task"><i class="fa fa-fw fa-check checkmark"></i> Draft</div>
+                          <div class="task"><i class="fa fa-fw fa-clock-o"></i> Draft Approval</div>
+                          <div class="task"><i class="fa fa-fw fa-clock-o"></i> Final</div>
+                          <div class="task"><i class="fa fa-fw fa-clock-o"></i> Surrender</div>
                         </div>
                         <div class="form-group-fields">
                           <div class="field">
