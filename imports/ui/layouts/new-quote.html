@@ -75,7 +75,7 @@
       </div>
     </div>
     <div id="single-input">
-      <div class="row input-row">
+      <div class="row">
         <div id="single-from" class="col-12 col-lg-6">
           {{> Input type="location" placeholder="From"}}
         </div>
@@ -86,7 +86,7 @@
     </div>
     <div id="multi-input">
       {{#each multiRoute in multiRoutes}}
-        <div class="row input-row">
+        <div class="row">
           <div class="col-12 col-lg-6">
             {{> Input type="location" placeholder="From"}}
           </div>
@@ -98,7 +98,7 @@
       <button id="add-multi-route" class="btn btn-secondary add-button">Add Route</button>
     </div>
     <div id="matrix-input">
-      <div class="row input-row">
+      <div class="row">
         <div class="col-12 col-lg-6">
           {{#each matrixFrom in matrixFroms}}
             {{> Input type="location" placeholder="From"}}

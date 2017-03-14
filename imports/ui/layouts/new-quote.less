@@ -12,6 +12,9 @@
 
 .product-button {
   width: 100%;
+  border: 1px solid #ba7708;
+  color: #ba7708;
+  background-color: #FFF;
   padding-bottom: 6px;
   .row {
     .icon {
@@ -22,6 +25,20 @@
       font-size: 42px;
     }
   }
+}
+
+.product-button:hover {
+  background-color: #ba7708;
+  border: 1px solid #ba7708;
+  color: #FFF;
+  box-shadow: 0 0 0 2px rgb(186,119,8,.5);
+}
+
+.product-button.active {
+  background-color: #ba7708;
+  color: #FFF;
+  border: 1px solid #ba7708;
+  box-shadow: 0 0 0 2px rgb(186,119,8,.5);
 }
 
 #single-input,
