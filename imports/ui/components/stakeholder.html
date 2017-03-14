@@ -1,0 +1,23 @@
+<template name="stakeholder">
+  <div class="field stakeholder-field">
+    <span class="label">{{label}}</span>
+    <div class="dropdown">
+      <div class="value-container dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="value"></span>
+      </div>
+      <div class="dropdown-menu stakeholder-dropdown" aria-labelledby="dropdownMenuButton">
+        <input class="dropdown-filter" type="text">
+        {{#each option in options}}
+          <a href="#" class="dropdown-item stakeholder row">
+            <div class="stakeholder-name-address">
+              {{{formatText addressQuery}}}
+            </div>
+            <div class="stakeholder-properties">
+              {{{formatText propertiesQuery}}}
+            </div>
+          </a>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>

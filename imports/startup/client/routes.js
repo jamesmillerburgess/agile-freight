@@ -20,6 +20,8 @@ import '../../ui/components/free-text-field';
 import '../../ui/components/dropdown';
 import '../../ui/components/mention';
 import '../../ui/components/collapse-button';
+import '../../ui/components/stakeholder';
+import '../../ui/formatters/smart-highlight';
 
 BlazeLayout.setRoot('body');
 

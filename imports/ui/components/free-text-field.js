@@ -10,17 +10,17 @@ Template.FreeTextField.onRendered(function onRendered() {
 });
 
 Template.FreeTextField.events({
-  'click .dropdown-button' (event) {
+  'click .dropdown-button': function handleClick(event) {
     if (!$(event.target.parentNode.parentNode).hasClass('show')) {
       $(event.target).dropdown('toggle');
     }
   },
   'shown.bs.dropdown .free-text-dropdown': function updateInput(event) {
-    const input = event.target.childNodes[3].childNodes[1];
+    const input = $(event.target).find('.dropdown-input')[0];
     input.value = $(event.target).find('.value')[0].innerText;
     input.select();
   },
-  'keydown input'(event) {
+  'keydown input': function handleEnter(event) {
     if (event.key === 'Enter') {
       $(event.target.parentNode.parentNode).dropdown('toggle');
     }

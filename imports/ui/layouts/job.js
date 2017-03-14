@@ -4,6 +4,7 @@ import './job.html';
 import './job.less';
 
 Template.job.onCreated(function onRendered() {
+  this.data.shipper = 'Alstom Power Boilers Limited';
   this.data.incoterm = 'FOB';
   this.data.incotermOptions = ['CFR', 'CIF', 'CIP', 'CPT', 'DAF', 'DAP', 'DAT', 'DDP', 'DDU', 'EXW', 'FAS', 'FCA', 'FOB', ''];
   this.data.contract = 'MyContract';
