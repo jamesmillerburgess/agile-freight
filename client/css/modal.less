@@ -3,21 +3,26 @@
 }
 
 .modal-dialog {
+
 }
 
 .modal-content {
-  border-radius: 0;
-
+  border: 1px solid #990000;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.23);
 }
 
 .modal-header {
-  height: 26px;
-  padding: 0 5px 0 5px;
+  border-radius: 5px 5px 0 0;
+  height: 50px;
+  padding: 7px;
   background-color: rgb(247, 235, 195);
+  .close {
+  }
 }
 
 .modal-title {
-  font-size: 12px;
+  font-size: 24px;
   font-weight: bold;
   color: #786010;
 }
@@ -28,5 +33,8 @@
 }
 
 .modal-footer {
-  height: 31px;
+  height: 50px;
+  border-radius: 0 0 5px 5px;
+  justify-content: flex-start;
+  padding: 7px;
 }

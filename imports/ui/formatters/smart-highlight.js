@@ -1,4 +1,5 @@
 UI.registerHelper('formatText', (query) => {
+  // TODO: Deal with searches that catch <br/>
   const context = query.context;
   const search = query.search;
 
@@ -10,7 +11,6 @@ UI.registerHelper('formatText', (query) => {
 
   // Get the coordinate pairs of the string that need styling applied
   const pairs = [];
-  //const searchTokens = Session.get('searchTokens');
   const searchTokens = search.split(' ');
   for (let t = 0; t < searchTokens.length; t += 1) {
     if (searchTokens[t]) {
