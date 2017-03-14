@@ -558,21 +558,30 @@ Shipment Total
           </button>
         </div>
         <div class="modal-body">
-          <div class="container">
-            <div class="label">Completed By</div>
-            <div class="latest-update-list-item">
-              <div class="list-item-profile-pic">
-                <a class="user-id" href=""><img class="profile-pic" src="/lib/jburgess%20profile%20pic.png"></a>
-              </div>
-              <div class="list-item-content">
-                <a class="user-id" href="">jburgess</a> completed Carrier Booking Confirmation
-              </div>
+          <div class="row input-row">
+            <div class="col-6">
+              <div class="label">Completed By</div>
+              {{> userId userName="James Burgess" picPath="/lib/jburgess%20profile%20pic.png"}}
+            </div>
+            <div class="col-6">
+              <div class="label">Date</div>
+              ...
             </div>
           </div>
-          <textarea></textarea>
+          <div class="row input-row">
+            <div class="col-6">
+              <div class="label">Data Submission</div>
+              ...
+            </div>
+            <div class="col-6">
+              <div class="label">Reference File</div>
+              ...
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="focis-button" data-dismiss="modal">Save and Close</button>
+          <button type="button" class="focis-button" data-dismiss="modal">Send Amendment</button>
+          <button type="button" class="focis-button" data-dismiss="modal">Cancel Request</button>
         </div>
       </div>
     </div>
