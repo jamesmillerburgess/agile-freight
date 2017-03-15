@@ -46,8 +46,6 @@ Template.job.events({
       `<div class="alert alert-warning alert-dismissible fade show" role="alert" data-dismiss="alert">
       <strong>Booking</strong> must be completed before starting <strong>House Bill of Lading</strong>!
       </div>`).children().last();
-    setTimeout(() => {
-      alert.alert('close');
-    }, 5000);
+    setTimeout(() => alert.alert('close'), 5000);
   },
 });
