@@ -31,7 +31,7 @@
           <div class="panel-body-inner">
             <div class="row">
               <div class="job-status col-3">
-                DEPARTED
+                RECEIVED
               </div>
               <div class="origin col-3">
                 {{> stakeholder label="Shipper" value=shipper}}
@@ -444,6 +444,49 @@ Shipment Total
                         <div class="form-group-fields">
                           {{> Dropdown label="Seaquest Type" value=seaquestType options=seaquestTypeOptions}}
                           {{> FreeTextField label="Number of Originals" value=numOriginals}}
+                        </div>
+                        <div id="seaquest-alerts"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group-container row">
+                <div class="col-4">
+                  <div class="form-group">
+                    <div class="form-group-header">
+                      Cargo Release
+                    </div>
+                    <div class="form-group-body">
+                      <div class="form-group-body-inner">
+                        <div class="form-group-tasks dropdown">
+                          <div class="task-list-container">
+                            <div class="task-list">
+                              <div id="seaquest-draft-task" class="current-task task">
+                                <i class="fa fa-fw fa-clock-o"></i> 1/3 Arrival Notice
+                              </div>
+                              <div class="task-list-spacer"></div>
+                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
+                                <i class="fa fa-fw fa-caret-down"></i>
+                              </div>
+                              <div class="dropdown-menu">
+                                <div class="task">
+                                  <i class="fa fa-fw fa-clock-o"></i> 1 Arrival Notice
+                                </div>
+                                <div class="task">
+                                  <i class="fa fa-fw fa-clock-o"></i> 2 Invoice
+                                </div>
+                                <div class="task">
+                                  <i class="fa fa-fw fa-clock-o"></i> 3 Cargo Release
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group-fields">
+                          {{> FreeTextField label="Detention" value=detention}}
+                          {{> FreeTextField label="Demurrage" value=demurrage}}
                         </div>
                         <div id="seaquest-alerts"></div>
                       </div>

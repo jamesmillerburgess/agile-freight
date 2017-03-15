@@ -1,5 +1,4 @@
 import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
 
 import './job.html';
 import './job.less';
@@ -19,18 +18,15 @@ Template.job.onCreated(function onRendered() {
   this.data.seaquestType = 'Original';
   this.data.seaquestTypeOptions = ['Original', 'Express', ''];
   this.data.numOriginals = 3;
-
-  this.data.mblAlerts = new ReactiveVar([]);
+  this.data.detention = '';
+  this.data.demurrage = '';
 });
 
 Template.job.onRendered(function onRendered() {
 });
 
 Template.job.helpers({
-  getMBLAlerts: function getMBLAlerts() {
-    console.log(this.mblAlerts.get());
-    this.mblAlerts.get();
-  },
+
 });
 
 Template.job.events({
