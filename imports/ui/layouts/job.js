@@ -20,12 +20,14 @@ Template.job.onCreated(function onRendered() {
   this.data.numOriginals = 3;
   this.data.detention = '';
   this.data.demurrage = '';
-});
-
-Template.job.onRendered(function onRendered() {
-});
-
-Template.job.helpers({
+  this.data.originHaulageBy = '';
+  this.data.originHaulageByOptions = ['Agility', 'Customer', ''];
+  this.data.originCustomsBy = '';
+  this.data.originCustomsByOptions = ['Agility', 'Customer', ''];
+  this.data.destinationHaulageBy = '';
+  this.data.destinationHaulageByOptions = ['Agility', 'Customer', ''];
+  this.data.destinationCustomsBy = '';
+  this.data.destinationCustomsByOptions = ['Agility', 'Customer', ''];
 
 });
 

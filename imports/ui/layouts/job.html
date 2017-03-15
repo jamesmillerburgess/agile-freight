@@ -308,15 +308,16 @@ Shipment Total
                   <div class="panel-title col-3">Operations</div>
                   <div class="col-8"></div>
                   <div class="col-1">
-                    {{> CollapseButton target="#movement-body"}}
+                    {{> CollapseButton target="#operations-body"}}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div id="movement-body" class="panel-body show">
+          <div id="operations-body" class="panel-body show">
             <div class="panel-body-inner">
-              <div class="form-group-container row">
+              <div class="form-group-row-header">Origin</div>
+              <div class="form-group-container row justify-content-center">
                 <div class="col-4">
                   <div class="form-group">
                     <div class="form-group-header">
@@ -359,10 +360,86 @@ Shipment Total
                           {{> FreeTextField label="Contract / Spot Rate" value=contract}}
                           {{> FreeTextField label="Booking Reference" value=bookingReference}}
                         </div>
+                        <div id="booking-alerts"></div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <div class="col-4">
+                  <div class="form-group">
+                    <div class="form-group-header">
+                      Collection
+                    </div>
+                    <div class="form-group-body">
+                      <div class="form-group-body-inner">
+                        <div class="form-group-tasks dropdown">
+                          <div class="task-list-container">
+                            <div class="task-list">
+                              <div id="seaquest-draft-task" class="current-task task">
+                                <i class="fa fa-fw fa-clock-o"></i> 1/2 Plan Haulage
+                              </div>
+                              <div class="task-list-spacer"></div>
+                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
+                                <i class="fa fa-fw fa-caret-down"></i>
+                              </div>
+                              <div class="dropdown-menu">
+                                <div class="task">
+                                  <i class="fa fa-fw fa-clock-o"></i> 1 Plan Haulage
+                                </div>
+                                <div class="task">
+                                  <i class="fa fa-fw fa-clock-o"></i> 2 Arrange Collection
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group-fields">
+                          {{> Dropdown label="Origin Haulage By" value=originHaulageBy options=originHaulageByOptions}}
+                        </div>
+                        <div id="collection-alerts"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                    <div class="form-group-header">
+                      Origin Customs
+                    </div>
+                    <div class="form-group-body">
+                      <div class="form-group-body-inner">
+                        <div class="form-group-tasks dropdown">
+                          <div class="task-list-container">
+                            <div class="task-list">
+                              <div id="shipping-instructions-task" class="current-task task">
+                                <i class="fa fa-fw fa-clock-o"></i> 1/1 Clearance
+                              </div>
+                              <div class="task-list-spacer"></div>
+                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
+                                <i class="fa fa-fw fa-caret-down"></i>
+                              </div>
+                              <div class="dropdown-menu">
+                                <div class="task">
+                                  <i class="fa fa-fw fa-clock-o"></i> 1 Clearance
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group-fields">
+                          {{> Dropdown label="Origin Customs By" value=originCustomsBy options=originCustomsByOptions}}
+                        </div>
+                        <div id="origin-customs-alerts">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group-row-header">Port to Port</div>
+              <div class="form-group-container row justify-content-center">
                 <div class="col-4">
                   <div class="form-group">
                     <div class="form-group-header">
@@ -451,7 +528,43 @@ Shipment Total
                   </div>
                 </div>
               </div>
-              <div class="form-group-container row">
+              <div class="form-group-row-header">Destination</div>
+              <div class="form-group-container row justify-content-center">
+                <div class="col-4">
+                  <div class="form-group">
+                    <div class="form-group-header">
+                      Destination Customs
+                    </div>
+                    <div class="form-group-body">
+                      <div class="form-group-body-inner">
+                        <div class="form-group-tasks dropdown">
+                          <div class="task-list-container">
+                            <div class="task-list">
+                              <div id="shipping-instructions-task" class="current-task task">
+                                <i class="fa fa-fw fa-clock-o"></i> 1/1 Clearance
+                              </div>
+                              <div class="task-list-spacer"></div>
+                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
+                                <i class="fa fa-fw fa-caret-down"></i>
+                              </div>
+                              <div class="dropdown-menu">
+                                <div class="task">
+                                  <i class="fa fa-fw fa-clock-o"></i> 1 Clearance
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group-fields">
+                          {{> Dropdown label="Destination Customs By" value=destinationCustomsBy options=destinationCustomsByOptions}}
+                        </div>
+                        <div id="destination-customs-alerts">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="col-4">
                   <div class="form-group">
                     <div class="form-group-header">
@@ -488,7 +601,44 @@ Shipment Total
                           {{> FreeTextField label="Detention" value=detention}}
                           {{> FreeTextField label="Demurrage" value=demurrage}}
                         </div>
-                        <div id="seaquest-alerts"></div>
+                        <div id="cargo-release-alerts"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                    <div class="form-group-header">
+                      Delivery
+                    </div>
+                    <div class="form-group-body">
+                      <div class="form-group-body-inner">
+                        <div class="form-group-tasks dropdown">
+                          <div class="task-list-container">
+                            <div class="task-list">
+                              <div id="seaquest-draft-task" class="current-task task">
+                                <i class="fa fa-fw fa-clock-o"></i> 1/2 Plan Haulage
+                              </div>
+                              <div class="task-list-spacer"></div>
+                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
+                                <i class="fa fa-fw fa-caret-down"></i>
+                              </div>
+                              <div class="dropdown-menu">
+                                <div class="task">
+                                  <i class="fa fa-fw fa-clock-o"></i> 1 Plan Haulage
+                                </div>
+                                <div class="task">
+                                  <i class="fa fa-fw fa-clock-o"></i> 2 Arrange Delivery
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group-fields">
+                          {{> Dropdown label="Destination Haulage By" value=destinationHaulageBy options=destinationHaulageByOptions}}
+                        </div>
+                        <div id="delivery-alerts"></div>
                       </div>
                     </div>
                   </div>
