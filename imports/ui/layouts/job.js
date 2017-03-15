@@ -28,7 +28,6 @@ Template.job.onCreated(function onRendered() {
   this.data.destinationHaulageByOptions = ['Agility', 'Customer', ''];
   this.data.destinationCustomsBy = '';
   this.data.destinationCustomsByOptions = ['Agility', 'Customer', ''];
-
 });
 
 Template.job.events({
@@ -37,9 +36,7 @@ Template.job.events({
       `<div class="alert alert-warning alert-dismissible fade show" role="alert" data-dismiss="alert">
       <strong>Booking</strong> must be completed before starting <strong>Master Bill of Lading</strong>!
       </div>`).children().last();
-    setTimeout(() => {
-      alert.alert('close');
-    }, 5000);
+    setTimeout(() => alert.alert('close'), 5000);
   },
   'click #seaquest-draft-task': function handleSeaquestDraftTaskClick() {
     const alert = $('#seaquest-alerts').append(
