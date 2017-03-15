@@ -20,9 +20,9 @@ Template.job.onCreated(function onRendered() {
   this.data.numOriginals = 3;
   this.data.detention = '';
   this.data.demurrage = '';
-  this.data.originHaulageBy = '';
+  this.data.originHaulageBy = 'Customer';
   this.data.originHaulageByOptions = ['Agility', 'Customer', ''];
-  this.data.originCustomsBy = '';
+  this.data.originCustomsBy = 'Customer';
   this.data.originCustomsByOptions = ['Agility', 'Customer', ''];
   this.data.destinationHaulageBy = '';
   this.data.destinationHaulageByOptions = ['Agility', 'Customer', ''];
