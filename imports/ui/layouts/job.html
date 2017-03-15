@@ -28,26 +28,54 @@
           </div>
         </div>
         <div class="panel-body">
-          <div class="row">
-            <div class="job-status col-3">
-              DEPARTED
-            </div>
-            <div class="origin col-3">
-              {{> stakeholder label="Shipper" value=shipper}}
-              <div class="field">
-                <div class="label">Export Office</div>
-                <span class="value">Bangalore</span>
+          <div class="panel-body-inner">
+            <div class="row">
+              <div class="job-status col-3">
+                DEPARTED
+              </div>
+              <div class="origin col-3">
+                {{> stakeholder label="Shipper" value=shipper}}
+                <div class="field">
+                  <div class="label">Export Office</div>
+                  <span class="value">Bangalore</span>
+                </div>
+              </div>
+              <div class="destination col-3">
+                {{> stakeholder label="Consignee" value=consignee}}
+                <div class="field">
+                  <div class="label">Import Office</div>
+                  <span class="value">Thurrock</span>
+                </div>
+              </div>
+              <div class="terms col-3">
+                {{> Dropdown label="Incoterm" value=incoterm options=incotermOptions}}
               </div>
             </div>
-            <div class="destination col-3">
-              {{> stakeholder label="Consignee" value=consignee}}
-              <div class="field">
-                <div class="label">Import Office</div>
-                <span class="value">Thurrock</span>
+            <div class="row">
+              <div class="col-3">
+                <div class="label">Physical Receipt of Goods</div>
+                <div class="task">
+                  <i class="fa fa-fw fa-check checkmark"></i> 2-Feb-2017 09:34
+                </div>
               </div>
-            </div>
-            <div class="terms col-3">
-              {{> Dropdown label="Incoterm" value=incoterm options=incotermOptions}}
+              <div class="col-3">
+                <div class="label">International Departure</div>
+                <div class="task">
+                  <i class="fa fa-fw fa-clock-o"></i> 5-Feb-2017 18:00
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="label">International Arrival</div>
+                <div class="task">
+                  <i class="fa fa-fw fa-clock-o"></i> 1-Mar-2017 18:00
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="label">Proof of Delivery</div>
+                <div class="task">
+                  <i class="fa fa-fw fa-question"></i> Not Planned
+                </div>
+              </div>
             </div>
           </div>
         </div>
