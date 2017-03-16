@@ -17,6 +17,7 @@ import '../../ui/layouts/get-rates';
 import '../../ui/layouts/job';
 import '../../ui/components/input';
 import '../../ui/components/free-text-field';
+import '../../ui/components/file-field';
 import '../../ui/components/dropdown';
 import '../../ui/components/mention';
 import '../../ui/components/collapse-button';
