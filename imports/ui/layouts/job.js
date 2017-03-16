@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import './job.html';
 import './job.less';
 
-Template.job.onCreated(function onRendered() {
+Template.job.onCreated(function onCreated() {
   this.data.shipper = 'Alstom Power Boilers Limited';
   this.data.consignee = 'Presspart Manufacturing Ltd';
   this.data.incoterm = 'FOB';
@@ -30,6 +30,8 @@ Template.job.onCreated(function onRendered() {
   this.data.destinationCustomsBy = '';
   this.data.destinationCustomsByOptions = ['Agility', 'Customer', ''];
 });
+
+Template.job.onRendered(() => $(() => $('[data-toggle="tooltip"]').tooltip()));
 
 Template.job.events({
   'click .shipping-instructions-task': function handleShippingInstructionsTaskClick() {
