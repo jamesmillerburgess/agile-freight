@@ -328,7 +328,7 @@ Shipment Total
                         <div class="form-group-tasks dropdown">
                           <div class="task-list-container">
                             <div class="task-list">
-                              <div class="current-task task customer-confirmation-task" data-toggle="modal"
+                              <div class="current-task task customer-confirmation-task overdue" data-toggle="modal"
                                    data-target="#customer-confirmation-modal">
                                 <i class="fa fa-fw fa-clock-o"></i> 4/4 Customer Conf
                               </div>
@@ -348,7 +348,7 @@ Shipment Total
                                 <div class="task carrier-confirmation-task">
                                   <i class="fa fa-fw fa-check checkmark"></i> 3 Carrier Conf
                                 </div>
-                                <div class="task customer-confirmation-task" data-toggle="modal"
+                                <div class="task customer-confirmation-task overdue" data-toggle="modal"
                                      data-target="#customer-confirmation-modal">
                                   <i class="fa fa-fw fa-clock-o"></i> 4 Customer Conf
                                 </div>
@@ -357,8 +357,8 @@ Shipment Total
                           </div>
                         </div>
                         <div class="form-group-fields">
-                          {{> FreeTextField label="Contract / Spot Rate" value=contract}}
-                          {{> FreeTextField label="Booking Reference" value=bookingReference}}
+                          {{> freeTextField label="Contract / Spot Rate" value=contract}}
+                          {{> freeTextField label="Booking Reference" value=bookingReference}}
                         </div>
                         <div id="booking-alerts"></div>
                       </div>
@@ -475,7 +475,7 @@ Shipment Total
                         <div class="form-group-fields">
                           {{> Dropdown label="MBL Type" value=mblType options=mblTypeOptions}}
                           {{> Dropdown label="MBL Terms" value=mblTerms options=mblTermsOptions}}
-                          {{> FreeTextField label="MBL Number" value=mblNumber}}
+                          {{> freeTextField label="MBL Number" value=mblNumber}}
                         </div>
                         <div id="mbl-alerts">
                         </div>
@@ -520,7 +520,7 @@ Shipment Total
                         </div>
                         <div class="form-group-fields">
                           {{> Dropdown label="Seaquest Type" value=seaquestType options=seaquestTypeOptions}}
-                          {{> FreeTextField label="Number of Originals" value=numOriginals}}
+                          {{> freeTextField label="Number of Originals" value=numOriginals}}
                         </div>
                         <div id="seaquest-alerts"></div>
                       </div>
@@ -598,8 +598,8 @@ Shipment Total
                           </div>
                         </div>
                         <div class="form-group-fields">
-                          {{> FreeTextField label="Detention" value=detention}}
-                          {{> FreeTextField label="Demurrage" value=demurrage}}
+                          {{> freeTextField label="Detention" value=detention}}
+                          {{> freeTextField label="Demurrage" value=demurrage}}
                         </div>
                         <div id="cargo-release-alerts"></div>
                       </div>

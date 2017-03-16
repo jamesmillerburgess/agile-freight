@@ -4,12 +4,12 @@ import './free-text-field.html';
 import './free-text-field.less';
 
 
-Template.FreeTextField.onRendered(function onRendered() {
+Template.freeTextField.onRendered(function onRendered() {
   $(this.find('.dropdown-button')).dropdown();
   $(this.find('.value'))[0].innerText = this.data.value;
 });
 
-Template.FreeTextField.events({
+Template.freeTextField.events({
   'click .dropdown-button': function handleClick(event) {
     if (!$(event.target.parentNode.parentNode).hasClass('show')) {
       $(event.target).dropdown('toggle');

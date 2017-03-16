@@ -33,6 +33,10 @@
     "settings": {
       "import/resolver": "meteor"
     },
-    "rules": {}
+    "rules": {},
+    "globals": {
+      "_": true,
+      "$": true
+    }
   }
 }
