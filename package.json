@@ -33,7 +33,10 @@
     "settings": {
       "import/resolver": "meteor"
     },
-    "rules": {},
+    "rules": {
+      "import/no-extraneous-dependencies": "off",
+      "import/extensions": ["off", "never"]
+    },
     "globals": {
       "_": true,
       "$": true
