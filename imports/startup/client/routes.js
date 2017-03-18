@@ -46,7 +46,7 @@ FlowRouter.route('/customers', {
   },
 });
 
-FlowRouter.route('/customer/:_id', {
+FlowRouter.route('/customer/:customerCode', {
   name: 'Customer',
   action() {
     BlazeLayout.render('AppBody', { content: 'customer' });

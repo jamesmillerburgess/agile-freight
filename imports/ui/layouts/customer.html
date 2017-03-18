@@ -8,11 +8,11 @@
         <div class="panel-header-content container">
           <div class="row">
             <div class="panel-title col-12 col-lg-6 align-left">
-              AIA Engineering Ltd
+              {{customer.name}}
             </div>
             <div class="col-6 col-lg-3 align-right">
-              2 ACTIVE QUOTES<br/>
-              1 ACTIVE JOB
+              {{customer.activeQuotes.length}} ACTIVE QUOTES<br/>
+              {{customer.activeJobs.length}} ACTIVE JOB
             </div>
             <div class="col-6 col-lg-3 align-right">
               MTD +13,237 INR<br/>
@@ -28,9 +28,9 @@
         <div class="row">
           <div class="col-12 col-lg-6">
             <span class="customer-industry">Pharmaceuticals</span><br/>
-            <span class="customer-credit">24k / 119k INR credit</span><br/>
+            <span class="customer-credit">{{customer.credit.used}} / {{customer.credit.total}} {{customer.credit.currency}} credit</span><br/>
             <div class="progress">
-              <div class="progress-bar" role="progressbar" style="width: 80%; height: 20px;" aria-valuenow="25"
+              <div class="progress-bar" role="progressbar" style="width: {{creditPercent}}; height: 20px;" aria-valuenow="25"
                    aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
