@@ -1,3 +1,5 @@
 <template name="main">
-  {{> Template.dynamic template=content}}
+  {{#if Template.subscriptionsReady}}
+    {{> Template.dynamic template=content data=context}}
+  {{/if}}
 </template>

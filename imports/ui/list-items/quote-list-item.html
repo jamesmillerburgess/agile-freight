@@ -1,0 +1,23 @@
+<template name="quoteListItem">
+  <a class="card" href="/quote/1">
+    <div class="card-inner">
+      <div class="icon-container hidden-md-down">
+        <div class="icon fa fa-fw fa-plane"></div>
+      </div>
+      <div class="card-content container">
+        <div class="row">
+          <div class="col-6">
+            <b>{{quoteCode}}</b><br/>
+            {{status}}<br/>
+            {{dateFormat expiryDate}}
+          </div>
+          <div class="col-6">
+            {{type}}<br/>
+            {{rateType}}<br/>
+            {{incoterm}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+</template>

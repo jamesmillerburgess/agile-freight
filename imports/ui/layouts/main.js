@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import './main.html';
 import './main.less';
@@ -13,15 +14,16 @@ Template.main.onCreated(function onCreated() {
 });
 
 Template.main.helpers({
-  customers() {
-    return Customers.find({});
-  },
-  quotes() {
-    console.log(Quotes.findOne());
-    return Quotes.find({});
-  },
-  jobs() {
-    return Jobs.find({});
-  },
+  context() {
+    const routeName = FlowRouter.getRouteName();
 
+    if (routeName === 'Customer') {
+      const id = FlowRouter.getParam('_id');
+      return {
+        customer: Customers.findOne(id),
+        quotes: Quotes.find({ customerId: id }),
+      };
+    }
+    return null;
+  },
 });

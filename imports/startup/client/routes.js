@@ -12,7 +12,8 @@ import '../../ui/layouts/rates';
 import '../../ui/layouts/user-profile';
 import '../../ui/layouts/sign-in';
 
-import '../../ui/components/customer-list-item';
+import '../../ui/list-items/customer-list-item';
+import '../../ui/list-items/quote-list-item';
 
 import '../../ui/layouts/new-quote';
 import '../../ui/layouts/get-rates';
@@ -26,13 +27,14 @@ import '../../ui/components/collapse-button';
 import '../../ui/components/stakeholder';
 import '../../ui/components/user-id';
 import '../../ui/formatters/smart-highlight';
+import '../../ui/formatters/date-format';
 
 BlazeLayout.setRoot('body');
 
 FlowRouter.route('/', {
   name: 'App.home',
   action() {
-    BlazeLayout.render('AppBody', { main: 'RootRedirector', content: 'Home' });
+    BlazeLayout.render('appBody', { main: 'RootRedirector', content: 'Home' });
   },
 });
 
@@ -42,28 +44,28 @@ FlowRouter.route('/', {
 FlowRouter.route('/customers', {
   name: 'Customers',
   action() {
-    BlazeLayout.render('AppBody', { content: 'customers' });
+    BlazeLayout.render('appBody', { content: 'customers' });
   },
 });
 
-FlowRouter.route('/customer/:customerCode', {
+FlowRouter.route('/customer/:_id', {
   name: 'Customer',
   action() {
-    BlazeLayout.render('AppBody', { content: 'customer' });
+    BlazeLayout.render('appBody', { content: 'customer' });
   },
 });
 
 FlowRouter.route('/new-quote:customer', {
   name: 'Customer.show',
   action() {
-    BlazeLayout.render('AppBody', { content: 'NewQuote' });
+    BlazeLayout.render('appBody', { content: 'NewQuote' });
   },
 });
 
 FlowRouter.route('/get-rates', {
   name: 'Customer.show',
   action() {
-    BlazeLayout.render('AppBody', { content: 'GetRates' });
+    BlazeLayout.render('appBody', { content: 'GetRates' });
   },
 });
 
@@ -73,7 +75,7 @@ FlowRouter.route('/get-rates', {
 FlowRouter.route('/quotes', {
   name: 'Quotes',
   action() {
-    BlazeLayout.render('AppBody', { content: 'Quotes'});
+    BlazeLayout.render('AppBody', { content: 'Quotes' });
   },
 });
 
@@ -93,14 +95,14 @@ FlowRouter.route('/job/:jobNumber', {
 FlowRouter.route('/rates', {
   name: 'Rates',
   action() {
-    BlazeLayout.render('AppBody', { content: 'Rates'});
+    BlazeLayout.render('AppBody', { content: 'Rates' });
   },
 });
 
 FlowRouter.route('/user-profile/:_id', {
   name: 'UserProfile',
   action() {
-    BlazeLayout.render('AppBody', { content: 'UserProfile'});
+    BlazeLayout.render('AppBody', { content: 'UserProfile' });
   },
 });
 

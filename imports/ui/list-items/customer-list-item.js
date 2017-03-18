@@ -15,6 +15,6 @@ Template.customerListItem.helpers({
 
 Template.customerListItem.events({
   'click .card': function handleClickCard() {
-    FlowRouter.go(`/customer/${this.customer.code}`);
+    FlowRouter.go(`/customer/${this.customer._id}`);
   },
 });

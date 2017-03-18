@@ -4,7 +4,7 @@ import { Template } from 'meteor/templating';
 import './app-body.html';
 import './app-body.less';
 
-Template.AppBody.helpers({
+Template.appBody.helpers({
   loggedIn: function loggedIn() {
     return Meteor.user();
   },
