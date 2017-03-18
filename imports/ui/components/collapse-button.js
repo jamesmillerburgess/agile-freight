@@ -1,6 +1,8 @@
+import { Template } from 'meteor/templating';
+
 import './collapse-button.html';
 
-Template.CollapseButton.onRendered(function onRendered() {
+Template.collapseButton.onRendered(function onRendered() {
   const icon = this.find('i');
   const collapsible = $(this.data.target);
 
@@ -13,14 +15,14 @@ Template.CollapseButton.onRendered(function onRendered() {
   }
 });
 
-Template.CollapseButton.events({
-  'click .collapse-button'(event) {
+Template.collapseButton.events({
+  'click .collapse-button': function handleCollapseButtonClick(event) {
     if (event.target.classList.contains('fa-chevron-down')) {
-     event.target.classList.remove('fa-chevron-down');
-     event.target.classList.add('fa-chevron-up');
-     } else {
-     event.target.classList.remove('fa-chevron-up');
-     event.target.classList.add('fa-chevron-down');
-     }
-  }
+      event.target.classList.remove('fa-chevron-down');
+      event.target.classList.add('fa-chevron-up');
+    } else {
+      event.target.classList.remove('fa-chevron-up');
+      event.target.classList.add('fa-chevron-down');
+    }
+  },
 });

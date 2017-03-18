@@ -3,12 +3,13 @@ import { Template } from 'meteor/templating';
 import './job.html';
 import './job.less';
 
-Template.job.onCreated(function onRendered() {
+Template.job.onCreated(function onCreated() {
   this.data.shipper = 'Alstom Power Boilers Limited';
   this.data.consignee = 'Presspart Manufacturing Ltd';
   this.data.incoterm = 'FOB';
   this.data.incotermOptions = ['CFR', 'CIF', 'CIP', 'CPT', 'DAF', 'DAP', 'DAT', 'DDP', 'DDU', 'EXW', 'FAS', 'FCA', 'FOB', ''];
   this.data.contract = 'MyContract';
+  this.data.carrierBookingConfirmationFile = 'CBC-12392.pdf';
   this.data.bookingReference = 'ABC1234';
   this.data.mblNumber = 'MAEU12345';
   this.data.mblType = 'Waybill';
@@ -29,6 +30,8 @@ Template.job.onCreated(function onRendered() {
   this.data.destinationCustomsBy = '';
   this.data.destinationCustomsByOptions = ['Agility', 'Customer', ''];
 });
+
+Template.job.onRendered(() => $(() => $('[data-toggle="tooltip"]').tooltip()));
 
 Template.job.events({
   'click .shipping-instructions-task': function handleShippingInstructionsTaskClick() {

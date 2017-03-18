@@ -3,12 +3,14 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
 // Import to load templates
 import '../../ui/layouts/app-body';
+import '../../ui/layouts/main';
 
 import '../../ui/layouts/customers';
 import '../../ui/layouts/customer';
 import '../../ui/layouts/quotes';
 import '../../ui/layouts/rates';
 import '../../ui/layouts/user-profile';
+import '../../ui/layouts/sign-in';
 
 import '../../ui/components/customer-list-item';
 
@@ -17,6 +19,7 @@ import '../../ui/layouts/get-rates';
 import '../../ui/layouts/job';
 import '../../ui/components/input';
 import '../../ui/components/free-text-field';
+import '../../ui/components/file-field';
 import '../../ui/components/dropdown';
 import '../../ui/components/mention';
 import '../../ui/components/collapse-button';
@@ -39,14 +42,14 @@ FlowRouter.route('/', {
 FlowRouter.route('/customers', {
   name: 'Customers',
   action() {
-    BlazeLayout.render('AppBody', { content: 'Customers'});
+    BlazeLayout.render('AppBody', { content: 'customers' });
   },
 });
 
-FlowRouter.route('/customer/:_id', {
+FlowRouter.route('/customer/:customerCode', {
   name: 'Customer',
   action() {
-    BlazeLayout.render('AppBody', { content: 'Customer' });
+    BlazeLayout.render('AppBody', { content: 'customer' });
   },
 });
 

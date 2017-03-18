@@ -23,16 +23,28 @@
       <form class="form-inline">
         <input class="focis-input mr-sm-2" type="text" placeholder="Search">
       </form>
+      <ul class="nav navbar-nav navbar-right">
+        {{> atNavButton}}
+      </ul>
       <form class="form-inline my-2 my-lg-0">
         <a class="profile-button btn btn-secondary" href="/user-profile/1">
-            <img class="profile-pic" src="/lib/jburgess%20profile%20pic.png">
-            <span class="user-name">James Burgess</span>
+          <img class="profile-pic" src="/lib/jburgess%20profile%20pic.png">
+          <span class="user-name">James Burgess</span>
         </a>
       </form>
+      <div class="alert-button-container">
+        <button class="alert-button btn btn-secondary">
+          <i class="fa fa-fw fa-bell-o alert-icon"></i>
+        </button>
+      </div>
     </div>
   </nav>
   <div class="container content">
-    {{>Template.dynamic template=content}}
+    {{#if loggedIn}}
+      {{> main}}
+    {{else}}
+      {{> signIn}}
+    {{/if}}
   </div>
 
 </template>

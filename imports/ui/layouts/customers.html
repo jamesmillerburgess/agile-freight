@@ -1,4 +1,4 @@
-<template name="Customers">
+<template name="customers">
   <div class="customer-list">
     <div class="panel">
       <div class="panel-header">
@@ -34,6 +34,8 @@
         </div>
       </div>
     </div>
-    {{>CustomerListItem}}
+    {{#each customer in customers}}
+      {{> customerListItem customer=customer}}
+    {{/each}}
   </div>
 </template>
