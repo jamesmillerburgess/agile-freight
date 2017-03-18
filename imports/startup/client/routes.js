@@ -3,6 +3,7 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
 // Import to load templates
 import '../../ui/layouts/app-body';
+import '../../ui/layouts/main';
 
 import '../../ui/layouts/customers';
 import '../../ui/layouts/customer';
@@ -41,14 +42,14 @@ FlowRouter.route('/', {
 FlowRouter.route('/customers', {
   name: 'Customers',
   action() {
-    BlazeLayout.render('AppBody', { content: 'Customers'});
+    BlazeLayout.render('AppBody', { content: 'customers' });
   },
 });
 
 FlowRouter.route('/customer/:_id', {
   name: 'Customer',
   action() {
-    BlazeLayout.render('AppBody', { content: 'Customer' });
+    BlazeLayout.render('AppBody', { content: 'customer' });
   },
 });
 

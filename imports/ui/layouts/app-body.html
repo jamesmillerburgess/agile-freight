@@ -41,7 +41,7 @@
   </nav>
   <div class="container content">
     {{#if loggedIn}}
-      {{>Template.dynamic template=content}}
+      {{> main}}
     {{else}}
       {{> signIn}}
     {{/if}}
