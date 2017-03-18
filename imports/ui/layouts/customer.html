@@ -51,53 +51,9 @@
           <button class="focis-button new-quote-button">New Quote</button>
         </a>
       </div>
-      {{#if Template.subscriptionsReady}}
-        {{#each quote in quotes}}
-          {{> quoteListItem quote}}
-        {{/each}}
-      {{/if}}
-      <a class="card" href="/quote/1">
-        <div class="card-inner">
-          <div class="icon-container hidden-md-down">
-            <div class="icon fa fa-fw fa-plane"></div>
-          </div>
-          <div class="card-content container">
-            <div class="row">
-              <div class="col-6">
-                <b>Q572038</b><br/>
-                Accepted<br/>
-                22-May-2017
-              </div>
-              <div class="col-6">
-                Single Route<br/>
-                Rated<br/>
-                FOB
-              </div>
-            </div>
-          </div>
-        </div>
-      </a>
-      <a class="card" href="/quote/1">
-        <div class="card-inner">
-          <div class="icon-container hidden-md-down">
-            <div class="icon fa fa-fw fa-ship"></div>
-          </div>
-          <div class="card-content container">
-            <div class="row">
-              <div class="col-6">
-                <b>Q571559</b><br/>
-                Won +3,291 INR<br/>
-                12-May-2017
-              </div>
-              <div class="col-6">
-                Route Matrix<br/>
-                Rated<br/>
-                CIF
-              </div>
-            </div>
-          </div>
-        </div>
-      </a>
+      {{#each quote in quotes}}
+        {{> quoteListItem quote}}
+      {{/each}}
       <div class="list-title">
         <div class="btn focis-button">Show Inactive Quotes</div>
       </div>

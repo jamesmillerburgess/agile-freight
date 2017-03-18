@@ -1,6 +1,7 @@
-UI.registerHelper('dateFormat', (query) => {
+import { Template } from 'meteor/templating';
+
+Template.registerHelper('dateFormat', (query) => {
   const date = new Date(query);
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const formattedDate = `${date.getDate()}-${months[date.getMonth()]}-${date.getFullYear()}`;
-  return formattedDate;
+  return `${date.getDate()}-${months[date.getMonth()]}-${date.getFullYear()}`;
 });

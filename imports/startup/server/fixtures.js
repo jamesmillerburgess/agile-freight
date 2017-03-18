@@ -34,7 +34,7 @@ Meteor.startup(() => {
     _.each(customerFixtures, doc => Customers.insert(doc));
     const quoteFixtures = [
       {
-        quoteCode: '1',
+        quoteCode: 'Q572038',
         customerId: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
         mode: 'Air',
         type: 'Single Route',
@@ -44,12 +44,24 @@ Meteor.startup(() => {
         expiryDate: new Date('22-May-2017'),
       },
       {
-        quoteCode: '2',
+        quoteCode: 'Q571559',
         customerId: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
+        mode: 'Ocean',
+        type: 'Route Matrix',
+        rateType: 'Rated',
+        incoterm: 'CIF',
+        status: 'Won +3,291 INR',
+        expiryDate: new Date('12-May-2017'),
       },
       {
         quoteCode: '3',
         customerId: Customers.findOne({ name: 'AIA Engineering Limited' }, {})._id,
+        mode: 'Air',
+        type: 'Single Route',
+        rateType: 'Rated',
+        incoterm: 'FOB',
+        status: 'Accepted',
+        expiryDate: new Date('22-May-2017'),
       },
     ];
     _.each(quoteFixtures, doc => Quotes.insert(doc));

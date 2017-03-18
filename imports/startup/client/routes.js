@@ -75,7 +75,7 @@ FlowRouter.route('/get-rates', {
 FlowRouter.route('/quotes', {
   name: 'Quotes',
   action() {
-    BlazeLayout.render('AppBody', { content: 'Quotes' });
+    BlazeLayout.render('appBody', { content: 'Quotes' });
   },
 });
 
@@ -85,7 +85,7 @@ FlowRouter.route('/quotes', {
 FlowRouter.route('/job/:jobNumber', {
   name: 'Job',
   action() {
-    BlazeLayout.render('AppBody', { content: 'job' });
+    BlazeLayout.render('appBody', { content: 'job' });
   },
 });
 
@@ -95,14 +95,14 @@ FlowRouter.route('/job/:jobNumber', {
 FlowRouter.route('/rates', {
   name: 'Rates',
   action() {
-    BlazeLayout.render('AppBody', { content: 'Rates' });
+    BlazeLayout.render('appBody', { content: 'Rates' });
   },
 });
 
 FlowRouter.route('/user-profile/:_id', {
   name: 'UserProfile',
   action() {
-    BlazeLayout.render('AppBody', { content: 'UserProfile' });
+    BlazeLayout.render('appBody', { content: 'UserProfile' });
   },
 });
 

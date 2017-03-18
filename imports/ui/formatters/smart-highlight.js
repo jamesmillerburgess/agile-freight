@@ -1,4 +1,6 @@
-UI.registerHelper('formatText', (query) => {
+import { Template } from 'meteor/templating';
+
+Template.registerHelper('formatText', (query) => {
   // TODO: Deal with searches that catch <br/>
   const context = query.context;
   const search = query.search;
