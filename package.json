@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
+    "bcrypt": "^1.0.2",
     "bootstrap": "^3.3.7"
   },
   "devDependencies": {
@@ -35,7 +36,10 @@
     },
     "rules": {
       "import/no-extraneous-dependencies": "off",
-      "import/extensions": ["off", "never"]
+      "import/extensions": [
+        "off",
+        "never"
+      ]
     },
     "globals": {
       "_": true,

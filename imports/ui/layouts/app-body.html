@@ -23,6 +23,9 @@
       <form class="form-inline">
         <input class="focis-input mr-sm-2" type="text" placeholder="Search">
       </form>
+      <ul class="nav navbar-nav navbar-right">
+        {{> atNavButton}}
+      </ul>
       <form class="form-inline my-2 my-lg-0">
         <a class="profile-button btn btn-secondary" href="/user-profile/1">
           <img class="profile-pic" src="/lib/jburgess%20profile%20pic.png">
@@ -37,7 +40,11 @@
     </div>
   </nav>
   <div class="container content">
-    {{>Template.dynamic template=content}}
+    {{#if loggedIn}}
+      {{>Template.dynamic template=content}}
+    {{else}}
+      {{> signIn}}
+    {{/if}}
   </div>
 
 </template>

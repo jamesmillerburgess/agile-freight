@@ -9,6 +9,7 @@ import '../../ui/layouts/customer';
 import '../../ui/layouts/quotes';
 import '../../ui/layouts/rates';
 import '../../ui/layouts/user-profile';
+import '../../ui/layouts/sign-in';
 
 import '../../ui/components/customer-list-item';
 
