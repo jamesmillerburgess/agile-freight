@@ -1,11 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Customers } from '../../api/customers/customers';
 import { Quotes } from '../../api/quotes/quotes';
+import { Jobs } from '../../api/jobs/jobs';
 
 // if the database is empty on server start, create some sample data.
 Meteor.startup(() => {
   // Customers.remove({});
   // Quotes.remove({});
+  // Jobs.remove({});
   if (Customers.find().count() === 0) {
     const customerFixtures = [
       {
@@ -65,5 +67,28 @@ Meteor.startup(() => {
       },
     ];
     _.each(quoteFixtures, doc => Quotes.insert(doc));
+    const jobFixtures = [
+      {
+        jobCode: 'J201938',
+        shipper: 'Alstom Power Boilers Limited',
+        consignee: 'Presspart Manufacturing Ltd',
+        incoterm: 'FOB',
+        contract: 'MyContract',
+        carrierBookingConfirmationFile: 'CBC-12392.pdf',
+        bookingReference: 'ABC1234',
+        mblNumber: 'MAEU12345',
+        mblType: 'Waybill',
+        mblTerms: 'Prepaid',
+        seaquestType: 'Original',
+        numOriginals: 3,
+        detention: '',
+        demurrage: '',
+        originHaulageBy: 'Customer',
+        originCustomsBy: 'Customer',
+        destinationHaulageBy: '',
+        destinationCustomsBy: '',
+      },
+    ];
+    _.each(jobFixtures, doc => Jobs.insert(doc));
   }
 });

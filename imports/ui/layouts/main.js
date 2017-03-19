@@ -24,6 +24,13 @@ Template.main.helpers({
         quotes: Quotes.find({ customerId: id }),
       };
     }
+
+    if (routeName === 'Job') {
+      const id = FlowRouter.getParam('_id');
+      return {
+        job: Jobs.findOne(id),
+      };
+    }
     return null;
   },
 });

@@ -4,6 +4,7 @@ import './job.html';
 import './job.less';
 
 Template.job.onCreated(function onCreated() {
+  console.log(this.data);
   this.data.shipper = 'Alstom Power Boilers Limited';
   this.data.consignee = 'Presspart Manufacturing Ltd';
   this.data.incoterm = 'FOB';
