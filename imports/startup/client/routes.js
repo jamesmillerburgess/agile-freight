@@ -83,7 +83,7 @@ FlowRouter.route('/quotes', {
 /**
  * JOBS
  */
-FlowRouter.route('/job/:jobNumber', {
+FlowRouter.route('/job/:_id', {
   name: 'Job',
   action() {
     BlazeLayout.render('appBody', { content: 'job' });

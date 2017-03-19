@@ -34,21 +34,21 @@
                 RECEIVED
               </div>
               <div class="origin col-3">
-                {{> stakeholder label="Shipper" value=shipper}}
+                {{> stakeholder label="Shipper" value=job.shipper}}
                 <div class="field">
                   <div class="label">Export Office</div>
                   <span class="value">Bangalore</span>
                 </div>
               </div>
               <div class="destination col-3">
-                {{> stakeholder label="Consignee" value=consignee}}
+                {{> stakeholder label="Consignee" value=job.consignee}}
                 <div class="field">
                   <div class="label">Import Office</div>
                   <span class="value">Thurrock</span>
                 </div>
               </div>
               <div class="terms col-3">
-                {{> Dropdown label="Incoterm" value=incoterm options=incotermOptions}}
+                {{> Dropdown label="Incoterm" value=job.incoterm options=incotermOptions}}
               </div>
             </div>
             <div class="row">
@@ -390,9 +390,9 @@ Shipment Total
                         <!--</div>-->
                         <!--</div>-->
                         <div class="form-group-fields">
-                          {{> freeTextField label="Contract / Spot Rate" value=contract}}
-                          {{> freeTextField label="Booking Reference" value=bookingReference}}
-                          {{> fileField label="Carrier Booking Confirmation" value=carrierBookingConfirmationFile}}
+                          {{> freeTextField label="Contract / Spot Rate" value=job.contract}}
+                          {{> freeTextField label="Booking Reference" value=job.bookingReference}}
+                          {{> fileField label="Carrier Booking Confirmation" value=job.carrierBookingConfirmationFile}}
                           {{> fileField label="Booking Confirmation to Customer" value=""}}
                         </div>
                         <div id="booking-alerts"></div>
@@ -430,7 +430,7 @@ Shipment Total
                           </div>
                         </div>
                         <div class="form-group-fields">
-                          {{> Dropdown label="Origin Haulage By" value=originHaulageBy options=originHaulageByOptions}}
+                          {{> Dropdown label="Origin Haulage By" value=job.originHaulageBy options=originHaulageByOptions}}
                         </div>
                         <div id="collection-alerts"></div>
                       </div>
@@ -464,7 +464,7 @@ Shipment Total
                           </div>
                         </div>
                         <div class="form-group-fields">
-                          {{> Dropdown label="Origin Customs By" value=originCustomsBy options=originCustomsByOptions}}
+                          {{> Dropdown label="Origin Customs By" value=job.originCustomsBy options=originCustomsByOptions}}
                         </div>
                         <div id="origin-customs-alerts">
                         </div>
@@ -508,9 +508,9 @@ Shipment Total
                           </div>
                         </div>
                         <div class="form-group-fields">
-                          {{> Dropdown label="MBL Type" value=mblType options=mblTypeOptions}}
-                          {{> Dropdown label="MBL Terms" value=mblTerms options=mblTermsOptions}}
-                          {{> freeTextField label="MBL Number" value=mblNumber}}
+                          {{> Dropdown label="MBL Type" value=job.mblType options=mblTypeOptions}}
+                          {{> Dropdown label="MBL Terms" value=job.mblTerms options=mblTermsOptions}}
+                          {{> freeTextField label="MBL Number" value=job.mblNumber}}
                         </div>
                         <div id="mbl-alerts">
                         </div>
@@ -554,8 +554,8 @@ Shipment Total
                           </div>
                         </div>
                         <div class="form-group-fields">
-                          {{> Dropdown label="Seaquest Type" value=seaquestType options=seaquestTypeOptions}}
-                          {{> freeTextField label="Number of Originals" value=numOriginals}}
+                          {{> Dropdown label="Seaquest Type" value=job.seaquestType options=seaquestTypeOptions}}
+                          {{> freeTextField label="Number of Originals" value=job.numOriginals}}
                         </div>
                         <div id="seaquest-alerts"></div>
                       </div>
@@ -592,7 +592,7 @@ Shipment Total
                           </div>
                         </div>
                         <div class="form-group-fields">
-                          {{> Dropdown label="Destination Customs By" value=destinationCustomsBy options=destinationCustomsByOptions}}
+                          {{> Dropdown label="Destination Customs By" value=job.destinationCustomsBy options=destinationCustomsByOptions}}
                         </div>
                         <div id="destination-customs-alerts">
                         </div>
@@ -633,8 +633,8 @@ Shipment Total
                           </div>
                         </div>
                         <div class="form-group-fields">
-                          {{> freeTextField label="Detention" value=detention}}
-                          {{> freeTextField label="Demurrage" value=demurrage}}
+                          {{> freeTextField label="Detention" value=job.detention}}
+                          {{> freeTextField label="Demurrage" value=job.demurrage}}
                         </div>
                         <div id="cargo-release-alerts"></div>
                       </div>
@@ -671,7 +671,7 @@ Shipment Total
                           </div>
                         </div>
                         <div class="form-group-fields">
-                          {{> Dropdown label="Destination Haulage By" value=destinationHaulageBy options=destinationHaulageByOptions}}
+                          {{> Dropdown label="Destination Haulage By" value=job.destinationHaulageBy options=destinationHaulageByOptions}}
                         </div>
                         <div id="delivery-alerts"></div>
                       </div>
