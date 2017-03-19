@@ -4,10 +4,6 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import './quote-list-item.html';
 import './quote-list-item.less';
 
-Template.quoteListItem.onCreated(function onCreated() {
-  //console.log(this.data);
-});
-
 Template.quoteListItem.helpers({
   modeIconClass() {
     if (this.mode === 'Air') {
@@ -19,6 +15,7 @@ Template.quoteListItem.helpers({
     if (this.mode === 'Road') {
       return 'fa-truck';
     }
+    return '';
   },
 });
 
