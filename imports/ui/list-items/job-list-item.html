@@ -1,0 +1,23 @@
+<template name="jobListItem">
+  <a class="card">
+    <div class="card-inner">
+      <div class="icon-container hidden-md-down">
+        <div class="icon fa fa-fw fa-ship"></div>
+      </div>
+      <div class="card-content container">
+        <div class="row">
+          <div class="col-6">
+            <b>{{jobCode}}</b><br/>
+            {{status}}<br/>
+            {{movementType}}
+          </div>
+          <div class="col-6">
+            {{totalTEU}} TEU<br/>
+            <i class="fa fa-link"></i>{{quoteCode}}<br/>
+            {{netRevenue}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+</template>

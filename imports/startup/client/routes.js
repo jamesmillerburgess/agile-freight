@@ -14,6 +14,7 @@ import '../../ui/layouts/sign-in';
 
 import '../../ui/list-items/customer-list-item';
 import '../../ui/list-items/quote-list-item';
+import '../../ui/list-items/job-list-item';
 
 import '../../ui/layouts/new-quote';
 import '../../ui/layouts/get-rates';

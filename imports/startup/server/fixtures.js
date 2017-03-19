@@ -70,9 +70,15 @@ Meteor.startup(() => {
     const jobFixtures = [
       {
         jobCode: 'J201938',
+        status: 'Received',
+        movementType: 'Door to CY', // TODO: Autocalculate in template helper
+        quoteCode: 'Q571559',
+        netRevenue: '3,291 INR',
         shipper: 'Alstom Power Boilers Limited',
+        shipperId: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
         consignee: 'Presspart Manufacturing Ltd',
         incoterm: 'FOB',
+        cargo: {},
         contract: 'MyContract',
         carrierBookingConfirmationFile: 'CBC-12392.pdf',
         bookingReference: 'ABC1234',

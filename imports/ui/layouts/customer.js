@@ -13,4 +13,7 @@ Template.customer.helpers({
   quotes() {
     return this.quotes;
   },
+  jobs() {
+    return this.jobs;
+  },
 });

@@ -63,27 +63,9 @@
         <h2>Jobs</h2>
         <button class="focis-button new-job-button">New Job</button>
       </div>
-      <a class="card" href="/job/1">
-        <div class="card-inner">
-          <div class="icon-container hidden-md-down">
-            <div class="icon fa fa-fw fa-ship"></div>
-          </div>
-          <div class="card-content container">
-            <div class="row">
-              <div class="col-6">
-                <b>J201938</b><br/>
-                Received<br/>
-                Door to CY
-              </div>
-              <div class="col-6">
-                4 TEU<br/>
-                <i class="fa fa-link"></i>Q571559<br/>
-                +3,291 INR
-              </div>
-            </div>
-          </div>
-        </div>
-      </a>
+      {{#each job in jobs}}
+        {{> jobListItem job}}
+      {{/each}}
       <div class="list-title">
         <button class="btn focis-button">Show Inactive Jobs</button>
       </div>
