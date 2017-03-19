@@ -25,7 +25,7 @@ Template.main.helpers({
       return {
         customer: Customers.findOne(id),
         quotes: Quotes.find({ customerId: id }),
-        jobs: Jobs.find(),
+        jobs: Jobs.find({ shipperId: id }),
       };
     }
 
