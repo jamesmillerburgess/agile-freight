@@ -2,23 +2,22 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
 // Import to load templates
-import '../../ui/layouts/app-body';
-import '../../ui/layouts/main';
+import '../../ui/app-core/app-body';
+import '../../ui/app-core/main';
 
-import '../../ui/layouts/customers';
-import '../../ui/layouts/customer';
-import '../../ui/layouts/quotes';
-import '../../ui/layouts/rates';
-import '../../ui/layouts/user-profile';
-import '../../ui/layouts/sign-in';
+import '../../ui/list-pages/customers';
+import '../../ui/object-view-pages/customer';
+import '../../ui/list-pages/quotes';
+import '../../ui/list-pages/rates';
+import '../../ui/object-view-pages/user-profile';
+import '../../ui/app-core/sign-in';
 
 import '../../ui/list-items/customer-list-item';
 import '../../ui/list-items/quote-list-item';
 import '../../ui/list-items/job-list-item';
 
-import '../../ui/layouts/new-quote';
-import '../../ui/layouts/get-rates';
-import '../../ui/layouts/job';
+import '../../ui/object-creation-pages/new-quote';
+import '../../ui/object-view-pages/job';
 import '../../ui/components/input';
 import '../../ui/components/free-text-field';
 import '../../ui/components/file-field';
