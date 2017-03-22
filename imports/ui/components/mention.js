@@ -51,8 +51,9 @@ Template.mention.events({
   },
   'click #mention-button a': function clickMentionLinkHandler(event) {
     event.preventDefault();
-    $('.latest-updates-input')[0].value = `@${event.target.name} ${$('.latest-updates-input')[0].value}`;
-    $('.latest-updates-input').focus();
+    const input = $('.latest-updates-input');
+    input[0].value = `@${event.target.name} ${input[0].value}`;
+    input.focus();
   },
 });
 
@@ -84,7 +85,8 @@ Template.mention.events({
 // const completeMention = function completeMention(target) {
 //   const idSearch = target.data().idSearch;
 //   // Replace query with the first result
-//   const newVal = `${target.val().slice(0, idSearch.startPosition) + idSearch.results[0].id} ${target.val().slice(idSearch.startPosition + idSearch.query.length)}`;
+//   const newVal = `${target.val().slice(0, idSearch.startPosition) + idSearch.results[0].id}
+// ${target.val().slice(idSearch.startPosition + idSearch.query.length)}`;
 //   target.val(newVal);
 //   idSearch.isSearching = false;
 //
@@ -154,7 +156,8 @@ Template.mention.events({
 //     }
 //
 //     if (cursorPosition > 1) {
-//       if (newValue.slice(cursorPosition - lengthDiff - 2, cursorPosition - lengthDiff) !== ' @') {
+//       if (newValue.slice(cursorPosition - lengthDiff - 2,
+//                          cursorPosition - lengthDiff) !== ' @') {
 //         idSearch.isSearching = false;
 //         return;
 //       }
@@ -213,7 +216,10 @@ Template.mention.events({
 //   target.parent().children('ul').append($('<li>').append($('<a>').append('Mention')));
 //   target.parent().children('ul').append($('<li role="separator" class="divider">'));
 //   for (let i = 0; i < results.length; i += 1)
-//     target.parent().children('ul').append($('<li>').append($('<a>').attr('href', '#').append(results[i].name + " - " + results[i].id)));
+//     target.parent().children('ul')
+//                    .append($('<li>')
+//                    .append($('<a>').attr('href', '#')
+//                    .append(results[i].name + " - " + results[i].id)));
 //   if (results.length !== 0) {
 //     turnDropdownOn(target);
 //   } else {
