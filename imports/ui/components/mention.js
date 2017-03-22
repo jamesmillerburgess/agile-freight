@@ -5,7 +5,7 @@ import './mention.html';
 Template.mention.onRendered(function onRendered() {
   const elem = this.find('textarea');
   elem.style.height = '1px';
-  elem.style.height = `${elem.scrollHeight} px`;
+  elem.style.height = `${elem.scrollHeight}px`;
   $(elem).data({
     latestValue: elem.value,
     idSearch: {
