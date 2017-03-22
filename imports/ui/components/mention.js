@@ -18,10 +18,9 @@ Template.mention.onRendered(function onRendered() {
 
 Template.mention.events({
   'input textarea': function inputTextareaHandler(event) {
-    // const textarea = event.target;
-    console.log(event);
-    event.target.style.height = '1px';
-    event.target.style.height = `${event.target.scrollHeight}px`;
+    const textarea = event.target;
+    textarea.style.height = '1px';
+    textarea.style.height = `${textarea.scrollHeight}px`;
     // handleInput(event, $(event.target));
   },
   'keydown textarea': function keydownTextareaHandler(event) {
@@ -36,19 +35,20 @@ Template.mention.events({
         const listItem = `<div class="latest-update-list-item"><div class="list-item-profile-pic"><a class="user-id" href="#"><img class="profile-pic" src="./lib/jburgess%20profile%20pic.png"></a></div><div class="list-item-content"><a class="user-id" href=""> jburgess</a> left a note : <div class="quote">${note}</div></div></div>`;
         $('.latest-update-list').prepend(listItem);
       }
-      event.target.value = '';
-      event.target.style.height = '1px';
-      event.target.style.height = event.target.scrollHeight + 'px';
+      const textarea = event.target;
+      textarea.value = '';
+      textarea.style.height = '1px';
+      textarea.style.height = `${textarea.scrollHeight}px`;
     }
   },
-  'click #mention-button a'(event) {
+  'click #mention-button a': function clickMentionLinkHandler(event) {
     event.preventDefault();
-    $('.latest-updates-input')[0].value = '@'+event.target.name+' '+$('.latest-updates-input')[0].value;
+    $('.latest-updates-input')[0].value = `@${event.target.name} ${$('.latest-updates-input')[0].value}`;
     $('.latest-updates-input').focus();
   },
 });
 
-var users = [
+const users = [
   { name: 'James Burgess', id: 'jburgess' },
   { name: 'Ashwath Kulkarni', id: 'akulkarni' },
   { name: 'Praveen Arya Kumar', id: 'pnkumar' },
@@ -61,21 +61,19 @@ var users = [
   { name: 'Siva Kumar', id: 'skumar' },
 ];
 
-var completeMention = function (target) {
+function completeMention(target) {
   // Replace query with the first result
-  var newVal = target.val().slice(0, target.data().idSearch.startPosition)
-    + target.data().idSearch.results[0].id + " "
-    + target.val().slice(target.data().idSearch.startPosition + target.data().idSearch.query.length);
+  const newVal = `${target.val().slice(0, target.data().idSearch.startPosition) + target.data().idSearch.results[0].id} ${target.val().slice(target.data().idSearch.startPosition + target.data().idSearch.query.length)}`;
   target.val(newVal);
   target.data().idSearch.isSearching = false;
 
   //TODO: Set cursor position
-};
+}
 
-var handleKeydown = function (event, target) {
+function handleKeydown(event, target) {
 
   // Detect the shift button
-  if (event.which == 16)
+  if (event.which === 16)
     shifted = true;
 
   // Tab should complete selection
@@ -94,7 +92,7 @@ var handleKeydown = function (event, target) {
   // '@' should start a query
   if (event.which == 50 && shifted)
     startNewQuery(target, null, target.getCursorPosition() + 1);
-};
+}
 
 var startNewQuery = function (target, query, startPosition) {
   target.data().idSearch = {
