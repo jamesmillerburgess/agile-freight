@@ -1,35 +1,38 @@
+import { Template } from 'meteor/templating';
+
 import './mention.html';
 
-Template.Mention.onRendered(function onRendered() {
+Template.mention.onRendered(function onRendered() {
   const elem = this.find('textarea');
   elem.style.height = '1px';
-  elem.style.height = elem.scrollHeight + 'px';
+  elem.style.height = `${elem.scrollHeight} px`;
   $(elem).data({
     latestValue: elem.value,
     idSearch: {
       isSearching: false,
       query: '',
-      startPosition: $(elem).getCursorPosition()
-    }
+      startPosition: $(elem).getCursorPosition(),
+    },
   });
 });
 
-Template.Mention.events({
-  'input textarea'(event) {
-    event.target.style.height = '1px';
-    event.target.style.height = event.target.scrollHeight + 'px';
-    //handleInput(event, $(event.target));
+Template.mention.events({
+  'input textarea': function inputTextareaHandler(event) {
+    const textarea = event.target;
+    textarea.style.height = '1px';
+    textarea.style.height = `${textarea.scrollHeight}px`;
+    // handleInput(event, $(event.target));
   },
-  'keydown textarea'(event) {
+  'keydown textarea': function keydownTextareaHandler(event) {
     if (event.key === 'Enter') {
       event.preventDefault();
-      var note = event.target.value;
+      const note = event.target.value;
       if (note.trim()) {
         // TODO: Regex to bold/hyperlink any mentions
         // TODO: Strip out or display HTML tags
         // TODO: Include whitespace
 
-        var listItem = '<div class="latest-update-list-item"><div class="list-item-profile-pic"><a class="user-id" href="#"><img class="profile-pic" src="./lib/jburgess%20profile%20pic.png"></a></div><div class="list-item-content"><a class="user-id" href=""> jburgess</a> left a note : <div class="quote">'+note+'</div></div></div>'
+        const listItem = `<div class="latest-update-list-item"><div class="list-item-profile-pic"><a class="user-id" href="#"><img class="profile-pic" src="./lib/jburgess%20profile%20pic.png"></a></div><div class="list-item-content"><a class="user-id" href=""> jburgess</a> left a note : <div class="quote">${note}</div></div></div>`;
         $('.latest-update-list').prepend(listItem);
       }
       event.target.value = '';
@@ -45,16 +48,16 @@ Template.Mention.events({
 });
 
 var users = [
-  {name: "James Burgess", id: "jburgess"},
-  {name: "Ashwath Kulkarni", id: "akulkarni"},
-  {name: "Praveen Arya Kumar", id: "pnkumar"},
-  {name: "Malte Katt", id: "mkatt"},
-  {name: "Janaki Botlaguduru", id: "jbotlaguduru"},
-  {name: "Rushabh Shah", id: "rshah"},
-  {name: "Tapan Shah", id: "tashah"},
-  {name: "Phanikumar Sripada", id: "psripada"},
-  {name: "Rexsebastian Chandru", id: "rchandru"},
-  {name: "Siva Kumar", id: "skumar"}
+  { name: 'James Burgess', id: 'jburgess' },
+  { name: 'Ashwath Kulkarni', id: 'akulkarni' },
+  { name: 'Praveen Arya Kumar', id: 'pnkumar' },
+  { name: 'Malte Katt', id: 'mkatt' },
+  { name: 'Janaki Botlaguduru', id: 'jbotlaguduru' },
+  { name: 'Rushabh Shah', id: 'rshah' },
+  { name: 'Tapan Shah', id: 'tashah' },
+  { name: 'Phanikumar Sripada', id: 'psripada' },
+  { name: 'Rexsebastian Chandru', id: 'rchandru' },
+  { name: 'Siva Kumar', id: 'skumar' },
 ];
 
 var completeMention = function (target) {

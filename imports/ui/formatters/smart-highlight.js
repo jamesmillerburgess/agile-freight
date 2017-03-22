@@ -7,9 +7,9 @@ Template.registerHelper('formatText', (query) => {
 
   // Check the context and force a string
   if (!context) {
-    return;
+    return '';
   }
-  let formattedText = context + '';
+  let formattedText = `${context}`;
 
   // Get the coordinate pairs of the string that need styling applied
   const pairs = [];
@@ -17,9 +17,10 @@ Template.registerHelper('formatText', (query) => {
   for (let t = 0; t < searchTokens.length; t += 1) {
     if (searchTokens[t]) {
       const regex = new RegExp(searchTokens[t], 'gi');
-      let result;
-      while ((result = regex.exec(formattedText)) !== null) {
+      let result = regex.exec(formattedText);
+      while (result !== null) {
         pairs.push([result.index, result.index + searchTokens[t].length]);
+        result = regex.exec(formattedText);
       }
     }
   }

@@ -21,16 +21,19 @@ Template.stakeholder.onRendered(function onRendered() {
 });
 
 Template.stakeholder.helpers({
-  getSearch: function getSearch() {
-    this.search.get();
+  getSearch() {
+    if (this.search) {
+      return this.search.get();
+    }
+    return '';
   },
-  addressQuery: function addressQuery() {
+  addressQuery() {
     return {
       context: this.options[0].address,
       search: this.search.get(),
     };
   },
-  propertiesQuery: function propertiesQuery() {
+  propertiesQuery() {
     return {
       context: this.options[0].properties,
       search: this.search.get(),
@@ -44,7 +47,7 @@ Template.stakeholder.events({
     input.value = $(event.target).find('.value')[0].innerText;
     input.select();
   },
-  'input .dropdown-filter' (event) {
+  'input .dropdown-filter': function inputDropdownFilterHandler(event) {
     this.search.set(event.target.value);
   },
 });

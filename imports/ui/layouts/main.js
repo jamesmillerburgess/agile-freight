@@ -12,6 +12,8 @@ Template.main.onCreated(function onCreated() {
   this.subscribe('branch.active');
 });
 
+// TODO: Filter content by branch/access level
+// TODO: Deal with opening on non-cached objects
 Template.main.helpers({
   context() {
     const routeName = FlowRouter.getRouteName();

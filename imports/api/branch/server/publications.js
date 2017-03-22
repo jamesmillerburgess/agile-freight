@@ -5,7 +5,8 @@ import { Jobs } from '../../jobs/jobs';
 
 Meteor.publish('branch.active', function publishBranchActive() {
   const cursors = [];
-  if (this.userId /*&& this.userId.branch*/) {
+  // if (this.userId && this.userId.branch) {
+  if (this.userId) {
     // const branch = this.userId.branch;
     // cursors.push(Customers.find({ branch, active: true }));
     // cursors.push(Quotes.find({ branch, active: true }));
