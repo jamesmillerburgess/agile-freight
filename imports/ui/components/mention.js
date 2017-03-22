@@ -71,13 +71,12 @@ function completeMention(target) {
 }
 
 function handleKeydown(event, target) {
-
   // Detect the shift button
   if (event.which === 16)
     shifted = true;
 
   // Tab should complete selection
-  if (event.which == 9) {
+  if (event.which === 9) {
     if (target.data().idSearch.isSearching && target.data().idSearch.results.length != 0) {
       completeMention(target);
       turnDropdownOff(target);
@@ -86,11 +85,11 @@ function handleKeydown(event, target) {
   }
 
   // Space should make the query stop
-  if (event.which == 32)
+  if (event.which === 32)
     target.data().idSearch.isSearching = false;
 
   // '@' should start a query
-  if (event.which == 50 && shifted)
+  if (event.which === 50 && shifted)
     startNewQuery(target, null, target.getCursorPosition() + 1);
 }
 
@@ -99,12 +98,12 @@ var startNewQuery = function (target, query, startPosition) {
     isSearching: true,
     query: query,
     startPosition: startPosition,
-    results: []
+    results: [],
   }
 };
 
 var handleKeyup = function (event, target) {
-  if (event.which == 16)
+  if (event.which === 16)
     shifted = false;
 };
 
@@ -121,7 +120,7 @@ var updateQuery = function (event, target) {
   // TODO: Handle letter entered after existing @
   if (!isSearching) {
     var cursorPosition = target.getCursorPosition();
-    if (cursorPosition == 1) {
+    if (cursorPosition === 1) {
       if (newValue.slice(cursorPosition - lengthDiff - 1, cursorPosition - lengthDiff) !== '@') {
         idSearch.isSearching = false;
         return;

@@ -22,7 +22,5 @@ coursierprive:tether
 less@2.7.9
 kadira:flow-router
 kadira:blaze-layout
-session@1.1.7
-aldeed:simple-schema
 accounts-password
 useraccounts:bootstrap
