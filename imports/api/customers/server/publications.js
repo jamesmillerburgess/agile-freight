@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Customers } from '../customers';
-
 import { Quotes } from '../../quotes/quotes';
 
 Meteor.publish('customers.single', (_id) => {
