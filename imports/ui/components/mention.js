@@ -18,7 +18,8 @@ Template.mention.onRendered(function onRendered() {
 
 Template.mention.events({
   'input textarea': function inputTextareaHandler(event) {
-    const textarea = event.target;
+    // const textarea = event.target;
+    console.log(event);
     event.target.style.height = '1px';
     event.target.style.height = `${event.target.scrollHeight}px`;
     // handleInput(event, $(event.target));
