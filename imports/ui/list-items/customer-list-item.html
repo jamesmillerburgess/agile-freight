@@ -14,7 +14,7 @@
           </div>
           <div class="col-6">
             <span class="customer-industry">Pharmaceuticals</span><br/>
-            <span class="customer-credit">{{customer.credit.used}} / {{customer.credit.total}} {{customer.credit.currency}} credit</span><br/>
+            <span class="customer-credit">{{currencyFormat customer.credit.used}} / {{currencyFormat customer.credit.total}} {{customer.credit.currency}} credit</span><br/>
             <div class="progress">
               <div class="progress-bar" role="progressbar" style="width: {{creditPercent}}; height: 20px;" aria-valuenow="25"
                    aria-valuemin="0" aria-valuemax="100"></div>

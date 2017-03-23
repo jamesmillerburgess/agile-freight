@@ -28,6 +28,7 @@ import '../../ui/components/stakeholder';
 import '../../ui/components/user-id';
 import '../../ui/formatters/smart-highlight';
 import '../../ui/formatters/date-format';
+import '../../ui/formatters/currency-format';
 
 BlazeLayout.setRoot('body');
 
