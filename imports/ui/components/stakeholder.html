@@ -7,16 +7,18 @@
       </div>
       <div class="dropdown-menu stakeholder-dropdown" aria-labelledby="dropdownMenuButton">
         <input class="dropdown-filter" type="text">
-        {{#each option in options}}
-          <a href="#" class="dropdown-item stakeholder row">
-            <div class="stakeholder-name-address">
-              <pre>{{{formatText addressQuery}}}</pre>
-            </div>
-            <div class="stakeholder-properties">
-              <pre>{{{formatText propertiesQuery}}}</pre>
-            </div>
-          </a>
-        {{/each}}
+        <div class="stakeholder-results">
+          {{#each option in options}}
+            <a href="#" class="dropdown-item stakeholder row">
+              <div class="stakeholder-name-address">
+                <pre>{{{formatText addressQuery}}}</pre>
+              </div>
+              <div class="stakeholder-properties">
+                <pre>{{{formatText propertiesQuery}}}</pre>
+              </div>
+            </a>
+          {{/each}}
+        </div>
       </div>
     </div>
   </div>
