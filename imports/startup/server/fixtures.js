@@ -5,14 +5,15 @@ import { Jobs } from '../../api/jobs/jobs';
 
 // if the database is empty on server start, create some sample data.
 Meteor.startup(() => {
-  Customers.remove({});
-  Customers._ensureIndex({ search: 1 });
-  Quotes.remove({});
-  Quotes._ensureIndex({ search: 1 });
-  Jobs.remove({});
-  Jobs._ensureIndex({ search: 1 });
 
   if (Customers.find().count() === 0) {
+    Customers.remove({});
+    Customers._ensureIndex({ search: 1 });
+    Quotes.remove({});
+    Quotes._ensureIndex({ search: 1 });
+    Jobs.remove({});
+    Jobs._ensureIndex({ search: 1 });
+
     const customerFixtures = [
       {
         customerCode: '1',
@@ -75,7 +76,7 @@ Australia`,
       },
       {
         quoteCode: '3',
-        customerId: Customers.findOne({ name: 'AIA Engineering Limited' }, {})._id,
+        customerId: Customers.findOne({ name: 'Cellmid Limited' }, {})._id,
         mode: 'Air',
         type: 'Single Route',
         rateType: 'Rated',
