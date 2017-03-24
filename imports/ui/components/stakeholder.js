@@ -1,6 +1,8 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
+import { Customers } from '../../api/customers/customers';
+
 import './stakeholder.html';
 import './stakeholder.less';
 
@@ -44,6 +46,12 @@ Template.stakeholder.helpers({
       context: this.options[0].properties,
       search: this.search.get(),
     };
+  },
+  results() {
+    return Customers.find(
+      { search: { $regex: this.search.get(), $options: 'gi' } },
+      { limit: 10 },
+    );
   },
 });
 

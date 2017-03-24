@@ -8,13 +8,10 @@
       <div class="dropdown-menu stakeholder-dropdown" aria-labelledby="dropdownMenuButton">
         <input class="dropdown-filter" type="text">
         <div class="stakeholder-results">
-          {{#each option in options}}
+          {{#each result in results}}
             <a href="#" class="dropdown-item stakeholder row">
               <div class="stakeholder-name-address">
-                <pre>{{{formatText addressQuery}}}</pre>
-              </div>
-              <div class="stakeholder-properties">
-                <pre>{{{formatText propertiesQuery}}}</pre>
+                <pre>{{{formatText result.search getSearch}}}</pre>
               </div>
             </a>
           {{/each}}

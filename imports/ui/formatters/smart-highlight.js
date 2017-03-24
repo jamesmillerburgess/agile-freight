@@ -1,8 +1,8 @@
 import { Template } from 'meteor/templating';
 
-Template.registerHelper('formatText', (query) => {
-  const context = query.context;
-  const search = query.search;
+Template.registerHelper('formatText', (context, search) => {
+  // const context = query.context;
+  // const search = query.search;
 
   // Check the context and force a string
   if (!context) {
