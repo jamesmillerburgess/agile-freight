@@ -7,8 +7,13 @@ import './stakeholder.less';
 Template.stakeholder.onCreated(function onCreated() {
   this.data.options = [
     {
-      address: 'Alstom Power Boilers Limited<br/>Jubilee Hills<br/>Hyderabad, Telangana, 500033<br/>India',
-      properties: '<br/>Customer – Existing<br/>Primary Address<br/>INHYD',
+      address: `Alstom Power Boilers Limited
+Jubilee Hills
+Hyderabad, Telangana, 500033
+India`,
+      properties: `Customer – Existing
+Primary Address
+INHYD`,
     },
   ];
   this.data.search = new ReactiveVar(this.data.value);
