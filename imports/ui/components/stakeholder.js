@@ -11,7 +11,8 @@ Template.stakeholder.onCreated(function onCreated() {
 Jubilee Hills
 Hyderabad, Telangana, 500033
 India`,
-      properties: `Customer – Existing
+      properties: `
+Customer – Existing
 Primary Address
 INHYD`,
     },
