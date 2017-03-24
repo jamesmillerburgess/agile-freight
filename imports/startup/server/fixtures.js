@@ -21,12 +21,6 @@ Meteor.startup(() => {
         address: `Jubilee Hills
 Hyderabad, Telangana, 500033
 India`,
-        search: `Alstom Power Boilers Limited
-Jubilee Hills
-Hyderabad, Telangana, 500033
-India
-Customer - Existing
-INHYD`,
         properties: `Customer - Existing
 INHYD`,
         activeQuotes: ['1', '2'],
@@ -43,12 +37,6 @@ INHYD`,
         address: `Suite 1802, Level 18
 Sydney, New South Wales 2000
 Australia`,
-        search: `Cellmid Limited
-Suite 1802, Level 18
-Sydney, New South Wales 2000
-Australia
-Customer - Existing
-AUSYD`,
         properties: `Customer - Existing
 AUSYD`,
         activeQuotes: ['3'],
@@ -66,13 +54,6 @@ AUSYD`,
 Blackburn, Lancashire
 BB1 5RF
 United Kingdom`,
-        search: `Presspart Manufacturing Ltd.
-Whitebirk Ind Est.
-Blackburn, Lancashire
-BB1 5RF
-United Kingdom
-Customer - Existing
-GBLAN`,
         properties: `Customer - Existing
 GBLAN`,
         activeQuotes: ['3'],
@@ -84,7 +65,10 @@ GBLAN`,
         },
       },
     ];
-    _.each(customerFixtures, doc => Customers.insert(doc));
+    _.each(customerFixtures, (doc) => {
+      doc.search = `${doc.name} ${doc.address} ${doc.properties}`;
+      Customers.insert(doc)
+    });
     const quoteFixtures = [
       {
         quoteCode: 'Q572038',
