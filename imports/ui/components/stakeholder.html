@@ -9,7 +9,7 @@
         <input class="dropdown-filter" type="text">
         <div class="stakeholder-results">
           {{#each result in results}}
-            <a href="#" class="dropdown-item stakeholder row">
+            <a href="#" class="dropdown-item stakeholder row" name={{result.name}}>
               <div class="stakeholder-name-address">
                 <pre>{{{formatText result.search getSearch}}}</pre>
               </div>

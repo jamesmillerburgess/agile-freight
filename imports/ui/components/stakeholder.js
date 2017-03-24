@@ -64,4 +64,9 @@ Template.stakeholder.events({
   'input .dropdown-filter': function inputDropdownFilterHandler(event) {
     this.search.set(event.target.value);
   },
+  'click .dropdown-menu a': function handleClickDropdownMenuA(event) {
+    const newValue = $(event.target).parents('a')[0].name || '';
+    $(event.target).parents('.dropdown').find('.value')[0].innerText = newValue;
+    this.search.set(newValue);
+  },
 });

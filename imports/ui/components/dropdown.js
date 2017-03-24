@@ -1,3 +1,5 @@
+import { Template } from 'meteor/templating';
+
 import './dropdown.html';
 
 Template.Dropdown.onRendered(function onRendered() {
