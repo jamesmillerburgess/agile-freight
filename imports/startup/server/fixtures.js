@@ -5,15 +5,23 @@ import { Jobs } from '../../api/jobs/jobs';
 
 // if the database is empty on server start, create some sample data.
 Meteor.startup(() => {
-  // Customers.remove({});
-  // Quotes.remove({});
-  // Jobs.remove({});
+  Customers.remove({});
+  Customers._ensureIndex({ search: 1 });
+  Quotes.remove({});
+  Quotes._ensureIndex({ search: 1 });
+  Jobs.remove({});
+  Jobs._ensureIndex({ search: 1 });
+
   if (Customers.find().count() === 0) {
     const customerFixtures = [
       {
         customerCode: '1',
         name: 'Alstom Power Boilers Limited',
         address: `Jubilee Hills
+Hyderabad, Telangana, 500033
+India`,
+        search: `Alstom Power Boilers Limited
+Jubilee Hills
 Hyderabad, Telangana, 500033
 India`,
         activeQuotes: ['1', '2'],
@@ -26,11 +34,18 @@ India`,
       },
       {
         customerCode: '2',
-        name: 'AIA Engineering Limited',
+        name: 'Cellmid Limited',
+        address: `Suite 1802, Level 18
+Sydney, New South Wales 2000
+Australia`,
+        search: `Cellmid Limited
+Suite 1802, Level 18
+Sydney, New South Wales 2000
+Australia`,
         activeQuotes: ['3'],
         activeJobs: ['2'],
         credit: {
-          currency: 'INR',
+          currency: 'AUD',
           total: 200000,
           used: 180000,
         },
