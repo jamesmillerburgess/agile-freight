@@ -13,6 +13,9 @@ Meteor.startup(() => {
       {
         customerCode: '1',
         name: 'Alstom Power Boilers Limited',
+        address: `Jubilee Hills
+Hyderabad, Telangana, 500033
+India`,
         activeQuotes: ['1', '2'],
         activeJobs: ['1'],
         credit: {

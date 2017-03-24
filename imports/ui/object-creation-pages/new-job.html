@@ -5,16 +5,38 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Booking – Customer Confirmation</h5>
+          <h5 class="modal-title" id="exampleModalLabel">New Job</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i class="fa fa-fw fa-close"></i>
           </button>
         </div>
         <div class="modal-body">
-          <textarea></textarea>
+          <div class="row">
+            <div class="col-6">
+              {{> stakeholder label="Shipper" value=""}}
+            </div>
+            <div class="col-6">
+              {{> stakeholder label="Consignee" value=""}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3">
+              {{> Dropdown label="Product" value="" options=productOptions}}
+            </div>
+            <div class="col-3">
+              {{> Dropdown label="Incoterm" value="" options=incotermOptions}}
+            </div>
+            <div class="col-3">
+              {{> Dropdown label="Port of Loading" value="unknown" options=productOptions}}
+            </div>
+            <div class="col-3">
+              {{> Dropdown label="Port of Discharge" value="unknown" options=incotermOptions}}
+            </div>
+          </div>
+
         </div>
         <div class="modal-footer">
-          <button type="button" class="focis-button" data-dismiss="modal">Save and Close</button>
+          <button type="button" class="focis-button">Next</button>
         </div>
       </div>
     </div>
