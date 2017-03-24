@@ -50,7 +50,7 @@ Template.stakeholder.helpers({
   results() {
     return Customers.find(
       { search: { $regex: this.search.get(), $options: 'gi' } },
-      { limit: 10 },
+      { limit: 5 },
     );
   },
 });

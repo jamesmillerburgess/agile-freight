@@ -11,7 +11,12 @@
           {{#each result in results}}
             <a href="#" class="dropdown-item stakeholder row" name={{result.name}}>
               <div class="stakeholder-name-address">
-                <pre>{{{formatText result.search getSearch}}}</pre>
+                {{{formatText result.name getSearch}}}<br/>
+                <pre>{{{formatText result.address getSearch}}}</pre>
+              </div>
+              <div class="stakeholder-properties">
+                <br/>
+                <pre>{{{formatText result.properties getSearch}}}</pre>
               </div>
             </a>
           {{/each}}

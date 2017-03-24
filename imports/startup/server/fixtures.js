@@ -24,7 +24,11 @@ India`,
         search: `Alstom Power Boilers Limited
 Jubilee Hills
 Hyderabad, Telangana, 500033
-India`,
+India
+Customer - Existing
+INHYD`,
+        properties: `Customer - Existing
+INHYD`,
         activeQuotes: ['1', '2'],
         activeJobs: ['1'],
         credit: {
@@ -42,7 +46,35 @@ Australia`,
         search: `Cellmid Limited
 Suite 1802, Level 18
 Sydney, New South Wales 2000
-Australia`,
+Australia
+Customer - Existing
+AUSYD`,
+        properties: `Customer - Existing
+AUSYD`,
+        activeQuotes: ['3'],
+        activeJobs: ['2'],
+        credit: {
+          currency: 'AUD',
+          total: 200000,
+          used: 180000,
+        },
+      },
+      {
+        customerCode: '3',
+        name: 'Presspart Manufacturing Ltd.',
+        address: `Whitebirk Ind Est.
+Blackburn, Lancashire
+BB1 5RF
+United Kingdom`,
+        search: `Presspart Manufacturing Ltd.
+Whitebirk Ind Est.
+Blackburn, Lancashire
+BB1 5RF
+United Kingdom
+Customer - Existing
+GBLAN`,
+        properties: `Customer - Existing
+GBLAN`,
         activeQuotes: ['3'],
         activeJobs: ['2'],
         credit: {
