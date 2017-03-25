@@ -5,15 +5,18 @@ import { Jobs } from '../../api/jobs/jobs';
 
 // if the database is empty on server start, create some sample data.
 Meteor.startup(() => {
-
-  if (Customers.find().count() === 0) {
+  console.log(Meteor.settings);
+  if (Meteor.settings.reset) {
     Customers.remove({});
     Customers._ensureIndex({ search: 1 });
     Quotes.remove({});
     Quotes._ensureIndex({ search: 1 });
     Jobs.remove({});
     Jobs._ensureIndex({ search: 1 });
+  }
 
+  if (Meteor.settings.testMode === 'structure' && Customers.find().count() === 0) {
+    console.log('Loading fixtures for structure testing');
     const customerFixtures = [
       {
         customerCode: '1',
@@ -150,5 +153,37 @@ GBLAN`,
       },
     ];
     _.each(jobFixtures, doc => Jobs.insert(doc));
+  }
+
+  if (Meteor.settings.testMode === 'load' && Customers.find().count() === 0) {
+    console.log('Loading fixtures for load testing');
+    const customerFixtures = [];
+    for (let i = 0; i < 10000; i += 1) {
+      customerFixtures.push({
+        customerCode: '1',
+        name: `Alstom Power Boilers Limited ${i}`,
+        address: `Jubilee Hills
+Hyderabad, Telangana, 500033
+India`,
+        search: `Alstom Power Boilers Limited
+Jubilee Hills
+Hyderabad, Telangana, 500033
+India
+Customer - Existing
+INHYD`,
+        properties: `Customer - Existing
+INHYD`,
+        activeQuotes: ['1', '2'],
+        activeJobs: ['1'],
+        credit: {
+          currency: 'INR',
+          total: 119000,
+          used: 24000,
+        },
+      });
+    }
+    console.log('Inserting 10k customers');
+    _.each(customerFixtures, doc => Customers.insert(doc));
+    console.log('Done inserting');
   }
 });

@@ -11,7 +11,7 @@ Meteor.publish('branch.active', function publishBranchActive() {
     // cursors.push(Customers.find({ branch, active: true }));
     // cursors.push(Quotes.find({ branch, active: true }));
     // cursors.push(Jobs.find({ branch, active: true }));
-    cursors.push(Customers.find());
+    cursors.push(Customers.find({}, { limit: 10 }));
     cursors.push(Quotes.find());
     cursors.push(Jobs.find());
   }

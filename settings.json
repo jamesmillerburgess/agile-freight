@@ -1,0 +1,7 @@
+{
+  "reset": true,
+  "testMode": "load",
+  "public": {
+    "hello": "goodbye"
+  }
+}
