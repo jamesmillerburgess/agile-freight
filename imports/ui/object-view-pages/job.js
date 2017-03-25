@@ -1,17 +1,12 @@
 import { Template } from 'meteor/templating';
 
+import { APIGlobals } from '../../api/api-globals';
+
 import './job.html';
 import './job.less';
 
 Template.job.onCreated(function onCreated() {
-  this.data.incotermOptions = ['CFR', 'CIF', 'CIP', 'CPT', 'DAF', 'DAP', 'DAT', 'DDP', 'DDU', 'EXW', 'FAS', 'FCA', 'FOB', ''];
-  this.data.mblTypeOptions = ['Waybill', 'Original', ''];
-  this.data.mblTermsOptions = ['Prepaid', 'Collect', ''];
-  this.data.seaquestTypeOptions = ['Original', 'Express', ''];
-  this.data.originHaulageByOptions = ['Agility', 'Customer', ''];
-  this.data.originCustomsByOptions = ['Agility', 'Customer', ''];
-  this.data.destinationHaulageByOptions = ['Agility', 'Customer', ''];
-  this.data.destinationCustomsByOptions = ['Agility', 'Customer', ''];
+  this.data.APIGlobals = APIGlobals;
 });
 
 Template.job.onRendered(() => $(() => $('[data-toggle="tooltip"]').tooltip()));
