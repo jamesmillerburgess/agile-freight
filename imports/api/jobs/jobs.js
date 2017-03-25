@@ -3,6 +3,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import { Customers } from '../customers/customers';
 import { Offices } from '../offices/offices';
+import { APIGlobals } from '../api-globals';
 
 export const Jobs = new Mongo.Collection('Jobs');
 
@@ -46,7 +47,12 @@ Jobs.schema = new SimpleSchema({
     },
   },
   // TODO: Schemas for the below items
-  incoterm: { type: String, optional: true, defaultValue: '' },
+  incoterm: {
+    type: String,
+    optional: true,
+    defaultValue: '',
+    allowedValues: APIGlobals.incotermOptions,
+  },
   exportOffice: {
     type: Offices.refSchema,
     optional: true,
@@ -65,9 +71,9 @@ Jobs.schema = new SimpleSchema({
       address: '',
     },
   },
-  cargo: { type: Object, optional: true, defaultValue: {}  },
-  routing: { type: Object, optional: true, defaultValue: {}  },
-  operations: { type: Object, optional: true, defaultValue: {}  },
-  accounting: { type: Object, optional: true, defaultValue: {}  },
-  latestUpdates: { type: Object, optional: true, defaultValue: {} }
+  cargo: { type: Object, optional: true, defaultValue: {} },
+  routing: { type: Object, optional: true, defaultValue: {} },
+  operations: { type: Object, optional: true, defaultValue: {} },
+  accounting: { type: Object, optional: true, defaultValue: {} },
+  latestUpdates: { type: Object, optional: true, defaultValue: {} },
 });
