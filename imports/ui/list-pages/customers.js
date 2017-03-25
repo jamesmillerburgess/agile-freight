@@ -7,7 +7,6 @@ import './customers.less';
 
 Template.customers.helpers({
   customers() {
-    console.log('getting customers');
     return Customers.find({}, { limit: 5 });
   },
 });
