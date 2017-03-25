@@ -1,13 +1,6 @@
 import { Template } from 'meteor/templating';
 
-Template.registerHelper('formatText', (context, search) => {
-  // const context = query.context;
-  // const search = query.search;
-
-  // Check the context and force a string
-  if (!context) {
-    return '';
-  }
+Template.registerHelper('formatText', (context = '', search = '') => {
   let formattedText = `${context}`;
 
   // Get the coordinate pairs of the string that need styling applied

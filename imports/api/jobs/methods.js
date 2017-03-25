@@ -1,34 +1,21 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-import { Jobs } from './jobs.js';
-
-const StakeholderRefSchema = new SimpleSchema({
-  id: { type: String, optional: true, defaultValue: '' },
-  name: { type: String, optional: true, defaultValue: '' },
-  address: { type: String, optional: true, defaultValue: '' },
-});
-
-const JobSchema = new SimpleSchema({
-  jobCode: { type: String, optional: true, defaultValue: '' },
-  shipper: { type: StakeholderRefSchema, optional: true },
-  consignee: { type: StakeholderRefSchema, optional: true },
-  // TODO: Schemas for the below items
-  incoterm: { type: String, optional: true, defaultValue: '' },
-  exportOffice: { type: String, optional: true },
-  importOffice: { type: String, optional: true },
-  cargo: { type: Object, optional: true },
-  routing: { type: Object, optional: true },
-  operations: { type: Object, optional: true },
-  accounting: { type: Object, optional: true },
-});
+import { Jobs } from './jobs';
+import { Customers } from '../customers/customers';
 
 Meteor.methods({
   'jobs.new': function jobsNewMethod(options) {
-    check(options, JobSchema);
-    JobSchema.clean(options);
-    Jobs.insert(options);
+    check(options, Jobs.schema);
+    const query = options;
+    if (query.shipper) {
+      query.shipper = Customers.refSchema.clean(query.shipper);
+    }
+    if (query.consignee) {
+      query.consignee = Customers.refSchema.clean(query.consignee);
+    }
+    Jobs.schema.clean(query);
+    Jobs.insert(query);
   },
   'jobs.updateField': function jobsUpdateFieldMethod(jobId, path = '', field, value) {
     // Check the parameters
