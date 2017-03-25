@@ -1,6 +1,6 @@
 {
   "reset": true,
-  "testMode": "load",
+  "testMode": "structure",
   "public": {
     "hello": "goodbye"
   }
