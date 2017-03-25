@@ -1,5 +1,5 @@
 {
-  "reset": false,
+  "reset": true,
   "testMode": "structure",
   "public": {
     "hello": "goodbye"

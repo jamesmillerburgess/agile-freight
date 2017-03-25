@@ -61,7 +61,7 @@
     <div class="jobs-list col-12 col-lg-6">
       <div class="list-title">
         <h2>Jobs</h2>
-        <button class="focis-button new-job-button" data-toggle="modal" data-target="#new-job-modal">New Job</button>
+        <button id="new-job-button" class="focis-button new-job-button">New Job</button>
       </div>
       {{#each job in jobs}}
         {{> jobListItem job}}
