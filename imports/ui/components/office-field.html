@@ -1,12 +1,12 @@
-<template name="stakeholder">
-  <div class="field stakeholder-field">
+<template name="officeField">
+  <div class="field office-field">
     <span class="label">{{label}}</span>
     <div class="dropdown">
       <div class="value-container dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <button class="value" path={{path}}></button>
+        <button class="value" path={{path}}>{{value}}</button>
       </div>
       <div class="dropdown-menu stakeholder-dropdown" aria-labelledby="dropdownMenuButton">
-        <input class="dropdown-filter" type="text">
+        <input class="dropdown-filter" type="text" value={{value}}>
         <div class="stakeholder-results">
           {{#each result in results}}
             <a href="#" class="dropdown-item stakeholder row" name={{result.name}}>

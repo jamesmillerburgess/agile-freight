@@ -34,18 +34,12 @@
                 RECEIVED
               </div>
               <div class="origin col-3">
-                {{> stakeholder label="Shipper" value=job.shipper}}
-                <div class="field">
-                  <div class="label">Export Office</div>
-                  <span class="value">Bangalore</span>
-                </div>
+                {{> stakeholder label="Shipper" value=job.shipper.name update=updateShipper}}
+                {{> officeField label="Export Office" value=job.exportOffice.name}}
               </div>
               <div class="destination col-3">
-                {{> stakeholder label="Consignee" value=job.consignee}}
-                <div class="field">
-                  <div class="label">Import Office</div>
-                  <span class="value">Thurrock</span>
-                </div>
+                {{> stakeholder label="Consignee" value=job.consignee.name}}
+                {{> officeField label="Import Office" value=job.importOffice.name}}
               </div>
               <div class="terms col-3">
                 {{> Dropdown label="Incoterm" value=job.incoterm options=incotermOptions}}

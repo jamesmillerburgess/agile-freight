@@ -13,9 +13,7 @@ Template.customer.helpers({
 });
 
 Template.customer.events({
-  'click #new-job-button': function handleClickNewJobButton(event) {
-    Meteor.call('jobs.new', {
-      shipperId: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
-    });
+  'click #new-job-button': function handleClickNewJobButton() {
+    Meteor.call('jobs.new', { shipper: { id: this.customer._id } });
   },
 });

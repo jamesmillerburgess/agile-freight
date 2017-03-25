@@ -26,8 +26,8 @@ Template.main.helpers({
       const id = FlowRouter.getParam('_id');
       return {
         customer: Customers.findOne(id),
-        quotes: Quotes.find({ customerId: id }),
-        jobs: Jobs.find({ shipperId: id }),
+        quotes: Quotes.find({ 'customer.id': id }),
+        jobs: Jobs.find({ 'shipper.id': id }),
       };
     }
 

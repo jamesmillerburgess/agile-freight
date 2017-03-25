@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Offices } from '../../api/offices/offices';
 import { Customers } from '../../api/customers/customers';
 import { Quotes } from '../../api/quotes/quotes';
 import { Jobs } from '../../api/jobs/jobs';
@@ -7,6 +8,8 @@ import { Jobs } from '../../api/jobs/jobs';
 Meteor.startup(() => {
   console.log(Meteor.settings);
   if (Meteor.settings.reset) {
+    Offices.remove({});
+    Offices._ensureIndex({ search: 1 });
     Customers.remove({});
     Customers._ensureIndex({ search: 1 });
     Quotes.remove({});
@@ -16,7 +19,21 @@ Meteor.startup(() => {
   }
 
   if (Meteor.settings.testMode === 'structure' && Customers.find().count() === 0) {
-    console.log('Loading fixtures for structure testing');
+    const officeFixtures = [
+      {
+        name: 'Bangalore',
+        address: 'India',
+      },
+      {
+        name: 'Thurrock',
+        address: 'United Kingdom',
+      },
+    ];
+    _.each(officeFixtures, (doc) => {
+      const newDoc = doc;
+      newDoc.search = `${doc.name} ${doc.address}`;
+      Offices.insert(newDoc);
+    });
     const customerFixtures = [
       {
         customerCode: '1',
@@ -69,13 +86,17 @@ GBLAN`,
       },
     ];
     _.each(customerFixtures, (doc) => {
-      doc.search = `${doc.name} ${doc.address} ${doc.properties}`;
-      Customers.insert(doc)
+      const newDoc = doc;
+      newDoc.search = `${doc.name} ${doc.address} ${doc.properties}`;
+      Customers.insert(newDoc);
     });
     const quoteFixtures = [
       {
         quoteCode: 'Q572038',
-        customerId: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
+        customer: {
+          id: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
+          name: 'Alstom Power Boilers Limited',
+        },
         mode: 'Air',
         type: 'Single Route',
         rateType: 'Rated',
@@ -85,7 +106,10 @@ GBLAN`,
       },
       {
         quoteCode: 'Q571559',
-        customerId: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
+        customer: {
+          id: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
+          name: 'Alstom Power Boilers Limited',
+        },
         mode: 'Ocean',
         type: 'Route Matrix',
         rateType: 'Rated',
@@ -95,7 +119,10 @@ GBLAN`,
       },
       {
         quoteCode: '3',
-        customerId: Customers.findOne({ name: 'Cellmid Limited' }, {})._id,
+        customer: {
+          id: Customers.findOne({ name: 'Cellmid Limited' }, {})._id,
+          name: 'Cellmid Limited',
+        },
         mode: 'Air',
         type: 'Single Route',
         rateType: 'Rated',
@@ -112,10 +139,27 @@ GBLAN`,
         movementType: 'Door to CY', // TODO: Autocalculate in template helper
         quoteCode: 'Q571559',
         netRevenue: '3,291 INR',
-        shipper: 'Alstom Power Boilers Limited',
-        shipperId: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
-        consignee: 'Presspart Manufacturing Ltd',
+        shipper: {
+          id: Customers.findOne({ name: customerFixtures[0].name }, {})._id,
+          name: customerFixtures[0].name,
+          address: customerFixtures[0].address,
+        },
+        consignee: {
+          id: Customers.findOne({ name: customerFixtures[1].name }, {})._id,
+          name: customerFixtures[1].name,
+          address: customerFixtures[1].address,
+        },
         incoterm: 'FOB',
+        exportOffice: {
+          id: Offices.findOne({ name: officeFixtures[0].name }, {})._id,
+          name: officeFixtures[0].name,
+          address: officeFixtures[0].address,
+        },
+        importOffice: {
+          id: Offices.findOne({ name: officeFixtures[1].name }, {})._id,
+          name: officeFixtures[1].name,
+          address: officeFixtures[1].address,
+        },
         cargo: {},
         routing: {},
         operations: {},

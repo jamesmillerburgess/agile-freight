@@ -1,26 +1,33 @@
 import { Meteor } from 'meteor/meteor';
-import { check, Match } from 'meteor/check';
+import { check } from 'meteor/check';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import { Jobs } from './jobs.js';
 
 const StakeholderRefSchema = new SimpleSchema({
-  _id: { type: String },
-  name: { type: String },
-  address: { type: String, optional: true },
+  id: { type: String, optional: true, defaultValue: '' },
+  name: { type: String, optional: true, defaultValue: '' },
+  address: { type: String, optional: true, defaultValue: '' },
 });
 
 const JobSchema = new SimpleSchema({
-  jobCode: { type: String, optional: true },
-  shipperId: { type: String, optional: true },
-  consigneeId: { type: String, optional: true },
-  // shipper: { type: StakeholderRefSchema, optional: true },
-  // consignee: { type: StakeholderRefSchema, optional: true },
+  jobCode: { type: String, optional: true, defaultValue: '' },
+  shipper: { type: StakeholderRefSchema, optional: true },
+  consignee: { type: StakeholderRefSchema, optional: true },
+  // TODO: Schemas for the below items
+  incoterm: { type: String, optional: true, defaultValue: '' },
+  exportOffice: { type: String, optional: true },
+  importOffice: { type: String, optional: true },
+  cargo: { type: Object, optional: true },
+  routing: { type: Object, optional: true },
+  operations: { type: Object, optional: true },
+  accounting: { type: Object, optional: true },
 });
 
 Meteor.methods({
   'jobs.new': function jobsNewMethod(options) {
     check(options, JobSchema);
+    JobSchema.clean(options);
     Jobs.insert(options);
   },
   'jobs.updateField': function jobsUpdateFieldMethod(jobId, path = '', field, value) {

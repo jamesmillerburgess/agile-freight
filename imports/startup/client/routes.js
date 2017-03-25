@@ -26,6 +26,7 @@ import '../../ui/components/dropdown';
 import '../../ui/components/mention';
 import '../../ui/components/collapse-button';
 import '../../ui/components/stakeholder';
+import '../../ui/components/office-field';
 import '../../ui/components/user-id';
 import '../../ui/formatters/smart-highlight';
 import '../../ui/formatters/date-format';

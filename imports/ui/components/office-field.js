@@ -1,37 +1,29 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import { Customers } from '../../api/customers/customers';
+import { Offices } from '../../api/offices/offices';
 
-import './stakeholder.html';
-import './stakeholder.less';
+import './office-field.html';
+import './office-field.less';
 
-Template.stakeholder.onCreated(function onCreated() {
+Template.officeField.onCreated(function onCreated() {
   this.data.search = new ReactiveVar(this.data.value);
 });
 
-Template.stakeholder.onRendered(function onRendered() {
+Template.officeField.onRendered(function onRendered() {
   $(this.find('.dropdown-button')).dropdown();
-  $(this.find('.value'))[0].innerText = this.data.value;
-  $(this.find('.dropdown-filter'))[0].value = this.data.value;
 });
 
-Template.stakeholder.helpers({
-  getSearch() {
-    if (this.search) {
-      return this.search.get();
-    }
-    return '';
-  },
+Template.officeField.helpers({
   results() {
-    return Customers.find(
-      { search: { $regex: this.search.get(), $options: 'gi' } },
+    return Offices.find(
+      { search: { $regex: this.search.get() || '', $options: 'gi' } },
       { limit: 5 },
     );
   },
 });
 
-Template.stakeholder.events({
+Template.officeField.events({
   'shown.bs.dropdown .dropdown': function updateInput(event) {
     const input = $(event.target).find('.dropdown-filter')[0];
     input.value = $(event.target).find('.value')[0].innerText;
