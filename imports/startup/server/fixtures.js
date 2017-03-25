@@ -134,7 +134,7 @@ GBLAN`,
     _.each(quoteFixtures, doc => Quotes.insert(doc));
     const jobFixtures = [
       {
-        jobCode: 'J201938',
+        jobCode: 'J00000001',
         status: 'Received',
         movementType: 'Door to CY', // TODO: Autocalculate in template helper
         quoteCode: 'Q571559',
