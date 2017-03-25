@@ -13,30 +13,30 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-6">
-              {{> stakeholder label="Shipper" value=""}}
+              {{> stakeholder label="Shipper" value=name path="shipper"}}
             </div>
             <div class="col-6">
-              {{> stakeholder label="Consignee" value=""}}
+              {{> stakeholder label="Consignee" value="" path="consignee"}}
             </div>
           </div>
           <div class="row">
             <div class="col-3">
-              {{> Dropdown label="Product" value="" options=productOptions}}
+              {{> Dropdown label="Product" value="" options=productOptions path="product"}}
             </div>
             <div class="col-3">
-              {{> Dropdown label="Incoterm" value="" options=incotermOptions}}
+              {{> Dropdown label="Incoterm" value="" options=incotermOptions path="incoterm"}}
             </div>
             <div class="col-3">
-              {{> Dropdown label="Port of Loading" value="unknown" options=productOptions}}
+              {{> Dropdown label="Port of Loading" value="" options=productOptions path="portOfLoading"}}
             </div>
             <div class="col-3">
-              {{> Dropdown label="Port of Discharge" value="unknown" options=incotermOptions}}
+              {{> Dropdown label="Port of Discharge" value="" options=incotermOptions path="portOfDischarge"}}
             </div>
           </div>
-
         </div>
         <div class="modal-footer">
-          <button type="button" class="focis-button">Next</button>
+          <button id="add-cargo" type="button" class="focis-button">Add Cargo</button>
+          <button id="create-job" type="button" class="focis-button">Create Job</button>
         </div>
       </div>
     </div>
