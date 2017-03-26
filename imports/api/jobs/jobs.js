@@ -59,50 +59,15 @@ Schemas.Job = new SimpleSchema({
     allowedValues: ['Air', 'Ocean', 'Road', ''],
   },
   shipper: { type: String, optional: true, defaultValue: '' },
-  // shipper: {
-  //   type: Schemas.CustomerRef,
-  //   optional: true,
-  //   defaultValue: {
-  //     id: '',
-  //     name: '',
-  //     address: '',
-  //   },
-  // },
   consignee: { type: String, optional: true, defaultValue: '' },
-  // consignee: {
-  //   type: Schemas.CustomerRef,
-  //   optional: true,
-  //   defaultValue: {
-  //     id: '',
-  //     name: '',
-  //     address: '',
-  //   },
-  // },
-  // TODO: Schemas for the below items
   incoterm: {
     type: String,
     optional: true,
     defaultValue: '',
     allowedValues: APIGlobals.incotermOptions,
   },
-  exportOffice: {
-    type: Offices.simpleSchema(),
-    optional: true,
-    defaultValue: {
-      id: '',
-      name: '',
-      address: '',
-    },
-  },
-  importOffice: {
-    type: Offices.simpleSchema(),
-    optional: true,
-    defaultValue: {
-      id: '',
-      name: '',
-      address: '',
-    },
-  },
+  exportOffice: { type: String, optional: true, defaultValue: '' },
+  importOffice: { type: String, optional: true, defaultValue: '' },
   cargo: { type: Object, optional: true, defaultValue: {} },
   routing: { type: Object, optional: true, defaultValue: {} },
   operations: { type: Object, optional: true, defaultValue: {} },

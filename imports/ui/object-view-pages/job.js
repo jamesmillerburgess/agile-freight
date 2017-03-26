@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 
+import { Offices } from '../../api/offices/offices';
 import { Customers } from '../../api/customers/customers';
 import { Jobs } from '../../api/jobs/jobs';
 
@@ -62,6 +63,38 @@ Template.job.helpers({
         method: 'jobs.updateField',
         id: this.job._id,
         path: 'incoterm',
+      },
+    };
+  },
+  exportOffice() {
+    return {
+      type: 'reference',
+      field: {
+        label: 'Export Office',
+        collection: Offices,
+        id: this.job.exportOffice,
+        display: 'name',
+      },
+      update: {
+        method: 'jobs.updateField',
+        id: this.job._id,
+        path: 'exportOffice',
+      },
+    };
+  },
+  importOffice() {
+    return {
+      type: 'reference',
+      field: {
+        label: 'Import Office',
+        collection: Offices,
+        id: this.job.importOffice,
+        display: 'name',
+      },
+      update: {
+        method: 'jobs.updateField',
+        id: this.job._id,
+        path: 'importOffice',
       },
     };
   },

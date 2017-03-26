@@ -31,7 +31,8 @@ Meteor.startup(() => {
     ];
     _.each(officeFixtures, (doc) => {
       const newDoc = doc;
-      newDoc.search = `${doc.name} ${doc.address}`;
+      newDoc.search = `${doc.name}
+${doc.address}`;
       Offices.insert(newDoc);
     });
     const customerFixtures = [
@@ -141,28 +142,10 @@ ${doc.address}`;
         quoteCode: 'Q571559',
         netRevenue: '3,291 INR',
         shipper: Customers.findOne({ name: customerFixtures[0].name }, {})._id,
-        // shipper: {
-        //   id: Customers.findOne({ name: customerFixtures[0].name }, {})._id,
-        //   name: customerFixtures[0].name,
-        //   address: customerFixtures[0].address,
-        // },
         consignee: Customers.findOne({ name: customerFixtures[1].name }, {})._id,
-        // consignee: {
-        //   id: Customers.findOne({ name: customerFixtures[1].name }, {})._id,
-        //   name: customerFixtures[1].name,
-        //   address: customerFixtures[1].address,
-        // },
         incoterm: 'FOB',
-        exportOffice: {
-          id: Offices.findOne({ name: officeFixtures[0].name }, {})._id,
-          name: officeFixtures[0].name,
-          address: officeFixtures[0].address,
-        },
-        importOffice: {
-          id: Offices.findOne({ name: officeFixtures[1].name }, {})._id,
-          name: officeFixtures[1].name,
-          address: officeFixtures[1].address,
-        },
+        exportOffice: Offices.findOne({ name: officeFixtures[0].name }, {})._id,
+        importOffice: Offices.findOne({ name: officeFixtures[1].name }, {})._id,
         cargo: {},
         routing: {},
         operations: {},
