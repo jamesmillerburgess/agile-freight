@@ -87,7 +87,8 @@ GBLAN`,
     ];
     _.each(customerFixtures, (doc) => {
       const newDoc = doc;
-      newDoc.search = `${doc.name} ${doc.address} ${doc.properties}`;
+      newDoc.search = `${doc.name}
+${doc.address}`;
       Customers.insert(newDoc);
     });
     const quoteFixtures = [
@@ -139,16 +140,18 @@ GBLAN`,
         movementType: 'Door to CY', // TODO: Autocalculate in template helper
         quoteCode: 'Q571559',
         netRevenue: '3,291 INR',
-        shipper: {
-          id: Customers.findOne({ name: customerFixtures[0].name }, {})._id,
-          name: customerFixtures[0].name,
-          address: customerFixtures[0].address,
-        },
-        consignee: {
-          id: Customers.findOne({ name: customerFixtures[1].name }, {})._id,
-          name: customerFixtures[1].name,
-          address: customerFixtures[1].address,
-        },
+        shipper: Customers.findOne({ name: customerFixtures[0].name }, {})._id,
+        // shipper: {
+        //   id: Customers.findOne({ name: customerFixtures[0].name }, {})._id,
+        //   name: customerFixtures[0].name,
+        //   address: customerFixtures[0].address,
+        // },
+        consignee: Customers.findOne({ name: customerFixtures[1].name }, {})._id,
+        // consignee: {
+        //   id: Customers.findOne({ name: customerFixtures[1].name }, {})._id,
+        //   name: customerFixtures[1].name,
+        //   address: customerFixtures[1].address,
+        // },
         incoterm: 'FOB',
         exportOffice: {
           id: Offices.findOne({ name: officeFixtures[0].name }, {})._id,

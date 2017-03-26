@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Template } from 'meteor/templating';
-
-import { Customers } from '../../api/customers/customers';
 
 import './customer.html';
 import './customer.less';
@@ -14,6 +13,8 @@ Template.customer.helpers({
 
 Template.customer.events({
   'click #new-job-button': function handleClickNewJobButton() {
-    Meteor.call('jobs.new', { shipper: { id: this.customer._id } });
+    Meteor.call('jobs.new', { shipper: { id: this.customer._id } }, (error, result) => {
+      FlowRouter.go(`/job/${result}`);
+    });
   },
 });

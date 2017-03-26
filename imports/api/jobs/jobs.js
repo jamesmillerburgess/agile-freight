@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 import { Customers } from '../customers/customers';
 import { Offices } from '../offices/offices';
@@ -7,17 +7,47 @@ import { APIGlobals } from '../api-globals';
 
 export const Jobs = new Mongo.Collection('Jobs');
 
-Jobs.schema = new SimpleSchema({
+const Schemas = {};
+
+// Schemas.CustomerRef = new SimpleSchema({
+//   id: { type: String, optional: true, defaultValue: '' },
+//   name: {
+//     type: String,
+//     optional: true,
+//     autoValue: function autoValue() {
+//       console.log('Updating name...');
+//       if (!this.field('id').value) {
+//         return undefined;
+//       }
+//       return Customers.findOne(this.field('id').value).name || '';
+//     },
+//   },
+//   address: {
+//     type: String,
+//     optional: true,
+//     autoValue: function autoValue() {
+//       console.log('Updating address...');
+//       if (!this.field('id').value) {
+//         return '';
+//       }
+//       return Customers.findOne(this.field('id').value).address || '';
+//     },
+//   },
+// });
+
+Schemas.Job = new SimpleSchema({
   jobCode: {
     type: String,
     optional: true,
     autoValue: function autoValue() {
       const count = Jobs.find().count();
+
       function pad(n, width, z) {
         const fill = z || '0';
         const num = `${n}`;
         return num.length >= width ? num : new Array((width - num.length) + 1).join(fill) + n;
       }
+
       return `J${pad(count + 1, 8)}`;
     },
   },
@@ -28,24 +58,26 @@ Jobs.schema = new SimpleSchema({
     // TODO: Read this from another file
     allowedValues: ['Air', 'Ocean', 'Road', ''],
   },
-  shipper: {
-    type: Customers.refSchema,
-    optional: true,
-    defaultValue: {
-      id: '',
-      name: '',
-      address: '',
-    },
-  },
-  consignee: {
-    type: Customers.refSchema,
-    optional: true,
-    defaultValue: {
-      id: '',
-      name: '',
-      address: '',
-    },
-  },
+  shipper: { type: String, optional: true, defaultValue: '' },
+  // shipper: {
+  //   type: Schemas.CustomerRef,
+  //   optional: true,
+  //   defaultValue: {
+  //     id: '',
+  //     name: '',
+  //     address: '',
+  //   },
+  // },
+  consignee: { type: String, optional: true, defaultValue: '' },
+  // consignee: {
+  //   type: Schemas.CustomerRef,
+  //   optional: true,
+  //   defaultValue: {
+  //     id: '',
+  //     name: '',
+  //     address: '',
+  //   },
+  // },
   // TODO: Schemas for the below items
   incoterm: {
     type: String,
@@ -54,7 +86,7 @@ Jobs.schema = new SimpleSchema({
     allowedValues: APIGlobals.incotermOptions,
   },
   exportOffice: {
-    type: Offices.refSchema,
+    type: Offices.simpleSchema(),
     optional: true,
     defaultValue: {
       id: '',
@@ -63,7 +95,7 @@ Jobs.schema = new SimpleSchema({
     },
   },
   importOffice: {
-    type: Customers.refSchema,
+    type: Offices.simpleSchema(),
     optional: true,
     defaultValue: {
       id: '',
@@ -77,3 +109,5 @@ Jobs.schema = new SimpleSchema({
   accounting: { type: Object, optional: true, defaultValue: {} },
   latestUpdates: { type: Object, optional: true, defaultValue: {} },
 });
+
+Jobs.attachSchema(Schemas.Job);

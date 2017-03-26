@@ -1,0 +1,30 @@
+<template name="field">
+  <div class="field">
+    <span class="label">{{field.label}}</span>
+    <div class="dropdown">
+      <div class="value-container dropdown-button" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">
+        <button class="value">{{value}}</button>
+      </div>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {{#if isReferenceField}}
+          <input class="dropdown-filter" type="text" value={{value}}>
+        {{/if}}
+        <div class="">
+          {{#each result in results}}
+            {{#if isSelectField}}
+              <a id={{result}} href="#" class="dropdown-item row" name="{{result}}">
+                <pre>{{{result}}}</pre>
+              </a>
+            {{/if}}
+            {{#if isReferenceField}}
+              <a id={{result._id}} href="#" class="dropdown-item row" name="{{result.name}}">
+                <pre>{{{formatText result.search search.get}}}</pre>
+              </a>
+            {{/if}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

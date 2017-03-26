@@ -19,6 +19,8 @@ import '../../ui/list-items/job-list-item';
 import '../../ui/object-creation-pages/new-quote';
 import '../../ui/object-creation-pages/new-job';
 import '../../ui/object-view-pages/job';
+
+import '../../ui/components/field';
 import '../../ui/components/input';
 import '../../ui/components/free-text-field';
 import '../../ui/components/file-field';

@@ -1,8 +1,11 @@
 import { Mongo } from 'meteor/mongo';
+import SimpleSchema from 'simpl-schema';
 
 export const Offices = new Mongo.Collection('Offices');
 
-Offices.refSchema = new SimpleSchema({
+const Schemas = {};
+
+Schemas.Office = new SimpleSchema({
   id: { type: String, optional: true, defaultValue: '' },
   name: {
     type: String,
@@ -25,3 +28,5 @@ Offices.refSchema = new SimpleSchema({
     },
   },
 });
+
+Offices.attachSchema(Schemas.Office);
