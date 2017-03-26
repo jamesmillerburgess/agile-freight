@@ -1,7 +1,5 @@
 {
   "reset": false,
   "testMode": "structure",
-  "public": {
-    "hello": "goodbye"
-  }
+  "public": {}
 }

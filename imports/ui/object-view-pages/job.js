@@ -17,7 +17,7 @@ Template.job.onRendered(() => $(() => $('[data-toggle="tooltip"]').tooltip()));
 
 Template.job.helpers({
   job() {
-    Jobs.findOne(this.job._id);
+    return Jobs.findOne(this.job._id);
   },
   shipper() {
     return {
@@ -95,6 +95,58 @@ Template.job.helpers({
         method: 'jobs.updateField',
         id: this.job._id,
         path: 'importOffice',
+      },
+    };
+  },
+  physicalReceiptOfGoods() {
+    return {
+      type: 'event',
+      field: {
+        label: 'Physical Receipt of Goods',
+        event: _.find(this.job.events, doc => doc.type === 'Physical Receipt of Goods'),
+      },
+      update: {
+        method: 'jobs.updateEvent',
+        id: this.job._id,
+      },
+    };
+  },
+  internationalDeparture() {
+    return {
+      type: 'event',
+      field: {
+        label: 'International Departure',
+        event: _.find(this.job.events, doc => doc.type === 'International Departure'),
+      },
+      update: {
+        method: 'jobs.updateEvent',
+        id: this.job._id,
+      },
+    };
+  },
+  internationalArrival() {
+    return {
+      type: 'event',
+      field: {
+        label: 'International Arrival',
+        event: _.find(this.job.events, doc => doc.type === 'International Arrival'),
+      },
+      update: {
+        method: 'jobs.updateEvent',
+        id: this.job._id,
+      },
+    };
+  },
+  proofOfDelivery() {
+    return {
+      type: 'event',
+      field: {
+        label: 'Proof of Delivery',
+        event: _.find(this.job.events, doc => doc.type === 'Proof of Delivery'),
+      },
+      update: {
+        method: 'jobs.updateEvent',
+        id: this.job._id,
       },
     };
   },

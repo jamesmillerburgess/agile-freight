@@ -137,7 +137,7 @@ ${doc.address}`;
     const jobFixtures = [
       {
         jobCode: 'J00000001',
-        status: 'Received',
+        status: 'Initiated',
         movementType: 'Door to CY', // TODO: Autocalculate in template helper
         quoteCode: 'Q571559',
         netRevenue: '3,291 INR',

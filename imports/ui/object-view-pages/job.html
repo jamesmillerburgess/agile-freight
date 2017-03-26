@@ -31,17 +31,15 @@
           <div class="panel-body-inner">
             <div class="row">
               <div class="job-status col-3">
-                RECEIVED
+                {{caps job.status}}
               </div>
               <div class="origin col-3">
                 {{> field shipper}}
                 {{> field exportOffice}}
-                <!--{{> officeField label="Export Office" value=job.exportOffice.name}}-->
               </div>
               <div class="destination col-3">
                 {{> field consignee}}
                 {{> field importOffice}}
-                <!--{{> officeField label="Import Office" value=job.importOffice.name}}-->
               </div>
               <div class="terms col-3">
                 {{> field incoterm}}
@@ -49,28 +47,16 @@
             </div>
             <div class="row">
               <div class="col-3">
-                <div class="label">Physical Receipt of Goods</div>
-                <div class="task">
-                  <i class="fa fa-fw fa-check checkmark"></i> 2-Feb-2017 09:34
-                </div>
+                {{> field physicalReceiptOfGoods}}
               </div>
               <div class="col-3">
-                <div class="label">International Departure</div>
-                <div class="task">
-                  <i class="fa fa-fw fa-clock-o"></i> 5-Feb-2017 18:00
-                </div>
+                {{> field internationalDeparture}}
               </div>
               <div class="col-3">
-                <div class="label">International Arrival</div>
-                <div class="task">
-                  <i class="fa fa-fw fa-clock-o"></i> 1-Mar-2017 18:00
-                </div>
+                {{> field internationalArrival}}
               </div>
               <div class="col-3">
-                <div class="label">Proof of Delivery</div>
-                <div class="task">
-                  <i class="fa fa-fw fa-question"></i> Not Planned
-                </div>
+                {{> field proofOfDelivery}}
               </div>
             </div>
           </div>
@@ -310,7 +296,7 @@ Shipment Total
               </div>
             </div>
           </div>
-          <div id="operations-body" class="panel-body show">
+          <div id="operations-body" class="panel-body collapse">
             <div class="panel-body-inner">
               <div class="form-group-row-header">
                 Origin

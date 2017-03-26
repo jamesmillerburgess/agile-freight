@@ -2,28 +2,45 @@
   <div class="field">
     <span class="label">{{field.label}}</span>
     <div class="dropdown">
+
+      <!--Field Button-->
       <div class="value-container dropdown-button" data-toggle="dropdown" aria-haspopup="true"
            aria-expanded="false">
-        <button class="value">{{value}}</button>
+        <button class="value">
+          {{#if isEventField}}<i class="fa fa-fw {{eventStatusClasses}}"></i>{{/if}}{{value}}
+        </button>
       </div>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+      <!--Field Menu-->
+      <div class="dropdown-menu {{dropdownMenuClasses}}" aria-labelledby="dropdownMenuButton">
         {{#if isReferenceField}}
           <input class="dropdown-filter" type="text" value={{value}}>
         {{/if}}
-        <div class="">
-          {{#each result in results}}
-            {{#if isSelectField}}
-              <a id={{result}} href="#" class="dropdown-item row" name="{{result}}">
+        {{#each result in results}}
+          {{#if isSelectField}}
+            <div id="{{result}}" class="a-container" title="{{result}}">
+              <a href="#" class="dropdown-item row">
                 <pre>{{{result}}}</pre>
               </a>
-            {{/if}}
-            {{#if isReferenceField}}
-              <a id={{result._id}} href="#" class="dropdown-item row" name="{{result.name}}">
+            </div>
+          {{/if}}
+          {{#if isReferenceField}}
+            <div id="{{result._id}}" class="a-container" title="{{result.name}}">
+              <a href="#" class="dropdown-item row">
                 <pre>{{{formatText result.search search.get}}}</pre>
               </a>
-            {{/if}}
-          {{/each}}
-        </div>
+            </div>
+          {{/if}}
+        {{/each}}
+        {{#if isEventField}}
+          <div href="#" class="dropdown-form">
+            <input class="datetimepicker" type="text"/>
+            <button class="focis-button set-expected"><i class="fa fa-fw fa-clock-o"></i></button>
+            <button class="focis-button set-actual"><i class="fa fa-fw fa-check"></i></button>
+            <input class="focis-input event-update-remarks" placeholder="Remarks">
+            <button class="focis-button update-event">Update</button>
+          </div>
+        {{/if}}
       </div>
     </div>
   </div>

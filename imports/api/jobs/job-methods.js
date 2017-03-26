@@ -34,5 +34,43 @@ Meteor.methods({
     // Update search
     // updateSearch(jobId);
   },
+  'jobs.updateEvent': function jobsUpdateEventMethod(jobId, value) {
+    // Check the parameters
+    check(jobId, String);
+    check(value, Object);
 
+    // Build the query and update criteria
+    const query = { _id: jobId };
+    //
+
+    const job = Jobs.findOne(query);
+    let i;
+    for (i = 0; i < job.events.length; i += 1) {
+      if (job.events[i].id === value.id) {
+        break;
+      }
+    }
+
+    const updatePath = `events.${i}`;
+    const update = {
+      $set: {
+        [`${updatePath}.date`]: value.date,
+        [`${updatePath}.status`]: value.status,
+        [`${updatePath}.remarks`]: value.remarks,
+      },
+    };
+    Jobs.update(query, update);
+
+    const historyEntry = {
+      date: value.date,
+      status: value.status,
+      remarks: value.remarks,
+      timestamp: new Date(),
+      user: Meteor.userId(),
+    };
+    const historyPath = `${updatePath}.history`;
+    Jobs.update(query, { $push: { [historyPath]: historyEntry } });
+
+    return Jobs.findOne(query);
+  },
 });

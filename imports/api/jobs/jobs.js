@@ -1,4 +1,5 @@
 import { Mongo } from 'meteor/mongo';
+import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 
 import { Customers } from '../customers/customers';
@@ -58,6 +59,12 @@ Schemas.Job = new SimpleSchema({
     // TODO: Read this from another file
     allowedValues: ['Air', 'Ocean', 'Road', ''],
   },
+  status: {
+    type: String,
+    optional: true,
+    defaultValue: 'Initiated',
+    allowedValues: ['Initiated', 'Received', 'Departed', 'Arrived', 'Delivered', ''],
+  },
   shipper: { type: String, optional: true, defaultValue: '' },
   consignee: { type: String, optional: true, defaultValue: '' },
   incoterm: {
@@ -68,6 +75,52 @@ Schemas.Job = new SimpleSchema({
   },
   exportOffice: { type: String, optional: true, defaultValue: '' },
   importOffice: { type: String, optional: true, defaultValue: '' },
+  events: {
+    type: Array,
+    optional: true,
+    defaultValue: [
+      {
+        id: new Meteor.Collection.ObjectID().toHexString(),
+        type: 'Physical Receipt of Goods',
+        status: 'Not Planned',
+        date: null,
+        history: [],
+      },
+      {
+        id: new Meteor.Collection.ObjectID().toHexString(),
+        type: 'International Departure',
+        status: 'Not Planned',
+        date: null,
+        history: [],
+      },
+      {
+        id: new Meteor.Collection.ObjectID().toHexString(),
+        type: 'International Arrival',
+        status: 'Not Planned',
+        date: null,
+        history: [],
+      },
+      {
+        id: new Meteor.Collection.ObjectID().toHexString(),
+        type: 'Proof of Delivery',
+        status: 'Not Planned',
+        date: null,
+        history: [],
+      },
+    ],
+  },
+  'events.$': Object,
+  'events.$.id': String,
+  'events.$.type': String,
+  'events.$.status': String,
+  'events.$.date': { type: Date, optional: true },
+  'events.$.history': Array,
+  'events.$.history.$': Object,
+  'events.$.history.$.date': Date,
+  'events.$.history.$.status': String,
+  'events.$.history.$.remarks': String,
+  'events.$.history.$.timestamp': Date,
+  'events.$.history.$.user': String,
   cargo: { type: Object, optional: true, defaultValue: {} },
   routing: { type: Object, optional: true, defaultValue: {} },
   operations: { type: Object, optional: true, defaultValue: {} },
