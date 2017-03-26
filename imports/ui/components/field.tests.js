@@ -9,7 +9,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 // Will set up Template.foo.__helpers[' bar']
 
 if (Meteor.isClient) {
-  import './field';
+  require('./field');
 
   describe('Field handlers', () => {
     it('Should test bar', () => {
