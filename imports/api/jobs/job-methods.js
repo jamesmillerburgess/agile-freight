@@ -2,21 +2,16 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Jobs } from './jobs';
-import { Customers } from '../customers/customers';
 
 Meteor.methods({
   'jobs.new': function jobsNewMethod(options) {
-    const query = options;
-    if (query.shipper) {
-      query.shipper = Customers.simpleSchema().clean(query.shipper);
-    }
-    if (query.consignee) {
-      query.consignee = Customers.simpleSchema().clean(query.consignee);
-    }
-    Jobs.simpleSchema().clean(query);
-    return Jobs.insert(query);
+    // Check the parameters
+    check(options, Object);
+
+    // Insert the new job
+    return Jobs.insert(options);
   },
-  'jobs.updateField': function jobsUpdateFieldMethod(jobId, path = '', value) {
+  'jobs.updateField': function jobsUpdateFieldMethod(jobId, path, value) {
     // Check the parameters
     check(jobId, String);
     check(path, String);
@@ -41,9 +36,9 @@ Meteor.methods({
 
     // Build the query and update criteria
     const query = { _id: jobId };
-    //
 
-    const job = Jobs.findOne(query);
+    // Find the event
+    let job = Jobs.findOne(query);
     let i;
     for (i = 0; i < job.events.length; i += 1) {
       if (job.events[i].id === value.id) {
@@ -51,8 +46,9 @@ Meteor.methods({
       }
     }
 
+    // Update the event (but later do the history)
     const updatePath = `events.${i}`;
-    const update = {
+    let update = {
       $set: {
         [`${updatePath}.date`]: value.date,
         [`${updatePath}.status`]: value.status,
@@ -60,7 +56,26 @@ Meteor.methods({
       },
     };
     Jobs.update(query, update);
+    job = Jobs.findOne(query);
 
+    // Infer job status based on events
+    let newJobStatus = 'Initiated';
+
+    function checkEvent(name) {
+      return _.find(job.events, event => event.type === name && event.status === 'Actual');
+    }
+
+    if (checkEvent('Proof of Delivery')) {
+      newJobStatus = 'Delivered';
+    } else if (checkEvent('International Arrival')) {
+      newJobStatus = 'Arrived';
+    } else if (checkEvent('International Departure')) {
+      newJobStatus = 'Departed';
+    } else if (checkEvent('Physical Receipt of Goods')) {
+      newJobStatus = 'Received';
+    }
+
+    // Add a history entry
     const historyEntry = {
       date: value.date,
       status: value.status,
@@ -69,8 +84,15 @@ Meteor.methods({
       user: Meteor.userId(),
     };
     const historyPath = `${updatePath}.history`;
-    Jobs.update(query, { $push: { [historyPath]: historyEntry } });
 
+    // Second job update
+    update = {
+      $push: { [historyPath]: historyEntry },
+      $set: { status: newJobStatus },
+    };
+    Jobs.update(query, update);
+
+    // Return the job
     return Jobs.findOne(query);
   },
 });

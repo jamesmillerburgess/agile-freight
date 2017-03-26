@@ -1,5 +1,4 @@
-export default function UIGlobals() {
-  return {
-    listLimit: 10,
-  };
-}
+export const UIGlobals = {
+  listLimit: 10,
+  dateFormat: 'DD-MMM-YYYY HH:mm',
+};
