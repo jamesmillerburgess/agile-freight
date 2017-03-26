@@ -1,1 +1,1 @@
-import '../../api/rates/methods';
+import '../../api/rates/rate-methods';
