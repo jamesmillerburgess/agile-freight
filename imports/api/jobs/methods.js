@@ -17,28 +17,20 @@ Meteor.methods({
     return Jobs.insert(query);
   },
   'jobs.updateField': function jobsUpdateFieldMethod(jobId, path = '', value) {
-
     // Check the parameters
     check(jobId, String);
     check(path, String);
     check(value, String);
 
-    // Build the query
+    // Build the query and update criteria
     const query = { _id: jobId };
-
-    // Build the update
-    // if (!path) {
-    //   path = field;
-    // } else {
-    //   path += `.${field}`;
-    // }
-
     const update = { $set: { [path]: value } };
 
     // Update the job
     Jobs.update(query, update);
 
     return Jobs.findOne(query);
+
     // Update search
     // updateSearch(jobId);
   },
