@@ -35,9 +35,15 @@ Template.field.onRendered(function onRendered() {
 });
 
 Template.field.helpers({
-  isSelectField() { return this.type === 'select'; },
-  isReferenceField() { return this.type === 'reference'; },
-  isEventField() { return this.type === 'event'; },
+  isSelectField() {
+    return this.type === 'select';
+  },
+  isReferenceField() {
+    return this.type === 'reference';
+  },
+  isEventField() {
+    return this.type === 'event';
+  },
   value() {
     // Select fields can directly read a value
     if (this.type === 'select') {
@@ -90,17 +96,29 @@ Template.field.helpers({
     return null;
   },
   eventStatusClasses() {
-    if (this.field.event.status === 'Not Planned') { return 'fa-question'; }
-    if (this.field.event.status === 'Expected') { return 'fa-clock-o'; }
-    if (this.field.event.status === 'Actual') { return 'fa-check'; }
+    if (this.field.event.status === 'Not Planned') {
+      return 'fa-question';
+    }
+    if (this.field.event.status === 'Expected') {
+      return 'fa-clock-o';
+    }
+    if (this.field.event.status === 'Actual') {
+      return 'fa-check';
+    }
     return '';
   },
   dropdownMenuClasses() {
-    if (this.type === 'event') { return 'event'; }
+    if (this.type === 'event') {
+      return 'event';
+    }
     return '';
   },
   overdueClass() {
-    if (this.type === 'event' && moment().isBefore(this.field.date)) { return 'overdue'}
+    if (this.type === 'event' &&
+      this.field.event.status === 'Expected' &&
+      moment().isAfter(this.field.event.date)) {
+      return 'overdue';
+    }
     return '';
   },
 });
@@ -174,7 +192,9 @@ Template.field.events({
         this.update.id,
         this.update.path,
         updateValue,
-        () => { $(event.target).parents('.dropdown').find('.value')[0].innerText = ''; }
+        () => {
+          $(event.target).parents('.dropdown').find('.value')[0].innerText = '';
+        }
       );
     }
   },
@@ -207,8 +227,12 @@ Template.field.events({
 
     // Get the status and error check
     update.status = '';
-    if (menu.find('.set-expected').hasClass('active')) { update.status = 'Expected'; }
-    if (menu.find('.set-actual').hasClass('active')) { update.status = 'Actual'; }
+    if (menu.find('.set-expected').hasClass('active')) {
+      update.status = 'Expected';
+    }
+    if (menu.find('.set-actual').hasClass('active')) {
+      update.status = 'Actual';
+    }
 
     // Get the remarks
     update.remarks = menu.find('.event-update-remarks')[0].value;

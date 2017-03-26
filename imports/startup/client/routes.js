@@ -17,7 +17,6 @@ import '../../ui/list-items/quote-list-item';
 import '../../ui/list-items/job-list-item';
 
 import '../../ui/object-creation-pages/new-quote';
-import '../../ui/object-creation-pages/new-job';
 import '../../ui/object-view-pages/job';
 
 import '../../ui/components/field';
@@ -27,8 +26,6 @@ import '../../ui/components/file-field';
 import '../../ui/components/dropdown';
 import '../../ui/components/mention';
 import '../../ui/components/collapse-button';
-import '../../ui/components/stakeholder';
-import '../../ui/components/office-field';
 import '../../ui/components/user-id';
 import '../../ui/formatters/smart-highlight';
 import '../../ui/formatters/date-format';

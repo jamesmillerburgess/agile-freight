@@ -27,7 +27,7 @@ Template.main.helpers({
       return {
         customer: Customers.findOne(id),
         quotes: Quotes.find({ 'customer.id': id }),
-        jobs: Jobs.find({ 'shipper': id }),
+        jobs: Jobs.find({ $or: [{ shipper: id }, { consignee: id }] }),
       };
     }
 
