@@ -1,5 +1,5 @@
 import '../../api/branch/server/publications';
-
+import '../../api/users/user-methods';
 import '../../api/offices/server/publications';
 import '../../api/offices/office-methods';
 import '../../api/customers/server/publications';

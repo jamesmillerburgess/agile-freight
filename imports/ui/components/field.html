@@ -13,6 +13,9 @@
 
       <!--Field Menu-->
       <div class="dropdown-menu {{dropdownMenuClasses}}" aria-labelledby="dropdownMenuButton">
+        {{#if isTextField}}
+          <input class="dropdown-text-input" type="text" value={{value}}>
+        {{/if}}
         {{#if isReferenceField}}
           <input class="dropdown-filter" type="text" value={{value}}>
         {{/if}}

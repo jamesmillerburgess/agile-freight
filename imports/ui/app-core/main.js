@@ -11,6 +11,7 @@ import { Jobs } from '../../api/jobs/jobs';
 
 Template.main.onCreated(function onCreated() {
   this.subscribe('branch.active');
+  this.subscribe('userData');
 });
 
 // TODO: Filter content by branch/access level

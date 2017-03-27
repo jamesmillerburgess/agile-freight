@@ -1,3 +1,35 @@
-<template name="UserProfile">
-  User Profile
+<template name="userProfile">
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-header-inner">
+        <div class="icon-container hidden-md-down">
+          <i class="icon fa fa-fw fa-user"></i>
+        </div>
+        <div class="panel-header-content container">
+          <div class="row">
+            <div class="panel-title col-12 col-lg-6 align-left">
+              User Profile
+            </div>
+            <div class="col-6 col-lg-3 align-right">
+            </div>
+            <div class="col-6 col-lg-3 align-right">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="panel-body">
+      <div class="panel-body-inner">
+        <div class="row">
+          <div class="col-12 col-lg-3">
+            {{> field name}}
+          </div>
+          <div class="col-12 col-lg-3">
+            {{> field email}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>

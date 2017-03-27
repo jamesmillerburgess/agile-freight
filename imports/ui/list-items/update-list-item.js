@@ -8,7 +8,11 @@ Template.updateListItem.helpers({
   isNote() {
     return this.type === 'Note';
   },
-  user() {
-    return Meteor.users.findOne(this.source).emails[0].address;
+  userName() {
+    const user = Meteor.users.findOne(this.source);
+    if (user.profile && user.profile.name) {
+      return user.profile.name;
+    }
+    return 'unknown';
   },
 });

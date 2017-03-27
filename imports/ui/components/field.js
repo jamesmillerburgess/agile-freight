@@ -22,7 +22,7 @@ Template.field.onCreated(function onCreated() {
 
 Template.field.onRendered(function onRendered() {
   // Set the dropdown button to listen
-  $(this.find('.dropdown-button')).dropdown();
+  // $(this.find('.dropdown-button')).dropdown();
 
   // Set up the datetimepicker
   if (this.data.type === 'event') {
@@ -44,9 +44,12 @@ Template.field.helpers({
   isEventField() {
     return this.type === 'event';
   },
+  isTextField() {
+    return this.type === 'text';
+  },
   value() {
     // Select fields can directly read a value
-    if (this.type === 'select') {
+    if (this.type === 'select' || this.type === 'text') {
       return this.field.value;
     }
 
@@ -77,7 +80,6 @@ Template.field.helpers({
 
     // Reference fields search their collections for options
     if (this.type === 'reference') {
-
       // Sometimes the search gets removes, so we need to re-initialize
       if (!this.search) {
         if (this.field.collection.findOne({ _id: this.field.id })) {
@@ -124,6 +126,20 @@ Template.field.helpers({
 });
 
 Template.field.events({
+  'keydown .dropdown-text-input': function handleEnter(event) {
+    if (event.key === 'Enter') {
+      const value = event.target.value;
+      const needUpdate = this.field.value !== value;
+
+      // Update if needed and reset the UI because it displays the value twice otherwise
+      if (needUpdate) {
+        Meteor.call(this.update.method, this.update.id, this.update.path, value);
+      }
+
+      // Toggle the dropdown
+      $(event.target).parents('.dropdown').removeClass('show');
+    }
+  },
   'show.bs.dropdown .dropdown': function showDropdown(event) {
     // Re-initialize the dropdown UI in case it was edited
     if (this.type === 'event') {
@@ -154,6 +170,11 @@ Template.field.events({
 
       // And set the datetimepicker value
       input.data('DateTimePicker').date(input[0].value);
+      input[0].select();
+    }
+    if (this.type === 'text') {
+      const input = $(event.target).find('.dropdown-text-input');
+      input[0].value = $(event.target).find('.value')[0].innerText;
       input[0].select();
     }
   },

@@ -107,7 +107,7 @@ FlowRouter.route('/rates', {
 FlowRouter.route('/user-profile/:_id', {
   name: 'UserProfile',
   action() {
-    BlazeLayout.render('appBody', { content: 'UserProfile' });
+    BlazeLayout.render('appBody', { content: 'userProfile' });
   },
 });
 
