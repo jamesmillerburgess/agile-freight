@@ -23,6 +23,7 @@ Meteor.methods({
     const query = { _id: jobId };
     const update = { $set: { [path]: value } };
 
+    console.log(update);
     // Update the job
     Jobs.update(query, update);
 

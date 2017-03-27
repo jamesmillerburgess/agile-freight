@@ -82,7 +82,9 @@
                   {{> updateListItem update}}
                 {{/each}}
                 <div class="latest-update-list-item">
-                  <button id="see-all-updates" class="value" data-toggle="modal" data-target="#all-updates-modal">See All Updates</button>
+                  <button id="see-all-updates" class="value" data-toggle="modal"
+                          data-target="#all-updates-modal">See All Updates
+                  </button>
                 </div>
               </div>
             </div>
@@ -111,10 +113,10 @@
                       53 Pkgs
                     </div>
                     <div class="gross-weight-total col-6 align-right">
-                      GR WT 30,000.000 kg
+                      {{job.cargo.totalGrossWeight}} kg
                     </div>
                     <div class="volume-total col-4 align-right">
-                      VOL 60.000 cbm
+                      {{job.cargo.totalVolume}} cbm
                     </div>
                   </div>
                   <div class="collapse-button col-1">
@@ -124,12 +126,21 @@
               </div>
             </div>
           </div>
-          <div id="cargo-body" class="panel-body collapse">
+          <div id="cargo-body" class="panel-body">
             <div class="panel-body-inner">
               <div class="cargo-body-header row">
-                <div class="cargo-buttons col-3">
-                  <button class="btn focis-button" data-toggle="modal" data-target="#packages-modal">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                <div class="col-4">
+                  <!--TODO: Multiselect Field-->
+                  <!--{{> field commodityType}}-->
+                </div>
+                <div class="col-4">
+                  {{> field volumetricRatio}}
+                  {{> field measurementSystem}}
+                </div>
+                <div class="col-4">
+                  <button class="btn focis-button" data-toggle="modal"
+                          data-target="#packages-modal">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     Packages
                   </button>
                   <button class="btn focis-button" data-toggle="modal" data-target="#units-modal">
@@ -137,30 +148,6 @@
                     Units
                   </button>
                 </div>
-                <div class="col-4"></div>
-                <div class="cargo-inputs col-5 pull-right">
-                  <select class="focis-select">
-                    <option>1:1</option>
-                    <option>1:2</option>
-                    <option>1:3</option>
-                    <option>1:4</option>
-                    <option>1:5</option>
-                    <option>1:6</option>
-                  </select>
-                  <select class="focis-select">
-                    <option>General Cargo</option>
-                    <option>Dangerous Goods</option>
-                    <option>1:3</option>
-                    <option>1:4</option>
-                    <option>1:5</option>
-                    <option>1:6</option>
-                  </select>
-                  <select class="focis-select">
-                    <option>Metric</option>
-                    <option>Imperial</option>
-                  </select>
-                </div>
-
               </div>
               <div class="cargo-content">
                 <div class="cargo-column-headers row">
@@ -172,36 +159,36 @@
                   <span class="volume col-2">Volume</span>
                 </div>
                 <div class="cargo-row row">
-<span class="marks-and-numbers col-3">
-MSCU1234566 Seal: 1234<br/>
-Inverted green<br/>
-with the letters 'AG'<br/>
-printed in the center
-</span>
-                  <span class="description-of-goods col-3">nails</span>
-                  <span class="packages col-1">10</span>
-                  <span class="type col-1">Pallets</span>
-                  <span class="gross-weight col-2">500.000 kg</span>
-                  <span class="volume col-2">10.000 cbm</span>
+                  <span class="marks-and-numbers col-3">
+                    <!--{{> field marksAndNumbers}}-->
+                    my marks and numbers that are really long so they need to wrap
+                  </span>
+                  <span class="description-of-goods col-3">
+                    nails
+                  </span>
+                  <div class="packages col-6">
+                    {{#each package in job.packages}}
+                      <div class="row">
+                        <span class="packages col-2">{{package.count}}</span>
+                        <span class="type col-2">{{package.type}}</span>
+                        <span class="gross-weight col-4">{{package.grossWeight}}</span>
+                        <span class="volume col-4">{{package.volume}}</span>
+                      </div>
+                    {{/each}}
+                    <div class="row">
+                      <span class="packages col-2">10</span>
+                      <span class="type col-2">Pallets</span>
+                      <span class="gross-weight col-4">500.000 kg</span>
+                      <span class="volume col-4">10.000 cbm</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="cargo-row row">
-<span class="marks-and-numbers col-3">
-MSCU1234566 Seal: 1234<br/>
-Inverted green<br/>
-with the letters 'AG'<br/>
-printed in the center
-</span>
-                  <span class="description-of-goods col-3">nails</span>
-                  <span class="packages col-1">10</span>
-                  <span class="type col-1">Pallets</span>
-                  <span class="gross-weight col-2">500.000 kg</span>
-                  <span class="volume col-2">10.000 cbm</span>
-                </div>
+
                 <div class="cargo-body-totals row">
-                  <span class="col-3"></span>
-                  <span class="col-9">
-Shipment Total
-</span>
+                  <div class="col-3"></div>
+                  <div class="col-9">
+                    Shipment Total
+                  </div>
                 </div>
               </div>
             </div>
@@ -277,7 +264,8 @@ Shipment Total
                           Booking
                         </div>
                         <div class="col-2">
-                          <div class="form-group-icon-container" data-toggle="tooltip" data-placement="top"
+                          <div class="form-group-icon-container" data-toggle="tooltip"
+                               data-placement="top"
                                title="Info">
                             <i class="fa fa-fw fa-info-circle form-group-header-icon"></i>
                           </div>
@@ -288,18 +276,21 @@ Shipment Total
                       <div class="form-group-body-inner">
                         <div class="row task-progress-bar">
                           <div class="col-4">
-                            <div class="task" data-toggle="tooltip" data-placement="top" title="Carrier Request">
+                            <div class="task" data-toggle="tooltip" data-placement="top"
+                                 title="Carrier Request">
                               <i class="fa fa-fw fa-check checkmark"></i>
                             </div>
                           </div>
                           <div class="col-4">
-                            <div class="task" data-toggle="tooltip" data-placement="top" title="Carrier Confirmation">
+                            <div class="task" data-toggle="tooltip" data-placement="top"
+                                 title="Carrier Confirmation">
                               <i class="fa fa-fw fa-check checkmark"></i>
                             </div>
                           </div>
                           <div class="col-4" data-toggle="tooltip" data-placement="top"
                                title="Customer Confirmation">
-                            <div class="task overdue" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="task overdue" data-toggle="dropdown" aria-haspopup="true"
+                                 aria-expanded="false">
                               <i class="fa fa-fw fa-clock-o"></i>
                             </div>
                             <div class="dropdown-menu">
@@ -332,7 +323,8 @@ Shipment Total
                                 <i class="fa fa-fw fa-clock-o"></i> 1/2 Plan Haulage
                               </div>
                               <div class="task-list-spacer"></div>
-                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                              <div class="task-list-expander" data-toggle="dropdown"
+                                   aria-haspopup="true"
                                    aria-expanded="false">
                                 <i class="fa fa-fw fa-caret-down"></i>
                               </div>
@@ -369,7 +361,8 @@ Shipment Total
                                 <i class="fa fa-fw fa-clock-o"></i> 1/1 Clearance
                               </div>
                               <div class="task-list-spacer"></div>
-                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                              <div class="task-list-expander" data-toggle="dropdown"
+                                   aria-haspopup="true"
                                    aria-expanded="false">
                                 <i class="fa fa-fw fa-caret-down"></i>
                               </div>
@@ -407,7 +400,8 @@ Shipment Total
                                 <i class="fa fa-fw fa-clock-o"></i> 1/3 Instructions
                               </div>
                               <div class="task-list-spacer"></div>
-                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                              <div class="task-list-expander" data-toggle="dropdown"
+                                   aria-haspopup="true"
                                    aria-expanded="false">
                                 <i class="fa fa-fw fa-caret-down"></i>
                               </div>
@@ -450,7 +444,8 @@ Shipment Total
                                 <i class="fa fa-fw fa-clock-o"></i> 1/4 Draft
                               </div>
                               <div class="task-list-spacer"></div>
-                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                              <div class="task-list-expander" data-toggle="dropdown"
+                                   aria-haspopup="true"
                                    aria-expanded="false">
                                 <i class="fa fa-fw fa-caret-down"></i>
                               </div>
@@ -497,7 +492,8 @@ Shipment Total
                                 <i class="fa fa-fw fa-clock-o"></i> 1/1 Clearance
                               </div>
                               <div class="task-list-spacer"></div>
-                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                              <div class="task-list-expander" data-toggle="dropdown"
+                                   aria-haspopup="true"
                                    aria-expanded="false">
                                 <i class="fa fa-fw fa-caret-down"></i>
                               </div>
@@ -532,7 +528,8 @@ Shipment Total
                                 <i class="fa fa-fw fa-clock-o"></i> 1/3 Arrival Notice
                               </div>
                               <div class="task-list-spacer"></div>
-                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                              <div class="task-list-expander" data-toggle="dropdown"
+                                   aria-haspopup="true"
                                    aria-expanded="false">
                                 <i class="fa fa-fw fa-caret-down"></i>
                               </div>
@@ -573,7 +570,8 @@ Shipment Total
                                 <i class="fa fa-fw fa-clock-o"></i> 1/2 Plan Haulage
                               </div>
                               <div class="task-list-spacer"></div>
-                              <div class="task-list-expander" data-toggle="dropdown" aria-haspopup="true"
+                              <div class="task-list-expander" data-toggle="dropdown"
+                                   aria-haspopup="true"
                                    aria-expanded="false">
                                 <i class="fa fa-fw fa-caret-down"></i>
                               </div>
@@ -626,7 +624,8 @@ Shipment Total
     </div>
 
     <!-- Packages Modal -->
-    <div class="modal fade" id="packages-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="packages-modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
          aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -672,7 +671,8 @@ Shipment Total
     </div>
 
     <!-- Units Modal -->
-    <div class="modal fade" id="units-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="units-modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
          aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -782,7 +782,8 @@ Shipment Total
     </div>
 
     <!-- All Updates Modal -->
-    <div class="modal fade" id="all-updates-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="all-updates-modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
          aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">

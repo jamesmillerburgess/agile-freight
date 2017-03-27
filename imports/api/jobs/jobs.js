@@ -45,8 +45,11 @@ Schemas.Job = new SimpleSchema({
     defaultValue: '',
     allowedValues: APIGlobals.incotermOptions,
   },
+
   exportOffice: { type: String, optional: true, defaultValue: '' },
+
   importOffice: { type: String, optional: true, defaultValue: '' },
+
   events: {
     type: Array,
     optional: true,
@@ -93,10 +96,52 @@ Schemas.Job = new SimpleSchema({
   'events.$.history.$.remarks': String,
   'events.$.history.$.timestamp': Date,
   'events.$.history.$.user': String,
+
   cargo: { type: Object, optional: true, defaultValue: {} },
+  'cargo.volumetricRatio': { type: String, defaultValue: '1:1' },
+  'cargo.commodityType': { type: Array, defaultValue: ['General Cargo'] },
+  'cargo.commodityType.$': String,
+  'cargo.measurementSystem': { type: String, defaultValue: 'Metric' },
+  'cargo.marksAndNumbers': { type: String, defaultValue: '' },
+  'cargo.descriptionOfGoods': { type: String, defaultValue: '' },
+  'cargo.packages': { type: Array, defaultValue: [] },
+  'cargo.packages.$': Object,
+  'cargo.packages.$.count': { type: Number, optional: true },
+  'cargo.packages.$.type': { type: String, optional: true },
+  'cargo.packages.$.grossWeight': { type: Number, optional: true },
+  'cargo.packages.$.volume': { type: Number, optional: true },
+  'cargo.totalGrossWeight': {
+    type: Number,
+    optional: true,
+    autoValue: function autoValue() {
+      // TODO: Sum over all packages
+    },
+  },
+  'cargo.totalVolume': {
+    type: Number,
+    optional: true,
+    autoValue: function autoValue() {
+      // TODO: Sum over all packages
+    },
+  },
+  'cargo.totalGrossWeightOverride': { type: Number, optional: true },
+  'cargo.totalVolumeOverride': { type: Number, optional: true },
+  'cargo.units': { type: Array, defaultValue: [] },
+  'cargo.units.$': Object,
+  'cargo.units.$.type': String,
+  'cargo.units.$.number': {
+    type: Number,
+    autoValue: function autoValue() {
+      // TODO: Create UNITXXX based on units already in the cargo
+    },
+  },
+
   routing: { type: Object, optional: true, defaultValue: {} },
+
   operations: { type: Object, optional: true, defaultValue: {} },
+
   accounting: { type: Object, optional: true, defaultValue: {} },
+
   updates: { type: Array, optional: true, defaultValue: [] },
   'updates.$': Object,
   'updates.$.type': String,

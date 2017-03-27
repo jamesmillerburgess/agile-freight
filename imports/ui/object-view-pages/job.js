@@ -163,6 +163,36 @@ Template.job.helpers({
   updatesReversed() {
     return this.job.updates.slice().reverse();
   },
+  volumetricRatio() {
+    return {
+      type: 'select',
+      field: {
+        label: 'Volumetric Ratio',
+        options: APIGlobals.volumetricRatioOptions,
+        value: this.job.cargo.volumetricRatio,
+      },
+      update: {
+        method: 'jobs.updateField',
+        id: this.job._id,
+        path: 'cargo.volumetricRatio',
+      },
+    };
+  },
+  measurementSystem() {
+    return {
+      type: 'select',
+      field: {
+        label: 'Measurement System',
+        options: APIGlobals.measurementSystemOptions,
+        value: this.job.cargo.measurementSystem,
+      },
+      update: {
+        method: 'jobs.updateField',
+        id: this.job._id,
+        path: 'cargo.measurementSystem',
+      },
+    };
+  },
 });
 
 Template.job.events({
