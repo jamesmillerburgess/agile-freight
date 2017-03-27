@@ -23,14 +23,27 @@
       <form class="form-inline">
         <input class="focis-input mr-sm-2" type="text" placeholder="Search">
       </form>
-      <ul class="nav navbar-nav navbar-right">
-        {{> atNavButton}}
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <a id="navbar-profile-button" class="profile-button btn btn-secondary">
+      <form class="form-inline my-2 my-lg-0 dropdown">
+        <a id="navbar-profile-button" class="profile-button btn btn-secondary" data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
           <img class="profile-pic" src="/lib/jburgess%20profile%20pic.png">
           <span class="user-name">James Burgess</span>
         </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="a-container">
+            <a id="edit-profile-link" href="#" class="dropdown-item">
+              <i class="fa fa-fw fa-pencil"></i>
+              Edit Profile
+            </a>
+          </div>
+          <div class="a-container">
+            <a id="sign-out-link" href="#" class="dropdown-item">
+              <i class="fa fa-fw fa-sign-out"></i>
+              Sign Out
+            </a>
+          </div>
+        </div>
       </form>
       <div class="alert-button-container">
         <button class="alert-button btn btn-secondary">
