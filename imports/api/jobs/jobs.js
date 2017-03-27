@@ -110,14 +110,15 @@ Schemas.Job = new SimpleSchema({
   'cargo.packages.$.type': { type: String, optional: true },
   'cargo.packages.$.grossWeight': { type: Number, optional: true },
   'cargo.packages.$.volume': { type: Number, optional: true },
-  'cargo.totalGrossWeight': {
+  'cargo.totalPackageCount': { type: Number, optional: true },
+  'cargo.totalPackageGrossWeight': {
     type: Number,
     optional: true,
     autoValue: function autoValue() {
       // TODO: Sum over all packages
     },
   },
-  'cargo.totalVolume': {
+  'cargo.totalPackageVolume': {
     type: Number,
     optional: true,
     autoValue: function autoValue() {
@@ -126,6 +127,8 @@ Schemas.Job = new SimpleSchema({
   },
   'cargo.totalGrossWeightOverride': { type: Number, optional: true },
   'cargo.totalVolumeOverride': { type: Number, optional: true },
+  'cargo.totalGrossWeight': { type: Number, optional: true },
+  'cargo.totalVolume': { type: Number, optional: true },
   'cargo.units': { type: Array, defaultValue: [] },
   'cargo.units.$': Object,
   'cargo.units.$.type': String,
