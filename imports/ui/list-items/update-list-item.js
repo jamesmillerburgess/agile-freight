@@ -10,7 +10,6 @@ Template.updateListItem.helpers({
   },
   userName() {
     const user = Meteor.users.findOne(this.source);
-    console.log(Meteor.users.find({}).fetch());
     if (user.profile && user.profile.name) {
       return user.profile.name;
     }
