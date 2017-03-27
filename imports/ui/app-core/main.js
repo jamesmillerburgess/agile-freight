@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
@@ -35,6 +36,13 @@ Template.main.helpers({
       const id = FlowRouter.getParam('_id');
       return {
         job: Jobs.findOne(id),
+      };
+    }
+
+    if (routeName === 'UserProfile') {
+      const id = FlowRouter.getParam('_id');
+      return {
+        user: Meteor.users.findOne(id),
       };
     }
     return null;

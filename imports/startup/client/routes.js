@@ -15,6 +15,7 @@ import '../../ui/app-core/sign-in';
 import '../../ui/list-items/customer-list-item';
 import '../../ui/list-items/quote-list-item';
 import '../../ui/list-items/job-list-item';
+import '../../ui/list-items/update-list-item';
 
 import '../../ui/object-creation-pages/new-quote';
 import '../../ui/object-view-pages/job';
@@ -27,6 +28,7 @@ import '../../ui/components/dropdown';
 import '../../ui/components/mention';
 import '../../ui/components/collapse-button';
 import '../../ui/components/user-id';
+
 import '../../ui/formatters/smart-highlight';
 import '../../ui/formatters/date-format';
 import '../../ui/formatters/currency-format';

@@ -45,7 +45,8 @@
         "never"
       ],
       "no-underscore-dangle": "off",
-      "linebreak-style": "off"
+      "linebreak-style": "off",
+      "import/prefer-default-export": "off"
     },
     "globals": {
       "_": true,

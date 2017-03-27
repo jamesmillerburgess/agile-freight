@@ -76,8 +76,11 @@
           </div>
           <div class="panel-body">
             <div class="panel-body-inner">
-              {{> mention}}
+              {{> mention updateField}}
               <div class="latest-update-list">
+                {{#each update in updatesReversed}}
+                  {{> updateListItem update}}
+                {{/each}}
                 <div class="latest-update-list-item">
                   Departure Confirmation is overdue.
                 </div>

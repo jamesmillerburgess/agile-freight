@@ -2,39 +2,11 @@ import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 
-import { Customers } from '../customers/customers';
-import { Offices } from '../offices/offices';
 import { APIGlobals } from '../api-globals';
 
 export const Jobs = new Mongo.Collection('Jobs');
 
 const Schemas = {};
-
-// Schemas.CustomerRef = new SimpleSchema({
-//   id: { type: String, optional: true, defaultValue: '' },
-//   name: {
-//     type: String,
-//     optional: true,
-//     autoValue: function autoValue() {
-//       console.log('Updating name...');
-//       if (!this.field('id').value) {
-//         return undefined;
-//       }
-//       return Customers.findOne(this.field('id').value).name || '';
-//     },
-//   },
-//   address: {
-//     type: String,
-//     optional: true,
-//     autoValue: function autoValue() {
-//       console.log('Updating address...');
-//       if (!this.field('id').value) {
-//         return '';
-//       }
-//       return Customers.findOne(this.field('id').value).address || '';
-//     },
-//   },
-// });
 
 Schemas.Job = new SimpleSchema({
   jobCode: {
@@ -125,7 +97,12 @@ Schemas.Job = new SimpleSchema({
   routing: { type: Object, optional: true, defaultValue: {} },
   operations: { type: Object, optional: true, defaultValue: {} },
   accounting: { type: Object, optional: true, defaultValue: {} },
-  latestUpdates: { type: Object, optional: true, defaultValue: {} },
+  updates: { type: Array, optional: true, defaultValue: [] },
+  'updates.$': Object,
+  'updates.$.type': String,
+  'updates.$.source': String,
+  'updates.$.message': String,
+  'updates.$.note': { type: String, optional: true },
 });
 
 Jobs.attachSchema(Schemas.Job);

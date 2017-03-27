@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import './mention.html';
@@ -17,20 +18,13 @@ Template.mention.events({
   'keydown textarea': function keydownTextareaHandler(event) {
     if (event.key === 'Enter') {
       event.preventDefault();
-      const note = event.target.value;
-      if (note.trim()) {
-        const listItem = `<div class="latest-update-list-item">
-                            <div class="list-item-profile-pic">
-                              <a class="user-id" href="#">
-                                <img class="profile-pic" src="/lib/jburgess%20profile%20pic.png">
-                              </a>
-                            </div>
-                            <div class="list-item-content">
-                              <a class="user-id" href=""> jburgess</a>left a note : <div class="quote">${note}</div>
-                            </div>
-                          </div>`;
-        $('.latest-update-list').prepend(listItem);
-      }
+      const update = {
+        type: 'Note',
+        source: Meteor.userId(),
+        message: 'left a note :',
+        note: event.target.value,
+      };
+      Meteor.call(this.method, this.id, update);
       const textarea = event.target;
       textarea.value = '';
       textarea.style.height = '1px';

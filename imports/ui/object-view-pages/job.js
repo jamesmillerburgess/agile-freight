@@ -150,6 +150,15 @@ Template.job.helpers({
       },
     };
   },
+  updateField() {
+    return {
+      method: 'jobs.addUpdate',
+      id: this.job._id,
+    };
+  },
+  updatesReversed() {
+    return this.job.updates.reverse();
+  },
 });
 
 Template.job.events({

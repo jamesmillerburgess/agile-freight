@@ -9,3 +9,9 @@ Template.appBody.helpers({
     return Meteor.user();
   },
 });
+
+Template.appBody.events({
+  'click #navbar-profile-button': function handleClickNavbarProfileButton(event) {
+    FlowRouter.go(`/user-profile/${Meteor.userId()}`);
+  }
+});

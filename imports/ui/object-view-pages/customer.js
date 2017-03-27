@@ -13,7 +13,17 @@ Template.customer.helpers({
 
 Template.customer.events({
   'click #new-job-button': function handleClickNewJobButton() {
-    Meteor.call('jobs.new', { shipper: this.customer._id }, (error, result) => {
+    const newJob = {
+      shipper: this.customer._id,
+      updates: [
+        {
+          type: 'Action',
+          source: Meteor.userId(),
+          message: 'created the job',
+        },
+      ],
+    };
+    Meteor.call('jobs.new', newJob, (error, result) => {
       FlowRouter.go(`/job/${result}`);
     });
   },

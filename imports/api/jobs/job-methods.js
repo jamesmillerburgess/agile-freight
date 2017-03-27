@@ -95,4 +95,16 @@ Meteor.methods({
     // Return the job
     return Jobs.findOne(query);
   },
+  'jobs.addUpdate': function jobsAddUpdateMethod(jobId, value) {
+    // Check the parameters
+    check(jobId, String);
+    check(value, Object);
+
+    // Build the query and update criteria
+    const query = { _id: jobId };
+    const update = { $push: { updates: value } };
+
+    // Update the job
+    Jobs.update(query, update);
+  },
 });
