@@ -164,6 +164,9 @@ Template.field.events({
     }
   },
   'click .dropdown-menu a': function handleClickDropdownMenuA(event) {
+    // Prevent redirect on Internet Explorer
+    event.preventDefault();
+
     // Grab the correct value/id
     const updateValue = $(event.target).parents('.a-container')[0].id || '';
     const display = $(event.target).parents('.a-container')[0].title || '';
@@ -187,15 +190,7 @@ Template.field.events({
 
     // Update if needed and reset the UI because it displays the value twice otherwise
     if (needUpdate) {
-      Meteor.call(
-        this.update.method,
-        this.update.id,
-        this.update.path,
-        updateValue,
-        () => {
-          $(event.target).parents('.dropdown').find('.value')[0].innerText = '';
-        }
-      );
+      Meteor.call(this.update.method, this.update.id, this.update.path, updateValue);
     }
   },
   'click .dropdown-menu': function dontCloseDropdown(event) {
@@ -223,8 +218,8 @@ Template.field.events({
     update.type = this.field.event.type;
 
     // Get the date and error check
-    update.date = new Date(menu.find('.datetimepicker')[0].value);
-
+    // update.date = new Date(menu.find('.datetimepicker')[0].value);
+    update.date = new Date(menu.find('.datetimepicker').data('DateTimePicker').date());
     // Get the status and error check
     update.status = '';
     if (menu.find('.set-expected').hasClass('active')) {

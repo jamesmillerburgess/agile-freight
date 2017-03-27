@@ -18,7 +18,7 @@
 
 .latest-updates-input {
   font-family: Verdana, Helvetica, Arial, sans-serif;
-  border-color: #decea0;
+  border: 1px solid #decea0;
   border-radius: 5px;
   width: 100%;
   margin-bottom: 5px;
@@ -27,6 +27,16 @@
   height: 24px;
   resize: none;
   overflow-y: hidden;
+}
+
+.latest-updates-input:-moz-placeholder {
+  font-style: italic;
+  color: #decea0;
+}
+
+.latest-updates-input:-ms-input-placeholder {
+  font-style: italic;
+  color: #decea0;
 }
 
 .latest-updates-input::-webkit-input-placeholder {
