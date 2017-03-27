@@ -5,6 +5,7 @@ import { Customers } from '../../api/customers/customers';
 import { Jobs } from '../../api/jobs/jobs';
 
 import { APIGlobals } from '../../api/api-globals';
+import { UIGlobals } from '../ui-globals';
 
 import './job.html';
 import './job.less';
@@ -156,8 +157,11 @@ Template.job.helpers({
       id: this.job._id,
     };
   },
+  updatesReversedAndTrimmed() {
+    return _.first(this.job.updates.slice().reverse(), UIGlobals.listLimit);
+  },
   updatesReversed() {
-    return this.job.updates.reverse();
+    return this.job.updates.slice().reverse();
   },
 });
 
@@ -175,5 +179,8 @@ Template.job.events({
       <strong>Booking</strong> must be completed before starting <strong>House Bill of Lading</strong>!
       </div>`).children().last();
     setTimeout(() => alert.alert('close'), 5000);
+  },
+  'click #see-all-updates': function handleSeeAllUpdates() {
+
   },
 });

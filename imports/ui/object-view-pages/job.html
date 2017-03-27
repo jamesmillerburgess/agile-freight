@@ -78,9 +78,12 @@
             <div class="panel-body-inner">
               {{> mention updateField}}
               <div class="latest-update-list">
-                {{#each update in updatesReversed}}
+                {{#each update in updatesReversedAndTrimmed}}
                   {{> updateListItem update}}
                 {{/each}}
+                <div class="latest-update-list-item">
+                  <button id="see-all-updates" class="value" data-toggle="modal" data-target="#all-updates-modal">See All Updates</button>
+                </div>
               </div>
             </div>
           </div>
@@ -622,7 +625,6 @@ Shipment Total
       </div>
     </div>
 
-
     <!-- Packages Modal -->
     <div class="modal fade" id="packages-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -714,69 +716,93 @@ Shipment Total
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Booking Request Modal -->
-  <div class="modal fade" id="booking-request-modal" tabindex="-1" role="dialog"
-       aria-labelledby="exampleModalLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Booking – Request</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i class="fa fa-fw fa-close"></i>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="row input-row">
-            <div class="col-6">
-              <div class="label">Completed By</div>
-              {{> userId userName="James Burgess" picPath="/lib/jburgess%20profile%20pic.png"}}
+    <!-- Booking Request Modal -->
+    <div class="modal fade" id="booking-request-modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Booking – Request</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <i class="fa fa-fw fa-close"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row input-row">
+              <div class="col-6">
+                <div class="label">Completed By</div>
+                {{> userId userName="James Burgess" picPath="/lib/jburgess%20profile%20pic.png"}}
+              </div>
+              <div class="col-6">
+                <div class="label">Date</div>
+                ...
+              </div>
             </div>
-            <div class="col-6">
-              <div class="label">Date</div>
-              ...
+            <div class="row input-row">
+              <div class="col-6">
+                <div class="label">Data Submission</div>
+                ...
+              </div>
+              <div class="col-6">
+                <div class="label">Reference File</div>
+                ...
+              </div>
             </div>
           </div>
-          <div class="row input-row">
-            <div class="col-6">
-              <div class="label">Data Submission</div>
-              ...
-            </div>
-            <div class="col-6">
-              <div class="label">Reference File</div>
-              ...
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="focis-button" data-dismiss="modal">Send Amendment</button>
+            <button type="button" class="focis-button" data-dismiss="modal">Cancel Request</button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="focis-button" data-dismiss="modal">Send Amendment</button>
-          <button type="button" class="focis-button" data-dismiss="modal">Cancel Request</button>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Customer Confirmation Modal -->
-  <div class="modal fade" id="customer-confirmation-modal" tabindex="-1" role="dialog"
-       aria-labelledby="exampleModalLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Booking – Customer Confirmation</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i class="fa fa-fw fa-close"></i>
-          </button>
-        </div>
-        <div class="modal-body">
-          <textarea></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="focis-button" data-dismiss="modal">Save and Close</button>
+    <!-- Customer Confirmation Modal -->
+    <div class="modal fade" id="customer-confirmation-modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Booking – Customer Confirmation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <i class="fa fa-fw fa-close"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <textarea></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="focis-button" data-dismiss="modal">Save and Close</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- All Updates Modal -->
+    <div class="modal fade" id="all-updates-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Job Updates</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <i class="fa fa-fw fa-close"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{#each update in updatesReversed}}
+              {{> updateListItem update}}
+            {{/each}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="focis-button" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- Job -->
 </template>

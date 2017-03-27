@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
+import moment from 'moment';
 
+import { UIGlobals } from '../../ui/ui-globals';
 import { Jobs } from './jobs';
 
 Meteor.methods({
@@ -91,6 +93,13 @@ Meteor.methods({
       $set: { status: newJobStatus },
     };
     Jobs.update(query, update);
+
+    const newUpdate = {
+      type: 'note',
+      source: Meteor.userId(),
+      message: `updated ${value.status.toLowerCase()} ${value.type} to ${moment(value.date).format(UIGlobals.dateFormat)}`,
+    };
+    Meteor.call('jobs.addUpdate', jobId, newUpdate);
 
     // Return the job
     return Jobs.findOne(query);
