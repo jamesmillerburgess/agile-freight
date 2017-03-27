@@ -12,10 +12,10 @@ Template.appBody.helpers({
 });
 
 Template.appBody.events({
-  'click #edit-profile-link': function handleClickNavbarProfileButton(event) {
+  'click #edit-profile-link': function handleClickNavbarProfileButton() {
     FlowRouter.go(`/user-profile/${Meteor.userId()}`);
   },
-  'click #sign-out-link': function handleClickNavbarProfileButton(event) {
+  'click #sign-out-link': function handleClickNavbarProfileButton() {
     Meteor.logout();
   },
 });
