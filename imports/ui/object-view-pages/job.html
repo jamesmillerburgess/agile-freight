@@ -126,7 +126,7 @@
               </div>
             </div>
           </div>
-          <div id="cargo-body" class="panel-body">
+          <div id="cargo-body" class="panel-body show">
             <div class="panel-body-inner">
               <div class="cargo-shipment-level">
                 <div class="cargo-subheading">Shipment</div>
@@ -188,11 +188,11 @@
               <div class="cargo-subheading">Units and Packages</div>
               <button class="btn focis-button">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                Packages
+                Package
               </button>
-              <button class="btn focis-button">
+              <button id="add-unit" class="btn focis-button">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                Units
+                Unit
               </button>
               <div class="cargo-content">
                 <div class="cargo-column-headers row">
@@ -203,7 +203,7 @@
                   <span class="gross-weight col-2">Gross Weight</span>
                   <span class="volume col-2">Volume</span>
                 </div>
-                {{#each unit in units}}
+                {{#each unit in job.cargo.units}}
                   <div class="cargo-row unit-header-row row">
                     <div class="marks-and-numbers col-3">{{unit.number}}</div>
                     <div class="description-of-goods col-3">{{unit.type}}</div>
@@ -212,7 +212,7 @@
                     <div class="gross-weight col-2"></div>
                     <div class="volume col-2"></div>
                   </div>
-                  {{#each package in unitPackages @index}}
+                  {{#each package in unit.packages}}
                     <div class="cargo-row unit-package-row row">
                       <div class="marks-and-numbers col-3">{{package.marksAndNumbers}}</div>
                       <div class="description-of-goods col-3">{{package.descriptionOfGoods}}</div>
@@ -224,7 +224,7 @@
                   {{/each}}
                   <div class="cargo-row unit-total-row row">
                     <div class="marks-and-numbers col-3"></div>
-                    <div class="description-of-goods col-3"></div>
+                    <div class="description-of-goods col-3">Unit Total</div>
                     <div class="packages col-1">{{unit.packageCount}}</div>
                     <div class="type col-1">{{unit.packageType}}</div>
                     <div class="gross-weight col-2">{{unit.totalGrossWeight}}</div>

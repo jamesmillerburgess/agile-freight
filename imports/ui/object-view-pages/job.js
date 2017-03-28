@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { Offices } from '../../api/offices/offices';
@@ -280,7 +281,7 @@ Template.job.events({
       </div>`).children().last();
     setTimeout(() => alert.alert('close'), 5000);
   },
-  'click #add-units': function handleSeeAllUpdates() {
-
+  'click #add-unit': function handleSeeAllUpdates() {
+    Meteor.call('jobs.addUnit', this.job._id);
   },
 });

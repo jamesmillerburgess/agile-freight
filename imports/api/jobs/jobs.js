@@ -131,12 +131,14 @@ Schemas.Job = new SimpleSchema({
   'cargo.totalVolume': { type: Number, optional: true },
   'cargo.units': { type: Array, defaultValue: [] },
   'cargo.units.$': Object,
-  'cargo.units.$.type': String,
+  'cargo.units.$.type': { type: String, optional: true },
   'cargo.units.$.number': {
-    type: Number,
-    autoValue: function autoValue() {
-      // TODO: Create UNITXXX based on units already in the cargo
-    },
+    type: String,
+    optional: true,
+    // autoValue: function autoValue() {
+    //   // TODO: Create UNITXXX based on units already in the cargo
+    //   console.log(this);
+    // },
   },
 
   routing: { type: Object, optional: true, defaultValue: {} },

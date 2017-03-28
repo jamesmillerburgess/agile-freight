@@ -116,4 +116,22 @@ Meteor.methods({
     // Update the job
     Jobs.update(query, update);
   },
+  'jobs.addUnit': function jobsAddUnitMethod(jobId) {
+    // Check the parameters
+    check(jobId, String);
+
+    // Build the query and update criteria
+    const query = { _id: jobId };
+    const update = {
+      $push: {
+        'cargo.units': {
+          number: 'UNIT001',
+          type: '20\' DC',
+        },
+      },
+    };
+
+    // Update the job
+    Jobs.update(query, update);
+  },
 });
