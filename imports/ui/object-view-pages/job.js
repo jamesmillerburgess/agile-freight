@@ -177,6 +177,62 @@ Template.job.helpers({
       },
     };
   },
+  shipmentDescriptionOfGoods() {
+    return {
+      type: 'textarea',
+      field: {
+        label: 'Shipment Description of Goods',
+        value: this.job.cargo.shipmentDescriptionOfGoods,
+      },
+      update: {
+        method: 'jobs.updateField',
+        id: this.job._id,
+        path: 'cargo.shipmentDescriptionOfGoods',
+      },
+    };
+  },
+  totalGrossWeightOverride() {
+    return {
+      type: 'text',
+      field: {
+        label: 'Total Gross Weight Override',
+        value: this.job.cargo.totalGrossWeightOverride,
+      },
+      update: {
+        method: 'jobs.updateField',
+        id: this.job._id,
+        path: 'cargo.totalGrossWeightOverride',
+      },
+    };
+  },
+  totalVolumeOverride() {
+    return {
+      type: 'text',
+      field: {
+        label: 'Total Volume Override',
+        value: this.job.cargo.totalVolumeOverride,
+      },
+      update: {
+        method: 'jobs.updateField',
+        id: this.job._id,
+        path: 'cargo.totalVolumeOverride',
+      },
+    };
+  },
+  totalChargeableWeightOverride() {
+    return {
+      type: 'text',
+      field: {
+        label: 'Total Chargeable Weight Override',
+        value: this.job.cargo.totalChargeableWeightOverride,
+      },
+      update: {
+        method: 'jobs.updateField',
+        id: this.job._id,
+        path: 'cargo.totalChargeableWeightOverride',
+      },
+    };
+  },
   volumetricRatio() {
     return {
       type: 'select',
@@ -224,7 +280,7 @@ Template.job.events({
       </div>`).children().last();
     setTimeout(() => alert.alert('close'), 5000);
   },
-  'click #see-all-updates': function handleSeeAllUpdates() {
+  'click #add-units': function handleSeeAllUpdates() {
 
   },
 });

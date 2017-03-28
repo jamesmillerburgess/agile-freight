@@ -21,9 +21,6 @@ Template.field.onCreated(function onCreated() {
 });
 
 Template.field.onRendered(function onRendered() {
-  // Set the dropdown button to listen
-  // $(this.find('.dropdown-button')).dropdown();
-
   // Set up the datetimepicker
   if (this.data.type === 'event') {
     this.$('.datetimepicker').datetimepicker({
@@ -52,7 +49,7 @@ Template.field.helpers({
   },
   value() {
     // Select fields can directly read a value
-    if (this.type === 'select' || this.type === 'text') {
+    if (this.type === 'select' || this.type === 'text' || this.type === 'textarea') {
       return this.field.value;
     }
 
@@ -129,6 +126,11 @@ Template.field.helpers({
 });
 
 Template.field.events({
+  'input .dropdown-textarea-input': function inputTextareaHandler(event) {
+    const textarea = event.target;
+    textarea.style.height = '1px';
+    textarea.style.height = `${textarea.scrollHeight + 3}px`;
+  },
   'keydown .dropdown-text-input': function handleEnter(event) {
     if (event.key === 'Enter') {
       const value = event.target.value;
@@ -142,6 +144,21 @@ Template.field.events({
       // Toggle the dropdown
       $(event.target).parents('.dropdown').removeClass('show');
     }
+  },
+  'click .dropdown-textarea-confirm-button': function handleClickDropdownTextareaConfirm(event) {
+    console.log('confirm!');
+    console.log(this);
+    const value = $(event.target).parents('.dropdown-menu').find('.dropdown-textarea-input')[0].value;
+    console.log(value);
+    const needUpdate = this.field.value !== value;
+
+    // Update if needed and reset the UI because it displays the value twice otherwise
+    if (needUpdate) {
+      Meteor.call(this.update.method, this.update.id, this.update.path, value);
+    }
+
+    // Toggle the dropdown
+    $(event.target).parents('.dropdown').removeClass('show');
   },
   'show.bs.dropdown .dropdown': function showDropdown(event) {
     // Re-initialize the dropdown UI in case it was edited
@@ -179,6 +196,12 @@ Template.field.events({
       const input = $(event.target).find('.dropdown-text-input');
       input[0].value = $(event.target).find('.value')[0].innerText;
       input[0].select();
+    }
+    if (this.type === 'textarea') {
+      const elem = $(event.target).find('.dropdown-textarea-input')[0];
+      elem.style.height = '1px';
+      elem.style.height = `${elem.scrollHeight + 3}px`;
+      elem.select();
     }
   },
   'input .dropdown-filter': function inputDropdownFilterHandler(event) {

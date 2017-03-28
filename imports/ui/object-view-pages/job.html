@@ -128,85 +128,72 @@
           </div>
           <div id="cargo-body" class="panel-body">
             <div class="panel-body-inner">
-              <div class="row">
-                <div class="col-3">
-                  <div class="label">
-                    Total Package Gross Weight
+              <div class="cargo-shipment-level">
+                <div class="cargo-subheading">Shipment</div>
+                <div class="row">
+                  <div class="col-3">
+                    <div class="label">
+                      Total Package Gross Weight
+                    </div>
+                    <b>700.000 kg</b>
                   </div>
-                  <b>700.000 kg</b>
-                </div>
-                <div class="col-3">
-                  <div class="label">
-                    Total Package Volume
+                  <div class="col-3">
+                    <div class="label">
+                      Total Package Volume
+                    </div>
+                    <b>15.000 cbm</b>
                   </div>
-                  <b>15.000 cbm</b>
-                </div>
-                <div class="col-3">
-                  <div class="label">
-                    Total Package Chargeable Weight
+                  <div class="col-3">
+                    <div class="label">
+                      Total Package Chargeable Weight
+                    </div>
+                    <b>15,000 kg</b>
                   </div>
-                  <b>15,000 kg</b>
+                  <div class="col-3">
+
+                  </div>
                 </div>
-                <div class="col-3">
-                  <button class="btn focis-button" data-toggle="modal"
-                          data-target="#packages-modal">
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    Packages
-                  </button>
-                  <button class="btn focis-button" data-toggle="modal" data-target="#units-modal">
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    Units
-                  </button>
+                <div class="row">
+                  <div class="col-3">
+                    {{> field totalGrossWeightOverride}}
+                  </div>
+                  <div class="col-3">
+                    {{> field totalVolumeOverride}}
+                  </div>
+                  <div class="col-3">
+                    {{> field totalChargeableWeightOverride}}
+                  </div>
+                </div>
+                <div class="cargo-body-header row">
+                  <div class="col-3">
+                    {{> field shipmentMarksAndNumbers}}
+                  </div>
+                  <div class="col-3">
+                    {{> field shipmentDescriptionOfGoods}}
+                  </div>
+                  <div class="col-3">
+                    <!--TODO: Multiselect Field-->
+                    <!--{{> field commodityType}}-->
+                    <div class="label">
+                      Commodity Type
+                    </div>
+                    <b>General Cargo</b>
+                  </div>
+                  <div class="col-3">
+                    {{> field volumetricRatio}}
+                    {{> field measurementSystem}}
+                  </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-3">
-                  <div class="label">
-                    Total Gross Weight Override
-                  </div>
-                  <b>.</b>
-                </div>
-                <div class="col-3">
-                  <div class="label">
-                    Total Volume Override
-                  </div>
-                  <b>.</b>
-                </div>
-                <div class="col-3">
-                  <div class="label">
-                    Total Chargeable Weight Override
-                  </div>
-                  <b>.</b>
-                </div>
-              </div>
-              <div class="cargo-body-header row">
-                <div class="col-3">
-                  {{> field shipmentMarksAndNumbers}}
-                  <div class="label">
-                    Shipment Marks and Numbers
-                  </div>
-                  my marks and numbers that are really long so they need to wrap
-                </div>
-                <div class="col-3">
-                  <div class="label">
-                    Shipment Description of Goods
-                  </div>
-                  <!--{{> field descriptionOfGoods}}-->
-                  nails
-                </div>
-                <div class="col-3">
-                  <!--TODO: Multiselect Field-->
-                  <!--{{> field commodityType}}-->
-                  <div class="label">
-                    Commodity Type
-                  </div>
-                  <b>General Cargo</b>
-                </div>
-                <div class="col-3">
-                  {{> field volumetricRatio}}
-                  {{> field measurementSystem}}
-                </div>
-              </div>
+              <div class="cargo-subheading">Units and Packages</div>
+              <button class="btn focis-button">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                Packages
+              </button>
+              <button class="btn focis-button">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                Units
+              </button>
               <div class="cargo-content">
                 <div class="cargo-column-headers row">
                   <span class="marks-and-numbers col-3">Marks and Numbers</span>
@@ -727,100 +714,6 @@
             <div class="panel-body-inner">
               PLACEHOLDER
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Packages Modal -->
-    <div class="modal fade" id="packages-modal" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Packages</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <i class="fa fa-fw fa-close"></i>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="focis-button" data-dismiss="modal">Close</button>
-            <button type="button" class="focis-button">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Units Modal -->
-    <div class="modal fade" id="units-modal" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Units</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <i class="fa fa-fw fa-close"></i>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-            ...<br/>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="focis-button" data-dismiss="modal">Close</button>
-            <button type="button" class="focis-button">Save changes</button>
           </div>
         </div>
       </div>
