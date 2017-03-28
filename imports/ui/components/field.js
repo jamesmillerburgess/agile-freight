@@ -47,6 +47,9 @@ Template.field.helpers({
   isTextField() {
     return this.type === 'text';
   },
+  isTextareaField() {
+    return this.type === 'textarea';
+  },
   value() {
     // Select fields can directly read a value
     if (this.type === 'select' || this.type === 'text') {

@@ -16,6 +16,9 @@
         {{#if isTextField}}
           <input class="dropdown-text-input" type="text" value={{value}}>
         {{/if}}
+        {{#if isTextareaField}}
+          <textarea class="dropdown-textarea-input">{{value}}</textarea>
+        {{/if}}
         {{#if isReferenceField}}
           <input class="dropdown-filter" type="text" value={{value}}>
         {{/if}}
