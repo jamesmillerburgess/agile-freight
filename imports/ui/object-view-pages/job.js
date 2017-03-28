@@ -264,6 +264,15 @@ Template.job.helpers({
       },
     };
   },
+  unallocatedPackages() {
+    const unallocatedPackages = [];
+    for (let i = 0, j = this.job.cargo.packages.length; i < j; i += 1) {
+      if (!this.job.cargo.packages[i].allocatedUnit) {
+        unallocatedPackages.push(this.job.cargo.packages[i]);
+      }
+    }
+    return unallocatedPackages;
+  },
 });
 
 Template.job.events({
@@ -283,5 +292,8 @@ Template.job.events({
   },
   'click #add-unit': function handleSeeAllUpdates() {
     Meteor.call('jobs.addUnit', this.job._id);
+  },
+  'click #add-package': function handleSeeAllUpdates() {
+    Meteor.call('jobs.addPackage', this.job._id);
   },
 });

@@ -134,4 +134,19 @@ Meteor.methods({
     // Update the job
     Jobs.update(query, update);
   },
+  'jobs.addPackage': function jobsAddPackageMethod(jobId) {
+    // Check the parameters
+    check(jobId, String);
+
+    // Build the query and update criteria
+    const query = { _id: jobId };
+    const update = {
+      $push: {
+        'cargo.packages': {},
+      },
+    };
+
+    // Update the job
+    Jobs.update(query, update);
+  },
 });
