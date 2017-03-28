@@ -125,10 +125,15 @@ Schemas.Job = new SimpleSchema({
       // TODO: Sum over all packages
     },
   },
-  'cargo.totalGrossWeightOverride': { type: Number, optional: true },
-  'cargo.totalVolumeOverride': { type: Number, optional: true },
-  'cargo.totalGrossWeight': { type: Number, optional: true },
-  'cargo.totalVolume': { type: Number, optional: true },
+  'cargo.totalPackageChargeableWeight': {
+    type: Number,
+    optional: true,
+    autoValue: function autoValue() {
+      // TODO: Sum over all packages
+    },
+  },
+  'cargo.totalChargeableWeightOverride': { type: Number, optional: true },
+  'cargo.totalChargeableWeight': { type: Number, optional: true },
   'cargo.units': { type: Array, defaultValue: [] },
   'cargo.units.$': Object,
   'cargo.units.$.type': { type: String, optional: true },
