@@ -146,10 +146,7 @@ Template.field.events({
     }
   },
   'click .dropdown-textarea-confirm-button': function handleClickDropdownTextareaConfirm(event) {
-    console.log('confirm!');
-    console.log(this);
     const value = $(event.target).parents('.dropdown-menu').find('.dropdown-textarea-input')[0].value;
-    console.log(value);
     const needUpdate = this.field.value !== value;
 
     // Update if needed and reset the UI because it displays the value twice otherwise
