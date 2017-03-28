@@ -163,6 +163,20 @@ Template.job.helpers({
   updatesReversed() {
     return this.job.updates.slice().reverse();
   },
+  shipmentMarksAndNumbers() {
+    return {
+      type: 'textarea',
+      field: {
+        label: 'Shipment Marks and Numbers',
+        value: this.job.cargo.shipmentMarksAndNumbers,
+      },
+      update: {
+        method: 'jobs.updateField',
+        id: this.job._id,
+        path: 'cargo.shipmentMarksAndNumbers',
+      },
+    };
+  },
   volumetricRatio() {
     return {
       type: 'select',

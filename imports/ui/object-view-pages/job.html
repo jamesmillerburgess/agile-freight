@@ -128,16 +128,26 @@
           </div>
           <div id="cargo-body" class="panel-body">
             <div class="panel-body-inner">
-              <div class="cargo-body-header row">
-                <div class="col-4">
-                  <!--TODO: Multiselect Field-->
-                  <!--{{> field commodityType}}-->
+              <div class="row">
+                <div class="col-3">
+                  <div class="label">
+                    Total Package Gross Weight
+                  </div>
+                  <b>700.000 kg</b>
                 </div>
-                <div class="col-4">
-                  {{> field volumetricRatio}}
-                  {{> field measurementSystem}}
+                <div class="col-3">
+                  <div class="label">
+                    Total Package Volume
+                  </div>
+                  <b>15.000 cbm</b>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
+                  <div class="label">
+                    Total Package Chargeable Weight
+                  </div>
+                  <b>15,000 kg</b>
+                </div>
+                <div class="col-3">
                   <button class="btn focis-button" data-toggle="modal"
                           data-target="#packages-modal">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -149,6 +159,54 @@
                   </button>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-3">
+                  <div class="label">
+                    Total Gross Weight Override
+                  </div>
+                  <b>.</b>
+                </div>
+                <div class="col-3">
+                  <div class="label">
+                    Total Volume Override
+                  </div>
+                  <b>.</b>
+                </div>
+                <div class="col-3">
+                  <div class="label">
+                    Total Chargeable Weight Override
+                  </div>
+                  <b>.</b>
+                </div>
+              </div>
+              <div class="cargo-body-header row">
+                <div class="col-3">
+                  <!--{{> field marksAndNumbers}}-->
+                  <div class="label">
+                    Shipment Marks and Numbers
+                  </div>
+                  my marks and numbers that are really long so they need to wrap
+                </div>
+                <div class="col-3">
+                  <div class="label">
+                    Shipment Description of Goods
+                  </div>
+                  <!--{{> field descriptionOfGoods}}-->
+                  nails
+                </div>
+                <div class="col-3">
+                  <!--TODO: Multiselect Field-->
+                  <!--{{> field commodityType}}-->
+                  <div class="label">
+                    Commodity Type
+                  </div>
+                  <b>General Cargo</b>
+                </div>
+                <div class="col-3">
+                  {{> field volumetricRatio}}
+                  {{> field measurementSystem}}
+                </div>
+              </div>
               <div class="cargo-content">
                 <div class="cargo-column-headers row">
                   <span class="marks-and-numbers col-3">Marks and Numbers</span>
@@ -158,42 +216,93 @@
                   <span class="gross-weight col-2">Gross Weight</span>
                   <span class="volume col-2">Volume</span>
                 </div>
-                <div class="cargo-row row">
-                  <span class="marks-and-numbers col-3">
-                    <!--{{> field marksAndNumbers}}-->
-                    my marks and numbers that are really long so they need to wrap
-                  </span>
-                  <span class="description-of-goods col-3">
-                    nails
-                  </span>
-                  <div class="packages col-6">
-                    {{#each package in job.packages}}
-                      <div class="row">
-                        <span class="packages col-2">{{package.count}}</span>
-                        <span class="type col-2">{{package.type}}</span>
-                        <span class="gross-weight col-4">{{package.grossWeight}}</span>
-                        <span class="volume col-4">{{package.volume}}</span>
-                      </div>
-                    {{/each}}
-                    <div class="row">
-                      <span class="packages col-2">10</span>
-                      <span class="type col-2">Pallets</span>
-                      <span class="gross-weight col-4">500.000 kg</span>
-                      <span class="volume col-4">10.000 cbm</span>
+                {{#each unit in units}}
+                  <div class="cargo-row unit-header-row row">
+                    <div class="marks-and-numbers col-3">{{unit.number}}</div>
+                    <div class="description-of-goods col-3">{{unit.type}}</div>
+                    <div class="packages col-1"></div>
+                    <div class="type col-1"></div>
+                    <div class="gross-weight col-2"></div>
+                    <div class="volume col-2"></div>
+                  </div>
+                  {{#each package in unitPackages @index}}
+                    <div class="cargo-row unit-package-row row">
+                      <div class="marks-and-numbers col-3">{{package.marksAndNumbers}}</div>
+                      <div class="description-of-goods col-3">{{package.descriptionOfGoods}}</div>
+                      <div class="packages col-1">{{package.count}}</div>
+                      <div class="type col-1">{{package.type}}</div>
+                      <div class="gross-weight col-2">{{package.grossWeight}}</div>
+                      <div class="volume col-2">{{package.volume}}</div>
                     </div>
+                  {{/each}}
+                  <div class="cargo-row unit-total-row row">
+                    <div class="marks-and-numbers col-3"></div>
+                    <div class="description-of-goods col-3"></div>
+                    <div class="packages col-1">{{unit.packageCount}}</div>
+                    <div class="type col-1">{{unit.packageType}}</div>
+                    <div class="gross-weight col-2">{{unit.totalGrossWeight}}</div>
+                    <div class="volume col-2">{{unit.totalVolume}}</div>
                   </div>
+                  <div class="cargo-row spacer-row"></div>
+                {{/each}}
+                <div class="cargo-row unit-header-row row">
+                  <div class="marks-and-numbers col-3">UNIT001</div>
+                  <div class="description-of-goods col-3">20' DC</div>
+                  <div class="packages col-1"></div>
+                  <div class="type col-1"></div>
+                  <div class="gross-weight col-2"></div>
+                  <div class="volume col-2"></div>
                 </div>
-
-                <div class="cargo-body-totals row">
-                  <div class="col-3"></div>
-                  <div class="col-9">
-                    Shipment Total
+                <div class="cargo-row unit-package-row row">
+                  <div class="marks-and-numbers col-3">Red square</div>
+                  <div class="description-of-goods col-3">short nails</div>
+                  <span class="packages col-1">20</span>
+                  <span class="type col-1">Boxes</span>
+                  <span class="gross-weight col-2">200.000 kg</span>
+                  <span class="volume col-2">5.000 cbm</span>
+                </div>
+                <div class="cargo-row unit-total-row row">
+                  <div class="marks-and-numbers col-3"></div>
+                  <div class="description-of-goods col-3">Unit Total</div>
+                  <div class="packages col-1">20</div>
+                  <div class="type col-1">Boxes</div>
+                  <div class="gross-weight col-2">200.000 kg</div>
+                  <div class="volume col-2">5.000 cbm</div>
+                </div>
+                <div class="cargo-row spacer-row"></div>
+                <div class="cargo-row unallocated-header-row row">
+                  <span class="col-3">Unallocated Packages</span>
+                </div>
+                {{#each package in unallocatedPackages}}
+                  <div class="cargo-row unallocated-package-row row">
+                    <div class="marks-and-numbers col-3">{{package.marksAndNumbers}}</div>
+                    <div class="description-of-goods col-3">{{package.descriptionOfGoods}}</div>
+                    <div class="packages col-1">{{package.count}}</div>
+                    <div class="type col-1">{{package.type}}</div>
+                    <div class="gross-weight col-2">{{package.grossWeight}}</div>
+                    <div class="volume col-2">{{package.volume}}</div>
                   </div>
+                {{/each}}
+                <div class="cargo-row unallocated-package-row row">
+                  <div class="marks-and-numbers col-3">Green inverted triangle</div>
+                  <div class="description-of-goods col-3">long nails</div>
+                  <span class="packages col-1">10</span>
+                  <span class="type col-1">Pallets</span>
+                  <span class="gross-weight col-2">500.000 kg</span>
+                  <span class="volume col-2">10.000 cbm</span>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                <div class="cargo-row unallocated-total-row row">
+                  <div class="marks-and-numbers col-3"></div>
+                  <div class="description-of-goods col-3">Unallocated Total</div>
+                  <span class="packages col-1">10</span>
+                  <span class="type col-1">Pallets</span>
+                  <span class="gross-weight col-2">500.000 kg</span>
+                  <span class="volume col-2">10.000 cbm</span>
+                </div>
+              </div> <!-- cargo-content -->
+            </div> <!-- panel-body-inner -->
+          </div> <!-- cargo-body -->
+        </div> <!-- cargo-panel -->
 
         <!-- Routing Panel -->
         <div class="routing panel">
