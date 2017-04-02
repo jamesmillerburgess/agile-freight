@@ -1,21 +1,25 @@
+import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
+
+import { Customers } from '../../api/customers/customers';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
 
-export default class CustomerList extends Component {
+class CustomerList extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { loading } = this.props;
+    const { loading, customers } = this.props;
     return (
       <div className="customer-list">
         <div className="panel">
           <div className="panel-header">
             <div className="panel-header-inner">
               <div className="icon-container hidden-md-down">
-                <i className="icon fa fa-fw fa-address-card" />
+                <i className="icon fa fa-fw fa-address-card"/>
               </div>
               <div className="panel-header-content container">
                 <div className="row">
@@ -37,7 +41,7 @@ export default class CustomerList extends Component {
                   </div>
                   <div className="col-5">
                     <form className="form-inline">
-                      <input className="focis-input mr-sm-2" type="text" placeholder="Filter" />
+                      <input className="focis-input mr-sm-2" type="text" placeholder="Filter"/>
                     </form>
                   </div>
                 </div>
@@ -47,7 +51,9 @@ export default class CustomerList extends Component {
         </div>
         {loading
           ? <h1>Loading...</h1>
-          : this.props.customers.map((customer, index) => <CustomerListItem key={index} customer={customer} />)
+          : customers.map((customer, index) =>
+          <CustomerListItem key={customer._id} customer={customer}/>
+        )
         }
       </div>
     );
@@ -58,3 +64,14 @@ CustomerList.propTypes = {
   loading: React.PropTypes.bool,
   customers: React.PropTypes.array,
 };
+
+const CustomerListContainer = createContainer(() => {
+  const branch = Meteor.subscribe('branch.active');
+  const loading = !branch.ready();
+  return {
+    loading,
+    customers: Customers.find().fetch(),
+  };
+}, CustomerList);
+
+export default CustomerListContainer;

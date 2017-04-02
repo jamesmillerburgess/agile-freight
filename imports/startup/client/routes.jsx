@@ -10,8 +10,10 @@ export const renderRoutes = () => (
   <BrowserRouter>
     <div>
       <Nav />
+      {/*<MainContainer />*/}
       <Route path="/" component={MainContainer} />
-      <Route path="/customers" />
+      {/*<Route path="/customers" />*/}
+      {/*<Route path="/customer/:id" component={MainContainer} />*/}
     </div>
   </BrowserRouter>
 );

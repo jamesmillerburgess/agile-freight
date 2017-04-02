@@ -1,10 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Route } from 'react-router-dom';
 
 import { Customers } from '../../api/customers/customers';
 
-import CustomerList from '../lists/CustomerList.jsx';
+import CustomerListContainer from '../lists/CustomerList.jsx';
+import CustomerContainer from '../object-view-pages/Customer.jsx';
 
 // App component - represents the whole app
 class Main extends Component {
@@ -12,22 +14,13 @@ class Main extends Component {
     super(props);
   }
 
-  path() {
-    return this.props.location.pathname;
-  }
-
-  content() {
-    if (this.path() === '/customers') {
-      return <CustomerList loading={this.props.loading} customers={this.props.customers}/>;
-    }
-    return <h1>Not /customers !</h1>;
-  }
-
   render() {
+    const { loading } = this.props;
     return (
       <div>
         <div className="container content">
-          {this.content()}
+          <Route path="/customers" render={props => <CustomerListContainer {...props} loading={loading} />} />
+          <Route path="/customer/:id" render={props => <CustomerContainer {...props} loading={loading} />} />
         </div>
       </div>
     );
@@ -44,7 +37,6 @@ const MainContainer = createContainer(() => {
   const loading = !branch.ready();
   return {
     loading,
-    customers: Customers.find({}).fetch(),
   };
 }, Main);
 
