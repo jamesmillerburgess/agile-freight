@@ -49,12 +49,10 @@ class CustomerList extends Component {
             </div>
           </div>
         </div>
-        {loading
-          ? <h1>Loading...</h1>
-          : customers.map((customer, index) =>
-          <CustomerListItem key={customer._id} customer={customer} />
-        )
-        }
+          {loading
+            ? <h1 key="loading">Loading...</h1>
+            : customers.map(customer => <CustomerListItem key={customer._id} customer={customer} />)
+          }
       </div>
     );
   }

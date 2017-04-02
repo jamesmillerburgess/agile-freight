@@ -18,9 +18,18 @@ class Main extends Component {
     return (
       <div>
         <div className="container content">
-          <Route path="/customers" render={props => <CustomerListContainer {...props} loading={loading} />} />
-          <Route path="/customer/:id" render={props => <CustomerContainer {...props} loading={loading} />} />
-          <Route path="/job/:id" render={props => <JobContainer {...props} loading={loading} />} />
+          <Route
+            path="/customers"
+            render={props => <CustomerListContainer {...props} />}
+          />
+          <Route
+            path="/customer/:id"
+            render={props => <CustomerContainer {...props} />}
+          />
+          <Route
+            path="/job/:id"
+            render={props => <JobContainer {...props} />}
+          />
         </div>
       </div>
     );

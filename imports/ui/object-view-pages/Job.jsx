@@ -24,7 +24,9 @@ class Job extends Component {
                 <div className="panel-header">
                   <div className="panel-header-inner">
                     <div className="icon-container hidden-md-down">
-                      <i className="icon fa fa-fw fa-ship"/>
+                      <i
+                        className="icon fa fa-fw fa-ship"
+                      />
                     </div>
                     <div className="panel-header-content container">
                       <div className="row">
@@ -54,13 +56,20 @@ class Job extends Component {
                         <div className="label">
                           Shipper
                         </div>
-                        <StakeholderFieldContainer stakeholderId={job.shipper} />
+                        <StakeholderFieldContainer
+                          stakeholderId={job.shipper}
+                        />
 
-                        {/*{{> field shipper}}*/}
                         {/*{{> field exportOffice}}*/}
                       </div>
                       <div className="destination col-3">
-                        {/*{{> field consignee}}*/}
+                        <div className="label">
+                          Consignee
+                        </div>
+                        <StakeholderFieldContainer
+                          stakeholderId={job.consignee}
+                        />
+
                         {/*{{> field importOffice}}*/}
                       </div>
                       <div className="terms col-3">

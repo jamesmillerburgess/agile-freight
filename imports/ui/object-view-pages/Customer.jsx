@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Customers } from '../../api/customers/customers';
@@ -83,7 +84,7 @@ class Customer extends Component {
                     <button className="focis-button new-quote-button">New Quote</button>
                   </a>
                 </div>
-                {quotes.map(quote => <QuoteListItem key={quote._id} quote={quote} />)}
+                {quotes.map(quote => <QuoteListItem key={quote._id} quote={quote}/>)}
                 <div className="list-title">
                   <div className="btn focis-button">Show Inactive Quotes</div>
                 </div>
@@ -91,9 +92,10 @@ class Customer extends Component {
               <div className="jobs-list col-12 col-lg-6">
                 <div className="list-title">
                   <h2>Jobs</h2>
-                  <button id="new-job-button" className="focis-button new-job-button">New Job</button>
+                  <button id="new-job-button" className="focis-button new-job-button">New Job
+                  </button>
                 </div>
-                {jobs.map(job => <JobListItem key={job._id} job={job} />)}
+                {jobs.map(job => <JobListItem key={job._id} job={job}/>)}
                 <div className="list-title">
                   <button className="btn focis-button">Show Inactive Jobs</button>
                 </div>
@@ -135,6 +137,7 @@ class Customer extends Component {
               </div>
             </div>
           </div>
+
         }
       </div>
     );
