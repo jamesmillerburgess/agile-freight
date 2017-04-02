@@ -37,7 +37,6 @@ htmljs@1.0.11
 http@1.2.12
 id-map@1.0.9
 jquery@1.11.10
-kadira:blaze-layout@2.3.0
 launch-screen@1.1.1
 less@2.7.9
 livedata@1.0.18
@@ -67,6 +66,7 @@ promise@0.8.8
 raix:eventemitter@0.1.3
 random@1.0.10
 rate-limit@1.0.7
+react-meteor-data@0.2.9
 reactive-dict@1.1.8
 reactive-var@1.0.11
 reload@1.1.11

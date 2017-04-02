@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 
+import CustomerListItem from '../list-items/CustomerListItem.jsx';
+
 export default class CustomerList extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const { loading } = this.props;
     return (
       <div className="customer-list">
         <div className="panel">
           <div className="panel-header">
             <div className="panel-header-inner">
               <div className="icon-container hidden-md-down">
-                <i className="icon fa fa-fw fa-address-card"></i>
+                <i className="icon fa fa-fw fa-address-card" />
               </div>
               <div className="panel-header-content container">
                 <div className="row">
@@ -38,7 +45,16 @@ export default class CustomerList extends Component {
             </div>
           </div>
         </div>
+        {loading
+          ? <h1>Loading...</h1>
+          : this.props.customers.map((customer, index) => <CustomerListItem key={index} customer={customer} />)
+        }
       </div>
     );
   }
 }
+
+CustomerList.propTypes = {
+  loading: React.PropTypes.bool,
+  customers: React.PropTypes.array,
+};

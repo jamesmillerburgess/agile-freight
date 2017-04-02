@@ -2,21 +2,16 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 // route components
-import App from '../../ui/app-core/App.jsx';
+import Nav from '../../ui/app-core/Nav.jsx';
+import MainContainer from '../../ui/app-core/Main.jsx';
 import CustomerList from '../../ui/lists/CustomerList.jsx';
-// import AppContainer from '../../ui/containers/AppContainer.jsx';
-// import ListPageContainer from '../../ui/containers/ListPageContainer.jsx';
-// import AuthPageSignIn from '../../ui/pages/AuthPageSignIn.jsx';
-// import AuthPageJoin from '../../ui/pages/AuthPageJoin.jsx';
-// import NotFoundPage from '../../ui/pages/NotFoundPage.jsx';
 
 export const renderRoutes = () => (
   <BrowserRouter>
     <div>
-      <App />
-      <div className="container content">
-        <Route path="/customers" component={CustomerList}/>
-      </div>
+      <Nav />
+      <Route path="/" component={MainContainer} />
+      <Route path="/customers" />
     </div>
   </BrowserRouter>
 );

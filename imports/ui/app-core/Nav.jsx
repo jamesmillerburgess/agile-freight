@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 // App component - represents the whole app
-export default class App extends Component {
+export default class Nav extends Component {
 
   render() {
     return (
@@ -11,7 +11,7 @@ export default class App extends Component {
                 data-target="#navbarTogglerDemo01"
                 aria-controls="navbarTogglerDemo01" aria-expanded="false"
                 aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"/>
         </button>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
           <Link to="/" className="navbar-brand">FOCiS</Link>
@@ -49,7 +49,7 @@ export default class App extends Component {
               </div>
               <div className="a-container">
                 <a id="sign-out-link" href="#" className="dropdown-item">
-                  <i className="fa fa-fw fa-sign-out"></i>
+                  <i className="fa fa-fw fa-sign-out"/>
                   Sign Out
                 </a>
               </div>
