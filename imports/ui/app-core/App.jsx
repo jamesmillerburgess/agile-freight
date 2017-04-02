@@ -14,7 +14,7 @@ export default class App extends Component {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <a className="navbar-brand" href="#">FOCiS</a>
+          <Link to="/" className="navbar-brand">FOCiS</Link>
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
             <li className="nav-item">
               <Link to="/customers" className="nav-link">Customers <span className="sr-only">(current)</span></Link>

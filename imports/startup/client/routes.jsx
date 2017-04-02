@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 // route components
 import App from '../../ui/app-core/App.jsx';
@@ -14,7 +14,9 @@ export const renderRoutes = () => (
   <BrowserRouter>
     <div>
       <App />
-      <Route path="/customers" component={CustomerList} />
+      <div className="container content">
+        <Route path="/customers" component={CustomerList}/>
+      </div>
     </div>
   </BrowserRouter>
 );
