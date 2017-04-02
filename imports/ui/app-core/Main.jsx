@@ -3,10 +3,9 @@ import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Route } from 'react-router-dom';
 
-import { Customers } from '../../api/customers/customers';
-
 import CustomerListContainer from '../lists/CustomerList.jsx';
 import CustomerContainer from '../object-view-pages/Customer.jsx';
+import JobContainer from '../object-view-pages/Job.jsx';
 
 // App component - represents the whole app
 class Main extends Component {
@@ -21,6 +20,7 @@ class Main extends Component {
         <div className="container content">
           <Route path="/customers" render={props => <CustomerListContainer {...props} loading={loading} />} />
           <Route path="/customer/:id" render={props => <CustomerContainer {...props} loading={loading} />} />
+          <Route path="/job/:id" render={props => <JobContainer {...props} loading={loading} />} />
         </div>
       </div>
     );
@@ -29,7 +29,6 @@ class Main extends Component {
 
 Main.propTypes = {
   loading: React.PropTypes.bool,
-  customers: React.PropTypes.array,
 };
 
 const MainContainer = createContainer(() => {

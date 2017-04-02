@@ -52,7 +52,7 @@ class CustomerList extends Component {
         {loading
           ? <h1>Loading...</h1>
           : customers.map((customer, index) =>
-          <CustomerListItem key={customer._id} customer={customer}/>
+          <CustomerListItem key={customer._id} customer={customer} />
         )
         }
       </div>
