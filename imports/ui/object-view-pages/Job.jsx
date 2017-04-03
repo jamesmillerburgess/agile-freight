@@ -16,6 +16,7 @@ class Job extends Component {
   constructor(props) {
     super(props);
     this.updateValue = this.updateValue.bind(this);
+    this.updateEvent = this.updateEvent.bind(this);
   }
 
   updateValue(path, value) {
@@ -27,8 +28,8 @@ class Job extends Component {
     }
   }
 
-  updateEvent(eventId, event) {
-    Meteor.call('jobs.updateEvent', eventId, event);
+  updateEvent(event) {
+    Meteor.call('jobs.updateEvent', this.props.job._id, event);
   }
 
   render() {
@@ -133,16 +134,33 @@ class Job extends Component {
                           event={_.find(job.events, doc => doc.type === 'Physical Receipt of Goods')}
                           valueUpdateCallback={this.updateEvent}
                         />
-                        {/*{{> field physicalReceiptOfGoods}}*/}
                       </div>
                       <div className="col-3">
-                        {/*{{> field internationalDeparture}}*/}
+                        <div className="label">
+                          International Departure
+                        </div>
+                        <EventField
+                          event={_.find(job.events, doc => doc.type === 'International Departure')}
+                          valueUpdateCallback={this.updateEvent}
+                        />
                       </div>
                       <div className="col-3">
-                        {/*{{> field internationalArrival}}*/}
+                        <div className="label">
+                          International Arrival
+                        </div>
+                        <EventField
+                          event={_.find(job.events, doc => doc.type === 'International Arrival')}
+                          valueUpdateCallback={this.updateEvent}
+                        />
                       </div>
                       <div className="col-3">
-                        {/*{{> field proofOfDelivery}}*/}
+                        <div className="label">
+                          Proof of Delivery
+                        </div>
+                        <EventField
+                          event={_.find(job.events, doc => doc.type === 'Proof of Delivery')}
+                          valueUpdateCallback={this.updateEvent}
+                        />
                       </div>
                     </div>
                   </div>

@@ -9,9 +9,6 @@ export default class EventField extends React.Component {
     this.state = { search: '' };
     this.getValue = this.getValue.bind(this);
     this.handleFieldButtonClick = this.handleFieldButtonClick.bind(this);
-    this.handleDropdownMenuClick = this.handleDropdownMenuClick.bind(this);
-    this.handleSetExpectedClick = this.handleSetExpectedClick.bind(this);
-    this.handleSetActualClick = this.handleSetActualClick.bind(this);
     this.handleClickUpdateEvent = this.handleClickUpdateEvent.bind(this);
     this.eventStatusClasses = this.eventStatusClasses.bind(this);
     this.overdueClass = this.overdueClass.bind(this);
@@ -23,7 +20,16 @@ export default class EventField extends React.Component {
       format: UIGlobals.dateFormat,   // Standard date format
       useCurrent: false,              // Don't default in today's date and time
     });
-    $(this.node).find('.dropdown').dropdown();
+    $('.dropdown-menu .set-expected').click((event) => {
+      event.stopPropagation();
+      $(event.target).parents('.dropdown-menu').find('.set-expected').addClass('active');
+      $(event.target).parents('.dropdown-menu').find('.set-actual').removeClass('active');
+    });
+    $('.dropdown-menu .set-actual').click((event) => {
+      event.stopPropagation();
+      $(event.target).parents('.dropdown-menu').find('.set-actual').addClass('active');
+      $(event.target).parents('.dropdown-menu').find('.set-expected').removeClass('active');
+    });
   }
 
   getValue() {
@@ -35,11 +41,6 @@ export default class EventField extends React.Component {
 
   handleFieldButtonClick() {
     $('.dropdown-filter').select();
-  }
-
-  handleDropdownMenuClick(event) {
-    // event.stopPropagation();
-    // event.nativeEvent.stopImmediatePropagation();
   }
 
   eventStatusClasses() {
@@ -65,25 +66,12 @@ export default class EventField extends React.Component {
     return '';
   }
 
-  handleSetExpectedClick(event) {
-    console.log('click!');
-    $(event.target).parents('.dropdown-menu').find('.set-expected').addClass('active');
-    $(event.target).parents('.dropdown-menu').find('.set-actual').removeClass('active');
-    event.stopPropagation();
-  }
-
-  handleSetActualClick(event) {
-    console.log('click!');
-    $(event.target).parents('.dropdown-menu').find('.set-actual').addClass('active');
-    $(event.target).parents('.dropdown-menu').find('.set-expected').removeClass('active');
-  }
-
   handleClickUpdateEvent(event) {
     const menu = $(event.target).parents('.dropdown-menu');
     const update = {};
 
     // Set the id
-    const eventId = this.props.event.id;
+    update.id = this.props.event.id;
 
     // Set the type
     update.type = this.props.event.type;
@@ -104,7 +92,7 @@ export default class EventField extends React.Component {
     update.remarks = menu.find('.event-update-remarks')[0].value;
 
     // Update
-    this.props.valueUpdateCallback(eventId, update);
+    this.props.valueUpdateCallback(update);
   }
 
   render() {
@@ -136,17 +124,17 @@ export default class EventField extends React.Component {
         <div
           className="dropdown-menu event"
           aria-labelledby="dropdownMenuButton"
-          onClick={this.handleDropdownMenuClick}
         >
           <div href="#" className="dropdown-form">
             <input
               className="datetimepicker"
               type="text"
+              defaultValue={this.getValue()}
             />
-            <button className="focis-button set-expected" onClick={this.handleSetExpectedClick}>
+            <button className="focis-button set-expected">
               <i className="fa fa-fw fa-clock-o"/>
             </button>
-            <button className="focis-button set-actual" onClick={this.handleSetActualClick}>
+            <button className="focis-button set-actual">
               <i className="fa fa-fw fa-check"/>
             </button>
             <input
