@@ -9,6 +9,16 @@ import StakeholderFieldContainer from '../fields/StakeholderField.jsx';
 class Job extends Component {
   constructor(props) {
     super(props);
+    this.updateValue = this.updateValue.bind(this);
+  }
+
+  updateValue(path, value) {
+    console.log('path: '+path);
+    console.log('value: '+value);
+    console.log(`this.props.job[${path}]: ${this.props.job[path]}`);
+    if (this.props.job[path] !== value) {
+      Meteor.call('jobs.updateField', this.props.job._id, path, value);
+    }
   }
 
   render() {
@@ -58,6 +68,8 @@ class Job extends Component {
                         </div>
                         <StakeholderFieldContainer
                           stakeholderId={job.shipper}
+                          path="shipper"
+                          valueUpdateCallback={this.updateValue}
                         />
 
                         {/*{{> field exportOffice}}*/}

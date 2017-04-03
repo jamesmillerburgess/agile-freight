@@ -24,19 +24,17 @@ class StakeholderField extends Component {
     // event.preventDefault();
 
     // Grab the correct value/id
-    const updateValue = $(event.target).parents('.a-container')[0].key || '';
+    const updateValue = $(event.target).parents('.a-container')[0].id || '';
     const display = $(event.target).parents('.a-container')[0].title || '';
 
     // Update the UI now
     $(event.target).parents('.dropdown').find('.value')[0].innerText = display;
+    $(event.target).parents('.dropdown').find('input')[0].value = display;
 
     // Check if we should update the collection
     this.setState({ search: display });
 
-    // Update if needed and reset the UI because it displays the value twice otherwise
-    // if (needUpdate) {
-    //   Meteor.call(this.update.method, this.update.id, this.update.path, updateValue);
-    // }
+    this.props.valueUpdateCallback(this.props.path, updateValue);
   }
 
   updateSearch(event) {
@@ -51,7 +49,7 @@ class StakeholderField extends Component {
   }
 
   render() {
-    const { loading, job, value, currentStakeholder, stakeholders } = this.props;
+    const { loading, currentStakeholder } = this.props;
     const { search } = this.state;
     return (
       <div className="dropdown">
@@ -64,14 +62,14 @@ class StakeholderField extends Component {
           aria-expanded="false"
           onClick={this.handleFieldButtonClick}
         >
-          <button className="value {{overdueClass}}">
+          <button className="value">
             <span>{currentStakeholder.name}</span>
           </button>
         </div>
 
         {/* Field Menu */}
         <div
-          className="dropdown-menu {{dropdownMenuClasses}}"
+          className="dropdown-menu"
           aria-labelledby="dropdownMenuButton"
         >
           <input
@@ -85,16 +83,24 @@ class StakeholderField extends Component {
             this.searchResults().map(searchResult =>
               (
 
-                <div key={searchResult._id} className="a-container" title={searchResult.name}>
+                <div
+                  id={searchResult._id}
+                  key={searchResult._id}
+                  className="a-container"
+                  title={searchResult.name}
+                >
                   <a
                     className="dropdown-item row"
                     onClick={this.handleClickResult}
                   >
                     <pre
-                      dangerouslySetInnerHTML={{ __html: smartHighlight(searchResult.search, search) }}></pre>
+                      dangerouslySetInnerHTML={{
+                        __html: smartHighlight(searchResult.search, search)
+                      }}
+                    />
                   </a>
                 </div>
-              )
+              ),
             )}
         </div>
 
@@ -105,20 +111,22 @@ class StakeholderField extends Component {
 
 
 StakeholderField.propTypes = {
-  value: React.PropTypes.string,
+  path: React.PropTypes.string,
+  valueUpdateCallback: React.PropTypes.func,
   loading: React.PropTypes.bool,
-  stakeholders: React.PropTypes.array,
   currentStakeholder: React.PropTypes.object,
 };
 
 const StakeholderFieldContainer = createContainer((props) => {
-  const { stakeholderId } = props;
+  const { stakeholderId, valueUpdateCallback, path } = props;
   const branch = Meteor.subscribe('branch.active');
   const loading = !branch.ready();
+  const currentStakeholder = Customers.findOne(stakeholderId);
   return {
+    path,
+    valueUpdateCallback,
     loading,
-    stakeholders: Customers.find({}).fetch(),
-    currentStakeholder: Customers.findOne(stakeholderId),
+    currentStakeholder,
   };
 }, StakeholderField);
 
