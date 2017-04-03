@@ -8,8 +8,9 @@ import { Offices } from '../../api/offices/offices';
 
 import { APIGlobals } from '../../api/api-globals';
 
-import StakeholderFieldContainer from '../fields/StakeholderField.jsx';
+import ReferenceFieldContainer from '../fields/ReferenceField.jsx';
 import DropdownField from '../fields/DropdownField.jsx';
+import EventField from '../fields/EventField.jsx';
 
 class Job extends Component {
   constructor(props) {
@@ -24,6 +25,10 @@ class Job extends Component {
     if (this.props.job[path] !== value) {
       Meteor.call('jobs.updateField', this.props.job._id, path, value);
     }
+  }
+
+  updateEvent(eventId, event) {
+    Meteor.call('jobs.updateEvent', eventId, event);
   }
 
   render() {
@@ -71,7 +76,7 @@ class Job extends Component {
                         <div className="label">
                           Shipper
                         </div>
-                        <StakeholderFieldContainer
+                        <ReferenceFieldContainer
                           stakeholderId={job.shipper}
                           path="shipper"
                           collection={Customers}
@@ -80,7 +85,7 @@ class Job extends Component {
                         <div className="label">
                           Export Office
                         </div>
-                        <StakeholderFieldContainer
+                        <ReferenceFieldContainer
                           stakeholderId={job.exportOffice}
                           path="exportOffice"
                           collection={Offices}
@@ -91,7 +96,7 @@ class Job extends Component {
                         <div className="label">
                           Consignee
                         </div>
-                        <StakeholderFieldContainer
+                        <ReferenceFieldContainer
                           stakeholderId={job.consignee}
                           path="consignee"
                           collection={Customers}
@@ -100,7 +105,7 @@ class Job extends Component {
                         <div className="label">
                           Import Office
                         </div>
-                        <StakeholderFieldContainer
+                        <ReferenceFieldContainer
                           stakeholderId={job.importOffice}
                           path="importOffice"
                           collection={Offices}
@@ -121,6 +126,13 @@ class Job extends Component {
                     </div>
                     <div className="row">
                       <div className="col-3">
+                        <div className="label">
+                          Physical Receipt of Goods
+                        </div>
+                        <EventField
+                          event={_.find(job.events, doc => doc.type === 'Physical Receipt of Goods')}
+                          valueUpdateCallback={this.updateEvent}
+                        />
                         {/*{{> field physicalReceiptOfGoods}}*/}
                       </div>
                       <div className="col-3">

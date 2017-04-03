@@ -4,7 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { smartHighlight } from '../formatters/smart-highlight';
 
-class StakeholderField extends Component {
+class ReferenceField extends Component {
   constructor(props) {
     super(props);
     this.state = { search: this.props.currentStakeholder.name };
@@ -108,14 +108,14 @@ class StakeholderField extends Component {
 }
 
 
-StakeholderField.propTypes = {
+ReferenceField.propTypes = {
   path: React.PropTypes.string,
   valueUpdateCallback: React.PropTypes.func,
   loading: React.PropTypes.bool,
   currentStakeholder: React.PropTypes.object,
 };
 
-const StakeholderFieldContainer = createContainer((props) => {
+const ReferenceFieldContainer = createContainer((props) => {
   const {
     stakeholderId,
     valueUpdateCallback,
@@ -132,6 +132,6 @@ const StakeholderFieldContainer = createContainer((props) => {
     loading,
     currentStakeholder,
   };
-}, StakeholderField);
+}, ReferenceField);
 
-export default StakeholderFieldContainer;
+export default ReferenceFieldContainer;
