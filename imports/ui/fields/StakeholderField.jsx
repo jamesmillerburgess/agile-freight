@@ -2,8 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Customers } from '../../api/customers/customers';
-
 import { smartHighlight } from '../formatters/smart-highlight';
 
 class StakeholderField extends Component {
@@ -42,7 +40,7 @@ class StakeholderField extends Component {
   }
 
   searchResults() {
-    return Customers.find(
+    return this.props.collection.find(
       { search: { $regex: this.state.search, $options: 'gi' } },
       { limit: 5 },
     );
@@ -95,7 +93,7 @@ class StakeholderField extends Component {
                   >
                     <pre
                       dangerouslySetInnerHTML={{
-                        __html: smartHighlight(searchResult.search, search)
+                        __html: smartHighlight(searchResult.search, search),
                       }}
                     />
                   </a>
@@ -118,12 +116,18 @@ StakeholderField.propTypes = {
 };
 
 const StakeholderFieldContainer = createContainer((props) => {
-  const { stakeholderId, valueUpdateCallback, path } = props;
+  const {
+    stakeholderId,
+    valueUpdateCallback,
+    path,
+    collection,
+  } = props;
   const branch = Meteor.subscribe('branch.active');
   const loading = !branch.ready();
-  const currentStakeholder = Customers.findOne(stakeholderId);
+  const currentStakeholder = collection.findOne(stakeholderId);
   return {
     path,
+    collection,
     valueUpdateCallback,
     loading,
     currentStakeholder,

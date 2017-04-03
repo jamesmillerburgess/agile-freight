@@ -3,8 +3,13 @@ import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Jobs } from '../../api/jobs/jobs';
+import { Customers } from '../../api/customers/customers';
+import { Offices } from '../../api/offices/offices';
+
+import { APIGlobals } from '../../api/api-globals';
 
 import StakeholderFieldContainer from '../fields/StakeholderField.jsx';
+import DropdownField from '../fields/DropdownField.jsx';
 
 class Job extends Component {
   constructor(props) {
@@ -13,8 +18,8 @@ class Job extends Component {
   }
 
   updateValue(path, value) {
-    console.log('path: '+path);
-    console.log('value: '+value);
+    console.log('path: ' + path);
+    console.log('value: ' + value);
     console.log(`this.props.job[${path}]: ${this.props.job[path]}`);
     if (this.props.job[path] !== value) {
       Meteor.call('jobs.updateField', this.props.job._id, path, value);
@@ -69,10 +74,18 @@ class Job extends Component {
                         <StakeholderFieldContainer
                           stakeholderId={job.shipper}
                           path="shipper"
+                          collection={Customers}
                           valueUpdateCallback={this.updateValue}
                         />
-
-                        {/*{{> field exportOffice}}*/}
+                        <div className="label">
+                          Export Office
+                        </div>
+                        <StakeholderFieldContainer
+                          stakeholderId={job.exportOffice}
+                          path="exportOffice"
+                          collection={Offices}
+                          valueUpdateCallback={this.updateValue}
+                        />
                       </div>
                       <div className="destination col-3">
                         <div className="label">
@@ -80,12 +93,30 @@ class Job extends Component {
                         </div>
                         <StakeholderFieldContainer
                           stakeholderId={job.consignee}
+                          path="consignee"
+                          collection={Customers}
+                          valueUpdateCallback={this.updateValue}
                         />
-
-                        {/*{{> field importOffice}}*/}
+                        <div className="label">
+                          Import Office
+                        </div>
+                        <StakeholderFieldContainer
+                          stakeholderId={job.importOffice}
+                          path="importOffice"
+                          collection={Offices}
+                          valueUpdateCallback={this.updateValue}
+                        />
                       </div>
                       <div className="terms col-3">
-                        {/*{{> field incoterm}}*/}
+                        <div className="label">
+                          Incoterm
+                        </div>
+                        <DropdownField
+                          value={job.incoterm}
+                          options={APIGlobals.incotermOptions}
+                          path="incoterm"
+                          valueUpdateCallback={this.updateValue}
+                        />
                       </div>
                     </div>
                     <div className="row">
