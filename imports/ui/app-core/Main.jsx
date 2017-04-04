@@ -15,7 +15,6 @@ class Main extends Component {
   }
 
   render() {
-    const { loading } = this.props;
     return (
       <div>
         <div className="container content">

@@ -194,7 +194,8 @@ class Job extends Component {
                       />
                       {/* {{> mention updateField}} */}
                       <div className="latest-update-list">
-                        {this.updatesReversedAndTrimmed().map(update => <UpdateListItem update={update} />)}
+                        {this.updatesReversedAndTrimmed()
+                          .map((update, index) => <UpdateListItem key={index} update={update} />)}
                         <div className="latest-update-list-item">
                           <button
                             id="see-all-updates"
