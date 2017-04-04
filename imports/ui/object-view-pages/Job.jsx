@@ -11,6 +11,7 @@ import { APIGlobals } from '../../api/api-globals';
 import ReferenceFieldContainer from '../fields/ReferenceField.jsx';
 import DropdownField from '../fields/DropdownField.jsx';
 import EventField from '../fields/EventField.jsx';
+import MentionFieldContainer from '../fields/MentionField.jsx';
 
 class Job extends Component {
   constructor(props) {
@@ -167,6 +168,42 @@ class Job extends Component {
                 </div>
               </div>
 
+            </div>
+
+            {/* Job Body */}
+            <div className="job-body row">
+
+              {/* Latest Updates */}
+              <div className="latest-updates col-3">
+                <div className="panel">
+                  <div className="panel-header align-center">
+                    Latest Updates
+                  </div>
+                  <div className="panel-body">
+                    <div className="panel-body-inner">
+                      <MentionFieldContainer
+                        valueUpdateCallback={() => null}
+                      />
+                      {/* {{> mention updateField}} */}
+                      <div className="latest-update-list">
+                        {/* {{#each update in updatesReversedAndTrimmed}} */}
+                        {/* {{> updateListItem update}} */}
+                        {/* {{/each}} */}
+                        <div className="latest-update-list-item">
+                          <button
+                            id="see-all-updates"
+                            className="value"
+                            data-toggle="modal"
+                            data-target="#all-updates-modal"
+                          >
+                            See All Updates
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         }
