@@ -3,7 +3,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Template } from 'meteor/templating';
 
 import './customer.html';
-import './customer.less';
+import '../../../client/css/customer.less';
 
 Template.customer.helpers({
   creditPercent() {

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import './user-profile.html';
-import './user-profile.less';
+import '../../../client/css/user-profile.less';
 
 Template.userProfile.helpers({
   name() {

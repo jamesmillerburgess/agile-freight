@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import './app-body.html';
-import './app-body.less';
+import '../../../client/css/app-body.less';
 
 Template.appBody.helpers({
   loggedIn: function loggedIn() {

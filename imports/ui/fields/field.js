@@ -6,7 +6,7 @@ import moment from 'moment';
 import { UIGlobals } from '../ui-globals';
 
 import './field.html';
-import './field.less';
+import '../../../client/css/field.less';
 
 Template.field.onCreated(function onCreated() {
   // Set the starting search

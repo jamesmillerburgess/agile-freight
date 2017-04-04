@@ -6,24 +6,24 @@ import { Jobs } from '../../api/jobs/jobs';
 import { Customers } from '../../api/customers/customers';
 import { Offices } from '../../api/offices/offices';
 
+import { UIGlobals } from '../ui-globals';
 import { APIGlobals } from '../../api/api-globals';
 
 import ReferenceFieldContainer from '../fields/ReferenceField.jsx';
 import DropdownField from '../fields/DropdownField.jsx';
 import EventField from '../fields/EventField.jsx';
 import MentionFieldContainer from '../fields/MentionField.jsx';
+import UpdateListItem from '../list-items/UpdateListItem.jsx';
 
 class Job extends Component {
   constructor(props) {
     super(props);
     this.updateValue = this.updateValue.bind(this);
     this.updateEvent = this.updateEvent.bind(this);
+    this.addUpdate = this.addUpdate.bind(this);
   }
 
   updateValue(path, value) {
-    console.log('path: ' + path);
-    console.log('value: ' + value);
-    console.log(`this.props.job[${path}]: ${this.props.job[path]}`);
     if (this.props.job[path] !== value) {
       Meteor.call('jobs.updateField', this.props.job._id, path, value);
     }
@@ -31,6 +31,14 @@ class Job extends Component {
 
   updateEvent(event) {
     Meteor.call('jobs.updateEvent', this.props.job._id, event);
+  }
+
+  addUpdate(update) {
+    Meteor.call('jobs.addUpdate', this.props.job._id, update);
+  }
+
+  updatesReversedAndTrimmed() {
+    return _.first(this.props.job.updates.slice().reverse(), UIGlobals.listLimit);
   }
 
   render() {
@@ -182,13 +190,11 @@ class Job extends Component {
                   <div className="panel-body">
                     <div className="panel-body-inner">
                       <MentionFieldContainer
-                        valueUpdateCallback={() => null}
+                        valueUpdateCallback={this.addUpdate}
                       />
                       {/* {{> mention updateField}} */}
                       <div className="latest-update-list">
-                        {/* {{#each update in updatesReversedAndTrimmed}} */}
-                        {/* {{> updateListItem update}} */}
-                        {/* {{/each}} */}
+                        {this.updatesReversedAndTrimmed().map(update => <UpdateListItem update={update} />)}
                         <div className="latest-update-list-item">
                           <button
                             id="see-all-updates"

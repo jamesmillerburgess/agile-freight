@@ -1,2 +1,2 @@
 import './rates.html';
-import './rates.less';
+import '../../../client/css/rates.less';

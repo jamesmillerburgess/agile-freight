@@ -4,7 +4,7 @@ import { Template } from 'meteor/templating';
 import { Rates } from '../../api/rates/rates.js';
 
 import './new-quote.html';
-import './new-quote.less';
+import '../../../client/css/new-quote.less';
 
 const searchQuery = new ReactiveVar('');
 const product = new ReactiveVar('');

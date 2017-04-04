@@ -1,5 +1,5 @@
 import './input.html';
-import './input.less';
+import '../../../client/css/input.less';
 
 Template.Input.onRendered(function onRendered() {
   const input = this.find('input');

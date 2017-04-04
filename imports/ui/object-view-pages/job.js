@@ -9,7 +9,7 @@ import { APIGlobals } from '../../api/api-globals';
 import { UIGlobals } from '../ui-globals';
 
 import './job.html';
-import './job.less';
+import '../../../client/css/job.less';
 
 Template.job.onCreated(function onCreated() {
   this.data.APIGlobals = APIGlobals;

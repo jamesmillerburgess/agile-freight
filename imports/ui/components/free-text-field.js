@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 
 import './free-text-field.html';
-import './free-text-field.less';
+import '../../../client/css/free-text-field.less';
 
 
 Template.freeTextField.onRendered(function onRendered() {

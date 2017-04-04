@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import './quote-list-item.html';
-import './quote-list-item.less';
+import '../../../client/css/quote-list-item.less';
 
 Template.quoteListItem.helpers({
   modeIconClass() {

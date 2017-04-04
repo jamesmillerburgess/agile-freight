@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import CustomerListContainer from '../lists/CustomerList.jsx';
 import CustomerContainer from '../object-view-pages/Customer.jsx';
 import JobContainer from '../object-view-pages/Job.jsx';
+import SignIn from'./SignIn.jsx';
 
 // App component - represents the whole app
 class Main extends Component {
@@ -29,6 +30,10 @@ class Main extends Component {
           <Route
             path="/job/:id"
             render={props => <JobContainer {...props} />}
+          />
+          <Route
+            path="/sign-in"
+            render={props => <SignIn {...props} />}
           />
         </div>
       </div>

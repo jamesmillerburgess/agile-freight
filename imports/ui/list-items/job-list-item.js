@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import './job-list-item.html';
-import './job-list-item.less';
+import '../../../client/css/job-list-item.less';
 
 Template.jobListItem.events({
   'click .card': function handleClickCard() {

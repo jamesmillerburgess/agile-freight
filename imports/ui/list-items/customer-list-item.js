@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import './customer-list-item.html';
-import './customer-list-item.less';
+import '../../../client/css/customer-list-item.less';
 
 Template.customerListItem.helpers({
   customer() {

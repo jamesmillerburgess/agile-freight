@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import './update-list-item.html';
-import './update-list-item.less';
+import '../../../client/css/update-list-item.less';
 
 Template.updateListItem.helpers({
   isNote() {

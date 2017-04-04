@@ -1,2 +1,2 @@
 import './quotes.html';
-import './quotes.less';
+import '../../../client/css/quotes.less';

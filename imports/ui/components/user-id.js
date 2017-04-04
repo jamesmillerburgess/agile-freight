@@ -1,2 +1,2 @@
 import './user-id.html';
-import './user-id.less';
+import '../../../client/css/user-id.less';

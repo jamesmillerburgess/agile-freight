@@ -2,13 +2,11 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Meteor } from 'meteor/meteor';
-
 class MentionField extends React.Component {
 
   constructor(props) {
     super(props);
-    MentionField.handleTextareaInput = MentionField.handleTextareaInput.bind(this);
+    this.adjustTextareaHeight = this.adjustTextareaHeight.bind(this);
     this.handleTextareaKeydown = this.handleTextareaKeydown.bind(this);
   }
 
@@ -17,7 +15,7 @@ class MentionField extends React.Component {
   }
 
   adjustTextareaHeight() {
-    const elem = $(this.node).find('textarea');
+    const elem = this.textareaNode;
     elem.style.height = '1px';
     elem.style.height = `${elem.scrollHeight}px`;
   }
@@ -31,7 +29,7 @@ class MentionField extends React.Component {
         message: 'left a note :',
         note: event.target.value,
       };
-      Meteor.call(this.method, this.id, update);
+      this.props.valueUpdateCallback(update);
       event.target.value = '';
       this.adjustTextareaHeight();
     }
@@ -40,18 +38,18 @@ class MentionField extends React.Component {
   render() {
     return (
       <div
-        ref={node => this.node = node}
         className="mentionable"
         data-toggle="dropdown"
       >
         <textarea
+          ref={node => this.textareaNode = node}
           className="latest-updates-input"
           placeholder="Leave a note..."
           onKeyDown={this.handleTextareaKeydown}
           onInput={this.adjustTextareaHeight}
         />
         <ul className="dropdown-menu">
-          <li/>
+          <li />
         </ul>
       </div>
     );
@@ -59,17 +57,18 @@ class MentionField extends React.Component {
 }
 
 MentionField.propTypes = {
-
   valueUpdateCallback: React.PropTypes.func.isRequired,
 };
 
 const MentionFieldContainer = createContainer((props) => {
+  const { valueUpdateCallback } = props;
   const branch = Meteor.subscribe('branch.active');
   const loading = !branch.ready();
   const users = Meteor.users.find({}).fetch();
   return {
     loading,
     users,
+    valueUpdateCallback,
   };
 }, MentionField);
 

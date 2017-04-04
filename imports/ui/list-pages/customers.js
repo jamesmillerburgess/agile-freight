@@ -4,7 +4,7 @@ import { Customers } from '../../api/customers/customers';
 import { UIGlobals } from '../ui-globals';
 
 import './customers.html';
-import './customers.less';
+import '../../../client/css/customers.less';
 
 Template.customers.helpers({
   customers() {

@@ -3,7 +3,6 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import './main.html';
-import './main.less';
 
 import { Customers } from '../../api/customers/customers';
 import { Quotes } from '../../api/quotes/quotes';

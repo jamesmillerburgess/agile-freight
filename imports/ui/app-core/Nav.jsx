@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import { Link } from 'react-router-dom';
 
 // App component - represents the whole app
@@ -48,7 +49,12 @@ export default class Nav extends Component {
                 </Link>
               </div>
               <div className="a-container">
-                <a id="sign-out-link" href="#" className="dropdown-item">
+                <a
+                  id="sign-out-link"
+                  href="#"
+                  className="dropdown-item"
+                  onClick={Meteor.logout}
+                >
                   <i className="fa fa-fw fa-sign-out"/>
                   Sign Out
                 </a>
