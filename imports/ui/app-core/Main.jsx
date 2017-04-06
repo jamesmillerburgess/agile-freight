@@ -6,6 +6,7 @@ import { Route, Redirect } from 'react-router-dom';
 import CustomerListContainer from '../lists/CustomerList.jsx';
 import CustomerContainer from '../object-view-pages/Customer.jsx';
 import JobContainer from '../object-view-pages/Job.jsx';
+import UserProfile from '../object-view-pages/UserProfile.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
 
@@ -45,6 +46,10 @@ class Main extends Component {
           <Route
             path="/job/:id"
             render={props => this.verifyAuth(JobContainer, props)}
+          />
+          <Route
+            path="/user-profile"
+            render={props => this.verifyAuth(UserProfile, props)}
           />
         </div>
       </div>

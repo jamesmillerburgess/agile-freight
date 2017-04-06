@@ -58,7 +58,7 @@ class NavInner extends Component {
               </a>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <div className="a-container">
-                  <Link to="/edit-profile" id="edit-profile-link" className="dropdown-item">
+                  <Link to="/user-profile" id="edit-profile-link" className="dropdown-item">
                     <i className="fa fa-fw fa-pencil" />
                     Edit Profile
                   </Link>

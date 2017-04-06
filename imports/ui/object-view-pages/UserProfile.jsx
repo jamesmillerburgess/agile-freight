@@ -1,8 +1,18 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
+import { createContainer } from 'meteor/react-meteor-data';
 
-export default class UserProfile extends React.Component {
+import FreeTextField from '../fields/FreeTextField.jsx';
+
+class UserProfileInner extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  updateValue(path, value) {
+    if (Meteor.user()[path] !== value) {
+      Meteor.call('users.updateField', Meteor.user()._id, path, value);
+    }
   }
 
   render() {
@@ -11,7 +21,7 @@ export default class UserProfile extends React.Component {
         <div className="panel-header">
           <div className="panel-header-inner">
             <div className="icon-container hidden-md-down">
-              <i className="icon fa fa-fw fa-user"/>
+              <i className="icon fa fa-fw fa-user" />
             </div>
             <div className="panel-header-content container">
               <div className="row">
@@ -31,10 +41,30 @@ export default class UserProfile extends React.Component {
           <div className="panel-body-inner">
             <div className="row">
               <div className="col-12 col-lg-3">
-                {/*{{> field name}}*/}
+                <div className="label">
+                  Name
+                </div>
+                {Meteor.loggingIn() ?
+                  <span>Loading</span> :
+                  <FreeTextField
+                    value={Meteor.user().profile.name}
+                    path="profile.name"
+                    valueUpdateCallback={this.updateValue}
+                  />
+                }
               </div>
               <div className="col-12 col-lg-3">
-                {/*{{> field email}}*/}
+                <div className="label">
+                  Email
+                </div>
+                {Meteor.loggingIn() ?
+                  <span>Loading</span> :
+                  <FreeTextField
+                    value={Meteor.user().emails[0].address}
+                    path="emails[0].address"
+                    valueUpdateCallback={this.updateValue}
+                  />
+                }
               </div>
             </div>
           </div>
@@ -44,7 +74,10 @@ export default class UserProfile extends React.Component {
   }
 }
 
-UserProfile.propTypes = {
-  loading: React.PropTypes.bool,
-  job: React.PropTypes.object,
-};
+const UserProfile = createContainer(() => {
+  return {
+    user: Meteor.user(),
+  };
+}, UserProfileInner);
+
+export default UserProfile;
