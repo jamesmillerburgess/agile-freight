@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Jobs } from '../../api/jobs/jobs';
@@ -15,7 +15,7 @@ import EventField from '../fields/EventField.jsx';
 import MentionFieldContainer from '../fields/MentionField.jsx';
 import UpdateListItem from '../list-items/UpdateListItem.jsx';
 
-class Job extends Component {
+class Job extends React.Component {
   constructor(props) {
     super(props);
     this.updateValue = this.updateValue.bind(this);
