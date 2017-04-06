@@ -1,8 +1,17 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 
 export default class UpdateListItem extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  userName() {
+    const user = Meteor.users.findOne(this.props.update.source);
+    if (user.profile && user.profile.name) {
+      return user.profile.name;
+    }
+    return 'unknown';
   }
 
   render() {
@@ -18,7 +27,7 @@ export default class UpdateListItem extends React.Component {
           </a>
         </div>
         <div className="list-item-content">
-          <a className="user-id" href="">{update.userName}</a>{update.message}
+          <a className="user-id" href="">{this.userName()}</a>{update.message}
           {update.type === 'Note' ?
             <div className="quote">
               {update.note}
@@ -30,3 +39,7 @@ export default class UpdateListItem extends React.Component {
     );
   }
 }
+
+UpdateListItem.propTypes = {
+  update: React.PropTypes.object,
+};
