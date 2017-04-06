@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import CustomerListContainer from '../lists/CustomerList.jsx';
 import CustomerContainer from '../object-view-pages/Customer.jsx';
@@ -14,25 +14,32 @@ class Main extends Component {
     super(props);
   }
 
+  verifyAuth(component, props) {
+    if (Meteor.user() || Meteor.loggingIn()) {
+      return React.createElement(component, props);
+    }
+    return <Redirect to={{ pathname: '/sign-in' }} />;
+  }
+
   render() {
     return (
       <div>
         <div className="container content">
           <Route
+            path="/sign-in"
+            render={props => <SignIn {...props} />}
+          />
+          <Route
             path="/customers"
-            render={props => <CustomerListContainer {...props} />}
+            render={props => this.verifyAuth(CustomerListContainer, props)}
           />
           <Route
             path="/customer/:id"
-            render={props => <CustomerContainer {...props} />}
+            render={props => this.verifyAuth(CustomerContainer, props)}
           />
           <Route
             path="/job/:id"
-            render={props => <JobContainer {...props} />}
-          />
-          <Route
-            path="/sign-in"
-            render={props => <SignIn {...props} />}
+            render={props => this.verifyAuth(JobContainer, props)}
           />
         </div>
       </div>

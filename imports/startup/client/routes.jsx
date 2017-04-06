@@ -9,17 +9,17 @@ import MainContainer from '../../ui/app-core/Main.jsx';
 export const renderRoutes = () => (
   <BrowserRouter>
     <Route
-      render={({ location }) => (
+      render={props => (
         <div>
-          <Nav />
+          <Nav {...props} />
           <ReactCSSTransitionGroup
             transitionName="fade"
             transitionEnterTimeout={200}
             transitionLeaveTimeout={0}
           >
             <Route
-              location={location}
-              key={location.key}
+              location={props.location}
+              key={props.location.key}
               path="/"
               component={MainContainer}
             />

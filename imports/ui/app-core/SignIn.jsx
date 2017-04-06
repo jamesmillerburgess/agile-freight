@@ -8,7 +8,6 @@ export default class SignIn extends React.Component {
       email: '',
       password: '',
     };
-    console.log(this.props);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.login = this.login.bind(this);
@@ -29,9 +28,7 @@ export default class SignIn extends React.Component {
   login(event) {
     event.preventDefault();
     const props = this.props;
-    console.log(this.state);
     Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
-      console.log(error);
       props.history.push('/customers', {});
     });
   }
