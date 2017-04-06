@@ -41,5 +41,5 @@ export default class UpdateListItem extends React.Component {
 }
 
 UpdateListItem.propTypes = {
-  update: React.PropTypes.object,
+  update: React.PropTypes.object.isRequired,
 };
