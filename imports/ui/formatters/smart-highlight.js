@@ -1,6 +1,4 @@
-import { Template } from 'meteor/templating';
-
-Template.registerHelper('formatText', (context, search) => {
+export function smartHighlight(context, search) {
   let formattedText = `${context}`;
 
   if (typeof search !== 'string') {
@@ -71,4 +69,4 @@ Template.registerHelper('formatText', (context, search) => {
     offset += openB.length + closeB.length;
   }
   return formattedText;
-});
+}
