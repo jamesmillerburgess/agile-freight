@@ -35,7 +35,9 @@ class Customer extends Component {
       <div>
         <div>
           <div className="row page-header">
-            {loading ? '...' : customer.name}
+            <div className="page-header-inner">
+              {loading ? '...' : customer.name}
+            </div>
           </div>
           <div className="row">
             <div className="col-2 sidebar">

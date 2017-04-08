@@ -17,7 +17,7 @@ class NavInner extends Component {
   render() {
     const { user } = this.props;
     return (
-      <nav className="navbar navbar-toggleable-md navbar-light">
+      <nav className="navbar navbar-toggleable-md navbar-light navbar-inverse">
         <button
           className="navbar-toggler" type="button" data-toggle="collapse"
           data-target="#navbarTogglerDemo01"
@@ -27,7 +27,7 @@ class NavInner extends Component {
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <Link to="/" className="navbar-brand">FOCiS</Link>
+          <Link to="/" className="navbar-brand">Agility Freight</Link>
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
             <li className="nav-item">
               <Link to="/customers" className="nav-link">Customers <span className="sr-only">(current)</span></Link>
