@@ -1,20 +1,20 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { createContainer } from 'meteor/react-meteor-data';
+import { NavLink } from 'react-router-dom';
+import { Bar, Line } from 'react-chartjs';
+
+import MentionFieldContainer from '../fields/MentionField.jsx';
 
 import { Customers } from '../../api/customers/customers';
 import { Quotes } from '../../api/quotes/quotes';
 import { Jobs } from '../../api/jobs/jobs';
 
-import QuoteListItem from '../list-items/QuoteListItem.jsx';
-import JobListItem from '../list-items/JobListItem.jsx';
-
-import { currencyFormat } from '../formatters/currency-format';
 
 class Customer extends Component {
   constructor(props) {
     super(props);
+    this.getChartWidth = this.getChartWidth.bind(this);
   }
 
   creditUsageStyle() {
@@ -24,121 +24,159 @@ class Customer extends Component {
     };
   }
 
+  getChartWidth() {
+    console.log(this.chartNode);
+    return this.chartNode.width();
+  }
+
   render() {
-    const { loading, customer, quotes, jobs } = this.props;
+    const { loading, customer } = this.props;
     return (
       <div>
-        {loading ? <h1>Loading...</h1> :
-          <div>
-            <div className="panel">
-              <div className="panel-header">
-                <div className="panel-header-inner">
-                  <div className="icon-container hidden-md-down">
-                    <i className="icon fa fa-fw fa-address-card"/>
-                  </div>
-                  <div className="panel-header-content container">
-                    <div className="row">
-                      <div className="panel-title col-12 col-lg-6 align-left">
-                        {customer.name}
-                      </div>
-                      <div className="col-6 col-lg-3 align-right">
-                        {customer.activeQuotes.length} ACTIVE QUOTES<br/>
-                        {customer.activeJobs.length} ACTIVE JOB
-                      </div>
-                      <div className="col-6 col-lg-3 align-right">
-                        MTD +13,237 INR<br/>
-                        LTM +178,391 INR
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        <div>
+          <div className="row page-header">
+            {loading ? '...' : customer.name}
+          </div>
+          <div className="row">
+            <div className="col-2 sidebar">
+              <div className="sidebar-section-header">
+                VIEWS
               </div>
-              <div className="panel-body">
-                <div className="panel-body-inner">
-                  <div className="row">
-                    <div className="col-12 col-lg-6">
-                      <span className="customer-industry">Pharmaceuticals</span>
-                      <br/>
-                      <span className="customer-credit">
-                        {`${currencyFormat(customer.credit.used)} / ${currencyFormat(customer.credit.total)} ${customer.credit.currency} credit`}
-                      </span>
-                      <br />
-                      <div className="progress">
-                        <div className="progress-bar" role="progressbar"
-                             style={this.creditUsageStyle()} aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100"/>
-                      </div>
-                    </div>
-                    <div className="col-12 col-lg-6">
-                      <pre>{customer.address}</pre>
-                    </div>
-                  </div>
-                </div>
+              <NavLink
+                to={`/customer/${loading ? '...' : customer._id}/overview`}
+                activeClassName="active"
+              >
+                Overview
+              </NavLink>
+              <NavLink
+                to={`/customer/${loading ? '...' : customer._id}/quotes`}
+                activeClassName="active"
+              >
+                Quotes
+              </NavLink>
+              <NavLink
+                to={`/customer/${loading ? '...' : customer._id}/cargo`}
+                activeClassName="active"
+              >
+                Cargo
+              </NavLink>
+              <NavLink
+                to={`/customer/${loading ? '...' : customer._id}/accounting`}
+                activeClassName="active"
+              >
+                Accounting
+              </NavLink>
+              <NavLink
+                to={`/customer/${loading ? '...' : customer._id}/configuration`}
+                activeClassName="active"
+              >
+                Configuration
+              </NavLink>
+              <div className="sidebar-section-spacer" />
+              <div className="sidebar-section-header">
+                UPDATES
               </div>
+              {/*<MentionFieldContainer />*/}
             </div>
-            <div className="row">
-              <div className="quotes-list col-12 col-lg-6">
-                <div className="list-title">
-                  <h2>Quotes</h2>
-                  <a href="/new-quote&c=1">
-                    <button className="focis-button new-quote-button">New Quote</button>
-                  </a>
-                </div>
-                {quotes.map(quote => <QuoteListItem key={quote._id} quote={quote}/>)}
-                <div className="list-title">
-                  <div className="btn focis-button">Show Inactive Quotes</div>
-                </div>
-              </div>
-              <div className="jobs-list col-12 col-lg-6">
-                <div className="list-title">
-                  <h2>Jobs</h2>
-                  <button id="new-job-button" className="focis-button new-job-button">New Job
-                  </button>
-                </div>
-                {jobs.map(job => <JobListItem key={job._id} job={job}/>)}
-                <div className="list-title">
-                  <button className="btn focis-button">Show Inactive Jobs</button>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="invoices-list col-12 col-lg-6">
-                <div className="list-title">
-                  <h2>Invoices</h2>
-                  <button className="focis-button new-job-button">New Invoice</button>
-                </div>
-              </div>
-              <div className="cargo-receipt-list col-12 col-lg-6">
-                <div className="list-title">
-                  <h2>Cargo Receipts</h2>
-                  <button className="focis-button new-job-button">New Cargo Receipt</button>
-                </div>
-                <a className="card" href="/job/1">
-                  <div className="card-inner">
-                    <div className="icon-container hidden-md-down">
-                      <div className="icon fa fa-fw fa-flag"></div>
-                    </div>
-                    <div className="card-content container">
-                      <div className="row">
-                        <div className="col-6">
-                          <b>R198571</b><br/>
-                          Jebel Ali 60k<br/>
-                          13-Mar-2017
-                        </div>
-                        <div className="col-6">
-                          25 Boxes<br/>
-                          450.0 kg<br/>
-                          5.230 cbm
-                        </div>
-                      </div>
-                    </div>
+            <div className="col-10 content">
+              <div className="row">
+                <div className="col-4 kpi">
+                  <div className="kpi-label">
+                    Quote Win Rate
                   </div>
-                </a>
+                  <div className="kpi-value">
+                    25%
+                  </div>
+                </div>
+                <div className="col-4 kpi">
+                  <div className="kpi-label">
+                    Net Revenue
+                  </div>
+                  <div className="kpi-value">
+                    382,128 INR
+                  </div>
+                </div>
+                <div className="col-4 kpi">
+                  <div className="kpi-label">
+                    Customer Rank
+                  </div>
+                  <div className="kpi-value">
+                    12
+                  </div>
+                </div>
+              </div>
+              <div className="chart">
+                <div className="chart-label">
+                  Cargo Volume
+                </div>
+                <Bar
+                  data={{
+                    labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'],
+                    datasets: [{
+                      label: '# of Votes',
+                      data: [12, 19, 3, 5, 2, 3, 5, 9, 6, 7, 1, 3],
+                      backgroundColor: [
+                        'rgba(255,255,255,1)',
+                      ],
+                      borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                      ],
+                      borderWidth: 1,
+                    }],
+                  }}
+                  options={{ responsive: true }}
+                  width="900"
+                />
+              </div>
+              <div className="chart">
+                <div className="chart-label">
+                  Credit Usage
+                </div>
+                <Line
+                  data={{
+                    labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'],
+                    datasets: [{
+                      data: [0.2, 0.25, 0.4, 0.2, 0.18, 0.3, 0.36, 0.5, 0.45, 0.61, 0.54, 0.48],
+                      backgroundColor: [
+                        'rgba(255,255,255,1)',
+                      ],
+                      borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                      ],
+                      borderWidth: 1,
+                    }, {
+                      data: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.7, 0.7, 0.7],
+                      fillColor: [
+                        'rgba(220,200,200,0.2)',
+                      ],
+                      borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                      ],
+                      borderWidth: 1,
+                    }],
+                  }}
+                  options={{ responsive: true }}
+                  width="900"
+                />
               </div>
             </div>
           </div>
-
-        }
+        </div>
       </div>
     );
   }

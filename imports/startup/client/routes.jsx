@@ -12,18 +12,18 @@ export const renderRoutes = () => (
       render={props => (
         <div>
           <Nav {...props} />
-          <ReactCSSTransitionGroup
-            transitionName="fade"
-            transitionEnterTimeout={200}
-            transitionLeaveTimeout={0}
-          >
+          {/*<ReactCSSTransitionGroup*/}
+            {/*transitionName="fade"*/}
+            {/*transitionEnterTimeout={200}*/}
+            {/*transitionLeaveTimeout={0}*/}
+          {/*>*/}
             <Route
               location={props.location}
               key={props.location.key}
               path="/"
               component={MainContainer}
             />
-          </ReactCSSTransitionGroup>
+          {/*</ReactCSSTransitionGroup>*/}
         </div>
       )}/>
   </BrowserRouter>

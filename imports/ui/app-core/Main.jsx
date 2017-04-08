@@ -26,7 +26,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <div className="container content">
+        <div className="container page">
           <Route
             path="/sign-up"
             render={props => <SignUp {...props} />}
