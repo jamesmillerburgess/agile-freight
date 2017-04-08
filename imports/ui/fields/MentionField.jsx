@@ -2,22 +2,22 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import { autoheight } from '../formatters/autoheight';
+
 class MentionField extends React.Component {
 
   constructor(props) {
     super(props);
-    this.adjustTextareaHeight = this.adjustTextareaHeight.bind(this);
+    this.handleMentionInput = this.handleMentionInput.bind(this);
     this.handleTextareaKeydown = this.handleTextareaKeydown.bind(this);
   }
 
   componentDidMount() {
-    this.adjustTextareaHeight();
+    autoheight(this.textareaNode);
   }
 
-  adjustTextareaHeight() {
-    const elem = this.textareaNode;
-    elem.style.height = '1px';
-    elem.style.height = `${elem.scrollHeight}px`;
+  handleMentionInput() {
+    autoheight(this.textareaNode);
   }
 
   handleTextareaKeydown(event) {
@@ -31,7 +31,7 @@ class MentionField extends React.Component {
       };
       this.props.valueUpdateCallback(update);
       event.target.value = '';
-      this.adjustTextareaHeight();
+      autoheight(this.textareaNode);
     }
   }
 
@@ -46,7 +46,7 @@ class MentionField extends React.Component {
           className="latest-updates-input"
           placeholder="Leave a note..."
           onKeyDown={this.handleTextareaKeydown}
-          onInput={this.adjustTextareaHeight}
+          onInput={this.handleMentionInput}
         />
         <ul className="dropdown-menu">
           <li />
