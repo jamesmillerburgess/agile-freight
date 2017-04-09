@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 
 import { currencyFormat } from '../formatters/currency-format';
@@ -19,7 +19,7 @@ export default class CustomerListItem extends React.Component {
   render() {
     const { customer } = this.props;
     return (
-      <Link to={`/customer/${customer._id}`} className="card">
+      <Link to={`/customer/${customer._id}/overview`} className="card">
         <div className="card-inner">
           <div className="icon-container hidden-md-down">
             <div className="icon fa fa-fw fa-address-card"></div>

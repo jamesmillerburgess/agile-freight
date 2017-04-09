@@ -21,15 +21,12 @@ class Customer extends React.Component {
   }
 
   render() {
-    const { loading, customer } = this.props;
+    const { customer } = this.props;
     return (
       <div>
         <div>
           <div className="row">
             <div className="col-2 sidebar">
-              <div className="sidebar-section-header">
-                {customer.name}
-                </div>
               <div className="sidebar-section-spacer" />
               <div className="sidebar-section-header">
                 VIEWS
@@ -71,13 +68,17 @@ class Customer extends React.Component {
               {/*<MentionFieldContainer />*/}
             </div>
             <div className="col-10 content">
+              <div className="content-header">
+                {customer.name}
+              </div>
               <Route
                 path={`/customer/${customer._id}/overview`}
                 render={props => <CustomerOverview {...props} />}
               />
               <Route
                 path={`/customer/${customer._id}/quotes`}
-                render={props => <CustomerQuotes {...props} />}
+                render={props => <CustomerQuotes {...props} customer={customer} />
+                }
               />
               <Route
                 path={`/customer/${customer._id}/cargo`}

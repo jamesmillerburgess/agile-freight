@@ -14,7 +14,7 @@ class CustomerOverviewInner extends React.Component {
     return (
       <div className="customer-overview">
         <div className="row">
-          <div className="col-4 kpi">
+          <div className="col-3 kpi">
             <div className="kpi-label">
               Quote Win Rate
             </div>
@@ -22,15 +22,15 @@ class CustomerOverviewInner extends React.Component {
               25%
             </div>
           </div>
-          <div className="col-4 kpi">
+          <div className="col-6 kpi">
             <div className="kpi-label">
               Net Revenue
             </div>
             <div className="kpi-value">
-              382,128 INR
+              382,128 INR (4%)
             </div>
           </div>
-          <div className="col-4 kpi">
+          <div className="col-3 kpi">
             <div className="kpi-label">
               Customer Rank
             </div>

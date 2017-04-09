@@ -1,6 +1,56 @@
 .content {
   background-color: white;
-  padding-top: 7px;
+
+  .content-header {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #333333;
+    margin: 0 -15px 7px -15px;
+    -moz-box-shadow:    0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset, 0 1px 3px rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset, 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset, 0 1px 3px rgba(0, 0, 0, 0.15);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.08));
+  }
+
+  .content-navbar {
+    margin: 0 -15px 7px -15px;
+    padding: 7px;
+    -moz-box-shadow:    0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset, 0 1px 3px rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset, 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset, 0 1px 3px rgba(0, 0, 0, 0.15);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.08));
+    a {
+      color: #555555;
+      transition: all .2s ease-in-out;
+      margin-right: 10px;
+      padding: 5px 7px;
+      font-size: 13px;
+      border-radius: 5px;
+      .item-count {
+        margin-left: 3px;
+        font-size: 12px;
+        padding: 2px 4px;
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    a.active {
+      background-color: orange;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    a:hover {
+
+    }
+  }
+
+  .content-body {
+    transition: all .2s ease-in-out;
+  }
+
   .kpi {
     text-align: center;
 

@@ -1,7 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route, NavLink, Redirect } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
+
+import QuoteList from '../lists/QuoteList';
 
 class CustomerQuotesInner extends React.Component {
   constructor(props) {
@@ -9,10 +12,33 @@ class CustomerQuotesInner extends React.Component {
   }
 
   render() {
-    const { loading, customer } = this.props;
+    const { customer } = this.props;
     return (
       <div className="customer-quotes">
-        Quotes
+        <div className="content-navbar">
+          <NavLink to={`/customer/${customer._id}/quotes/active`}>
+            Active <span className="item-count">4</span>
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/quotes/all`}>
+            All <span className="item-count">17</span>
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/quotes/new`}>
+            <i className="fa fa-fw fa-plus" /> New
+          </NavLink>
+        </div>
+        <div className="content-body">
+          <Route path={`/customer/${customer._id}/quotes`} exact>
+            <Redirect to={`/customer/${customer._id}/quotes/active`} />
+          </Route>
+          <Route
+            path={`/customer/${customer._id}/quotes/active`}
+            render={props => <QuoteList {...props} customer={customer} filter="active" />}
+          />
+          <Route
+            path={`/customer/${customer._id}/quotes/all`}
+            render={props => <QuoteList {...props} customer={customer} filter="all" />}
+          />
+        </div>
       </div>
     );
   }
