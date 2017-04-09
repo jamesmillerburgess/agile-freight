@@ -23,7 +23,7 @@ class CustomerQuotesInner extends React.Component {
             All <span className="item-count">17</span>
           </NavLink>
           <NavLink to={`/customer/${customer._id}/quotes/new`}>
-            <i className="fa fa-fw fa-plus" /> New
+            <i className="fa fa-fw fa-plus" /> Quote
           </NavLink>
         </div>
         <div className="content-body">

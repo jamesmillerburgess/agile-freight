@@ -82,15 +82,15 @@ class Customer extends React.Component {
               />
               <Route
                 path={`/customer/${customer._id}/cargo`}
-                render={props => <CustomerCargo {...props} />}
+                render={props => <CustomerCargo {...props} customer={customer} />}
               />
               <Route
                 path={`/customer/${customer._id}/accounting`}
-                render={props => <CustomerAccounting {...props} />}
+                render={props => <CustomerAccounting {...props} customer={customer} />}
               />
               <Route
                 path={`/customer/${customer._id}/configuration`}
-                render={props => <CustomerConfiguration {...props} />}
+                render={props => <CustomerConfiguration {...props} customer={customer} />}
               />
 
             </div>

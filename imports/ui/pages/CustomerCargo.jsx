@@ -1,36 +1,48 @@
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import PropTypes from 'prop-types';
-import { createContainer } from 'meteor/react-meteor-data';
+import { Route, NavLink, Redirect } from 'react-router-dom';
 
-class CustomerCargoInner extends React.Component {
+import CargoList from '../lists/CargoList';
+
+export default class CustomerCargo extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { loading, customer } = this.props;
+    const { customer } = this.props;
     return (
       <div className="customer-quotes">
-        Cargo
+        <div className="content-navbar">
+          <NavLink to={`/customer/${customer._id}/cargo/active`}>
+            Active <span className="item-count">4</span>
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/cargo/all`}>
+            All <span className="item-count">17</span>
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/cargo/new-receipt`}>
+            <i className="fa fa-fw fa-plus" /> Receipt
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/cargo/new-booking`}>
+            <i className="fa fa-fw fa-plus" /> Booking
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/cargo/new-consol`}>
+            <i className="fa fa-fw fa-plus" /> Consol
+          </NavLink>
+        </div>
+        <div className="content-body">
+          <Route path={`/customer/${customer._id}/cargo`} exact>
+            <Redirect to={`/customer/${customer._id}/cargo/active`} />
+          </Route>
+          <Route
+            path={`/customer/${customer._id}/cargo/active`}
+            render={props => <CargoList {...props} customer={customer} filter="active" />}
+          />
+          <Route
+            path={`/customer/${customer._id}/cargo/all`}
+            render={props => <CargoList {...props} customer={customer} filter="all" />}
+          />
+        </div>
       </div>
     );
   }
 }
-
-CustomerCargoInner.propTypes = {
-  loading: PropTypes.bool,
-  customer: PropTypes.object,
-};
-
-const CustomerCargo = createContainer((props) => {
-  const branch = Meteor.subscribe('branch.active');
-  const loading = !branch.ready();
-  const { customer } = props;
-  return {
-    loading,
-    customer,
-  };
-}, CustomerCargoInner);
-
-export default CustomerCargo;
