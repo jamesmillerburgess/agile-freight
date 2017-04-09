@@ -1,36 +1,35 @@
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import PropTypes from 'prop-types';
-import { createContainer } from 'meteor/react-meteor-data';
+import { Route, NavLink, Redirect } from 'react-router-dom';
 
-class CustomerConfigurationInner extends React.Component {
+export default class CustomerConfiguration extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { loading, customer } = this.props;
+    const { customer } = this.props;
     return (
       <div className="customer-quotes">
-        Configuration
+        <div className="content-navbar">
+          <NavLink to={`/customer/${customer._id}/configuration/general`}>
+            General
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/configuration/addresses`}>
+            Addresses
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/configuration/documents`}>
+            Documents
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/configuration/accounts`}>
+            Accounts
+          </NavLink>
+        </div>
+        <div className="content-body">
+          <Route path={`/customer/${customer._id}/configuration`} exact>
+            <Redirect to={`/customer/${customer._id}/configuration/general`} />
+          </Route>
+        </div>
       </div>
     );
   }
 }
-
-CustomerConfigurationInner.propTypes = {
-  loading: PropTypes.bool,
-  customer: PropTypes.object,
-};
-
-const CustomerConfiguration = createContainer((props) => {
-  const branch = Meteor.subscribe('branch.active');
-  const loading = !branch.ready();
-  const { customer } = props;
-  return {
-    loading,
-    customer,
-  };
-}, CustomerConfigurationInner);
-
-export default CustomerConfiguration;

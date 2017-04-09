@@ -1,36 +1,45 @@
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import PropTypes from 'prop-types';
-import { createContainer } from 'meteor/react-meteor-data';
+import { Route, NavLink, Redirect } from 'react-router-dom';
 
-class CustomerAccountingInner extends React.Component {
+import AccountingList from '../lists/AccountingList';
+
+export default class CustomerAccounting extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { loading, customer } = this.props;
+    const { customer } = this.props;
     return (
       <div className="customer-quotes">
-        Accounting
+        <div className="content-navbar">
+          <NavLink to={`/customer/${customer._id}/accounting/active`}>
+            Active <span className="item-count">4</span>
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/accounting/all`}>
+            All <span className="item-count">17</span>
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/accounting/new-invoice`}>
+            <i className="fa fa-fw fa-plus" /> Invoice
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/accounting/new-credit-note`}>
+            <i className="fa fa-fw fa-plus" /> Credit Note
+          </NavLink>
+        </div>
+        <div className="content-body">
+          <Route path={`/customer/${customer._id}/accounting`} exact>
+            <Redirect to={`/customer/${customer._id}/accounting/active`} />
+          </Route>
+          <Route
+            path={`/customer/${customer._id}/accounting/active`}
+            render={props => <AccountingList {...props} customer={customer} filter="active" />}
+          />
+          <Route
+            path={`/customer/${customer._id}/accounting/all`}
+            render={props => <AccountingList {...props} customer={customer} filter="all" />}
+          />
+        </div>
       </div>
     );
   }
 }
-
-CustomerAccountingInner.propTypes = {
-  loading: PropTypes.bool,
-  customer: PropTypes.object,
-};
-
-const CustomerAccounting = createContainer((props) => {
-  const branch = Meteor.subscribe('branch.active');
-  const loading = !branch.ready();
-  const { customer } = props;
-  return {
-    loading,
-    customer,
-  };
-}, CustomerAccountingInner);
-
-export default CustomerAccounting;

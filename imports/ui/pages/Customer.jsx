@@ -73,7 +73,7 @@ class Customer extends React.Component {
               </div>
               <Route
                 path={`/customer/${customer._id}/overview`}
-                render={props => <CustomerOverview {...props} />}
+                render={props => <CustomerOverview {...props} customer={customer} />}
               />
               <Route
                 path={`/customer/${customer._id}/quotes`}
