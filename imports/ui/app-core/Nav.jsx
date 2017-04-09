@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -99,10 +100,10 @@ class NavInner extends Component {
 }
 
 NavInner.propTypes = {
-  history: React.PropTypes.object,
-  location: React.PropTypes.object,
-  match: React.PropTypes.object,
-  user: React.PropTypes.object,
+  history: PropTypes.object,
+  location: PropTypes.object,
+  match: PropTypes.object,
+  user: PropTypes.object,
 };
 
 const Nav = createContainer((props) => {
