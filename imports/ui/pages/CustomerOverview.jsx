@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Bar, Line } from 'react-chartjs';
 
@@ -113,8 +114,8 @@ class CustomerOverviewInner extends React.Component {
 }
 
 CustomerOverviewInner.propTypes = {
-  loading: React.PropTypes.bool,
-  customer: React.PropTypes.object,
+  loading: PropTypes.bool,
+  customer: PropTypes.object,
 };
 
 const CustomerOverview = createContainer((props) => {

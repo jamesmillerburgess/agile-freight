@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import { UIGlobals } from '../ui-globals';
@@ -156,6 +157,6 @@ export default class EventField extends React.Component {
 }
 
 EventField.propTypes = {
-  event: React.PropTypes.object.isRequired,
-  valueUpdateCallback: React.PropTypes.func.isRequired,
+  event: PropTypes.object.isRequired,
+  valueUpdateCallback: PropTypes.func.isRequired,
 };

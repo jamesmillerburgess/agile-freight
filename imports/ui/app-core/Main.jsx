@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
@@ -13,7 +13,7 @@ import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
 
 // App component - represents the whole app
-class Main extends Component {
+class Main extends React.Component {
   constructor(props) {
     super(props);
   }

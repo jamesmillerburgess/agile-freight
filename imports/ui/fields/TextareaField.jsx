@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { autoheight } from '../formatters/autoheight';
 
@@ -78,7 +79,7 @@ export default class TextareaField extends React.Component {
 }
 
 TextareaField.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  path: React.PropTypes.string.isRequired,
-  valueUpdateCallback: React.PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
+  valueUpdateCallback: PropTypes.func.isRequired,
 };

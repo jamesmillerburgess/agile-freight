@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Route, NavLink } from 'react-router-dom';
@@ -15,7 +15,7 @@ import { Quotes } from '../../api/quotes/quotes';
 import { Jobs } from '../../api/jobs/jobs';
 
 
-class Customer extends Component {
+class Customer extends React.Component {
   constructor(props) {
     super(props);
   }

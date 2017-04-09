@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export default class JobListItem extends Component {
+export default class JobListItem extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -35,5 +36,5 @@ export default class JobListItem extends Component {
 }
 
 JobListItem.propTypes = {
-  job: React.PropTypes.object,
+  job: PropTypes.object,
 };

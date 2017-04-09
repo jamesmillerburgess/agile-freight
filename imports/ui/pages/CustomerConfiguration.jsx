@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 
 class CustomerConfigurationInner extends React.Component {
@@ -18,8 +19,8 @@ class CustomerConfigurationInner extends React.Component {
 }
 
 CustomerConfigurationInner.propTypes = {
-  loading: React.PropTypes.bool,
-  customer: React.PropTypes.object,
+  loading: PropTypes.bool,
+  customer: PropTypes.object,
 };
 
 const CustomerConfiguration = createContainer((props) => {

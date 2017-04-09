@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class FreeTextField extends React.Component {
   constructor(props) {
@@ -63,7 +64,7 @@ export default class FreeTextField extends React.Component {
 }
 
 FreeTextField.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  path: React.PropTypes.string.isRequired,
-  valueUpdateCallback: React.PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
+  valueUpdateCallback: PropTypes.func.isRequired,
 };

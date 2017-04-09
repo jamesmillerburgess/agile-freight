@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Jobs } from '../../api/jobs/jobs';
@@ -427,8 +428,8 @@ class Job extends React.Component {
 }
 
 Job.propTypes = {
-  loading: React.PropTypes.bool,
-  job: React.PropTypes.object,
+  loading: PropTypes.bool,
+  job: PropTypes.object,
 };
 
 const JobContainer = createContainer((props) => {

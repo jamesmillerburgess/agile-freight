@@ -1,12 +1,13 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Customers } from '../../api/customers/customers';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
 
-class CustomerList extends Component {
+class CustomerList extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -59,8 +60,8 @@ class CustomerList extends Component {
 }
 
 CustomerList.propTypes = {
-  loading: React.PropTypes.bool,
-  customers: React.PropTypes.array,
+  loading: PropTypes.bool,
+  customers: PropTypes.array,
 };
 
 const CustomerListContainer = createContainer(() => {

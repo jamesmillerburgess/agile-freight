@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { smartHighlight } from '../formatters/smart-highlight';
 
@@ -99,8 +100,8 @@ export default class DropdownField extends React.Component {
 }
 
 DropdownField.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  options: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  path: React.PropTypes.string.isRequired,
-  valueUpdateCallback: React.PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  path: PropTypes.string.isRequired,
+  valueUpdateCallback: PropTypes.func.isRequired,
 };

@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { currencyFormat } from '../formatters/currency-format';
 
-export default class CustomerListItem extends Component {
+export default class CustomerListItem extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -57,5 +58,5 @@ export default class CustomerListItem extends Component {
 }
 
 CustomerListItem.propTypes = {
-  customer: React.PropTypes.object,
+  customer: PropTypes.object,
 };
