@@ -31,7 +31,9 @@ class CustomerQuotesInner extends React.Component {
           </NavLink>
         </div>
         <div className="content-body">
-          <Route path={`/customer/${customer._id}/quotes`} exact>
+          <Route
+            path={`/customer/${customer._id}/quotes`}
+          >
             <Redirect to={`/customer/${customer._id}/quotes/active`} />
           </Route>
           <Route
@@ -53,9 +55,9 @@ class CustomerQuotesInner extends React.Component {
 }
 
 CustomerQuotesInner.propTypes = {
-  customer: PropTypes.object,
-  quotes: PropTypes.array,
-  activeQuotes: PropTypes.array,
+  customer: PropTypes.object.isRequired,
+  quotes: PropTypes.array.isRequired,
+  activeQuotes: PropTypes.array.isRequired,
 };
 
 const CustomerQuotes = createContainer((props) => {

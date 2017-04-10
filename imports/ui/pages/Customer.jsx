@@ -29,7 +29,7 @@ class Customer extends React.Component {
             <div className="col-2 sidebar">
               <div className="sidebar-section-spacer" />
               <div className="sidebar-section-header">
-                VIEWS
+                CUSTOMER
               </div>
               <NavLink
                 to={`/customer/${customer._id}/overview`}
@@ -89,6 +89,7 @@ class Customer extends React.Component {
                 render={props => <CustomerAccounting {...props} customer={customer} />}
               />
               <Route
+                exact
                 path={`/customer/${customer._id}/configuration`}
                 render={props => <CustomerConfiguration {...props} customer={customer} />}
               />
