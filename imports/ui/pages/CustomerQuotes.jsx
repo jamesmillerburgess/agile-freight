@@ -23,6 +23,9 @@ class CustomerQuotesInner extends React.Component {
           <NavLink to={`/customer/${customer._id}/quotes/all`}>
             All <span className="item-count">{quotes.length}</span>
           </NavLink>
+          <NavLink to={`/customer/${customer._id}/quotes/charts`}>
+            <i className="fa fa-fw fa-bar-chart" /> Charts
+          </NavLink>
           <NavLink to={`/customer/${customer._id}/quotes/new`}>
             <i className="fa fa-fw fa-plus" /> Quote
           </NavLink>
@@ -34,6 +37,10 @@ class CustomerQuotesInner extends React.Component {
           <Route
             path={`/customer/${customer._id}/quotes/active`}
             render={props => <QuoteList {...props} quotes={activeQuotes} />}
+          />
+          <Route
+            path={`/customer/${customer._id}/quotes/charts`}
+            render={props => <div />}
           />
           <Route
             path={`/customer/${customer._id}/quotes/all`}
@@ -53,8 +60,11 @@ CustomerQuotesInner.propTypes = {
 
 const CustomerQuotes = createContainer((props) => {
   const { customer } = props;
-  const quotes = Quotes.find({ customerId: customer._id }).fetch().sort((a, b) => new Date(b.expiryDate) - new Date(a.expiryDate));
-  const activeQuotes = quotes.filter(quote => !moment().isAfter(quote.expiryDate));
+  const quotes = Quotes
+    .find({ _id: { $in: customer.quotes } })
+    .fetch()
+    .sort((a, b) => new Date(b.expiryDate) - new Date(a.expiryDate));
+  const activeQuotes = quotes.filter(quote => !moment().isAfter(quote.expiryDate) && quote.status !== 'Canceled');
   return {
     customer,
     quotes,

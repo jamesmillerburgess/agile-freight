@@ -1,8 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import { Offices } from '../../api/offices/offices';
-import { Customers } from '../../api/customers/customers';
-import { Quotes } from '../../api/quotes/quotes';
-import { Jobs } from '../../api/jobs/jobs';
+import { Offices } from '../../../api/offices/offices';
+import { Customers } from '../../../api/customers/customers';
+import { Quotes } from '../../../api/quotes/quotes';
+import { Jobs } from '../../../api/jobs/jobs';
+
+import quoteFixtures from './quote-fixtures';
 
 // if the database is empty on server start, create some sample data.
 Meteor.startup(() => {
@@ -16,6 +18,10 @@ Meteor.startup(() => {
     Quotes._ensureIndex({ search: 1 });
     Jobs.remove({});
     Jobs._ensureIndex({ search: 1 });
+  }
+
+  function randomOption(options) {
+    return options[Math.floor(Math.random() * (options.length))];
   }
 
   if (Meteor.settings.testMode === 'structure' && Customers.find().count() === 0) {
@@ -44,6 +50,7 @@ Hyderabad, Telangana, 500033
 India`,
         properties: `Customer - Existing
 INHYD`,
+        quotes: [],
         activeQuotes: ['1', '2'],
         activeJobs: ['1'],
         credit: {
@@ -60,6 +67,7 @@ Sydney, New South Wales 2000
 Australia`,
         properties: `Customer - Existing
 AUSYD`,
+        quotes: [],
         activeQuotes: ['3'],
         activeJobs: ['2'],
         credit: {
@@ -77,6 +85,7 @@ BB1 5RF
 United Kingdom`,
         properties: `Customer - Existing
 GBLAN`,
+        quotes: [],
         activeQuotes: ['3'],
         activeJobs: ['2'],
         credit: {
@@ -92,28 +101,9 @@ GBLAN`,
 ${doc.address}`;
       Customers.insert(newDoc);
     });
-    const quoteFixtures = [];
-    for (let i = 0; i < 30; i = i + 1) {
-      quoteFixtures.push({
-        quoteCode: `Q${Math.floor(Math.random() * (900000 - 100000)) + 100000}`,
-        customerId: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
-        mode: 'Ocean',
-        service: 'LCL',
-        type: 'Single Route',
-        rateType: 'Rated',
-        rates: [
-          { type: '20\' DC', rate: 24212, currency: 'INR' },
-          { type: '40\' DC', rate: 48424, currency: 'INR' },
-        ],
-        direction: 'Export',
-        incoterm: 'FOB',
-        status: 'Issued',
-        expiryDate: new Date(new Date() - ((Math.random() - 0.5) * 30 * 24 * 60 * 60 * 60 * 60 * 3)),
-        issuedBy: Meteor.users.findOne()._id,
-      });
-      console.log(quoteFixtures[i].expiryDate);
-    }
-    _.each(quoteFixtures, doc => Quotes.insert(doc));
+
+    quoteFixtures.random(50);
+
     const jobFixtures = [
       {
         jobCode: 'J00000001',
