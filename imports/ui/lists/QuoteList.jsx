@@ -11,8 +11,8 @@ export default class QuoteList extends React.Component {
         <thead>
         <tr className="list-header">
           <th />
+          <th>Mode</th>
           <th>Routes</th>
-          <th>Terms</th>
           <th>Rates</th>
           <th>Expiry</th>
           <th>Quoted By</th>
@@ -20,9 +20,15 @@ export default class QuoteList extends React.Component {
         </thead>
         <tbody>
         <tr>
-          <th><i className="fa fa-fw fa-ship product-icon" /></th>
+          <th>
+            Q285610<br />
+            Issued
+          </th>
+          <td>
+            Ocean LCL<br />
+            Export FOB
+          </td>
           <td>INNSA - GBFXT</td>
-          <td>Export FOB</td>
           <td>
             20' DC - 24,212 INR<br />
             40' DC - 48,242 INR
@@ -31,9 +37,15 @@ export default class QuoteList extends React.Component {
           <td>James Burgess</td>
         </tr>
         <tr>
-          <th><i className="fa fa-fw fa-ship product-icon" /></th>
+          <th>
+            Q285610<br />
+            Issued
+          </th>
+          <td>
+            Ocean LCL<br />
+            Export FOB
+          </td>
           <td>INNSA - GBFXT</td>
-          <td>Export FOB</td>
           <td>
             20' DC - 24,212 INR<br />
             40' DC - 48,242 INR
@@ -42,9 +54,15 @@ export default class QuoteList extends React.Component {
           <td>James Burgess</td>
         </tr>
         <tr>
-          <th><i className="fa fa-fw fa-ship product-icon" /></th>
+          <th>
+            Q285610<br />
+            Issued
+          </th>
+          <td>
+            Ocean LCL<br />
+            Export FOB
+          </td>
           <td>INNSA - GBFXT</td>
-          <td>Export FOB</td>
           <td>
             20' DC - 24,212 INR<br />
             40' DC - 48,242 INR
@@ -53,9 +71,15 @@ export default class QuoteList extends React.Component {
           <td>James Burgess</td>
         </tr>
         <tr>
-          <th><i className="fa fa-fw fa-ship product-icon" /></th>
+          <th>
+            Q285610<br />
+            Issued
+          </th>
+          <td>
+            Ocean LCL<br />
+            Export FOB
+          </td>
           <td>INNSA - GBFXT</td>
-          <td>Export FOB</td>
           <td>
             20' DC - 24,212 INR<br />
             40' DC - 48,242 INR

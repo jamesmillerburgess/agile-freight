@@ -10,7 +10,7 @@ export default class AccountingList extends React.Component {
       <table className="table table-hover">
         <thead>
         <tr className="list-header">
-          <th>Type</th>
+          <th />
           <th>Amount</th>
           <th>References</th>
           <th>Issued Date</th>
@@ -19,7 +19,10 @@ export default class AccountingList extends React.Component {
         </thead>
         <tbody>
         <tr>
-          <td>Invoice</td>
+          <th>
+            I5671023<br />
+            Invoice
+          </th>
           <td>32,928 INR</td>
           <td>
             J285012<br />
@@ -29,7 +32,10 @@ export default class AccountingList extends React.Component {
           <td>James Burgess</td>
         </tr>
         <tr>
-          <td>Invoice</td>
+          <th>
+            I5671023<br />
+            Invoice
+          </th>
           <td>32,928 INR</td>
           <td>
             J285012<br />
@@ -39,7 +45,10 @@ export default class AccountingList extends React.Component {
           <td>James Burgess</td>
         </tr>
         <tr>
-          <td>Invoice</td>
+          <th>
+            I5671023<br />
+            Invoice
+          </th>
           <td>32,928 INR</td>
           <td>
             J285012<br />
@@ -49,7 +58,10 @@ export default class AccountingList extends React.Component {
           <td>James Burgess</td>
         </tr>
         <tr>
-          <td>Invoice</td>
+          <th>
+            I5671023<br />
+            Invoice
+          </th>
           <td>32,928 INR</td>
           <td>
             J285012<br />

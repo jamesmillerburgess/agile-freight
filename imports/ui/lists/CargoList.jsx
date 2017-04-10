@@ -10,7 +10,7 @@ export default class CargoList extends React.Component {
       <table className="table table-hover">
         <thead>
         <tr className="list-header">
-          <th>Status</th>
+          <th />
           <th>Goods</th>
           <th>Mode</th>
           <th>Route</th>
@@ -20,7 +20,10 @@ export default class CargoList extends React.Component {
         </thead>
         <tbody>
         <tr>
-          <th>Received</th>
+          <th>
+            J597124<br />
+            Received
+          </th>
           <td>
             20 Boxes<br />
             239.000 kg<br />
@@ -32,7 +35,10 @@ export default class CargoList extends React.Component {
           <td>James Burgess</td>
         </tr>
         <tr>
-          <th>Received</th>
+          <th>
+            J597124<br />
+            Received
+          </th>
           <td>
             20 Boxes<br />
             239.000 kg<br />
@@ -44,7 +50,10 @@ export default class CargoList extends React.Component {
           <td>James Burgess</td>
         </tr>
         <tr>
-          <th>Received</th>
+          <th>
+            J597124<br />
+            Received
+          </th>
           <td>
             20 Boxes<br />
             239.000 kg<br />
@@ -56,7 +65,10 @@ export default class CargoList extends React.Component {
           <td>James Burgess</td>
         </tr>
         <tr>
-          <th>Received</th>
+          <th>
+            J597124<br />
+            Received
+          </th>
           <td>
             20 Boxes<br />
             239.000 kg<br />
@@ -74,4 +86,3 @@ export default class CargoList extends React.Component {
 }
 
 CargoList.propTypes = {};
-
