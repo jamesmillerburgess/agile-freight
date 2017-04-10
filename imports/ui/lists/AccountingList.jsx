@@ -10,57 +10,52 @@ export default class AccountingList extends React.Component {
       <table className="table table-hover">
         <thead>
         <tr className="list-header">
-          <th />
-          <th>Routes</th>
-          <th>Terms</th>
-          <th>Rates</th>
-          <th>Expiry</th>
-          <th>Quoted By</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>References</th>
+          <th>Issued Date</th>
+          <th>Issued By</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-          <th><i className="fa fa-fw fa-ship product-icon" /></th>
-          <td>INNSA - GBFXT</td>
-          <td>Export FOB</td>
+          <td>Invoice</td>
+          <td>32,928 INR</td>
           <td>
-            20' DC - 24,212 INR<br />
-            40' DC - 48,242 INR
+            J285012<br />
+            J158210
           </td>
-          <td>21-Apr-2017</td>
+          <td>02-Apr-2017</td>
           <td>James Burgess</td>
         </tr>
         <tr>
-          <th><i className="fa fa-fw fa-ship product-icon" /></th>
-          <td>INNSA - GBFXT</td>
-          <td>Export FOB</td>
+          <td>Invoice</td>
+          <td>32,928 INR</td>
           <td>
-            20' DC - 24,212 INR<br />
-            40' DC - 48,242 INR
+            J285012<br />
+            J158210
           </td>
-          <td>21-Apr-2017</td>
+          <td>02-Apr-2017</td>
           <td>James Burgess</td>
         </tr>
         <tr>
-          <th><i className="fa fa-fw fa-ship product-icon" /></th>
-          <td>INNSA - GBFXT</td>
-          <td>Export FOB</td>
+          <td>Invoice</td>
+          <td>32,928 INR</td>
           <td>
-            20' DC - 24,212 INR<br />
-            40' DC - 48,242 INR
+            J285012<br />
+            J158210
           </td>
-          <td>21-Apr-2017</td>
+          <td>02-Apr-2017</td>
           <td>James Burgess</td>
         </tr>
         <tr>
-          <th><i className="fa fa-fw fa-ship product-icon" /></th>
-          <td>INNSA - GBFXT</td>
-          <td>Export FOB</td>
+          <td>Invoice</td>
+          <td>32,928 INR</td>
           <td>
-            20' DC - 24,212 INR<br />
-            40' DC - 48,242 INR
+            J285012<br />
+            J158210
           </td>
-          <td>21-Apr-2017</td>
+          <td>02-Apr-2017</td>
           <td>James Burgess</td>
         </tr>
         </tbody>
