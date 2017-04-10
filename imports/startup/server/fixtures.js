@@ -92,47 +92,27 @@ GBLAN`,
 ${doc.address}`;
       Customers.insert(newDoc);
     });
-    const quoteFixtures = [
-      {
-        quoteCode: 'Q572038',
-        customer: {
-          id: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
-          name: 'Alstom Power Boilers Limited',
-        },
-        mode: 'Air',
-        type: 'Single Route',
-        rateType: 'Rated',
-        incoterm: 'FOB',
-        status: 'Accepted',
-        expiryDate: new Date('22-May-2017'),
-      },
-      {
-        quoteCode: 'Q571559',
-        customer: {
-          id: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
-          name: 'Alstom Power Boilers Limited',
-        },
+    const quoteFixtures = [];
+    for (let i = 0; i < 30; i = i + 1) {
+      quoteFixtures.push({
+        quoteCode: `Q${Math.floor(Math.random() * (900000 - 100000)) + 100000}`,
+        customerId: Customers.findOne({ name: 'Alstom Power Boilers Limited' }, {})._id,
         mode: 'Ocean',
-        type: 'Route Matrix',
-        rateType: 'Rated',
-        incoterm: 'CIF',
-        status: 'Won +3,291 INR',
-        expiryDate: new Date('12-May-2017'),
-      },
-      {
-        quoteCode: '3',
-        customer: {
-          id: Customers.findOne({ name: 'Cellmid Limited' }, {})._id,
-          name: 'Cellmid Limited',
-        },
-        mode: 'Air',
+        service: 'LCL',
         type: 'Single Route',
         rateType: 'Rated',
+        rates: [
+          { type: '20\' DC', rate: 24212, currency: 'INR' },
+          { type: '40\' DC', rate: 48424, currency: 'INR' },
+        ],
+        direction: 'Export',
         incoterm: 'FOB',
-        status: 'Accepted',
-        expiryDate: new Date('22-May-2017'),
-      },
-    ];
+        status: 'Issued',
+        expiryDate: new Date(new Date() - ((Math.random() - 0.5) * 30 * 24 * 60 * 60 * 60 * 60 * 3)),
+        issuedBy: Meteor.users.findOne()._id,
+      });
+      console.log(quoteFixtures[i].expiryDate);
+    }
     _.each(quoteFixtures, doc => Quotes.insert(doc));
     const jobFixtures = [
       {
