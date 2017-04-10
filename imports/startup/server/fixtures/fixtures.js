@@ -3,8 +3,10 @@ import { Offices } from '../../../api/offices/offices';
 import { Customers } from '../../../api/customers/customers';
 import { Quotes } from '../../../api/quotes/quotes';
 import { Jobs } from '../../../api/jobs/jobs';
+import { Shipments } from '../../../api/shipments/shipments';
 
 import quoteFixtures from './quote-fixtures';
+import shipmentFixtures from './shipment-fixtures';
 
 // if the database is empty on server start, create some sample data.
 Meteor.startup(() => {
@@ -18,10 +20,8 @@ Meteor.startup(() => {
     Quotes._ensureIndex({ search: 1 });
     Jobs.remove({});
     Jobs._ensureIndex({ search: 1 });
-  }
-
-  function randomOption(options) {
-    return options[Math.floor(Math.random() * (options.length))];
+    Shipments.remove({});
+    Shipments._ensureIndex({ search: 1 });
   }
 
   if (Meteor.settings.testMode === 'structure' && Customers.find().count() === 0) {
@@ -51,6 +51,7 @@ India`,
         properties: `Customer - Existing
 INHYD`,
         quotes: [],
+        shipments: [],
         activeQuotes: ['1', '2'],
         activeJobs: ['1'],
         credit: {
@@ -68,6 +69,7 @@ Australia`,
         properties: `Customer - Existing
 AUSYD`,
         quotes: [],
+        shipments: [],
         activeQuotes: ['3'],
         activeJobs: ['2'],
         credit: {
@@ -86,6 +88,7 @@ United Kingdom`,
         properties: `Customer - Existing
 GBLAN`,
         quotes: [],
+        shipments: [],
         activeQuotes: ['3'],
         activeJobs: ['2'],
         credit: {
@@ -103,6 +106,7 @@ ${doc.address}`;
     });
 
     quoteFixtures.random(50);
+    shipmentFixtures.random(20);
 
     const jobFixtures = [
       {

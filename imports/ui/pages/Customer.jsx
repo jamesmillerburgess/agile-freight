@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Route, NavLink } from 'react-router-dom';
 
-import CustomerOverview from './CustomerOverview';
-import CustomerQuotes from './CustomerQuotes';
-import CustomerCargo from './CustomerCargo';
-import CustomerAccounting from './CustomerAccounting';
-import CustomerConfiguration from './CustomerConfiguration';
+import CustomerOverview from './CustomerOverview.jsx';
+import CustomerQuotes from './CustomerQuotes.jsx';
+import CustomerShipments from './CustomerShipments.jsx';
+import CustomerAccounting from './CustomerAccounting.jsx';
+import CustomerConfiguration from './CustomerConfiguration.jsx';
 
 import { Customers } from '../../api/customers/customers';
 import { Quotes } from '../../api/quotes/quotes';
@@ -44,10 +44,10 @@ class Customer extends React.Component {
                 Quotes
               </NavLink>
               <NavLink
-                to={`/customer/${customer._id}/cargo`}
+                to={`/customer/${customer._id}/shipments`}
                 activeClassName="active"
               >
-                Cargo
+                Shipments
               </NavLink>
               <NavLink
                 to={`/customer/${customer._id}/accounting`}
@@ -81,8 +81,8 @@ class Customer extends React.Component {
                 }
               />
               <Route
-                path={`/customer/${customer._id}/cargo`}
-                render={props => <CustomerCargo {...props} customer={customer} />}
+                path={`/customer/${customer._id}/shipments`}
+                render={props => <CustomerShipments {...props} customer={customer} />}
               />
               <Route
                 path={`/customer/${customer._id}/accounting`}
