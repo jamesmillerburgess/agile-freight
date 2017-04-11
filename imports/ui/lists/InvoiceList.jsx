@@ -54,19 +54,6 @@ class InvoiceListInner extends React.Component {
                 </tr>,
               )
             }
-            <tr>
-              <th>
-                I5671023<br />
-                Invoice
-              </th>
-              <td>32,928 INR</td>
-              <td>
-                J285012<br />
-                J158210
-              </td>
-              <td>02-Apr-2017</td>
-              <td>James Burgess</td>
-            </tr>
           </tbody>
         </table>
       </div>

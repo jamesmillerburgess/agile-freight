@@ -23,6 +23,7 @@ export default class shipmentFixtures {
         direction: _.sample(APIGlobals.directionOptions),
         incoterm: _.sample(APIGlobals.incotermOptions),
         status: _.sample(APIGlobals.shipmentStatusOptions),
+        totalNetRevenue: Math.floor(rand * (50000 - 10000)) + 10000,
         lastUpdatedBy: _.sample(users)._id,
       };
 
@@ -40,6 +41,8 @@ export default class shipmentFixtures {
         totalGrossWeightKG: Math.floor(rand * (20000 - 50)) + 50,
         totalVolumeCBM: Math.floor(rand * (30 - 1)) + 1,
       };
+      shipment.shipperNetRevenue = Math.floor(shipment.totalNetRevenue * rand);
+      shipment.consigneeNetRevenue = Math.ceil(shipment.totalNetRevenue * (1 - rand));
 
       // Add to the array
       newShipments.push(shipment);

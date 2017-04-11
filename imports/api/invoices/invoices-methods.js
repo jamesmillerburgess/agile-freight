@@ -15,4 +15,14 @@ Meteor.methods({
 
     Customers.update({ _id: customerId }, { $push: { invoices: quoteId } });
   },
+  'invoice.issue': function invoiceIssueMethod(invoiceId) {
+    // Check the parameters
+    check(invoiceId, String);
+
+    Invoices.update({ _id: invoiceId }, { $set: { status: 'Issued' } });
+
+    const invoice = Invoices.findOne(invoiceId);
+
+    // Customers.update({ _id: invoice.customerId }, { $add { }})
+  }
 });

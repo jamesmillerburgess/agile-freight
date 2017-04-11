@@ -21,7 +21,7 @@ export default class invoiceFixtures {
 
       // Set all the properties that have no dependencies
       const invoice = {
-        invoiceCode: `S${Math.floor(rand * (900000 - 100000)) + 100000}`,
+        invoiceCode: `I${Math.floor(rand * (900000 - 100000)) + 100000}`,
         customerId: _.sample(customers)._id,
         status: _.sample(APIGlobals.invoiceStatusOptions),
         amount: Math.floor(rand * (100000 - 20000)) + 10000,

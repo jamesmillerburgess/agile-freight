@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Bar, Line } from 'react-chartjs-2';
 
+import { Shipments } from '../../api/shipments/shipments';
+
 class CustomerOverviewInner extends React.Component {
   constructor(props) {
     super(props);
@@ -46,7 +48,11 @@ class CustomerOverviewInner extends React.Component {
                 Net Revenue
               </div>
               <div className="kpi-value">
-                382,128 INR (4%)
+                {
+                  customer.shipments
+                    .reduce((acc, val) =>
+                    acc + Shipments.findOne(val).shipperNetRevenue, 0)
+                } INR (4%)
               </div>
             </div>
             <div className="col-3 kpi">
