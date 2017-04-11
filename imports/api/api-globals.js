@@ -14,10 +14,13 @@ export const APIGlobals = {
   airServiceOptions: ['Premier', 'Expedited', 'Express'],
   oceanServiceOptions: ['FCL', 'LCL', 'Breakbulk'],
 
-  // Quote
+  // Quotes
   quoteStatusOptions: ['Issued', 'Expired', 'Draft', 'Canceled'],
   quoteTypeOptions: ['Single Route', 'Multi Route'],
   quoteRateTypeOptions: ['Rated', 'Itemized'],
+
+  // Shipments
+  shipmentStatusOptions: ['Received', 'Booked', 'Departed', 'Arrived', 'Released', 'Delivered', 'Closed'],
 
   // TEMP!!!!
   indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],

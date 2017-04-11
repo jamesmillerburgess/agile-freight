@@ -25,6 +25,7 @@ export default class shipmentFixtures {
         mode: _.sample(APIGlobals.modeOptions),
         direction: _.sample(APIGlobals.directionOptions),
         incoterm: _.sample(APIGlobals.incotermOptions),
+        status: _.sample(APIGlobals.shipmentStatusOptions),
         lastUpdatedBy: _.sample(users)._id,
       };
 
@@ -33,24 +34,15 @@ export default class shipmentFixtures {
       shipment.service = shipment.mode === 'Ocean' ?
         _.sample(APIGlobals.oceanServiceOptions) :
         _.sample(APIGlobals.airServiceOptions);
-      if (shipment.rateType === 'Rated') {
-        shipment.routes = shipment.type === 'Single Route' ? [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
-        ] : [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
-        ];
-      } else {
-        shipment.routes = shipment.type === 'Single Route' ? [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
-        ] : [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
-        ];
-      }
-      shipment.expiryDate = shipment.status === 'Expired' ?
-        moment().subtract(rand * 100, 'days').format() :
-        moment().add(rand * 100, 'days').format();
+      shipment.route = [
+        `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
+      ];
+      shipment.cargo = {
+        totalPackages: Math.floor(rand * (999 - 1)) + 1,
+        totalPackagesType: 'Packages',
+        totalGrossWeightKG: Math.floor(rand * (20000 - 50)) + 50,
+        totalVolumeCBM: Math.floor(rand * (30 - 1)) + 1,
+      };
 
       // Add to the array
       newShipments.push(shipment);

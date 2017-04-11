@@ -28,15 +28,15 @@ class ShipmentListInner extends React.Component {
               <tr key={shipment._id}>
                 <th>
                   {shipment.shipmentCode}<br />
-                  Received
+                  {shipment.status}
                 </th>
                 <td>
-                  20 Boxes<br />
-                  239.000 kg<br />
-                  4.219 cbm
+                  {shipment.cargo.totalPackages} {shipment.cargo.totalPackagesType}<br />
+                  {shipment.cargo.totalGrossWeightKG} kg<br />
+                  {shipment.cargo.totalVolumeCBM} cbm
                 </td>
                 <td>{shipment.mode} {shipment.service}</td>
-                <td>INNSA - GBFXT</td>
+                <td>{shipment.route}</td>
                 <td>{shipment.direction} {shipment.incoterm}</td>
                 <td>{Meteor.users.findOne(shipment.lastUpdatedBy).profile.name}</td>
               </tr>
@@ -49,14 +49,12 @@ class ShipmentListInner extends React.Component {
 }
 
 ShipmentListInner.propTypes = {
-  shipments: PropTypes.array,
+  shipments: PropTypes.array.isRequired,
 };
 
 const ShipmentList = createContainer((props) => {
   const { shipments } = props;
-  return {
-    shipments,
-  };
+  return { shipments };
 }, ShipmentListInner);
 
 export default ShipmentList;
