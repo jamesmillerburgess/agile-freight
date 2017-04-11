@@ -5,7 +5,7 @@ import { Quotes } from '../../../api/quotes/quotes';
 import { Jobs } from '../../../api/jobs/jobs';
 import { Shipments } from '../../../api/shipments/shipments';
 
-import customerFixtures from './customerFixtures';
+import customerFixtures from './customer-fixtures';
 import quoteFixtures from './quote-fixtures';
 import shipmentFixtures from './shipment-fixtures';
 import invoiceFixtures from './invoice-fixtures';

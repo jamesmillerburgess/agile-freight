@@ -27,9 +27,9 @@ export default class customerFixtures {
 
       // Then work out the values for the properties that have dependencies
       const names = {
-        name: ['Alstom', 'Herbert', 'James', 'Cecilia', 'Gregg'],
-        adjective: ['Awesome', 'Sensational', 'Gregarious', 'Hyper'],
-        product: ['Power Boilers', 'Pills', 'Urinals', 'Perfume'],
+        name: ['Alstom', 'Herbert', 'James', 'Cecilia', 'Gregg', 'Brioche'],
+        adjective: ['Awesome', 'Sensational', 'Gregarious', 'Hyper', 'Decent'],
+        product: ['Power Boilers', 'Pills', 'Urinals', 'Perfume', 'Paperclips'],
         suffix: ['Inc.', 'Ltd.', 'Corp', 'International', 'Worldwide', 'Limited'],
       };
       customer.name = `${_.sample(names.name)} ${_.sample(names.adjective)} ${_.sample(names.product)} ${_.sample(names.suffix)}`;
