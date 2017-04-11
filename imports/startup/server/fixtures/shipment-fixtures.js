@@ -1,8 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import moment from 'moment';
 import { APIGlobals } from '../../../api/api-globals';
 import { Customers } from '../../../api/customers/customers';
-import { Quotes } from '../../../api/quotes/quotes';
 
 export default class shipmentFixtures {
 
@@ -12,7 +10,6 @@ export default class shipmentFixtures {
 
     // Pre-fetch these guys so we don't do it over and over in the loop
     const customers = Customers.find().fetch();
-    const quotes = Quotes.find().fetch();
     const users = Meteor.users.find().fetch();
 
     for (let i = 0; i < num; i += 1) {

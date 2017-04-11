@@ -7,7 +7,7 @@ import { Route, NavLink } from 'react-router-dom';
 import CustomerOverview from './CustomerOverview.jsx';
 import CustomerQuotes from './CustomerQuotes.jsx';
 import CustomerShipments from './CustomerShipments.jsx';
-import CustomerAccounting from './CustomerAccounting.jsx';
+import CustomerInvoices from './CustomerInvoices.jsx';
 import CustomerConfiguration from './CustomerConfiguration.jsx';
 
 import { Customers } from '../../api/customers/customers';
@@ -50,10 +50,10 @@ class Customer extends React.Component {
                 Shipments
               </NavLink>
               <NavLink
-                to={`/customer/${customer._id}/accounting`}
+                to={`/customer/${customer._id}/invoices`}
                 activeClassName="active"
               >
-                Accounting
+                Invoices
               </NavLink>
               <NavLink
                 to={`/customer/${customer._id}/configuration`}
@@ -85,8 +85,8 @@ class Customer extends React.Component {
                 render={props => <CustomerShipments {...props} customer={customer} />}
               />
               <Route
-                path={`/customer/${customer._id}/accounting`}
-                render={props => <CustomerAccounting {...props} customer={customer} />}
+                path={`/customer/${customer._id}/invoices`}
+                render={props => <CustomerInvoices {...props} customer={customer} />}
               />
               <Route
                 exact

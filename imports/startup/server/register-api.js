@@ -9,6 +9,8 @@ import '../../api/quotes/server/publications';
 import '../../api/quotes/quote-methods';
 import '../../api/shipments/server/publications';
 import '../../api/shipments/shipment-methods';
+import '../../api/invoices/server/invoices-publications';
+import '../../api/invoices/invoices-methods';
 import '../../api/jobs/server/publications';
 import '../../api/jobs/job-methods';
 import '../../api/rates/rate-methods';

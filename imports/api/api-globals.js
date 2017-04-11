@@ -20,7 +20,10 @@ export const APIGlobals = {
   quoteRateTypeOptions: ['Rated', 'Itemized'],
 
   // Shipments
-  shipmentStatusOptions: ['Received', 'Booked', 'Departed', 'Arrived', 'Released', 'Delivered', 'Closed'],
+  shipmentStatusOptions: ['Received', 'Booked', 'Departed', 'Arrived', 'Released', 'Delivered', 'Closed', 'Canceled'],
+
+  // Invoices
+  invoiceStatusOptions: ['Issued', 'Draft', 'Canceled'],
 
   // TEMP!!!!
   indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],

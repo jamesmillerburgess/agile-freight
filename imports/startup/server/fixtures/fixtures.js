@@ -7,6 +7,7 @@ import { Shipments } from '../../../api/shipments/shipments';
 
 import quoteFixtures from './quote-fixtures';
 import shipmentFixtures from './shipment-fixtures';
+import invoiceFixtures from './invoice-fixtures';
 
 // if the database is empty on server start, create some sample data.
 Meteor.startup(() => {
@@ -52,6 +53,7 @@ India`,
 INHYD`,
         quotes: [],
         shipments: [],
+        invoices: [],
         activeQuotes: ['1', '2'],
         activeJobs: ['1'],
         credit: {
@@ -70,6 +72,7 @@ Australia`,
 AUSYD`,
         quotes: [],
         shipments: [],
+        invoices: [],
         activeQuotes: ['3'],
         activeJobs: ['2'],
         credit: {
@@ -89,6 +92,7 @@ United Kingdom`,
 GBLAN`,
         quotes: [],
         shipments: [],
+        invoices: [],
         activeQuotes: ['3'],
         activeJobs: ['2'],
         credit: {
@@ -107,6 +111,7 @@ ${doc.address}`;
 
     quoteFixtures.random(50);
     shipmentFixtures.random(20);
+    invoiceFixtures.random(15);
 
     const jobFixtures = [
       {
