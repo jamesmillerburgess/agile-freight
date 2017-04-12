@@ -72,7 +72,7 @@ class CustomerOverviewInner extends React.Component {
                 Credit Usage
               </div>
               <div className="kpi-value">
-                35%
+                {Math.floor((customer.credit.used / customer.credit.total) * 100)}%
               </div>
             </div>
           </div>

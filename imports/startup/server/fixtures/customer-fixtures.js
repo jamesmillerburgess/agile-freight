@@ -20,11 +20,11 @@ export default class customerFixtures {
         activeJobs: ['1'],
         credit: {
           currency: 'INR',
-          total: 119000,
-          used: 24000,
+          total: Math.floor(rand * (900000 - 100000)) + 100000,
         },
       };
 
+      customer.credit.used = Math.floor(customer.credit.total * rand);
       // Then work out the values for the properties that have dependencies
       const names = {
         name: ['Alstom', 'Herbert', 'James', 'Cecilia', 'Gregg', 'Brioche'],
