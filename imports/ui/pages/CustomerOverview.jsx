@@ -46,11 +46,19 @@ class CustomerOverviewInner extends React.Component {
                 Net Revenue
               </div>
               <div className="kpi-value">
-                {
-                  customer.shipments
-                    .reduce((acc, val) =>
-                    acc + Shipments.findOne(val).shipperNetRevenue, 0)
-                } INR (4%)
+                <Route
+                  path={`/customer/${customer._id}/overview/ltm`}
+                  render={() => <div>{this.props.ltmNetRevenue.toLocaleString()} INR (4%)</div>}
+                />
+                <Route
+                  path={`/customer/${customer._id}/overview/ytd`}
+                  render={() => <div>{this.props.ytdNetRevenue.toLocaleString()} INR (4%)</div>}
+                />
+                <Route
+                  path={`/customer/${customer._id}/overview/all-time`}
+                  render={() => <div>{this.props.allTimeNetRevenue.toLocaleString()} INR (4%)</div>}
+                />
+
               </div>
             </div>
             <div className="col-3 kpi">
@@ -178,6 +186,9 @@ class CustomerOverviewInner extends React.Component {
 
 CustomerOverviewInner.propTypes = {
   customer: PropTypes.object,
+  ltmNetRevenue: PropTypes.number,
+  ytdNetRevenue: PropTypes.number,
+  allTimeNetRevenue: PropTypes.number,
   ltmQuoteWinRate: PropTypes.number,
   ytdQuoteWinRate: PropTypes.number,
   allTimeQuoteWinRate: PropTypes.number,
@@ -185,6 +196,30 @@ CustomerOverviewInner.propTypes = {
 
 const CustomerOverview = createContainer((props) => {
   const { customer } = props;
+
+  // LTM Net Revenue
+  const ltmNetRevenue = customer.shipments
+    .reduce((acc, val) => {
+      const shipment = Shipments.findOne(val);
+      if (moment(shipment.creationDate).isAfter(ltmStart())) {
+        return acc + shipment.shipperNetRevenue;
+      }
+      return acc;
+    }, 0);
+
+  // YTD Net Revenue
+  const ytdNetRevenue = customer.shipments
+    .reduce((acc, val) => {
+      const shipment = Shipments.findOne(val);
+      if (moment(shipment.creationDate).isAfter(ytdStart())) {
+        return acc + shipment.shipperNetRevenue;
+      }
+      return acc;
+    }, 0);
+
+  // All Time Net Revenue
+  const allTimeNetRevenue = customer.shipments
+    .reduce((acc, val) => acc + Shipments.findOne(val).shipperNetRevenue, 0);
 
   // LTM Quote Win Rate KPI
   const ltmExpiredQuotes = Quotes
@@ -231,6 +266,9 @@ const CustomerOverview = createContainer((props) => {
 
   return {
     customer,
+    ltmNetRevenue,
+    ytdNetRevenue,
+    allTimeNetRevenue,
     ltmQuoteWinRate,
     ytdQuoteWinRate,
     allTimeQuoteWinRate,

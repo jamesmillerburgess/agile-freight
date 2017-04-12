@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 import { APIGlobals } from '../../../api/api-globals';
 import { Customers } from '../../../api/customers/customers';
 
@@ -43,6 +44,7 @@ export default class shipmentFixtures {
       };
       shipment.shipperNetRevenue = Math.floor(shipment.totalNetRevenue * rand);
       shipment.consigneeNetRevenue = Math.ceil(shipment.totalNetRevenue * (1 - rand));
+      shipment.creationDate = moment().subtract(rand * 600, 'days').format();
 
       // Add to the array
       newShipments.push(shipment);
