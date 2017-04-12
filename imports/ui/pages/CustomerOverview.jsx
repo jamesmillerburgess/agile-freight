@@ -122,7 +122,7 @@ CustomerOverviewInner.propTypes = {
 
 const CustomerOverview = createContainer((props) => {
   const { customer } = props;
-  const quotes = Quotes.find({ _id: { $in: cus.quotes } }).fetch();
+  const quotes = Quotes.find({ _id: { $in: customer.quotes } }).fetch();
   const shipments = Shipments.find({ _id: { $in: customer.shipments } }).fetch();
 
   const getNetRevenue = (cus, start) =>
