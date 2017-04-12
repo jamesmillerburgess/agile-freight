@@ -94,6 +94,15 @@ class CustomerOverviewInner extends React.Component {
                 }}
                 height={150}
                 options={{
+                  scales: {
+                    yAxes: [
+                      {
+                        ticks: {
+                          callback: label => (+label).toLocaleString(),
+                        },
+                      },
+                    ],
+                  },
                   maintainAspectRatio: false,
                   legend: { display: false },
                 }}
