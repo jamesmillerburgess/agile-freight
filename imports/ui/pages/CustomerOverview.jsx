@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Bar, Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import moment from 'moment';
 
 import { Quotes } from '../../api/quotes/quotes';
@@ -118,16 +118,11 @@ class CustomerOverviewInner extends React.Component {
 CustomerOverviewInner.propTypes = {
   customer: PropTypes.object,
   kpis: PropTypes.object,
-  ltmNetRevenue: PropTypes.number,
-  ytdNetRevenue: PropTypes.number,
-  allTimeNetRevenue: PropTypes.number,
-  ltmQuoteWinRate: PropTypes.number,
-  ytdQuoteWinRate: PropTypes.number,
-  allTimeQuoteWinRate: PropTypes.number,
 };
 
 const CustomerOverview = createContainer((props) => {
   const { customer } = props;
+  const quotes = Quotes.find({ _id: { $in: cus.quotes } }).fetch();
   const shipments = Shipments.find({ _id: { $in: customer.shipments } }).fetch();
 
   const getNetRevenue = (cus, start) =>
@@ -141,9 +136,7 @@ const CustomerOverview = createContainer((props) => {
       }, 0);
 
   const getQuoteWinRate = (cus, start) => {
-    const expiredQuotes = Quotes
-      .find({ _id: { $in: cus.quotes } })
-      .fetch()
+    const expiredQuotes = quotes
       .filter(quote =>
       quote.status === 'Expired' &&
       moment(quote.expiryDate)
