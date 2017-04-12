@@ -56,10 +56,10 @@ class CustomerOverviewInner extends React.Component {
           <div className="row">
             <div className="col-3 kpi">
               <div className="kpi-label">
-                Customer Rank
+                Quote Win Rate
               </div>
               <div className="kpi-value">
-                12
+                {getKpis().quoteWinRate}%
               </div>
             </div>
             <div className="col-6 kpi">
@@ -72,10 +72,10 @@ class CustomerOverviewInner extends React.Component {
             </div>
             <div className="col-3 kpi">
               <div className="kpi-label">
-                Quote Win Rate
+                Credit Usage
               </div>
               <div className="kpi-value">
-                {getKpis().quoteWinRate}%
+                35%
               </div>
             </div>
           </div>
@@ -109,53 +109,9 @@ class CustomerOverviewInner extends React.Component {
               />
             </div>
           </div>
-          <div className="chart">
-            <div className="chart-label">
-              Credit Usage
-            </div>
-            <div className="chart-container">
-              <Line
-                data={{
-                  labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'],
-                  datasets: [{
-                    data: [0.2, 0.25, 0.4, 0.2, 0.18, 0.3, 0.36, 0.5, 0.45, 0.61, 0.54, 0.48],
-                    backgroundColor: [
-                      'rgba(255, 159, 64, 1)',
-                    ],
-                    borderColor: [
-                      'rgba(255,99,132,1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)',
-                    ],
-                    borderWidth: 1,
-                  }, {
-                    data: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.7, 0.7, 0.7],
-                    borderColor: [
-                      'rgba(255,99,132,1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)',
-                    ],
-                    borderWidth: 1,
-                  }],
-                }}
-                height={150}
-                options={{
-                  maintainAspectRatio: false,
-                  legend: { display: false },
-                }}
-              />
-            </div>
-          </div>
         </div>
       </div>
-    )
-      ;
+    );
   }
 }
 
