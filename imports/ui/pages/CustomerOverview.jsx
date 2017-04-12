@@ -36,11 +36,11 @@ class CustomerOverviewInner extends React.Component {
     return (
       <div className="customer-overview">
         <div className="content-navbar">
-          <NavLink to={`/customer/${customer._id}/overview/ltm`}>
-            Last 12 Months
-          </NavLink>
           <NavLink to={`/customer/${customer._id}/overview/ytd`}>
             Year to Date
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/overview/ltm`}>
+            Last 12 Months
           </NavLink>
           <NavLink to={`/customer/${customer._id}/overview/all-time`}>
             All Time
@@ -51,7 +51,7 @@ class CustomerOverviewInner extends React.Component {
         </div>
         <div className="content-body">
           <Route path={`/customer/${customer._id}/overview`} exact>
-            <Redirect to={`/customer/${customer._id}/overview/ltm`} />
+            <Redirect to={`/customer/${customer._id}/overview/ytd`} />
           </Route>
           <div className="row">
             <div className="col-3 kpi">
@@ -67,7 +67,7 @@ class CustomerOverviewInner extends React.Component {
                 Net Revenue
               </div>
               <div className="kpi-value">
-                {getKpis().netRevenue.toLocaleString()} INR (4%)
+                <div>{getKpis().netRevenue.toLocaleString()} INR (4%)</div>
               </div>
             </div>
             <div className="col-3 kpi">
@@ -120,7 +120,7 @@ class CustomerOverviewInner extends React.Component {
                   datasets: [{
                     data: [0.2, 0.25, 0.4, 0.2, 0.18, 0.3, 0.36, 0.5, 0.45, 0.61, 0.54, 0.48],
                     backgroundColor: [
-                      'rgba(255,255,255,1)',
+                      'rgba(255, 159, 64, 1)',
                     ],
                     borderColor: [
                       'rgba(255,99,132,1)',
@@ -133,9 +133,6 @@ class CustomerOverviewInner extends React.Component {
                     borderWidth: 1,
                   }, {
                     data: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.7, 0.7, 0.7],
-                    fillColor: [
-                      'rgba(220,200,200,0.2)',
-                    ],
                     borderColor: [
                       'rgba(255,99,132,1)',
                       'rgba(54, 162, 235, 1)',
