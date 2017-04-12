@@ -18,16 +18,16 @@ class CustomerOverviewInner extends React.Component {
   getKpis() {
     const pathname = this.props.location.pathname;
     const kpis = this.props.kpis;
-    if (pathname.indexOf('/overview/ltm') !== -1) {
-      return kpis.ltm;
-    }
     if (pathname.indexOf('/overview/ytd') !== -1) {
       return kpis.ytd;
+    }
+    if (pathname.indexOf('/overview/ltm') !== -1) {
+      return kpis.ltm;
     }
     if (pathname.indexOf('/overview/all-time') !== -1) {
       return kpis.allTime;
     }
-    return kpis.ltm;
+    return kpis.ytd;
   }
 
   render() {
@@ -44,9 +44,6 @@ class CustomerOverviewInner extends React.Component {
           </NavLink>
           <NavLink to={`/customer/${customer._id}/overview/all-time`}>
             All Time
-          </NavLink>
-          <NavLink to={`/customer/${customer._id}/overview/custom`}>
-            Custom
           </NavLink>
         </div>
         <div className="content-body">
