@@ -5,7 +5,7 @@ exports.ltmStart = (date = undefined) =>
     .subtract(1, 'years')
     .subtract(moment().date(), 'days');
 
-exports.ytdStart = (date) =>
+exports.ytdStart = date =>
   moment(date)
     .subtract(moment().month(), 'months')
     .subtract(moment().date(), 'days');

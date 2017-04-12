@@ -10,8 +10,29 @@ import { Shipments } from '../../api/shipments/shipments';
 import { ltmStart, ytdStart, allTimeStart } from '../calculations';
 
 class CustomerOverviewInner extends React.Component {
+  constructor(props) {
+    super(props);
+    this.getKpis = this.getKpis.bind(this);
+  }
+
+  getKpis() {
+    const pathname = this.props.location.pathname;
+    const kpis = this.props.kpis;
+    if (pathname.indexOf('/overview/ltm') !== -1) {
+      return kpis.ltm;
+    }
+    if (pathname.indexOf('/overview/ytd') !== -1) {
+      return kpis.ytd;
+    }
+    if (pathname.indexOf('/overview/all-time') !== -1) {
+      return kpis.allTime;
+    }
+    return kpis.ltm;
+  }
+
   render() {
-    const { customer, kpis } = this.props;
+    const { customer } = this.props;
+    const getKpis = this.getKpis;
     return (
       <div className="customer-overview">
         <div className="content-navbar">
@@ -46,19 +67,7 @@ class CustomerOverviewInner extends React.Component {
                 Net Revenue
               </div>
               <div className="kpi-value">
-                <Route
-                  path={`/customer/${customer._id}/overview/ltm`}
-                  render={() => <div>{kpis.ltm.netRevenue.toLocaleString()} INR (4%)</div>}
-                />
-                <Route
-                  path={`/customer/${customer._id}/overview/ytd`}
-                  render={() => <div>{kpis.ytd.netRevenue.toLocaleString()} INR (4%)</div>}
-                />
-                <Route
-                  path={`/customer/${customer._id}/overview/all-time`}
-                  render={() => <div>{kpis.allTime.netRevenue.toLocaleString()} INR (4%)</div>}
-                />
-
+                {getKpis().netRevenue.toLocaleString()} INR (4%)
               </div>
             </div>
             <div className="col-3 kpi">
@@ -66,60 +75,20 @@ class CustomerOverviewInner extends React.Component {
                 Quote Win Rate
               </div>
               <div className="kpi-value">
-                <Route
-                  path={`/customer/${customer._id}/overview/ltm`}
-                  render={() => <div>{kpis.ltm.quoteWinRate}%</div>}
-                />
-                <Route
-                  path={`/customer/${customer._id}/overview/ytd`}
-                  render={() => <div>{kpis.ytd.quoteWinRate}%</div>}
-                />
-                <Route
-                  path={`/customer/${customer._id}/overview/all-time`}
-                  render={() => <div>{kpis.allTime.quoteWinRate}%</div>}
-                />
+                {getKpis().quoteWinRate}%
               </div>
             </div>
           </div>
           <div className="chart">
             <div className="chart-label">
-              Cargo Volume
+              Net Revenue by Month
             </div>
             <div className="chart-container">
               <Bar
                 data={{
-                  labels: [
-                    'Apr \'16',
-                    'May \'16',
-                    'Jun \'16',
-                    'Jul \'16',
-                    'Aug \'16',
-                    'Sep \'16',
-                    'Oct \'16',
-                    'Nov \'16',
-                    'Dec \'16',
-                    'Jan \'17',
-                    'Feb \'17',
-                    'Mar \'17',
-                    'Apr \'17',
-                  ],
+                  labels: getKpis().labels,
                   datasets: [{
-                    backgroundColor: [
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.1)',
-                      'rgba(0,0,0,0.3)',
-                    ],
-                    data: kpis.ltm.netRevenueData,
+                    data: getKpis().netRevenueData,
                     borderWidth: 1,
                   }],
                 }}
@@ -197,6 +166,7 @@ CustomerOverviewInner.propTypes = {
 
 const CustomerOverview = createContainer((props) => {
   const { customer } = props;
+  const shipments = Shipments.find({ _id: { $in: customer.shipments } }).fetch();
 
   const getNetRevenue = (cus, start) =>
     cus.shipments
@@ -227,32 +197,51 @@ const CustomerOverview = createContainer((props) => {
   const buildVolumeData = (arr, valPath, datePath, start) => {
     const firstOfNextMonth = moment().subtract(moment().date(), 'days').add(1, 'months');
     const volumeData = [];
-    const m = start();
-    while (new Date(m) < new Date()) {
-      m.add(1, 'months');
+    const now = moment();
+    while (start < now) {
+      now.subtract(1, 'months');
       volumeData.push(0);
     }
     arr.forEach((val) => {
-      if (moment(val[datePath]).isAfter(start())) {
+      if (moment(val[datePath]).isAfter(moment(start))) {
         volumeData[firstOfNextMonth.diff(moment(val[datePath]), 'months')] += val[valPath];
       }
     });
     return volumeData.reverse();
   };
 
+  const getDataLabels = (start) => {
+    const dataLabels = [];
+    const m = start;
+    const now = moment();
+    while (m < now) {
+      m.add(1, 'months');
+      dataLabels.push(`${m.format('MMM')} '${m.format('YY')}`);
+    }
+    return dataLabels;
+  };
+
+  const minDate = moment(_.min(shipments, val => moment(val.creationDate)).creationDate);
+  const ats = minDate.subtract(minDate.date(), 'days');
+
   const kpis = {
     ltm: {
       netRevenue: getNetRevenue(customer, ltmStart),
       quoteWinRate: getQuoteWinRate(customer, ltmStart),
-      netRevenueData: buildVolumeData(Shipments.find({ _id: { $in: customer.shipments } }).fetch(), 'shipperNetRevenue', 'creationDate', ltmStart),
+      netRevenueData: buildVolumeData(shipments, 'shipperNetRevenue', 'creationDate', ltmStart()),
+      labels: getDataLabels(ltmStart()),
     },
     ytd: {
       netRevenue: getNetRevenue(customer, ytdStart),
       quoteWinRate: getQuoteWinRate(customer, ytdStart),
+      netRevenueData: buildVolumeData(shipments, 'shipperNetRevenue', 'creationDate', ytdStart()),
+      labels: getDataLabels(ytdStart()),
     },
     allTime: {
       netRevenue: getNetRevenue(customer, allTimeStart),
       quoteWinRate: getQuoteWinRate(customer, allTimeStart),
+      netRevenueData: buildVolumeData(shipments, 'shipperNetRevenue', 'creationDate', ats),
+      labels: getDataLabels(ats),
     },
   };
 
