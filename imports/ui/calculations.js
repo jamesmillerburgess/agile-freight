@@ -10,3 +10,6 @@ exports.ytdStart = (date) =>
     .subtract(moment().month(), 'months')
     .subtract(moment().date(), 'days');
 
+exports.allTimeStart = () =>
+  moment(0);
+

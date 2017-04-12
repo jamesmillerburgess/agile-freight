@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import moment from 'moment';
+
+import { UIGlobals } from '../ui-globals';
+
 class ShipmentListInner extends React.Component {
   render() {
     return (
@@ -32,7 +36,8 @@ class ShipmentListInner extends React.Component {
                 >
                   <th>
                     {shipment.shipmentCode}<br />
-                    {shipment.status}
+                    {shipment.status}<br />
+                    {moment(shipment.creationDate).format(UIGlobals.dateFormat)}
                   </th>
                   <td>
                     {shipment.cargo.totalPackages} {shipment.cargo.totalPackagesType}<br />

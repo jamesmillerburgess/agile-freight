@@ -13,14 +13,14 @@ class CustomerList extends React.Component {
   }
 
   render() {
-    const { loading, customers } = this.props;
+    const { customers } = this.props;
     return (
       <div className="customer-list">
         <div className="panel">
           <div className="panel-header">
             <div className="panel-header-inner">
               <div className="icon-container hidden-md-down">
-                <i className="icon fa fa-fw fa-address-card"/>
+                <i className="icon fa fa-fw fa-address-card" />
               </div>
               <div className="panel-header-content container">
                 <div className="row">
@@ -42,7 +42,7 @@ class CustomerList extends React.Component {
                   </div>
                   <div className="col-5">
                     <form className="form-inline">
-                      <input className="focis-input mr-sm-2" type="text" placeholder="Filter"/>
+                      <input className="focis-input mr-sm-2" type="text" placeholder="Filter" />
                     </form>
                   </div>
                 </div>
@@ -50,10 +50,7 @@ class CustomerList extends React.Component {
             </div>
           </div>
         </div>
-          {loading
-            ? <h1 key="loading">Loading...</h1>
-            : customers.map(customer => <CustomerListItem key={customer._id} customer={customer} />)
-          }
+        {customers.map(customer => <CustomerListItem key={customer._id} customer={customer} />)}
       </div>
     );
   }
@@ -65,10 +62,7 @@ CustomerList.propTypes = {
 };
 
 const CustomerListContainer = createContainer(() => {
-  const branch = Meteor.subscribe('branch.active');
-  const loading = !branch.ready();
   return {
-    loading,
     customers: Customers.find().fetch(),
   };
 }, CustomerList);

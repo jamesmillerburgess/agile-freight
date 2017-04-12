@@ -62,7 +62,7 @@ const CustomerShipment = createContainer((props) => {
   const shipments = Shipments
     .find({ _id: { $in: customer.shipments } })
     .fetch()
-    .sort((a, b) => new Date(b.expiryDate) - new Date(a.expiryDate));
+    .sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
   const activeShipments = shipments
     .filter(shipment => shipment.status !== 'Canceled' && shipment.status !== 'Closed');
   return {

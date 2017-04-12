@@ -7,11 +7,11 @@ import moment from 'moment';
 
 import { Quotes } from '../../api/quotes/quotes';
 import { Shipments } from '../../api/shipments/shipments';
-import { ltmStart, ytdStart } from '../calculations';
+import { ltmStart, ytdStart, allTimeStart } from '../calculations';
 
 class CustomerOverviewInner extends React.Component {
   render() {
-    const { customer } = this.props;
+    const { customer, kpis } = this.props;
     return (
       <div className="customer-overview">
         <div className="content-navbar">
@@ -48,15 +48,15 @@ class CustomerOverviewInner extends React.Component {
               <div className="kpi-value">
                 <Route
                   path={`/customer/${customer._id}/overview/ltm`}
-                  render={() => <div>{this.props.ltmNetRevenue.toLocaleString()} INR (4%)</div>}
+                  render={() => <div>{kpis.ltm.netRevenue.toLocaleString()} INR (4%)</div>}
                 />
                 <Route
                   path={`/customer/${customer._id}/overview/ytd`}
-                  render={() => <div>{this.props.ytdNetRevenue.toLocaleString()} INR (4%)</div>}
+                  render={() => <div>{kpis.ytd.netRevenue.toLocaleString()} INR (4%)</div>}
                 />
                 <Route
                   path={`/customer/${customer._id}/overview/all-time`}
-                  render={() => <div>{this.props.allTimeNetRevenue.toLocaleString()} INR (4%)</div>}
+                  render={() => <div>{kpis.allTime.netRevenue.toLocaleString()} INR (4%)</div>}
                 />
 
               </div>
@@ -68,15 +68,15 @@ class CustomerOverviewInner extends React.Component {
               <div className="kpi-value">
                 <Route
                   path={`/customer/${customer._id}/overview/ltm`}
-                  render={() => <div>{this.props.ltmQuoteWinRate}%</div>}
+                  render={() => <div>{kpis.ltm.quoteWinRate}%</div>}
                 />
                 <Route
                   path={`/customer/${customer._id}/overview/ytd`}
-                  render={() => <div>{this.props.ytdQuoteWinRate}%</div>}
+                  render={() => <div>{kpis.ytd.quoteWinRate}%</div>}
                 />
                 <Route
                   path={`/customer/${customer._id}/overview/all-time`}
-                  render={() => <div>{this.props.allTimeQuoteWinRate}%</div>}
+                  render={() => <div>{kpis.allTime.quoteWinRate}%</div>}
                 />
               </div>
             </div>
@@ -119,7 +119,7 @@ class CustomerOverviewInner extends React.Component {
                       'rgba(0,0,0,0.1)',
                       'rgba(0,0,0,0.3)',
                     ],
-                    data: [10, 12, 19, 3, 5, 2, 3, 5, 9, 6, 7, 1, 3],
+                    data: kpis.ltm.netRevenueData,
                     borderWidth: 1,
                   }],
                 }}
@@ -186,6 +186,7 @@ class CustomerOverviewInner extends React.Component {
 
 CustomerOverviewInner.propTypes = {
   customer: PropTypes.object,
+  kpis: PropTypes.object,
   ltmNetRevenue: PropTypes.number,
   ytdNetRevenue: PropTypes.number,
   allTimeNetRevenue: PropTypes.number,
@@ -197,81 +198,67 @@ CustomerOverviewInner.propTypes = {
 const CustomerOverview = createContainer((props) => {
   const { customer } = props;
 
-  // LTM Net Revenue
-  const ltmNetRevenue = customer.shipments
-    .reduce((acc, val) => {
-      const shipment = Shipments.findOne(val);
-      if (moment(shipment.creationDate).isAfter(ltmStart())) {
-        return acc + shipment.shipperNetRevenue;
+  const getNetRevenue = (cus, start) =>
+    cus.shipments
+      .reduce((acc, val) => {
+        const shipment = Shipments.findOne(val);
+        if (moment(shipment.creationDate).isAfter(start())) {
+          return acc + shipment.shipperNetRevenue;
+        }
+        return acc;
+      }, 0);
+
+  const getQuoteWinRate = (cus, start) => {
+    const expiredQuotes = Quotes
+      .find({ _id: { $in: cus.quotes } })
+      .fetch()
+      .filter(quote =>
+      quote.status === 'Expired' &&
+      moment(quote.expiryDate)
+        .isAfter(start()));
+    const wonQuotes = expiredQuotes
+      .filter(quote =>
+        quote.shipments.length !== 0,
+      );
+    return expiredQuotes.length > 0 ?
+      Math.floor((wonQuotes.length / expiredQuotes.length) * 100) : 0;
+  };
+
+  const buildVolumeData = (arr, valPath, datePath, start) => {
+    const firstOfNextMonth = moment().subtract(moment().date(), 'days').add(1, 'months');
+    const volumeData = [];
+    const m = start();
+    while (new Date(m) < new Date()) {
+      m.add(1, 'months');
+      volumeData.push(0);
+    }
+    arr.forEach((val) => {
+      if (moment(val[datePath]).isAfter(start())) {
+        volumeData[firstOfNextMonth.diff(moment(val[datePath]), 'months')] += val[valPath];
       }
-      return acc;
-    }, 0);
+    });
+    return volumeData.reverse();
+  };
 
-  // YTD Net Revenue
-  const ytdNetRevenue = customer.shipments
-    .reduce((acc, val) => {
-      const shipment = Shipments.findOne(val);
-      if (moment(shipment.creationDate).isAfter(ytdStart())) {
-        return acc + shipment.shipperNetRevenue;
-      }
-      return acc;
-    }, 0);
-
-  // All Time Net Revenue
-  const allTimeNetRevenue = customer.shipments
-    .reduce((acc, val) => acc + Shipments.findOne(val).shipperNetRevenue, 0);
-
-  // LTM Quote Win Rate KPI
-  const ltmExpiredQuotes = Quotes
-    .find({ _id: { $in: customer.quotes } })
-    .fetch()
-    .filter(quote =>
-    quote.status === 'Expired' &&
-    moment(quote.expiryDate)
-      .isAfter(ltmStart()));
-  const ltmWonQuotes = ltmExpiredQuotes
-    .filter(quote =>
-      quote.shipments.length !== 0,
-    );
-  const ltmQuoteWinRate =
-    ltmExpiredQuotes.length > 0 ?
-      Math.floor((ltmWonQuotes.length / ltmExpiredQuotes.length) * 100) : 0;
-
-  // YTD Quote Win Rate KPI
-  const ytdExpiredQuotes = Quotes
-    .find({ _id: { $in: customer.quotes } })
-    .fetch()
-    .filter(quote =>
-    quote.status === 'Expired' &&
-    moment(quote.expiryDate)
-      .isAfter(ytdStart()));
-  const ytdWonQuotes = ytdExpiredQuotes
-    .filter(quote =>
-      quote.shipments.length !== 0,
-    );
-  const ytdQuoteWinRate =
-    ytdExpiredQuotes.length > 0 ?
-      Math.floor((ytdWonQuotes.length / ytdExpiredQuotes.length) * 100) : 0;
-
-  // All Time Quote Win Rate KPI
-  const allTimeExpiredQuotes = Quotes
-    .find({ _id: { $in: customer.quotes } })
-    .fetch()
-    .filter(quote => quote.status === 'Expired');
-  const allTimeWonQuotes = allTimeExpiredQuotes
-    .filter(quote => quote.shipments.length !== 0);
-  const allTimeQuoteWinRate =
-    allTimeExpiredQuotes.length > 0 ?
-      Math.floor((allTimeWonQuotes.length / allTimeExpiredQuotes.length) * 100) : 0;
+  const kpis = {
+    ltm: {
+      netRevenue: getNetRevenue(customer, ltmStart),
+      quoteWinRate: getQuoteWinRate(customer, ltmStart),
+      netRevenueData: buildVolumeData(Shipments.find({ _id: { $in: customer.shipments } }).fetch(), 'shipperNetRevenue', 'creationDate', ltmStart),
+    },
+    ytd: {
+      netRevenue: getNetRevenue(customer, ytdStart),
+      quoteWinRate: getQuoteWinRate(customer, ytdStart),
+    },
+    allTime: {
+      netRevenue: getNetRevenue(customer, allTimeStart),
+      quoteWinRate: getQuoteWinRate(customer, allTimeStart),
+    },
+  };
 
   return {
     customer,
-    ltmNetRevenue,
-    ytdNetRevenue,
-    allTimeNetRevenue,
-    ltmQuoteWinRate,
-    ytdQuoteWinRate,
-    allTimeQuoteWinRate,
+    kpis,
   };
 }, CustomerOverviewInner);
 
