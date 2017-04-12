@@ -1,17 +1,15 @@
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { NavLink, Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Bar, Line } from 'react-chartjs-2';
+import moment from 'moment';
 
+import { Quotes } from '../../api/quotes/quotes';
 import { Shipments } from '../../api/shipments/shipments';
+import { ltmStart, ytdStart } from '../calculations';
 
 class CustomerOverviewInner extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { customer } = this.props;
     return (
@@ -60,7 +58,18 @@ class CustomerOverviewInner extends React.Component {
                 Quote Win Rate
               </div>
               <div className="kpi-value">
-                25%
+                <Route
+                  path={`/customer/${customer._id}/overview/ltm`}
+                  render={() => <div>{this.props.ltmQuoteWinRate}%</div>}
+                />
+                <Route
+                  path={`/customer/${customer._id}/overview/ytd`}
+                  render={() => <div>{this.props.ytdQuoteWinRate}%</div>}
+                />
+                <Route
+                  path={`/customer/${customer._id}/overview/all-time`}
+                  render={() => <div>{this.props.allTimeQuoteWinRate}%</div>}
+                />
               </div>
             </div>
           </div>
@@ -162,22 +171,69 @@ class CustomerOverviewInner extends React.Component {
           </div>
         </div>
       </div>
-    );
+    )
+      ;
   }
 }
 
 CustomerOverviewInner.propTypes = {
-  loading: PropTypes.bool,
   customer: PropTypes.object,
+  ltmQuoteWinRate: PropTypes.number,
+  ytdQuoteWinRate: PropTypes.number,
+  allTimeQuoteWinRate: PropTypes.number,
 };
 
 const CustomerOverview = createContainer((props) => {
-  const branch = Meteor.subscribe('branch.active');
-  const loading = !branch.ready();
   const { customer } = props;
+
+  // LTM Quote Win Rate KPI
+  const ltmExpiredQuotes = Quotes
+    .find({ _id: { $in: customer.quotes } })
+    .fetch()
+    .filter(quote =>
+    quote.status === 'Expired' &&
+    moment(quote.expiryDate)
+      .isAfter(ltmStart()));
+  const ltmWonQuotes = ltmExpiredQuotes
+    .filter(quote =>
+      quote.shipments.length !== 0,
+    );
+  const ltmQuoteWinRate =
+    ltmExpiredQuotes.length > 0 ?
+      Math.floor((ltmWonQuotes.length / ltmExpiredQuotes.length) * 100) : 0;
+
+  // YTD Quote Win Rate KPI
+  const ytdExpiredQuotes = Quotes
+    .find({ _id: { $in: customer.quotes } })
+    .fetch()
+    .filter(quote =>
+    quote.status === 'Expired' &&
+    moment(quote.expiryDate)
+      .isAfter(ytdStart()));
+  const ytdWonQuotes = ytdExpiredQuotes
+    .filter(quote =>
+      quote.shipments.length !== 0,
+    );
+  const ytdQuoteWinRate =
+    ytdExpiredQuotes.length > 0 ?
+      Math.floor((ytdWonQuotes.length / ytdExpiredQuotes.length) * 100) : 0;
+
+  // All Time Quote Win Rate KPI
+  const allTimeExpiredQuotes = Quotes
+    .find({ _id: { $in: customer.quotes } })
+    .fetch()
+    .filter(quote => quote.status === 'Expired');
+  const allTimeWonQuotes = allTimeExpiredQuotes
+    .filter(quote => quote.shipments.length !== 0);
+  const allTimeQuoteWinRate =
+    allTimeExpiredQuotes.length > 0 ?
+      Math.floor((allTimeWonQuotes.length / allTimeExpiredQuotes.length) * 100) : 0;
+
   return {
-    loading,
     customer,
+    ltmQuoteWinRate,
+    ytdQuoteWinRate,
+    allTimeQuoteWinRate,
   };
 }, CustomerOverviewInner);
 

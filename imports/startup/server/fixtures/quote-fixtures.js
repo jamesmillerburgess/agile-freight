@@ -62,7 +62,7 @@ export default class quoteFixtures {
         ];
       }
       quote.expiryDate = quote.status === 'Expired' ?
-        moment().subtract(rand * 100, 'days').format() :
+        moment().subtract(rand * 600, 'days').format() :
         moment().add(rand * 100, 'days').format();
 
       // Add to the array
