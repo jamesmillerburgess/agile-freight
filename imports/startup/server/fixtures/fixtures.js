@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { Offices } from '../../../api/offices/offices';
 import { Customers } from '../../../api/customers/customers';
 import { Quotes } from '../../../api/quotes/quotes';
@@ -24,6 +25,15 @@ Meteor.startup(() => {
     Jobs._ensureIndex({ search: 1 });
     Shipments.remove({});
     Shipments._ensureIndex({ search: 1 });
+    Meteor.users.remove({});
+    Accounts.createUser({
+      username: 'd',
+      email: 'd@d.com',
+      password: 'd',
+      profile: {
+        name: 'default'
+      }
+    });
   }
 
   if (Meteor.settings.testMode === 'structure' && Customers.find().count() === 0) {
