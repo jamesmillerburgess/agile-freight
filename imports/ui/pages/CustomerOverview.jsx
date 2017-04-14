@@ -9,9 +9,7 @@ import { Quotes } from '../../api/quotes/quotes';
 import { Shipments } from '../../api/shipments/shipments';
 import { ltmStart, ytdStart, allTimeStart } from '../calculations';
 
-const CustomerOverviewInner = (props) => {
-  const { customer, location, kpis } = props;
-
+const CustomerOverviewInner = ({ customer, location, kpis }) => {
   const getKpis = () => {
     const pathname = location.pathname;
     if (pathname.indexOf('/overview/ytd') !== -1) {
