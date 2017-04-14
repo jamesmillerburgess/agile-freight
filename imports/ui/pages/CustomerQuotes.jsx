@@ -7,52 +7,43 @@ import moment from 'moment';
 import QuoteList from '../lists/QuoteList.jsx';
 import { Quotes } from '../../api/quotes/quotes';
 
-class CustomerQuotesInner extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const { customer, quotes, activeQuotes } = this.props;
-    return (
-      <div className="customer-quotes">
-        <div className="content-navbar">
-          <NavLink to={`/customer/${customer._id}/quotes/active`}>
-            Active <span className="item-count">{activeQuotes.length}</span>
-          </NavLink>
-          <NavLink to={`/customer/${customer._id}/quotes/all`}>
-            All <span className="item-count">{quotes.length}</span>
-          </NavLink>
-          <NavLink to={`/customer/${customer._id}/quotes/charts`}>
-            <i className="fa fa-fw fa-bar-chart" /> Charts
-          </NavLink>
-          <NavLink to={`/customer/${customer._id}/quotes/new`}>
-            <i className="fa fa-fw fa-plus" /> Quote
-          </NavLink>
-        </div>
-        <div className="content-body">
-          <Route
-            path={`/customer/${customer._id}/quotes`}
-          >
-            <Redirect to={`/customer/${customer._id}/quotes/active`} />
-          </Route>
-          <Route
-            path={`/customer/${customer._id}/quotes/active`}
-            render={props => <QuoteList {...props} quotes={activeQuotes} />}
-          />
-          <Route
-            path={`/customer/${customer._id}/quotes/charts`}
-            render={props => <div />}
-          />
-          <Route
-            path={`/customer/${customer._id}/quotes/all`}
-            render={props => <QuoteList {...props} quotes={quotes} />}
-          />
-        </div>
-      </div>
-    );
-  }
-}
+const CustomerQuotesInner = ({ customer, quotes, activeQuotes }) => (
+  <div className="customer-quotes">
+    <div className="content-navbar">
+      <NavLink to={`/customer/${customer._id}/quotes/active`}>
+        Active <span className="item-count">{activeQuotes.length}</span>
+      </NavLink>
+      <NavLink to={`/customer/${customer._id}/quotes/all`}>
+        All <span className="item-count">{quotes.length}</span>
+      </NavLink>
+      <NavLink to={`/customer/${customer._id}/quotes/charts`}>
+        <i className="fa fa-fw fa-bar-chart" /> Charts
+      </NavLink>
+      <NavLink to={`/customer/${customer._id}/quotes/new`}>
+        <i className="fa fa-fw fa-plus" /> Quote
+      </NavLink>
+    </div>
+    <div className="content-body">
+      <Route
+        path={`/customer/${customer._id}/quotes`}
+      >
+        <Redirect to={`/customer/${customer._id}/quotes/active`} />
+      </Route>
+      <Route
+        path={`/customer/${customer._id}/quotes/active`}
+        render={props => <QuoteList {...props} quotes={activeQuotes} />}
+      />
+      <Route
+        path={`/customer/${customer._id}/quotes/charts`}
+        render={props => <div />}
+      />
+      <Route
+        path={`/customer/${customer._id}/quotes/all`}
+        render={props => <QuoteList {...props} quotes={quotes} />}
+      />
+    </div>
+  </div>
+);
 
 CustomerQuotesInner.propTypes = {
   customer: PropTypes.object.isRequired,
