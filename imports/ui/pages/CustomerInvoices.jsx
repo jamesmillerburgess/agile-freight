@@ -7,42 +7,30 @@ import { Invoices } from '../../api/invoices/invoices-collection';
 
 import InvoiceList from '../lists/InvoiceList.jsx';
 
-class CustomerInvoicesInner extends React.Component {
-  render() {
-    const { customer, activeInvoices, invoices } = this.props;
-    return (
-      <div className="customer-quotes">
-        <div className="content-navbar">
-          <NavLink to={`/customer/${customer._id}/invoices/active`}>
-            Active <span className="item-count">{activeInvoices.length}</span>
-          </NavLink>
-          <NavLink to={`/customer/${customer._id}/invoices/all`}>
-            All <span className="item-count">{invoices.length}</span>
-          </NavLink>
-          <NavLink to={`/customer/${customer._id}/invoices/new-invoice`}>
-            <i className="fa fa-fw fa-plus" /> Invoice
-          </NavLink>
-          <NavLink to={`/customer/${customer._id}/invoices/new-credit-note`}>
-            <i className="fa fa-fw fa-plus" /> Credit Note
-          </NavLink>
-        </div>
-        <div className="content-body">
-          <Route path={`/customer/${customer._id}/invoices`} exact>
-            <Redirect to={`/customer/${customer._id}/invoices/active`} />
-          </Route>
-          <Route
-            path={`/customer/${customer._id}/invoices/active`}
-            render={props => <InvoiceList {...props} invoices={activeInvoices} />}
-          />
-          <Route
-            path={`/customer/${customer._id}/invoices/all`}
-            render={props => <InvoiceList {...props} invoices={invoices} />}
-          />
-        </div>
-      </div>
-    );
-  }
-}
+const CustomerInvoicesInner = ({ customer, activeInvoices, invoices }) => (
+  <div className="customer-quotes">
+    <div className="content-navbar">
+      <NavLink to={`/customer/${customer._id}/invoices/active`}>
+        Active <span className="item-count">{activeInvoices.length}</span>
+      </NavLink>
+      <NavLink to={`/customer/${customer._id}/invoices/all`}>
+        All <span className="item-count">{invoices.length}</span>
+      </NavLink>
+      <NavLink to={`/customer/${customer._id}/invoices/new-invoice`}>
+        <i className="fa fa-fw fa-plus" /> Invoice
+      </NavLink>
+    </div>
+    <div className="content-body">
+      <Route path={`/customer/${customer._id}/invoices`} exact>
+        <Redirect to={`/customer/${customer._id}/invoices/active`} />
+      </Route>
+      <Route
+        path={`/customer/${customer._id}/invoices/active`}
+        render={props => <InvoiceList {...props} invoices={activeInvoices} />}
+      />
+    </div>
+  </div>
+);
 
 CustomerInvoicesInner.propTypes = {
   customer: PropTypes.object.isRequired,
