@@ -10,8 +10,6 @@ import CustomerInvoices from './CustomerInvoices.jsx';
 import CustomerConfiguration from './CustomerConfiguration.jsx';
 
 import { Customers } from '../../api/customers/customers';
-import { Quotes } from '../../api/quotes/quotes';
-import { Jobs } from '../../api/jobs/jobs';
 
 const Customer = ({ customer }) =>
   (
@@ -57,7 +55,7 @@ const Customer = ({ customer }) =>
             <div className="sidebar-section-header">
               UPDATES
             </div>
-            {/*<MentionFieldContainer />*/}
+            {/* <MentionFieldContainer /> */}
           </div>
           <div className="col-10 content">
             <div className="content-header">
@@ -94,19 +92,13 @@ const Customer = ({ customer }) =>
 
 Customer.propTypes = {
   customer: PropTypes.object,
-  quotes: PropTypes.array,
-  jobs: PropTypes.array,
 };
 
 const CustomerContainer = createContainer((props) => {
   const customerId = props.match.params.id;
   const customer = Customers.findOne(customerId);
-  const quotes = Quotes.find({ 'customer.id': customerId }).fetch();
-  const jobs = Jobs.find({ $or: [{ shipper: customerId }, { consignee: customerId }] }).fetch();
   return {
     customer,
-    quotes,
-    jobs,
   };
 }, Customer);
 

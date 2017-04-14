@@ -9,15 +9,11 @@ import { Quotes } from '../../api/quotes/quotes';
 import { Shipments } from '../../api/shipments/shipments';
 import { ltmStart, ytdStart, allTimeStart } from '../calculations';
 
-class CustomerOverviewInner extends React.Component {
-  constructor(props) {
-    super(props);
-    this.getKpis = this.getKpis.bind(this);
-  }
+const CustomerOverviewInner = (props) => {
+  const { customer, location, kpis } = props;
 
-  getKpis() {
-    const pathname = this.props.location.pathname;
-    const kpis = this.props.kpis;
+  const getKpis = () => {
+    const pathname = location.pathname;
     if (pathname.indexOf('/overview/ytd') !== -1) {
       return kpis.ytd;
     }
@@ -28,93 +24,90 @@ class CustomerOverviewInner extends React.Component {
       return kpis.allTime;
     }
     return kpis.ytd;
-  }
+  };
 
-  render() {
-    const { customer } = this.props;
-    const getKpis = this.getKpis;
-    return (
-      <div className="customer-overview">
-        <div className="content-navbar">
-          <NavLink to={`/customer/${customer._id}/overview/ytd`}>
-            Year to Date
-          </NavLink>
-          <NavLink to={`/customer/${customer._id}/overview/ltm`}>
-            Last 12 Months
-          </NavLink>
-          <NavLink to={`/customer/${customer._id}/overview/all-time`}>
-            All Time
-          </NavLink>
-        </div>
-        <div className="content-body">
-          <Route path={`/customer/${customer._id}/overview`} exact>
-            <Redirect to={`/customer/${customer._id}/overview/ytd`} />
-          </Route>
-          <div className="row">
-            <div className="col-3 kpi">
-              <div className="kpi-label">
-                Quote Win Rate
-              </div>
-              <div className="kpi-value">
-                {getKpis().quoteWinRate}%
-              </div>
+  return (
+    <div className="customer-overview">
+      <div className="content-navbar">
+        <NavLink to={`/customer/${customer._id}/overview/ytd`}>
+          Year to Date
+        </NavLink>
+        <NavLink to={`/customer/${customer._id}/overview/ltm`}>
+          Last 12 Months
+        </NavLink>
+        <NavLink to={`/customer/${customer._id}/overview/all-time`}>
+          All Time
+        </NavLink>
+      </div>
+      <div className="content-body">
+        <Route path={`/customer/${customer._id}/overview`} exact>
+          <Redirect to={`/customer/${customer._id}/overview/ytd`} />
+        </Route>
+        <div className="row">
+          <div className="col-3 kpi">
+            <div className="kpi-label">
+              Quote Win Rate
             </div>
-            <div className="col-6 kpi">
-              <div className="kpi-label">
-                Net Revenue
-              </div>
-              <div className="kpi-value">
-                <div>{getKpis().netRevenue.toLocaleString()} INR (4%)</div>
-              </div>
-            </div>
-            <div className="col-3 kpi">
-              <div className="kpi-label">
-                Credit Usage
-              </div>
-              <div className="kpi-value">
-                {Math.floor((customer.credit.used / customer.credit.total) * 100)}%
-              </div>
+            <div className="kpi-value">
+              {getKpis().quoteWinRate}%
             </div>
           </div>
-          <div className="chart">
-            <div className="chart-label">
-              Net Revenue by Month
+          <div className="col-6 kpi">
+            <div className="kpi-label">
+              Net Revenue
             </div>
-            <div className="chart-container">
-              <Bar
-                data={{
-                  labels: getKpis().labels,
-                  datasets: [{
-                    data: getKpis().netRevenueData,
-                    borderWidth: 1,
-                  }],
-                }}
-                height={150}
-                options={{
-                  scales: {
-                    yAxes: [
-                      {
-                        ticks: {
-                          callback: label => (+label).toLocaleString(),
-                        },
+            <div className="kpi-value">
+              <div>{getKpis().netRevenue.toLocaleString()} INR (4%)</div>
+            </div>
+          </div>
+          <div className="col-3 kpi">
+            <div className="kpi-label">
+              Credit Usage
+            </div>
+            <div className="kpi-value">
+              {Math.floor((customer.credit.used / customer.credit.total) * 100)}%
+            </div>
+          </div>
+        </div>
+        <div className="chart">
+          <div className="chart-label">
+            Net Revenue by Month
+          </div>
+          <div className="chart-container">
+            <Bar
+              data={{
+                labels: getKpis().labels,
+                datasets: [{
+                  data: getKpis().netRevenueData,
+                  borderWidth: 1,
+                }],
+              }}
+              height={150}
+              options={{
+                scales: {
+                  yAxes: [
+                    {
+                      ticks: {
+                        callback: label => (+label).toLocaleString(),
                       },
-                    ],
-                  },
-                  maintainAspectRatio: false,
-                  legend: { display: false },
-                }}
-              />
-            </div>
+                    },
+                  ],
+                },
+                maintainAspectRatio: false,
+                legend: { display: false },
+              }}
+            />
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 CustomerOverviewInner.propTypes = {
   customer: PropTypes.object,
   kpis: PropTypes.object,
+  location: PropTypes.object,
 };
 
 const CustomerOverview = createContainer((props) => {
