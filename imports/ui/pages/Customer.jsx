@@ -79,7 +79,6 @@ const Customer = ({ customer }) =>
               render={props => <CustomerInvoices {...props} customer={customer} />}
             />
             <Route
-              exact
               path={`/customer/${customer._id}/configuration`}
               render={props => <CustomerConfiguration {...props} customer={customer} />}
             />
