@@ -12,66 +12,59 @@ import UserProfile from '../object-view-pages/UserProfile.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
 
-// App component - represents the whole app
-class Main extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
-  verifyAuth(component, props) {
+const Main = ({ loading }) => {
+  const verifyAuth = (component, props) => {
     if (Meteor.user() || Meteor.loggingIn()) {
       return React.createElement(component, props);
     }
     return <Redirect to={{ pathname: '/sign-in' }} />;
-  }
+  };
 
-  render() {
-    const { loading } = this.props;
-    return (
-      <BrowserRouter>
-        <Route
-          render={props => (
-            <div>
-              <Nav {...props} />
-              {loading ? '...' :
-                <div className="container page">
-                  <Route
-                    path="/sign-up"
-                    render={props => <SignUp {...props} />}
-                  />
-                  <Route
-                    path="/sign-in"
-                    render={props => <SignIn {...props} />}
-                  />
-                  <Route
-                    path="/customers"
-                    render={props => this.verifyAuth(CustomerListContainer, props)}
-                  />
-                  <Route
-                    path="/customer/:id"
-                    render={props => this.verifyAuth(CustomerContainer, props)}
-                  />
-                  <Route
-                    path="/job/:id"
-                    render={props => this.verifyAuth(JobContainer, props)}
-                  />
-                  <Route
-                    path="/user-profile"
-                    render={props => this.verifyAuth(UserProfile, props)}
-                  />
-                </div>
-
-              }
-            </div>
-          )}
-        />
-      </BrowserRouter>
-    );
-  }
-}
+  return (
+    <BrowserRouter>
+      <Route
+        render={props => (
+          <div>
+            <Nav {...props} />
+            {loading ?
+              '...' :
+              <div className="container page">
+                <Route
+                  path="/sign-up"
+                  render={routeProps => <SignUp {...routeProps} />}
+                />
+                <Route
+                  path="/sign-in"
+                  render={routeProps => <SignIn {...routeProps} />}
+                />
+                <Route
+                  path="/customers"
+                  render={routeProps => verifyAuth(CustomerListContainer, routeProps)}
+                />
+                <Route
+                  path="/customer/:id"
+                  render={routeProps => verifyAuth(CustomerContainer, routeProps)}
+                />
+                <Route
+                  path="/job/:id"
+                  render={routeProps => verifyAuth(JobContainer, routeProps)}
+                />
+                <Route
+                  path="/user-profile"
+                  render={routeProps => verifyAuth(UserProfile, routeProps)}
+                />
+              </div>
+            }
+          </div>
+        )}
+      />
+    </BrowserRouter>
+  );
+};
 
 Main.propTypes = {
-  loading: PropTypes.bool,
+  loading: PropTypes.bool.isRequired,
 };
 
 const MainContainer = createContainer(() => {
