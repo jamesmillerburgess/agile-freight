@@ -100,9 +100,10 @@ NavInner.propTypes = {
 
 const Nav = createContainer((props) => {
   const { history } = props;
+  const user = Meteor.user();
   return {
     history,
-    user: Meteor.user(),
+    user,
   };
 }, NavInner);
 
