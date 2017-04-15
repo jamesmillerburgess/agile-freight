@@ -1,6 +1,6 @@
 import React from 'react';
-import MainContainer from '../../ui/app-core/Main.jsx';
+import Main from '../../ui/app-core/Main.jsx';
 
 export const renderRoutes = () => (
-  <MainContainer />
+  <Main />
 );

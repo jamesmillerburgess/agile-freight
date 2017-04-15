@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
+// All the pages to render
 import Nav from '../../ui/app-core/Nav.jsx';
 import CustomerListContainer from '../lists/CustomerList.jsx';
 import CustomerContainer from '../pages/Customer.jsx';
@@ -12,8 +13,7 @@ import UserProfile from '../object-view-pages/UserProfile.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
 
-
-const Main = ({ loading }) => {
+const MainInner = ({ loading }) => {
   const verifyAuth = (component, props) => {
     if (Meteor.user() || Meteor.loggingIn()) {
       return React.createElement(component, props);
@@ -28,7 +28,7 @@ const Main = ({ loading }) => {
           <div>
             <Nav {...props} />
             {loading ?
-              '...' :
+              '' :
               <div className="container page">
                 <Route
                   path="/sign-up"
@@ -63,16 +63,16 @@ const Main = ({ loading }) => {
   );
 };
 
-Main.propTypes = {
+MainInner.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 
-const MainContainer = createContainer(() => {
+const Main = createContainer(() => {
   const branch = Meteor.subscribe('branch.active');
   const loading = !branch.ready();
   return {
     loading,
   };
-}, Main);
+}, MainInner);
 
-export default MainContainer;
+export default Main;
