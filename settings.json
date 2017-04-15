@@ -1,5 +1,5 @@
 {
-  "reset": true,
+  "reset": false,
   "testMode": "structure",
   "public": {},
   "galaxy.meteor.com": {

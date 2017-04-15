@@ -8,8 +8,8 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import Nav from '../../ui/app-core/Nav.jsx';
 import CustomerList from '../lists/CustomerList.jsx';
 import Customer from '../pages/Customer.jsx';
-import Job from '../object-view-pages/Job.jsx';
-import UserProfile from '../object-view-pages/UserProfile.jsx';
+import Job from '../editors/Job.jsx';
+import UserProfile from '../editors/UserProfile.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
 

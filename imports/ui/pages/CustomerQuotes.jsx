@@ -4,8 +4,10 @@ import { Route, NavLink, Redirect } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import moment from 'moment';
 
-import QuoteList from '../lists/QuoteList.jsx';
 import { Quotes } from '../../api/quotes/quotes';
+
+import QuoteList from '../lists/QuoteList.jsx';
+import QuoteEditor from '../editors/quote/QuoteEditor.jsx';
 
 const CustomerQuotesInner = ({ customer, quotes, activeQuotes }) => (
   <div className="customer-quotes">
@@ -24,22 +26,27 @@ const CustomerQuotesInner = ({ customer, quotes, activeQuotes }) => (
       </NavLink>
     </div>
     <div className="content-body">
-      <Route
-        path={`/customer/${customer._id}/quotes`}
-      >
-        <Redirect to={`/customer/${customer._id}/quotes/active`} />
-      </Route>
+      {/*<Route*/}
+        {/*exact*/}
+        {/*path={`/customer/${customer._id}/quotes`}*/}
+      {/*>*/}
+        {/*<Redirect to={`/customer/${customer._id}/quotes/active`} />*/}
+      {/*</Route>*/}
       <Route
         path={`/customer/${customer._id}/quotes/active`}
         render={props => <QuoteList {...props} quotes={activeQuotes} />}
+      />
+      <Route
+        path={`/customer/${customer._id}/quotes/all`}
+        render={props => <QuoteList {...props} quotes={quotes} />}
       />
       <Route
         path={`/customer/${customer._id}/quotes/charts`}
         render={props => <div />}
       />
       <Route
-        path={`/customer/${customer._id}/quotes/all`}
-        render={props => <QuoteList {...props} quotes={quotes} />}
+        path={`/customer/${customer._id}/quotes/new`}
+        render={props => <QuoteEditor {...props} />}
       />
     </div>
   </div>
