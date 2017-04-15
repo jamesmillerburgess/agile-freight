@@ -4,15 +4,15 @@ import { Meteor } from 'meteor/meteor';
 import { Link } from 'react-router-dom';
 
 const SignIn = ({ history }) => {
-  let emailInput;
-  let passwordInput;
+  const inputs = {};
 
   const login = (event) => {
+    const { email, password } = inputs;
     event.preventDefault();
     Meteor
       .loginWithPassword(
-        emailInput.value,
-        passwordInput.value,
+        email.value,
+        password.value,
         () => history.push('/customers', {}),
       );
   };
@@ -35,7 +35,7 @@ const SignIn = ({ history }) => {
                     type="email"
                     className="form-control"
                     id="at-field-email"
-                    ref={el => emailInput = el}
+                    ref={el => inputs.email = el}
                     name="at-field-email"
                     placeholder="Email"
                     autoCapitalize="none"
@@ -51,7 +51,7 @@ const SignIn = ({ history }) => {
                     type="password"
                     className="form-control"
                     id="at-field-password"
-                    ref={el => passwordInput = el}
+                    ref={el => inputs.password = el}
                     name="at-field-password"
                     placeholder="Password"
                     autoCapitalize="none"
