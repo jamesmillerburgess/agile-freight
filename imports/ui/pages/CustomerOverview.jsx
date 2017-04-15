@@ -137,26 +137,29 @@ const CustomerOverview = createContainer((props) => {
       Math.floor((wonQuotes.length / expiredQuotes.length) * 100) : 0;
   };
 
-  const buildVolumeData = (arr, valPath, datePath, start) => {
-    const firstOfNextMonth = moment().subtract(moment().date(), 'days').add(1, 'months');
+  const buildVolumeData = (arr, valPath, datePath, start = [], end = []) => {
+    const now = moment(end);
+    const firstOfNextMonth = moment(now).subtract(now.date(), 'days').add(1, 'months');
     const volumeData = [];
-    const now = moment();
     while (start < now) {
       now.subtract(1, 'months');
       volumeData.push(0);
     }
-    arr.forEach((val) => {
-      if (moment(val[datePath]).isAfter(moment(start))) {
-        volumeData[firstOfNextMonth.diff(moment(val[datePath]), 'months')] += val[valPath];
+    arr.forEach((item) => {
+      const date = moment(item[datePath]);
+      const value = item[valPath];
+      if (date.isAfter(start)) {
+        const dataIndex = firstOfNextMonth.diff(date, 'months');
+        volumeData[dataIndex] += value;
       }
     });
     return volumeData.reverse();
   };
 
-  const getDataLabels = (start) => {
+  const getDataLabels = (start = [], end = []) => {
     const dataLabels = [];
-    const m = start;
-    const now = moment();
+    const m = moment(start);
+    const now = moment(end);
     while (m < now) {
       m.add(1, 'months');
       dataLabels.push(`${m.format('MMM')} '${m.format('YY')}`);
