@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
-// App component - represents the whole app
 const NavInner = ({ user, history }) => {
   const logout = () => Meteor.logout(() => history.push('/sign-in'));
 
@@ -39,8 +38,7 @@ const NavInner = ({ user, history }) => {
         <form className="form-inline">
           <input className="focis-input mr-sm-2" type="text" placeholder="Search" />
         </form>
-        {user
-          ?
+        {user ?
           <form className="form-inline my-2 my-lg-0 dropdown">
             <a
               id="navbar-profile-button"
@@ -49,7 +47,7 @@ const NavInner = ({ user, history }) => {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <img className="profile-pic" src="/lib/jburgess%20profile%20pic.png" />
+              <img className="profile-pic" src="/lib/jburgess%20profile%20pic.png" alt="" />
               <span className="user-name">{user.profile.name}</span>
             </a>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -70,8 +68,8 @@ const NavInner = ({ user, history }) => {
                 </a>
               </div>
             </div>
-          </form>
-          :
+          </form> :
+
           <form className="form-inline my-2 my-lg-0">
             <Link
               to="/sign-in"
