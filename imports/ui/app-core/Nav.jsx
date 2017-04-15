@@ -50,7 +50,7 @@ const NavInner = ({ user, history }) => {
               <img className="profile-pic" src="/lib/jburgess%20profile%20pic.png" alt="" />
               <span className="user-name">{user.profile.name}</span>
             </a>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div className="dropdown-menu">
               <div className="a-container">
                 <Link to="/user-profile" id="edit-profile-link" className="dropdown-item">
                   <i className="fa fa-fw fa-pencil" />
