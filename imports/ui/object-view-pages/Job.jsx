@@ -17,7 +17,7 @@ import MentionFieldContainer from '../fields/MentionField.jsx';
 import UpdateListItem from '../list-items/UpdateListItem.jsx';
 import TextareaField from '../fields/TextareaField.jsx';
 
-class Job extends React.Component {
+class JobInner extends React.Component {
   constructor(props) {
     super(props);
     this.updateValue = this.updateValue.bind(this);
@@ -427,12 +427,12 @@ class Job extends React.Component {
   }
 }
 
-Job.propTypes = {
+JobInner.propTypes = {
   loading: PropTypes.bool,
   job: PropTypes.object,
 };
 
-const JobContainer = createContainer((props) => {
+const Job = createContainer((props) => {
   const branch = Meteor.subscribe('branch.active');
   const loading = !branch.ready();
   const jobId = props.match.params.id;
@@ -440,6 +440,6 @@ const JobContainer = createContainer((props) => {
     loading,
     job: Jobs.findOne(jobId),
   };
-}, Job);
+}, JobInner);
 
-export default JobContainer;
+export default Job;

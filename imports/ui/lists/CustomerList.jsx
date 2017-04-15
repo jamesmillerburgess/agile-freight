@@ -6,7 +6,7 @@ import { Customers } from '../../api/customers/customers';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
 
-const CustomerList = ({ customers }) => (
+const CustomerListInner = ({ customers }) => (
   <div className="customer-list">
     <div className="panel">
       <div className="panel-header">
@@ -46,14 +46,14 @@ const CustomerList = ({ customers }) => (
   </div>
 );
 
-CustomerList.propTypes = {
+CustomerListInner.propTypes = {
   customers: PropTypes.array,
 };
 
-const CustomerListContainer = createContainer(() => {
+const CustomerList = createContainer(() => {
   return {
     customers: Customers.find().fetch(),
   };
-}, CustomerList);
+}, CustomerListInner);
 
-export default CustomerListContainer;
+export default CustomerList;

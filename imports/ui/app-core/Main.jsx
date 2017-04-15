@@ -6,9 +6,9 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
 // All the pages to render
 import Nav from '../../ui/app-core/Nav.jsx';
-import CustomerListContainer from '../lists/CustomerList.jsx';
-import CustomerContainer from '../pages/Customer.jsx';
-import JobContainer from '../object-view-pages/Job.jsx';
+import CustomerList from '../lists/CustomerList.jsx';
+import Customer from '../pages/Customer.jsx';
+import Job from '../object-view-pages/Job.jsx';
 import UserProfile from '../object-view-pages/UserProfile.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
@@ -40,15 +40,15 @@ const MainInner = ({ loading }) => {
                 />
                 <Route
                   path="/customers"
-                  render={routeProps => verifyAuth(CustomerListContainer, routeProps)}
+                  render={routeProps => verifyAuth(CustomerList, routeProps)}
                 />
                 <Route
                   path="/customer/:id"
-                  render={routeProps => verifyAuth(CustomerContainer, routeProps)}
+                  render={routeProps => verifyAuth(Customer, routeProps)}
                 />
                 <Route
                   path="/job/:id"
-                  render={routeProps => verifyAuth(JobContainer, routeProps)}
+                  render={routeProps => verifyAuth(Job, routeProps)}
                 />
                 <Route
                   path="/user-profile"

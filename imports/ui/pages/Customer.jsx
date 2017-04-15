@@ -11,7 +11,7 @@ import CustomerConfiguration from './CustomerConfiguration.jsx';
 
 import { Customers } from '../../api/customers/customers';
 
-const Customer = ({ customer }) =>
+const CustomerInner = ({ customer }) =>
   (
     <div>
       <div>
@@ -89,16 +89,16 @@ const Customer = ({ customer }) =>
     </div>
   );
 
-Customer.propTypes = {
+CustomerInner.propTypes = {
   customer: PropTypes.object,
 };
 
-const CustomerContainer = createContainer((props) => {
+const Customer = createContainer((props) => {
   const customerId = props.match.params.id;
   const customer = Customers.findOne(customerId);
   return {
     customer,
   };
-}, Customer);
+}, CustomerInner);
 
-export default CustomerContainer;
+export default Customer;
