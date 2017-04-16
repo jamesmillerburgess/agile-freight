@@ -56,8 +56,8 @@ export default class DropdownField extends React.Component {
           aria-expanded="false"
           onClick={this.handleFieldButtonClick}
         >
-          <button className="value">
-            <span>{value}</span>
+          <button className={`value ${this.props.alignRight ? 'align-right' : 'align-left'}`}>
+            <span>{value || <span>&nbsp;</span>}</span>
           </button>
         </div>
 
@@ -104,4 +104,5 @@ DropdownField.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   path: PropTypes.string.isRequired,
   valueUpdateCallback: PropTypes.func.isRequired,
+  alignRight: PropTypes.bool,
 };

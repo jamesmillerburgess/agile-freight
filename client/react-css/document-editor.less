@@ -19,9 +19,12 @@
   }
 
   .document-title {
-    font-size: 36px;
+    font-size: 52px;
     font-weight: bold;
-    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .document-header {
     margin-bottom: 15px;
   }
 
@@ -34,4 +37,34 @@
     padding: 7px;
   }
 
+  .add-row-button,
+  .remove-row-button {
+    transition: all .2s ease-in-out;
+    position: absolute;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 2px;
+    left: 20px;
+  }
+
+  .add-row-button {
+    top: -5px;
+  }
+
+  .remove-row-button {
+    top: 2px;
+  }
+
+  .add-row-button:hover,
+  .remove-row-button:hover {
+    background-color: rgba(239, 130, 1, 0.3);
+  }
+
+  .extra-space {
+    padding-right: 5px;
+  }
 }

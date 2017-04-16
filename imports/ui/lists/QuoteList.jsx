@@ -49,26 +49,26 @@ class QuoteListInner extends React.Component {
                   </td>
                   <td>
                     {
-                      quote.routes.map((route, index) =>
+                      quote.routes ? quote.routes.map((route, index) =>
                         <div key={index}>
                           {route}
-                        </div>
-                      )
+                        </div>,
+                      ) : null
                     }
                   </td>
                   <td>
                     {
-                      quote.rates.map((rate, index) =>
+                      quote.rates ? quote.rates.map((rate, index) =>
                         <div key={index}>
                           {rate.type} - {rate.rate} {rate.currency}
-                        </div>
-                      )
+                        </div>,
+                      ) : null
                     }
                   </td>
                   <td>
                     {moment(quote.expiryDate).format(UIGlobals.dateFormat)}
                   </td>
-                  <td>{Meteor.users.findOne(quote.issuedBy).profile.name}</td>
+                  <td>{quote.issuedBy ? Meteor.users.findOne(quote.issuedBy).profile.name : null}</td>
                 </tr>,
               )
             }

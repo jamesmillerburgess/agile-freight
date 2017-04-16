@@ -13,7 +13,7 @@ export default class FreeTextField extends React.Component {
   }
 
   handleDropdownTextInputKeyDown(event) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || event.key === 'Tab') {
       const value = event.target.value;
       const needUpdate = this.props.value !== value;
 
@@ -28,7 +28,7 @@ export default class FreeTextField extends React.Component {
   }
 
   render() {
-    const { value } = this.props;
+    const { value, unit } = this.props;
     return (
       <div className="dropdown">
 
@@ -40,8 +40,8 @@ export default class FreeTextField extends React.Component {
           aria-expanded="false"
           onClick={this.handleFieldButtonClick}
         >
-          <button className="value">
-            <span>{value}</span>
+          <button className={`value ${this.props.alignRight ? 'align-right' : 'align-left'}`}>
+            <span>{value ? `${value} ${unit || ''}` : <span>&nbsp;</span>}</span>
           </button>
         </div>
 
@@ -51,7 +51,7 @@ export default class FreeTextField extends React.Component {
           aria-labelledby="dropdownMenuButton"
         >
           <input
-            className="dropdown-text-input"
+            className={`dropdown-text-input ${this.props.alignRight ? 'align-right' : 'align-left'}`}
             type="text"
             defaultValue={value}
             onKeyDown={this.handleDropdownTextInputKeyDown}
@@ -67,4 +67,6 @@ FreeTextField.propTypes = {
   value: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   valueUpdateCallback: PropTypes.func.isRequired,
+  alignRight: PropTypes.bool,
+  unit: PropTypes.string,
 };
