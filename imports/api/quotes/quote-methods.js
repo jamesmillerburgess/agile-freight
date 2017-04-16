@@ -72,37 +72,44 @@ Meteor.methods({
 
     // Build the query and update criteria
     const query = { _id: quoteId };
-    const quote = Quotes.findOne(query);
-    quote.cargo.packageLines.push({});
+    const { cargo } = Quotes.findOne(query);
+    cargo.packageLines.push({});
 
     // Update the job
-    updateQuote(query, { $set: { cargo: quote.cargo } });
+    updateQuote(query, { $set: { cargo } });
   },
   'quote.removePackageLine': function removePackageLine(quoteId, index) {
     check(quoteId, String);
     check(index, Number);
 
-    const quote = Quotes.findOne(quoteId);
+    const { cargo } = Quotes.findOne(quoteId);
 
-    if (index >= quote.cargo.packageLines.length) {
+    if (index >= cargo.packageLines.length) {
       return;
     }
-    quote.cargo.packageLines.splice(index, 1);
+    cargo.packageLines.splice(index, 1);
 
-    const newPackageLines = quote.cargo.packageLines;
     const query = { _id: quoteId };
-    const update = {
-      $set: {
-        'cargo.packageLines': newPackageLines,
-      },
-    };
+    const update = { $set: { cargo } };
 
     updateQuote(query, update);
   },
-  'quote.updateCargo': function quoteUpdateCargo(quoteId, cargo) {
+  'quote.addChargeLine': function addChargeLine(quoteId) {
+    // Check the parameters
     check(quoteId, String);
-    check(cargo, Object);
 
-    Quotes.update({ _id: quoteId }, { $set: { cargo } });
+    // Build the query and update criteria
+    const query = { _id: quoteId };
+    const { charges } = Quotes.findOne(query);
+    charges.chargeLines.push({
+      description: '',
+      rate: { amount: null, currency: null },
+      amount: 0,
+      currency: 'USD',
+    });
+    const update = { $set: { charges } };
+
+    // Update the job
+    updateQuote(query, update);
   },
 });

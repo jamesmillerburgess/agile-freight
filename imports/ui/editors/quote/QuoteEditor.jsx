@@ -23,6 +23,9 @@ const QuoteEditorInner = ({ quote }) => {
     // Meteor.call('quote.updateCargo', quote._id, quote.cargo);
     Meteor.call('quote.removePackageLine', quote._id, index);
   };
+  const addChargeLine = () => {
+    Meteor.call('quote.addChargeLine', quote._id);
+  };
   return (
     <div className="quote-editor">
       <div className="document-editor">
@@ -155,7 +158,8 @@ const QuoteEditorInner = ({ quote }) => {
             </div>
             <div className="row no-gutters">
               <div className="col-4"><b>Totals</b></div>
-              <div className="col-2 align-right extra-space"><b>{quote.cargo.totalPackages}</b></div>
+              <div className="col-2 align-right extra-space"><b>{quote.cargo.totalPackages}</b>
+              </div>
               <div className="col-2"><b>{quote.cargo.totalPackageType}</b></div>
               <div className="col-2 align-right"><b>{quote.cargo.totalGrossWeight} kg</b></div>
               <div className="col-2 align-right"><b>{quote.cargo.totalVolume} cbm</b></div>
@@ -166,11 +170,65 @@ const QuoteEditorInner = ({ quote }) => {
             <h5>Charges</h5>
             <div className="row no-gutters">
               <div className="col-4 label">Description</div>
-              <div className="col-2 label align-right">Rate&nbsp;&nbsp;</div>
-              <div className="col-2 label" />
-              <div className="col-2 label align-right">Units</div>
-              <div className="col-2 label align-right">Amount</div>
+              <div className="col-8">
+                <div className="row no-gutters">
+                  <div className="col-1">
+                    <button
+                      className="add-row-button"
+                      onClick={addChargeLine}
+                    >
+                      <i className="fa fa-fw fa-plus" />
+                    </button>
+                  </div>
+                  <div className="col-2 label align-right">Rate&nbsp;&nbsp;</div>
+                  <div className="col-3 label" />
+                  <div className="col-3 label align-right">Units</div>
+                  <div className="col-3 label align-right">Amount</div>
+                </div>
+              </div>
             </div>
+            {
+              quote.charges.chargeLines.map((chargeLine, index) =>
+                <div key={index} className="row no-gutters">
+                  <div className="col-4">
+                    <FreeTextField
+                      value={`${chargeLine.description || ''}`}
+                      path={`charges.chargeLines.${index}.description`}
+                      valueUpdateCallback={updateValue}
+                    />
+                  </div>
+                  <div className="col-2 align-right extra-space">
+                    <FreeTextField
+                      alignRight
+                      value={`${chargeLine.rate.amount || ''}`}
+                      path={`charges.chargeLines.${index}.rate.amount`}
+                      valueUpdateCallback={updateValue}
+                    />
+                  </div>
+                  <div className="col-2">
+                    <FreeTextField
+                      value={`${chargeLine.rate.currency || ''}`}
+                      path={`charges.chargeLines.${index}.rate.currency`}
+                      valueUpdateCallback={updateValue}
+                    /> /
+                    <FreeTextField
+                      value={`${chargeLine.rate.unit || ''}`}
+                      path={`charges.chargeLines.${index}.rate.unit`}
+                      valueUpdateCallback={updateValue}
+                    />
+                  </div>
+                  <div className="col-2 align-right">
+                    <FreeTextField
+                      value={`${chargeLine.units || ''}`}
+                      path={`charges.chargeLines.${index}.units`}
+                      valueUpdateCallback={updateValue}
+                    />
+                    {chargeLine.rate.unit}
+                  </div>
+                  <div className="col-2 align-right">50.00 USD</div>
+                </div>
+              )
+            }
             <div className="row no-gutters">
               <div className="col-4">Collection</div>
               <div className="col-2 align-right">10.00&nbsp;</div>

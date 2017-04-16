@@ -24,6 +24,25 @@ const cargoSchema = new SimpleSchema({
   totalVolume: { type: Number, optional: true },
 });
 
+const rateSchema = new SimpleSchema({
+  amount: { type: Number, optional: true },
+  currency: { type: String, optional: true },
+  unit: { type: String, optional: true },
+});
+
+const chargeLineSchema = new SimpleSchema({
+  description: { type: String, optional: true },
+  rate: { type: rateSchema, optional: true },
+  units: { type: Number, optional: true },
+  amount: Number,
+  currency: String,
+});
+
+const chargesSchema = new SimpleSchema({
+  chargeLines: Array,
+  'chargeLines.$': chargeLineSchema,
+});
+
 Schemas.Quote = new SimpleSchema({
   quoteCode: {
     type: String,
@@ -75,9 +94,9 @@ ${address}`;
     defaultValue: { descriptionOfGoods: '', packageLines: [] },
   },
   charges: {
-    type: Array,
+    type: chargesSchema,
     optional: true,
-    defaultValue: [],
+    defaultValue: { chargeLines: [] },
   },
   summary: {
     type: Object,
@@ -87,16 +106,10 @@ ${address}`;
   agilityContact: {
     type: String,
     optional: true,
-    autoValue() {
-
-    },
   },
   termsAndConditions: {
     type: String,
     optional: true,
-    autoValue() {
-
-    },
   },
 });
 
