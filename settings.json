@@ -1,5 +1,10 @@
 {
   "reset": false,
   "testMode": "structure",
-  "public": {}
+  "public": {},
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL": "mongodb://admin:Cdjuices1@ds159880.mlab.com:59880/agility-freight"
+    }
+  }
 }

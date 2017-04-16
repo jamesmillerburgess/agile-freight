@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
@@ -57,7 +58,7 @@ class MentionField extends React.Component {
 }
 
 MentionField.propTypes = {
-  valueUpdateCallback: React.PropTypes.func.isRequired,
+  valueUpdateCallback: PropTypes.func.isRequired,
 };
 
 const MentionFieldContainer = createContainer((props) => {

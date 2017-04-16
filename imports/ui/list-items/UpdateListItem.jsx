@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 
 export default class UpdateListItem extends React.Component {
@@ -41,5 +42,5 @@ export default class UpdateListItem extends React.Component {
 }
 
 UpdateListItem.propTypes = {
-  update: React.PropTypes.object.isRequired,
+  update: PropTypes.object.isRequired,
 };

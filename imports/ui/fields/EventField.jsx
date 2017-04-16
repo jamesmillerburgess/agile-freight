@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import { UIGlobals } from '../ui-globals';
@@ -17,7 +18,7 @@ export default class EventField extends React.Component {
   componentDidMount() {
     $(this.node).find('.datetimepicker').datetimepicker({
       inline: true,                   // No collapsing
-      format: UIGlobals.dateFormat,   // Standard date format
+      format: UIGlobals.dateTimeFormat,   // Standard date format
       useCurrent: false,              // Don't default in today's date and time
     });
     $('.dropdown-menu .set-expected').click((event) => {
@@ -36,7 +37,7 @@ export default class EventField extends React.Component {
     if (this.props.event.status === 'Not Planned') {
       return <span>Not Planned</span>;
     }
-    return moment(this.props.event.date).format(UIGlobals.dateFormat);
+    return moment(this.props.event.date).format(UIGlobals.dateTimeFormat);
   }
 
   handleFieldButtonClick() {
@@ -156,6 +157,6 @@ export default class EventField extends React.Component {
 }
 
 EventField.propTypes = {
-  event: React.PropTypes.object.isRequired,
-  valueUpdateCallback: React.PropTypes.func.isRequired,
+  event: PropTypes.object.isRequired,
+  valueUpdateCallback: PropTypes.func.isRequired,
 };

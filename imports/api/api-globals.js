@@ -9,4 +9,23 @@ export const APIGlobals = {
   destinationCustomsByOptions: ['Agility', 'Customer', ''],
   volumetricRatioOptions: ['1:1', '1:2', '1:3', '1:4', '1:5', '1:6'],
   measurementSystemOptions: ['Metric', 'Imperial'],
+  directionOptions: ['Export', 'Import'],
+  modeOptions: ['Ocean', 'Air', 'Road'],
+  airServiceOptions: ['Premier', 'Expedited', 'Express'],
+  oceanServiceOptions: ['FCL', 'LCL', 'Breakbulk'],
+
+  // Quotes
+  quoteStatusOptions: ['Issued', 'Expired', 'Draft', 'Canceled'],
+  quoteTypeOptions: ['Single Route', 'Multi Route'],
+  quoteRateTypeOptions: ['Rated', 'Itemized'],
+
+  // Shipments
+  shipmentStatusOptions: ['Received', 'Booked', 'Departed', 'Arrived', 'Released', 'Delivered', 'Closed', 'Canceled'],
+
+  // Invoices
+  invoiceStatusOptions: ['Issued', 'Draft', 'Canceled'],
+
+  // TEMP!!!!
+  indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],
+  ukPortOptions: ['GBFXT', 'GBSOU', 'GBLGW'],
 };

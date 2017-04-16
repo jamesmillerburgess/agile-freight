@@ -97,7 +97,7 @@ Meteor.methods({
     const newUpdate = {
       type: 'note',
       source: Meteor.userId(),
-      message: `updated ${value.status.toLowerCase()} ${value.type} to ${moment(value.date).format(UIGlobals.dateFormat)}`,
+      message: `updated ${value.status.toLowerCase()} ${value.type} to ${moment(value.date).format(UIGlobals.dateTimeFormat)}`,
     };
     Meteor.call('jobs.addUpdate', jobId, newUpdate);
 

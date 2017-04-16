@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import { dateFormat } from '../formatters/date-format';
 
-export default class QuoteListItem extends Component {
+export default class QuoteListItem extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -50,5 +51,5 @@ export default class QuoteListItem extends Component {
 }
 
 QuoteListItem.propTypes = {
-  quote: React.PropTypes.object,
+  quote: PropTypes.object,
 };

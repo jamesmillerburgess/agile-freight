@@ -1,72 +1,78 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
-import CustomerListContainer from '../lists/CustomerList.jsx';
-import CustomerContainer from '../object-view-pages/Customer.jsx';
-import JobContainer from '../object-view-pages/Job.jsx';
-import UserProfile from '../object-view-pages/UserProfile.jsx';
+// All the pages to render
+import Nav from '../../ui/app-core/Nav.jsx';
+import CustomerList from '../lists/CustomerList.jsx';
+import Customer from '../pages/Customer.jsx';
+import Job from '../editors/Job.jsx';
+import UserProfile from '../editors/UserProfile.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
 
-// App component - represents the whole app
-class Main extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  verifyAuth(component, props) {
+const MainInner = ({ loading }) => {
+  const verifyAuth = (component, props) => {
     if (Meteor.user() || Meteor.loggingIn()) {
       return React.createElement(component, props);
     }
     return <Redirect to={{ pathname: '/sign-in' }} />;
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        <div className="container content">
-          <Route
-            path="/sign-up"
-            render={props => <SignUp {...props} />}
-          />
-          <Route
-            path="/sign-in"
-            render={props => <SignIn {...props} />}
-          />
-          <Route
-            path="/customers"
-            render={props => this.verifyAuth(CustomerListContainer, props)}
-          />
-          <Route
-            path="/customer/:id"
-            render={props => this.verifyAuth(CustomerContainer, props)}
-          />
-          <Route
-            path="/job/:id"
-            render={props => this.verifyAuth(JobContainer, props)}
-          />
-          <Route
-            path="/user-profile"
-            render={props => this.verifyAuth(UserProfile, props)}
-          />
-        </div>
-      </div>
-    );
-  }
-}
-
-Main.propTypes = {
-  loading: React.PropTypes.bool,
+  return (
+    <BrowserRouter>
+      <Route
+        render={props => (
+          <div>
+            <Nav {...props} />
+            {loading ?
+              '' :
+              <div className="container page">
+                <Route
+                  path="/sign-up"
+                  render={routeProps => <SignUp {...routeProps} />}
+                />
+                <Route
+                  path="/sign-in"
+                  render={routeProps => <SignIn {...routeProps} />}
+                />
+                <Route
+                  path="/customers"
+                  render={routeProps => verifyAuth(CustomerList, routeProps)}
+                />
+                <Route
+                  path="/customer/:id"
+                  render={routeProps => verifyAuth(Customer, routeProps)}
+                />
+                <Route
+                  path="/job/:id"
+                  render={routeProps => verifyAuth(Job, routeProps)}
+                />
+                <Route
+                  path="/user-profile"
+                  render={routeProps => verifyAuth(UserProfile, routeProps)}
+                />
+              </div>
+            }
+          </div>
+        )}
+      />
+    </BrowserRouter>
+  );
 };
 
-const MainContainer = createContainer(() => {
+MainInner.propTypes = {
+  loading: PropTypes.bool.isRequired,
+};
+
+const Main = createContainer(() => {
   const branch = Meteor.subscribe('branch.active');
   const loading = !branch.ready();
   return {
     loading,
   };
-}, Main);
+}, MainInner);
 
-export default MainContainer;
+export default Main;

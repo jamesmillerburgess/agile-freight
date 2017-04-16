@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { smartHighlight } from '../formatters/smart-highlight';
 
-class ReferenceField extends Component {
+class ReferenceField extends React.Component {
   constructor(props) {
     super(props);
     this.state = { search: this.props.currentStakeholder.name };
@@ -109,10 +110,10 @@ class ReferenceField extends Component {
 
 
 ReferenceField.propTypes = {
-  path: React.PropTypes.string,
-  valueUpdateCallback: React.PropTypes.func,
-  loading: React.PropTypes.bool,
-  currentStakeholder: React.PropTypes.object,
+  path: PropTypes.string,
+  valueUpdateCallback: PropTypes.func,
+  loading: PropTypes.bool,
+  currentStakeholder: PropTypes.object,
 };
 
 const ReferenceFieldContainer = createContainer((props) => {

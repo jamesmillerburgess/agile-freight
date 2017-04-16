@@ -1,4 +1,5 @@
 export const UIGlobals = {
   listLimit: 10,
-  dateFormat: 'DD-MMM-YYYY HH:mm',
+  dateTimeFormat: 'DD-MMM-YYYY HH:mm',
+  dateFormat: 'DD-MMM-YYYY',
 };
