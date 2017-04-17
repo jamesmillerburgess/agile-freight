@@ -9,7 +9,11 @@ import { Quotes } from '../../../api/quotes/quotes';
 import TextareaField from '../../fields/TextareaField.jsx';
 import FreeTextField from '../../fields/FreeTextField.jsx';
 import DropdownField from '../../fields/DropdownField.jsx';
+
+import { APIGlobals } from '../../../api/api-globals';
+
 import { dateFormat } from '../../formatters/date-format';
+import { currencyFormat } from '../../formatters/currency-format';
 
 const QuoteEditorInner = ({ quote }) => {
   const updateValue = (path, value) => Meteor.call('quote.updateField', quote._id, path, value);
@@ -26,6 +30,11 @@ const QuoteEditorInner = ({ quote }) => {
   const addChargeLine = () => {
     Meteor.call('quote.addChargeLine', quote._id);
   };
+  const removeChargeLine = (index) => {
+    // quote.cargo.packageLines.splice(index, 1);
+    // Meteor.call('quote.updateCargo', quote._id, quote.cargo);
+    Meteor.call('quote.removeChargeLine', quote._id, index);
+  };
   return (
     <div className="quote-editor">
       <div className="document-editor">
@@ -35,13 +44,13 @@ const QuoteEditorInner = ({ quote }) => {
             Freight Quotation
           </div>
           <div className="document-header">
-            <div className="row no-gutters">
+            <div className="row">
               <div className="col-4">
                 <div className="label">
                   Customer
                 </div>
                 <TextareaField
-                  value={quote.customerNameAddress}
+                  value={quote.customerNameAddress || ''}
                   path={'customerNameAddress'}
                   valueUpdateCallback={updateValue}
                 />
@@ -63,21 +72,51 @@ const QuoteEditorInner = ({ quote }) => {
             </div>
           </div>
           <div className="document-section">
-            <h5>
-              <DropdownField
-                value={quote.mode}
-                options={['Air', 'Ocean', 'Road', '']}
-                path="mode"
-                valueUpdateCallback={updateValue}
-              />
-              -
-              <DropdownField
-                value={quote.service}
-                options={['Air', 'Ocean', 'Road', '']}
-                path="service"
-                valueUpdateCallback={updateValue}
-              />
-            </h5>
+            <h5>Shipment</h5>
+            <div className="row field-row">
+              <div className="col-3">
+                <div className="label">Mode</div>
+                <DropdownField
+                  value={quote.mode}
+                  options={['Air Freight', 'Ocean Freight', 'Road Freight', '']}
+                  path="mode"
+                  valueUpdateCallback={updateValue}
+                />
+              </div>
+              <div className="col-3">
+                <div className="label">Service</div>
+                <DropdownField
+                  value={quote.service}
+                  options={['Expedited', 'Premier', 'Value', '']}
+                  path="service"
+                  valueUpdateCallback={updateValue}
+                />
+              </div>
+            </div>
+            {
+              quote.routes.map((route, index) => (
+                <div key={index} className="row field-row">
+                  <div className="col-3">
+                    <div className="label">From</div>
+                    <DropdownField
+                      value={`${route.from || ''}`}
+                      options={APIGlobals.cityOptions}
+                      path={`routes.${index}.from`}
+                      valueUpdateCallback={updateValue}
+                    />
+                  </div>
+                  <div className="col-3">
+                    <div className="label">To</div>
+                    <DropdownField
+                      value={`${route.to || ''}`}
+                      options={APIGlobals.cityOptions}
+                      path={`routes.${index}.to`}
+                      valueUpdateCallback={updateValue}
+                    />
+                  </div>
+                </div>
+              ))
+            }
             <div className="row no-gutters">
               <div className="col-4 label">Description of Goods</div>
               <div className="col-8">
@@ -100,7 +139,7 @@ const QuoteEditorInner = ({ quote }) => {
             <div className="row no-gutters">
               <div className="col-4">
                 <TextareaField
-                  value={quote.cargo.descriptionOfGoods}
+                  value={quote.cargo.descriptionOfGoods || ''}
                   path={'cargo.descriptionOfGoods'}
                   valueUpdateCallback={updateValue}
                 />
@@ -128,7 +167,7 @@ const QuoteEditorInner = ({ quote }) => {
                       <div className="col-3">
                         <DropdownField
                           value={`${packageLine.type || ''}`}
-                          options={['Packages', 'Boxes', '']}
+                          options={APIGlobals.packageTypeOptions}
                           path={`cargo.packageLines.${index}.type`}
                           valueUpdateCallback={updateValue}
                         />
@@ -181,15 +220,15 @@ const QuoteEditorInner = ({ quote }) => {
                     </button>
                   </div>
                   <div className="col-2 label align-right">Rate&nbsp;&nbsp;</div>
-                  <div className="col-3 label" />
-                  <div className="col-3 label align-right">Units</div>
+                  <div className="col-3 label">Unit of Measure</div>
+                  <div className="col-3 label align-right">Quantity</div>
                   <div className="col-3 label align-right">Amount</div>
                 </div>
               </div>
             </div>
             {
-              quote.charges.chargeLines.map((chargeLine, index) =>
-                <div key={index} className="row no-gutters">
+              quote.charges.chargeLines.map((chargeLine, index) => (
+                <div key={index} className="row no-gutters field-row">
                   <div className="col-4">
                     <FreeTextField
                       value={`${chargeLine.description || ''}`}
@@ -197,101 +236,76 @@ const QuoteEditorInner = ({ quote }) => {
                       valueUpdateCallback={updateValue}
                     />
                   </div>
-                  <div className="col-2 align-right extra-space">
-                    <FreeTextField
-                      alignRight
-                      value={`${chargeLine.rate.amount || ''}`}
-                      path={`charges.chargeLines.${index}.rate.amount`}
-                      valueUpdateCallback={updateValue}
-                    />
+                  <div className="col-8">
+                    <div className="row no-gutters">
+                      <div className="col-1">
+                        <button
+                          className="remove-row-button"
+                          onClick={() => removeChargeLine(index)}
+                        >
+                          <i className="fa fa-fw fa-minus" />
+                        </button>
+                      </div>
+                      <div className="col-2 align-right extra-space">
+                        <FreeTextField
+                          alignRight
+                          value={`${chargeLine.rate.amount || ''}`}
+                          path={`charges.chargeLines.${index}.rate.amount`}
+                          valueUpdateCallback={updateValue}
+                        />
+                      </div>
+                      <div className="col-1">
+                        <FreeTextField
+                          alignRight
+                          value={`${chargeLine.rate.currency || ''}`}
+                          unit="/"
+                          path={`charges.chargeLines.${index}.rate.currency`}
+                          valueUpdateCallback={updateValue}
+                        />
+                      </div>
+                      <div className="col-2">
+                        <FreeTextField
+                          value={`${chargeLine.rate.unit || ''}`}
+                          path={`charges.chargeLines.${index}.rate.unit`}
+                          valueUpdateCallback={updateValue}
+                        />
+                      </div>
+                      <div className="col-3">
+                        <FreeTextField
+                          alignRight
+                          value={`${chargeLine.units || ''}`}
+                          unit={chargeLine.rate.unit || ''}
+                          path={`charges.chargeLines.${index}.units`}
+                          valueUpdateCallback={updateValue}
+                        />
+                      </div>
+                      <div className="col-3 align-right">
+                        {`${currencyFormat(chargeLine.amount)} ${chargeLine.currency || ''}`}
+                      </div>
+                    </div>
                   </div>
-                  <div className="col-2">
-                    <FreeTextField
-                      value={`${chargeLine.rate.currency || ''}`}
-                      path={`charges.chargeLines.${index}.rate.currency`}
-                      valueUpdateCallback={updateValue}
-                    /> /
-                    <FreeTextField
-                      value={`${chargeLine.rate.unit || ''}`}
-                      path={`charges.chargeLines.${index}.rate.unit`}
-                      valueUpdateCallback={updateValue}
-                    />
-                  </div>
-                  <div className="col-2 align-right">
-                    <FreeTextField
-                      value={`${chargeLine.units || ''}`}
-                      path={`charges.chargeLines.${index}.units`}
-                      valueUpdateCallback={updateValue}
-                    />
-                    {chargeLine.rate.unit}
-                  </div>
-                  <div className="col-2 align-right">50.00 USD</div>
                 </div>
-              )
+              ))
             }
             <div className="row no-gutters">
-              <div className="col-4">Collection</div>
-              <div className="col-2 align-right">10.00&nbsp;</div>
-              <div className="col-2">USD / mile</div>
-              <div className="col-2 align-right">5 miles</div>
-              <div className="col-2 align-right">50.00 USD</div>
-            </div>
-            <div className="row no-gutters">
-              <div className="col-4">International Freight</div>
-              <div className="col-2 align-right">10.00&nbsp;</div>
-              <div className="col-2">USD / kg</div>
-              <div className="col-2 align-right">5 kg</div>
-              <div className="col-2 align-right">50.00 USD</div>
-            </div>
-            <div className="row no-gutters">
-              <div className="col-4">Delivery</div>
-              <div className="col-2 align-right">10.00&nbsp;</div>
-              <div className="col-2">USD / mile</div>
-              <div className="col-2 align-right">5 miles</div>
-              <div className="col-2 align-right">50.00 USD</div>
+              <div className="col-4" />
+              <div className="col-4"><h3>Total Quoted Amount</h3></div>
+              <div className="col-4 align-right">
+                <h3>
+                  {`${currencyFormat(quote.charges.totalAmount)} ${quote.charges.totalCurrency || ''}`}
+                </h3>
+              </div>
             </div>
           </div>
-          <div className="document-section">
-            <h5>Summary</h5>
-            <div className="row no-gutters">
-              <div className="col-8">
-                <div className="row no-gutters">
-                  <div className="col-3 label">Charge Group</div>
-                  <div className="col-3 label align-right">Total</div>
-                  <div className="col-3 label align-right">FX Rate</div>
-                  <div className="col-3 label align-right">Total (INR)</div>
-                </div>
-                <div className="row no-gutters">
-                  <div className="col-3">Origin</div>
-                  <div className="col-3 align-right">50.00 USD</div>
-                  <div className="col-3 align-right">66.413421</div>
-                  <div className="col-3 align-right">3,320.66 INR</div>
-                </div>
-                <div className="row no-gutters">
-                  <div className="col-3">International</div>
-                  <div className="col-3 align-right">50.00 USD</div>
-                  <div className="col-3 align-right">66.413421</div>
-                  <div className="col-3 align-right">3,320.66 INR</div>
-                </div>
-                <div className="row no-gutters">
-                  <div className="col-3">Destination</div>
-                  <div className="col-3 align-right">50.00 USD</div>
-                  <div className="col-3 align-right">66.413421</div>
-                  <div className="col-3 align-right">3,320.66 INR</div>
-                </div>
-                <div className="row no-gutters">
-                  <div className="col-6"><h3>Total Quoted Amount</h3></div>
-                  <div className="col-6 align-right"><h3>9,961.97 INR</h3></div>
-                </div>
-              </div>
-              <div className="col-1" />
-              <div className="col-3">
-                <div className="label">Agility Contact</div>
-                James Burgess<br />
-                Hyderabad, India<br />
-                +41 79 417 8097<br />
-                jburgess@agility.com
-              </div>
+          <div className="row no-gutters">
+            <div className="col-9" />
+            <div className="col-3">
+              <div className="label">Agility Contact</div>
+              <TextareaField
+                value={quote.agilityContact || ''}
+                path="agilityContact"
+                valueUpdateCallback={updateValue}
+              />
             </div>
           </div>
         </div>

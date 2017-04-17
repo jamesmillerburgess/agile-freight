@@ -39,33 +39,35 @@ const NavInner = ({ user, history }) => {
           <input className="focis-input mr-sm-2" type="text" placeholder="Search" />
         </form>
         {user ?
-          <form className="form-inline my-2 my-lg-0 dropdown">
-            <a
-              id="navbar-profile-button"
-              className="profile-button btn btn-secondary"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <img className="profile-pic" src="/lib/jburgess%20profile%20pic.png" alt="" />
-              <span className="user-name">{user.profile.name}</span>
-            </a>
-            <div className="dropdown-menu">
-              <div className="a-container">
-                <Link to="/user-profile" id="edit-profile-link" className="dropdown-item">
-                  <i className="fa fa-fw fa-pencil" />
-                  Edit Profile
-                </Link>
-              </div>
-              <div className="a-container">
-                <a
-                  id="sign-out-link"
-                  className="dropdown-item"
-                  onClick={logout}
-                >
-                  <i className="fa fa-fw fa-sign-out" />
-                  Sign Out
-                </a>
+          <form className="form-inline my-2 my-lg-0">
+            <div className="dropdown">
+              <a
+                id="navbar-profile-button"
+                className="profile-button btn btn-secondary"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <img className="profile-pic" src="/lib/jburgess%20profile%20pic.png" alt="" />
+                <span className="user-name">{user.profile.name}</span>
+              </a>
+              <div className="dropdown-menu">
+                <div className="a-container">
+                  <Link to="/user-profile" id="edit-profile-link" className="dropdown-item">
+                    <i className="fa fa-fw fa-pencil" />
+                    Edit Profile
+                  </Link>
+                </div>
+                <div className="a-container">
+                  <a
+                    id="sign-out-link"
+                    className="dropdown-item"
+                    onClick={logout}
+                  >
+                    <i className="fa fa-fw fa-sign-out" />
+                    Sign Out
+                  </a>
+                </div>
               </div>
             </div>
           </form> :

@@ -7,6 +7,11 @@ export const Quotes = new Mongo.Collection('Quotes');
 
 const Schemas = {};
 
+const routeSchema = new SimpleSchema({
+  from: { type: String, optional: true },
+  to: { type: String, optional: true },
+});
+
 const packageLineSchema = new SimpleSchema({
   num: { type: Number, optional: true },
   type: { type: String, optional: true },
@@ -28,19 +33,33 @@ const rateSchema = new SimpleSchema({
   amount: { type: Number, optional: true },
   currency: { type: String, optional: true },
   unit: { type: String, optional: true },
+}, {
+  clean: {
+    removeEmptyStrings: false,
+  },
 });
 
 const chargeLineSchema = new SimpleSchema({
   description: { type: String, optional: true },
   rate: { type: rateSchema, optional: true },
   units: { type: Number, optional: true },
-  amount: Number,
-  currency: String,
+  amount: { type: Number, optional: true },
+  currency: { type: String, optional: true },
+}, {
+  clean: {
+    removeEmptyStrings: false,
+  },
 });
 
 const chargesSchema = new SimpleSchema({
   chargeLines: Array,
   'chargeLines.$': chargeLineSchema,
+  totalAmount: { type: Number, optional: true },
+  totalCurrency: { type: String, optional: true},
+}, {
+  clean: {
+    removeEmptyStrings: false,
+  },
 });
 
 Schemas.Quote = new SimpleSchema({
@@ -61,19 +80,18 @@ Schemas.Quote = new SimpleSchema({
       }
     },
   },
+  direction: { type: String, optional: true },
+  incoterm: { type: String, optional: true },
+  status: { type: String, optional: true },
   customerId: { type: String, optional: false },
-  issuedOn: { type: String, optional: true },
-  validThrough: {
-    type: Date,
+  shipments: {
+    type: Array,
     optional: true,
-    autoValue() {
-      if (this.isInsert) {
-        const date = new Date();
-        date.setDate(date.getDate() + 30);
-        return date;
-      }
-    },
+    defaultValue: [],
   },
+  'shipments.$': { type: String, optional: true },
+  issuedOn: { type: String, optional: true },
+  validThrough: { type: Date, optional: true },
   customerNameAddress: {
     type: String,
     optional: true,
@@ -87,6 +105,10 @@ ${address}`;
     },
   },
   mode: { type: String, optional: true, defaultValue: '' },
+  type: { type: String, optional: true },
+  rateType: { type: String, optional: true },
+  routes: { type: Array, optional: true, defaultValue: [{}] },
+  'routes.$': routeSchema,
   service: { type: String, optional: true, defaultValue: '' },
   cargo: {
     type: cargoSchema,
@@ -110,6 +132,10 @@ ${address}`;
   termsAndConditions: {
     type: String,
     optional: true,
+  },
+}, {
+  clean: {
+    removeEmptyStrings: false,
   },
 });
 

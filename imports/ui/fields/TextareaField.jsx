@@ -51,7 +51,7 @@ export default class TextareaField extends React.Component {
           onClick={this.handleFieldButtonClick}
         >
           <button className={`value ${this.props.alignRight ? 'align-right' : 'align-left'}`}>
-            <pre>{value}</pre>
+            <pre>{value || ' '}</pre>
           </button>
         </div>
 

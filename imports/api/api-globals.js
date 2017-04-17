@@ -14,6 +14,9 @@ export const APIGlobals = {
   airServiceOptions: ['Premier', 'Expedited', 'Express'],
   oceanServiceOptions: ['FCL', 'LCL', 'Breakbulk'],
 
+  // Cargo
+  packageTypeOptions: ['Packages', 'Boxes', 'Cartons', 'Bags', 'Bales', 'Bolts', 'Bottles', ''],
+
   // Quotes
   quoteStatusOptions: ['Issued', 'Expired', 'Draft', 'Canceled'],
   quoteTypeOptions: ['Single Route', 'Multi Route'],
@@ -26,6 +29,7 @@ export const APIGlobals = {
   invoiceStatusOptions: ['Issued', 'Draft', 'Canceled'],
 
   // TEMP!!!!
+  cityOptions: ['Basel', 'Shanghai', 'Seoul', ''],
   indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],
   ukPortOptions: ['GBFXT', 'GBSOU', 'GBLGW'],
 };

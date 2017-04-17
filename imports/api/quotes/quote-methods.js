@@ -10,8 +10,8 @@ const updateQuote = (query, update) => {
 
   // Update package totals
   const packageLines = quote.cargo.packageLines;
-  quote.cargo.totalPackages = packageLines.reduce((acc, val) => acc + (val.num || 0), 0);
-  quote.cargo.totalPackageType = packageLines.reduce((acc, val) => {
+  const totalPackages = packageLines.reduce((acc, val) => acc + (val.num || 0), 0);
+  const totalPackageType = packageLines.reduce((acc, val) => {
     if (val.type !== '' && val.type) {
       if (acc === '' || acc === val.type) {
         return val.type;
@@ -20,15 +20,45 @@ const updateQuote = (query, update) => {
     }
     return acc;
   }, '');
-  quote.cargo.totalGrossWeight = packageLines.reduce((acc, val) => acc + (val.grossWeight || 0), 0);
-  quote.cargo.totalVolume = packageLines.reduce((acc, val) => acc + (val.volume || 0), 0);
+  const totalGrossWeight = packageLines.reduce((acc, val) => acc + (val.grossWeight || 0), 0);
+  const totalVolume = packageLines.reduce((acc, val) => acc + (val.volume || 0), 0);
+
+  // Update charge totals
+  const chargeLines = quote.charges.chargeLines.map((val) => {
+    const newVal = {
+      description: val.description || '',
+      rate: {
+        amount: val.rate ? val.rate.amount || 0 : 0,
+        currency: val.rate ? val.rate.currency || '' : '',
+        unit: val.rate ? val.rate.unit || '' : '',
+      },
+      units: val.units || '',
+      amount: (val.rate ? val.rate.amount || 0 : 0) * (val.units || 0),
+      currency: val.rate ? val.rate.currency || '' : '',
+    };
+    return newVal;
+  });
+  const totalAmount = chargeLines.reduce((acc, val) => acc + val.amount, 0);
+  const totalCurrency = chargeLines.reduce((acc, val) => {
+    if (val.currency !== '' && val.currency) {
+      if (acc === '' || acc === val.currency) {
+        return val.currency;
+      }
+      return 'N/A';
+    }
+    return acc;
+  }, '');
 
   const newUpdate = {
     $set: {
-      'cargo.totalPackages': quote.cargo.totalPackages,
-      'cargo.totalPackageType': quote.cargo.totalPackageType,
-      'cargo.totalGrossWeight': quote.cargo.totalGrossWeight,
-      'cargo.totalVolume': quote.cargo.totalVolume,
+      'cargo.totalPackages': totalPackages,
+      'cargo.totalPackageType': totalPackageType,
+      'cargo.totalGrossWeight': totalGrossWeight,
+      'cargo.totalVolume': totalVolume,
+
+      'charges.chargeLines': chargeLines,
+      'charges.totalAmount': totalAmount,
+      'charges.totalCurrency': totalCurrency,
     },
   };
 
@@ -47,12 +77,32 @@ Meteor.methods({
 
     Customers.update({ _id: customerId }, { $push: { quotes: quoteId } });
 
+    const query = { _id: quoteId };
+    updateQuote(query, {});
     return quoteId;
   },
   'quote.newDraft': function quoteNewDraftMethod(customerId) {
     check(customerId, String);
 
-    return Meteor.call('quotes.new', { customerId });
+    const cargo = {
+      descriptionOfGoods: '',
+      packageLines: [{}],
+    };
+    const charges = {
+      chargeLines: [{}],
+    };
+    const user = Meteor.user();
+    const agilityContact = user.profile ? (`${user.profile.name}
+${user.profile.address}`) : '';
+
+    const update = {
+      customerId,
+      cargo,
+      charges,
+      agilityContact,
+    };
+
+    return Meteor.call('quotes.new', update);
   },
   'quote.updateField': function quoteUpdateFieldMethod(quoteId, path, value) {
     // Check the parameters
@@ -103,13 +153,30 @@ Meteor.methods({
     const { charges } = Quotes.findOne(query);
     charges.chargeLines.push({
       description: '',
-      rate: { amount: null, currency: null },
+      rate: { amount: 0, currency: '', unit: '' },
+      units: 0,
       amount: 0,
-      currency: 'USD',
+      currency: '',
     });
     const update = { $set: { charges } };
 
     // Update the job
+    updateQuote(query, update);
+  },
+  'quote.removeChargeLine': function removeChargeLine(quoteId, index) {
+    check(quoteId, String);
+    check(index, Number);
+
+    const { charges } = Quotes.findOne(quoteId);
+
+    if (index >= charges.chargeLines.length) {
+      return;
+    }
+    charges.chargeLines.splice(index, 1);
+
+    const query = { _id: quoteId };
+    const update = { $set: { charges } };
+
     updateQuote(query, update);
   },
 });

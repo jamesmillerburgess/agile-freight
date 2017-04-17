@@ -3,12 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import FreeTextField from '../fields/FreeTextField.jsx';
+import TextareaField from '../fields/TextareaField.jsx';
 
 class UserProfileInner extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   updateValue(path, value) {
     if (Meteor.user()[path] !== value) {
       Meteor.call('users.updateField', Meteor.user()._id, path, value);
@@ -49,6 +46,19 @@ class UserProfileInner extends React.Component {
                   <FreeTextField
                     value={Meteor.user().profile.name}
                     path="profile.name"
+                    valueUpdateCallback={this.updateValue}
+                  />
+                }
+              </div>
+              <div className="col-12 col-lg-3">
+                <div className="label">
+                  Address
+                </div>
+                {Meteor.loggingIn() ?
+                  <span>Loading</span> :
+                  <TextareaField
+                    value={Meteor.user().profile.address}
+                    path="profile.address"
                     valueUpdateCallback={this.updateValue}
                   />
                 }

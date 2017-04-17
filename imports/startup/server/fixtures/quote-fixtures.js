@@ -48,20 +48,34 @@ export default class quoteFixtures {
         _.sample(APIGlobals.airServiceOptions);
       if (quote.rateType === 'Rated') {
         quote.routes = quote.type === 'Single Route' ? [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
+          {
+            from: _.sample(APIGlobals.indiaPortOptions),
+            to: _.sample(APIGlobals.ukPortOptions),
+          },
         ] : [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
+          {
+            from: _.sample(APIGlobals.indiaPortOptions),
+            to: _.sample(APIGlobals.ukPortOptions),
+          },
+          {
+            from: _.sample(APIGlobals.indiaPortOptions),
+            to: _.sample(APIGlobals.ukPortOptions),
+          },
         ];
       } else {
         quote.routes = quote.type === 'Single Route' ? [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
+          {
+            from: _.sample(APIGlobals.indiaPortOptions),
+            to: _.sample(APIGlobals.ukPortOptions),
+          },
         ] : [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
+          {
+            from: _.sample(APIGlobals.indiaPortOptions),
+            to: _.sample(APIGlobals.ukPortOptions),
+          },
         ];
       }
-      quote.expiryDate = quote.status === 'Expired' ?
+      quote.validThrough = quote.status === 'Expired' ?
         moment().subtract(rand * 600, 'days').format() :
         moment().add(rand * 100, 'days').format();
 

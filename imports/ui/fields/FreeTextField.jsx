@@ -50,12 +50,19 @@ export default class FreeTextField extends React.Component {
           className="dropdown-menu"
           aria-labelledby="dropdownMenuButton"
         >
-          <input
-            className={`dropdown-text-input ${this.props.alignRight ? 'align-right' : 'align-left'}`}
-            type="text"
-            defaultValue={value}
-            onKeyDown={this.handleDropdownTextInputKeyDown}
-          />
+          <div className="input-container">
+            <div className="input-row">
+              <input
+                className={`dropdown-text-input ${this.props.alignRight ? 'align-right' : 'align-left'}`}
+                type="text"
+                defaultValue={value}
+                onKeyDown={this.handleDropdownTextInputKeyDown}
+              />
+            </div>
+            { unit ? <div className="input-unit">{unit}</div> : '' }
+
+          </div>
+
         </div>
 
       </div>
