@@ -10,6 +10,8 @@
     "bootstrap": "^3.3.7",
     "chart.js": "^2.5.0",
     "dragula": "^3.7.2",
+    "fibers": "^1.0.15",
+    "fs": "0.0.1-security",
     "jquery": "^3.2.1",
     "meteor-node-stubs": "^0.2.6",
     "moment": "^2.18.1",

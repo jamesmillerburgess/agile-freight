@@ -18,7 +18,6 @@ export default class quoteFixtures {
 
       // Set all the properties that have no dependencies
       const quote = {
-        quoteCode: `Q${Math.floor(rand * (900000 - 100000)) + 100000}`,
         customerId: _.sample(customers)._id,
         mode: _.sample(APIGlobals.modeOptions),
         type: _.sample(APIGlobals.quoteTypeOptions),
