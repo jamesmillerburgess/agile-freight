@@ -11,7 +11,7 @@ describe('Charges Utilities', function () {
   describe('Update Charges Function', function () {
     it('works with an empty object', function () {
       const updatedCharges = updateCharges({});
-      updatedCharges.chargeLines.should.equal([]);
+      updatedCharges.chargeLines.should.eql([]);
       updatedCharges.totalAmount.should.equal(0);
       updatedCharges.totalCurrency.should.equal('');
     });
@@ -19,8 +19,14 @@ describe('Charges Utilities', function () {
     it('calculates the total amount correctly', function () {
       const charges = {
         chargeLines: [
-          { amount: 1 },
-          { amount: 1 },
+          {
+            rate: { amount: 1 },
+            units: 1,
+          },
+          {
+            rate: { amount: 1 },
+            units: 1,
+          },
         ],
       };
       const updatedCharges = updateCharges(charges);
@@ -30,8 +36,8 @@ describe('Charges Utilities', function () {
     it('calculates the total currency correctly', function () {
       const charges = {
         chargeLines: [
-          { currency: 'USD' },
-          { currency: 'USD' },
+          { rate: { currency: 'USD' } },
+          { rate: { currency: 'USD' } },
         ],
       };
       const updatedCharges = updateCharges(charges);
@@ -41,8 +47,8 @@ describe('Charges Utilities', function () {
     it('deals with mixed currencies correctly', function () {
       const charges = {
         chargeLines: [
-          { currency: 'USD' },
-          { currency: 'CHF' },
+          { rate: { currency: 'USD' } },
+          { rate: { currency: 'CHF' } },
         ],
       };
       const updatedCharges = updateCharges(charges);
@@ -50,13 +56,22 @@ describe('Charges Utilities', function () {
     });
 
     it('ignores blank currencies when determining the total currency', function () {
-      const charges = {
+      let charges = {
         chargeLines: [
-          { currency: 'USD' },
-          { currency: '' },
+          { rate: { currency: 'USD' } },
+          { rate: { currency: '' } },
         ],
       };
-      const updatedCharges = updateCharges(charges);
+      let updatedCharges = updateCharges(charges);
+      updatedCharges.totalCurrency.should.equal('USD');
+
+      charges = {
+        chargeLines: [
+          { rate: { currency: '' } },
+          { rate: { currency: 'USD' } },
+        ],
+      };
+      updatedCharges = updateCharges(charges);
       updatedCharges.totalCurrency.should.equal('USD');
     });
 

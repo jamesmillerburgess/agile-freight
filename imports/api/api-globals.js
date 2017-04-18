@@ -29,7 +29,7 @@ export const APIGlobals = {
   invoiceStatusOptions: ['Issued', 'Draft', 'Canceled'],
 
   // TEMP!!!!
-  cityOptions: ['Basel', 'Shanghai', 'Seoul', ''],
+  cityOptions: ['Shanghai', 'Basel', 'Seoul', ''],
   indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],
   ukPortOptions: ['GBFXT', 'GBSOU', 'GBLGW'],
 };

@@ -38,8 +38,7 @@ export default class DropdownField extends React.Component {
   }
 
   searchResults() {
-    const searchRegex = new RegExp(this.state.search, 'gi');
-    return this.props.options.filter(option => searchRegex.test(option));
+    return this.props.options.filter(option => (new RegExp(this.state.search, 'gi')).test(option));
   }
 
   render() {

@@ -17,8 +17,10 @@ exports.cargoSchema = new SimpleSchema({
   totalVolume: { type: Number, optional: true },
 });
 
-exports.updateCargo = (cargo) => {
-  const { descriptionOfGoods, packageLines } = cargo;
+exports.updateCargo = ({
+  descriptionOfGoods = '',
+  packageLines = [],
+}) => {
   return {
     descriptionOfGoods,
     packageLines,

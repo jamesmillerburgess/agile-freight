@@ -52,8 +52,8 @@ Schemas.Quote = new SimpleSchema({
       if (this.isInsert) {
         const customerId = this.field('customerId').value;
         const { name, address } = Customers.findOne(customerId);
-        return `${name}
-${address}`;
+        return `${name || ''}
+${address || ''}`;
       }
     },
   },

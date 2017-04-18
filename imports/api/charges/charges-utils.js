@@ -33,8 +33,10 @@ exports.chargesSchema = new SimpleSchema({
   },
 });
 
-exports.updateCharges = (charges) => {
-  const chargeLines = charges.chargeLines.map(val => (
+exports.updateCharges = ({
+  chargeLines = [],
+}) => {
+  const updatedChargeLines = chargeLines.map(val => (
     {
       description: val.description || '',
       rate: {
@@ -42,24 +44,27 @@ exports.updateCharges = (charges) => {
         currency: val.rate ? val.rate.currency || '' : '',
         unit: val.rate ? val.rate.unit || '' : '',
       },
-      units: val.units || '',
+      units: val.units || 0,
       amount: (val.rate ? val.rate.amount || 0 : 0) * (val.units || 0),
       currency: val.rate ? val.rate.currency || '' : '',
     }),
   );
-  const totalAmount = chargeLines.reduce((acc, val) => acc + val.amount, 0);
-  const totalCurrency = chargeLines.reduce((acc, val) => {
-    if (val.currency !== '' && val.currency) {
-      if (acc === '' || acc === val.currency) {
-        return val.currency;
-      }
+  const totalAmount = updatedChargeLines.reduce((acc, val) => acc + val.amount, 0);
+  const totalCurrency = updatedChargeLines.reduce((acc, val) => {
+    if (acc === '') {
+      return val.currency;
+    }
+    if (acc === 'N/A') {
       return 'N/A';
     }
-    return acc;
+    if (acc === val.currency || val.currency === '') {
+      return acc;
+    }
+    return 'N/A';
   }, '');
 
   return {
-    chargeLines,
+    chargeLines: updatedChargeLines,
     totalAmount,
     totalCurrency,
   };

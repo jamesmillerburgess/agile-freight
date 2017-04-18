@@ -13,7 +13,7 @@ describe('Cargo Utilities', function () {
       const cargo = {};
       const updatedCargo = updateCargo(cargo);
       updatedCargo.descriptionOfGoods.should.equal('');
-      updatedCargo.packageLines.should.equal([]);
+      updatedCargo.packageLines.should.eql([]);
       updatedCargo.totalPackages.should.equal(0);
       updatedCargo.totalPackageType.should.equal('');
       updatedCargo.totalGrossWeight.should.equal(0);
@@ -36,7 +36,7 @@ describe('Cargo Utilities', function () {
         ],
       };
       const updatedCargo = updateCargo(cargo);
-      updatedCargo.totalPackageType.should.equal(2);
+      updatedCargo.totalPackages.should.equal(2);
       updatedCargo.totalGrossWeight.should.equal(4);
       updatedCargo.totalVolume.should.equal(6);
     });
@@ -76,7 +76,7 @@ describe('Cargo Utilities', function () {
 
     it('maintains the description of goods value', function () {
       const cargo = {
-        descriptionOfGoods: 'description ',
+        descriptionOfGoods: 'description',
         packageLines: [{}],
       };
       const updatedCargo = updateCargo(cargo);
