@@ -1,27 +1,50 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
-import { Quotes } from './quotes';
+import { Quotes } from './quotes-collection';
 import { Customers } from '../customers/customers';
+
+import { updateCargo } from '../cargo/cargo-utils';
+
+// const updateCargo = (cargo) => {
+//   const { descriptionOfGoods, packageLines } = cargo;
+//   return {
+//     descriptionOfGoods,
+//     packageLines,
+//     totalPackages: packageLines.reduce((acc, val) => acc + (val.num || 0), 0),
+//     totalPackageType: packageLines.reduce((acc, val) => {
+//       if (val.type !== '' && val.type) {
+//         if (acc === '' || acc === val.type) {
+//           return val.type;
+//         }
+//         return 'Mixed Types';
+//       }
+//       return acc;
+//     }, ''),
+//     totalGrossWeight: packageLines.reduce((acc, val) => acc + (val.grossWeight || 0), 0),
+//     totalVolume: packageLines.reduce((acc, val) => acc + (val.volume || 0), 0),
+//   };
+// };
 
 const updateQuote = (query, update) => {
   Quotes.update(query, update);
   const quote = Quotes.findOne(query);
 
-  // Update package totals
-  const packageLines = quote.cargo.packageLines;
-  const totalPackages = packageLines.reduce((acc, val) => acc + (val.num || 0), 0);
-  const totalPackageType = packageLines.reduce((acc, val) => {
-    if (val.type !== '' && val.type) {
-      if (acc === '' || acc === val.type) {
-        return val.type;
-      }
-      return 'Mixed Types';
-    }
-    return acc;
-  }, '');
-  const totalGrossWeight = packageLines.reduce((acc, val) => acc + (val.grossWeight || 0), 0);
-  const totalVolume = packageLines.reduce((acc, val) => acc + (val.volume || 0), 0);
+  // Update cargo
+  const cargo = updateCargo(quote.cargo);
+  // const packageLines = quote.cargo.packageLines;
+  // const totalPackages = packageLines.reduce((acc, val) => acc + (val.num || 0), 0);
+  // const totalPackageType = packageLines.reduce((acc, val) => {
+  //   if (val.type !== '' && val.type) {
+  //     if (acc === '' || acc === val.type) {
+  //       return val.type;
+  //     }
+  //     return 'Mixed Types';
+  //   }
+  //   return acc;
+  // }, '');
+  // const totalGrossWeight = packageLines.reduce((acc, val) => acc + (val.grossWeight || 0), 0);
+  // const totalVolume = packageLines.reduce((acc, val) => acc + (val.volume || 0), 0);
 
   // Update charge totals
   const chargeLines = quote.charges.chargeLines.map((val) => {
@@ -51,11 +74,11 @@ const updateQuote = (query, update) => {
 
   const newUpdate = {
     $set: {
-      'cargo.totalPackages': totalPackages,
-      'cargo.totalPackageType': totalPackageType,
-      'cargo.totalGrossWeight': totalGrossWeight,
-      'cargo.totalVolume': totalVolume,
-
+      // 'cargo.totalPackages': totalPackages,
+      // 'cargo.totalPackageType': totalPackageType,
+      // 'cargo.totalGrossWeight': totalGrossWeight,
+      // 'cargo.totalVolume': totalVolume,
+      cargo,
       'charges.chargeLines': chargeLines,
       'charges.totalAmount': totalAmount,
       'charges.totalCurrency': totalCurrency,

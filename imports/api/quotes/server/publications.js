@@ -1,3 +1,3 @@
 import { Meteor } from 'meteor/meteor';
 
-import { Quotes } from '../quotes';
+import { Quotes } from '../quotes-collection';

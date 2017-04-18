@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Quotes } from '../../../api/quotes/quotes';
+import { Quotes } from '../../../api/quotes/quotes-collection';
 
 import TextareaField from '../../fields/TextareaField.jsx';
 import FreeTextField from '../../fields/FreeTextField.jsx';
