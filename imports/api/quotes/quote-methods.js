@@ -5,26 +5,7 @@ import { Quotes } from './quotes-collection';
 import { Customers } from '../customers/customers';
 
 import { updateCargo } from '../cargo/cargo-utils';
-
-// const updateCargo = (cargo) => {
-//   const { descriptionOfGoods, packageLines } = cargo;
-//   return {
-//     descriptionOfGoods,
-//     packageLines,
-//     totalPackages: packageLines.reduce((acc, val) => acc + (val.num || 0), 0),
-//     totalPackageType: packageLines.reduce((acc, val) => {
-//       if (val.type !== '' && val.type) {
-//         if (acc === '' || acc === val.type) {
-//           return val.type;
-//         }
-//         return 'Mixed Types';
-//       }
-//       return acc;
-//     }, ''),
-//     totalGrossWeight: packageLines.reduce((acc, val) => acc + (val.grossWeight || 0), 0),
-//     totalVolume: packageLines.reduce((acc, val) => acc + (val.volume || 0), 0),
-//   };
-// };
+import { updateCharges } from '../charges/charges-utils';
 
 const updateQuote = (query, update) => {
   Quotes.update(query, update);
@@ -32,45 +13,33 @@ const updateQuote = (query, update) => {
 
   // Update cargo
   const cargo = updateCargo(quote.cargo);
-  // const packageLines = quote.cargo.packageLines;
-  // const totalPackages = packageLines.reduce((acc, val) => acc + (val.num || 0), 0);
-  // const totalPackageType = packageLines.reduce((acc, val) => {
-  //   if (val.type !== '' && val.type) {
-  //     if (acc === '' || acc === val.type) {
-  //       return val.type;
+
+  // Update charge totals
+  const charges = updateCharges(quote.charges);
+  // const chargeLines = quote.charges.chargeLines.map((val) => {
+  //   const newVal = {
+  //     description: val.description || '',
+  //     rate: {
+  //       amount: val.rate ? val.rate.amount || 0 : 0,
+  //       currency: val.rate ? val.rate.currency || '' : '',
+  //       unit: val.rate ? val.rate.unit || '' : '',
+  //     },
+  //     units: val.units || '',
+  //     amount: (val.rate ? val.rate.amount || 0 : 0) * (val.units || 0),
+  //     currency: val.rate ? val.rate.currency || '' : '',
+  //   };
+  //   return newVal;
+  // });
+  // const totalAmount = chargeLines.reduce((acc, val) => acc + val.amount, 0);
+  // const totalCurrency = chargeLines.reduce((acc, val) => {
+  //   if (val.currency !== '' && val.currency) {
+  //     if (acc === '' || acc === val.currency) {
+  //       return val.currency;
   //     }
-  //     return 'Mixed Types';
+  //     return 'N/A';
   //   }
   //   return acc;
   // }, '');
-  // const totalGrossWeight = packageLines.reduce((acc, val) => acc + (val.grossWeight || 0), 0);
-  // const totalVolume = packageLines.reduce((acc, val) => acc + (val.volume || 0), 0);
-
-  // Update charge totals
-  const chargeLines = quote.charges.chargeLines.map((val) => {
-    const newVal = {
-      description: val.description || '',
-      rate: {
-        amount: val.rate ? val.rate.amount || 0 : 0,
-        currency: val.rate ? val.rate.currency || '' : '',
-        unit: val.rate ? val.rate.unit || '' : '',
-      },
-      units: val.units || '',
-      amount: (val.rate ? val.rate.amount || 0 : 0) * (val.units || 0),
-      currency: val.rate ? val.rate.currency || '' : '',
-    };
-    return newVal;
-  });
-  const totalAmount = chargeLines.reduce((acc, val) => acc + val.amount, 0);
-  const totalCurrency = chargeLines.reduce((acc, val) => {
-    if (val.currency !== '' && val.currency) {
-      if (acc === '' || acc === val.currency) {
-        return val.currency;
-      }
-      return 'N/A';
-    }
-    return acc;
-  }, '');
 
   const newUpdate = {
     $set: {
@@ -79,9 +48,10 @@ const updateQuote = (query, update) => {
       // 'cargo.totalGrossWeight': totalGrossWeight,
       // 'cargo.totalVolume': totalVolume,
       cargo,
-      'charges.chargeLines': chargeLines,
-      'charges.totalAmount': totalAmount,
-      'charges.totalCurrency': totalCurrency,
+      // 'charges.chargeLines': chargeLines,
+      // 'charges.totalAmount': totalAmount,
+      // 'charges.totalCurrency': totalCurrency,
+      charges,
     },
   };
 

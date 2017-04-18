@@ -3,6 +3,9 @@ import SimpleSchema from 'simpl-schema';
 
 import { Customers } from '../customers/customers';
 
+import { cargoSchema } from '../cargo/cargo-utils';
+import { chargesSchema } from '../charges/charges-utils';
+
 export const Quotes = new Mongo.Collection('Quotes');
 
 const Schemas = {};
@@ -10,56 +13,6 @@ const Schemas = {};
 const routeSchema = new SimpleSchema({
   from: { type: String, optional: true },
   to: { type: String, optional: true },
-});
-
-const packageLineSchema = new SimpleSchema({
-  num: { type: Number, optional: true },
-  type: { type: String, optional: true },
-  grossWeight: { type: Number, optional: true },
-  volume: { type: Number, optional: true },
-});
-
-const cargoSchema = new SimpleSchema({
-  descriptionOfGoods: { type: String, optional: true },
-  packageLines: Array,
-  'packageLines.$': packageLineSchema,
-  totalPackages: { type: Number, optional: true },
-  totalPackageType: { type: String, optional: true },
-  totalGrossWeight: { type: Number, optional: true },
-  totalVolume: { type: Number, optional: true },
-});
-
-const rateSchema = new SimpleSchema({
-  amount: { type: Number, optional: true },
-  currency: { type: String, optional: true },
-  unit: { type: String, optional: true },
-}, {
-  clean: {
-    removeEmptyStrings: false,
-  },
-});
-
-const chargeLineSchema = new SimpleSchema({
-  description: { type: String, optional: true },
-  rate: { type: rateSchema, optional: true },
-  units: { type: Number, optional: true },
-  amount: { type: Number, optional: true },
-  currency: { type: String, optional: true },
-}, {
-  clean: {
-    removeEmptyStrings: false,
-  },
-});
-
-const chargesSchema = new SimpleSchema({
-  chargeLines: Array,
-  'chargeLines.$': chargeLineSchema,
-  totalAmount: { type: Number, optional: true },
-  totalCurrency: { type: String, optional: true},
-}, {
-  clean: {
-    removeEmptyStrings: false,
-  },
 });
 
 Schemas.Quote = new SimpleSchema({

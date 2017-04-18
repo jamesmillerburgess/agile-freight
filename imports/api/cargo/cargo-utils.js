@@ -1,3 +1,22 @@
+import SimpleSchema from 'simpl-schema';
+
+exports.packageLineSchema = new SimpleSchema({
+  num: { type: Number, optional: true },
+  type: { type: String, optional: true },
+  grossWeight: { type: Number, optional: true },
+  volume: { type: Number, optional: true },
+});
+
+exports.cargoSchema = new SimpleSchema({
+  descriptionOfGoods: { type: String, optional: true },
+  packageLines: Array,
+  'packageLines.$': exports.packageLineSchema,
+  totalPackages: { type: Number, optional: true },
+  totalPackageType: { type: String, optional: true },
+  totalGrossWeight: { type: Number, optional: true },
+  totalVolume: { type: Number, optional: true },
+});
+
 exports.updateCargo = (cargo) => {
   const { descriptionOfGoods, packageLines } = cargo;
   return {

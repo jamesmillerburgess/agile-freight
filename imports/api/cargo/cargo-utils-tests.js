@@ -6,7 +6,20 @@ import { chai } from 'meteor/practicalmeteor:chai';
 import { updateCargo } from './cargo-utils';
 
 describe('Cargo Utilities', function () {
+  chai.should();
+
   describe('Update Cargo Function', function () {
+    it('works with an empty object', function () {
+      const cargo = {};
+      const updatedCargo = updateCargo(cargo);
+      updatedCargo.descriptionOfGoods.should.equal('');
+      updatedCargo.packageLines.should.equal([]);
+      updatedCargo.totalPackages.should.equal(0);
+      updatedCargo.totalPackageType.should.equal('');
+      updatedCargo.totalGrossWeight.should.equal(0);
+      updatedCargo.totalVolume.should.equal(0);
+    });
+
     it('adds up the totals correctly', function () {
       const cargo = {
         packageLines: [
@@ -23,12 +36,12 @@ describe('Cargo Utilities', function () {
         ],
       };
       const updatedCargo = updateCargo(cargo);
-      chai.assert.equal(updatedCargo.totalPackages, 2);
-      chai.assert.equal(updatedCargo.totalGrossWeight, 4);
-      chai.assert.equal(updatedCargo.totalVolume, 6);
+      updatedCargo.totalPackageType.should.equal(2);
+      updatedCargo.totalGrossWeight.should.equal(4);
+      updatedCargo.totalVolume.should.equal(6);
     });
 
-    it('determines the deals with mixed package types correctly', function () {
+    it('deals with mixed package types correctly', function () {
       const cargo = {
         packageLines: [
           { type: 'Package' },
@@ -36,7 +49,7 @@ describe('Cargo Utilities', function () {
         ],
       };
       const updatedCargo = updateCargo(cargo);
-      chai.assert.equal(updatedCargo.totalPackageType, 'Mixed Types');
+      updatedCargo.totalPackageType.should.equal('Mixed Types');
     });
 
     it('ignores blank package types when determining the total package type', function () {
@@ -47,7 +60,7 @@ describe('Cargo Utilities', function () {
         ],
       };
       const updatedCargo = updateCargo(cargo);
-      chai.assert.equal(updatedCargo.totalPackageType, 'Package');
+      updatedCargo.totalPackageType.should.equal('Package');
     });
 
     it('gives a blank total package type when all types are blank', function () {
@@ -58,26 +71,16 @@ describe('Cargo Utilities', function () {
         ],
       };
       const updatedCargo = updateCargo(cargo);
-      chai.assert.equal(updatedCargo.totalPackageType, '');
+      updatedCargo.totalPackageType.should.equal('');
     });
 
-    it('maintains the description of goods', function () {
+    it('maintains the description of goods value', function () {
       const cargo = {
         descriptionOfGoods: 'description ',
         packageLines: [{}],
       };
       const updatedCargo = updateCargo(cargo);
-      chai.assert.equal(updatedCargo.descriptionOfGoods, 'description');
-    });
-
-    it('still works with an empty object', function () {
-      const updatedCargo = updateCargo({});
-      chai.assert.equal(updatedCargo.descriptionOfGoods, '');
-      chai.assert.equal(updatedCargo.packageLines, []);
-      chai.assert.equal(updatedCargo.totalPackages, 0);
-      chai.assert.equal(updatedCargo.totalPackageType, '');
-      chai.assert.equal(updatedCargo.totalGrossWeight, 0);
-      chai.assert.equal(updatedCargo.totalVolume, 0);
+      updatedCargo.descriptionOfGoods.should.equal('description');
     });
   });
 });
