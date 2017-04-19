@@ -34,7 +34,10 @@ Meteor.startup(() => {
       email: 'd@d.com',
       password: 'd',
       profile: {
-        name: 'default',
+        name: 'James Burgess',
+        address: `Beim Goldenen Loewen 16
+4052 Basel
+Switzerland`,
       },
     });
   }

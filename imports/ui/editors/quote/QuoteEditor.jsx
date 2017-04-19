@@ -97,20 +97,38 @@ const QuoteEditorInner = ({ quote }) => {
               quote.routes.map((route, index) => (
                 <div key={index} className="row field-row">
                   <div className="col-3">
-                    <div className="label">From</div>
+                    <div className="label">Collection From</div>
                     <DropdownField
-                      value={`${route.from || ''}`}
+                      value={`${route.collectionFrom || ''}`}
                       options={APIGlobals.cityOptions}
-                      path={`routes.${index}.from`}
+                      path={`routes.${index}.collectionFrom`}
+                      valueUpdateCallback={updateValue}
+                    />
+                  </div>
+                  <div className="col-3 dropdown">
+                    <div className="label">Airport of Departure</div>
+                    <DropdownField
+                      value={`${route.airportOfDeparture || ''}`}
+                      options={APIGlobals.airportOptions}
+                      path={`routes.${index}.airportOfDeparture`}
                       valueUpdateCallback={updateValue}
                     />
                   </div>
                   <div className="col-3">
-                    <div className="label">To</div>
+                    <div className="label">Airport of Arrival</div>
                     <DropdownField
-                      value={`${route.to || ''}`}
+                      value={`${route.airportOfArrival || ''}`}
+                      options={APIGlobals.airportOptions}
+                      path={`routes.${index}.airportOfArrival`}
+                      valueUpdateCallback={updateValue}
+                    />
+                  </div>
+                  <div className="col-3">
+                    <div className="label">Delivery To</div>
+                    <DropdownField
+                      value={`${route.deliveryTo || ''}`}
                       options={APIGlobals.cityOptions}
-                      path={`routes.${index}.to`}
+                      path={`routes.${index}.deliveryTo`}
                       valueUpdateCallback={updateValue}
                     />
                   </div>
@@ -139,7 +157,7 @@ const QuoteEditorInner = ({ quote }) => {
             <div className="row no-gutters">
               <div className="col-4">
                 <TextareaField
-                  value={quote.cargo.descriptionOfGoods || ''}
+                  value={quote.cargo ? quote.cargo.descriptionOfGoods || '' : ''}
                   path={'cargo.descriptionOfGoods'}
                   valueUpdateCallback={updateValue}
                 />

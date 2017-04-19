@@ -22,6 +22,10 @@ export default class quoteFixtures {
         mode: _.sample(APIGlobals.modeOptions),
         type: _.sample(APIGlobals.quoteTypeOptions),
         rateType: _.sample(APIGlobals.quoteRateTypeOptions),
+        cargo: {
+          descriptionOfGoods: '',
+          packageLines: [{}],
+        },
         rates: [
           {
             type: '20\' DC', // TODO: Randomize
@@ -48,29 +52,29 @@ export default class quoteFixtures {
       if (quote.rateType === 'Rated') {
         quote.routes = quote.type === 'Single Route' ? [
           {
-            from: _.sample(APIGlobals.indiaPortOptions),
-            to: _.sample(APIGlobals.ukPortOptions),
+            collectionFrom: _.sample(APIGlobals.indiaPortOptions),
+            deliveryTo: _.sample(APIGlobals.ukPortOptions),
           },
         ] : [
           {
-            from: _.sample(APIGlobals.indiaPortOptions),
-            to: _.sample(APIGlobals.ukPortOptions),
+            collectionFrom: _.sample(APIGlobals.indiaPortOptions),
+            deliveryTo: _.sample(APIGlobals.ukPortOptions),
           },
           {
-            from: _.sample(APIGlobals.indiaPortOptions),
-            to: _.sample(APIGlobals.ukPortOptions),
+            collectionFrom: _.sample(APIGlobals.indiaPortOptions),
+            deliveryTo: _.sample(APIGlobals.ukPortOptions),
           },
         ];
       } else {
         quote.routes = quote.type === 'Single Route' ? [
           {
-            from: _.sample(APIGlobals.indiaPortOptions),
-            to: _.sample(APIGlobals.ukPortOptions),
+            collectionFrom: _.sample(APIGlobals.indiaPortOptions),
+            deliveryTo: _.sample(APIGlobals.ukPortOptions),
           },
         ] : [
           {
-            from: _.sample(APIGlobals.indiaPortOptions),
-            to: _.sample(APIGlobals.ukPortOptions),
+            collectionFrom: _.sample(APIGlobals.indiaPortOptions),
+            deliveryTo: _.sample(APIGlobals.ukPortOptions),
           },
         ];
       }

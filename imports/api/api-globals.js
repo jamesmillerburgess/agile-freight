@@ -30,6 +30,7 @@ export const APIGlobals = {
 
   // TEMP!!!!
   cityOptions: ['Shanghai', 'Basel', 'Seoul', ''],
+  airportOptions: ['Shanghai Hongquiao - SHA', 'Shanghai Pudong - PVG', 'Frankfurt - FRA', 'Basel Mulhouse - BSL'],
   indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],
   ukPortOptions: ['GBFXT', 'GBSOU', 'GBLGW'],
 };

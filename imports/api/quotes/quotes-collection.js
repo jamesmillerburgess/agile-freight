@@ -11,8 +11,10 @@ export const Quotes = new Mongo.Collection('Quotes');
 const Schemas = {};
 
 const routeSchema = new SimpleSchema({
-  from: { type: String, optional: true },
-  to: { type: String, optional: true },
+  collectionFrom: { type: String, optional: true },
+  airportOfDeparture: { type: String, optional: true },
+  airportOfArrival: { type: String, optional: true },
+  deliveryTo: { type: String, optional: true },
 });
 
 Schemas.Quote = new SimpleSchema({
