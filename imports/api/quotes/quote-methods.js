@@ -16,41 +16,11 @@ const updateQuote = (query, update) => {
 
   // Update charge totals
   const charges = updateCharges(quote.charges);
-  // const chargeLines = quote.charges.chargeLines.map((val) => {
-  //   const newVal = {
-  //     description: val.description || '',
-  //     rate: {
-  //       amount: val.rate ? val.rate.amount || 0 : 0,
-  //       currency: val.rate ? val.rate.currency || '' : '',
-  //       unit: val.rate ? val.rate.unit || '' : '',
-  //     },
-  //     units: val.units || '',
-  //     amount: (val.rate ? val.rate.amount || 0 : 0) * (val.units || 0),
-  //     currency: val.rate ? val.rate.currency || '' : '',
-  //   };
-  //   return newVal;
-  // });
-  // const totalAmount = chargeLines.reduce((acc, val) => acc + val.amount, 0);
-  // const totalCurrency = chargeLines.reduce((acc, val) => {
-  //   if (val.currency !== '' && val.currency) {
-  //     if (acc === '' || acc === val.currency) {
-  //       return val.currency;
-  //     }
-  //     return 'N/A';
-  //   }
-  //   return acc;
-  // }, '');
+
 
   const newUpdate = {
     $set: {
-      // 'cargo.totalPackages': totalPackages,
-      // 'cargo.totalPackageType': totalPackageType,
-      // 'cargo.totalGrossWeight': totalGrossWeight,
-      // 'cargo.totalVolume': totalVolume,
       cargo,
-      // 'charges.chargeLines': chargeLines,
-      // 'charges.totalAmount': totalAmount,
-      // 'charges.totalCurrency': totalCurrency,
       charges,
     },
   };
