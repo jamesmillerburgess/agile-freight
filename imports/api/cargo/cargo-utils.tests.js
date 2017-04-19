@@ -13,7 +13,8 @@ describe('Cargo Utilities', function () {
       const cargo = {};
       const updatedCargo = updateCargo(cargo);
       updatedCargo.descriptionOfGoods.should.equal('');
-      updatedCargo.packageLines.should.eql([]);
+      updatedCargo.packageLines.should.be.a('array');
+      updatedCargo.packageLines.should.have.lengthOf(0);
       updatedCargo.totalPackages.should.equal(0);
       updatedCargo.totalPackageType.should.equal('');
       updatedCargo.totalGrossWeight.should.equal(0);

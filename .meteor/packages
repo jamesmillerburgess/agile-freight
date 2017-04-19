@@ -25,3 +25,4 @@ aldeed:collection2-core
 practicalmeteor:chai
 react-meteor-data
 static-html
+dispatch:mocha

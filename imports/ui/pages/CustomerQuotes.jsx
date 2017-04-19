@@ -36,6 +36,9 @@ const CustomerQuotesInner = ({ customer, quotes, activeQuotes, history }) => {
         </button>
       </div>
       <div className="content-body">
+        <Route path={`/customer/${customer._id}/quotes`} exact>
+          <Redirect to={`/customer/${customer._id}/quotes/active`} />
+        </Route>
         <Route
           path={`/customer/${customer._id}/quotes/active`}
           render={props => <QuoteList {...props} quotes={activeQuotes} />}
@@ -46,7 +49,7 @@ const CustomerQuotesInner = ({ customer, quotes, activeQuotes, history }) => {
         />
         <Route
           path={`/customer/${customer._id}/quotes/charts`}
-          render={props => <div />}
+          render={() => <div />}
         />
         <Route
           path={`/customer/${customer._id}/quotes/:quoteId/edit`}

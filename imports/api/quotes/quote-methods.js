@@ -17,7 +17,6 @@ const updateQuote = (query, update) => {
   // Update charge totals
   const charges = updateCharges(quote.charges);
 
-
   const newUpdate = {
     $set: {
       cargo,
