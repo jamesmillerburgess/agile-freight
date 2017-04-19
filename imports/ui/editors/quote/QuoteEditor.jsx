@@ -273,17 +273,18 @@ const QuoteEditorInner = ({ quote }) => {
                         />
                       </div>
                       <div className="col-1">
-                        <FreeTextField
-                          alignRight
+                        <DropdownField
                           value={`${chargeLine.rate.currency || ''}`}
+                          options={APIGlobals.currencyOptions}
                           unit="/"
                           path={`charges.chargeLines.${index}.rate.currency`}
                           valueUpdateCallback={updateValue}
                         />
                       </div>
                       <div className="col-2">
-                        <FreeTextField
+                        <DropdownField
                           value={`${chargeLine.rate.unit || ''}`}
+                          options={APIGlobals.chargeUOMOptions}
                           path={`charges.chargeLines.${index}.rate.unit`}
                           valueUpdateCallback={updateValue}
                         />

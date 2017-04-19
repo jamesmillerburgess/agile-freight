@@ -24,7 +24,7 @@ export default class DropdownField extends React.Component {
     const updateValue = $(event.target).parents('.a-container')[0].id || '';
 
     // Update the UI now
-    $(event.target).parents('.dropdown').find('.value')[0].innerText = updateValue;
+    // $(event.target).parents('.dropdown').find('.value')[0].innerText = updateValue;
     $(event.target).parents('.dropdown').find('input')[0].value = '';
 
     // Check if we should update the collection
@@ -42,7 +42,7 @@ export default class DropdownField extends React.Component {
   }
 
   render() {
-    const { value } = this.props;
+    const { value, unit } = this.props;
     const { search } = this.state;
     return (
       <div className="dropdown">
@@ -56,7 +56,7 @@ export default class DropdownField extends React.Component {
           onClick={this.handleFieldButtonClick}
         >
           <button className={`value ${this.props.alignRight ? 'align-right' : 'align-left'}`}>
-            <span>{value || <span>&nbsp;</span>}</span>
+            <span>{value ? `${value} ${unit || ''}` : <span>&nbsp;</span>}</span>
           </button>
         </div>
 
@@ -101,6 +101,7 @@ export default class DropdownField extends React.Component {
 DropdownField.propTypes = {
   value: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  unit: PropTypes.string,
   path: PropTypes.string.isRequired,
   valueUpdateCallback: PropTypes.func.isRequired,
   alignRight: PropTypes.bool,

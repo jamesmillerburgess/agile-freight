@@ -14,6 +14,10 @@ export const APIGlobals = {
   airServiceOptions: ['Premier', 'Expedited', 'Express'],
   oceanServiceOptions: ['FCL', 'LCL', 'Breakbulk'],
 
+  // Common
+  currencyOptions: ['USD', 'EUR', 'RMB', 'CHF', ''],
+  chargeUOMOptions: ['kg', 'cbm', 'lb', 'cu ft', 'km', 'mile', 'container', ''],
+
   // Cargo
   packageTypeOptions: ['Packages', 'Boxes', 'Cartons', 'Bags', 'Bales', 'Bolts', 'Bottles', ''],
 
