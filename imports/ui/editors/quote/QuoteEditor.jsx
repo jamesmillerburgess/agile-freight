@@ -18,21 +18,15 @@ import { currencyFormat } from '../../formatters/currency-format';
 const QuoteEditorInner = ({ quote }) => {
   const updateValue = (path, value) => Meteor.call('quote.updateField', quote._id, path, value);
   const addPackageLine = () => {
-    // quote.cargo.packageLines.push({});
-    // Meteor.call('quote.updateCargo', quote._id, quote.cargo);
     Meteor.call('quote.addPackageLine', quote._id);
   };
   const removePackageLine = (index) => {
-    // quote.cargo.packageLines.splice(index, 1);
-    // Meteor.call('quote.updateCargo', quote._id, quote.cargo);
     Meteor.call('quote.removePackageLine', quote._id, index);
   };
   const addChargeLine = () => {
     Meteor.call('quote.addChargeLine', quote._id);
   };
   const removeChargeLine = (index) => {
-    // quote.cargo.packageLines.splice(index, 1);
-    // Meteor.call('quote.updateCargo', quote._id, quote.cargo);
     Meteor.call('quote.removeChargeLine', quote._id, index);
   };
   return (

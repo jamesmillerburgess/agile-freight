@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import $ from 'jquery';
 
 const FreeTextField = ({
-  value,
-  path,
-  valueUpdateCallback,
-  alignRight,
-  unit,
-}) => {
+                         value,
+                         path,
+                         valueUpdateCallback,
+                         alignRight,
+                         unit,
+                       }) => {
   const handleDropdownTextInputKeyDown = (event) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
       const newValue = event.target.value;
@@ -32,10 +33,12 @@ const FreeTextField = ({
         data-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false"
-        onClick={() => $('.dropdown-text-input').select()}
       >
-        <button className={`value ${alignRight ? 'align-right' : 'align-left'}`}>
-          <span>{value ? `${value} ${unit || ''}` : <span>&nbsp;</span>}</span>
+        <button
+          className={`value ${alignRight ? 'align-right' : 'align-left'}`}
+          onClick={() => $('.dropdown-text-input').select()}
+        >
+          {unit ? `${value} ${unit}` : value}
         </button>
       </div>
 
@@ -54,11 +57,8 @@ const FreeTextField = ({
             />
           </div>
           { unit ? <div className="input-unit">{unit}</div> : '' }
-
         </div>
-
       </div>
-
     </div>
   );
 };
@@ -66,7 +66,7 @@ const FreeTextField = ({
 FreeTextField.propTypes = {
   value: PropTypes.string,
   path: PropTypes.string,
-  valueUpdateCallback: PropTypes.func.isRequired,
+  valueUpdateCallback: PropTypes.func,
   alignRight: PropTypes.bool,
   unit: PropTypes.string,
 };
@@ -74,6 +74,7 @@ FreeTextField.propTypes = {
 FreeTextField.defaultProps = {
   value: '',
   path: '',
+  valueUpdateCallback: () => null,
   alignRight: false,
   unit: '',
 };
