@@ -17,6 +17,18 @@ import { currencyFormat } from '../../formatters/currency-format';
 
 const QuoteEditorInner = ({ quote }) => {
   const updateValue = (path, value) => Meteor.call('quote.updateField', quote._id, path, value);
+  const getServiceOptions = () => {
+    if (quote.mode === 'Air Freight') {
+      return APIGlobals.airServiceOptions;
+    }
+    if (quote.mode === 'Ocean Freight') {
+      return APIGlobals.oceanServiceOptions;
+    }
+    if (quote.mode === 'Road Freight') {
+      return APIGlobals.roadServiceOptions;
+    }
+    return [''];
+  };
   const addPackageLine = () => {
     Meteor.call('quote.addPackageLine', quote._id);
   };
@@ -81,7 +93,7 @@ const QuoteEditorInner = ({ quote }) => {
                 <div className="label">Service</div>
                 <DropdownField
                   value={quote.service}
-                  options={['Expedited', 'Premier', 'Value', '']}
+                  options={getServiceOptions()}
                   path="service"
                   valueUpdateCallback={updateValue}
                 />
@@ -99,24 +111,56 @@ const QuoteEditorInner = ({ quote }) => {
                       valueUpdateCallback={updateValue}
                     />
                   </div>
-                  <div className="col-3 dropdown">
-                    <div className="label">Airport of Departure</div>
-                    <DropdownField
-                      value={`${route.airportOfDeparture || ''}`}
-                      options={APIGlobals.airportOptions}
-                      path={`routes.${index}.airportOfDeparture`}
-                      valueUpdateCallback={updateValue}
-                    />
-                  </div>
-                  <div className="col-3">
-                    <div className="label">Airport of Arrival</div>
-                    <DropdownField
-                      value={`${route.airportOfArrival || ''}`}
-                      options={APIGlobals.airportOptions}
-                      path={`routes.${index}.airportOfArrival`}
-                      valueUpdateCallback={updateValue}
-                    />
-                  </div>
+
+                  {
+                    quote.mode === 'Air Freight' ?
+                      <div className="col-3 dropdown">
+                        <div className="label">Airport of Departure</div>
+                        <DropdownField
+                          value={`${route.airportOfDeparture || ''}`}
+                          options={APIGlobals.airportOptions}
+                          path={`routes.${index}.airportOfDeparture`}
+                          valueUpdateCallback={updateValue}
+                        />
+                      </div> : ''
+                  }
+                  {
+                    quote.mode === 'Ocean Freight' ?
+                      <div className="col-3 dropdown">
+                        <div className="label">Port of Departure</div>
+                        <DropdownField
+                          value={`${route.portOfDeparture || ''}`}
+                          options={APIGlobals.portOptions}
+                          path={`routes.${index}.portOfDeparture`}
+                          valueUpdateCallback={updateValue}
+                        />
+                      </div> : ''
+                  }
+
+                  {
+                    quote.mode === 'Air Freight' ?
+                      <div className="col-3">
+                        <div className="label">Airport of Arrival</div>
+                        <DropdownField
+                          value={`${route.airportOfArrival || ''}`}
+                          options={APIGlobals.airportOptions}
+                          path={`routes.${index}.airportOfArrival`}
+                          valueUpdateCallback={updateValue}
+                        />
+                      </div> : ''
+                  }
+                  {
+                    quote.mode === 'Ocean Freight' ?
+                      <div className="col-3 dropdown">
+                        <div className="label">Port of Arrival</div>
+                        <DropdownField
+                          value={`${route.portOfArrival || ''}`}
+                          options={APIGlobals.portOptions}
+                          path={`routes.${index}.portOfArrival`}
+                          valueUpdateCallback={updateValue}
+                        />
+                      </div> : ''
+                  }
                   <div className="col-3">
                     <div className="label">Delivery To</div>
                     <DropdownField

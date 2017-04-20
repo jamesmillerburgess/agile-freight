@@ -57,7 +57,8 @@ export default class DropdownField extends React.Component {
         >
           <button className={`value ${this.props.alignRight ? 'align-right' : 'align-left'}`}>
             <span>{value ? `${value} ${unit || ''}` : <span>&nbsp;</span>}</span>
-            <i className="fa fa-fw fa-caret-down dropdown-icon" />
+            <i className="fa fa-fw fa-caret-down dropdown-icon-down" />
+            <i className="fa fa-fw fa-caret-up dropdown-icon-up" />
           </button>
         </div>
 
@@ -100,10 +101,19 @@ export default class DropdownField extends React.Component {
 }
 
 DropdownField.propTypes = {
-  value: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  value: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.string),
   unit: PropTypes.string,
-  path: PropTypes.string.isRequired,
-  valueUpdateCallback: PropTypes.func.isRequired,
+  path: PropTypes.string,
+  valueUpdateCallback: PropTypes.func,
   alignRight: PropTypes.bool,
+};
+
+DropdownField.defaultProps = {
+  value: '',
+  options: [''],
+  unit: null,
+  path: '',
+  valueUpdateCallback: () => null,
+  alignRight: false,
 };

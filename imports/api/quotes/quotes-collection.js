@@ -5,13 +5,17 @@ import { Customers } from '../customers/customers';
 
 import { cargoSchema } from '../cargo/cargo-utils';
 import { chargesSchema } from '../charges/charges-utils';
+import { APIGlobals } from '../../api/api-globals';
 
 export const Quotes = new Mongo.Collection('Quotes');
 
 const Schemas = {};
 
 const routeSchema = new SimpleSchema({
+  mode: { type: String, optional: true, allowedValues: APIGlobals.modeOptions },
   collectionFrom: { type: String, optional: true },
+  portOfDeparture: { type: String, optional: true },
+  portOfArrival: { type: String, optional: true },
   airportOfDeparture: { type: String, optional: true },
   airportOfArrival: { type: String, optional: true },
   deliveryTo: { type: String, optional: true },

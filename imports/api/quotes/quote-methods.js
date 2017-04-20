@@ -7,9 +7,29 @@ import { Customers } from '../customers/customers';
 import { updateCargo } from '../cargo/cargo-utils';
 import { updateCharges } from '../charges/charges-utils';
 
+import { APIGlobals } from '../../api/api-globals';
+
 const updateQuote = (query, update) => {
   Quotes.update(query, update);
   const quote = Quotes.findOne(query);
+
+  let service = quote.service;
+  // Update service
+  if (quote.mode === 'Air Freight') {
+    if (APIGlobals.airServiceOptions.indexOf(quote.service) === -1) {
+      service = '';
+    }
+  }
+  if (quote.mode === 'Ocean Freight') {
+    if (APIGlobals.oceanServiceOptions.indexOf(quote.service) === -1) {
+      service = '';
+    }
+  }
+  if (quote.mode === 'Road Freight') {
+    if (APIGlobals.roadServiceOptions.indexOf(quote.service) === -1) {
+      service = '';
+    }
+  }
 
   // Update cargo
   const cargo = updateCargo(quote.cargo);
@@ -19,6 +39,7 @@ const updateQuote = (query, update) => {
 
   const newUpdate = {
     $set: {
+      service,
       cargo,
       charges,
     },
@@ -46,6 +67,8 @@ Meteor.methods({
   'quote.newDraft': function quoteNewDraftMethod(customerId) {
     check(customerId, String);
 
+    const mode = 'Air Freight';
+    const service = 'Premier';
     const cargo = {
       descriptionOfGoods: '',
       packageLines: [{}],
@@ -58,6 +81,8 @@ Meteor.methods({
 ${user.profile.address}`) : '';
 
     const update = {
+      mode,
+      service,
       customerId,
       cargo,
       charges,

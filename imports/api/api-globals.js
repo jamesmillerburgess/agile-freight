@@ -11,8 +11,9 @@ export const APIGlobals = {
   measurementSystemOptions: ['Metric', 'Imperial'],
   directionOptions: ['Export', 'Import'],
   modeOptions: ['Ocean', 'Air', 'Road'],
-  airServiceOptions: ['Premier', 'Expedited', 'Express'],
-  oceanServiceOptions: ['FCL', 'LCL', 'Breakbulk'],
+  airServiceOptions: ['Premier', 'Expedited', 'Express', ''],
+  oceanServiceOptions: ['FCL', 'LCL', 'Breakbulk', ''],
+  roadServiceOptions: ['FTL', 'LTL', ''],
 
   // Common
   currencyOptions: ['USD', 'EUR', 'RMB', 'CHF', ''],
@@ -35,6 +36,7 @@ export const APIGlobals = {
   // TEMP!!!!
   cityOptions: ['Shanghai', 'Basel', 'Seoul', ''],
   airportOptions: ['Shanghai Hongquiao - SHA', 'Shanghai Pudong - PVG', 'Frankfurt - FRA', 'Basel Mulhouse - BSL'],
+  portOptions: ['Rotterdam - NLROT', 'Hamburg - DEHAM', 'Singapore - SGSIN', ''],
   indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],
   ukPortOptions: ['GBFXT', 'GBSOU', 'GBLGW'],
 };
