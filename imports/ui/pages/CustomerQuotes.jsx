@@ -30,9 +30,8 @@ const CustomerQuotesInner = ({ customer, quotes, activeQuotes, history }) => {
         <NavLink to={`/customer/${customer._id}/quotes/charts`}>
           <i className="fa fa-fw fa-bar-chart" /> Charts
         </NavLink>
-        <button
-          onClick={newQuote}>
-          <i className="fa fa-fw fa-plus" /> Quote
+        <button onClick={newQuote}>
+          <i className="fa fa-fw fa-plus" /> New Quote
         </button>
       </div>
       <div className="content-body">

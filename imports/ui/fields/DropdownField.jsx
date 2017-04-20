@@ -57,6 +57,7 @@ export default class DropdownField extends React.Component {
         >
           <button className={`value ${this.props.alignRight ? 'align-right' : 'align-left'}`}>
             <span>{value ? `${value} ${unit || ''}` : <span>&nbsp;</span>}</span>
+            <i className="fa fa-fw fa-caret-down dropdown-icon" />
           </button>
         </div>
 
