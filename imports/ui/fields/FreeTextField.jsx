@@ -64,11 +64,18 @@ const FreeTextField = ({
 };
 
 FreeTextField.propTypes = {
-  value: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  path: PropTypes.string,
   valueUpdateCallback: PropTypes.func.isRequired,
   alignRight: PropTypes.bool,
   unit: PropTypes.string,
+};
+
+FreeTextField.defaultProps = {
+  value: '',
+  path: '',
+  alignRight: false,
+  unit: '',
 };
 
 export default FreeTextField;
