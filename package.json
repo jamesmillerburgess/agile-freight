@@ -25,9 +25,11 @@
     "react-bootstrap": "^0.30.8",
     "react-chartjs-2": "^2.0.5",
     "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
     "react-router": "^4.0.0",
     "react-router-dom": "^4.0.0",
     "react-test-renderer": "^15.5.4",
+    "redux": "^3.6.0",
     "simpl-schema": "^0.2.3"
   },
   "devDependencies": {
@@ -38,7 +40,8 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-meteor": "^4.0.1",
-    "eslint-plugin-react": "^6.10.3"
+    "eslint-plugin-react": "^6.10.3",
+    "redux-devtools": "^3.3.2"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
