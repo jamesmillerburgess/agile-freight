@@ -50,8 +50,8 @@ export default class TextareaField extends React.Component {
           aria-expanded="false"
           onClick={this.handleFieldButtonClick}
         >
-          <button className="value">
-            <span>{value}</span>
+          <button className={`value ${this.props.alignRight ? 'align-right' : 'align-left'}`}>
+            <pre>{value || ' '}</pre>
           </button>
         </div>
 
@@ -82,4 +82,5 @@ TextareaField.propTypes = {
   value: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
   valueUpdateCallback: PropTypes.func.isRequired,
+  alignRight: PropTypes.bool,
 };

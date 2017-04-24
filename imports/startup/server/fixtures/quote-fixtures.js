@@ -18,11 +18,14 @@ export default class quoteFixtures {
 
       // Set all the properties that have no dependencies
       const quote = {
-        quoteCode: `Q${Math.floor(rand * (900000 - 100000)) + 100000}`,
         customerId: _.sample(customers)._id,
         mode: _.sample(APIGlobals.modeOptions),
         type: _.sample(APIGlobals.quoteTypeOptions),
         rateType: _.sample(APIGlobals.quoteRateTypeOptions),
+        cargo: {
+          descriptionOfGoods: '',
+          packageLines: [{}],
+        },
         rates: [
           {
             type: '20\' DC', // TODO: Randomize
@@ -48,20 +51,34 @@ export default class quoteFixtures {
         _.sample(APIGlobals.airServiceOptions);
       if (quote.rateType === 'Rated') {
         quote.routes = quote.type === 'Single Route' ? [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
+          {
+            collectionFrom: _.sample(APIGlobals.indiaPortOptions),
+            deliveryTo: _.sample(APIGlobals.ukPortOptions),
+          },
         ] : [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
+          {
+            collectionFrom: _.sample(APIGlobals.indiaPortOptions),
+            deliveryTo: _.sample(APIGlobals.ukPortOptions),
+          },
+          {
+            collectionFrom: _.sample(APIGlobals.indiaPortOptions),
+            deliveryTo: _.sample(APIGlobals.ukPortOptions),
+          },
         ];
       } else {
         quote.routes = quote.type === 'Single Route' ? [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
+          {
+            collectionFrom: _.sample(APIGlobals.indiaPortOptions),
+            deliveryTo: _.sample(APIGlobals.ukPortOptions),
+          },
         ] : [
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
-          `${_.sample(APIGlobals.indiaPortOptions)} - ${_.sample(APIGlobals.ukPortOptions)}`,
+          {
+            collectionFrom: _.sample(APIGlobals.indiaPortOptions),
+            deliveryTo: _.sample(APIGlobals.ukPortOptions),
+          },
         ];
       }
-      quote.expiryDate = quote.status === 'Expired' ?
+      quote.validThrough = quote.status === 'Expired' ?
         moment().subtract(rand * 600, 'days').format() :
         moment().add(rand * 100, 'days').format();
 

@@ -1,10 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+
 import { Offices } from '../../../api/offices/offices';
 import { Customers } from '../../../api/customers/customers';
-import { Quotes } from '../../../api/quotes/quotes';
+import { Quotes } from '../../../api/quotes/quotes-collection';
 import { Jobs } from '../../../api/jobs/jobs';
 import { Shipments } from '../../../api/shipments/shipments';
+
+import { Airports } from '../../../api/reference-data/airports/airports-collection';
 
 import customerFixtures from './customer-fixtures';
 import quoteFixtures from './quote-fixtures';
@@ -31,8 +34,11 @@ Meteor.startup(() => {
       email: 'd@d.com',
       password: 'd',
       profile: {
-        name: 'default'
-      }
+        name: 'James Burgess',
+        address: `Beim Goldenen Loewen 16
+4052 Basel
+Switzerland`,
+      },
     });
   }
 

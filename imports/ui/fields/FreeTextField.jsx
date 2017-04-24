@@ -1,70 +1,82 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import $ from 'jquery';
 
-export default class FreeTextField extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleFieldButtonClick = this.handleFieldButtonClick.bind(this);
-    this.handleDropdownTextInputKeyDown = this.handleDropdownTextInputKeyDown.bind(this);
-  }
-
-  handleFieldButtonClick() {
-    $('.dropdown-text-input').select();
-  }
-
-  handleDropdownTextInputKeyDown(event) {
-    if (event.key === 'Enter') {
-      const value = event.target.value;
-      const needUpdate = this.props.value !== value;
+const FreeTextField = ({
+                         value,
+                         path,
+                         valueUpdateCallback,
+                         alignRight,
+                         unit,
+                       }) => {
+  const handleDropdownTextInputKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === 'Tab') {
+      const newValue = event.target.value;
+      const needUpdate = value !== newValue;
 
       // Update if needed and reset the UI because it displays the value twice otherwise
       if (needUpdate) {
-        this.props.valueUpdateCallback(this.props.path, value);
+        valueUpdateCallback(path, newValue);
       }
 
       // Toggle the dropdown
       $(event.target).parents('.dropdown').removeClass('show');
     }
-  }
+  };
 
-  render() {
-    const { value } = this.props;
-    return (
-      <div className="dropdown">
+  return (
+    <div className="dropdown">
 
-        {/* Field Button */}
-        <div
-          className="value-container dropdown-button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-          onClick={this.handleFieldButtonClick}
+      {/* Field Button */}
+      <div
+        className="value-container dropdown-button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <button
+          className={`value ${alignRight ? 'align-right' : 'align-left'}`}
+          onClick={() => $('.dropdown-text-input').select()}
         >
-          <button className="value">
-            <span>{value}</span>
-          </button>
-        </div>
-
-        {/* Field Menu */}
-        <div
-          className="dropdown-menu"
-          aria-labelledby="dropdownMenuButton"
-        >
-          <input
-            className="dropdown-text-input"
-            type="text"
-            defaultValue={value}
-            onKeyDown={this.handleDropdownTextInputKeyDown}
-          />
-        </div>
-
+          {unit ? `${value} ${unit}` : value}
+        </button>
       </div>
-    );
-  }
-}
+
+      {/* Field Menu */}
+      <div
+        className="dropdown-menu"
+        aria-labelledby="dropdownMenuButton"
+      >
+        <div className="input-container">
+          <div className="input-row">
+            <input
+              className={`dropdown-text-input ${alignRight ? 'align-right' : 'align-left'}`}
+              type="text"
+              defaultValue={value}
+              onKeyDown={handleDropdownTextInputKeyDown}
+            />
+          </div>
+          { unit ? <div className="input-unit">{unit}</div> : '' }
+        </div>
+      </div>
+    </div>
+  );
+};
 
 FreeTextField.propTypes = {
-  value: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
-  valueUpdateCallback: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  path: PropTypes.string,
+  valueUpdateCallback: PropTypes.func,
+  alignRight: PropTypes.bool,
+  unit: PropTypes.string,
 };
+
+FreeTextField.defaultProps = {
+  value: '',
+  path: '',
+  valueUpdateCallback: () => null,
+  alignRight: false,
+  unit: '',
+};
+
+export default FreeTextField;

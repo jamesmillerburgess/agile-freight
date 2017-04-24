@@ -25,7 +25,7 @@ const MainInner = ({ loading }) => {
     <BrowserRouter>
       <Route
         render={props => (
-          <div>
+          <div className="app-inner">
             <Nav {...props} />
             {loading ?
               '' :

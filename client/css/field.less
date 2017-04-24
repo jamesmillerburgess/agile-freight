@@ -31,22 +31,37 @@
 }
 
 .datetimepicker {
-  font-family: Verdana,Helvetica,Arial,sans-serif;
   font-size: 11pt;
   width: 100%;
   padding: 0 1px;
   border: 1px solid rgb(204, 204, 204);
 }
 
+.input-container {
+  width: 100%;
+  display: table;
+}
+
+.input-row {
+  display: table-cell;
+}
+
 .dropdown-text-input,
 .dropdown-textarea-input,
 .dropdown-filter,
 .dropdown-input {
-  font-family: Verdana,Helvetica,Arial,sans-serif;
-  border: 1px solid #ccc;
-  padding: 0 3px 0 3px;
-  margin: 0 0 3px 0;
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   width: 100%;
+  line-height: 21.6px;
+  border: 1px solid #decea0;
+  border-radius: 5px;
+  outline: none;
+}
+
+.input-unit {
+  display: table-cell;
+  width: auto;
+  padding-left: 3px;
 }
 
 .dropdown-text-input {
@@ -58,7 +73,6 @@
 }
 
 .dropdown-textarea-input {
-  font-family: Verdana, Helvetica, Arial, sans-serif;
   border: 1px solid #decea0;
   border-radius: 5px;
   width: 100%;
@@ -66,6 +80,7 @@
   height: 24px;
   resize: none;
   overflow-y: hidden;
+  line-height: 21.6px;
 }
 
 .dropdown-textarea-confirm-button {
@@ -90,21 +105,31 @@
 }
 
 button.value {
-  background-color: transparent;
+  // background-color: transparent;
   border: none;
-  font-family: Verdana,Helvetica,Arial,sans-serif;
+  border-radius: 5px;
   padding: 0;
   width: 100%;
-  min-height: 19px;
-  text-align: left;
-  outline-color: #786010;
+  min-height: 24px;
+  outline: none;
+  background-color: #eeeeee;
+}
+
+button.value:focus {
+  box-shadow: 0 0 3pt 2pt rgba(239, 130, 1, 0.3);
+  background-color: rgba(239, 130, 1, 0.3);
 }
 
 .value {
-  font-weight: bold;
-  min-width: 100px;
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  //font-weight: bold;
+  // min-width: 100px;
 }
 
 .value:hover {
-  background-color: rgb(248, 246, 240);
+  background-color: rgba(239, 130, 1, 0.3);
+}
+
+.field-row {
+  margin-bottom: 7px;
 }

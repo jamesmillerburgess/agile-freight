@@ -1,34 +1,47 @@
-.dropdown-dropdown {
+.dropdown {
+  display: inline-block;
+  width: 100%;
   .value-container {
-    height: auto;
+    // height: auto;
+    //width: 100%;
   }
   a {
-    height: 25px;
+    min-height: 25px;
   }
+}
+
+.dropdown-icon-down,
+.dropdown-icon-up {
+  font-size: 12px !important;
+  position: absolute;
+  right: 0;
+}
+
+.dropdown-icon-down {
+  top: 9px;
+}
+
+.dropdown-icon-up {
+  top: 2px;
 }
 
 .dropdown-button {
-  font-family: Verdana,Helvetica,Arial,sans-serif;
   transition: all .2s ease-in-out;
-  padding: 0 3px;
-  margin: 0 0 0 -3px;
+  padding: 0;
+  margin: 0;
   border-radius: 3px;
   cursor: pointer;
-  width: auto;
-}
-
-.dropdown-button:hover {
- // background-color: rgb(248, 246, 240);
+  width: 100%;
 }
 
 .dropdown-menu {
   margin-top: 0;
-  margin-left: -2px;
-  font-size: 11pt;
+  margin-left: -5px;
   padding: 3px;
   box-shadow: 0 1px 2px rgba(0,0,0,.23);
   max-height: 400px;
-  min-width: 100%;
+  min-width: 100px;
+  width: calc(~'100% + 9px');
   overflow-y: auto;
 }
 
@@ -48,7 +61,7 @@
 }
 
 .dropdown-item:hover {
-  background-color: rgb(248, 246, 240);
+  background-color: rgba(239, 130, 1, 0.3);
 }
 
 .dropdown-menu a {
@@ -61,5 +74,13 @@
 }
 
 pre {
+  line-height: 21.6px;
+  font-size: 16px;
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   margin: 0;
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }

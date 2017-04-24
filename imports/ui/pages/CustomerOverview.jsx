@@ -5,7 +5,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Bar } from 'react-chartjs-2';
 import moment from 'moment';
 
-import { Quotes } from '../../api/quotes/quotes';
+import { Quotes } from '../../api/quotes/quotes-collection';
 import { Shipments } from '../../api/shipments/shipments';
 import { ltmStart, ytdStart, allTimeStart } from '../calculations';
 

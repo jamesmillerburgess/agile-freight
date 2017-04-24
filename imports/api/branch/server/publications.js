@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Offices } from '../../offices/offices';
 import { Customers } from '../../customers/customers';
-import { Quotes } from '../../quotes/quotes';
+import { Quotes } from '../../quotes/quotes-collection';
 import { Shipments } from '../../shipments/shipments';
 import { Invoices } from '../../invoices/invoices-collection';
 import { Jobs } from '../../jobs/jobs';

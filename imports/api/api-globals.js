@@ -11,8 +11,16 @@ export const APIGlobals = {
   measurementSystemOptions: ['Metric', 'Imperial'],
   directionOptions: ['Export', 'Import'],
   modeOptions: ['Ocean', 'Air', 'Road'],
-  airServiceOptions: ['Premier', 'Expedited', 'Express'],
-  oceanServiceOptions: ['FCL', 'LCL', 'Breakbulk'],
+  airServiceOptions: ['Premier', 'Expedited', 'Express', ''],
+  oceanServiceOptions: ['FCL', 'LCL', 'Breakbulk', ''],
+  roadServiceOptions: ['FTL', 'LTL', ''],
+
+  // Common
+  currencyOptions: ['USD', 'EUR', 'RMB', 'CHF', ''],
+  chargeUOMOptions: ['kg', 'cbm', 'lb', 'cu ft', 'km', 'mile', 'container', ''],
+
+  // Cargo
+  packageTypeOptions: ['Packages', 'Boxes', 'Cartons', 'Bags', 'Bales', 'Bolts', 'Bottles', ''],
 
   // Quotes
   quoteStatusOptions: ['Issued', 'Expired', 'Draft', 'Canceled'],
@@ -26,6 +34,9 @@ export const APIGlobals = {
   invoiceStatusOptions: ['Issued', 'Draft', 'Canceled'],
 
   // TEMP!!!!
+  cityOptions: ['Shanghai', 'Basel', 'Seoul', ''],
+  airportOptions: ['Shanghai Hongquiao - SHA', 'Shanghai Pudong - PVG', 'Frankfurt - FRA', 'Basel Mulhouse - BSL'],
+  portOptions: ['Rotterdam - NLROT', 'Hamburg - DEHAM', 'Singapore - SGSIN', ''],
   indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],
   ukPortOptions: ['GBFXT', 'GBSOU', 'GBLGW'],
 };

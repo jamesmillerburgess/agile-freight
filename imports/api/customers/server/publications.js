@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Customers } from '../customers';
-import { Quotes } from '../../quotes/quotes';
+import { Quotes } from '../../quotes/quotes-collection';
 
 Meteor.publish('customers.single', (_id) => {
   check(_id, String);

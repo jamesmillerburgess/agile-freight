@@ -24,7 +24,7 @@ export default class DropdownField extends React.Component {
     const updateValue = $(event.target).parents('.a-container')[0].id || '';
 
     // Update the UI now
-    $(event.target).parents('.dropdown').find('.value')[0].innerText = updateValue;
+    // $(event.target).parents('.dropdown').find('.value')[0].innerText = updateValue;
     $(event.target).parents('.dropdown').find('input')[0].value = '';
 
     // Check if we should update the collection
@@ -38,12 +38,11 @@ export default class DropdownField extends React.Component {
   }
 
   searchResults() {
-    const searchRegex = new RegExp(this.state.search, 'gi');
-    return this.props.options.filter(option => searchRegex.test(option));
+    return this.props.options.filter(option => (new RegExp(this.state.search, 'gi')).test(option));
   }
 
   render() {
-    const { value } = this.props;
+    const { value, unit } = this.props;
     const { search } = this.state;
     return (
       <div className="dropdown">
@@ -56,8 +55,10 @@ export default class DropdownField extends React.Component {
           aria-expanded="false"
           onClick={this.handleFieldButtonClick}
         >
-          <button className="value">
-            <span>{value}</span>
+          <button className={`value ${this.props.alignRight ? 'align-right' : 'align-left'}`}>
+            <span>{value ? `${value} ${unit || ''}` : <span>&nbsp;</span>}</span>
+            <i className="fa fa-fw fa-caret-down dropdown-icon-down" />
+            <i className="fa fa-fw fa-caret-up dropdown-icon-up" />
           </button>
         </div>
 
@@ -100,8 +101,19 @@ export default class DropdownField extends React.Component {
 }
 
 DropdownField.propTypes = {
-  value: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
-  path: PropTypes.string.isRequired,
-  valueUpdateCallback: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.string),
+  unit: PropTypes.string,
+  path: PropTypes.string,
+  valueUpdateCallback: PropTypes.func,
+  alignRight: PropTypes.bool,
+};
+
+DropdownField.defaultProps = {
+  value: '',
+  options: [''],
+  unit: null,
+  path: '',
+  valueUpdateCallback: () => null,
+  alignRight: false,
 };
