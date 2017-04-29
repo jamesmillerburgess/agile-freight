@@ -27,26 +27,30 @@ const CustomerInner = ({ customer }) =>
           Overview
         </NavLink>
         <NavLink
-          to={`/customer/${customer._id}/quotes`}
+          to={`/customer/${customer._id}/quotes/active`}
           activeClassName="active"
+          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/quotes`) !== -1}
         >
           Quotes
         </NavLink>
         <NavLink
-          to={`/customer/${customer._id}/shipments`}
+          to={`/customer/${customer._id}/shipments/active`}
           activeClassName="active"
+          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/shipments`) !== -1}
         >
           Shipments
         </NavLink>
         <NavLink
-          to={`/customer/${customer._id}/invoices`}
+          to={`/customer/${customer._id}/invoices/active`}
           activeClassName="active"
+          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/invoices`) !== -1}
         >
           Invoices
         </NavLink>
         <NavLink
           to={`/customer/${customer._id}/configuration`}
           activeClassName="active"
+          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/configuration`) !== -1}
         >
           Configuration
         </NavLink>
