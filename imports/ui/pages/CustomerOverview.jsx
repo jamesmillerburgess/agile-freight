@@ -91,9 +91,9 @@ const CustomerOverviewInner = ({ customer, kpis, kpiPeriod }) => {
 };
 
 CustomerOverviewInner.propTypes = {
-  customer: PropTypes.object,
-  kpis: PropTypes.object,
-  kpiPeriod: PropTypes.string,
+  customer: PropTypes.object.isRequired,
+  kpis: PropTypes.object.isRequired,
+  kpiPeriod: PropTypes.string.isRequired,
 };
 
 const CustomerOverview = createContainer((props) => {
