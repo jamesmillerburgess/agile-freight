@@ -20,8 +20,9 @@ const CustomerInner = ({ customer }) =>
           CUSTOMER
         </div>
         <NavLink
-          to={`/customer/${customer._id}/overview`}
+          to={`/customer/${customer._id}/overview/ytd`}
           activeClassName="active"
+          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/overview`) !== -1}
         >
           Overview
         </NavLink>
@@ -60,13 +61,12 @@ const CustomerInner = ({ customer }) =>
           {customer.name}
         </div>
         <Route
-          path={`/customer/${customer._id}/overview`}
+          path={`/customer/${customer._id}/overview/:kpiPeriod`}
           render={props => <CustomerOverview {...props} customer={customer} />}
         />
         <Route
           path={`/customer/${customer._id}/quotes`}
-          render={props => <CustomerQuotes {...props} customer={customer} />
-          }
+          render={props => <CustomerQuotes {...props} customer={customer} />}
         />
         <Route
           path={`/customer/${customer._id}/shipments`}
@@ -96,5 +96,6 @@ const Customer = createContainer((props) => {
     customer,
   };
 }, CustomerInner);
+
 
 export default Customer;

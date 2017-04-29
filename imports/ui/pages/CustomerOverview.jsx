@@ -4,24 +4,24 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Bar } from 'react-chartjs-2';
 import moment from 'moment';
+import { connect } from 'react-redux';
 
 import { Quotes } from '../../api/quotes/quotes-collection';
 import { Shipments } from '../../api/shipments/shipments';
-import { ltmStart, ytdStart, allTimeStart } from '../calculations';
+import { ltmStart, ytdStart, allTimeStart, timeSeriesBarOptions } from '../chart-utils';
 
-const CustomerOverviewInner = ({ customer, location, kpis }) => {
+const CustomerOverviewInner = ({ customer, kpis, kpiPeriod }) => {
   const getKpis = () => {
-    const pathname = location.pathname;
-    if (pathname.indexOf('/overview/ytd') !== -1) {
-      return kpis.ytd;
+    switch (kpiPeriod) {
+      case 'ytd':
+        return kpis.ytd;
+      case 'ltm':
+        return kpis.ltm;
+      case 'all-time':
+        return kpis.allTime;
+      default:
+        return kpis.ytd;
     }
-    if (pathname.indexOf('/overview/ltm') !== -1) {
-      return kpis.ltm;
-    }
-    if (pathname.indexOf('/overview/all-time') !== -1) {
-      return kpis.allTime;
-    }
-    return kpis.ytd;
   };
 
   return (
@@ -81,19 +81,7 @@ const CustomerOverviewInner = ({ customer, location, kpis }) => {
                 }],
               }}
               height={150}
-              options={{
-                scales: {
-                  yAxes: [
-                    {
-                      ticks: {
-                        callback: label => (+label).toLocaleString(),
-                      },
-                    },
-                  ],
-                },
-                maintainAspectRatio: false,
-                legend: { display: false },
-              }}
+              options={timeSeriesBarOptions}
             />
           </div>
         </div>
@@ -105,11 +93,11 @@ const CustomerOverviewInner = ({ customer, location, kpis }) => {
 CustomerOverviewInner.propTypes = {
   customer: PropTypes.object,
   kpis: PropTypes.object,
-  location: PropTypes.object,
+  kpiPeriod: PropTypes.string,
 };
 
 const CustomerOverview = createContainer((props) => {
-  const { customer } = props;
+  const { customer, kpiPeriod } = props;
   const quotes = Quotes.find({ _id: { $in: customer.quotes } }).fetch();
   const shipments = Shipments.find({ _id: { $in: customer.shipments } }).fetch();
 
@@ -194,7 +182,14 @@ const CustomerOverview = createContainer((props) => {
   return {
     customer,
     kpis,
+    kpiPeriod,
   };
 }, CustomerOverviewInner);
 
-export default CustomerOverview;
+const mapStateToProps = (state, ownProps) => (
+  {
+    kpiPeriod: ownProps.match.params.kpiPeriod,
+  }
+);
+
+export default connect(mapStateToProps)(CustomerOverview);
