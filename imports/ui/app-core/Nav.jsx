@@ -26,12 +26,6 @@ const NavInner = ({ user, history }) => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/quotes" className="nav-link">Quotes</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/jobs" className="nav-link">Jobs</Link>
-          </li>
-          <li className="nav-item">
             <Link to="/rates" className="nav-link">Rates</Link>
           </li>
         </ul>

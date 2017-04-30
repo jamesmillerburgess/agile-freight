@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, NavLink, Redirect } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
@@ -9,6 +9,7 @@ import { Quotes } from '../../api/quotes/quotes-collection';
 
 import QuoteList from '../lists/QuoteList.jsx';
 import QuoteEditor from '../editors/quote/QuoteEditor.jsx';
+import NewQuote from '../editors/quote/NewQuote.jsx';
 
 const CustomerQuotesInner = ({ customer, quotes, activeQuotes, history }) => {
   const newQuote = () =>
@@ -21,23 +22,22 @@ const CustomerQuotesInner = ({ customer, quotes, activeQuotes, history }) => {
   return (
     <div className="customer-quotes">
       <div className="content-navbar">
-        <NavLink to={`/customer/${customer._id}/quotes/active`}>
-          Active <span className="item-count">{activeQuotes.length}</span>
-        </NavLink>
-        <NavLink to={`/customer/${customer._id}/quotes/all`}>
-          All <span className="item-count">{quotes.length}</span>
-        </NavLink>
-        <NavLink to={`/customer/${customer._id}/quotes/charts`}>
-          <i className="fa fa-fw fa-bar-chart" /> Charts
-        </NavLink>
-        <button onClick={newQuote}>
-          <i className="fa fa-fw fa-plus" /> New Quote
-        </button>
+        <div className="content-navbar-inner">
+          <NavLink to={`/customer/${customer._id}/quotes/active`}>
+            Active <span className="item-count">{activeQuotes.length}</span>
+          </NavLink>
+          <NavLink to={`/customer/${customer._id}/quotes/charts`}>
+            <i className="fa fa-fw fa-bar-chart" /> Charts
+          </NavLink>
+          <button onClick={newQuote}>
+            <i className="fa fa-fw fa-plus" /> New Quote
+          </button>
+          <NavLink to={`/customer/${customer._id}/quotes/new-quote`}>
+            <i className="fa fa-fw fa-plus" /> New Quote 2
+          </NavLink>
+        </div>
       </div>
       <div className="content-body">
-        <Route path={`/customer/${customer._id}/quotes`} exact>
-          <Redirect to={`/customer/${customer._id}/quotes/active`} />
-        </Route>
         <Route
           path={`/customer/${customer._id}/quotes/active`}
           render={props => <QuoteList {...props} quotes={activeQuotes} />}
@@ -54,6 +54,10 @@ const CustomerQuotesInner = ({ customer, quotes, activeQuotes, history }) => {
           path={`/customer/${customer._id}/quotes/:quoteId/edit`}
           render={props => <QuoteEditor {...props} />}
         />
+        <Route
+          path={`/customer/${customer._id}/quotes/new-quote`}
+          render={props => <NewQuote {...props} />}
+        />
       </div>
     </div>
   );
@@ -63,6 +67,7 @@ CustomerQuotesInner.propTypes = {
   customer: PropTypes.object.isRequired,
   quotes: PropTypes.array.isRequired,
   activeQuotes: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const CustomerQuotes = createContainer((props) => {

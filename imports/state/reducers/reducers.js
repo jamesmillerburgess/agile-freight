@@ -39,3 +39,7 @@ export const focusObject = (state = { id: '', objectType: '' }, action) => {
       return state;
   }
 };
+
+export const newQuote = (state = { active: false }, action) => {
+  combineReducers(newQuoteReducers);
+};

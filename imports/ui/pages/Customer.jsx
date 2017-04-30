@@ -13,12 +13,39 @@ import { Customers } from '../../api/customers/customers';
 
 const CustomerInner = ({ customer }) =>
   (
-    <div className="row sidebar-container">
+    <div className="row sidebar-container no-gutters">
       <div className="col-2 sidebar">
         <div className="sidebar-section-spacer" />
         <div className="sidebar-section-header">
-          CUSTOMER
+          <NavLink
+            to={`/customer/${customer._id}/configuration`}
+            activeClassName="active"
+            isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/configuration`) !== -1}
+          >
+            {customer.name} (<i className="fa fa-fw fa-pencil" />Add)
+          </NavLink>
         </div>
+        <NavLink
+          to={`/customer/${customer._id}/quotes/active`}
+          activeClassName="active"
+          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/quotes`) !== -1}
+        >
+          1. Quotes (4)
+        </NavLink>
+        <NavLink
+          to={`/customer/${customer._id}/shipments/active`}
+          activeClassName="active"
+          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/shipments`) !== -1}
+        >
+          2. Shipments (2)
+        </NavLink>
+        <NavLink
+          to={`/customer/${customer._id}/invoices/active`}
+          activeClassName="active"
+          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/invoices`) !== -1}
+        >
+          3. Invoices (1)
+        </NavLink>
         <NavLink
           to={`/customer/${customer._id}/overview/ytd`}
           activeClassName="active"
@@ -26,43 +53,12 @@ const CustomerInner = ({ customer }) =>
         >
           Overview
         </NavLink>
-        <NavLink
-          to={`/customer/${customer._id}/quotes/active`}
-          activeClassName="active"
-          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/quotes`) !== -1}
-        >
-          Quotes
-        </NavLink>
-        <NavLink
-          to={`/customer/${customer._id}/shipments/active`}
-          activeClassName="active"
-          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/shipments`) !== -1}
-        >
-          Shipments
-        </NavLink>
-        <NavLink
-          to={`/customer/${customer._id}/invoices/active`}
-          activeClassName="active"
-          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/invoices`) !== -1}
-        >
-          Invoices
-        </NavLink>
-        <NavLink
-          to={`/customer/${customer._id}/configuration`}
-          activeClassName="active"
-          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/configuration`) !== -1}
-        >
-          Configuration
-        </NavLink>
-        <div className="sidebar-section-spacer" />
-        <div className="sidebar-section-header">
-          UPDATES
-        </div>
-        {/* <MentionFieldContainer /> */}
       </div>
       <div className="col-10 content">
         <div className="content-header">
-          {customer.name}
+          <div className="content-header-inner">
+            {customer.name}
+          </div>
         </div>
         <Route
           path={`/customer/${customer._id}/overview/:kpiPeriod`}
@@ -90,7 +86,7 @@ const CustomerInner = ({ customer }) =>
   );
 
 CustomerInner.propTypes = {
-  customer: PropTypes.object,
+  customer: PropTypes.object.isRequired,
 };
 
 const Customer = createContainer((props) => {

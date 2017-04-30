@@ -1,0 +1,226 @@
+.new-quote {
+  margin: 15px 15px;
+
+  .tab {
+    display: inline-block;
+    border-radius: 7px 7px 0 0;
+    padding: 7px 25px;
+    margin-right: 7px;
+    font-size: 18px;
+    font-weight: 500;
+    background-color: #dddddd;
+    cursor: pointer;
+  }
+
+  .tab.active {
+    background-color: #eeeeee;
+  }
+
+  .tab.inactive {
+    -moz-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset;
+    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset;
+    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset;
+  }
+
+  .edit-group {
+    width: 100%;
+    background-color: #eeeeee;
+    border-radius: 7px;
+    margin-bottom: 7px;
+  }
+
+  .edit-group-body {
+    padding: 10px 15px;
+  }
+
+  .edit-group-footer {
+    padding: 10px 15px;
+    border-top: 1px dashed #cccccc;
+  }
+
+  .edit-group.with-tabs {
+    border-radius: 0 7px 7px 7px;
+  }
+
+  .field {
+    display: inline-block;
+    margin-right: 15px;
+  }
+
+  .label {
+    font-size: 14px;
+    font-style: normal;
+    margin-bottom: 3px;
+    font-weight: 400;
+  }
+
+  .select,
+  .input-group {
+    background-color: white;
+  }
+
+  .select,
+  .input-group input {
+    font-weight: 300;
+    color: #9b9b9b;
+  }
+
+  .select {
+    border: 1px solid rgb(203, 203, 203);
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    font-weight: 300;
+    color: #9b9b9b;
+  }
+
+  .select-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
+  .select-packages,
+  .select-location-type,
+  .select-country {
+    width: 200px;
+  }
+
+  .select-num-packages {
+    width: 60px;
+  }
+
+  .input-group {
+    background-color: transparent;
+    input {
+      padding: 5px 0;
+      font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      border: 1px solid rgb(203, 203, 203);
+      border-radius: 5px;
+      width: 56px;
+      text-align: center;
+      color: #9b9b9b;
+      font-weight: 300;
+    }
+    .input-group-first {
+      border-right: 0;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+    .input-group-middle {
+      border-radius: 0;
+    }
+    .input-group-last {
+      border-left: 0;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
+
+  .input-weight {
+    width: 80px;
+  }
+
+  .package-row-totals {
+    display: inline-block;
+    font-size: 13px;
+  }
+
+  .package-row-icon {
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    display: inline-block;
+    color: #4a90e2;
+  }
+
+  .total-spacer {
+    display: inline-block;
+    width: 472px;
+  }
+
+  .edit-group-totals {
+    display: inline-block;
+    font-size: 13px;
+    position: relative;
+    bottom: 4px;
+    left: 32px;
+  }
+
+  .pickup-delivery-wrapper {
+    overflow: hidden;
+  }
+
+  .edit-group-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .pickup,
+  .delivery {
+    width: 50%;
+    height: 100%;
+  }
+
+  .pickup {
+    float: left;
+
+  }
+
+  .delivery {
+    float: right;
+    border-left: 2px solid #cccccc;
+    padding-left: 15px;
+  }
+
+  .empty-field {
+    width: 50%;
+  }
+
+  .other-services {
+    .field {
+      width: 45%;
+    }
+  }
+
+  .edit-group-footer .field {
+    width: 20%;
+  }
+
+  .checkbox {
+    height: 20px;
+    width: 20px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid rgb(203, 203, 203);
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .checkbox-label {
+    position: relative;
+    display: inline-block;
+    left: 5px;
+    bottom: 3px;
+  }
+
+  .submit {
+    margin: 10px 0;
+    height: 50px;
+    width: 200px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 5px;
+    border: 0;
+    color: white;
+    outline: none;
+    background-color: #4caf50;
+    cursor: pointer;
+  }
+
+  .submit:hover {
+    background-color: #388e3c;
+  }
+}
