@@ -135,7 +135,7 @@ const NewQuote = (props) => {
               onClick={() => (index === 0 ? props.onAddPackageLine() : props.onRemovePackageLine(index))}
               disabled={cargo.ratedQuote}
             >
-              <i className={`fa fa-fw ${index === 0 ? 'fa-plus-circle' : 'fa-minus-circle'}`} />
+              <span className={`fa fa-fw ${index === 0 ? 'fa-plus-circle' : 'fa-minus-circle'}`} />
             </button>
           </div>
         ))}
@@ -143,19 +143,19 @@ const NewQuote = (props) => {
       <div className="edit-group-footer">
         <div className="field checkbox-hazardous">
           <button className="checkbox" onClick={() => props.onChangeRatedQuote()}>
-            <i className={`fa fa-fw ${cargo.ratedQuote ? 'fa-check' : ' '}`} />
+            <span className={`fa fa-fw ${cargo.ratedQuote ? 'fa-check' : ' '}`} />
           </button>
           <div className="checkbox-label">Rated Quote</div>
         </div>
         <div className="field checkbox-hazardous">
           <button className="checkbox" onClick={() => props.onClickHazardous()}>
-            <i className={`fa fa-fw ${cargo.hazardous ? 'fa-check' : ' '}`} />
+            <span className={`fa fa-fw ${cargo.hazardous ? 'fa-check' : ' '}`} />
           </button>
           <div className="checkbox-label">Hazardous</div>
         </div>
         <div className="field checkbox-temperature-controlled">
           <button className="checkbox" onClick={() => props.onClickTemperatureControlled()}>
-            <i className={`fa fa-fw ${cargo.temperatureControlled ? 'fa-check' : ' '}`} />
+            <span className={`fa fa-fw ${cargo.temperatureControlled ? 'fa-check' : ' '}`} />
           </button>
           <div className="checkbox-label">Temperature Controlled</div>
         </div>
@@ -226,7 +226,7 @@ const NewQuote = (props) => {
                   onClick={() => props.onClickContainerLineTemperatureControlled(index)}
                   disabled={cargo.ratedQuote}
                 >
-                  <i className={`fa fa-fw ${containerLine.temperatureControlled ? 'fa-check' : ' '}`} />
+                  <span className={`fa fa-fw ${containerLine.temperatureControlled ? 'fa-check' : ' '}`} />
                 </button>
                 <div className="checkbox-label">Temperature Controlled</div>
               </div>
@@ -235,7 +235,7 @@ const NewQuote = (props) => {
                 onClick={() => (index === 0 ? props.onAddContainerLine() : props.onRemoveContainerLine(index))}
                 disabled={cargo.ratedQuote}
               >
-                <i className={`fa fa-fw ${index === 0 ? 'fa-plus-circle' : 'fa-minus-circle'}`} />
+                <span className={`fa fa-fw ${index === 0 ? 'fa-plus-circle' : 'fa-minus-circle'}`} />
               </button>
             </div>
           ))
@@ -244,13 +244,13 @@ const NewQuote = (props) => {
       <div className="edit-group-footer">
         <div className="field checkbox-hazardous">
           <button className="checkbox" onClick={() => props.onChangeRatedQuote()}>
-            <i className={`fa fa-fw ${cargo.ratedQuote ? 'fa-check' : ' '}`} />
+            <span className={`fa fa-fw ${cargo.ratedQuote ? 'fa-check' : ' '}`} />
           </button>
           <div className="checkbox-label">Rated Quote</div>
         </div>
         <div className="field checkbox-hazardous">
           <button className="checkbox" onClick={() => props.onClickHazardous()}>
-            <i className={`fa fa-fw ${cargo.hazardous ? 'fa-check' : ' '}`} />
+            <span className={`fa fa-fw ${cargo.hazardous ? 'fa-check' : ' '}`} />
           </button>
           <div className="checkbox-label">Hazardous</div>
         </div>
@@ -400,13 +400,13 @@ const NewQuote = (props) => {
               <div className="edit-group-title">Other Services</div>
               <div className="field">
                 <button className="checkbox" onClick={() => props.onClickInsurance()}>
-                  <i className={`fa fa-fw ${otherServices.insurance ? 'fa-check' : ' '}`} />
+                  <span className={`fa fa-fw ${otherServices.insurance ? 'fa-check' : ' '}`} />
                 </button>
                 <div className="checkbox-label">Insurance</div>
               </div>
               <div className="field">
                 <button className="checkbox" onClick={() => props.onClickCustomsClearance()}>
-                  <i className={`fa fa-fw ${otherServices.customsClearance ? 'fa-check' : ' '}`} />
+                  <span className={`fa fa-fw ${otherServices.customsClearance ? 'fa-check' : ' '}`} />
                 </button>
                 <div className="checkbox-label">Customs Clearance</div>
               </div>
