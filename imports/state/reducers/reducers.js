@@ -1,3 +1,5 @@
+export { newQuote } from './newQuoteReducers';
+
 export const search = (state = { text: 'SEARCH' }, action) => {
   switch (action.type) {
     case 'APP_SEARCH':
@@ -38,8 +40,4 @@ export const focusObject = (state = { id: '', objectType: '' }, action) => {
     default:
       return state;
   }
-};
-
-export const newQuote = (state = { active: false }, action) => {
-  combineReducers(newQuoteReducers);
 };

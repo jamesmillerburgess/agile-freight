@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import 'react-select/dist/react-select.css';
 
 import * as reducers from './reducers/reducers';
 

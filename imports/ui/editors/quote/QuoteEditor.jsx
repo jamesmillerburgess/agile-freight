@@ -13,7 +13,7 @@ import DropdownField from '../../fields/DropdownField.jsx';
 import { APIGlobals } from '../../../api/api-globals';
 
 import { dateFormat } from '../../formatters/date-format';
-import { currencyFormat } from '../../formatters/currency-format';
+import { currencyFormat } from '../../formatters/numberFormatters';
 
 const QuoteEditorInner = ({ quote }) => {
   const updateValue = (path, value) => Meteor.call('quote.updateField', quote._id, path, value);

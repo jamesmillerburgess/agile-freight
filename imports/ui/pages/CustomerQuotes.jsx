@@ -9,7 +9,7 @@ import { Quotes } from '../../api/quotes/quotes-collection';
 
 import QuoteList from '../lists/QuoteList.jsx';
 import QuoteEditor from '../editors/quote/QuoteEditor.jsx';
-import NewQuote from '../editors/quote/NewQuote.jsx';
+import NewQuoteConnect from '../editors/quote/NewQuoteConnect.jsx';
 
 const CustomerQuotesInner = ({ customer, quotes, activeQuotes, history }) => {
   const newQuote = () =>
@@ -56,7 +56,7 @@ const CustomerQuotesInner = ({ customer, quotes, activeQuotes, history }) => {
         />
         <Route
           path={`/customer/${customer._id}/quotes/new-quote`}
-          render={props => <NewQuote {...props} />}
+          render={props => <NewQuoteConnect {...props} />}
         />
       </div>
     </div>
