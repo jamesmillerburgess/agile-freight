@@ -90,7 +90,8 @@ const NewQuote = (props) => {
                     { value: 'in', label: 'in' },
                   ]}
                   clearable={false}
-                  onChange={selectedValue => props.onChangePackageLineUnitVolumeUOM(index, selectedValue.value)}
+                  onChange={selectedValue =>
+                    props.onChangePackageLineUnitVolumeUOM(index, selectedValue.value)}
                   arrowRenderer={() => false}
                   searchable={false}
                   disabled={cargo.ratedQuote}
@@ -115,7 +116,8 @@ const NewQuote = (props) => {
                     { value: 'lb', label: 'lb' },
                   ]}
                   clearable={false}
-                  onChange={selectedValue => props.onChangePackageLineWeightUOM(index, selectedValue.value)}
+                  onChange={selectedValue =>
+                    props.onChangePackageLineWeightUOM(index, selectedValue.value)}
                   arrowRenderer={() => false}
                   searchable={false}
                   disabled={cargo.ratedQuote}
@@ -123,16 +125,23 @@ const NewQuote = (props) => {
               </div>
             </div>
             <div className="totals">
-              <span className="value">{integerFormat(packageLine.numPackages || 0)}</span>
+              <span className="value">
+                {integerFormat(packageLine.numPackages || 0)}
+              </span>
               &nbsp;pkgs,&nbsp;
-              <span
-                className="value">{weightFormat(packageLine.volume)}</span>&nbsp;{packageLine.volumeUOM},&nbsp;
-              <span
-                className="value">{weightFormat(packageLine.totalWeight)}</span>&nbsp;{packageLine.weightUOM}
+              <span className="value">
+                {weightFormat(packageLine.volume)}
+              </span>
+              &nbsp;{packageLine.volumeUOM},&nbsp;
+              <span className="value">
+                {weightFormat(packageLine.totalWeight)}
+              </span>
+              &nbsp;{packageLine.weightUOM}
             </div>
             <button
               className="cargo-row-icon"
-              onClick={() => (index === 0 ? props.onAddPackageLine() : props.onRemovePackageLine(index))}
+              onClick={() =>
+                (index === 0 ? props.onAddPackageLine() : props.onRemovePackageLine(index))}
               disabled={cargo.ratedQuote}
             >
               <span className={`fa fa-fw ${index === 0 ? 'fa-plus-circle' : 'fa-minus-circle'}`} />
@@ -160,10 +169,18 @@ const NewQuote = (props) => {
           <div className="checkbox-label">Temperature Controlled</div>
         </div>
         <div className="edit-group-totals">
-          <span className="total-shipment-label">Total Shipment:</span>&nbsp;
-          <span className="total-shipment-value">{integerFormat(cargo.totalPackages)}</span> pkgs,&nbsp;
-          <span className="total-shipment-value">{weightFormat(cargo.totalVolume)}</span> {cargo.volumeUOM},&nbsp;
-          <span className="total-shipment-value">{weightFormat(cargo.totalWeight)}</span> {cargo.weightUOM}
+          <span className="total-shipment-label">
+            Total Shipment:
+          </span>&nbsp;
+          <span className="total-shipment-value">
+            {integerFormat(cargo.totalPackages)}
+          </span> pkgs,&nbsp;
+          <span className="total-shipment-value">
+            {weightFormat(cargo.totalVolume)}
+          </span> {cargo.volumeUOM},&nbsp;
+          <span className="total-shipment-value">
+            {weightFormat(cargo.totalWeight)}
+          </span> {cargo.weightUOM}
         </div>
       </div>
     </div>
@@ -226,16 +243,20 @@ const NewQuote = (props) => {
                   onClick={() => props.onClickContainerLineTemperatureControlled(index)}
                   disabled={cargo.ratedQuote}
                 >
-                  <span className={`fa fa-fw ${containerLine.temperatureControlled ? 'fa-check' : ' '}`} />
+                  <span
+                    className={`fa fa-fw ${containerLine.temperatureControlled ? 'fa-check' : ' '}`}
+                  />
                 </button>
                 <div className="checkbox-label">Temperature Controlled</div>
               </div>
               <button
                 className="cargo-row-icon"
-                onClick={() => (index === 0 ? props.onAddContainerLine() : props.onRemoveContainerLine(index))}
+                onClick={() =>
+                  (index === 0 ? props.onAddContainerLine() : props.onRemoveContainerLine(index))}
                 disabled={cargo.ratedQuote}
               >
-                <span className={`fa fa-fw ${index === 0 ? 'fa-plus-circle' : 'fa-minus-circle'}`} />
+                <span
+                  className={`fa fa-fw ${index === 0 ? 'fa-plus-circle' : 'fa-minus-circle'}`} />
               </button>
             </div>
           ))
@@ -256,7 +277,8 @@ const NewQuote = (props) => {
         </div>
         <div className="edit-group-totals">
           <span className="total-shipment-label">Total Shipment:</span>&nbsp;
-          <span className="total-shipment-value">{integerFormat(cargo.totalContainers)}</span> containers,&nbsp;
+          <span className="total-shipment-value">{integerFormat(cargo.totalContainers)}</span>
+          containers,&nbsp;
           <span className="total-shipment-value">{integerFormat(cargo.totalTEU)}</span> TEU,&nbsp;
         </div>
       </div>
@@ -328,11 +350,11 @@ const NewQuote = (props) => {
                     { value: 'CNSHA Shanghai', label: 'CNSHA Shanghai' },
                     {
                       value: 'MIA Miami (Miami International Airport)',
-                      label: 'MIA Miami (Miami International Airport)'
+                      label: 'MIA Miami (Miami International Airport)',
                     },
                     {
                       value: 'SFO San Francisco (San Francisco International Airport)',
-                      label: 'SFO San Francisco (San Francisco International Airport)'
+                      label: 'SFO San Francisco (San Francisco International Airport)',
                     },
                   ]}
                   clearable={false}
@@ -355,7 +377,8 @@ const NewQuote = (props) => {
                     { value: 'Address', label: 'Address' },
                   ]}
                   clearable={false}
-                  onChange={selectedValue => props.onChangeDeliveryLocationType(selectedValue.value)}
+                  onChange={selectedValue =>
+                    props.onChangeDeliveryLocationType(selectedValue.value)}
                 />
               </div>
               <div className="empty-field" />
@@ -406,7 +429,8 @@ const NewQuote = (props) => {
               </div>
               <div className="field">
                 <button className="checkbox" onClick={() => props.onClickCustomsClearance()}>
-                  <span className={`fa fa-fw ${otherServices.customsClearance ? 'fa-check' : ' '}`} />
+                  <span
+                    className={`fa fa-fw ${otherServices.customsClearance ? 'fa-check' : ' '}`} />
                 </button>
                 <div className="checkbox-label">Customs Clearance</div>
               </div>
