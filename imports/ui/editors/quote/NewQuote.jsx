@@ -278,9 +278,12 @@ const NewQuote = (props) => {
         />
         <div className="edit-group-totals">
           <span className="total-shipment-label">Total Shipment:</span>&nbsp;
-          <span className="total-shipment-value">{integerFormat(cargo.totalContainers)}</span>
-          containers,&nbsp;
-          <span className="total-shipment-value">{integerFormat(cargo.totalTEU)}</span> TEU,&nbsp;
+          <span className="total-shipment-value">
+            {integerFormat(cargo.totalContainers)}
+          </span> containers,&nbsp;
+          <span className="total-shipment-value">
+            {integerFormat(cargo.totalTEU)}
+          </span> TEU&nbsp;
         </div>
       </div>
     </div>
