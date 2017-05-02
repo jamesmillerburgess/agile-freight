@@ -1,0 +1,38 @@
+.checkbox {
+  outline: none;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 3px;
+  border: 1px solid rgb(203, 203, 203);
+  display: inline-block;
+  cursor: pointer;
+  padding: 0;
+  .fa {
+    position: relative;
+    bottom: 2px;
+    left: -1px;
+  }
+}
+
+.checkbox:hover {
+  background-color: #eeeeee;
+}
+
+.checkbox:focus {
+  box-shadow: 0 0 3pt 2pt rgba(239, 130, 1, 0.3);
+  outline: none;
+}
+
+.checkbox:disabled {
+  background-color: #eee;
+  cursor: default;
+}
+
+.checkbox-label {
+  position: relative;
+  font-size: 14px;
+  display: inline-block;
+  left: 5px;
+  bottom: 4px;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 
 import { integerFormat, weightFormat } from '../../formatters/numberFormatters';
+import CheckboxField from '../../fields/CheckboxField.jsx';
 
 const NewQuote = (props) => {
   const { cargo, movement, otherServices } = props;
@@ -150,24 +151,24 @@ const NewQuote = (props) => {
         ))}
       </div>
       <div className="edit-group-footer">
-        <div className="field checkbox-hazardous">
-          <button className="checkbox" onClick={() => props.onChangeRatedQuote()}>
-            <span className={`fa fa-fw ${cargo.ratedQuote ? 'fa-check' : ' '}`} />
-          </button>
-          <div className="checkbox-label">Rated Quote</div>
-        </div>
-        <div className="field checkbox-hazardous">
-          <button className="checkbox" onClick={() => props.onClickHazardous()}>
-            <span className={`fa fa-fw ${cargo.hazardous ? 'fa-check' : ' '}`} />
-          </button>
-          <div className="checkbox-label">Hazardous</div>
-        </div>
-        <div className="field checkbox-temperature-controlled">
-          <button className="checkbox" onClick={() => props.onClickTemperatureControlled()}>
-            <span className={`fa fa-fw ${cargo.temperatureControlled ? 'fa-check' : ' '}`} />
-          </button>
-          <div className="checkbox-label">Temperature Controlled</div>
-        </div>
+        <CheckboxField
+          className="checkbox-hazardous"
+          onClick={props.onChangeRatedQuote}
+          value={cargo.ratedQuote}
+          label="Rated Quote"
+        />
+        <CheckboxField
+          className="checkbox-hazardous"
+          onClick={props.onClickHazardous}
+          value={cargo.hazardous}
+          label="Hazardous"
+        />
+        <CheckboxField
+          className="checkbox-temperature-controlled"
+          onClick={props.onClickTemperatureControlled}
+          value={cargo.temperatureControlled}
+          label="Temperature Controlled"
+        />
         <div className="edit-group-totals">
           <span className="total-shipment-label">
             Total Shipment:
@@ -263,18 +264,18 @@ const NewQuote = (props) => {
         }
       </div>
       <div className="edit-group-footer">
-        <div className="field checkbox-hazardous">
-          <button className="checkbox" onClick={() => props.onChangeRatedQuote()}>
-            <span className={`fa fa-fw ${cargo.ratedQuote ? 'fa-check' : ' '}`} />
-          </button>
-          <div className="checkbox-label">Rated Quote</div>
-        </div>
-        <div className="field checkbox-hazardous">
-          <button className="checkbox" onClick={() => props.onClickHazardous()}>
-            <span className={`fa fa-fw ${cargo.hazardous ? 'fa-check' : ' '}`} />
-          </button>
-          <div className="checkbox-label">Hazardous</div>
-        </div>
+        <CheckboxField
+          className="checkbox-hazardous"
+          onClick={props.onChangeRatedQuote}
+          value={cargo.ratedQuote}
+          label="Rated Quote"
+        />
+        <CheckboxField
+          className="checkbox-hazardous"
+          onClick={props.onClickHazardous}
+          value={cargo.hazardous}
+          label="Hazardous"
+        />
         <div className="edit-group-totals">
           <span className="total-shipment-label">Total Shipment:</span>&nbsp;
           <span className="total-shipment-value">{integerFormat(cargo.totalContainers)}</span>
@@ -421,19 +422,16 @@ const NewQuote = (props) => {
           <div className="pickup-delivery-wrapper">
             <div className="pickup">
               <div className="edit-group-title">Other Services</div>
-              <div className="field">
-                <button className="checkbox" onClick={() => props.onClickInsurance()}>
-                  <span className={`fa fa-fw ${otherServices.insurance ? 'fa-check' : ' '}`} />
-                </button>
-                <div className="checkbox-label">Insurance</div>
-              </div>
-              <div className="field">
-                <button className="checkbox" onClick={() => props.onClickCustomsClearance()}>
-                  <span
-                    className={`fa fa-fw ${otherServices.customsClearance ? 'fa-check' : ' '}`} />
-                </button>
-                <div className="checkbox-label">Customs Clearance</div>
-              </div>
+              <CheckboxField
+                onClick={props.onClickInsurance}
+                value={otherServices.insurance}
+                label="Insurance"
+              />
+              <CheckboxField
+                onClick={props.onClickCustomsClearance}
+                value={otherServices.customsClearance}
+                label="Customs Clearance"
+              />
             </div>
             <div className="delivery">
               <button className="submit">GET RATES</button>
