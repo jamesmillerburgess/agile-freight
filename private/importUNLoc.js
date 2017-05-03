@@ -1,3 +1,5 @@
+// mongoimport -h localhost:3001 --db meteor --collection UNLocations --type csv --file /Users/goldfibre/Downloads/unloc.csv --headerline
+
 var db = connect('localhost:3001/meteor');
 
 var c = db.UNLocations.find();
