@@ -10,6 +10,7 @@ while (c.hasNext()) {
     { _id: doc._id },
     {
       $set: {
+        isUnknown: doc.isUnknown === 'TRUE',
         isPort: doc.isPort === 'TRUE',
         isRailTerminal: doc.isRailTerminal === 'TRUE',
         isRoadTerminal: doc.isRoadTerminal === 'TRUE',
