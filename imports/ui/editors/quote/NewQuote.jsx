@@ -5,6 +5,7 @@ import { integerFormat, weightFormat } from '../../formatters/numberFormatters';
 import CheckboxField from '../../fields/CheckboxField.jsx';
 import UNLocationCountryField from '../../fields/UNLocationCountryField.jsx';
 import UNLocationField from '../../fields/UNLocationField.jsx';
+import { UNLocations } from '../../../api/unlocations/unlocations-collection';
 
 const NewQuote = (props) => {
   const { cargo, movement, otherServices } = props;
@@ -348,6 +349,7 @@ const NewQuote = (props) => {
                   value={movement.pickup.portCode}
                   country={movement.pickup.country}
                   onChange={selectedValue => props.onChangePickupPortCode(selectedValue.value)}
+                  unLocations={UNLocations}
                 />
               </div>
             </div>
