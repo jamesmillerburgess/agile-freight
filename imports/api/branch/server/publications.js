@@ -5,6 +5,7 @@ import { Quotes } from '../../quotes/quotes-collection';
 import { Shipments } from '../../shipments/shipments';
 import { Invoices } from '../../invoices/invoices-collection';
 import { Jobs } from '../../jobs/jobs';
+import { Countries } from '../../countries/countries-collection';
 
 Meteor.publish('branch.active', function publishBranchActive() {
   const cursors = [];
@@ -16,6 +17,7 @@ Meteor.publish('branch.active', function publishBranchActive() {
     cursors.push(Invoices.find());
     cursors.push(Jobs.find());
     cursors.push(Meteor.users.find({}, { fields: { profile: 1, emails: 1 } }));
+    cursors.push(Countries.find());
   }
   return cursors;
 });
