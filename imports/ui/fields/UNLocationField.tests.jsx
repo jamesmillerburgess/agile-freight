@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import StubCollections from 'meteor/hwillson:stub-collections';
 import { chai } from 'meteor/practicalmeteor:chai';
 
