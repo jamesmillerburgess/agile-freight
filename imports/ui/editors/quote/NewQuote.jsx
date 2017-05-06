@@ -3,6 +3,8 @@ import Select from 'react-select';
 
 import { integerFormat, weightFormat } from '../../formatters/numberFormatters';
 import CheckboxField from '../../fields/CheckboxField.jsx';
+import UNLocationCountryField from '../../fields/UNLocationCountryField.jsx';
+import UNLocationField from '../../fields/UNLocationField.jsx';
 
 const NewQuote = (props) => {
   const { cargo, movement, otherServices } = props;
@@ -333,14 +335,8 @@ const NewQuote = (props) => {
                 <div className="label">
                   Country
                 </div>
-                <Select
+                <UNLocationCountryField
                   value={movement.pickup.country}
-                  options={[
-                    { value: 'United States', label: 'United States' },
-                    { value: 'China', label: 'China' },
-                    { value: 'India', label: 'India' },
-                  ]}
-                  clearable={false}
                   onChange={selectedValue => props.onChangePickupCountry(selectedValue.value)}
                 />
               </div>
@@ -348,20 +344,9 @@ const NewQuote = (props) => {
                 <div className="label">
                   City / Port Code
                 </div>
-                <Select
+                <UNLocationField
                   value={movement.pickup.portCode}
-                  options={[
-                    { value: 'CNSHA Shanghai', label: 'CNSHA Shanghai' },
-                    {
-                      value: 'MIA Miami (Miami International Airport)',
-                      label: 'MIA Miami (Miami International Airport)',
-                    },
-                    {
-                      value: 'SFO San Francisco (San Francisco International Airport)',
-                      label: 'SFO San Francisco (San Francisco International Airport)',
-                    },
-                  ]}
-                  clearable={false}
+                  country={movement.pickup.country}
                   onChange={selectedValue => props.onChangePickupPortCode(selectedValue.value)}
                 />
               </div>

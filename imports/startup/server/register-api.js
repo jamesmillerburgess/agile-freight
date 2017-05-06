@@ -14,3 +14,4 @@ import '../../api/invoices/invoices-methods';
 import '../../api/jobs/server/publications';
 import '../../api/jobs/job-methods';
 import '../../api/rates/rate-methods';
+import '../../api/unlocations/server/unlocations-publications';
