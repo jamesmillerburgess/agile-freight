@@ -25,20 +25,25 @@
     "react-bootstrap": "^0.30.8",
     "react-chartjs-2": "^2.0.5",
     "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
     "react-router": "^4.0.0",
     "react-router-dom": "^4.0.0",
+    "react-select": "^1.0.0-rc.3",
     "react-test-renderer": "^15.5.4",
+    "redux": "^3.6.0",
     "simpl-schema": "^0.2.3"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
+    "deep-freeze": "0.0.1",
     "eslint": "^3.18.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-import-resolver-meteor": "^0.3.4",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-meteor": "^4.0.1",
-    "eslint-plugin-react": "^6.10.3"
+    "eslint-plugin-react": "^6.10.3",
+    "redux-devtools": "^3.3.2"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
@@ -63,7 +68,8 @@
       ],
       "no-underscore-dangle": "off",
       "linebreak-style": "off",
-      "import/prefer-default-export": "off"
+      "import/prefer-default-export": "off",
+      "no-multi-spaces": "off"
     },
     "globals": {
       "_": true,

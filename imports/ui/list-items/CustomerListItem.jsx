@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { currencyFormat } from '../formatters/currency-format';
+import { currencyFormat } from '../formatters/numberFormatters';
 
 const CustomerListItem = ({ customer }) => {
   const creditUsageStyle = () => ({

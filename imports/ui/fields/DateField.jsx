@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 import { dateFormat } from '../formatters/date-format';
 
 const DateField = ({
-  value,
-  path,
-  valueUdpateCallback,
-}) => {
+                     value,
+                     path,
+                     valueUpdateCallback,
+                   }) => {
+  const handleFieldButtonClick = () => {
+    $('.dropdown-filter').select();
+  };
   const handleConfirmButtonClick = () => {
-    valueUdpateCallback(path, value);
+    valueUpdateCallback(path, value);
   };
   return (
-    <div
-      ref={node => this.node = node}
-      className="dropdown"
-    >
+    <div className="dropdown">
 
       {/* Field Button */}
       <div
@@ -23,9 +23,11 @@ const DateField = ({
         data-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false"
-        onClick={this.handleFieldButtonClick}
       >
-        <button className="value">
+        <button
+          className="value"
+          onClick={handleFieldButtonClick}
+        >
           {dateFormat(value)}
         </button>
       </div>

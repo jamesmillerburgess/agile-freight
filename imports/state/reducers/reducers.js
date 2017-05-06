@@ -1,0 +1,1 @@
+export { newQuote } from './newQuoteReducers';

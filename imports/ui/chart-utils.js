@@ -13,3 +13,16 @@ exports.ytdStart = date =>
 exports.allTimeStart = () =>
   moment(0);
 
+exports.timeSeriesBarOptions = {
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          callback: label => (+label).toLocaleString(),
+        },
+      },
+    ],
+  },
+  maintainAspectRatio: false,
+  legend: { display: false },
+};

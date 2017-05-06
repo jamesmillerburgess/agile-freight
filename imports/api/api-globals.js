@@ -33,6 +33,9 @@ export const APIGlobals = {
   // Invoices
   invoiceStatusOptions: ['Issued', 'Draft', 'Canceled'],
 
+  // UNLocations
+  unLocationsMaxResults: 10,
+
   // TEMP!!!!
   cityOptions: ['Shanghai', 'Basel', 'Seoul', ''],
   airportOptions: ['Shanghai Hongquiao - SHA', 'Shanghai Pudong - PVG', 'Frankfurt - FRA', 'Basel Mulhouse - BSL'],

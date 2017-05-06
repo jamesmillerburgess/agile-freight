@@ -49,6 +49,7 @@ describe('Charges Utilities', function () {
         chargeLines: [
           { rate: { currency: 'USD' } },
           { rate: { currency: 'CHF' } },
+          { rate: { currency: 'EUR' } },
         ],
       };
       const updatedCharges = updateCharges(charges);
