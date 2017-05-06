@@ -379,30 +379,21 @@ const NewQuote = (props) => {
                 <div className="label">
                   Country
                 </div>
-                <Select
+                <CountryField
                   value={movement.delivery.country}
-                  options={[
-                    { value: 'United States', label: 'United States' },
-                    { value: 'China', label: 'China' },
-                    { value: 'India', label: 'India' },
-                  ]}
-                  clearable={false}
                   onChange={selectedValue => props.onChangeDeliveryCountry(selectedValue.value)}
+                  countries={Countries}
                 />
               </div>
               <div className="field select-country">
                 <div className="label">
-                  Postal Code
+                  City / Port Code
                 </div>
-                <Select
-                  value={movement.delivery.postalCode}
-                  options={[
-                    { value: 'Sarasota, FL 34232', label: 'Sarasota, FL 34232' },
-                    { value: 'Orlando, FL 32819', label: 'Orlando, FL 32819' },
-                    { value: 'San Francisco, CA', label: 'San Francisco, CA' },
-                  ]}
-                  clearable={false}
-                  onChange={selectedValue => props.onChangeDeliveryPostalCode(selectedValue.value)}
+                <UNLocationField
+                  value={movement.delivery.portCode}
+                  country={movement.delivery.country}
+                  onChange={selectedValue => props.onChangeDeliveryPortCode(selectedValue.value)}
+                  unLocations={UNLocations}
                 />
               </div>
             </div>

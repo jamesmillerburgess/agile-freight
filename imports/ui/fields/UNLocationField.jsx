@@ -11,21 +11,27 @@ class UNLocationFieldInner extends React.Component {
     this.setOptions = this.setOptions.bind(this);
   }
 
-  componentWillMount() {
-    this.setOptions('');
+  componentWillReceiveProps(nextProps) {
+    const options = this.filterLocations('', nextProps.country, this.props.unLocations);
+    this.setState({ options });
   }
 
   setOptions(input) {
-    const {
-            country,
-            unLocations,
-          }       = this.props;
-    const query   = { country, name: { $regex: input, $options: 'i' } };
-    const options = unLocations.find(query, { limit: 10 }).fetch().map(unLocation => ({
+    const { country, unLocations } = this.props;
+    const options                  = this.filterLocations(input, country, unLocations);
+    this.setState({ options });
+  }
+
+  filterLocations(filter, country, collection) {
+    const query = { country };
+    if (filter) {
+      query.name = { $regex: filter, $options: 'i' };
+    }
+    const results = collection.find(query, { limit: 10 }).fetch();
+    return results.map(unLocation => ({
       value: unLocation.locationCode,
       label: `${unLocation.name}${unLocation.subdivision ? `, ${unLocation.subdivision}` : ''}`,
     }));
-    this.setState({ options });
   }
 
   render() {
@@ -58,7 +64,8 @@ UNLocationFieldInner.defaultProps = {
 
 const UNLocationField = createContainer((props) => {
   const { country } = props;
-  Meteor.subscribe('unlocations.country', country || '');
+  const locationsHandler = Meteor.subscribe('unlocations.country', country || '');
+  const loading = !locationsHandler.ready();
   return { ...props };
 }, UNLocationFieldInner);
 

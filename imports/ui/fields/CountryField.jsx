@@ -18,7 +18,7 @@ class CountryField extends React.Component {
   setOptions(input) {
     const { countries } = this.props;
     const query         = { countryName: { $regex: input, $options: 'i' } };
-    const options       = countries.find(query, { limit: 10 }).fetch().map(country => ({
+    const options       = countries.find(query).fetch().map(country => ({
       value: country.countryCode,
       label: country.countryName,
     }));
@@ -50,4 +50,5 @@ CountryField.defaultProps = {
   value: '',
   onChange: () => null,
 };
+
 export default CountryField;
