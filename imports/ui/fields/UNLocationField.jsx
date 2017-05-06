@@ -11,6 +11,10 @@ class UNLocationFieldInner extends React.Component {
     this.setOptions = this.setOptions.bind(this);
   }
 
+  componentWillMount() {
+    this.setOptions('');
+  }
+
   setOptions(input) {
     const {
             country,

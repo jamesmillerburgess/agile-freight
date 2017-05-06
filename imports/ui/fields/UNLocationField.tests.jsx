@@ -28,12 +28,15 @@ if (Meteor.isClient) {
       unLocationField.hasClass('Select').should.equal(true);
     });
 
-    it('should set options upon change of input', () => {
+    it('should filter options upon change of input', () => {
       UNLocations.insert({ country: 'AA', name: 'Aardvark' });
       const unLocationField = mount(<UNLocationField country="AA" unLocations={UNLocations} />);
       unLocationField.find('input').simulate('change', { target: { value: 'A' } });
 
       unLocationField.find('.Select-option').text().should.equal('Aardvark');
+
+      unLocationField.find('input').simulate('change', { target: { value: 'B' } });
+      unLocationField.find('.Select-noresults').text().should.equal('No results found');
     });
 
     it('should include subdivisions in the label following a comma and a space', () => {

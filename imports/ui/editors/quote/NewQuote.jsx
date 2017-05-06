@@ -3,9 +3,10 @@ import Select from 'react-select';
 
 import { integerFormat, weightFormat } from '../../formatters/numberFormatters';
 import CheckboxField from '../../fields/CheckboxField.jsx';
-import UNLocationCountryField from '../../fields/UNLocationCountryField.jsx';
+import CountryField from '../../fields/CountryField.jsx';
 import UNLocationField from '../../fields/UNLocationField.jsx';
 import { UNLocations } from '../../../api/unlocations/unlocations-collection';
+import { Countries } from '../../../api/countries/countries-collection';
 
 const NewQuote = (props) => {
   const { cargo, movement, otherServices } = props;
@@ -336,9 +337,10 @@ const NewQuote = (props) => {
                 <div className="label">
                   Country
                 </div>
-                <UNLocationCountryField
+                <CountryField
                   value={movement.pickup.country}
                   onChange={selectedValue => props.onChangePickupCountry(selectedValue.value)}
+                  countries={Countries}
                 />
               </div>
               <div className="field select-country">

@@ -50,7 +50,6 @@ if (Meteor.isClient) {
       const freeTextField = shallow(<FreeTextField />);
       const valueButton = freeTextField.find('button.value');
       valueButton.simulate('click');
-      console.log(freeTextField.html());
     });
   });
 }
