@@ -29,7 +29,7 @@ class UNLocationFieldInner extends React.Component {
     }
     const results = collection.find(query, { limit: 10 }).fetch();
     return results.map(unLocation => ({
-      value: unLocation.locationCode,
+      value: unLocation._id._str,
       label: `${unLocation.name}${unLocation.subdivision ? `, ${unLocation.subdivision}` : ''}`,
     }));
   }

@@ -19,7 +19,7 @@ class CountryField extends React.Component {
     const { countries } = this.props;
     const query         = { countryName: { $regex: input, $options: 'i' } };
     const options       = countries.find(query).fetch().map(country => ({
-      value: country.countryCode,
+      value: country._id._str,
       label: country.countryName,
     }));
     this.setState({ options });
