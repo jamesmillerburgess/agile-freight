@@ -16,12 +16,20 @@ class CountryField extends React.Component {
   }
 
   setOptions(input) {
-    const { countries } = this.props;
-    const query         = { countryName: { $regex: input, $options: 'i' } };
-    const options       = countries.find(query).fetch().map(country => ({
-      value: country._id._str,
-      label: country.countryName,
-    }));
+    const {
+            countries,
+            topCountries,
+          }       = this.props;
+    const query   = { countryName: { $regex: input, $options: 'i' } };
+    const options = countries
+      .find(query)
+      .fetch()
+      .map(country => (
+        {
+          value: country._id._str,
+          label: `${country.countryName}${topCountries[country._id._str] ? ` ${topCountries[country._id._str]}` : ''}`,
+        }
+      ));
     this.setState({ options });
   }
 
@@ -44,11 +52,13 @@ CountryField.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   countries: PropTypes.object.isRequired,
+  topCountries: PropTypes.object,
 };
 
 CountryField.defaultProps = {
   value: '',
   onChange: () => null,
+  topCountries: {},
 };
 
 export default CountryField;

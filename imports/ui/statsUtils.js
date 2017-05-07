@@ -6,9 +6,9 @@ exports.countByValue = (data = [], path) => {
   }
   return data.reduce((acc, val) => {
     let key = val;
-    path.split('.').forEach((prevKey) => {
-      key = key[prevKey];
-    });
+    path
+      .split('.')
+      .forEach((prevKey) => { key = key[prevKey]; });
     return {
       ...acc,
       [key]: (acc[key] || 0) + 1,

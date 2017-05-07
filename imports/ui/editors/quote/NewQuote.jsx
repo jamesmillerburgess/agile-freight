@@ -360,6 +360,7 @@ const NewQuote = (props) => {
                   value={movement.pickup.country}
                   onChange={selectedValue => props.onChangePickupCountry(selectedValue.value)}
                   countries={Countries}
+                  topCountries={quoteStats.pickupCountry}
                 />
               </div>
               <div className="field select-country">
@@ -402,6 +403,7 @@ const NewQuote = (props) => {
                   value={movement.delivery.country}
                   onChange={selectedValue => props.onChangeDeliveryCountry(selectedValue.value)}
                   countries={Countries}
+                  topCountries={quoteStats.deliveryCountry}
                 />
               </div>
               <div className="field select-country">
