@@ -87,6 +87,6 @@ export default class quoteFixtures {
     }
 
     // Stick them in the collection
-    _.each(newQuotes, doc => Meteor.call('quotes.new', doc));
+    _.each(newQuotes, doc => Meteor.call('quote.new', doc));
   }
 }

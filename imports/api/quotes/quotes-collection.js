@@ -9,7 +9,7 @@ import { APIGlobals } from '../../api/api-globals';
 
 export const Quotes = new Mongo.Collection('Quotes');
 
-const Schemas = {};
+export const Schemas = {};
 
 const routeSchema = new SimpleSchema({
   mode: { type: String, optional: true, allowedValues: APIGlobals.modeOptions },

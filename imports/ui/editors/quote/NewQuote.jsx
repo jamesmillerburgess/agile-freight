@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+import { Meteor } from 'meteor/meteor';
 
 import { integerFormat, weightFormat } from '../../formatters/numberFormatters';
 import CheckboxField from '../../fields/CheckboxField.jsx';
@@ -11,6 +12,12 @@ import { Countries } from '../../../api/countries/countries-collection';
 const NewQuote = (props) => {
   const { cargo, movement, otherServices } = props;
   const { customerId } = props.match.params;
+
+  const getRates = () => {
+    const rateParameters = { cargo, movement, otherServices };
+    console.log(Meteor.call('customerQuote.newFromRateSearch', { customerId, rateParameters }));
+  };
+
   const PackageLines = (
     <div className="edit-group with-tabs">
       <div className="edit-group-body">
@@ -417,7 +424,12 @@ const NewQuote = (props) => {
               />
             </div>
             <div className="delivery">
-              <button className="submit">GET RATES</button>
+              <button
+                className="submit"
+                onClick={getRates}
+              >
+                GET RATES
+              </button>
             </div>
           </div>
         </div>

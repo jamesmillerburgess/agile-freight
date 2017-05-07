@@ -49,7 +49,15 @@ const updateQuote = (query, update) => {
 };
 
 Meteor.methods({
-  'quotes.new': function quotesNewMethod(options) {
+  'quote.newFromRateSearch': function quotesNewFromRateSearch(options) {
+    check(options, Object);
+    check(options.customerId, String);
+    check(options.rateParameters, Object);
+
+    const update = { ...options, status: 'Draft' };
+    return Quotes.insert(update);
+  },
+  'quote.new': function quotesNewMethod(options) {
     // Check the parameters
     check(options, Object);
 
@@ -89,7 +97,7 @@ ${user.profile.address}`) : '';
       agilityContact,
     };
 
-    return Meteor.call('quotes.new', update);
+    return Meteor.call('quote.new', update);
   },
   'quote.updateField': function quoteUpdateFieldMethod(quoteId, path, value) {
     // Check the parameters
