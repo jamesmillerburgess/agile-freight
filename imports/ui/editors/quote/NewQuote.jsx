@@ -15,7 +15,7 @@ const NewQuote = (props) => {
 
   const getRates = () => {
     const rateParameters = { cargo, movement, otherServices };
-    console.log(Meteor.call('customerQuote.newFromRateSearch', { customerId, rateParameters }));
+    Meteor.call('customerQuote.newFromRateSearch', { customerId, rateParameters });
   };
 
   const PackageLines = (

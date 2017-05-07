@@ -6,12 +6,13 @@ import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 
 import { Quotes } from '../../api/quotes/quotes-collection';
+import { CustomerQuotes as customerQuotesCollection } from '../../api/customerQuotes/customerQuotesCollection';
 
 import QuoteList from '../lists/QuoteList.jsx';
 import QuoteEditor from '../editors/quote/QuoteEditor.jsx';
 import NewQuoteConnect from '../editors/quote/NewQuoteConnect.jsx';
 
-const CustomerQuotesInner = ({ customer, quotes, activeQuotes, history }) => {
+const CustomerQuotesInner = ({ customer, quotes, activeQuotes, customerQuotes, history }) => {
   const newQuote = () =>
     Meteor.call(
       'quote.newDraft',
@@ -55,8 +56,8 @@ const CustomerQuotesInner = ({ customer, quotes, activeQuotes, history }) => {
           render={props => <QuoteEditor {...props} />}
         />
         <Route
-          path={`/customer/:customerId/quotes/new-quote`}
-          render={props => <NewQuoteConnect {...props} />}
+          path="/customer/:customerId/quotes/new-quote"
+          render={props => <NewQuoteConnect {...props} customerQuotes={customerQuotes} />}
         />
       </div>
     </div>
@@ -72,6 +73,9 @@ CustomerQuotesInner.propTypes = {
 
 const CustomerQuotes = createContainer((props) => {
   const { customer } = props;
+  const customerQuotes = customerQuotesCollection
+    .find({ _id: { $in: customer.customerQuotes || [] } })
+    .fetch();
   const quotes = Quotes
     .find({ _id: { $in: customer.quotes } })
     .fetch()
@@ -81,6 +85,7 @@ const CustomerQuotes = createContainer((props) => {
     customer,
     quotes,
     activeQuotes,
+    customerQuotes,
   };
 }, CustomerQuotesInner);
 
