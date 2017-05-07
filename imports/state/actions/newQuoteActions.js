@@ -27,12 +27,10 @@ export const toggleTemperatureControlled              = makeActionCreator(ACTION
 // MOVEMENT
 export const setPickupLocationType   = makeActionCreator(ACTION_TYPES.SET_PICKUP_LOCATION_TYPE, 'locationType');
 export const setPickupCountry        = makeActionCreator(ACTION_TYPES.SET_PICKUP_COUNTRY, 'country');
-export const setPickupPostalCode     = makeActionCreator(ACTION_TYPES.SET_PICKUP_POSTAL_CODE, 'postalCode');
-export const setPickupPortCode       = makeActionCreator(ACTION_TYPES.SET_PICKUP_PORT_CODE, 'portCode');
+export const setPickupLocation       = makeActionCreator(ACTION_TYPES.SET_PICKUP_LOCATION, 'location');
 export const setDeliveryLocationType = makeActionCreator(ACTION_TYPES.SET_DELIVERY_LOCATION_TYPE, 'locationType');
 export const setDeliveryCountry      = makeActionCreator(ACTION_TYPES.SET_DELIVERY_COUNTRY, 'country');
-export const setDeliveryPostalCode   = makeActionCreator(ACTION_TYPES.SET_DELIVERY_POSTAL_CODE, 'postalCode');
-export const setDeliveryPortCode     = makeActionCreator(ACTION_TYPES.SET_DELIVERY_PORT_CODE, 'portCode');
+export const setDeliveryLocation     = makeActionCreator(ACTION_TYPES.SET_DELIVERY_LOCATION, 'location');
 
 // OTHER SERVICES
 export const toggleInsurance        = makeActionCreator(ACTION_TYPES.TOGGLE_INSURANCE);

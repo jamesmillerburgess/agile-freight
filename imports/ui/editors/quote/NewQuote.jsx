@@ -14,9 +14,9 @@ import { Countries } from '../../../api/countries/countries-collection';
 
 const getQuoteStats = customerQuotes => ({
   pickupCountry: countByValue(customerQuotes, 'rateParameters.movement.pickup.country'),
-  // pickupLocation: countByValue(customerQuotes, 'rateParameters.movement.pickup.country'),
+  pickupLocation: countByValue(customerQuotes, 'rateParameters.movement.pickup.location'),
   deliveryCountry: countByValue(customerQuotes, 'rateParameters.movement.delivery.country'),
-  // pickupCountry: countByValue(customerQuotes, 'rateParameters.movement.pickup.country'),
+  deliveryLocation: countByValue(customerQuotes, 'rateParameters.movement.pickup.location'),
 });
 
 const NewQuote = (props) => {
@@ -368,10 +368,11 @@ const NewQuote = (props) => {
                   City / Port Code
                 </div>
                 <UNLocationField
-                  value={movement.pickup.portCode}
+                  value={movement.pickup.location}
                   country={movement.pickup.country}
-                  onChange={selectedValue => props.onChangePickupPortCode(selectedValue.value)}
+                  onChange={selectedValue => props.onChangePickupLocation(selectedValue.value)}
                   unLocations={UNLocations}
+                  topLocations={quoteStats.pickupLocation}
                 />
               </div>
             </div>
@@ -411,10 +412,11 @@ const NewQuote = (props) => {
                   City / Port Code
                 </div>
                 <UNLocationField
-                  value={movement.delivery.portCode}
+                  value={movement.delivery.location}
                   country={movement.delivery.country}
-                  onChange={selectedValue => props.onChangeDeliveryPortCode(selectedValue.value)}
+                  onChange={selectedValue => props.onChangeDeliveryLocation(selectedValue.value)}
                   unLocations={UNLocations}
+                  topLocations={quoteStats.deliveryLocation}
                 />
               </div>
             </div>

@@ -24,27 +24,21 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
     case ACTION_TYPES.SET_PICKUP_COUNTRY:
       newState = changeProp(state, 'pickup', changeProp(state.pickup, 'country', action.country));
       if (action.country !== state.pickup.country) {
-        newState.pickup.portCode = '';
-        newState.pickup.postalCode = '';
+        newState.pickup.location = '';
       }
       return newState;
-    case ACTION_TYPES.SET_PICKUP_POSTAL_CODE:
-      return changeProp(state, 'pickup', changeProp(state.pickup, 'postalCode', action.postalCode));
-    case ACTION_TYPES.SET_PICKUP_PORT_CODE:
-      return changeProp(state, 'pickup', changeProp(state.pickup, 'portCode', action.portCode));
+    case ACTION_TYPES.SET_PICKUP_LOCATION:
+      return changeProp(state, 'pickup', changeProp(state.pickup, 'location', action.location));
     case ACTION_TYPES.SET_DELIVERY_LOCATION_TYPE:
       return changeProp(state, 'delivery', changeProp(state.delivery, 'locationType', action.locationType));
     case ACTION_TYPES.SET_DELIVERY_COUNTRY:
       newState = changeProp(state, 'delivery', changeProp(state.delivery, 'country', action.country));
       if (action.country !== state.delivery.country) {
-        newState.delivery.portCode = '';
-        newState.delivery.postalCode = '';
+        newState.delivery.location = '';
       }
       return newState;
-    case ACTION_TYPES.SET_DELIVERY_POSTAL_CODE:
-      return changeProp(state, 'delivery', changeProp(state.delivery, 'postalCode', action.postalCode));
-    case ACTION_TYPES.SET_DELIVERY_PORT_CODE:
-      return changeProp(state, 'delivery', changeProp(state.delivery, 'portCode', action.portCode));
+    case ACTION_TYPES.SET_DELIVERY_LOCATION:
+      return changeProp(state, 'delivery', changeProp(state.delivery, 'location', action.location));
     default:
       return state;
   }

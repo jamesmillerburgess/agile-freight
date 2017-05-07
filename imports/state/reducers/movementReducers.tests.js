@@ -29,38 +29,20 @@ if (Meteor.isClient) {
       movement(stateBefore, action).pickup.country.should.equal('China');
     });
 
-    it('clears the pickup port code if the pickup country changes', () => {
-      const stateBefore = { pickup: { country: 'India', portCode: 'NSA' } };
+    it('clears the pickup location if the pickup country changes', () => {
+      const stateBefore = { pickup: { country: 'India', location: 'NSA' } };
       const action = { type: ACTION_TYPES.SET_PICKUP_COUNTRY, country: 'China' };
       deepFreeze(stateBefore);
 
-      movement(stateBefore, action).pickup.portCode.should.equal('');
+      movement(stateBefore, action).pickup.location.should.equal('');
     });
 
-    it('clears the pickup postal code if the pickup country changes', () => {
-      const stateBefore = { pickup: { country: 'India', portCode: 'NSA' } };
-      const action = { type: ACTION_TYPES.SET_PICKUP_COUNTRY, country: 'China' };
+    it('sets the pickup location', () => {
+      const stateBefore = { pickup: { location: '000000' } };
+      const action = { type: ACTION_TYPES.SET_PICKUP_LOCATION, location: '111111' };
       deepFreeze(stateBefore);
 
-      movement(stateBefore, action).pickup.postalCode.should.equal('');
-    });
-
-    it('sets the pickup postal code', () => {
-      const stateBefore = { pickup: { postalCode: '000000' } };
-      const action = { type: ACTION_TYPES.SET_PICKUP_POSTAL_CODE, postalCode: '111111' };
-      const stateAfter = { pickup: { postalCode: '111111' } };
-      deepFreeze(stateBefore);
-
-      movement(stateBefore, action).should.eql(stateAfter);
-    });
-
-    it('sets the pickup port code', () => {
-      const stateBefore = { pickup: { portCode: '000000' } };
-      const action = { type: ACTION_TYPES.SET_PICKUP_PORT_CODE, portCode: '111111' };
-      const stateAfter = { pickup: { portCode: '111111' } };
-      deepFreeze(stateBefore);
-
-      movement(stateBefore, action).should.eql(stateAfter);
+      movement(stateBefore, action).pickup.location.should.eql('111111');
     });
 
     it('sets the delivery location type', () => {
@@ -80,38 +62,20 @@ if (Meteor.isClient) {
       movement(stateBefore, action).delivery.country.should.equal('China');
     });
 
-    it('clears the delivery port code if the delivery country changes', () => {
-      const stateBefore = { delivery: { country: 'India', portCode: 'NSA' } };
+    it('clears the delivery location if the delivery country changes', () => {
+      const stateBefore = { delivery: { country: 'India', location: 'NSA' } };
       const action = { type: ACTION_TYPES.SET_DELIVERY_COUNTRY, country: 'China' };
       deepFreeze(stateBefore);
 
-      movement(stateBefore, action).delivery.portCode.should.equal('');
+      movement(stateBefore, action).delivery.location.should.equal('');
     });
 
-    it('clears the delivery postal code if the delivery country changes', () => {
-      const stateBefore = { delivery: { country: 'India', portCode: 'NSA' } };
-      const action = { type: ACTION_TYPES.SET_DELIVERY_COUNTRY, country: 'China' };
+    it('sets the delivery location', () => {
+      const stateBefore = { delivery: { location: '000000' } };
+      const action = { type: ACTION_TYPES.SET_DELIVERY_LOCATION, location: '111111' };
       deepFreeze(stateBefore);
 
-      movement(stateBefore, action).delivery.postalCode.should.equal('');
-    });
-
-    it('sets the delivery postal code', () => {
-      const stateBefore = { delivery: { postalCode: '000000' } };
-      const action = { type: ACTION_TYPES.SET_DELIVERY_POSTAL_CODE, postalCode: '111111' };
-      const stateAfter = { delivery: { postalCode: '111111' } };
-      deepFreeze(stateBefore);
-
-      movement(stateBefore, action).should.eql(stateAfter);
-    });
-
-    it('sets the delivery port code', () => {
-      const stateBefore = { delivery: { portCode: '000000' } };
-      const action = { type: ACTION_TYPES.SET_DELIVERY_PORT_CODE, portCode: '111111' };
-      const stateAfter = { delivery: { portCode: '111111' } };
-      deepFreeze(stateBefore);
-
-      movement(stateBefore, action).should.eql(stateAfter);
+      movement(stateBefore, action).delivery.location.should.eql('111111');
     });
   });
 }

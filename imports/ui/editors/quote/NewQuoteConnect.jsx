@@ -31,12 +31,10 @@ const mapDispatchToProps = dispatch => ({
   // MOVEMENT
   onChangePickupLocationType: locationType => dispatch(newQuoteActions.setPickupLocationType(locationType)),
   onChangePickupCountry: country => dispatch(newQuoteActions.setPickupCountry(country)),
-  onChangePickupPortCode: portCode => dispatch(newQuoteActions.setPickupPortCode(portCode)),
-  onChangePickupPostalCode: postalCode => dispatch(newQuoteActions.setPickupPostalCode(postalCode)),
+  onChangePickupLocation: location => dispatch(newQuoteActions.setPickupLocation(location)),
   onChangeDeliveryLocationType: locationType => dispatch(newQuoteActions.setDeliveryLocationType(locationType)),
   onChangeDeliveryCountry: country => dispatch(newQuoteActions.setDeliveryCountry(country)),
-  onChangeDeliveryPortCode: portCode => dispatch(newQuoteActions.setDeliveryPortCode(portCode)),
-  onChangeDeliveryPostalCode: postalCode => dispatch(newQuoteActions.setDeliveryPostalCode(postalCode)),
+  onChangeDeliveryLocation: location => dispatch(newQuoteActions.setDeliveryLocation(location)),
 
   // OTHER SERVICES
   onClickInsurance: () => dispatch(newQuoteActions.toggleInsurance()),
