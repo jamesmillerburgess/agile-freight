@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Countries } from '../../api/countries/countries-collection';
 
@@ -24,12 +25,19 @@ class UNLocationFieldInner extends React.Component {
   }
 
   filterLocations(filter, countryId, collection) {
-    const country = Countries.findOne(countryId).countryCode;
+    if (!countryId) {
+      return [];
+    }
+    console.log(new Mongo.ObjectID(countryId));
+    console.log(Countries.findOne(new Mongo.ObjectID(countryId)).countryCode);
+    const country = Countries.findOne({ _id: new Mongo.ObjectID(countryId) }).countryCode;
     const query = { country };
     if (filter) {
       query.name = { $regex: filter, $options: 'i' };
     }
     const results = collection.find(query, { limit: 10 }).fetch();
+    console.log('results');
+    console.log(collection.find(query, { limit: 10 }).fetch());
     return results.map(unLocation => ({
       value: unLocation._id._str,
       label: `${unLocation.name}${unLocation.subdivision ? `, ${unLocation.subdivision}` : ''}`,
@@ -65,8 +73,9 @@ UNLocationFieldInner.defaultProps = {
 };
 
 const UNLocationField = createContainer((props) => {
-  const { country } = props;
-  const locationsHandler = Meteor.subscribe('unlocations.country', country || '');
+  const country = Countries.findOne(new Mongo.ObjectID(props.country));
+  const countryCode = country ? country.countryCode : '';
+  const locationsHandler = Meteor.subscribe('unlocations.country', countryCode);
   const loading = !locationsHandler.ready();
   return { ...props };
 }, UNLocationFieldInner);
