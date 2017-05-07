@@ -16,8 +16,11 @@ Meteor.methods({
       throw new Error('Invalid customer ID');
     }
 
+    // Insert customer quote
     const update = { ...options, status: 'Draft' };
     const customerQuoteId = CustomerQuotes.insert(update);
+
+    // Update the customer
     Customers.update({ _id: options.customerId }, { $push: { customerQuotes: customerQuoteId } });
     return customerQuoteId;
   },
