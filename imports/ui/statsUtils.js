@@ -1,5 +1,21 @@
 import moment from 'moment';
 
+exports.countByValue = (data = [], path) => {
+  if (!path) {
+    return {};
+  }
+  return data.reduce((acc, val) => {
+    let key = val;
+    path.split('.').forEach((prevKey) => {
+      key = key[prevKey];
+    });
+    return {
+      ...acc,
+      [key]: (acc[key] || 0) + 1,
+    };
+  }, {});
+};
+
 exports.ltmStart = (date = undefined) =>
   moment(date)
     .subtract(1, 'years')

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 import { Quotes } from '../../api/quotes/quotes-collection';
 import { Shipments } from '../../api/shipments/shipments';
-import { ltmStart, ytdStart, allTimeStart, timeSeriesBarOptions } from '../chart-utils';
+import { ltmStart, ytdStart, allTimeStart, timeSeriesBarOptions } from '../statsUtils';
 
 const CustomerOverviewInner = ({ customer, kpis, kpiPeriod }) => {
   const getKpis = () => {

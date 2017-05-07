@@ -3,14 +3,24 @@ import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
 
 import { integerFormat, weightFormat } from '../../formatters/numberFormatters';
+import { countByValue } from '../../statsUtils';
+
 import CheckboxField from '../../fields/CheckboxField.jsx';
 import CountryField from '../../fields/CountryField.jsx';
 import UNLocationField from '../../fields/UNLocationField.jsx';
+
 import { UNLocations } from '../../../api/unlocations/unlocations-collection';
 import { Countries } from '../../../api/countries/countries-collection';
 
+const getQuoteStats = customerQuotes => ({
+  pickupCountry: countByValue(customerQuotes, 'rateParameters.movement.pickup.country'),
+  // pickupLocation: countByValue(customerQuotes, 'rateParameters.movement.pickup.country'),
+  deliveryCountry: countByValue(customerQuotes, 'rateParameters.movement.delivery.country'),
+  // pickupCountry: countByValue(customerQuotes, 'rateParameters.movement.pickup.country'),
+});
+
 const NewQuote = (props) => {
-  const { cargo, movement, otherServices } = props;
+  const { cargo, movement, otherServices, customerQuotes } = props;
   const { customerId } = props.match.params;
 
   const getRates = () => {
@@ -18,6 +28,8 @@ const NewQuote = (props) => {
     Meteor.call('customerQuote.newFromRateSearch', { customerId, rateParameters });
   };
 
+  const quoteStats = getQuoteStats(customerQuotes);
+  
   const PackageLines = (
     <div className="edit-group with-tabs">
       <div className="edit-group-body">
