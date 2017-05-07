@@ -9,7 +9,7 @@ import CustomerShipments from './CustomerShipments.jsx';
 import CustomerInvoices from './CustomerInvoices.jsx';
 import CustomerConfiguration from './CustomerConfiguration.jsx';
 
-import { Customers } from '../../api/customers/customers';
+import { Customers } from '../../api/customers/customers-collection';
 
 const CustomerInner = ({ customer }) =>
   (

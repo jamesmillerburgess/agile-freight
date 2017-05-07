@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Invoices } from './invoices-collection';
-import { Customers } from '../customers/customers';
+import { Customers } from '../customers/customers-collection';
 
 Meteor.methods({
   'invoices.new': function invoicesNewMethod(options) {

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Quotes } from './quotes-collection';
-import { Customers } from '../customers/customers';
+import { Customers } from '../customers/customers-collection';
 
 import { updateCargo } from '../cargo/cargo-utils';
 import { updateCharges } from '../charges/charges-utils';

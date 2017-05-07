@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Customers } from '../../api/customers/customers';
+import { Customers } from '../../api/customers/customers-collection';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
 

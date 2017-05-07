@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 
 import { APIGlobals } from '../../../api/api-globals';
-import { Customers } from '../../../api/customers/customers';
+import { Customers } from '../../../api/customers/customers-collection';
 import { Shipments } from '../../../api/shipments/shipments';
 
 export default class invoiceFixtures {

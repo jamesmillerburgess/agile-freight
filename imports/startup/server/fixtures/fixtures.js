@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
 import { Offices } from '../../../api/offices/offices';
-import { Customers } from '../../../api/customers/customers';
+import { Customers } from '../../../api/customers/customers-collection';
 import { Quotes } from '../../../api/quotes/quotes-collection';
 import { Jobs } from '../../../api/jobs/jobs';
 import { Shipments } from '../../../api/shipments/shipments';

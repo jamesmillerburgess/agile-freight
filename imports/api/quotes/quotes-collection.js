@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
-import { Customers } from '../customers/customers';
+import { Customers } from '../customers/customers-collection';
 
 import { cargoSchema } from '../cargo/cargo-utils';
 import { chargesSchema } from '../charges/charges-utils';

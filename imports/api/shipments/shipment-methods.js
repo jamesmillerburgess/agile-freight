@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Shipments } from './shipments';
 import { Quotes } from '../quotes/quotes-collection';
-import { Customers } from '../customers/customers';
+import { Customers } from '../customers/customers-collection';
 
 Meteor.methods({
   'shipments.new': function shipmentsNewMethod(options) {

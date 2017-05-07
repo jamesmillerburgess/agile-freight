@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Jobs } from '../../api/jobs/jobs';
-import { Customers } from '../../api/customers/customers';
+import { Customers } from '../../api/customers/customers-collection';
 import { Offices } from '../../api/offices/offices';
 
 import { UIGlobals } from '../ui-globals';

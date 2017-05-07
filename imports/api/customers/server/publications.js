@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
-import { Customers } from '../customers';
+import { Customers } from '../customers-collection';
 import { Quotes } from '../../quotes/quotes-collection';
 
 Meteor.publish('customers.single', (_id) => {
