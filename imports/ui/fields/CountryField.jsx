@@ -46,7 +46,7 @@ class CountryField extends React.Component {
   renderOption(option) {
     return (
       <div>
-        <span className="option-Label">{option.label}</span>
+        <span className="option-label">{option.label}</span>
         {option.count ? <div className="option-count">{option.count}</div> : ''}
       </div>
     );

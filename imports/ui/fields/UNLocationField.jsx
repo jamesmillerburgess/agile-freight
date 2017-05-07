@@ -29,7 +29,8 @@ class UNLocationFieldInner extends React.Component {
     if (!countryId) {
       return [];
     }
-    const country = Countries.findOne({ _id: new Mongo.ObjectID(countryId) }).countryCode;
+    const doc     = Countries.findOne({ _id: new Mongo.ObjectID(countryId) });
+    const country = doc && doc.countryCode;
     const query   = { country };
     if (filter) {
       query.name = { $regex: filter, $options: 'i' };
@@ -57,7 +58,7 @@ class UNLocationFieldInner extends React.Component {
   renderOption(option) {
     return (
       <div>
-        <span className="option-Label">{option.label}</span>
+        <span className="option-label">{option.label}</span>
         {option.count ? <div className="option-count">{option.count}</div> : ''}
       </div>
     );

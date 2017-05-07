@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { mount } from 'enzyme';
 import StubCollections from 'meteor/hwillson:stub-collections';
 import { chai } from 'meteor/practicalmeteor:chai';
@@ -17,8 +18,8 @@ if (Meteor.isClient) {
 
     beforeEach(() => {
       StubCollections.stub([UNLocations, Countries]);
-      Countries.insert({ _id: 'AA', countryCode: 'AA' });
-      Countries.insert({ _id: 'BB', countryCode: 'BB' });
+      Countries.insert({ _id: new Mongo.ObjectID('aaaaaaaaaaaaaaaaaaaaaaaa'), countryCode: 'aaaaaaaaaaaaaaaaaaaaaaaa' });
+      Countries.insert({ _id: new Mongo.ObjectID('bbbbbbbbbbbbbbbbbbbbbbbb'), countryCode: 'bbbbbbbbbbbbbbbbbbbbbbbb' });
     });
 
     afterEach(() => {
@@ -32,28 +33,28 @@ if (Meteor.isClient) {
     });
 
     it('should filter options upon change of input', () => {
-      UNLocations.insert({ country: 'AA', name: 'Aardvark' });
-      const unLocationField = mount(<UNLocationField country="AA" unLocations={UNLocations} />);
+      UNLocations.insert({ country: 'aaaaaaaaaaaaaaaaaaaaaaaa', name: 'Aardvark' });
+      const unLocationField = mount(<UNLocationField country="aaaaaaaaaaaaaaaaaaaaaaaa" unLocations={UNLocations} />);
       unLocationField.find('input').simulate('change', { target: { value: 'A' } });
 
-      unLocationField.find('.Select-option').text().should.equal('Aardvark');
+      unLocationField.find('.option-label').text().should.equal('Aardvark');
 
       unLocationField.find('input').simulate('change', { target: { value: 'B' } });
       unLocationField.find('.Select-noresults').text().should.equal('No results found');
     });
 
     it('should include subdivisions in the label following a comma and a space', () => {
-      UNLocations.insert({ country: 'AA', name: 'Aardvark', subdivision: 'AL' });
-      const unLocationField = mount(<UNLocationField country="AA" unLocations={UNLocations} />);
+      UNLocations.insert({ country: 'aaaaaaaaaaaaaaaaaaaaaaaa', name: 'Aardvark', subdivision: 'AL' });
+      const unLocationField = mount(<UNLocationField country="aaaaaaaaaaaaaaaaaaaaaaaa" unLocations={UNLocations} />);
       unLocationField.find('input').simulate('change', { target: { value: 'A' } });
 
       unLocationField.find('.Select-option').text().should.equal('Aardvark, AL');
     });
 
     it('should filter by the country prop', () => {
-      UNLocations.insert({ country: 'AA', name: 'Aardvark', subdivision: 'AL' });
-      UNLocations.insert({ country: 'BB', name: 'Basilisk', subdivision: 'BS' });
-      const unLocationField = mount(<UNLocationField country="BB" unLocations={UNLocations} />);
+      UNLocations.insert({ country: 'aaaaaaaaaaaaaaaaaaaaaaaa', name: 'Aardvark', subdivision: 'AL' });
+      UNLocations.insert({ country: 'bbbbbbbbbbbbbbbbbbbbbbbb', name: 'Basilisk', subdivision: 'BS' });
+      const unLocationField = mount(<UNLocationField country="bbbbbbbbbbbbbbbbbbbbbbbb" unLocations={UNLocations} />);
       unLocationField.find('input').simulate('change', { target: { value: 'A' } });
 
       unLocationField.find('.Select-option').text().should.equal('Basilisk, BS');
