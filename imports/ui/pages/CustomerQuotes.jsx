@@ -55,7 +55,7 @@ const CustomerQuotesInner = ({ customer, quotes, activeQuotes, history }) => {
           render={props => <QuoteEditor {...props} />}
         />
         <Route
-          path={`/customer/${customer._id}/quotes/new-quote`}
+          path={`/customer/:customerId/quotes/new-quote`}
           render={props => <NewQuoteConnect {...props} />}
         />
       </div>

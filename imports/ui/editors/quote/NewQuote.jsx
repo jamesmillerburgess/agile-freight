@@ -10,7 +10,7 @@ import { Countries } from '../../../api/countries/countries-collection';
 
 const NewQuote = (props) => {
   const { cargo, movement, otherServices } = props;
-
+  const { customerId } = props.match.params;
   const PackageLines = (
     <div className="edit-group with-tabs">
       <div className="edit-group-body">
