@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { Route, NavLink } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import moment from 'moment';
+
+import { uniqueValues } from '../statsUtils';
 
 import { Quotes } from '../../api/quotes/quotes-collection';
 import { CustomerQuotes as customerQuotesCollection } from '../../api/customerQuotes/customerQuotesCollection';
@@ -72,15 +75,20 @@ CustomerQuotesInner.propTypes = {
 };
 
 const CustomerQuotes = createContainer((props) => {
-  const { customer } = props;
+  const { customer }   = props;
   const customerQuotes = customerQuotesCollection
     .find({ _id: { $in: customer.customerQuotes || [] } })
     .fetch();
-  const quotes = Quotes
+  const locationIds    = [
+    ...uniqueValues(customerQuotes, 'rateParameters.movement.pickup.location').map(val => new Mongo.ObjectID(val)),
+    ...uniqueValues(customerQuotes, 'rateParameters.movement.delivery.location').map(val => new Mongo.ObjectID(val)),
+  ];
+  Meteor.subscribe('unlocations.list', locationIds);
+  const quotes         = Quotes
     .find({ _id: { $in: customer.quotes } })
     .fetch()
     .sort((a, b) => new Date(b.expiryDate) - new Date(a.expiryDate));
-  const activeQuotes = quotes.filter(quote => !moment().isAfter(quote.expiryDate) && quote.status !== 'Canceled');
+  const activeQuotes   = quotes.filter(quote => !moment().isAfter(quote.expiryDate) && quote.status !== 'Canceled');
   return {
     customer,
     quotes,
