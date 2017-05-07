@@ -1,5 +1,24 @@
 import moment from 'moment';
 
+exports.uniqueValues = (data = [], path) => {
+  if (!path) {
+    return {};
+  }
+  return data.reduce((acc, val) => {
+    let key = val;
+    path
+      .split('.')
+      .forEach((prevKey) => {
+        key = key[prevKey];
+      });
+    const res = [...acc];
+    if (acc.indexOf(key) === -1) {
+      res.push(key);
+    }
+    return res;
+  }, []);
+};
+
 exports.countByValue = (data = [], path) => {
   if (!path) {
     return {};
@@ -8,7 +27,9 @@ exports.countByValue = (data = [], path) => {
     let key = val;
     path
       .split('.')
-      .forEach((prevKey) => { key = key[prevKey]; });
+      .forEach((prevKey) => {
+        key = key[prevKey];
+      });
     return {
       ...acc,
       [key]: (acc[key] || 0) + 1,
