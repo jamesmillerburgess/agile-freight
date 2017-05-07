@@ -30,6 +30,8 @@ if (Meteor.isClient) {
       const unLocationField = mount(<UNLocationField unLocations={UNLocations} />);
       unLocationField.exists().should.equal(true);
       unLocationField.hasClass('Select').should.equal(true);
+
+      unLocationField.unmount();
     });
 
     it('should filter options upon change of input', () => {
@@ -41,6 +43,7 @@ if (Meteor.isClient) {
 
       unLocationField.find('input').simulate('change', { target: { value: 'B' } });
       unLocationField.find('.Select-noresults').text().should.equal('No results found');
+      unLocationField.unmount();
     });
 
     it('should include subdivisions in the label following a comma and a space', () => {
@@ -49,6 +52,7 @@ if (Meteor.isClient) {
       unLocationField.find('input').simulate('change', { target: { value: 'A' } });
 
       unLocationField.find('.Select-option').text().should.equal('Aardvark, AL');
+      unLocationField.unmount();
     });
 
     it('should filter by the country prop', () => {
@@ -58,6 +62,7 @@ if (Meteor.isClient) {
       unLocationField.find('input').simulate('change', { target: { value: 'A' } });
 
       unLocationField.find('.Select-option').text().should.equal('Basilisk, BS');
+      unLocationField.unmount();
     });
   });
 }
