@@ -28,10 +28,10 @@ if (Meteor.isServer) {
       });
 
       it('only accepts an object as a parameter', () => {
-        (function () { Meteor.call('customer.new', 1); }).should.throw();
-        (function () { Meteor.call('customer.new', 'a'); }).should.throw();
-        (function () { Meteor.call('customer.new', []); }).should.throw();
-        (function () { Meteor.call('customer.new', true); }).should.throw();
+        (() => Meteor.call('customer.new', 1)).should.throw();
+        (() => Meteor.call('customer.new', 'a')).should.throw();
+        (() => Meteor.call('customer.new', [])).should.throw();
+        (() => Meteor.call('customer.new', true)).should.throw();
       });
     });
   });
