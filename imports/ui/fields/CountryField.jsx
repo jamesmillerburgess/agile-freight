@@ -28,8 +28,21 @@ class CountryField extends React.Component {
         {
           value: country._id._str,
           label: `${country.countryName}${topCountries[country._id._str] ? ` ${topCountries[country._id._str]}` : ''}`,
+          count: topCountries[country._id._str] ? topCountries[country._id._str] : 0,
         }
-      ));
+      ))
+      .sort((a, b) => {
+        if (a.count !== b.count) {
+          return b.count - a.count;
+        }
+        if (a.label.toUpperCase() < b.label.toUpperCase()) {
+          return -1;
+        }
+        if (a.label.toUpperCase() > b.label.toUpperCase()) {
+          return 1;
+        }
+        return 0;
+      });
     this.setState({ options });
   }
 
