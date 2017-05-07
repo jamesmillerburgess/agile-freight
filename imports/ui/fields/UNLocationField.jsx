@@ -9,8 +9,9 @@ import { Countries } from '../../api/countries/countries-collection';
 class UNLocationFieldInner extends React.Component {
   constructor(props) {
     super(props);
-    this.state      = { options: [] };
-    this.setOptions = this.setOptions.bind(this);
+    this.state           = { options: [] };
+    this.setOptions      = this.setOptions.bind(this);
+    this.filterLocations = this.filterLocations.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,20 +29,38 @@ class UNLocationFieldInner extends React.Component {
     if (!countryId) {
       return [];
     }
-    console.log(new Mongo.ObjectID(countryId));
-    console.log(Countries.findOne(new Mongo.ObjectID(countryId)).countryCode);
     const country = Countries.findOne({ _id: new Mongo.ObjectID(countryId) }).countryCode;
-    const query = { country };
+    const query   = { country };
     if (filter) {
       query.name = { $regex: filter, $options: 'i' };
     }
     const results = collection.find(query, { limit: 10 }).fetch();
-    console.log('results');
-    console.log(collection.find(query, { limit: 10 }).fetch());
-    return results.map(unLocation => ({
-      value: unLocation._id._str,
-      label: `${unLocation.name}${unLocation.subdivision ? `, ${unLocation.subdivision}` : ''}`,
-    }));
+    return results
+      .map(unLocation => (
+        {
+          value: unLocation._id._str,
+          label: `${unLocation.name}${unLocation.subdivision ? `, ${unLocation.subdivision}` : ''}`,
+          count: this.props.topLocations[unLocation._id._str] ? this.props.topLocations[unLocation._id._str] : 0,
+        }
+      ))
+      .sort((a, b) => {
+        if (a.count !== b.count) {
+          return b.count - a.count;
+        }
+        if (a.label.toUpperCase() < b.label.toUpperCase()) {
+          return -1;
+        }
+        return 1;
+      });
+  }
+
+  renderOption(option) {
+    return (
+      <div>
+        <span className="option-Label">{option.label}</span>
+        {option.count ? <div className="option-count">{option.count}</div> : ''}
+      </div>
+    );
   }
 
   render() {
@@ -54,6 +73,7 @@ class UNLocationFieldInner extends React.Component {
         clearable={false}
         onChange={unLocation => onChange(unLocation)}
         onInputChange={this.setOptions}
+        optionRenderer={this.renderOption}
       />
     );
   }
@@ -64,19 +84,21 @@ UNLocationFieldInner.propTypes = {
   country: PropTypes.string,
   onChange: PropTypes.func,
   unLocations: PropTypes.object.isRequired,
+  topLocations: PropTypes.object,
 };
 
 UNLocationFieldInner.defaultProps = {
   value: '',
   country: '',
   onChange: () => null,
+  topLocations: {},
 };
 
 const UNLocationField = createContainer((props) => {
-  const country = Countries.findOne(new Mongo.ObjectID(props.country));
-  const countryCode = country ? country.countryCode : '';
+  const country          = Countries.findOne(new Mongo.ObjectID(props.country));
+  const countryCode      = country ? country.countryCode : '';
   const locationsHandler = Meteor.subscribe('unlocations.country', countryCode);
-  const loading = !locationsHandler.ready();
+  const loading          = !locationsHandler.ready();
   return { ...props };
 }, UNLocationFieldInner);
 

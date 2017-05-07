@@ -16,7 +16,7 @@ const getQuoteStats = customerQuotes => ({
   pickupCountry: countByValue(customerQuotes, 'rateParameters.movement.pickup.country'),
   pickupLocation: countByValue(customerQuotes, 'rateParameters.movement.pickup.location'),
   deliveryCountry: countByValue(customerQuotes, 'rateParameters.movement.delivery.country'),
-  deliveryLocation: countByValue(customerQuotes, 'rateParameters.movement.pickup.location'),
+  deliveryLocation: countByValue(customerQuotes, 'rateParameters.movement.delivery.location'),
 });
 
 const NewQuote = (props) => {
