@@ -27,7 +27,7 @@ class CountryField extends React.Component {
       .map(country => (
         {
           value: country._id._str,
-          label: `${country.countryName}${topCountries[country._id._str] ? ` ${topCountries[country._id._str]}` : ''}`,
+          label: country.countryName,
           count: topCountries[country._id._str] ? topCountries[country._id._str] : 0,
         }
       ))
@@ -38,12 +38,18 @@ class CountryField extends React.Component {
         if (a.label.toUpperCase() < b.label.toUpperCase()) {
           return -1;
         }
-        if (a.label.toUpperCase() > b.label.toUpperCase()) {
-          return 1;
-        }
-        return 0;
+        return 1;
       });
     this.setState({ options });
+  }
+
+  renderOption(option) {
+    return (
+      <div>
+        <span className="option-Label">{option.label}</span>
+        {option.count ? <div className="option-count">{option.count}</div> : ''}
+      </div>
+    );
   }
 
   render() {
@@ -56,6 +62,7 @@ class CountryField extends React.Component {
         clearable={false}
         onChange={country => onChange(country)}
         onInputChange={this.setOptions}
+        optionRenderer={this.renderOption}
       />
     );
   }
