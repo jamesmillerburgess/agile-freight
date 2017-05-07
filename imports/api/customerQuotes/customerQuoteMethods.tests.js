@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import StubCollections from 'meteor/hwillson:stub-collections';
 
 import { CustomerQuotes, Schemas } from './customerQuotesCollection';
+import { Customers } from '../customers/customers-collection';
 
 import './customerQuoteMethods';
 
@@ -14,8 +15,9 @@ chai.should();
 if (Meteor.isServer) {
   describe('Customer Quote Methods', () => {
     beforeEach(() => {
-      StubCollections.stub([CustomerQuotes]);
+      StubCollections.stub([CustomerQuotes, Customers]);
       CustomerQuotes.attachSchema(Schemas.CustomerQuote);
+      Customers.insert({ _id: 'a' });
     });
 
     afterEach(() => {
@@ -68,6 +70,21 @@ if (Meteor.isServer) {
         newQuote.customerId.should.equal('a');
         newQuote.rateParameters.pickup.country.should.equal('b');
         newQuote.rateParameters.pickup.location.should.equal('c');
+      });
+
+      it('throws an error if an invalid customerId is passed', () => {
+        const customerId = 'b';
+        const rateParameters = {};
+        (() => Meteor.call('customerQuote.newFromRateSearch', { customerId, rateParameters })).should.throw();
+      });
+
+      it('adds the customer quote ID to the customer', () => {
+        const customerId = 'a';
+        const rateParameters = {};
+        const customerQuoteId = Meteor.call('customerQuote.newFromRateSearch', { customerId, rateParameters });
+        const customer = Customers.findOne(customerId);
+
+        customer.customerQuotes[0].should.equal(customerQuoteId);
       });
     });
   });
