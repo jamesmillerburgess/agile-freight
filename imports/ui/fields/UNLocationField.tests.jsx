@@ -9,13 +9,16 @@ import { chai } from 'meteor/practicalmeteor:chai';
 
 import UNLocationField from './UNLocationField.jsx';
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
+import { Countries } from '../../api/countries/countries-collection';
 
 if (Meteor.isClient) {
   describe('UN Location Field', () => {
     chai.should();
 
     beforeEach(() => {
-      StubCollections.stub(UNLocations);
+      StubCollections.stub([UNLocations, Countries]);
+      Countries.insert({ _id: 'AA', countryCode: 'AA' });
+      Countries.insert({ _id: 'BB', countryCode: 'BB' });
     });
 
     afterEach(() => {

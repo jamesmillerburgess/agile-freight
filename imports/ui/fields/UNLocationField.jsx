@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Countries } from '../../api/countries/countries-collection';
 
 class UNLocationFieldInner extends React.Component {
   constructor(props) {
@@ -22,7 +23,8 @@ class UNLocationFieldInner extends React.Component {
     this.setState({ options });
   }
 
-  filterLocations(filter, country, collection) {
+  filterLocations(filter, countryId, collection) {
+    const country = Countries.findOne(countryId).countryCode;
     const query = { country };
     if (filter) {
       query.name = { $regex: filter, $options: 'i' };
