@@ -13,13 +13,13 @@ export const getDeepVal = (obj, path) => {
   return val;
 };
 
-exports.groupByDate = (data = [], valuePath = 'value', datePath = 'date', timePeriod = 'day') => {
+export const groupByTimePeriod = (data = [], valuePath = 'value', datePath = 'date', dateFormat = 'DD-MMM-YYYY') => {
   const splitValuePath = valuePath.split('.');
   const splitDatePath = datePath.split('.');
   return data.reduce((acc, val) => {
     const value = getDeepVal(val, splitValuePath);
     const date = moment(getDeepVal(val, splitDatePath))
-      .format('DD-MMM-YYYY');
+      .format(dateFormat);
     return {
       ...acc,
       [date]: (acc[date] || 0) + value,
@@ -27,7 +27,7 @@ exports.groupByDate = (data = [], valuePath = 'value', datePath = 'date', timePe
   }, {});
 };
 
-exports.uniqueValues = (data = [], path) => {
+export const uniqueValues = (data = [], path) => {
   if (!path) {
     return {};
   }
@@ -42,7 +42,7 @@ exports.uniqueValues = (data = [], path) => {
   }, []);
 };
 
-exports.countByValue = (data = [], path) => {
+export const countByValue = (data = [], path) => {
   if (!path) {
     return {};
   }
@@ -56,20 +56,20 @@ exports.countByValue = (data = [], path) => {
   }, {});
 };
 
-exports.ltmStart = (date = undefined) =>
+export const ltmStart = (date = undefined) =>
   moment(date)
     .subtract(1, 'years')
     .subtract(moment().date(), 'days');
 
-exports.ytdStart = date =>
+export const ytdStart = date =>
   moment(date)
     .subtract(moment().month(), 'months')
     .subtract(moment().date(), 'days');
 
-exports.allTimeStart = () =>
+export const allTimeStart = () =>
   moment(0);
 
-exports.timeSeriesBarOptions = {
+export const timeSeriesBarOptions = {
   scales: {
     yAxes: [
       {

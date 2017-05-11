@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { chai } from 'meteor/practicalmeteor:chai';
 import deepFreeze from 'deep-freeze';
 
-import { getDeepVal, groupByDate, uniqueValues, countByValue } from './statsUtils';
+import { getDeepVal, groupByTimePeriod, uniqueValues, countByValue } from './statsUtils';
 
 if (Meteor.isClient) {
   describe('Stats Utilities', () => {
@@ -25,7 +25,7 @@ if (Meteor.isClient) {
       });
     });
 
-    describe('groupByDate', () => {
+    describe('groupByTimePeriod', () => {
       it('groups by date', () => {
         const data = [
           { value: 1, date: new Date('01-Apr-2017') },
@@ -33,11 +33,44 @@ if (Meteor.isClient) {
           { value: 3, date: new Date('01-May-2017') },
           { value: 4, date: new Date('01-May-2018') },
         ];
-        const group = groupByDate(data);
+        const group = groupByTimePeriod(data);
 
         group['01-Apr-2017'].should.equal(3);
         group['01-May-2017'].should.equal(3);
         group['01-May-2018'].should.equal(4);
+      });
+
+      it('groups by month', () => {
+        const data = [
+          { value: 1, date: new Date('01-Apr-2017') },
+          { value: 2, date: new Date('02-Apr-2017') },
+          { value: 3, date: new Date('03-May-2017') },
+          { value: 4, date: new Date('04-May-2018') },
+        ];
+        const valuePath = 'value';
+        const datePath = 'date';
+        const dateFormat = 'MMM-YYYY';
+        const group = groupByTimePeriod(data, valuePath, datePath, dateFormat);
+
+        group['Apr-2017'].should.equal(3);
+        group['May-2017'].should.equal(3);
+        group['May-2018'].should.equal(4);
+      });
+
+      it('groups by year', () => {
+        const data = [
+          { value: 1, date: new Date('01-Apr-2017') },
+          { value: 2, date: new Date('02-Apr-2017') },
+          { value: 3, date: new Date('03-May-2017') },
+          { value: 4, date: new Date('04-May-2018') },
+        ];
+        const valuePath = 'value';
+        const datePath = 'date';
+        const dateFormat = 'YYYY';
+        const group = groupByTimePeriod(data, valuePath, datePath, dateFormat);
+
+        group['2017'].should.equal(6);
+        group['2018'].should.equal(4);
       });
 
       it('handles nested paths correctly', () => {
@@ -49,7 +82,7 @@ if (Meteor.isClient) {
         ];
         const valuePath = 'key1.value';
         const datePath = 'key2.date';
-        const group = groupByDate(data, valuePath, datePath);
+        const group = groupByTimePeriod(data, valuePath, datePath);
 
         group['01-Apr-2017'].should.equal(3);
         group['01-May-2017'].should.equal(3);
