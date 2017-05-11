@@ -20,16 +20,22 @@ const getQuoteStats = customerQuotes => ({
 });
 
 const NewQuote = (props) => {
-  const { cargo, movement, otherServices, customerQuotes } = props;
-  const { customerId } = props.match.params;
+  const { cargo, movement, otherServices, customerQuotes, history } = props;
+  const { customerId }                                              = props.match.params;
 
   const getRates = () => {
     const rateParameters = { cargo, movement, otherServices };
-    Meteor.call('customerQuote.newFromRateSearch', { customerId, rateParameters });
+    Meteor.call(
+      'customerQuote.newFromRateSearch',
+      { customerId, rateParameters },
+      (err, customerQuoteId) => {
+        history.push(`/quotes/${customerQuoteId}/edit`);
+      },
+    );
   };
 
   const quoteStats = getQuoteStats(customerQuotes);
-  
+
   const PackageLines = (
     <div className="edit-group with-tabs">
       <div className="edit-group-body">
