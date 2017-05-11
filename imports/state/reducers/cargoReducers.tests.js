@@ -253,7 +253,7 @@ if (Meteor.isClient) {
         packageLines(stateBefore, action)[0].volumeUOM.should.equal(volumeUOMAfter);
       });
 
-      it('set the volume UOM to \'cbm\' when unit volume UOM is \'cm\'', () => {
+      it('sets the volume UOM to \'cbm\' when unit volume UOM is \'cm\'', () => {
         const stateBefore    = [{ unitVolumeUOM: 'in' }];
         const action         = {
           type: ACTION_TYPES.SET_PACKAGE_LINE_UNIT_VOLUME_UOM,
