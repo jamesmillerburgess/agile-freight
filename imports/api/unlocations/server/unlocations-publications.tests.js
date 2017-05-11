@@ -10,7 +10,7 @@ chai.should();
 
 if (Meteor.isServer) {
   describe('UNLocations Publications', () => {
-    describe('List Publication', () => {
+    describe('Publication by List of Locations', () => {
       it('registers as a publication', () => {
         Meteor.server.publish_handlers.should.have.property('unlocations.list');
       });
@@ -33,7 +33,7 @@ if (Meteor.isServer) {
       });
     });
 
-    describe('Country Publication', () => {
+    describe('Publication by Country', () => {
       it('registers as a publication', () => {
         Meteor.server.publish_handlers.should.have.property('unlocations.country');
       });
