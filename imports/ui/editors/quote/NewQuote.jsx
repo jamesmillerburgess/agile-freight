@@ -29,7 +29,7 @@ const NewQuote = (props) => {
       'customerQuote.newFromRateSearch',
       { customerId, rateParameters },
       (err, customerQuoteId) => {
-        history.push(`/quote/${customerQuoteId}/edit`);
+        history.push(`/customer/${customerId}/quotes/${customerQuoteId}/edit`);
       },
     );
   };

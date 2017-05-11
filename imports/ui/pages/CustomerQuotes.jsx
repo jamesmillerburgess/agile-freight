@@ -11,6 +11,7 @@ import { uniqueValues } from '../statsUtils';
 import { Quotes } from '../../api/quotes/quotes-collection';
 import { CustomerQuotes as customerQuotesCollection } from '../../api/customerQuotes/customerQuotesCollection';
 
+import EditQuote from '../editors/EditQuote.jsx';
 import QuoteList from '../lists/QuoteList.jsx';
 import QuoteEditor from '../editors/quote/QuoteEditor.jsx';
 import NewQuoteConnect from '../editors/quote/NewQuoteConnect.jsx';
@@ -55,12 +56,12 @@ const CustomerQuotesInner = ({ customer, quotes, activeQuotes, customerQuotes, h
           render={() => <div />}
         />
         <Route
-          path={`/customer/${customer._id}/quotes/:quoteId/edit`}
-          render={props => <QuoteEditor {...props} />}
-        />
-        <Route
           path="/customer/:customerId/quotes/new-quote"
           render={props => <NewQuoteConnect {...props} customerQuotes={customerQuotes} />}
+        />
+        <Route
+          path="/customer/:customerId/quotes/:quoteId/edit"
+          render={props => <EditQuote {...props} customerQuotes={customerQuotes} />}
         />
       </div>
     </div>
@@ -84,11 +85,11 @@ const CustomerQuotes = createContainer((props) => {
     ...uniqueValues(customerQuotes, 'rateParameters.movement.delivery.location').map(val => new Mongo.ObjectID(val)),
   ];
   Meteor.subscribe('unlocations.list', locationIds);
-  const quotes         = Quotes
+  const quotes       = Quotes
     .find({ _id: { $in: customer.quotes } })
     .fetch()
     .sort((a, b) => new Date(b.expiryDate) - new Date(a.expiryDate));
-  const activeQuotes   = quotes.filter(quote => !moment().isAfter(quote.expiryDate) && quote.status !== 'Canceled');
+  const activeQuotes = quotes.filter(quote => !moment().isAfter(quote.expiryDate) && quote.status !== 'Canceled');
   return {
     customer,
     quotes,

@@ -8,7 +8,6 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import Nav from '../../ui/app-core/Nav.jsx';
 import CustomerList from '../lists/CustomerList.jsx';
 import Customer from '../pages/Customer.jsx';
-import EditQuote from '../editors/EditQuote.jsx';
 import Job from '../editors/Job.jsx';
 import UserProfile from '../editors/UserProfile.jsx';
 import SignIn from './SignIn.jsx';
@@ -46,10 +45,6 @@ const MainInner = ({ loading }) => {
                 <Route
                   path="/customer/:id"
                   render={routeProps => verifyAuth(Customer, routeProps)}
-                />
-                <Route
-                  path="/quote/:id"
-                  render={routeProps => verifyAuth(EditQuote, routeProps)}
                 />
                 <Route
                   path="/job/:id"
