@@ -1,8 +1,64 @@
-.new-quote {
+.new-quote,
+.edit-quote {
   .field {
     margin-top: 0;
     margin-bottom: 0;
   }
+
+  .table {
+    font-size: 12px;
+    th {
+      font-weight: 600;
+    }
+    .title {
+      font-size: 14px;
+    }
+
+    tbody.striped-data tr:nth-child(odd) {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    tbody.subtotal {
+      font-weight: 600;
+      background-color: rgba(239, 130, 1, 0.25);
+    }
+    
+    td {
+      vertical-align: middle;
+    }
+
+    tr.empty-row {
+      height: 20px;
+    }
+    tr.summary {
+      color: white;
+      background-color: rgba(239, 130, 1, 0.75);
+    }
+
+    th.amount {
+      width: 13%;
+    }
+
+    td, th {
+      padding: 12px 7px;
+    }
+  }
+
+
+  //.table {
+  //  display: table;
+  //  width: 100%;
+  //  border-color: #cccccc;
+  //  .table-header-row,
+  //  .table-column-header-row {
+  //    display: table-row;
+  //    .table-cell {
+  //      display: table-cell;
+  //      padding: 10px;
+  //    }
+  //  }
+  //
+  //}
 
   .cargo-row-icon {
     border: 0;
