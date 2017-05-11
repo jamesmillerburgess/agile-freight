@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import StubCollections from 'meteor/hwillson:stub-collections';
 
 import { UNLocations } from './unlocations-collection';
+import { Countries } from '../countries/countries-collection';
 
 import './unlocationsMethods';
 
@@ -14,7 +15,7 @@ chai.should();
 if (Meteor.isServer) {
   describe('UN Location Methods', () => {
     beforeEach(() => {
-      StubCollections.stub([UNLocations]);
+      StubCollections.stub([UNLocations, Countries]);
     });
 
     afterEach(() => {
@@ -36,15 +37,25 @@ if (Meteor.isServer) {
       });
 
       it('returns locations meeting the criteria', () => {
-        // const newQuoteId = Meteor.call('customerQuote.newFromRateSearch', { customerId: 'a', rateParameters: {} });
-        //
-        // CustomerQuotes.findOne()._id.should.equal(newQuoteId);
+        UNLocations.insert({ country: 'country', name: 'name' });
+        UNLocations.insert({ country: 'differentCountry', name: 'name' });
+        UNLocations.insert({ country: 'country', name: 'differentName' });
+        UNLocations.insert({ country: 'country', name: 'notAMatch' });
+        Countries.insert({ _id: 'country' });
+        Countries.insert({ _id: 'differentCountry' });
+        const searchResults = Meteor.call('unlocations.search', { country: 'country', search: 'name' });
+
+        searchResults.length.should.equal(2);
+        searchResults[0].country.should.equal('country');
+        searchResults[0].name.should.equal('name');
+        searchResults[1].country.should.equal('country');
+        searchResults[1].name.should.equal('differentName');
       });
 
       it('throws an error if an invalid country is passed', () => {
-        // const customerId = 'b';
-        // const rateParameters = {};
-        // (() => Meteor.call('customerQuote.newFromRateSearch', { customerId, rateParameters })).should.throw();
+        Countries.insert({ _id: 'country' });
+
+        (() => Meteor.call('unlocations.search', { country: 'notACountry', search: '' })).should.throw();
       });
     });
   });
