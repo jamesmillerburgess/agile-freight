@@ -5,11 +5,63 @@ import { Meteor } from 'meteor/meteor';
 import { chai } from 'meteor/practicalmeteor:chai';
 import deepFreeze from 'deep-freeze';
 
-import { uniqueValues, countByValue } from './statsUtils';
+import { getDeepVal, groupByDate, uniqueValues, countByValue } from './statsUtils';
 
 if (Meteor.isClient) {
   describe('Stats Utilities', () => {
     chai.should();
+
+    describe('getDeepVal', () => {
+      it('gets a value an object using a nested path', () => {
+        const obj = { key1: { key2: 'value' } };
+        const path = 'key1.key2';
+        getDeepVal(obj, path).should.equal('value');
+      });
+
+      it('handles a nested path expressed as an array', () => {
+        const obj = { key1: { key2: 'value' } };
+        const path = ['key1', 'key2'];
+        getDeepVal(obj, path).should.equal('value');
+      });
+    });
+
+    describe('groupByDate', () => {
+      it('groups by date', () => {
+        const data = [
+          { value: 1, date: new Date('01-Apr-2017') },
+          { value: 2, date: new Date('01-Apr-2017') },
+          { value: 3, date: new Date('01-May-2017') },
+          { value: 4, date: new Date('01-May-2018') },
+        ];
+        const group = groupByDate(data);
+
+        group['01-Apr-2017'].should.equal(3);
+        group['01-May-2017'].should.equal(3);
+        group['01-May-2018'].should.equal(4);
+      });
+
+      it('handles nested paths correctly', () => {
+        const data = [
+          { key1: { value: 1 }, key2: { date: new Date('01-Apr-2017') } },
+          { key1: { value: 2 }, key2: { date: new Date('01-Apr-2017') } },
+          { key1: { value: 3 }, key2: { date: new Date('01-May-2017') } },
+          { key1: { value: 4 }, key2: { date: new Date('01-May-2018') } },
+        ];
+        const valuePath = 'key1.value';
+        const datePath = 'key2.date';
+        const group = groupByDate(data, valuePath, datePath);
+
+        group['01-Apr-2017'].should.equal(3);
+        group['01-May-2017'].should.equal(3);
+        group['01-May-2018'].should.equal(4);
+      });
+
+      it('handles empty values', () => {});
+
+      it('handles an empty array', () => {});
+
+      it('handles an undefined path', () => {});
+    });
 
     describe('uniqueValues', () => {
       it('gets unique values correctly', () => {
