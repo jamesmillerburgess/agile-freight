@@ -36,20 +36,32 @@ if (Meteor.isServer) {
         (() => Meteor.call('unlocations.search', { search: 'a' })).should.throw();
       });
 
-      it('returns locations meeting the criteria', () => {
+      it('returns locations for the specified country', () => {
         UNLocations.insert({ country: 'country', name: 'name' });
         UNLocations.insert({ country: 'differentCountry', name: 'name' });
-        UNLocations.insert({ country: 'country', name: 'differentName' });
-        UNLocations.insert({ country: 'country', name: 'notAMatch' });
         Countries.insert({ _id: 'country' });
         Countries.insert({ _id: 'differentCountry' });
-        const searchResults = Meteor.call('unlocations.search', { country: 'country', search: 'name' });
+        const searchResults = Meteor.call('unlocations.search', { country: 'country', search: '' });
 
-        searchResults.length.should.equal(2);
+        searchResults.length.should.equal(1);
         searchResults[0].country.should.equal('country');
         searchResults[0].name.should.equal('name');
-        searchResults[1].country.should.equal('country');
-        searchResults[1].name.should.equal('differentName');
+      });
+
+      it('returns locations matching each of the search words in any order', () => {
+        UNLocations.insert({ country: 'country', name: 'word1 word2 word3' });
+        UNLocations.insert({ country: 'country', name: 'word2 word3 word1' });
+        UNLocations.insert({ country: 'country', name: 'word3 word1 word2' });
+        UNLocations.insert({ country: 'country', name: 'aword3a bword2b bword1b notaword' });
+        UNLocations.insert({ country: 'country', name: 'word4 word2 word3' });
+        Countries.insert({ _id: 'country' });
+        const searchResults = Meteor.call('unlocations.search', { country: 'country', search: 'word1 word2 word3' });
+
+        searchResults.length.should.equal(4);
+        searchResults[0].name.should.equal('word1 word2 word3');
+        searchResults[1].name.should.equal('word2 word3 word1');
+        searchResults[2].name.should.equal('word3 word1 word2');
+        searchResults[3].name.should.equal('aword3a bword2b bword1b notaword');
       });
 
       it('throws an error if an invalid country is passed', () => {
