@@ -15,12 +15,16 @@ if (Meteor.isClient) {
       it('gets a value an object using a nested path', () => {
         const obj = { key1: { key2: 'value' } };
         const path = 'key1.key2';
+        deepFreeze([obj, path]);
+
         getDeepVal(obj, path).should.equal('value');
       });
 
       it('handles a nested path expressed as an array', () => {
         const obj = { key1: { key2: 'value' } };
         const path = ['key1', 'key2'];
+        deepFreeze([obj, path]);
+
         getDeepVal(obj, path).should.equal('value');
       });
     });
@@ -33,6 +37,7 @@ if (Meteor.isClient) {
           { date: new Date('01-May-2017') },
           { date: new Date('01-May-2018') },
         ];
+        deepFreeze(data);
         const counts = countByTimePeriod(data);
 
         counts['01-Apr-2017'].should.equal(2);
@@ -49,6 +54,7 @@ if (Meteor.isClient) {
         ];
         const datePath = 'date';
         const dateFormat = 'MMM-YYYY';
+        deepFreeze([data, datePath, dateFormat]);
         const counts = countByTimePeriod(data, datePath, dateFormat);
 
         counts['Apr-2017'].should.equal(2);
@@ -65,6 +71,7 @@ if (Meteor.isClient) {
         ];
         const datePath = 'date';
         const dateFormat = '[Q]Q-YYYY';
+        deepFreeze([data, datePath, dateFormat]);
         const counts = countByTimePeriod(data, datePath, dateFormat);
 
         counts['Q2-2017'].should.equal(3);
@@ -80,6 +87,7 @@ if (Meteor.isClient) {
         ];
         const datePath = 'date';
         const dateFormat = 'YYYY';
+        deepFreeze([data, datePath, dateFormat]);
         const counts = countByTimePeriod(data, datePath, dateFormat);
 
         counts['2017'].should.equal(3);
@@ -94,6 +102,7 @@ if (Meteor.isClient) {
           { key1: { date: new Date('01-May-2018') } },
         ];
         const datePath = 'key1.date';
+        deepFreeze([data, datePath]);
         const counts = countByTimePeriod(data, datePath);
 
         counts['01-Apr-2017'].should.equal(2);
@@ -108,6 +117,7 @@ if (Meteor.isClient) {
           {},
           { date: new Date('01-May-2018') },
         ];
+        deepFreeze(data);
         const counts = countByTimePeriod(data);
 
         Object.keys(counts).length.should.equal(2);
@@ -117,6 +127,7 @@ if (Meteor.isClient) {
 
       it('handles an empty array', () => {
         const data = [];
+        deepFreeze(data);
         const counts = countByTimePeriod(data);
 
         Object.keys(counts).length.should.equal(0);
@@ -131,6 +142,7 @@ if (Meteor.isClient) {
           { value: 3, date: new Date('01-May-2017') },
           { value: 4, date: new Date('01-May-2018') },
         ];
+        deepFreeze(data);
         const sums = sumByTimePeriod(data);
 
         sums['01-Apr-2017'].should.equal(3);
@@ -148,6 +160,7 @@ if (Meteor.isClient) {
         const valuePath = 'value';
         const datePath = 'date';
         const dateFormat = 'MMM-YYYY';
+        deepFreeze([data, valuePath, datePath, dateFormat]);
         const sums = sumByTimePeriod(data, valuePath, datePath, dateFormat);
 
         sums['Apr-2017'].should.equal(3);
@@ -165,6 +178,7 @@ if (Meteor.isClient) {
         const valuePath = 'value';
         const datePath = 'date';
         const dateFormat = '[Q]Q-YYYY';
+        deepFreeze([data, valuePath, datePath, dateFormat]);
         const sums = sumByTimePeriod(data, valuePath, datePath, dateFormat);
 
         sums['Q2-2017'].should.equal(6);
@@ -181,6 +195,7 @@ if (Meteor.isClient) {
         const valuePath = 'value';
         const datePath = 'date';
         const dateFormat = 'YYYY';
+        deepFreeze([data, valuePath, datePath, dateFormat]);
         const sums = sumByTimePeriod(data, valuePath, datePath, dateFormat);
 
         sums['2017'].should.equal(6);
@@ -196,6 +211,7 @@ if (Meteor.isClient) {
         ];
         const valuePath = 'key1.value';
         const datePath = 'key2.date';
+        deepFreeze([data, valuePath, datePath]);
         const sums = sumByTimePeriod(data, valuePath, datePath);
 
         sums['01-Apr-2017'].should.equal(3);
@@ -210,6 +226,7 @@ if (Meteor.isClient) {
           { date: new Date('01-May-2017') },
           { value: 4, date: new Date('01-May-2018') },
         ];
+        deepFreeze(data);
         const sums = sumByTimePeriod(data);
 
         sums['01-Apr-2017'].should.equal(3);
@@ -224,6 +241,7 @@ if (Meteor.isClient) {
           { value: 3 },
           { value: 4, date: new Date('01-May-2018') },
         ];
+        deepFreeze(data);
         const sums = sumByTimePeriod(data);
 
         Object.keys(sums).length.should.equal(2);
@@ -233,6 +251,7 @@ if (Meteor.isClient) {
 
       it('handles an empty array', () => {
         const data = [];
+        deepFreeze(data);
         const sums = sumByTimePeriod(data);
 
         Object.keys(sums).length.should.equal(0);
@@ -247,7 +266,7 @@ if (Meteor.isClient) {
           { key: 'b' },
         ];
         const path = 'key';
-        deepFreeze(data);
+        deepFreeze([data, path]);
         const values = uniqueValues(data, path);
 
         values[0].should.equal('a');
@@ -261,7 +280,7 @@ if (Meteor.isClient) {
           { key1: { key2: 'b' } },
         ];
         const path = 'key1.key2';
-        deepFreeze(data);
+        deepFreeze([data, path]);
         const values = uniqueValues(data, path);
 
         values[0].should.equal('a');
@@ -275,7 +294,7 @@ if (Meteor.isClient) {
           { key: 'b' },
         ];
         const path = 'key';
-        deepFreeze(data);
+        deepFreeze([data, path]);
         const values = uniqueValues(data, path);
 
         values[0].should.equal('a');
@@ -286,10 +305,10 @@ if (Meteor.isClient) {
       it('handles an empty array', () => {
         const data = [];
         const path = 'key';
-        deepFreeze(data);
+        deepFreeze([data, path]);
         const values = uniqueValues(data, path);
 
-        values.should.be.empty;
+        Object.keys(values).length.should.equal(0);
       });
 
       it('handles an undefined path', () => {
@@ -301,7 +320,7 @@ if (Meteor.isClient) {
         deepFreeze(data);
         const values = uniqueValues(data);
 
-        values.should.be.empty;
+        Object.keys(values).length.should.equal(0);
       });
     });
 
@@ -313,7 +332,7 @@ if (Meteor.isClient) {
           { key: 'b' },
         ];
         const path = 'key';
-        deepFreeze(data);
+        deepFreeze([data, path]);
         const counts = countByValue(data, path);
 
         counts.a.should.equal(2);
@@ -327,7 +346,7 @@ if (Meteor.isClient) {
           { key1: { key2: 'b' } },
         ];
         const path = 'key1.key2';
-        deepFreeze(data);
+        deepFreeze([data, path]);
         const counts = countByValue(data, path);
 
         counts.a.should.equal(2);
@@ -341,7 +360,7 @@ if (Meteor.isClient) {
           { key: 'b' },
         ];
         const path = 'key';
-        deepFreeze(data);
+        deepFreeze([data, path]);
         const counts = countByValue(data, path);
 
         counts.a.should.equal(1);
@@ -355,7 +374,7 @@ if (Meteor.isClient) {
         deepFreeze(data);
         const counts = countByValue(data, path);
 
-        counts.should.be.empty;
+        Object.keys(counts).length.should.equal(0);
       });
 
       it('handles an undefined path', () => {
@@ -367,7 +386,7 @@ if (Meteor.isClient) {
         deepFreeze(data);
         const counts = countByValue(data);
 
-        counts.should.be.empty;
+        Object.keys(counts).length.should.equal(0);
       });
     });
   });
