@@ -15,12 +15,18 @@ if (Meteor.isServer) {
         Meteor.server.publish_handlers.should.have.property('countries');
       });
 
-      it('returns a cursor on the UNLocations collection', () => {
+      it('returns a cursor on the Countries collection', () => {
         const cursor = Meteor.server.publish_handlers.countries();
 
         cursor.should.have.property('_cursorDescription');
         cursor._cursorDescription.should.have.property('collectionName');
         cursor._cursorDescription.collectionName.should.equal('Countries');
+      });
+
+      it('publishes all countries in the collection', () => {
+        const cursor = Meteor.server.publish_handlers.countries();
+
+        cursor._cursorDescription.selector.should.be.empty;
       });
     });
   });
