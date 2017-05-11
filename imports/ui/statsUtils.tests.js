@@ -57,6 +57,22 @@ if (Meteor.isClient) {
         group['May-2018'].should.equal(4);
       });
 
+      it('groups by quarter', () => {
+        const data = [
+          { value: 1, date: new Date('01-Apr-2017') },
+          { value: 2, date: new Date('02-Apr-2017') },
+          { value: 3, date: new Date('03-May-2017') },
+          { value: 4, date: new Date('04-May-2018') },
+        ];
+        const valuePath = 'value';
+        const datePath = 'date';
+        const dateFormat = '[Q]Q-YYYY';
+        const group = groupByTimePeriod(data, valuePath, datePath, dateFormat);
+
+        group['Q2-2017'].should.equal(6);
+        group['Q2-2018'].should.equal(4);
+      });
+
       it('groups by year', () => {
         const data = [
           { value: 1, date: new Date('01-Apr-2017') },
