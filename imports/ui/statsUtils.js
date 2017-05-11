@@ -13,16 +13,36 @@ export const getDeepVal = (obj, path) => {
   return val;
 };
 
-export const groupByTimePeriod = (data = [], valuePath = 'value', datePath = 'date', dateFormat = 'DD-MMM-YYYY') => {
+export const countByTimePeriod = (data = [], datePath = 'date', dateFormat = 'DD-MMM-YYYY') => {
+  const splitDatePath = datePath.split('.');
+  return data.reduce((acc, val) => {
+    const rawDate = getDeepVal(val, splitDatePath);
+    if (!rawDate) {
+      return acc;
+    }
+    const date = moment(rawDate)
+      .format(dateFormat);
+    return {
+      ...acc,
+      [date]: (acc[date] || 0) + 1,
+    };
+  }, {});
+};
+
+export const sumByTimePeriod = (data = [], valuePath = 'value', datePath = 'date', dateFormat = 'DD-MMM-YYYY') => {
   const splitValuePath = valuePath.split('.');
   const splitDatePath = datePath.split('.');
   return data.reduce((acc, val) => {
     const value = getDeepVal(val, splitValuePath);
-    const date = moment(getDeepVal(val, splitDatePath))
+    const rawDate = getDeepVal(val, splitDatePath);
+    if (!rawDate) {
+      return acc;
+    }
+    const date = moment(rawDate)
       .format(dateFormat);
     return {
       ...acc,
-      [date]: (acc[date] || 0) + value,
+      [date]: (acc[date] || 0) + (value || 0),
     };
   }, {});
 };

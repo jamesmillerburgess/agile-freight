@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { chai } from 'meteor/practicalmeteor:chai';
 import deepFreeze from 'deep-freeze';
 
-import { getDeepVal, groupByTimePeriod, uniqueValues, countByValue } from './statsUtils';
+import { getDeepVal, countByTimePeriod, sumByTimePeriod, uniqueValues, countByValue } from './statsUtils';
 
 if (Meteor.isClient) {
   describe('Stats Utilities', () => {
@@ -25,22 +25,120 @@ if (Meteor.isClient) {
       });
     });
 
-    describe('groupByTimePeriod', () => {
-      it('groups by date', () => {
+    describe('countByTimePeriod', () => {
+      it('counts by date', () => {
+        const data = [
+          { date: new Date('01-Apr-2017') },
+          { date: new Date('01-Apr-2017') },
+          { date: new Date('01-May-2017') },
+          { date: new Date('01-May-2018') },
+        ];
+        const counts = countByTimePeriod(data);
+
+        counts['01-Apr-2017'].should.equal(2);
+        counts['01-May-2017'].should.equal(1);
+        counts['01-May-2018'].should.equal(1);
+      });
+
+      it('counts by month', () => {
+        const data = [
+          { date: new Date('01-Apr-2017') },
+          { date: new Date('02-Apr-2017') },
+          { date: new Date('03-May-2017') },
+          { date: new Date('04-May-2018') },
+        ];
+        const datePath = 'date';
+        const dateFormat = 'MMM-YYYY';
+        const counts = countByTimePeriod(data, datePath, dateFormat);
+
+        counts['Apr-2017'].should.equal(2);
+        counts['May-2017'].should.equal(1);
+        counts['May-2018'].should.equal(1);
+      });
+
+      it('counts by quarter', () => {
+        const data = [
+          { date: new Date('01-Apr-2017') },
+          { date: new Date('02-Apr-2017') },
+          { date: new Date('03-May-2017') },
+          { date: new Date('04-May-2018') },
+        ];
+        const datePath = 'date';
+        const dateFormat = '[Q]Q-YYYY';
+        const counts = countByTimePeriod(data, datePath, dateFormat);
+
+        counts['Q2-2017'].should.equal(3);
+        counts['Q2-2018'].should.equal(1);
+      });
+
+      it('counts by year', () => {
+        const data = [
+          { date: new Date('01-Apr-2017') },
+          { date: new Date('02-Apr-2017') },
+          { date: new Date('03-May-2017') },
+          { date: new Date('04-May-2018') },
+        ];
+        const datePath = 'date';
+        const dateFormat = 'YYYY';
+        const counts = countByTimePeriod(data, datePath, dateFormat);
+
+        counts['2017'].should.equal(3);
+        counts['2018'].should.equal(1);
+      });
+
+      it('handles nested paths correctly', () => {
+        const data = [
+          { key1: { date: new Date('01-Apr-2017') } },
+          { key1: { date: new Date('01-Apr-2017') } },
+          { key1: { date: new Date('01-May-2017') } },
+          { key1: { date: new Date('01-May-2018') } },
+        ];
+        const datePath = 'key1.date';
+        const counts = countByTimePeriod(data, datePath);
+
+        counts['01-Apr-2017'].should.equal(2);
+        counts['01-May-2017'].should.equal(1);
+        counts['01-May-2018'].should.equal(1);
+      });
+
+      it('handles empty dates', () => {
+        const data = [
+          { date: new Date('01-Apr-2017') },
+          { date: new Date('01-Apr-2017') },
+          {},
+          { date: new Date('01-May-2018') },
+        ];
+        const counts = countByTimePeriod(data);
+
+        Object.keys(counts).length.should.equal(2);
+        counts['01-Apr-2017'].should.equal(2);
+        counts['01-May-2018'].should.equal(1);
+      });
+
+      it('handles an empty array', () => {
+        const data = [];
+        const counts = countByTimePeriod(data);
+
+        Object.keys(counts).length.should.equal(0);
+      });
+    });
+
+    describe('sumByTimePeriod', () => {
+      it('sums by date', () => {
         const data = [
           { value: 1, date: new Date('01-Apr-2017') },
           { value: 2, date: new Date('01-Apr-2017') },
           { value: 3, date: new Date('01-May-2017') },
           { value: 4, date: new Date('01-May-2018') },
         ];
-        const group = groupByTimePeriod(data);
+        const sums = sumByTimePeriod(data);
 
-        group['01-Apr-2017'].should.equal(3);
-        group['01-May-2017'].should.equal(3);
-        group['01-May-2018'].should.equal(4);
+        sums['01-Apr-2017'].should.equal(3);
+        sums['01-May-2017'].should.equal(3);
+        sums['01-May-2018'].should.equal(4);
       });
 
-      it('groups by month', () => {
+      it('sum by month', () => {
         const data = [
           { value: 1, date: new Date('01-Apr-2017') },
           { value: 2, date: new Date('02-Apr-2017') },
@@ -50,14 +148,14 @@ if (Meteor.isClient) {
         const valuePath = 'value';
         const datePath = 'date';
         const dateFormat = 'MMM-YYYY';
-        const group = groupByTimePeriod(data, valuePath, datePath, dateFormat);
+        const sums = sumByTimePeriod(data, valuePath, datePath, dateFormat);
 
-        group['Apr-2017'].should.equal(3);
-        group['May-2017'].should.equal(3);
-        group['May-2018'].should.equal(4);
+        sums['Apr-2017'].should.equal(3);
+        sums['May-2017'].should.equal(3);
+        sums['May-2018'].should.equal(4);
       });
 
-      it('groups by quarter', () => {
+      it('sums by quarter', () => {
         const data = [
           { value: 1, date: new Date('01-Apr-2017') },
           { value: 2, date: new Date('02-Apr-2017') },
@@ -67,13 +165,13 @@ if (Meteor.isClient) {
         const valuePath = 'value';
         const datePath = 'date';
         const dateFormat = '[Q]Q-YYYY';
-        const group = groupByTimePeriod(data, valuePath, datePath, dateFormat);
+        const sums = sumByTimePeriod(data, valuePath, datePath, dateFormat);
 
-        group['Q2-2017'].should.equal(6);
-        group['Q2-2018'].should.equal(4);
+        sums['Q2-2017'].should.equal(6);
+        sums['Q2-2018'].should.equal(4);
       });
 
-      it('groups by year', () => {
+      it('sums by year', () => {
         const data = [
           { value: 1, date: new Date('01-Apr-2017') },
           { value: 2, date: new Date('02-Apr-2017') },
@@ -83,10 +181,10 @@ if (Meteor.isClient) {
         const valuePath = 'value';
         const datePath = 'date';
         const dateFormat = 'YYYY';
-        const group = groupByTimePeriod(data, valuePath, datePath, dateFormat);
+        const sums = sumByTimePeriod(data, valuePath, datePath, dateFormat);
 
-        group['2017'].should.equal(6);
-        group['2018'].should.equal(4);
+        sums['2017'].should.equal(6);
+        sums['2018'].should.equal(4);
       });
 
       it('handles nested paths correctly', () => {
@@ -98,18 +196,47 @@ if (Meteor.isClient) {
         ];
         const valuePath = 'key1.value';
         const datePath = 'key2.date';
-        const group = groupByTimePeriod(data, valuePath, datePath);
+        const sums = sumByTimePeriod(data, valuePath, datePath);
 
-        group['01-Apr-2017'].should.equal(3);
-        group['01-May-2017'].should.equal(3);
-        group['01-May-2018'].should.equal(4);
+        sums['01-Apr-2017'].should.equal(3);
+        sums['01-May-2017'].should.equal(3);
+        sums['01-May-2018'].should.equal(4);
       });
 
-      it('handles empty values', () => {});
+      it('handles empty values', () => {
+        const data = [
+          { value: 1, date: new Date('01-Apr-2017') },
+          { value: 2, date: new Date('01-Apr-2017') },
+          { date: new Date('01-May-2017') },
+          { value: 4, date: new Date('01-May-2018') },
+        ];
+        const sums = sumByTimePeriod(data);
 
-      it('handles an empty array', () => {});
+        sums['01-Apr-2017'].should.equal(3);
+        sums['01-May-2017'].should.equal(0);
+        sums['01-May-2018'].should.equal(4);
+      });
 
-      it('handles an undefined path', () => {});
+      it('handles empty dates', () => {
+        const data = [
+          { value: 1, date: new Date('01-Apr-2017') },
+          { value: 2, date: new Date('01-Apr-2017') },
+          { value: 3 },
+          { value: 4, date: new Date('01-May-2018') },
+        ];
+        const sums = sumByTimePeriod(data);
+
+        Object.keys(sums).length.should.equal(2);
+        sums['01-Apr-2017'].should.equal(3);
+        sums['01-May-2018'].should.equal(4);
+      });
+
+      it('handles an empty array', () => {
+        const data = [];
+        const sums = sumByTimePeriod(data);
+
+        Object.keys(sums).length.should.equal(0);
+      });
     });
 
     describe('uniqueValues', () => {
