@@ -23,7 +23,7 @@
 
 .Select-option .option-count {
   float: right;
-  font-size: 12px;
+  font-size: $select-option-badge-font-size;
   padding: 2px 4px;
   border-radius: 3px;
   background-color: rgba($shading-color, $low-alpha);

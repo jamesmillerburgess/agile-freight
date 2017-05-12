@@ -8,12 +8,12 @@
   }
 
   .table {
-    font-size: 12px;
+    font-size: $table-font-size;
     th {
       font-weight: 600;
     }
     .title {
-      font-size: 14px;
+      font-size: $table-title-font-size;
     }
 
     tbody.striped-data tr:nth-child(odd) {
@@ -57,7 +57,7 @@
     top: 2px;
     width: 25px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: $small-icon-font-size;
     .fa-plus-circle {
       color: $add-icon-color;
     }
@@ -144,7 +144,7 @@
       position: relative;
       top: 8px;
       width: 200px;
-      font-size: 12px;
+      font-size: $cargo-totals-font-size;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -159,7 +159,7 @@
     border-radius: 7px 7px 0 0;
     padding: 7px 25px;
     margin-right: 7px;
-    font-size: 22px;
+    font-size: $content-tab-font-size;
     font-weight: 500;
     background-color: $inactive-tab-background-color;
     cursor: pointer;
@@ -201,7 +201,7 @@
   }
 
   .label {
-    font-size: 14px;
+    font-size: $field-label-font-size;
     font-style: normal;
     margin-bottom: 3px;
     font-weight: 400;
@@ -278,13 +278,13 @@
 
   .package-row-totals {
     display: inline-block;
-    font-size: 13px;
+    font-size: $package-row-totals-font-size;
   }
 
   .edit-group-totals {
     width: 300px;
     display: inline-block;
-    font-size: 12px;
+    font-size: $edit-group-totals-font-size;
     position: relative;
     top: 2px;
     left: 20px;
@@ -294,7 +294,7 @@
   }
 
   .total-shipment-label {
-    font-size: 14px;
+    font-size: $total-shipment-label-font-size;
     font-weight: bold;
   }
 
@@ -303,7 +303,7 @@
   }
 
   .edit-group-title {
-    font-size: 22px;
+    font-size: $content-group-font-size;
     font-weight: 500;
     margin-bottom: 10px;
   }
@@ -352,7 +352,7 @@
     margin: 10px 0;
     height: 50px;
     width: 200px;
-    font-size: 18px;
+    font-size: $submit-button-font-size;
     font-weight: 700;
     border-radius: 5px;
     border: 0;
