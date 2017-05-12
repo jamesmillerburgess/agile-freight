@@ -2,7 +2,7 @@
 
 input {
   padding: 5px 0;
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: $application-font-family;
   border: 1px solid $input-border-color;
   border-radius: 5px;
   color: $input-text-color;

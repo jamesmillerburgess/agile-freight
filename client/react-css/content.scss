@@ -1,8 +1,6 @@
 @import 'styleGlobals';
 
 .content {
-  //background-color: #111415;
-  //background-image: linear-gradient(to bottom, #323536, #111415 100%);
   overflow-y: auto;
 
   .content-header {
@@ -15,7 +13,6 @@
     text-align: center;
     font-size: $content-header-font-size;
     font-weight: bold;
-    // color: $neutral-content-text-color;
     margin: 0 0 7px 0;
     -moz-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset, 0 1px 3px rgba(0, 0, 0, 0.15);
     -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset, 0 1px 3px rgba(0, 0, 0, 0.15);
@@ -96,16 +93,4 @@
       margin-bottom: 15px;
     }
   }
-
-  //.table-container {
-  //  margin: 0 -15px;
-  //}
-  //table {
-  //  tbody {
-  //    tr {
-  //      cursor: pointer;
-  //    }
-  //  }
-  //}
-
 }

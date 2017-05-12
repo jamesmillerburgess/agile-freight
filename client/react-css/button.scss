@@ -1,7 +1,7 @@
 @import 'styleGlobals';
 
 .radio-button {
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: $application-font-family;
   border-radius: 4px;
   outline: none;
   border: 1px solid $input-border-color;
