@@ -6,13 +6,13 @@ const EditQuote = () => (
       <div className="edit-group-body">
         <table className="table table-bordered">
           <tbody>
-            <tr>
+            <tr className="title-row">
               <th colSpan="4" className="title">
                 Origin Charges
               </th>
               <th colSpan="3">Shanghai to CNSHA Shanghai</th>
             </tr>
-            <tr>
+            <tr className="column-title-row">
               <th className="amount">Fee Code</th>
               <th>Fee Name</th>
               <th>Comment</th>
@@ -78,11 +78,11 @@ const EditQuote = () => (
           </tbody>
           <tbody>
             <tr className="empty-row" />
-            <tr>
+            <tr className="title-row">
               <th colSpan="4" className="title">International Charges</th>
               <th colSpan="3">CNSHA Shanghai to USMIA Miami</th>
             </tr>
-            <tr>
+            <tr className="column-title-row">
               <th>Fee Code</th>
               <th>Fee Name</th>
               <th>Comment</th>
@@ -121,11 +121,11 @@ const EditQuote = () => (
           </tbody>
           <tbody>
             <tr className="empty-row" />
-            <tr>
+            <tr className="title-row">
               <th colSpan="4" className="title">Destination Charges</th>
               <th colSpan="3">USMIA Miami to Sarasota, FL</th>
             </tr>
-            <tr>
+            <tr className="column-title-row">
               <th>Fee Code</th>
               <th>Fee Name</th>
               <th>Comment</th>

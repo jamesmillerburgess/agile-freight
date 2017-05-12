@@ -16,8 +16,21 @@
       font-size: $table-title-font-size;
     }
 
+    .title-row th {
+      padding-bottom: 7px;
+      vertical-align: bottom;
+    }
+    
+    .column-title-row {
+      background: rgba($quaternary-color, $high-alpha);
+    }
+
     tbody.striped-data tr:nth-child(odd) {
-      background: rgba($shading-color, $very-low-alpha);
+      background: rgba($quaternary-color, $very-low-alpha);
+    }
+
+    tbody.striped-data tr:nth-child(even) {
+      background: rgba($quaternary-color, $low-alpha);
     }
 
     tbody.subtotal {
