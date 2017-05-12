@@ -25,6 +25,18 @@
       background: rgba($quaternary-color, $high-alpha);
     }
 
+    .column-title-row th:first-child {
+      border-top-left-radius: 10px;
+    }
+
+    .column-title-row th:last-child {
+      border-top-right-radius: 10px;
+    }
+
+    .info-row td {
+      vertical-align: top;
+    }
+
     tbody.striped-data tr:nth-child(odd) {
       background: rgba($quaternary-color, $very-low-alpha);
     }
@@ -188,25 +200,7 @@
     box-shadow: 0 -1px 0 0 rgba($shading-color, 0.05) inset, 0 0 0 1px rgba($shading-color, 0.13) inset;
   }
 
-  .edit-group {
-    width: 960px;
-    background-color: $content-background-color;
-    border-radius: 7px;
-    margin-bottom: 7px;
-  }
 
-  .edit-group-body {
-    padding: 10px 15px;
-  }
-
-  .edit-group-footer {
-    padding: 10px 15px;
-    border-top: 1px dashed $input-border-color;
-  }
-
-  .edit-group.with-tabs {
-    border-radius: 0 7px 7px 7px;
-  }
 
   .field {
     display: inline-block;

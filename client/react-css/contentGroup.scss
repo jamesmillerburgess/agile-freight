@@ -1,0 +1,21 @@
+@import 'styleGlobals';
+
+.edit-group {
+  width: 960px;
+  background-color: $content-background-color;
+  border-radius: 7px;
+  margin-bottom: 7px;
+}
+
+.edit-group-body {
+  padding: 10px 15px;
+}
+
+.edit-group-footer {
+  padding: 10px 15px;
+  border-top: 1px dashed $input-border-color;
+}
+
+.edit-group.with-tabs {
+  border-radius: 0 7px 7px 7px;
+}

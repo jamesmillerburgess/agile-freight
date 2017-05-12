@@ -163,7 +163,7 @@ const EditQuote = () => (
             </tr>
           </tbody>
           <tbody>
-            <tr>
+            <tr className="info-row">
               <td colSpan="5">
                 <b>Ocean Freight Leg:</b><br />
                 • Transit times are estimates as provided by the carriers.<br />
