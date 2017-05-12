@@ -1,12 +1,14 @@
+@import 'styleGlobals';
+
 .field {
 
   .checkbox {
     outline: none;
     height: 20px;
     width: 20px;
-    background-color: white;
+    background-color: $editable-input-background-color;
     border-radius: 3px;
-    border: 1px solid rgb(203, 203, 203);
+    border: 1px solid $input-border-color;
     display: inline-block;
     cursor: pointer;
     padding: 0;
@@ -18,17 +20,17 @@
   }
 
   .checkbox:hover {
-    background-color: rgba(239, 130, 1, 0.15);
-    border-color: rgba(239, 130, 1, 0.3);
+    background-color: rgba($quaternary-color, $low-alpha);
+    border-color: rgba($quaternary-color, $mid-alpha);
   }
 
   .checkbox:focus {
-    box-shadow: 0 0 3pt 2pt rgba(239, 130, 1, 0.3);
+    box-shadow: 0 0 3pt 2pt rgba($quaternary-color, $mid-alpha);
     outline: none;
   }
 
   .checkbox:disabled {
-    background-color: #eee;
+    background-color: $disabled-input-background-color;
     cursor: default;
   }
 

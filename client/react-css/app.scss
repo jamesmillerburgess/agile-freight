@@ -1,3 +1,5 @@
+@import 'styleGlobals';
+
 html {
   height: 100%;
 }
@@ -16,17 +18,17 @@ body {
 }
 
 .navbar {
-  background-color: #323536;
-  color: white;
+  background-color: $primary-color;
+  color: $quaternary-color;
 
   .navbar-brand {
-    color: orange;
+    color: $tertiary-color;
     font-weight: 500;
   }
 
   .navbar-brand:hover,
   .nav-link {
-    color: white;
+    color: $quaternary-color;
   }
 
   .form-inline {
@@ -35,7 +37,7 @@ body {
 
   .profile-button,
   .alert-button {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba($quaternary-color, $high-alpha);
     background-color: transparent;
     transition: all .2s ease-in-out;
     border-radius: 3px;
@@ -53,13 +55,13 @@ body {
     }
     .user-name {
       margin-top: 5px;
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba($quaternary-color, $high-alpha);
     }
   }
 
   .profile-button:hover,
   .alert-button:hover {
-    background-color: rgba(239, 130, 1, 0.3);
+    background-color: rgba($quaternary-color, $mid-alpha);
   }
 
   .alert-button-container {
@@ -79,5 +81,5 @@ body {
 }
 
 body {
-  background-color: #111415;
+  background-color: $primary-color;
 }

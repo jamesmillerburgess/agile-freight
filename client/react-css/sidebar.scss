@@ -1,11 +1,13 @@
+@import 'styleGlobals';
+
 .sidebar-container {
   height: 100%;
 }
 
 .sidebar {
   padding-top: 7px;
-  background-image: linear-gradient(to bottom, #323536, #111415 100%);
-  color: white;
+  background-color: $primary-color;
+  color: $editable-input-background-color;
   font-size: 11pt;
 
   height: 100%;
@@ -18,16 +20,16 @@
   a {
     padding: 2px 15px;
     display: block;
-    color: #dddddd;
+    color: $sidebar-link-text-color;
   }
 
   a.active {
-    color: orange;
+    color: $tertiary-color;
     font-weight: bold;
   }
 
   a:hover {
-    background-color: rgba(239, 130, 1, 0.3);
+    background-color: rgba($quaternary-color, $mid-alpha);
   }
 
   .sidebar-section-spacer {

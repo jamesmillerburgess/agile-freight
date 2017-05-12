@@ -1,0 +1,38 @@
+@import 'styleGlobals';
+
+.radio-button {
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid $input-border-color;
+  background-color: $editable-input-background-color;
+  padding: 5px 5px 4px 5px;
+  color: $input-text-color;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.radio-button:hover {
+  background-color: rgba($quaternary-color, $low-alpha);
+  border-color: rgba($quaternary-color, $mid-alpha);
+}
+
+.radio-button.active {
+  background-color: rgba($quaternary-color, $mid-alpha);
+  border-color: $quaternary-color;
+}
+
+.radio-button.active:hover {
+  background-color: rgba($quaternary-color, $high-alpha);
+}
+
+.radio-button:focus {
+  box-shadow: 0 0 3pt 2pt rgba($quaternary-color, $mid-alpha);
+  outline: none;
+}
+
+.radio-button:disabled,
+.radio-button.active:disabled {
+  background-color: $disabled-input-background-color;
+  cursor: default;
+}

@@ -1,0 +1,30 @@
+@import 'styleGlobals';
+
+.Select.is-focused .Select-control {
+  box-shadow: 0 0 3pt 2pt rgba($quaternary-color, $mid-alpha) !important;
+  border-color: rgba($quaternary-color, $mid-alpha) !important;
+}
+
+.Select-value-label {
+  font-weight: 300;
+}
+
+.Select.is-disabled .Select-control {
+  background-color: $disabled-input-background-color !important;
+}
+
+.Select-option.is-selected {
+  background-color: rgba($quaternary-color, $low-alpha) !important;
+}
+
+.Select-option.is-focused {
+  background-color: rgba($quaternary-color, $mid-alpha) !important;
+}
+
+.Select-option .option-count {
+  float: right;
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 3px;
+  background-color: rgba($shading-color, $low-alpha);
+}

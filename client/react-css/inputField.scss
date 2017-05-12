@@ -1,21 +1,18 @@
-input {
-  font-weight: 300;
-  color: #333;
-}
+@import 'styleGlobals';
 
 input {
   padding: 5px 0;
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  border: 1px solid rgb(203, 203, 203);
+  border: 1px solid $input-border-color;
   border-radius: 5px;
-  color: #333;
-  font-weight: 300;
+  color: $input-text-color;
+  font-weight: 400;
   outline: none;
 }
 
 input:focus {
-  box-shadow: 0 0 3pt 2pt rgba(239, 130, 1, 0.3);
-  border: 1px solid rgba(239, 130, 1, 0.3);
+  box-shadow: 0 0 3pt 2pt rgba($quaternary-color, $high-alpha);
+  border: 1px solid rgba($quaternary-color, $mid-alpha);
   z-index: 1000;
 }
 
@@ -30,5 +27,5 @@ input[type=number] {
 }
 
 input:disabled {
-  background-color: #eee;
+  background-color: $disabled-input-background-color;
 }

@@ -1,3 +1,5 @@
+@import 'styleGlobals';
+
 .new-quote,
 .edit-quote {
   .field {
@@ -15,12 +17,12 @@
     }
 
     tbody.striped-data tr:nth-child(odd) {
-      background: rgba(0, 0, 0, 0.05);
+      background: rgba($shading-color, $very-low-alpha);
     }
 
     tbody.subtotal {
       font-weight: 600;
-      background-color: rgba(239, 130, 1, 0.25);
+      background-color: rgba($quaternary-color, $mid-alpha);
     }
     
     td {
@@ -32,39 +34,24 @@
     }
     tr.summary {
       color: white;
-      background-color: rgba(239, 130, 1, 0.75);
+      background-color: rgba($quaternary-color, $very-high-alpha);
     }
 
     th.amount {
       width: 13%;
     }
 
-    td, th {
+    td,
+    th {
       padding: 12px 7px;
     }
   }
 
-
-  //.table {
-  //  display: table;
-  //  width: 100%;
-  //  border-color: #cccccc;
-  //  .table-header-row,
-  //  .table-column-header-row {
-  //    display: table-row;
-  //    .table-cell {
-  //      display: table-cell;
-  //      padding: 10px;
-  //    }
-  //  }
-  //
-  //}
-
   .cargo-row-icon {
     border: 0;
-    outline-color: rgba(239, 130, 1, 0.3);
+    outline-color: rgba($quaternary-color, $mid-alpha);
     padding: 0;
-    background-color: #eee;
+    background-color: $content-background-color;
     display: inline-block;
     position: relative;
     top: 2px;
@@ -72,10 +59,10 @@
     cursor: pointer;
     font-size: 18px;
     .fa-plus-circle {
-      color: #4a90e2;
+      color: $add-icon-color;
     }
     .fa-minus-circle {
-      color: #d0021b;
+      color: $remove-icon-color;
     }
   }
   .cargo-row-icon:disabled {
@@ -85,7 +72,7 @@
     }
   }
   .cargo-row-icon.active {
-    box-shadow: 0 0 3pt 2pt rgba(239, 130, 1, 0.3);
+    box-shadow: 0 0 3pt 2pt rgba($quaternary-color, $mid-alpha);
     outline: none;
   }
 
@@ -174,23 +161,23 @@
     margin-right: 7px;
     font-size: 22px;
     font-weight: 500;
-    background-color: #dddddd;
+    background-color: $inactive-tab-background-color;
     cursor: pointer;
   }
 
   .tab.active {
-    background-color: #eeeeee;
+    background-color: $content-background-color;
   }
 
   .tab.inactive {
-    -moz-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset;
-    -webkit-box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset;
-    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.05) inset, 0 0 0 1px rgba(0, 0, 0, 0.13) inset;
+    -moz-box-shadow: 0 -1px 0 0 rgba($shading-color, 0.05) inset, 0 0 0 1px rgba($shading-color, 0.13) inset;
+    -webkit-box-shadow: 0 -1px 0 0 rgba($shading-color, 0.05) inset, 0 0 0 1px rgba($shading-color, 0.13) inset;
+    box-shadow: 0 -1px 0 0 rgba($shading-color, 0.05) inset, 0 0 0 1px rgba($shading-color, 0.13) inset;
   }
 
   .edit-group {
     width: 960px;
-    background-color: #eeeeee;
+    background-color: $content-background-color;
     border-radius: 7px;
     margin-bottom: 7px;
   }
@@ -201,7 +188,7 @@
 
   .edit-group-footer {
     padding: 10px 15px;
-    border-top: 1px dashed #cccccc;
+    border-top: 1px dashed $input-border-color;
   }
 
   .edit-group.with-tabs {
@@ -222,22 +209,17 @@
 
   .select,
   .input-group {
-    background-color: white;
+    background-color: $editable-input-background-color;
   }
 
   .select {
-    font-weight: 300;
-    color: #333;
-  }
-
-  .select {
-    border: 1px solid rgb(203, 203, 203);
+    border: 1px solid $input-border-color;
     padding: 5px 15px;
     border-radius: 5px;
     cursor: pointer;
     position: relative;
     font-weight: 300;
-    color: #333;
+    color: $input-text-color;
   }
 
   .select-icon {
@@ -283,7 +265,7 @@
     .addon .Select-control {
       text-align: center;
       width: 56px;
-      background-color: #ccc;
+      background-color: $input-addon-background-color;
       font-weight: bold;
       border-bottom-left-radius: 0;
       border-top-left-radius: 0;
@@ -341,7 +323,7 @@
   }
 
   .delivery {
-    border-left: 2px solid #cccccc;
+    border-left: 2px solid $input-border-color;
     padding-left: 15px;
     float: right;
   }
@@ -374,13 +356,13 @@
     font-weight: 700;
     border-radius: 5px;
     border: 0;
-    color: white;
+    color: $editable-input-background-color;
     outline: none;
-    background-color: #4caf50;
+    background-color: $submit-button-background-color;
     cursor: pointer;
   }
 
   .submit:hover {
-    background-color: #388e3c;
+    background-color: rgba($submit-button-background-color, $very-high-alpha);
   }
 }
