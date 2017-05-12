@@ -79,7 +79,7 @@ const EditQuote = () => (
           <tbody>
             <tr className="empty-row" />
             <tr>
-              <th colSpan="4">International Charges</th>
+              <th colSpan="4" className="title">International Charges</th>
               <th colSpan="3">CNSHA Shanghai to USMIA Miami</th>
             </tr>
             <tr>
@@ -122,7 +122,7 @@ const EditQuote = () => (
           <tbody>
             <tr className="empty-row" />
             <tr>
-              <th colSpan="4">Destination Charges</th>
+              <th colSpan="4" className="title">Destination Charges</th>
               <th colSpan="3">USMIA Miami to Sarasota, FL</th>
             </tr>
             <tr>
