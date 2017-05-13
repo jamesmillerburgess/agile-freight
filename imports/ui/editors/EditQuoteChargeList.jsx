@@ -2,14 +2,44 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const EditQuoteChargeList = (props) => {
-  const { chargeLines, removeChargeLine, setChargeLineUnits, setChargeLineUnitPrice } = props;
+  const
+    {
+      chargeLines,
+      removeChargeLine,
+      setChargeLineCode,
+      setChargeLineName,
+      setChargeLineRate,
+      setChargeLineUnits,
+      setChargeLineUnitPrice,
+    } = props;
   return (
     <tbody className="striped-data">
       {chargeLines.map(chargeLine => (
         <tr key={chargeLine.id}>
-          <td>{chargeLine.code}</td>
-          <td>{chargeLine.name}</td>
-          <td>{chargeLine.rate}</td>
+          <td>
+            <input
+              type="text"
+              placeholder=""
+              value={chargeLine.code}
+              onChange={e => setChargeLineCode(chargeLine.id, e.target.value)}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              placeholder=""
+              value={chargeLine.name}
+              onChange={e => setChargeLineName(chargeLine.id, e.target.value)}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              placeholder=""
+              value={chargeLine.rate}
+              onChange={e => setChargeLineRate(chargeLine.id, e.target.value)}
+            />
+          </td>
           <td>
             <input
               className="input-numeric"
@@ -27,7 +57,7 @@ const EditQuoteChargeList = (props) => {
               value={chargeLine.unitPrice}
               onChange={e => setChargeLineUnitPrice(chargeLine.id, +e.target.value)}
             />
-            </td>
+          </td>
           <td>{chargeLine.amount}</td>
           <td />
           <td className="icon-cell">
