@@ -12,6 +12,24 @@ if (Meteor.isClient) {
   describe('Movement Reducer', () => {
     chai.should();
 
+    it('loads the movement section of a quote', () => {
+      const movementToLoad = {
+        pickup: {
+          locationType: 'a',
+          country: 'b',
+          location: 'c',
+        },
+        delivery: {
+          locationType: 'd',
+          country: 'e',
+          location: 'f',
+        },
+      };
+      const action = { type: ACTION_TYPES.LOAD_QUOTE, movement: movementToLoad };
+
+      movement({}, action).should.eql(movementToLoad);
+    });
+
     it('sets the pickup location type', () => {
       const stateBefore = { pickup: { locationType: 'port' } };
       const action = { type: ACTION_TYPES.SET_PICKUP_LOCATION_TYPE, locationType: 'address' };
