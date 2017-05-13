@@ -36,5 +36,14 @@ export const setDeliveryLocation     = makeActionCreator(ACTION_TYPES.SET_DELIVE
 export const toggleInsurance        = makeActionCreator(ACTION_TYPES.TOGGLE_INSURANCE);
 export const toggleCustomsClearance = makeActionCreator(ACTION_TYPES.TOGGLE_CUSTOMS_CLEARANCE);
 
+// CHARGES
+export const addChargeLine          = makeActionCreator(ACTION_TYPES.ADD_CHARGE_LINE, 'chargeLine');
+export const removeChargeLine       = makeActionCreator(ACTION_TYPES.REMOVE_CHARGE_LINE, 'index');
+export const setChargeLineCode      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_CODE, 'index', 'code');
+export const setChargeLineName      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_NAME, 'index', 'code');
+export const setChargeLineRate      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_RATE, 'index', 'rate');
+export const setChargeLineUnits     = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNITS, 'index', 'units');
+export const setChargeLineUnitPrice = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE, 'index', 'unitPrice');
+
 // LOAD QUOTE
 export const loadQuote = makeActionCreator(ACTION_TYPES.LOAD_QUOTE, 'quote');

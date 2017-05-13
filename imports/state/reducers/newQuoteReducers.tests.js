@@ -9,12 +9,13 @@ import { newQuote } from './newQuoteReducers';
 if (Meteor.isClient) {
   describe('New Quote Reducers', () => {
     chai.should();
-    it('defaults the three sections', () => {
+    it('defaults the various sections', () => {
       const newNewQuote = newQuote();
 
       newNewQuote.should.have.property('cargo');
       newNewQuote.should.have.property('movement');
       newNewQuote.should.have.property('otherServices');
+      newNewQuote.should.have.property('charges');
     });
   });
 }

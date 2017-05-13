@@ -1,4 +1,4 @@
-import { changeProp, changePropAtIndex, removeAtIndex, addToEnd } from './reducer-utils';
+import { changePropAtIndex, removeAtIndex, addToEnd } from './reducer-utils';
 import * as ACTION_TYPES from '../actions/actionTypes';
 
 export const cargoType = (state = 'loose', action = { type: '' }) => {
