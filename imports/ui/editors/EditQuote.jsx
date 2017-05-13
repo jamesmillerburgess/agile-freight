@@ -1,14 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import EditQuoteChargeList from './EditQuoteChargeList.jsx';
 
 import { CustomerQuotes } from '../../api/customerQuotes/customerQuotesCollection';
 
 const EditQuote = (props) => {
-  const { customerQuotes }      = props;
+  const { customerQuotes, onLoad }      = props;
   const { customerId, quoteId } = props.match.params;
-  console.log(CustomerQuotes.findOne(quoteId));
-  props.onLoad(CustomerQuotes.findOne(quoteId));
+  onLoad(CustomerQuotes.findOne(quoteId));
   return (
     <div className="edit-quote">
       <div className="edit-group">
@@ -165,6 +165,10 @@ const EditQuote = (props) => {
       </div>
     </div>
   );
+};
+
+EditQuote.propTypes = {
+  onLoad: PropTypes.func.isRequired,
 };
 
 export default EditQuote;
