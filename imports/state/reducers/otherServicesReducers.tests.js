@@ -11,6 +11,17 @@ import * as ACTION_TYPES from '../actions/actionTypes';
 if (Meteor.isClient) {
   describe('Other Services Reducer', () => {
     chai.should();
+
+    it('loads the otherServices section of a quote', () => {
+      const otherServicesToLoad = {
+        insurance: true,
+        customsClearance: false,
+      };
+      const action = { type: ACTION_TYPES.LOAD_QUOTE, otherServices: otherServicesToLoad };
+
+      otherServices({}, action).should.eql(otherServicesToLoad);
+    });
+
     it('defaults initial values', () => {
       const stateAfter = { insurance: false, customsClearance: false };
 
