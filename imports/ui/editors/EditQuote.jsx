@@ -33,7 +33,7 @@ const EditQuote = (props) => {
                 <th>
                   <span
                     className="fa fa-fw fa-plus-circle"
-                    onClick={() => addChargeLine({ id: Mongo.ObjectID(), group: 'Origin' })}
+                    onClick={() => addChargeLine({ id: new Mongo.ObjectID()._str, group: 'Origin' })}
                   />
                 </th>
               </tr>
