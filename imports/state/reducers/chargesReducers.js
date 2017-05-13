@@ -1,4 +1,4 @@
-import { changePropAtIndex, removeAtIndex, addToEnd } from './reducer-utils';
+import { changePropAtIndex, removeAtId, addToEnd } from './reducer-utils';
 import * as ACTION_TYPES from '../actions/actionTypes';
 
 export const chargeLines = (state = [], action = { type: '' }) => {
@@ -8,7 +8,7 @@ export const chargeLines = (state = [], action = { type: '' }) => {
       newState = addToEnd(state, action.chargeLine);
       break;
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
-      newState = removeAtIndex(state, action.index);
+      newState = removeAtId(state, action.id);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_CODE:
       newState = changePropAtIndex(state, 'code', action.index, action.code);

@@ -111,12 +111,12 @@ if (Meteor.isClient) {
         stateAfter[0].group.should.equal('Origin');
       });
 
-      it('removes a charge line at the specified index', () => {
+      it('removes a charge line with the specified id', () => {
         const stateBefore = [
-          { group: 'Origin' },
-          { group: 'Destination' },
+          { id: 'a', group: 'Origin' },
+          { id: 'b', group: 'Destination' },
         ];
-        const action      = { type: ACTION_TYPES.REMOVE_CHARGE_LINE, index: 0 };
+        const action      = { type: ACTION_TYPES.REMOVE_CHARGE_LINE, id: 'a' };
         deepFreeze(stateBefore);
         const stateAfter = chargeLines(stateBefore, action);
 

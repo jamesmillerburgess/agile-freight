@@ -11,6 +11,8 @@ export const removeAtIndex = (arr, index) => [
   ...arr.slice(index + 1),
 ];
 
+export const removeAtId = (arr, id) => arr.filter(val => val.id !== id);
+
 export const addToEnd = (arr, val) => [
   ...arr,
   val,
