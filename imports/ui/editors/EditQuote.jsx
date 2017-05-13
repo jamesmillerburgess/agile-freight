@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Mongo } from 'meteor/mongo';
 
-import EditQuoteChargeList from './EditQuoteChargeList.jsx';
+import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
 
 import { CustomerQuotes } from '../../api/customerQuotes/customerQuotesCollection';
 
 const EditQuote = (props) => {
-  const { customerQuotes, onLoad }      = props;
-  const { customerId, quoteId } = props.match.params;
+  const { customerQuotes, onLoad, addChargeLine } = props;
+  const { customerId, quoteId }                   = props.match.params;
   onLoad(CustomerQuotes.findOne(quoteId));
   return (
     <div className="edit-quote">
@@ -29,9 +30,15 @@ const EditQuote = (props) => {
                 <th className="amount">Unit Price</th>
                 <th className="amount">Amount</th>
                 <th className="amount">Final Amount</th>
+                <th>
+                  <span
+                    className="fa fa-fw fa-plus-circle"
+                    onClick={() => addChargeLine({ id: Mongo.ObjectID(), group: 'Origin' })}
+                  />
+                </th>
               </tr>
             </tbody>
-            <EditQuoteChargeList />
+            <EditQuoteChargeListConnect group="Origin" />
             <tbody className="subtotal">
               <tr>
                 <td colSpan="5" />
