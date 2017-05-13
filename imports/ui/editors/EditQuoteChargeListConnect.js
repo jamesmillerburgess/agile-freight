@@ -9,7 +9,9 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  removeChargeLine: index => dispatch(actionCreators.removeChargeLine(index)),
+  setChargeLineUnits: (id, units) => dispatch(actionCreators.setChargeLineUnits(id, units)),
+  setChargeLineUnitPrice: (id, unitPrice) => dispatch(actionCreators.setChargeLineUnitPrice(id, unitPrice)),
+  removeChargeLine: id => dispatch(actionCreators.removeChargeLine(id)),
 });
 
 const EditQuoteChargeListConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuoteChargeList);

@@ -124,43 +124,43 @@ if (Meteor.isClient) {
         stateAfter[0].group.should.equal('Destination');
       });
 
-      it('changes the code at the specified index', () => {
-        const stateBefore = [{ code: 'a' }];
-        const action      = { type: ACTION_TYPES.SET_CHARGE_LINE_CODE, index: 0, code: 'b' };
+      it('changes the code at the charge line with the specified id', () => {
+        const stateBefore = [{ id: 0, code: 'a' }, { id: 1, code: 'c' }];
+        const action      = { type: ACTION_TYPES.SET_CHARGE_LINE_CODE, id: 0, code: 'b' };
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore, action)[0].code.should.equal('b');
       });
 
-      it('changes the name at the specified index', () => {
-        const stateBefore = [{ name: 'a' }];
-        const action      = { type: ACTION_TYPES.SET_CHARGE_LINE_NAME, index: 0, name: 'b' };
+      it('changes the name at the charge line with the specified id', () => {
+        const stateBefore = [{ id: 0, name: 'a' }, { id: 2, name: 'c' }];
+        const action      = { type: ACTION_TYPES.SET_CHARGE_LINE_NAME, id: 0, name: 'b' };
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore, action)[0].name.should.equal('b');
       });
 
-      it('changes the rate at the specified index', () => {
-        const stateBefore = [{ rate: 'a' }];
-        const action      = { type: ACTION_TYPES.SET_CHARGE_LINE_RATE, index: 0, rate: 'b' };
+      it('changes the rate at at the charge line with the specified id', () => {
+        const stateBefore = [{ id: 0, rate: 'a' }, { id: 1, rate: 'c' }];
+        const action      = { type: ACTION_TYPES.SET_CHARGE_LINE_RATE, id: 0, rate: 'b' };
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore, action)[0].rate.should.equal('b');
       });
 
-      it('changes the units at the specified index', () => {
-        const stateBefore = [{ units: 1 }];
-        const action      = { type: ACTION_TYPES.SET_CHARGE_LINE_UNITS, index: 0, units: 2 };
+      it('changes the units at the charge line with the specified id', () => {
+        const stateBefore = [{ id: 'a', units: 1 }, { id: 'b', units: 3 }];
+        const action      = { type: ACTION_TYPES.SET_CHARGE_LINE_UNITS, id: 'a', units: 2 };
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore, action)[0].units.should.equal(2);
       });
 
-      it('changes the unit price at the specified index', () => {
-        const stateBefore = [{ unitPrice: 1 }];
+      it('changes the unit price at the charge line with the specified id', () => {
+        const stateBefore = [{ id: 'a', unitPrice: 1 }, { id: 'b', unitPrice: 3 }];
         const action      = {
           type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE,
-          index: 0,
+          id: 'a',
           unitPrice: 2,
         };
         deepFreeze(stateBefore);

@@ -1,4 +1,4 @@
-import { changePropAtIndex, removeAtId, addToEnd } from './reducer-utils';
+import { changePropAtId, changePropAtIndex, removeAtId, addToEnd } from './reducer-utils';
 import * as ACTION_TYPES from '../actions/actionTypes';
 
 export const chargeLines = (state = [], action = { type: '' }) => {
@@ -11,19 +11,19 @@ export const chargeLines = (state = [], action = { type: '' }) => {
       newState = removeAtId(state, action.id);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_CODE:
-      newState = changePropAtIndex(state, 'code', action.index, action.code);
+      newState = changePropAtId(state, 'code', action.id, action.code);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_NAME:
-      newState = changePropAtIndex(state, 'name', action.index, action.name);
+      newState = changePropAtId(state, 'name', action.id, action.name);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_RATE:
-      newState = changePropAtIndex(state, 'rate', action.index, action.rate);
+      newState = changePropAtId(state, 'rate', action.id, action.rate);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNITS:
-      newState = changePropAtIndex(state, 'units', action.index, action.units);
+      newState = changePropAtId(state, 'units', action.id, action.units);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE:
-      newState = changePropAtIndex(state, 'unitPrice', action.index, action.unitPrice);
+      newState = changePropAtId(state, 'unitPrice', action.id, action.unitPrice);
       break;
     default:
       newState = state;

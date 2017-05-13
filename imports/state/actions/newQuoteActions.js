@@ -39,11 +39,11 @@ export const toggleCustomsClearance = makeActionCreator(ACTION_TYPES.TOGGLE_CUST
 // CHARGES
 export const addChargeLine          = makeActionCreator(ACTION_TYPES.ADD_CHARGE_LINE, 'chargeLine');
 export const removeChargeLine       = makeActionCreator(ACTION_TYPES.REMOVE_CHARGE_LINE, 'id');
-export const setChargeLineCode      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_CODE, 'index', 'code');
-export const setChargeLineName      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_NAME, 'index', 'code');
-export const setChargeLineRate      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_RATE, 'index', 'rate');
-export const setChargeLineUnits     = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNITS, 'index', 'units');
-export const setChargeLineUnitPrice = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE, 'index', 'unitPrice');
+export const setChargeLineCode      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_CODE, 'id', 'code');
+export const setChargeLineName      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_NAME, 'id', 'code');
+export const setChargeLineRate      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_RATE, 'id', 'rate');
+export const setChargeLineUnits     = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNITS, 'id', 'units');
+export const setChargeLineUnitPrice = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE, 'id', 'unitPrice');
 
 // LOAD QUOTE
 export const loadQuote = makeActionCreator(ACTION_TYPES.LOAD_QUOTE, 'quote');

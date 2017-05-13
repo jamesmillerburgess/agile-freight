@@ -30,11 +30,13 @@ const EditQuote = (props) => {
                 <th className="amount">Unit Price</th>
                 <th className="amount">Amount</th>
                 <th className="amount">Final Amount</th>
-                <th>
-                  <span
-                    className="fa fa-fw fa-plus-circle"
+                <th className="icon-cell">
+                  <button
+                    className="cargo-row-icon"
                     onClick={() => addChargeLine({ id: new Mongo.ObjectID()._str, group: 'Origin' })}
-                  />
+                  >
+                    <span className="fa fa-fw fa-plus-circle" />
+                  </button>
                 </th>
               </tr>
             </tbody>

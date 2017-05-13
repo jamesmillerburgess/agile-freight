@@ -1,0 +1,38 @@
+@import 'styleGlobals';
+
+table {
+  .icon-cell {
+    vertical-align: middle;
+    text-align: center;
+    padding: 0 !important;
+  }
+
+  .cargo-row-icon {
+    border: 0;
+    outline-color: rgba($quaternary-color, $mid-alpha);
+    padding: 0;
+    background-color: transparent;
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    width: 25px;
+    cursor: pointer;
+    font-size: $small-icon-font-size;
+    .fa-plus-circle {
+      color: $add-icon-color;
+    }
+    .fa-minus-circle {
+      color: $remove-icon-color;
+    }
+  }
+  .cargo-row-icon:disabled {
+    cursor: default;
+    i {
+      color: #333;
+    }
+  }
+  .cargo-row-icon.active {
+    box-shadow: 0 0 3pt 2pt rgba($quaternary-color, $mid-alpha);
+    outline: none;
+  }
+}
