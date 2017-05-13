@@ -11,9 +11,8 @@ import { uniqueValues } from '../statsUtils';
 import { Quotes } from '../../api/quotes/quotes-collection';
 import { CustomerQuotes as customerQuotesCollection } from '../../api/customerQuotes/customerQuotesCollection';
 
-import EditQuote from '../editors/EditQuote.jsx';
+import EditQuoteConnect from '../editors/EditQuoteConnect';
 import QuoteList from '../lists/QuoteList.jsx';
-import QuoteEditor from '../editors/quote/QuoteEditor.jsx';
 import NewQuoteConnect from '../editors/quote/NewQuoteConnect.jsx';
 
 const CustomerQuotesInner = ({ customer, quotes, activeQuotes, customerQuotes, history }) => {
@@ -61,7 +60,7 @@ const CustomerQuotesInner = ({ customer, quotes, activeQuotes, customerQuotes, h
         />
         <Route
           path="/customer/:customerId/quotes/:quoteId/edit"
-          render={props => <EditQuote {...props} customerQuotes={customerQuotes} />}
+          render={props => <EditQuoteConnect {...props} customerQuotes={customerQuotes} />}
         />
       </div>
     </div>

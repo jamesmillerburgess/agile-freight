@@ -5,7 +5,7 @@ export const otherServices = (state  = { insurance: false, customsClearance: fal
                               action = { type: '' }) => {
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
-      return action.otherServices;
+      return action.quote.otherServices;
     case ACTION_TYPES.TOGGLE_INSURANCE:
       return changeProp(state, 'insurance', !state.insurance);
     case ACTION_TYPES.TOGGLE_CUSTOMS_CLEARANCE:

@@ -20,7 +20,7 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
   let newState = {};
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
-      return action.movement;
+      return action.quote.movement;
     case ACTION_TYPES.SET_PICKUP_LOCATION_TYPE:
       return changeProp(state, 'pickup', changeProp(state.pickup, 'locationType', action.locationType));
     case ACTION_TYPES.SET_PICKUP_COUNTRY:

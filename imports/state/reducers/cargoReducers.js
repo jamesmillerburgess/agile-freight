@@ -204,7 +204,7 @@ export const cargo = (state = {}, action = { type: '' }) => {
   let newBaseState = {};
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
-      return action.cargo;
+      return action.quote.cargo;
     default:
       newBaseState = {
         cargoType: cargoType(state.cargoType, action),

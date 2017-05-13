@@ -7,6 +7,8 @@ import { CustomerQuotes } from '../../api/customerQuotes/customerQuotesCollectio
 const EditQuote = (props) => {
   const { customerQuotes }      = props;
   const { customerId, quoteId } = props.match.params;
+  console.log(CustomerQuotes.findOne(quoteId));
+  props.onLoad(CustomerQuotes.findOne(quoteId));
   return (
     <div className="edit-quote">
       <div className="edit-group">

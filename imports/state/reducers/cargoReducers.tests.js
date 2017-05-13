@@ -86,7 +86,7 @@ if (Meteor.isClient) {
           hazardous: true,
           temperatureControlled: true,
         };
-        const newCargo    = cargo({}, { type: ACTION_TYPES.LOAD_QUOTE, cargo: cargoToLoad });
+        const newCargo    = cargo({}, { type: ACTION_TYPES.LOAD_QUOTE, quote: { cargo: cargoToLoad } });
 
         newCargo.should.eql(cargoToLoad);
       });

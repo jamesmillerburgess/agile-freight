@@ -25,7 +25,7 @@ if (Meteor.isClient) {
           location: 'f',
         },
       };
-      const action = { type: ACTION_TYPES.LOAD_QUOTE, movement: movementToLoad };
+      const action = { type: ACTION_TYPES.LOAD_QUOTE, quote: { movement: movementToLoad } };
 
       movement({}, action).should.eql(movementToLoad);
     });

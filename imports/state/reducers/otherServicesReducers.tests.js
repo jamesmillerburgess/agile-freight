@@ -17,7 +17,7 @@ if (Meteor.isClient) {
         insurance: true,
         customsClearance: false,
       };
-      const action = { type: ACTION_TYPES.LOAD_QUOTE, otherServices: otherServicesToLoad };
+      const action = { type: ACTION_TYPES.LOAD_QUOTE, quote: { otherServices: otherServicesToLoad } };
 
       otherServices({}, action).should.eql(otherServicesToLoad);
     });
