@@ -189,6 +189,7 @@
     font-weight: 500;
     background-color: $inactive-tab-background-color;
     cursor: pointer;
+    color: $content-tab-text-color;
   }
 
   .tab.active {
@@ -210,6 +211,7 @@
 
   .label {
     font-size: $field-label-font-size;
+    color: $content-field-label-text-color;
     font-style: normal;
     margin-bottom: 3px;
     font-weight: 400;

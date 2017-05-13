@@ -28,7 +28,7 @@ body {
 
   .navbar-brand:hover,
   .nav-link {
-    color: $quaternary-color;
+    color: $quaternary-color !important;
   }
 
   .form-inline {
