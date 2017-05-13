@@ -19,7 +19,11 @@ Meteor.methods({
     }
 
     // Insert customer quote
-    const update = { ...options, status: 'Draft', charges: {} };
+    const update = {
+      ...options,
+      status: 'Draft',
+      charges: [],
+    };
     const customerQuoteId = CustomerQuotes.insert(update);
 
     // Update the customer

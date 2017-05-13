@@ -35,3 +35,6 @@ export const setDeliveryLocation     = makeActionCreator(ACTION_TYPES.SET_DELIVE
 // OTHER SERVICES
 export const toggleInsurance        = makeActionCreator(ACTION_TYPES.TOGGLE_INSURANCE);
 export const toggleCustomsClearance = makeActionCreator(ACTION_TYPES.TOGGLE_CUSTOMS_CLEARANCE);
+
+// LOAD QUOTE
+export const loadQuote = makeActionCreator(ACTION_TYPES.LOAD_QUOTE, 'quote');

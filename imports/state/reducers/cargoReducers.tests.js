@@ -32,7 +32,11 @@ if (Meteor.isClient) {
             weightUOM: 'kg',
             totalWeight: 0,
           }],
-          containerLines: [{ numContainers: 1, containerType: '20\'', temperatureControlled: false }],
+          containerLines: [{
+            numContainers: 1,
+            containerType: '20\'',
+            temperatureControlled: false,
+          }],
           totalWeight: 0,
           totalPackages: 1,
           packageType: 'Packages',
@@ -47,6 +51,44 @@ if (Meteor.isClient) {
         const newCargo   = cargo();
 
         newCargo.should.eql(stateAfter);
+      });
+
+      it('loads the cargo section of a quote', () => {
+        const cargoToLoad = {
+          cargoType: 'containerized',
+          ratedQuote: true,
+          packageLines: [{
+            packageType: 'Boxes',
+            numPackages: 2,
+            length: 12,
+            width: 12,
+            height: 12,
+            unitVolumeUOM: 'in',
+            volume: 2,
+            volumeUOM: 'cft',
+            weight: 1,
+            weightUOM: 'lb',
+            totalWeight: 2,
+          }],
+          containerLines: [{
+            numContainers: 2,
+            containerType: '40\'',
+            temperatureControlled: false,
+          }],
+          totalWeight: 2,
+          totalPackages: 2,
+          packageType: 'Boxes',
+          weightUOM: 'lb',
+          totalVolume: 2,
+          volumeUOM: 'cft',
+          totalContainers: 2,
+          totalTEU: 4,
+          hazardous: true,
+          temperatureControlled: true,
+        };
+        const newCargo    = cargo({}, { type: ACTION_TYPES.LOAD_QUOTE, cargo: cargoToLoad });
+
+        newCargo.should.eql(cargoToLoad);
       });
     });
 
@@ -224,7 +266,11 @@ if (Meteor.isClient) {
 
       it('updates the total weight', () => {
         const stateBefore      = [{ numPackages: 2 }];
-        const action           = { type: ACTION_TYPES.SET_PACKAGE_LINE_WEIGHT, index: 0, weight: 2 };
+        const action           = {
+          type: ACTION_TYPES.SET_PACKAGE_LINE_WEIGHT,
+          index: 0,
+          weight: 2
+        };
         const totalWeightAfter = 4;
         deepFreeze(stateBefore);
 
