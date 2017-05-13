@@ -1,7 +1,7 @@
 import { changePropAtIndex, removeAtIndex, addToEnd } from './reducer-utils';
 import * as ACTION_TYPES from '../actions/actionTypes';
 
-export const chargeLines = (state, action = { type: '' }) => {
+export const chargeLines = (state = [], action = { type: '' }) => {
   let newState = [];
   switch (action.type) {
     case ACTION_TYPES.ADD_CHARGE_LINE:
