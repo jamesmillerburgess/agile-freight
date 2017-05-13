@@ -6,8 +6,7 @@ import { Customers } from '../../../api/customers/customers-collection';
 import { Quotes } from '../../../api/quotes/quotes-collection';
 import { Jobs } from '../../../api/jobs/jobs';
 import { Shipments } from '../../../api/shipments/shipments';
-
-import { Airports } from '../../../api/reference-data/airports/airports-collection';
+import { CustomerQuotes } from '../../../api/customerQuotes/customerQuotesCollection';
 
 import customerFixtures from './customer-fixtures';
 import quoteFixtures from './quote-fixtures';
@@ -28,6 +27,7 @@ Meteor.startup(() => {
     Jobs._ensureIndex({ search: 1 });
     Shipments.remove({});
     Shipments._ensureIndex({ search: 1 });
+    CustomerQuotes.remove({});
     Meteor.users.remove({});
     Accounts.createUser({
       username: 'd',

@@ -8,7 +8,9 @@ Meteor.methods({
   'customerQuote.newFromRateSearch': function customerQuotesNewFromRateSearch(options) {
     check(options, Object);
     check(options.customerId, String);
-    check(options.rateParameters, Object);
+    check(options.cargo, Object);
+    check(options.movement, Object);
+    check(options.otherServices, Object);
 
     // Check if the customerId is valid
     const customer = Customers.findOne(options.customerId);
@@ -17,7 +19,7 @@ Meteor.methods({
     }
 
     // Insert customer quote
-    const update = { ...options, status: 'Draft' };
+    const update = { ...options, status: 'Draft', charges: {} };
     const customerQuoteId = CustomerQuotes.insert(update);
 
     // Update the customer

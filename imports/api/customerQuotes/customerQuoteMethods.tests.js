@@ -27,7 +27,7 @@ if (Meteor.isServer) {
     describe('quote.newFromRateSearch', () => {
       it('insert a new customer quote into the collection', () => {
         CustomerQuotes.find({}).count().should.equal(0);
-        Meteor.call('customerQuote.newFromRateSearch', { customerId: 'a', rateParameters: {} });
+        Meteor.call('customerQuote.newFromRateSearch', { customerId: 'a', cargo: {}, movement: {}, otherServices: {} });
         CustomerQuotes.find({}).count().should.equal(1);
       });
 
@@ -38,50 +38,50 @@ if (Meteor.isServer) {
         (() => Meteor.call('customerQuote.newFromRateSearch', true)).should.throw();
       });
 
-      it('requires customerId and rateParameters options', () => {
+      it('requires customerId, cargo, movement, and otherServices options', () => {
         (() => Meteor.call('customerQuote.newFromRateSearch', {})).should.throw();
-        (() => Meteor.call('customerQuote.newFromRateSearch', { customerId: 'a' })).should.throw();
-        (() => Meteor.call('customerQuote.newFromRateSearch', { rateParameters: {} })).should.throw();
+        (() => Meteor.call('customerQuote.newFromRateSearch', { customerId: 'a', cargo: {}, movement: {} })).should.throw();
+        (() => Meteor.call('customerQuote.newFromRateSearch', { customerId: 'a', cargo: {}, otherServices: {} })).should.throw();
+        (() => Meteor.call('customerQuote.newFromRateSearch', { customerId: 'a', movement: {}, otherServices: {} })).should.throw();
+        (() => Meteor.call('customerQuote.newFromRateSearch', { cargo: {}, movement: {}, otherServices: {} })).should.throw();
       });
 
       it('returns the new quote id', () => {
-        const newQuoteId = Meteor.call('customerQuote.newFromRateSearch', { customerId: 'a', rateParameters: {} });
+        const newQuoteId = Meteor.call('customerQuote.newFromRateSearch', { customerId: 'a', cargo: {}, movement: {}, otherServices: {} });
 
         CustomerQuotes.findOne()._id.should.equal(newQuoteId);
       });
 
       it('inserts a new quote in \'Draft\' status', () => {
-        Meteor.call('customerQuote.newFromRateSearch', { customerId: 'a', rateParameters: {} });
+        Meteor.call('customerQuote.newFromRateSearch', { customerId: 'a', cargo: {}, movement: {}, otherServices: {} });
 
         CustomerQuotes.findOne().status.should.equal('Draft');
       });
 
       it('inserts a new quote with the given options', () => {
         const customerId = 'a';
-        const rateParameters = {
+        const movement = {
           pickup: {
             country: 'b',
             location: 'c',
           },
         };
-        Meteor.call('customerQuote.newFromRateSearch', { customerId, rateParameters });
+        Meteor.call('customerQuote.newFromRateSearch', { customerId, cargo: {}, movement, otherServices: {} });
         const newQuote = CustomerQuotes.findOne();
 
         newQuote.customerId.should.equal('a');
-        newQuote.rateParameters.pickup.country.should.equal('b');
-        newQuote.rateParameters.pickup.location.should.equal('c');
+        newQuote.movement.pickup.country.should.equal('b');
+        newQuote.movement.pickup.location.should.equal('c');
       });
 
       it('throws an error if an invalid customerId is passed', () => {
         const customerId = 'b';
-        const rateParameters = {};
-        (() => Meteor.call('customerQuote.newFromRateSearch', { customerId, rateParameters })).should.throw();
+        (() => Meteor.call('customerQuote.newFromRateSearch', { customerId, cargo: {}, movement: {}, otherServices: {} })).should.throw();
       });
 
       it('adds the customer quote ID to the customer', () => {
         const customerId = 'a';
-        const rateParameters = {};
-        const customerQuoteId = Meteor.call('customerQuote.newFromRateSearch', { customerId, rateParameters });
+        const customerQuoteId = Meteor.call('customerQuote.newFromRateSearch', { customerId, cargo: {}, movement: {}, otherServices: {} });
         const customer = Customers.findOne(customerId);
 
         customer.customerQuotes[0].should.equal(customerQuoteId);

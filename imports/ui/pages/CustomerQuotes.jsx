@@ -81,8 +81,8 @@ const CustomerQuotes = createContainer((props) => {
     .find({ _id: { $in: customer.customerQuotes || [] } })
     .fetch();
   const locationIds    = [
-    ...uniqueValues(customerQuotes, 'rateParameters.movement.pickup.location').map(val => new Mongo.ObjectID(val)),
-    ...uniqueValues(customerQuotes, 'rateParameters.movement.delivery.location').map(val => new Mongo.ObjectID(val)),
+    ...uniqueValues(customerQuotes, 'movement.pickup.location').map(val => new Mongo.ObjectID(val)),
+    ...uniqueValues(customerQuotes, 'movement.delivery.location').map(val => new Mongo.ObjectID(val)),
   ];
   Meteor.subscribe('unlocations.list', locationIds);
   const quotes       = Quotes

@@ -2,12 +2,11 @@ import React from 'react';
 
 import EditQuoteChargeList from './EditQuoteChargeList.jsx';
 
+import { CustomerQuotes } from '../../api/customerQuotes/customerQuotesCollection';
+
 const EditQuote = (props) => {
-  const { customerQuotes } = props;
+  const { customerQuotes }      = props;
   const { customerId, quoteId } = props.match.params;
-  console.log(customerQuotes);
-  console.log(customerId);
-  console.log(quoteId);
   return (
     <div className="edit-quote">
       <div className="edit-group">

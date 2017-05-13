@@ -8,7 +8,10 @@ export const Schemas = {};
 Schemas.CustomerQuote = new SimpleSchema({
   status: String,
   customerId: String,
-  rateParameters: { type: Object, blackbox: true },
+  cargo: { type: Object, blackbox: true },
+  movement: { type: Object, blackbox: true },
+  otherServices: { type: Object, blackbox: true },
+  charges: { type: Object, blackbox: true },
 });
 
 CustomerQuotes.attachSchema(Schemas.CustomerQuote);

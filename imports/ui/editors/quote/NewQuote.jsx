@@ -13,10 +13,10 @@ import { UNLocations } from '../../../api/unlocations/unlocations-collection';
 import { Countries } from '../../../api/countries/countries-collection';
 
 const getQuoteStats = customerQuotes => ({
-  pickupCountry: countByValue(customerQuotes, 'rateParameters.movement.pickup.country'),
-  pickupLocation: countByValue(customerQuotes, 'rateParameters.movement.pickup.location'),
-  deliveryCountry: countByValue(customerQuotes, 'rateParameters.movement.delivery.country'),
-  deliveryLocation: countByValue(customerQuotes, 'rateParameters.movement.delivery.location'),
+  pickupCountry: countByValue(customerQuotes, 'movement.pickup.country'),
+  pickupLocation: countByValue(customerQuotes, 'movement.pickup.location'),
+  deliveryCountry: countByValue(customerQuotes, 'movement.delivery.country'),
+  deliveryLocation: countByValue(customerQuotes, 'movement.delivery.location'),
 });
 
 const NewQuote = (props) => {
@@ -24,10 +24,9 @@ const NewQuote = (props) => {
   const { customerId }                                              = props.match.params;
 
   const getRates = () => {
-    const rateParameters = { cargo, movement, otherServices };
     Meteor.call(
       'customerQuote.newFromRateSearch',
-      { customerId, rateParameters },
+      { customerId, cargo, movement, otherServices },
       (err, customerQuoteId) => {
         history.push(`/customer/${customerId}/quotes/${customerQuoteId}/edit`);
       },
