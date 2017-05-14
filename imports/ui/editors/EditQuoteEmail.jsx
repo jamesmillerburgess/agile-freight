@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 import Modal from 'react-modal';
 import { Meteor } from 'meteor/meteor';
 
@@ -8,7 +7,6 @@ import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
 import { currencyFormat } from '../formatters/numberFormatters';
 
 const EditQuoteEmail = (props) => {
-  console.log(ReactDOMServer.renderToStaticMarkup(<div></div>));
   const
     {
       isOpen,
@@ -26,6 +24,22 @@ const EditQuoteEmail = (props) => {
       otherServices,
       charges,
     } = props;
+
+  const sendEmail = () => {
+    setEmailIsOpen(false);
+    Meteor.call(
+      'email.send',
+      {
+        from: 'agilityfreightdemo@gmail.com',
+        to,
+        cc,
+        subject,
+        message,
+        customerQuoteId: 'NSD9kRZWPtbTtprwA',
+      },
+    );
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -36,19 +50,7 @@ const EditQuoteEmail = (props) => {
       cc: <input value={cc} onChange={e => setEmailCC(e.target.value)} /><br />
       Subject: <input value={subject} onChange={e => setEmailSubject(e.target.value)} /><br />
       Message: <textarea value={message} onChange={e => setEmailMessage(e.target.value)} /><br />
-      <button
-        onClick={() =>
-          Meteor.call(
-            'email.send',
-            {
-              from: 'agilityfreightdemo@gmail.com',
-              to,
-              cc,
-              subject,
-              html: message,
-            },
-            () => setEmailIsOpen(false))}
-      >
+      <button onClick={sendEmail}>
         Send Email
       </button>
       <div className="edit-group">

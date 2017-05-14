@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>HTML email test</title>
+  <link href="styles.css" media="all" rel="stylesheet" type="text/css" />
+</head>
+
+<body itemscope itemtype="http://schema.org/EmailMessage">
+{{message}}
+<div style="height: 15px;"></div>
+<table>
+  <tr>
+    <td></td>
+    <td width="600" style="border-radius: 10px; background-color: #d0cdcd;">
+      <table width="100%" style="text-align: left; font-size: 12px;">
+        <tbody>
+          <tr>
+            <th colspan="7" style="padding: 12px 7px; font-size: 22px;">Origin Charges</th>
+          </tr>
+          <tr>
+            <th style="padding: 12px 7px;">Fee Code</th>
+            <th style="padding: 12px 7px;">Fee Name</th>
+            <th style="padding: 12px 7px;">Comment</th>
+            <th style="padding: 12px 7px;">Units</th>
+            <th style="padding: 12px 7px;">Unit Price</th>
+            <th style="padding: 12px 7px;">Amount</th>
+            <th style="padding: 12px 7px;">Final Amount</th>
+          </tr>
+        </tbody>
+        <tbody>
+          {{#each charges.chargeLines}}
+            <tr>
+              <th>Charge Line!</th>
+            </tr>
+          {{/each}}
+        </tbody>
+        <tr>
+          <th
+            style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">
+            Name
+          </th>
+          <td style="text-align: left; padding: 10px; border-bottom: 1px solid #eee;">{{name}}</td>
+        </tr>
+        <tr>
+          <th
+            style="text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">
+            Favorite Restaurant
+          </th>
+          <td
+            style="text-align: left; padding: 10px; border-bottom: 1px solid #eee;">{{favoriteRestaurant}}</td>
+        </tr>
+        <tr>
+          <th style="text-align: left; padding: 10px; border-right: 1px solid #eee;">Best Friend
+          </th>
+          <td style="text-align: left; padding: 10px;">{{bestFriend}}</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

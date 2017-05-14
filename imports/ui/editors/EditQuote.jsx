@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Mongo } from 'meteor/mongo';
+import { Meteor } from 'meteor/meteor';
 
 import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
 import EditQuoteEmailConnect from './EditQuoteEmailConnect';
@@ -10,8 +11,25 @@ import { CustomerQuotes } from '../../api/customerQuotes/customerQuotesCollectio
 import { currencyFormat } from '../formatters/numberFormatters';
 
 class EditQuote extends React.Component {
+  constructor(props) {
+    super(props);
+    this.saveAndLoadEmail = this.saveAndLoadEmail.bind(this);
+  }
+
   componentWillMount() {
     this.props.onLoad(CustomerQuotes.findOne(this.props.match.params.quoteId));
+  }
+
+  saveAndLoadEmail() {
+    Meteor.call('customerQuote.save', { ...this.props.newQuote, _id: this.props.match.params.quoteId });
+    this.props.loadEmail({
+      isOpen: true,
+      to: 'agilityfreightdemo@gmail.com',
+      cc: '',
+      subject: 'Your Freight Quote',
+      message: `Dear customer,
+  Thank you for your interest in our services. Please find attached a quote for the freight charges as per your request.`,
+    });
   }
 
   render() {
@@ -150,14 +168,7 @@ class EditQuote extends React.Component {
                   <td colSpan="2">
                     <button
                       className="submit"
-                      onClick={() => loadEmail({
-                        isOpen: true,
-                        to: 'agilityfreightdemo@gmail.com',
-                        cc: '',
-                        subject: 'Your Freight Quote',
-                        message: `Dear customer,
-  Thank you for your interest in our services. Please find attached a quote for the freight charges as per your request.`,
-                      })}
+                      onClick={this.saveAndLoadEmail}
                     >
                       SAVE AND SUBMIT TO CUSTOMER
                     </button>

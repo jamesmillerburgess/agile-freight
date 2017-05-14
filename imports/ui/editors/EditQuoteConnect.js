@@ -13,12 +13,14 @@ const mapStateToProps = (state) => {
       totalCharges,
       currency,
     } = state.newQuote.charges;
+  const newQuote = state.newQuote;
   return {
     totalOriginCharges,
     totalInternationalCharges,
     totalDestinationCharges,
     totalCharges,
     currency,
+    newQuote,
   };
 };
 
