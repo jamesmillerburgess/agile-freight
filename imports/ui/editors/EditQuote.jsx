@@ -5,6 +5,7 @@ import { Mongo } from 'meteor/mongo';
 import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
 
 import { CustomerQuotes } from '../../api/customerQuotes/customerQuotesCollection';
+import { currencyFormat } from '../formatters/numberFormatters';
 
 class EditQuote extends React.Component {
   componentWillMount() {
@@ -29,10 +30,7 @@ class EditQuote extends React.Component {
             <table className="table table-bordered">
               <tbody>
                 <tr className="title-row">
-                  <th colSpan="4" className="title">
-                    Origin Charges
-                  </th>
-                  <th colSpan="3">Shanghai to CNSHA Shanghai</th>
+                  <th colSpan="7" className="title">Origin Charges</th>
                 </tr>
                 <tr className="column-title-row">
                   <th className="amount">Fee Code</th>
@@ -60,14 +58,13 @@ class EditQuote extends React.Component {
                 <tr>
                   <td colSpan="5" />
                   <td>Subtotal</td>
-                  <td>{currency} {totalOriginCharges}</td>
+                  <td>{currency} {currencyFormat(totalOriginCharges)}</td>
                 </tr>
               </tbody>
               <tbody>
                 <tr className="empty-row" />
                 <tr className="title-row">
-                  <th colSpan="4" className="title">International Charges</th>
-                  <th colSpan="3">CNSHA Shanghai to USMIA Miami</th>
+                  <th colSpan="7" className="title">International Charges</th>
                 </tr>
                 <tr className="column-title-row">
                   <th>Fee Code</th>
@@ -95,14 +92,13 @@ class EditQuote extends React.Component {
                 <tr>
                   <td colSpan="5" />
                   <td>Subtotal</td>
-                  <td>{currency} {totalInternationalCharges}</td>
+                  <td>{currency} {currencyFormat(totalInternationalCharges)}</td>
                 </tr>
               </tbody>
               <tbody>
                 <tr className="empty-row" />
                 <tr className="title-row">
-                  <th colSpan="4" className="title">Destination Charges</th>
-                  <th colSpan="3">USMIA Miami to Sarasota, FL</th>
+                  <th colSpan="7" className="title">Destination Charges</th>
                 </tr>
                 <tr className="column-title-row">
                   <th>Fee Code</th>
@@ -130,42 +126,21 @@ class EditQuote extends React.Component {
                 <tr>
                   <td colSpan="5" />
                   <td>Subtotal</td>
-                  <td>{currency} {totalDestinationCharges}</td>
+                  <td>{currency} {currencyFormat(totalDestinationCharges)}</td>
                 </tr>
               </tbody>
               <tbody>
                 <tr className="info-row">
                   <td colSpan="5">
-                    <b>Ocean Freight Leg:</b><br />
-                    • Transit times are estimates as provided by the carriers.<br />
-                    • Overweight fee of USD 175.00 applies over 16,000kg<br />
-                    <br />
-                    <b>Delivery Leg:</b><br />
-                    •Chassis fee includes 3 days standard Charge. Final price will be Charged at
-                    actuals, 30 USD/day.<br />
-                    • SOLAS: upon customer request at time of dispatch, we can arrange to have
-                    containers weighed empty and/or loaded and provide email photo(s)<br />
-                    • USD 85 Per Chassis Repositioning<br />
-                    • USD 150 Hazardous commodities must be verified prior to dispatch.<br />
-                    • USD 175 Refrigerated container<br />
-                    • USD 125 Prepull flat charge. Subject to approval<br />
-                    • USD 30 Daily storage charge<br />
-                    • Free time Local 1 / Road 2 hrs then Hourly detention charge USD 85<br />
-                    • Bonded Stop Off charge: Please call with specifics for rates.<br />
-                    • Customer responsible for Rail Lift charge when applicable.<br />
-                    • Upon notification of container availability, and in coordination with the
-                    consignee, pre-arranged drayage can generally be completed within a 1-2 day
-                    timeframe.
+                    <textarea />
                   </td>
-                  <td colSpan="1">ISF Fee</td>
-                  <td colSpan="1">USD 50.00</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr className="summary">
                   <td colSpan="5">Summary</td>
                   <td>Total Price</td>
-                  <td>{currency} {totalCharges}</td>
+                  <td>{currency} {currencyFormat(totalCharges)}</td>
                 </tr>
               </tfoot>
             </table>
