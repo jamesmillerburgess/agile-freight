@@ -50,3 +50,11 @@ export const SET_CHARGE_LINE_UNIT_PRICE = 'SET_CHARGE_LINE_AMOUNT';
 
 // LOAD QUOTE
 export const LOAD_QUOTE = 'LOAD_QUOTE';
+
+// EMAIL
+export const LOAD_EMAIL = 'LOAD_EMAIL';
+export const SET_EMAIL_IS_OPEN = 'SET_EMAIL_IS_OPEN';
+export const SET_EMAIL_TO = 'SET_EMAIL_TO';
+export const SET_EMAIL_CC = 'SET_EMAIL_CC';
+export const SET_EMAIL_SUBJECT = 'SET_EMAIL_SUBJECT';
+export const SET_EMAIL_MESSAGE = 'SET_EMAIL_MESSAGE';
