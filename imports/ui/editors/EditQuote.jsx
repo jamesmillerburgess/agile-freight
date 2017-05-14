@@ -142,6 +142,14 @@ class EditQuote extends React.Component {
                   <td>Total Price</td>
                   <td>{currency} {currencyFormat(totalCharges)}</td>
                 </tr>
+                <tr>
+                  <td colSpan="5" />
+                  <td colSpan="2">
+                    <button className="submit" onClick={() => null}>
+                      SAVE AND SUBMIT TO CUSTOMER
+                    </button>
+                  </td>
+                </tr>
               </tfoot>
             </table>
           </div>

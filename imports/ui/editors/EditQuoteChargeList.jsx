@@ -35,7 +35,7 @@ const EditQuoteChargeList = (props) => {
             />
           </td>
           <td>
-            <input
+            <textarea
               type="text"
               placeholder=""
               value={chargeLine.rate || ''}
