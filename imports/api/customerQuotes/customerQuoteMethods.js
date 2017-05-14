@@ -19,7 +19,7 @@ Meteor.methods({
     }
 
     // Insert customer quote
-    const update = {
+    const update          = {
       ...options,
       status: 'Draft',
       charges: [],
@@ -29,5 +29,25 @@ Meteor.methods({
     // Update the customer
     Customers.update({ _id: options.customerId }, { $push: { customerQuotes: customerQuoteId } });
     return customerQuoteId;
+  },
+  'customerQuote.submit': function customerQuoteSubmit(customerQuoteId) {
+    check(customerQuoteId, customerQuoteId);
+
+    CustomerQuotes.update({ _id: customerQuoteId }, { $set: { status: 'Submitted' } });
+  },
+  'customerQuote.save': function customerQuoteSave(customerQuote) {
+    check(customerQuote, Object);
+
+    CustomerQuotes.update(
+      { _id: customerQuote._id },
+      {
+        $set: {
+          cargo: customerQuote.cargo,
+          movement: customerQuote.movement,
+          otherServices: customerQuote.otherServices,
+          charges: customerQuote.charges,
+        },
+      },
+    );
   },
 });
