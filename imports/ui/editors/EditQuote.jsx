@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
@@ -145,7 +146,7 @@ class EditQuote extends React.Component {
                 <tr>
                   <td colSpan="5" />
                   <td colSpan="2">
-                    <button className="submit" onClick={() => null}>
+                    <button className="submit" onClick={() => Meteor.call('email.send', { to: 'agilityfreightdemo@gmail.com', from: 'agilityfreightdemo@gmail.com', subject: 'subject', text: 'text' })}>
                       SAVE AND SUBMIT TO CUSTOMER
                     </button>
                   </td>

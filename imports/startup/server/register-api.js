@@ -17,3 +17,4 @@ import '../../api/rates/rate-methods';
 import '../../api/unlocations/server/unlocations-publications';
 import '../../api/countries/server/countries-publications';
 import '../../api/customerQuotes/customerQuoteMethods';
+import '../../api/email/emailMethods';
