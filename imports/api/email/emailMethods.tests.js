@@ -21,14 +21,14 @@ if (Meteor.isServer) {
           to: 'a@a.com',
           from: 'b@b.com',
           subject: 'c',
-          text: 'd',
+          html: 'd',
         });
         Meteor.call('emailStub/getEmails', (e, emails) => {
           emails.length.should.equal(1);
           emails[0].to.should.equal('a@a.com');
           emails[0].from.should.equal('b@b.com');
           emails[0].subject.should.equal('c');
-          emails[0].text.should.equal('d');
+          emails[0].html.should.equal('d');
           done();
         });
       });
