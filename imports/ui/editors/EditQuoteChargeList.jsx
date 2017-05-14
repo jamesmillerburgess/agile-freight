@@ -22,7 +22,7 @@ const EditQuoteChargeList = (props) => {
           <td>
             {
               readOnly ?
-                chargeLine.code :
+                '' :
                 <input
                   type="text"
                   placeholder=""
@@ -83,6 +83,18 @@ const EditQuoteChargeList = (props) => {
           </td>
           <td>{currencyFormat(chargeLine.amount)}</td>
           <td />
+          {
+            readOnly ?
+              '' :
+              <td className="icon-cell">
+                <button
+                  className="cargo-row-icon"
+                  onClick={() => removeChargeLine(chargeLine.id)}
+                >
+                  <span className="fa fa-fw fa-minus-circle" />
+                </button>
+              </td>
+          }
         </tr>
       ))}
     </tbody>
