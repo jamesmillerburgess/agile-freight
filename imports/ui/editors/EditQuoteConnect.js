@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 
 import EditQuote from './EditQuote.jsx';
 import { loadQuote, addChargeLine } from '../../state/actions/newQuoteActions';
+import { loadEmail } from '../../state/actions/emailActions';
 
 const mapStateToProps = (state) => {
   const
@@ -24,6 +25,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   onLoad: quote => dispatch(loadQuote(quote)),
   addChargeLine: chargeLine => dispatch(addChargeLine(chargeLine)),
+  loadEmail: email => dispatch(loadEmail(email)),
 });
 
 const EditQuoteConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuote);
