@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { currencyFormat } from '../formatters/numberFormatters';
+
 const EditQuoteChargeList = (props) => {
   const
     {
@@ -20,7 +22,7 @@ const EditQuoteChargeList = (props) => {
             <input
               type="text"
               placeholder=""
-              value={chargeLine.code}
+              value={chargeLine.code || ''}
               onChange={e => setChargeLineCode(chargeLine.id, e.target.value)}
             />
           </td>
@@ -28,7 +30,7 @@ const EditQuoteChargeList = (props) => {
             <input
               type="text"
               placeholder=""
-              value={chargeLine.name}
+              value={chargeLine.name || ''}
               onChange={e => setChargeLineName(chargeLine.id, e.target.value)}
             />
           </td>
@@ -36,7 +38,7 @@ const EditQuoteChargeList = (props) => {
             <input
               type="text"
               placeholder=""
-              value={chargeLine.rate}
+              value={chargeLine.rate || ''}
               onChange={e => setChargeLineRate(chargeLine.id, e.target.value)}
             />
           </td>
@@ -45,7 +47,7 @@ const EditQuoteChargeList = (props) => {
               className="input-numeric"
               type="number"
               placeholder=""
-              value={chargeLine.units}
+              value={chargeLine.units || ''}
               onChange={e => setChargeLineUnits(chargeLine.id, +e.target.value)}
             />
           </td>
@@ -54,11 +56,11 @@ const EditQuoteChargeList = (props) => {
               className="input-numeric"
               type="number"
               placeholder=""
-              value={chargeLine.unitPrice}
+              value={chargeLine.unitPrice || ''}
               onChange={e => setChargeLineUnitPrice(chargeLine.id, +e.target.value)}
             />
           </td>
-          <td>{chargeLine.amount}</td>
+          <td>{currencyFormat(chargeLine.amount)}</td>
           <td />
           <td className="icon-cell">
             <button
