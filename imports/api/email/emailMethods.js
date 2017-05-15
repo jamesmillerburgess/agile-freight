@@ -19,6 +19,7 @@ Meteor.methods({
       amount: currencyFormat(charge.amount),
     }));
     const emailData                             = {
+      isLoose: customerQuote.cargo.cargoType === 'Loose',
       message: stringToHTML(options.message),
       originCharges: customerQuote.charges.chargeLines.filter(charge => charge.group === 'Origin'),
       internationalCharges: customerQuote.charges.chargeLines.filter(charge => charge.group === 'International'),

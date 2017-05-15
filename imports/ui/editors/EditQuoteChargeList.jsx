@@ -85,7 +85,7 @@ const EditQuoteChargeList = (props) => {
           <td />
           {
             readOnly ?
-              '' :
+              null :
               <td className="icon-cell">
                 <button
                   className="cargo-row-icon"

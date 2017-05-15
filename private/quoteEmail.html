@@ -18,11 +18,28 @@
           <tr>
             <th colspan="5" style="padding: 12px 7px; font-size: 22px;">Freight Quotation</th>
           </tr>
+          {{#if isLoose}}
+            <tr>
+              <th colspan="5" style="padding: 0 7px;">Loose Cargo</th>
+            </tr>
+          {{else}}
+            <tr>
+              <th colspan="5" style="padding: 0 7px;">Containerized Cargo</th>
+            </tr>
+            <tr>
+              <th colspan="5" style="padding: 0 7px;">
+                <b>{{cargo.totalContainers}}</b> Units, <b>{{cargo.totalTEU}}</b> TEU</th>
+            </tr>
+          {{/if}}
           <tr>
-            <td colspan="5" style="padding: 0 7px;">Insurance: <b>{{#if otherServices.insurance}}Yes{{else}}No{{/if}}</b></td>
+            <td colspan="5" style="padding: 0 7px;">
+              Insurance: <b>{{#if otherServices.insurance}}Yes{{else}}No{{/if}}</b>
+            </td>
           </tr>
           <tr>
-            <td colspan="5" style="padding: 0 7px;">Customs Clearance: <b>{{#if otherServices.customsClearance}}Yes{{else}}No{{/if}}</b></td>
+            <td colspan="5" style="padding: 0 7px;">
+              Customs Clearance: <b>{{#if otherServices.customsClearance}}Yes{{else}}No{{/if}}</b>
+            </td>
           </tr>
           <tr>
             <th colspan="5" style="padding: 12px 7px; font-size: 22px;">Origin Charges</th>
@@ -50,7 +67,8 @@
           <tr>
             <td colspan="3"></td>
             <td style="padding: 12px 7px;">Subtotal</td>
-            <td style="padding: 12px 7px; text-align: right;">{{charges.currency}} {{charges.totalOriginCharges}}</td>
+            <td
+              style="padding: 12px 7px; text-align: right;">{{charges.currency}} {{charges.totalOriginCharges}}</td>
           </tr>
         </tbody>
         <tbody>
@@ -119,7 +137,8 @@
           <tr>
             <td colSpan="3" style="padding: 12px 7px;">Summary</td>
             <td style="padding: 12px 7px;">Total Price</td>
-            <td style="padding: 12px 7px; text-align: right;">{{charges.currency}} {{charges.totalCharges}}</td>
+            <td
+              style="padding: 12px 7px; text-align: right;">{{charges.currency}} {{charges.totalCharges}}</td>
           </tr>
         </tfoot>
       </table>
