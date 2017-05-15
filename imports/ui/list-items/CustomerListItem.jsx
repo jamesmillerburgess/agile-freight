@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { currencyFormat } from '../formatters/numberFormatters';
 
 const CustomerListItem = ({ customer }) => {
+  console.log(customer);
   const creditUsageStyle = () => ({
     width: `${Math.round((customer.credit.used / customer.credit.total) * 100)}%`,
     height: '20px',
