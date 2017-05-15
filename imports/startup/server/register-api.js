@@ -3,7 +3,6 @@ import '../../api/users/user-methods';
 import '../../api/users/server/user-publications';
 import '../../api/offices/server/publications';
 import '../../api/offices/office-methods';
-import '../../api/customers/server/publications';
 import '../../api/customers/customer-methods';
 import '../../api/quotes/server/publications';
 import '../../api/quotes/quote-methods';
