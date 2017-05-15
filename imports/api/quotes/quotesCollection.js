@@ -1,11 +1,11 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
-export const CustomerQuotes = new Mongo.Collection('CustomerQuotes');
+export const Quotes = new Mongo.Collection('Quotes');
 
 export const Schemas = {};
 
-Schemas.CustomerQuote = new SimpleSchema({
+Schemas.Quote = new SimpleSchema({
   status: String,
   customerId: String,
   cargo: { type: Object, blackbox: true },
@@ -14,4 +14,4 @@ Schemas.CustomerQuote = new SimpleSchema({
   charges: { type: Object, blackbox: true },
 });
 
-CustomerQuotes.attachSchema(Schemas.CustomerQuote);
+Quotes.attachSchema(Schemas.Quote);

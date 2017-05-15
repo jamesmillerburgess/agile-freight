@@ -7,7 +7,7 @@ import Modal from 'react-modal';
 import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
 import EditQuoteEmailConnect from './EditQuoteEmailConnect';
 
-import { CustomerQuotes } from '../../api/customerQuotes/customerQuotesCollection';
+import { Quotes } from '../../api/quotes/quotesCollection';
 
 import { currencyFormat } from '../formatters/numberFormatters';
 
@@ -18,11 +18,11 @@ class EditQuote extends React.Component {
   }
 
   componentWillMount() {
-    this.props.onLoad(CustomerQuotes.findOne(this.props.match.params.quoteId));
+    this.props.onLoad(Quotes.findOne(this.props.match.params.quoteId));
   }
 
   saveAndLoadEmail() {
-    Meteor.call('customerQuote.save', { ...this.props.newQuote, _id: this.props.match.params.quoteId });
+    Meteor.call('quote.save', { ...this.props.newQuote, _id: this.props.match.params.quoteId });
     this.props.loadEmail({
       isOpen: true,
       to: 'agilityfreightdemo@gmail.com',
@@ -36,7 +36,7 @@ class EditQuote extends React.Component {
   render() {
     const
       {
-        customerQuotes,
+        quotes,
         totalOriginCharges,
         totalInternationalCharges,
         totalDestinationCharges,

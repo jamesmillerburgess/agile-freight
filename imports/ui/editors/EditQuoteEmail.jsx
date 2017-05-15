@@ -32,7 +32,7 @@ const EditQuoteEmail = (props) => {
         cc,
         subject,
         message,
-        customerQuoteId: 'NSD9kRZWPtbTtprwA',
+        quoteId: 'NSD9kRZWPtbTtprwA',
       },
     );
   };

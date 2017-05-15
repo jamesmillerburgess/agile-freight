@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import * as newQuoteActions from '../../../state/actions/newQuoteActions';
+import * as newQuoteActions from '../../state/actions/newQuoteActions';
 import NewQuote from './NewQuote.jsx';
 
 const mapStateToProps    = state => ({ ...state.newQuote });

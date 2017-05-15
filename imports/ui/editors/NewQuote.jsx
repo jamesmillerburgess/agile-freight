@@ -2,38 +2,38 @@ import React from 'react';
 import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
 
-import { integerFormat, weightFormat } from '../../formatters/numberFormatters';
-import { countByValue } from '../../statsUtils';
+import { integerFormat, weightFormat } from '../formatters/numberFormatters';
+import { countByValue } from '../statsUtils';
 
-import CheckboxField from '../../fields/CheckboxField.jsx';
-import CountryField from '../../fields/CountryField.jsx';
-import UNLocationField from '../../fields/UNLocationField.jsx';
+import CheckboxField from '../fields/CheckboxField.jsx';
+import CountryField from '../fields/CountryField.jsx';
+import UNLocationField from '../fields/UNLocationField.jsx';
 
-import { UNLocations } from '../../../api/unlocations/unlocations-collection';
-import { Countries } from '../../../api/countries/countries-collection';
+import { UNLocations } from '../../api/unlocations/unlocations-collection';
+import { Countries } from '../../api/countries/countries-collection';
 
-const getQuoteStats = customerQuotes => ({
-  pickupCountry: countByValue(customerQuotes, 'movement.pickup.country'),
-  pickupLocation: countByValue(customerQuotes, 'movement.pickup.location'),
-  deliveryCountry: countByValue(customerQuotes, 'movement.delivery.country'),
-  deliveryLocation: countByValue(customerQuotes, 'movement.delivery.location'),
+const getQuoteStats = quotes => ({
+  pickupCountry: countByValue(quotes, 'movement.pickup.country'),
+  pickupLocation: countByValue(quotes, 'movement.pickup.location'),
+  deliveryCountry: countByValue(quotes, 'movement.delivery.country'),
+  deliveryLocation: countByValue(quotes, 'movement.delivery.location'),
 });
 
 const NewQuote = (props) => {
-  const { cargo, movement, otherServices, customerQuotes, history } = props;
+  const { cargo, movement, otherServices, quotes, history } = props;
   const { customerId }                                              = props.match.params;
 
   const getRates = () => {
     Meteor.call(
-      'customerQuote.newFromRateSearch',
+      'quote.newFromRateSearch',
       { customerId, cargo, movement, otherServices },
-      (err, customerQuoteId) => {
-        history.push(`/customer/${customerId}/quotes/${customerQuoteId}/edit`);
+      (err, quoteId) => {
+        history.push(`/customer/${customerId}/quotes/${quoteId}/edit`);
       },
     );
   };
 
-  const quoteStats = getQuoteStats(customerQuotes);
+  const quoteStats = getQuoteStats(quotes);
 
   const PackageLines = (
     <div className="edit-group with-tabs">

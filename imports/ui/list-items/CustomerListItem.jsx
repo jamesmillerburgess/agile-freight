@@ -11,10 +11,10 @@ const CustomerListItem = ({ customer }) => {
   });
 
   return (
-    <Link to={`/customer/${customer._id}/overview`} className="card">
+    <Link to={`/customer/${customer._id}/quotes`} className="card">
       <div className="card-inner">
         <div className="icon-container hidden-md-down">
-          <div className="icon fa fa-fw fa-address-card"></div>
+          <div className="icon fa fa-fw fa-address-card" />
         </div>
         <div className="container card-content">
           <div className="row">

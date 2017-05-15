@@ -3,15 +3,9 @@ import { Accounts } from 'meteor/accounts-base';
 
 import { Offices } from '../../../api/offices/offices';
 import { Customers } from '../../../api/customers/customers-collection';
-import { Quotes } from '../../../api/quotes/quotes-collection';
-import { Jobs } from '../../../api/jobs/jobs';
-import { Shipments } from '../../../api/shipments/shipments';
-import { CustomerQuotes } from '../../../api/customerQuotes/customerQuotesCollection';
+import { Quotes } from '../../../api/quotes/quotesCollection';
 
 import customerFixtures from './customer-fixtures';
-import quoteFixtures from './quote-fixtures';
-import shipmentFixtures from './shipment-fixtures';
-import invoiceFixtures from './invoice-fixtures';
 
 // if the database is empty on server start, create some sample data.
 Meteor.startup(() => {
@@ -22,12 +16,6 @@ Meteor.startup(() => {
     Customers.remove({});
     Customers._ensureIndex({ search: 1 });
     Quotes.remove({});
-    Quotes._ensureIndex({ search: 1 });
-    Jobs.remove({});
-    Jobs._ensureIndex({ search: 1 });
-    Shipments.remove({});
-    Shipments._ensureIndex({ search: 1 });
-    CustomerQuotes.remove({});
     Meteor.users.remove({});
     Accounts.createUser({
       username: 'd',
@@ -60,9 +48,6 @@ ${doc.address}`;
       Offices.insert(newDoc);
     });
     customerFixtures.random(15);
-    quoteFixtures.random(150);
-    shipmentFixtures.random(80);
-    invoiceFixtures.random(60);
   }
 
   if (Meteor.settings.testMode === 'load' && Customers.find().count() === 0) {

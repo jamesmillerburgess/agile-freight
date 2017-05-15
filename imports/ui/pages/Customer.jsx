@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Route, NavLink } from 'react-router-dom';
 
-import CustomerOverview from './CustomerOverview.jsx';
 import CustomerQuotes from './CustomerQuotes.jsx';
-import CustomerShipments from './CustomerShipments.jsx';
-import CustomerInvoices from './CustomerInvoices.jsx';
 import CustomerConfiguration from './CustomerConfiguration.jsx';
 
 import { Customers } from '../../api/customers/customers-collection';
@@ -32,27 +29,6 @@ const CustomerInner = ({ customer }) =>
         >
           1. Quotes (4)
         </NavLink>
-        <NavLink
-          to={`/customer/${customer._id}/shipments/active`}
-          activeClassName="active"
-          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/shipments`) !== -1}
-        >
-          2. Shipments (2)
-        </NavLink>
-        <NavLink
-          to={`/customer/${customer._id}/invoices/active`}
-          activeClassName="active"
-          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/invoices`) !== -1}
-        >
-          3. Invoices (1)
-        </NavLink>
-        <NavLink
-          to={`/customer/${customer._id}/overview/ytd`}
-          activeClassName="active"
-          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/overview`) !== -1}
-        >
-          Overview
-        </NavLink>
       </div>
       <div className="col-10 content">
         <div className="content-header">
@@ -61,20 +37,8 @@ const CustomerInner = ({ customer }) =>
           </div>
         </div>
         <Route
-          path={`/customer/${customer._id}/overview/:kpiPeriod`}
-          render={props => <CustomerOverview {...props} customer={customer} />}
-        />
-        <Route
           path={`/customer/${customer._id}/quotes`}
           render={props => <CustomerQuotes {...props} customer={customer} />}
-        />
-        <Route
-          path={`/customer/${customer._id}/shipments`}
-          render={props => <CustomerShipments {...props} customer={customer} />}
-        />
-        <Route
-          path={`/customer/${customer._id}/invoices`}
-          render={props => <CustomerInvoices {...props} customer={customer} />}
         />
         <Route
           path={`/customer/${customer._id}/configuration`}
