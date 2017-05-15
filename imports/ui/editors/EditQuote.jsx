@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
+import Modal from 'react-modal';
 
 import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
 import EditQuoteEmailConnect from './EditQuoteEmailConnect';
@@ -43,6 +44,7 @@ class EditQuote extends React.Component {
         currency,
         addChargeLine,
         loadEmail,
+        isOpen,
       } = this.props;
     return (
       <div className="edit-quote">
@@ -178,7 +180,9 @@ class EditQuote extends React.Component {
             </table>
           </div>
         </div>
-        <EditQuoteEmailConnect />
+        <Modal isOpen={isOpen} contentLabel="Modal">
+          <EditQuoteEmailConnect />
+        </Modal>
       </div>
     );
   }

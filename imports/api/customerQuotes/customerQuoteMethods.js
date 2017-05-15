@@ -37,7 +37,7 @@ Meteor.methods({
   },
   'customerQuote.save': function customerQuoteSave(customerQuote) {
     check(customerQuote, Object);
-
+    
     CustomerQuotes.update(
       { _id: customerQuote._id },
       {

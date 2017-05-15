@@ -1,5 +1,6 @@
 import React from 'react';
-import Modal from 'react-modal';
+import PropTypes from 'prop-types';
+
 import { Meteor } from 'meteor/meteor';
 
 import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
@@ -9,7 +10,6 @@ import { currencyFormat } from '../formatters/numberFormatters';
 const EditQuoteEmail = (props) => {
   const
     {
-      isOpen,
       setEmailIsOpen,
       to,
       setEmailTo,
@@ -19,9 +19,6 @@ const EditQuoteEmail = (props) => {
       setEmailSubject,
       message,
       setEmailMessage,
-      cargo,
-      movement,
-      otherServices,
       charges,
     } = props;
 
@@ -41,16 +38,15 @@ const EditQuoteEmail = (props) => {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      contentLabel="Modal"
-    >
+    <div>
       <h1>Email Customer</h1>
-      To: <input value={to} onChange={e => setEmailTo(e.target.value)} /><br />
-      cc: <input value={cc} onChange={e => setEmailCC(e.target.value)} /><br />
-      Subject: <input value={subject} onChange={e => setEmailSubject(e.target.value)} /><br />
-      Message: <textarea value={message} onChange={e => setEmailMessage(e.target.value)} /><br />
-      <button onClick={sendEmail}>
+      To: <input id="to" value={to} onChange={e => setEmailTo(e.target.value)} /><br />
+      cc: <input id="cc" value={cc} onChange={e => setEmailCC(e.target.value)} /><br />
+      Subject: <input id="subject" value={subject}
+                      onChange={e => setEmailSubject(e.target.value)} /><br />
+      Message: <textarea id="message" value={message}
+                         onChange={e => setEmailMessage(e.target.value)} /><br />
+      <button id="send-email-button" onClick={sendEmail}>
         Send Email
       </button>
       <div className="edit-group">
@@ -75,7 +71,8 @@ const EditQuoteEmail = (props) => {
               <tr>
                 <td colSpan="5" />
                 <td>Subtotal</td>
-                <td>{charges.currency} {currencyFormat(charges.totalOriginCharges)}</td>
+                <td
+                  id="origin-subtotal">{charges.currency} {currencyFormat(charges.totalOriginCharges)}</td>
               </tr>
             </tbody>
             <tbody>
@@ -98,7 +95,8 @@ const EditQuoteEmail = (props) => {
               <tr>
                 <td colSpan="5" />
                 <td>Subtotal</td>
-                <td>{charges.currency} {currencyFormat(charges.totalInternationalCharges)}</td>
+                <td
+                  id="international-subtotal">{charges.currency} {currencyFormat(charges.totalInternationalCharges)}</td>
               </tr>
             </tbody>
             <tbody>
@@ -121,7 +119,8 @@ const EditQuoteEmail = (props) => {
               <tr>
                 <td colSpan="5" />
                 <td>Subtotal</td>
-                <td>{charges.currency} {currencyFormat(charges.totalDestinationCharges)}</td>
+                <td
+                  id="destination-subtotal">{charges.currency} {currencyFormat(charges.totalDestinationCharges)}</td>
               </tr>
             </tbody>
             <tbody>
@@ -135,14 +134,51 @@ const EditQuoteEmail = (props) => {
               <tr className="summary">
                 <td colSpan="5">Summary</td>
                 <td>Total Price</td>
-                <td>{charges.currency} {currencyFormat(charges.totalCharges)}</td>
+                <td id="total">{charges.currency} {currencyFormat(charges.totalCharges)}</td>
               </tr>
             </tfoot>
           </table>
         </div>
       </div>
-    </Modal>
+    </div>
   );
+};
+
+EditQuoteEmail.propTypes = {
+  isOpen: PropTypes.bool,
+  setEmailIsOpen: PropTypes.func,
+  to: PropTypes.string,
+  setEmailTo: PropTypes.func,
+  cc: PropTypes.string,
+  setEmailCC: PropTypes.func,
+  subject: PropTypes.string,
+  setEmailSubject: PropTypes.func,
+  message: PropTypes.string,
+  setEmailMessage: PropTypes.func,
+  cargo: PropTypes.object,
+  movement: PropTypes.object,
+  otherServices: PropTypes.object,
+  charges: PropTypes.object,
+};
+
+EditQuoteEmail.defaultProps = {
+  setEmailIsOpen: () => null,
+  to: '',
+  setEmailTo: () => null,
+  cc: '',
+  setEmailCC: () => null,
+  subject: '',
+  setEmailSubject: () => null,
+  message: '',
+  setEmailMessage: () => null,
+  charges: {
+    chargeLines: [],
+    currency: '',
+    totalOriginCharges: 0,
+    totalInternationalCharges: 0,
+    totalDestinationCharges: 0,
+    totalCharges: 0,
+  },
 };
 
 export default EditQuoteEmail;
