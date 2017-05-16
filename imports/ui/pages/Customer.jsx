@@ -44,7 +44,6 @@ const CustomerInner = ({ customer }) =>
           path={`/customer/${customer._id}/configuration`}
           render={props => <CustomerConfiguration {...props} customer={customer} />}
         />
-
       </div>
     </div>
   );
