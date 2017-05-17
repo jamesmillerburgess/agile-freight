@@ -17,69 +17,12 @@ body {
   height: 100%;
 }
 
-.navbar {
-  background-color: $primary-color;
-  color: $quaternary-color;
-
-  .navbar-brand {
-    color: $tertiary-color;
-    font-weight: 500;
-  }
-
-  .navbar-brand:hover,
-  .nav-link {
-    color: $quaternary-color !important;
-  }
-
-  .form-inline {
-    margin-left: 15px;
-  }
-
-  .profile-button,
-  .alert-button {
-    color: rgba($quaternary-color, $high-alpha);
-    background-color: transparent;
-    transition: all .2s ease-in-out;
-    border-radius: 3px;
-    border: 0;
-  }
-
-  .profile-button {
-    padding: 0 5px 0 0;
-    .profile-pic {
-      height: 30px;
-      width: 30px;
-      display: inline-block;
-      border-radius: 5px;
-      margin-right: 5px;
-    }
-    .user-name {
-      margin-top: 5px;
-      color: rgba($quaternary-color, $high-alpha);
-    }
-  }
-
-  .profile-button:hover,
-  .alert-button:hover {
-    background-color: rgba($quaternary-color, $mid-alpha);
-  }
-
-  .alert-button-container {
-    padding-top: 5px;
-    .alert-button {
-      padding: 0;
-      margin-left: 15px;
-      font-size: $alert-button-font-size;
-      width: 30px;
-      height: 30px;
-    }
-  }
-}
-
 .profile-button:hover {
   cursor: pointer;
 }
 
 body {
-  background-color: $primary-color;
+  background-color: $app-background-color;
+  color: $text-color;
+  font-family: "Tw Cen MT", Arial, sans-serif;
 }

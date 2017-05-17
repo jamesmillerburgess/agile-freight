@@ -1,0 +1,100 @@
+@import 'styleGlobals';
+
+.navbar {
+  width: $nav-width;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: $app-background-color;
+  color: $text-color;
+  padding: $nav-padding;
+
+  .navbar-brand {
+    margin: $nav-brand-margin;
+  }
+
+  .brand {
+    font-size: $brand-font-size;
+    color: $text-color;
+    letter-spacing: 6px;
+    position: relative;
+    top: 60px;
+  }
+
+  .brand:hover {
+    color: $text-color !important;
+  }
+
+  .brand-highlight {
+    color: $home-accent-color;
+  }
+
+  .button {
+    height: $nav-button-height;
+    width: $nav-button-width;
+    margin-right: $nav-button-margin-right;
+    background-color: $panel-background-color;
+
+    .label {
+      position: relative;
+      text-align: center;
+      color: $text-color;
+      top: $nav-button-label-top;
+      font-size: $medium-font-size;
+    }
+  }
+
+  button:hover .label {
+    color: $inverted-text-color;
+  }
+
+  .customers-button:hover {
+    background-color: $customers-accent-color;
+  }
+
+  .rates-button:hover {
+    background-color: $rates-accent-color;
+  }
+
+  .profile-button:hover {
+    background-color: $profile-accent-color;
+  }
+
+  .form-inline {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .search {
+    font-size: $large-font-size;
+    border: none;
+    height: 28px;
+    background-color: transparent;
+    position: relative;
+    top: auto;
+  }
+
+  .search::placeholder {
+    color: $text-color;
+  }
+
+  .search:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .sign-in-button {
+    height: 30px;
+    width: auto;
+    padding: 0 10px;
+    font-size: $medium-font-size;
+    background-color: $panel-background-color;
+    color: $text-color;
+  }
+
+  .sign-in-button:hover {
+    background-color: $home-accent-color;
+  }
+
+  .alerts {
+  }
+}

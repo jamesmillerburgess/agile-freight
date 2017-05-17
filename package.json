@@ -16,6 +16,7 @@
     "dragula": "^3.7.2",
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
+    "eslint-plugin-meteor": "^4.0.1",
     "fibers": "^1.0.15",
     "fs": "0.0.1-security",
     "jquery": "^3.2.1",

@@ -1,12 +1,15 @@
 // APP
-$app-width: 731px;
+$app-width: 940px;
 
 // NAV
 $nav-width: $app-width;
+$nav-brand-margin: 0 7px 0 0;
 $nav-button-width: 80px;
 $nav-button-height: 95px;
-$nav-button-label-top: 75px;
+$nav-button-label-top: 30px;
+$nav-button-margin-right: 4px;
 $nav-margin: 0 0 10px 0;
+$nav-padding: 0;
 
 // CONTENT
 $content-width: $app-width;
