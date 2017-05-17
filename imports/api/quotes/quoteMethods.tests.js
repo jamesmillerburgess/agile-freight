@@ -24,6 +24,33 @@ if (Meteor.isServer) {
       StubCollections.restore();
     });
 
+    describe('quote.new', () => {
+      it('inserts a quote into the collection', () => {
+        Quotes.find({}).count().should.equal(0);
+        Meteor.call('quote.new', 'a');
+
+        Quotes.find({}).count().should.equal(1);
+      });
+
+      it('returns the id of the new quote', () => {
+        const quoteId = Meteor.call('quote.new', 'a');
+
+        Quotes.findOne()._id.should.equal(quoteId);
+      });
+
+      it('inserts a quote with the given customerId', () => {
+        const quoteId = Meteor.call('quote.new', 'a');
+
+        Quotes.findOne(quoteId).customerId.should.equal('a');
+      });
+
+      it('updates the given customer with the new quote id', () => {
+        const quoteId = Meteor.call('quote.new', 'a');
+
+        Customers.findOne('a').quotes[0].should.equal(quoteId);
+      });
+    });
+
     describe('quote.newFromRateSearch', () => {
       it('insert a new customer quote into the collection', () => {
         Quotes.find({}).count().should.equal(0);
@@ -83,7 +110,7 @@ if (Meteor.isServer) {
           customerId: 'a',
           cargo: {},
           movement: {},
-          otherServices: {}
+          otherServices: {},
         });
 
         Quotes.findOne().status.should.equal('Draft');
@@ -116,7 +143,7 @@ if (Meteor.isServer) {
           customerId,
           cargo: {},
           movement: {},
-          otherServices: {}
+          otherServices: {},
         })).should.throw();
       });
 
@@ -126,7 +153,7 @@ if (Meteor.isServer) {
           customerId,
           cargo: {},
           movement: {},
-          otherServices: {}
+          otherServices: {},
         });
         const customer        = Customers.findOne(customerId);
 
@@ -199,19 +226,6 @@ if (Meteor.isServer) {
         const quote = Quotes.findOne(quoteId);
 
         quote.status.should.equal('Draft');
-      });
-
-      it('throws an error if there is nothing to update', () => {
-        const quoteId = Quotes.insert({
-          status: 'Draft',
-          customerId: 'a',
-          cargo: {},
-          movement: {},
-          otherServices: {},
-          charges: {},
-        });
-
-        (() => Meteor.call('quote.save', { _id: quoteId })).should.Throw();
       });
     });
   });

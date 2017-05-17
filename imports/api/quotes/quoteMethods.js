@@ -5,6 +5,15 @@ import { Quotes } from './quotesCollection';
 import { Customers } from '../customers/customers-collection';
 
 Meteor.methods({
+  'quote.new': function quoteNew(customerId) {
+    check(customerId, String);
+
+    const quoteId = Quotes.insert({ customerId });
+
+    Customers.update({ _id: customerId }, { $push: { quotes: quoteId } });
+
+    return quoteId;
+  },
   'quote.newFromRateSearch': function quotesNewFromRateSearch(options) {
     check(options, Object);
     check(options.customerId, String);
