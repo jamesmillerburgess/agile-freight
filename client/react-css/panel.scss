@@ -1,0 +1,40 @@
+@import 'styleGlobals';
+
+.panel {
+  background-color: $panel-background-color;
+  margin: $panel-margin;
+  padding: $panel-padding;
+  display: flex;
+  justify-content: space-between;
+  .icon-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 0;
+    color: $panel-background-color;
+  }
+  .favorite-icon {
+    color: $panel-background-color;
+  }
+}
+
+.customer-list .panel:hover {
+  background-color: $customers-accent-color;
+  color: $inverted-text-color;
+  .icon-column,
+  .favorite-icon {
+    color: $inverted-text-color;
+    .fa:hover {
+      color: $customers-selected-item-background-color;
+    }
+  }
+  .favorite-icon:hover {
+    color: pink;
+  }
+}
+
+.list-item {
+  .list-item-header {
+    font-weight: bold;
+  }
+}

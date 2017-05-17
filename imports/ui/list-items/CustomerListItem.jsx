@@ -11,34 +11,38 @@ const CustomerListItem = ({ customer, history }) => {
   });
 
   return (
-    <button onClick={() => history.push(`/customer/${customer._id}/quotes`)} className="card">
-      <div className="card-inner">
-        <div className="container card-content">
-          <div className="row">
+    <Link to={`/customer/${customer._id}/quotes`} className="list-item">
+      <div className="panel">
+        <div className="icon-column">
+          <span className="fa fa-fw fa-file" />
+          <span className="fa fa-fw fa-cubes" />
+          <span className="fa fa-fw fa-dollar" />
+        </div>
+        <div className="container panel-body">
+          <div className="row no-gutters">
             <div className="col-6">
-              <span className="customer-name">{customer.name}</span>
+              <span className="list-item-header">{customer.name.toUpperCase()} <span className="fa fa-fw fa-heart-o favorite-icon" /></span>
               <br />
               <span className="customer-active-quotes">
                 {customer.quotes.length} QUOTES
               </span>
-            </div>
-            <div className="col-6">
-              <span className="customer-industry">Pharmaceuticals</span><br />
-              <span className="customer-credit">
-                {currencyFormat(customer.credit.used)}
-                / {currencyFormat(customer.credit.total)} {customer.credit.currency} credit
-              </span>
               <br />
-              <div className="progress">
-                <div className="progress-bar" role="progressbar"
-                     style={creditUsageStyle()} aria-valuenow="25"
-                     aria-valuemin="0" aria-valuemax="100" />
-              </div>
+              <span className="label">{customer.shipments.length} SHIPMENTS</span>
+            </div>
+            <div className="col-3">
+              <span className="list-item-header">LOCAL ACCOUNT</span><br />
+              Heavy Machinery<br />
+              2.1 TEU/MO
+            </div>
+            <div className="col-3">
+              <span className="label">13 k NR/MO</span><br />
+              <span className="label">2 k UNBILLED</span><br />
+              <span className="label">58 % CREDIT USAGE</span>
             </div>
           </div>
         </div>
       </div>
-    </button>
+    </Link>
   );
 }
 
