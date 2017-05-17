@@ -4,18 +4,26 @@ import { Route } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
+import QuoteListItem from '../list-items/QuoteListItem.jsx';
 
 import { Customers } from '../../api/customers/customers-collection';
 import NewQuoteConnect from '../editors/NewQuoteConnect.jsx';
 
-const CustomerInner = ({ customer, history }) =>
-  (
+const CustomerInner = ({ customer, history }) => {
+  return (
     <div className="">
       <div className="content customer">
         <CustomerListItem customer={customer} history={history} header />
         <Route
           path="/customers/:customerId/overview"
-          render={props => <div>{customer.quotes.map(quote => quote)}<br /></div>}
+          render={
+            props => (
+              <div>
+                {customer.quotes.map(quoteId =>
+                  <QuoteListItem key={quoteId} {...props} quoteId={quoteId} />)}
+              </div>
+            )
+          }
         />
         <Route
           path="/customers/:customerId/quotes/:quoteId/header"
@@ -26,6 +34,7 @@ const CustomerInner = ({ customer, history }) =>
       <div className="content-footer-accent customers-footer-accent" />
     </div>
   );
+};
 
 CustomerInner.propTypes = {
   customer: PropTypes.object.isRequired,
