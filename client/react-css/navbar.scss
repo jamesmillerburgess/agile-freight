@@ -2,11 +2,10 @@
 
 .navbar {
   width: $nav-width;
-  margin-left: auto;
-  margin-right: auto;
   background-color: $app-background-color;
   color: $text-color;
   padding: $nav-padding;
+  margin: $nav-margin;
 
   .navbar-brand {
     margin: $nav-brand-margin;

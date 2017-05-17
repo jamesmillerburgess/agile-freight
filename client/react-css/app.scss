@@ -7,6 +7,9 @@ html {
 body {
   overflow-x: hidden;
   height: 100%;
+  background-color: $app-background-color;
+  color: $text-color;
+  font-family: "Tw Cen MT", Arial, sans-serif;
 }
 
 .app {
@@ -19,10 +22,4 @@ body {
 
 .profile-button:hover {
   cursor: pointer;
-}
-
-body {
-  background-color: $app-background-color;
-  color: $text-color;
-  font-family: "Tw Cen MT", Arial, sans-serif;
 }

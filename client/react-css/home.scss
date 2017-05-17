@@ -1,0 +1,27 @@
+@import 'styleGlobals';
+
+.home {
+  display: flex;
+  flex-direction: row;
+
+  .splash-image-container {
+    margin-right: 7px;
+    width: 600px;
+    height: 370px;
+    background-color: $panel-background-color;
+  }
+
+  .home-kpis-container {
+    width: calc(100% - 600px);
+  }
+
+  .news-item {
+    line-height: 16px;
+  }
+
+  .horizontal-kpi {
+    display: flex;
+    justify-content: space-between;
+    font-size: $extra-large-font-size;
+  }
+}

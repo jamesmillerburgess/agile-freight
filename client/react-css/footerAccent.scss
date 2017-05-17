@@ -1,0 +1,11 @@
+@import 'styleGlobals';
+
+.content-footer-accent {
+  width: $content-width;
+  margin: 0 auto;
+  height: 12px;
+}
+
+.home-footer-accent {
+  background-color: $home-accent-color;
+}
