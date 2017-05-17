@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const NavInner = ({ user, history }) => {
@@ -24,31 +24,34 @@ const NavInner = ({ user, history }) => {
           </button>
         </div>
         <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li className="nav-item">
+          <NavLink to="/customers" className="nav-item">
             <button className="button customers-button">
               <span className="label">
                 CUSTOMERS
               </span>
             </button>
-          </li>
-          <li className="nav-item">
+          </NavLink>
+          <NavLink to="/rates" className="nav-item">
             <button className="button rates-button">
               <span className="label">
                 RATES
               </span>
             </button>
-          </li>
-          <li className="nav-item">
+          </NavLink>
+          <NavLink to="profile" className="nav-item">
             <button className="button profile-button">
               <span className="label">
                 PROFILE
               </span>
             </button>
+          </NavLink>
+          <li>
+            <div className="form-inline">
+              <input className="focis-input mr-sm-2 search" type="text" placeholder="Search..."/>
+            </div>
           </li>
         </ul>
-        <div className="form-inline">
-          <input className="focis-input mr-sm-2 search" type="text" placeholder="Search..."/>
-        </div>
+
         {user ?
           <form className="form-inline my-2 my-lg-0">
             <div className="dropdown">

@@ -32,6 +32,7 @@ const MainInner = ({ loading }) => {
               <div className="content-container">
                 <Route
                   path="/"
+                  exact
                   render={routeProps => <Home {...routeProps} />}
                 />
                 <Route
@@ -51,7 +52,7 @@ const MainInner = ({ loading }) => {
                   render={routeProps => verifyAuth(Customer, routeProps)}
                 />
                 <Route
-                  path="/user-profile"
+                  path="/profile"
                   render={routeProps => verifyAuth(UserProfile, routeProps)}
                 />
               </div>

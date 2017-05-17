@@ -50,6 +50,15 @@
     background-color: $customers-accent-color;
   }
 
+  a.active {
+    .customers-button {
+      background-color: $customers-accent-color;
+    }
+    .label {
+      color: $inverted-text-color;
+    }
+  }
+
   .rates-button:hover {
     background-color: $rates-accent-color;
   }
