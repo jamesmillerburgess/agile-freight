@@ -107,9 +107,9 @@ if (Meteor.isClient) {
               cargoType: 'Loose',
               totalPackages: 1,
               totalVolume: 3,
-              volumeUOM: 'CBM',
+              volumeUOM: 'cbm',
               totalWeight: 2,
-              weightUOM: 'KG',
+              weightUOM: 'kg',
             },
           },
         });
