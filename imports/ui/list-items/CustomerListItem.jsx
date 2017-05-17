@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom';
 
 import { currencyFormat } from '../formatters/numberFormatters';
 
-const CustomerListItem = ({ customer, history }) => {
+const CustomerListItem = ({ customer, header }) => {
   const creditUsageStyle = () => ({
     width: `${Math.round((customer.credit.used / customer.credit.total) * 100)}%`,
     height: '20px',
   });
 
   return (
-    <Link to={`/customer/${customer._id}/quotes`} className="list-item">
-      <div className="panel">
+    <Link to={`/customers/${customer._id}`} className="list-item">
+      <div className={`panel ${header ? 'header-panel' : ''}`}>
         <div className="icon-column">
           <span className="fa fa-fw fa-file" />
           <span className="fa fa-fw fa-cubes" />
@@ -44,10 +44,15 @@ const CustomerListItem = ({ customer, history }) => {
       </div>
     </Link>
   );
-}
+};
 
 CustomerListItem.propTypes = {
-  customer: PropTypes.object,
+  customer: PropTypes.object.isRequired,
+  header: PropTypes.bool,
+};
+
+CustomerListItem.defaultProps = {
+  header: false,
 };
 
 export default CustomerListItem;

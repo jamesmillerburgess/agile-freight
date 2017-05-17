@@ -18,7 +18,13 @@
   }
 }
 
-.customer-list .panel:hover {
+.customer .header-panel {
+  background-color: $customers-accent-color;
+  color: $inverted-text-color;
+}
+
+.customer-list .panel:hover,
+.customer .panel:hover {
   background-color: $customers-accent-color;
   color: $inverted-text-color;
   .icon-column,
