@@ -20,8 +20,18 @@ const getQuoteStats = quotes => ({
 });
 
 const NewQuote = (props) => {
-  const { cargo, movement, otherServices, quotes, history } = props;
-  const { customerId }                                              = props.match.params;
+  const
+    {
+      cargo,
+      movement,
+      otherServices,
+      quotes,
+      history,
+    } = props;
+  const
+    {
+      customerId,
+    } = props.match.params;
 
   const getRates = () => {
     Meteor.call(

@@ -1,28 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
 
-import { currencyFormat } from '../formatters/numberFormatters';
-
-const CustomerListItem = ({ customer, header }) => {
-  const newQuote = (customerId) => {
-    // TODO: Call new quote from scratch method
+const CustomerListItem = ({ customer, header, history }) => {
+  const newQuote = (e) => {
+    e.preventDefault();
+    Meteor.call(
+      'quote.new',
+      customer._id,
+      (err, quoteId) => history.push(`/customers/${customer._id}/quotes/${quoteId}/header`),
+    );
   };
 
   return (
     <Link to={`/customers/${customer._id}/overview`} className="list-item">
       <div className={`panel ${header ? 'header-panel' : ''}`}>
         <div className="icon-column">
-          <Link to={`/customers/${customer._id}/quotes`}>
+          <button onClick={newQuote}>
             <span className="fa fa-fw fa-file" />
-          </Link>
+          </button>
           <span className="fa fa-fw fa-cubes" />
           <span className="fa fa-fw fa-dollar" />
         </div>
         <div className="container panel-body">
           <div className="row no-gutters">
             <div className="col-6">
-              <span className="list-item-header">{customer.name.toUpperCase()} <span className="fa fa-fw fa-heart-o favorite-icon" /></span>
+              <span className="list-item-header">{customer.name.toUpperCase()} <span
+                className="fa fa-fw fa-heart-o favorite-icon" /></span>
               <br />
               <span className="customer-active-quotes">
                 {customer.quotes.length} QUOTES
@@ -50,6 +55,7 @@ const CustomerListItem = ({ customer, header }) => {
 CustomerListItem.propTypes = {
   customer: PropTypes.object.isRequired,
   header: PropTypes.bool,
+  history: PropTypes.object.isRequired,
 };
 
 CustomerListItem.defaultProps = {
