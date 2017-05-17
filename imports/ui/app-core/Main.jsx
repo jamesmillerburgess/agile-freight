@@ -45,10 +45,11 @@ const MainInner = ({ loading }) => {
                 />
                 <Route
                   path="/customers"
+                  exact
                   render={routeProps => verifyAuth(CustomerList, routeProps)}
                 />
                 <Route
-                  path="/customer/:id"
+                  path="/customers/:id"
                   render={routeProps => verifyAuth(Customer, routeProps)}
                 />
                 <Route
