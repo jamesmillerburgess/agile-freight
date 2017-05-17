@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Meteor} from 'meteor/meteor';
-import {Link} from 'react-router-dom';
-import {createContainer} from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
+import { Link } from 'react-router-dom';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const NavInner = ({ user, history }) => {
   const logout = () => Meteor.logout(() => history.push('/sign-in'));
