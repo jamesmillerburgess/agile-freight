@@ -15,7 +15,7 @@ const NavInner = ({ user, history }) => {
         aria-controls="navbarTogglerDemo01" aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span className="navbar-toggler-icon"/>
+        <span className="navbar-toggler-icon" />
       </button>
       <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
         <div className="navbar-brand">
@@ -47,7 +47,7 @@ const NavInner = ({ user, history }) => {
           </NavLink>
           <li>
             <div className="form-inline">
-              <input className="focis-input mr-sm-2 search" type="text" placeholder="Search..."/>
+              <input className="focis-input mr-sm-2 search" type="text" placeholder="Search..." />
             </div>
           </li>
         </ul>
@@ -62,7 +62,7 @@ const NavInner = ({ user, history }) => {
                 <div className="a-container">
                   <button className="dropdown-item">
                     <span className="label">
-                      <span className="fa fa-fw fa-pencil"/>
+                      <span className="fa fa-fw fa-pencil" />
                       EDIT PROFILE
                     </span>
                   </button>
@@ -70,7 +70,7 @@ const NavInner = ({ user, history }) => {
                 <div className="a-container">
                   <button className="dropdown-item" onClick={logout}>
                     <span className="label">
-                      <span className="fa fa-fw fa-sign-out"/>
+                      <span className="fa fa-fw fa-sign-out" />
                       SIGN OUT
                     </span>
                   </button>
