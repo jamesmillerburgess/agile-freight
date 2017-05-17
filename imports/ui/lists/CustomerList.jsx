@@ -19,7 +19,7 @@ const CustomerListInner = (props) => {
       <div className="content-footer-accent customers-footer-accent" />
     </div>
   );
-}
+};
 
 CustomerListInner.propTypes = {
   customers: PropTypes.array,

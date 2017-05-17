@@ -5,16 +5,17 @@ import { Link } from 'react-router-dom';
 import { currencyFormat } from '../formatters/numberFormatters';
 
 const CustomerListItem = ({ customer, header }) => {
-  const creditUsageStyle = () => ({
-    width: `${Math.round((customer.credit.used / customer.credit.total) * 100)}%`,
-    height: '20px',
-  });
+  const newQuote = (customerId) => {
+    // TODO: Call new quote from scratch method
+  };
 
   return (
-    <Link to={`/customers/${customer._id}`} className="list-item">
+    <Link to={`/customers/${customer._id}/overview`} className="list-item">
       <div className={`panel ${header ? 'header-panel' : ''}`}>
         <div className="icon-column">
-          <span className="fa fa-fw fa-file" />
+          <Link to={`/customers/${customer._id}/quotes`}>
+            <span className="fa fa-fw fa-file" />
+          </Link>
           <span className="fa fa-fw fa-cubes" />
           <span className="fa fa-fw fa-dollar" />
         </div>

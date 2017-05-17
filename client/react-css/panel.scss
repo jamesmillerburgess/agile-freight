@@ -11,7 +11,9 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 5px 0;
-    color: $panel-background-color;
+    .fa {
+      color: $panel-background-color;
+    }
   }
   .favorite-icon {
     color: $panel-background-color;
@@ -21,12 +23,23 @@
 .customer .header-panel {
   background-color: $customers-accent-color;
   color: $inverted-text-color;
+  .icon-column {
+    .fa {
+      color: $inverted-text-color;
+    }
+  }
+  .favorite-icon {
+    color: $inverted-text-color;
+  }
 }
 
 .customer-list .panel:hover,
 .customer .panel:hover {
   background-color: $customers-accent-color;
   color: $inverted-text-color;
+  .icon-column .fa {
+    color: $inverted-text-color;
+  }
   .icon-column,
   .favorite-icon {
     color: $inverted-text-color;
