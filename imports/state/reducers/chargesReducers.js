@@ -72,7 +72,7 @@ export const charges = (state = defaultChargesState, action = { type: '' }) => {
   let newState = {};
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
-      newState = action.quote.charges;
+      newState = action.quote.charges || defaultChargesState;
       break;
     default:
       newState = state;

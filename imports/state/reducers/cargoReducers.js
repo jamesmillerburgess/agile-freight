@@ -200,11 +200,21 @@ export const temperatureControlled = (state = false, action = { type: '' }) => {
   }
 };
 
+const cargoDefaultState = {
+  ratedQuote: false,
+  cargoType: 'Loose',
+  packageLines: defaultPackageLinesState,
+  containerLines: defaultContainerLinesState,
+  hazardous: false,
+  temperatureControlled: false,
+};
+
 export const cargo = (state = {}, action = { type: '' }) => {
   let newBaseState = {};
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
-      return action.quote.cargo;
+      newBaseState = action.quote.cargo || cargoDefaultState;
+      break;
     default:
       newBaseState = {
         cargoType: cargoType(state.cargoType, action),
@@ -214,9 +224,9 @@ export const cargo = (state = {}, action = { type: '' }) => {
         hazardous: hazardous(state.hazardous, action),
         temperatureControlled: temperatureControlled(state.temperatureControlled, action),
       };
-      return {
-        ...newBaseState,
-        ...cargoTotals(newBaseState),
-      };
   }
+  return {
+    ...newBaseState,
+    ...cargoTotals(newBaseState),
+  };
 };

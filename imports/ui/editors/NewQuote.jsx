@@ -37,7 +37,7 @@ class NewQuote extends React.Component {
   getRates() {
     Meteor.call(
       'quote.save',
-      this.props.quote,
+      { ...this.props.quote, _id: this.props.match.params.quoteId },
       () => this.props.history.push(
         `/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
       ),
@@ -335,20 +335,20 @@ class NewQuote extends React.Component {
       <div className="new-quote">
         <div className="tab-bar">
           <div
-            className={`tab ${this.props.cargo.cargoType === 'loose' ? 'active' : 'inactive'}`}
-            onClick={() => this.props.onChangeCargoType('loose')}
+            className={`tab ${this.props.cargo.cargoType === 'Loose' ? 'Active' : 'Inactive'}`}
+            onClick={() => this.props.onChangeCargoType('Loose')}
           >
             Loose Cargo
           </div>
           <div
-            className={`tab ${this.props.cargo.cargoType === 'containerized' ? 'active' : 'inactive'}`}
-            onClick={() => this.props.onChangeCargoType('containerized')}
+            className={`tab ${this.props.cargo.cargoType === 'Containerized' ? 'Active' : 'Inactive'}`}
+            onClick={() => this.props.onChangeCargoType('Containerized')}
           >
             Containers
           </div>
         </div>
-        {this.props.cargo.cargoType === 'loose' ? this.PackageLines() : ''}
-        {this.props.cargo.cargoType === 'containerized' ? this.Containers() : ''}
+        {this.props.cargo.cargoType === 'Loose' ? this.PackageLines() : ''}
+        {this.props.cargo.cargoType === 'Containerized' ? this.Containers() : ''}
         <div className="edit-group">
           <div className="edit-group-body">
             <div className="pickup-delivery-wrapper">

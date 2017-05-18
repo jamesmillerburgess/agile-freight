@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import moment from 'moment';
+import { Mongo } from 'meteor/mongo';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
-import { currencyFormat } from '../formatters/numberFormatters';
+import { UNLocations } from '../../api/unlocations/unlocations-collection';
+
+import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
 import { copyQuote } from '../quoteUtils';
 
 const QuoteListItemInner = ({ quote, history }) => {
@@ -31,14 +34,23 @@ const QuoteListItemInner = ({ quote, history }) => {
       if (ratedQuote === true) {
         return 'RATED, LOOSE';
       }
-      return `${totalPackages} PKG${totalPackages !== 1 ? 'S' : ''}, ${totalVolume} ${volumeUOM.toUpperCase()}, ${totalWeight} ${weightUOM.toUpperCase()}`;
+      return `${totalPackages} PKG${totalPackages !== 1 ? 'S' : ''}, ${weightFormat(totalVolume)} ${volumeUOM.toUpperCase()}, ${weightFormat(totalWeight)} ${weightUOM.toUpperCase()}`;
     }
     return '';
   };
 
   const getMovementText = () => {
-    if (quote && quote.movement && quote.movement.pickup && quote.movement.delivery) {
-      return `${quote.movement.pickup.location} – ${quote.movement.delivery.location}`.toUpperCase();
+    if (
+      quote &&
+      quote.movement &&
+      quote.movement.pickup &&
+      quote.movement.delivery &&
+      quote.movement.pickup.location &&
+      quote.movement.delivery.location
+    ) {
+      const pickupLocation   = UNLocations.findOne(new Mongo.ObjectID(quote.movement.pickup.location)).name;
+      const deliveryLocation = UNLocations.findOne(new Mongo.ObjectID(quote.movement.delivery.location)).name;
+      return `${pickupLocation} – ${deliveryLocation}`.toUpperCase();
     }
     return '';
   };
@@ -85,7 +97,7 @@ const QuoteListItemInner = ({ quote, history }) => {
   };
 
   return (
-    <div className="panel" onClick={() => history.push(`/customers/${quote.customerId}/quotes/${quote._id}/header`)}>
+    <div className="panel">
       <div className="icon-column">
         <span className="fa fa-fw fa-clone" onClick={onClickCopy} />
       </div>
@@ -143,7 +155,7 @@ QuoteListItemInner.defaultProps = {
 
 const QuoteListItem = createContainer((props) => {
   const { quoteId } = props;
-  const quote = Quotes.findOne(quoteId);
+  const quote       = Quotes.findOne(quoteId);
   return { quote };
 }, QuoteListItemInner);
 

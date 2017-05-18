@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
@@ -20,8 +20,15 @@ const CustomerInner = ({ customer, history }) => {
           render={
             props => (
               <div>
-                {customer.quotes.map(quoteId =>
-                  <QuoteListItem key={quoteId} {...props} quoteId={quoteId} />)}
+                {customer.quotes.map(quoteId => (
+                    <Link
+                      key={quoteId}
+                      className="list-item"
+                      to={`/customers/${customer._id}/quotes/${quoteId}/header`}>
+                      <QuoteListItem {...props} quoteId={quoteId} />
+                    </Link>
+                  )
+                )}
               </div>
             )
           }

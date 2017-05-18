@@ -11,6 +11,7 @@ import QuoteListItem from './QuoteListItem.jsx';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { Customers } from '../../api/customers/customers-collection';
+import { UNLocations } from '../../api/unlocations/unlocations-collection';
 
 if (Meteor.isClient) {
   describe('QuoteListItem Component', () => {
@@ -19,7 +20,7 @@ if (Meteor.isClient) {
     const props = { quoteId: 'a' };
 
     beforeEach(() => {
-      StubCollections.stub([Quotes, Customers]);
+      StubCollections.stub([Quotes, Customers, UNLocations]);
       Quotes.insert({
         _id: 'a',
         customerId: 'b',
@@ -30,6 +31,8 @@ if (Meteor.isClient) {
         },
       });
       Customers.insert({ _id: 'b', quotes: ['a'] });
+      UNLocations.insert({ _id: 'a', name: 'Location1' });
+      UNLocations.insert({ _id: 'b', name: 'Location2' });
     });
 
     afterEach(() => {
@@ -125,6 +128,28 @@ if (Meteor.isClient) {
         quoteListItem2.unmount();
       });
 
+      it('rounds the values for the volume and gross weight', () => {
+        Quotes.update(
+          { _id: 'a' },
+          {
+            $set: {
+              cargo: {
+                ratedQuote: false,
+                cargoType: 'Loose',
+                totalPackages: 1,
+                totalVolume: 0.111111111,
+                volumeUOM: 'cbm',
+                totalWeight: 0.222222222,
+                weightUOM: 'kg',
+              },
+            },
+          });
+        const wrapper = mount(<QuoteListItem {...props} />);
+
+        wrapper.contains(<span className="label">1 PKG, 0.111 CBM, 0.222 KG</span>).should.equal(true);
+        wrapper.unmount();
+      });
+
       it('renders a string in place of cargo totals for rated, loose quotes', () => {
         Quotes.update({ _id: 'a' }, { $set: { cargo: { ratedQuote: true, cargoType: 'Loose' } } });
         const quoteListItem = mount(<QuoteListItem {...props} />);
@@ -134,12 +159,12 @@ if (Meteor.isClient) {
       });
     });
 
-    describe('Routing', () => {
+    describe('Movement', () => {
       it('renders the route if there is one', () => {
-        Quotes.update({ _id: 'a' }, { $set: { movement: { pickup: { location: 'b' }, delivery: { location: 'c' } } } });
+        Quotes.update({ _id: 'a' }, { $set: { movement: { pickup: { location: 'a' }, delivery: { location: 'b' } } } });
         const wrapper = mount(<QuoteListItem {...props} />);
 
-        wrapper.contains(<span className="label">B – C</span>).should.equal(true);
+        wrapper.contains(<span className="label">LOCATION1 – LOCATION2</span>).should.equal(true);
         wrapper.unmount();
       });
 
