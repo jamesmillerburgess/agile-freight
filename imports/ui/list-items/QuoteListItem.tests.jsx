@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import { mount } from 'enzyme';
 import { chai } from 'meteor/practicalmeteor:chai';
 import StubCollections from 'meteor/hwillson:stub-collections';
+import { Mongo } from 'meteor/mongo';
 
 import QuoteListItem from './QuoteListItem.jsx';
 
@@ -31,8 +32,8 @@ if (Meteor.isClient) {
         },
       });
       Customers.insert({ _id: 'b', quotes: ['a'] });
-      UNLocations.insert({ _id: 'a', name: 'Location1' });
-      UNLocations.insert({ _id: 'b', name: 'Location2' });
+      UNLocations.insert({ _id: new Mongo.ObjectID('aaaaaaaaaaaaaaaaaaaaaaaa'), name: 'Location1' });
+      UNLocations.insert({ _id: new Mongo.ObjectID('bbbbbbbbbbbbbbbbbbbbbbbb'), name: 'Location2' });
     });
 
     afterEach(() => {
@@ -97,7 +98,8 @@ if (Meteor.isClient) {
         );
         const quoteListItem = mount(<QuoteListItem {...props} />);
 
-        quoteListItem.contains(<span className="label">RATED, CONTAINERIZED</span>).should.equal(true);
+        quoteListItem.contains(<span
+          className="label">RATED, CONTAINERIZED</span>).should.equal(true);
         quoteListItem.unmount();
       });
 
@@ -119,12 +121,14 @@ if (Meteor.isClient) {
           });
         const quoteListItem1 = mount(<QuoteListItem {...props} />);
 
-        quoteListItem1.contains(<span className="label">1 PKG, 3 CBM, 2 KG</span>).should.equal(true);
+        quoteListItem1.contains(<span
+          className="label">1 PKG, 3 CBM, 2 KG</span>).should.equal(true);
         quoteListItem1.unmount();
 
         Quotes.update({ _id: 'a' }, { $set: { 'cargo.totalPackages': 2 } });
         const quoteListItem2 = mount(<QuoteListItem {...props} />);
-        quoteListItem2.contains(<span className="label">2 PKGS, 3 CBM, 2 KG</span>).should.equal(true);
+        quoteListItem2.contains(<span
+          className="label">2 PKGS, 3 CBM, 2 KG</span>).should.equal(true);
         quoteListItem2.unmount();
       });
 
@@ -146,7 +150,8 @@ if (Meteor.isClient) {
           });
         const wrapper = mount(<QuoteListItem {...props} />);
 
-        wrapper.contains(<span className="label">1 PKG, 0.111 CBM, 0.222 KG</span>).should.equal(true);
+        wrapper.contains(<span
+          className="label">1 PKG, 0.111 CBM, 0.222 KG</span>).should.equal(true);
         wrapper.unmount();
       });
 
@@ -161,7 +166,14 @@ if (Meteor.isClient) {
 
     describe('Movement', () => {
       it('renders the route if there is one', () => {
-        Quotes.update({ _id: 'a' }, { $set: { movement: { pickup: { location: 'a' }, delivery: { location: 'b' } } } });
+        Quotes.update({ _id: 'a' }, {
+          $set: {
+            movement: {
+              pickup: { location: 'aaaaaaaaaaaaaaaaaaaaaaaa' },
+              delivery: { location: 'bbbbbbbbbbbbbbbbbbbbbbbb' },
+            },
+          },
+        });
         const wrapper = mount(<QuoteListItem {...props} />);
 
         wrapper.contains(<span className="label">LOCATION1 – LOCATION2</span>).should.equal(true);
@@ -179,10 +191,18 @@ if (Meteor.isClient) {
 
     describe('Other Services', () => {
       it('renders both other services if present', () => {
-        Quotes.update({ _id: 'a' }, { $set: { otherServices: { insurance: true, customsClearance: true } } });
+        Quotes.update({ _id: 'a' }, {
+          $set: {
+            otherServices: {
+              insurance: true,
+              customsClearance: true
+            }
+          }
+        });
         const wrapper = mount(<QuoteListItem {...props} />);
 
-        wrapper.contains(<span className="label">INSURANCE, CUSTOMS CLEARANCE</span>).should.equal(true);
+        wrapper.contains(<span
+          className="label">INSURANCE, CUSTOMS CLEARANCE</span>).should.equal(true);
         wrapper.unmount();
       });
 
@@ -203,7 +223,14 @@ if (Meteor.isClient) {
       });
 
       it('renders no other services if none are present', () => {
-        Quotes.update({ _id: 'a' }, { $set: { otherServices: { insurance: false, customsClearance: false } } });
+        Quotes.update({ _id: 'a' }, {
+          $set: {
+            otherServices: {
+              insurance: false,
+              customsClearance: false
+            }
+          }
+        });
         let wrapper = mount(<QuoteListItem {...props} />);
 
         wrapper.contains(<span className="label">NO OTHER SERVICES</span>).should.equal(true);
@@ -245,7 +272,12 @@ if (Meteor.isClient) {
       });
 
       it('renders the expiry date if the status is Active', () => {
-        Quotes.update({ _id: 'a' }, { $set: { status: 'Active', expiryDate: new Date('Jan 1, 2017') } });
+        Quotes.update({ _id: 'a' }, {
+          $set: {
+            status: 'Active',
+            expiryDate: new Date('Jan 1, 2017')
+          }
+        });
         const wrapper = mount(<QuoteListItem {...props} />);
 
         wrapper.contains(<span className="label">EXPIRES 01 JAN 2017</span>).should.equal(true);

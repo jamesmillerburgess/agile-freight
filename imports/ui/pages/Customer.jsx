@@ -21,14 +21,13 @@ const CustomerInner = ({ customer, history }) => {
             props => (
               <div>
                 {customer.quotes.map(quoteId => (
-                    <Link
-                      key={quoteId}
-                      className="list-item"
-                      to={`/customers/${customer._id}/quotes/${quoteId}/header`}>
-                      <QuoteListItem {...props} quoteId={quoteId} />
-                    </Link>
-                  )
-                )}
+                  <Link
+                    key={quoteId}
+                    className="list-item"
+                    to={`/customers/${customer._id}/quotes/${quoteId}/header`}>
+                    <QuoteListItem {...props} quoteId={quoteId} />
+                  </Link>
+                ))}
               </div>
             )
           }
