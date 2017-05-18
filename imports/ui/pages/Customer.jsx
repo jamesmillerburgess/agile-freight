@@ -8,6 +8,7 @@ import QuoteListItem from '../list-items/QuoteListItem.jsx';
 
 import { Customers } from '../../api/customers/customers-collection';
 import NewQuoteConnect from '../editors/NewQuoteConnect.jsx';
+import EditQuoteConnect from '../editors/EditQuoteConnect';
 
 const CustomerInner = ({ customer, history }) => {
   return (
@@ -28,6 +29,10 @@ const CustomerInner = ({ customer, history }) => {
         <Route
           path="/customers/:customerId/quotes/:quoteId/header"
           render={props => <NewQuoteConnect {...props} />}
+        />
+        <Route
+          path="/customers/:customerId/quotes/:quoteId/charges"
+          render={props => <EditQuoteConnect {...props} />}
         />
       </div>
 

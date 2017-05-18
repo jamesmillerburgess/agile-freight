@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import * as newQuoteActions from '../../state/actions/newQuoteActions';
 import NewQuote from './NewQuote.jsx';
 
-const mapStateToProps    = state => ({ ...state.newQuote });
+const mapStateToProps    = state => ({ ...state.newQuote, quote: state.newQuote });
 const mapDispatchToProps = dispatch => ({
+  onLoad: quote => dispatch(newQuoteActions.loadQuote(quote)),
+
   onChangeCargoType: cargoType => dispatch(newQuoteActions.setCargoType(cargoType)),
   onChangeRatedQuote: () => dispatch(newQuoteActions.toggleRatedQuote()),
   onAddPackageLine: () => dispatch(newQuoteActions.addPackageLine()),
