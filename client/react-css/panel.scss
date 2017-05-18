@@ -6,6 +6,9 @@
   padding: $panel-padding;
   display: flex;
   justify-content: space-between;
+  .title {
+    font-size: $extra-large-font-size;
+  }
   .icon-column {
     display: flex;
     flex-direction: column;

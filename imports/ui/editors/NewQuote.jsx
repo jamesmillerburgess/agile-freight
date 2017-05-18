@@ -340,6 +340,10 @@ class NewQuote extends React.Component {
             <div className="breadcrumb-end active customer" />
           </div>
         </div>
+        <div className="panel">
+          <div className="title">CARGO</div>
+          <button onClick={() => this.props.onChangeCargoType('Loose')}>Loose</button>
+        </div>
         <div className="tab-bar">
           <div
             className={`tab ${this.props.cargo.cargoType === 'Loose' ? 'Active' : 'Inactive'}`}
