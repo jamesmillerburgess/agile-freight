@@ -1,0 +1,50 @@
+@import 'styleGlobals';
+
+.process-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 7px;
+  .title {
+    font-size: $giant-font-size;
+    line-height: 32px;
+    margin-right: 7px;
+  }
+  .breadcrumbs {
+    display: flex;
+    flex-direction: row;
+  }
+  .breadcrumb-start {
+    width: 0;
+    height: 0;
+    border-top: 16.5px solid $customers-accent-color;
+    border-bottom: 16.5px solid $customers-accent-color;
+    border-left: 12px solid transparent;
+  }
+  .breadcrumb {
+    font-size: $extra-large-font-size;
+    background-color: $panel-background-color;
+    margin: 0;
+    padding: 0 5px;
+    border-radius: 0;
+    cursor: pointer;
+  }
+  .breadcrumb.active {
+    cursor: default;
+  }
+  .breadcrumb.active.customer {
+    background-color: $customers-accent-color;
+    color: $inverted-text-color;
+  }
+  .breadcrumb-end {
+    width: 0;
+    height: 0;
+    border-top: 16.5px solid transparent;
+    border-bottom: 16.5px solid transparent;
+    border-left: 12px solid $panel-background-color;
+    margin-right: -5px;
+  }
+  .breadcrumb-end.active.customer {
+    border-left-color: $customers-accent-color;
+  }
+}

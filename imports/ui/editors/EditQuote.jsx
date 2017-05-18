@@ -45,9 +45,25 @@ class EditQuote extends React.Component {
         addChargeLine,
         loadEmail,
         isOpen,
+        history,
       } = this.props;
     return (
       <div className="edit-quote">
+        <div className="process-header">
+          <div className="title">NEW QUOTE</div>
+          <div className="breadcrumbs">
+            <div
+              className="breadcrumb"
+              onClick={() => history.push(`/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
+            >
+              HEADER
+            </div>
+            <div className="breadcrumb-end" />
+            <div className="breadcrumb-start active customer" />
+            <div className="breadcrumb active customer">CHARGES</div>
+            <div className="breadcrumb-end active customer" />
+          </div>
+        </div>
         <div className="edit-group">
           <div className="edit-group-body">
             <table className="table table-bordered">

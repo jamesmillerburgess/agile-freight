@@ -333,6 +333,13 @@ class NewQuote extends React.Component {
   render() {
     return (
       <div className="new-quote">
+        <div className="process-header">
+          <div className="title">NEW QUOTE</div>
+          <div className="breadcrumbs">
+            <div className="breadcrumb active customer">HEADER</div>
+            <div className="breadcrumb-end active customer" />
+          </div>
+        </div>
         <div className="tab-bar">
           <div
             className={`tab ${this.props.cargo.cargoType === 'Loose' ? 'Active' : 'Inactive'}`}

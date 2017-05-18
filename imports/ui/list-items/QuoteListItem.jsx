@@ -93,7 +93,7 @@ const QuoteListItemInner = ({ quote, history }) => {
 
   const onClickCopy = (e) => {
     e.preventDefault();
-    copyQuote(quote._id, newQuoteId => history.push(`/customers/${quote.customerId}/quotes/${newQuoteId}/header`));
+    copyQuote(quote._id, (err, newQuoteId) => history.push(`/customers/${quote.customerId}/quotes/${newQuoteId}/header`));
   };
 
   return (

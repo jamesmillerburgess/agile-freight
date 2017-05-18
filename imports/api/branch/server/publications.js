@@ -22,7 +22,6 @@ Meteor.publish('branch.active', function publishBranchActive() {
         locationIds.push(new Mongo.ObjectID(quote.movement.delivery.location));
       }
     });
-    console.log(locationIds);
     cursors.push(UNLocations.find({ _id: { $in: locationIds } }));
   }
   return cursors;
