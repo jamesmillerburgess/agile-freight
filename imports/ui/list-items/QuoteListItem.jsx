@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
+import moment from 'moment';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
+import { currencyFormat } from '../formatters/numberFormatters';
+import { copyQuote } from '../quoteUtils';
 
-const QuoteListItemInner = ({ quote }) => {
+const QuoteListItemInner = ({ quote, history }) => {
   const
     {
       cargoType,
@@ -16,8 +19,9 @@ const QuoteListItemInner = ({ quote }) => {
       volumeUOM,
       totalWeight,
       weightUOM,
-    }               = quote.cargo || {};
-  const cargoString = () => {
+    } = quote.cargo || {};
+
+  const getCargoText = () => {
     if (cargoType === 'Containerized') {
       if (ratedQuote === true) {
         return 'RATED, CONTAINERIZED';
@@ -32,22 +36,68 @@ const QuoteListItemInner = ({ quote }) => {
     return '';
   };
 
-  const routes = () => {
-    
+  const getMovementText = () => {
+    if (quote && quote.movement && quote.movement.pickup && quote.movement.delivery) {
+      return `${quote.movement.pickup.location} – ${quote.movement.delivery.location}`.toUpperCase();
+    }
+    return '';
   };
+
+  const getOtherServicesText = () => {
+    if (!quote || !quote.otherServices) {
+      return 'NO OTHER SERVICES';
+    }
+    if (quote.otherServices.insurance && quote.otherServices.customsClearance) {
+      return 'INSURANCE, CUSTOMS CLEARANCE';
+    }
+    if (quote.otherServices.insurance) {
+      return 'INSURANCE';
+    }
+    if (quote.otherServices.customsClearance) {
+      return 'CUSTOMS CLEARANCE';
+    }
+    return 'NO OTHER SERVICES';
+  };
+
+  const getTotalPriceText = () => {
+    if (!quote || !quote.charges || !quote.charges.totalCharges || !quote.charges.currency) {
+      return '';
+    }
+    return `${quote.charges.currency} ${currencyFormat(quote.charges.totalCharges)}`;
+  };
+
+  const getStatusText = () => {
+    if (!quote || !quote.status) {
+      return '';
+    }
+    if (quote.status === 'Draft' || quote.status === 'Expired') {
+      return quote.status.toUpperCase();
+    }
+    if (quote.status === 'Active' && quote.expiryDate) {
+      return `EXPIRES ${moment(quote.expiryDate).format('DD MMM YYYY').toUpperCase()}`;
+    }
+    return '';
+  };
+
+  const onClickCopy = () => copyQuote(quote._id, (newQuoteId) => history.push(`/customers/${quote.customerId}/quotes/${newQuoteId}`));
 
   return (
     <div className="panel">
       <div className="icon-column">
-        <span className="fa fa-fw fa-clone" />
+        <span className="fa fa-fw fa-clone" onClick={onClickCopy} />
       </div>
       <div className="container panel-body">
         <div className="row no-gutters">
           <div className="col-4">
-            <span className="label">
-              {cargoString()}<br />
-              {routes()}
-            </span>
+            <span className="label">{getCargoText()}</span><br />
+            <span className="label">{getMovementText()}</span>
+          </div>
+          <div className="col-4">
+            <span className="label">{getOtherServicesText()}</span><br />
+            <span className="label">{getTotalPriceText()}</span>
+          </div>
+          <div className="col-4">
+            <span className="label">{getStatusText()}</span>
           </div>
         </div>
       </div>
@@ -69,6 +119,7 @@ QuoteListItemInner.propTypes = {
       totalTEU: PropTypes.number,
     }),
   }),
+  history: PropTypes.object,
 };
 
 QuoteListItemInner.defaultProps = {
@@ -89,7 +140,7 @@ QuoteListItemInner.defaultProps = {
 
 const QuoteListItem = createContainer((props) => {
   const { quoteId } = props;
-  const quote       = Quotes.findOne(quoteId);
+  const quote = Quotes.findOne(quoteId);
   return { quote };
 }, QuoteListItemInner);
 
