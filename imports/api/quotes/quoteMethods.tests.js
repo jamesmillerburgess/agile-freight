@@ -51,6 +51,79 @@ if (Meteor.isServer) {
       });
     });
 
+    describe('quote.copy', () => {
+      it('inserts a new quote into the collection', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a' });
+        Quotes.find({}).count().should.equal(1);
+        Meteor.call('quote.copy', 'b');
+        Quotes.find({}).count().should.equal(2);
+      });
+
+      it('returns the id of the new quote', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a' });
+        const quoteId = Meteor.call('quote.copy', 'b');
+
+        quoteId.should.be.a('string');
+        Quotes.find({ _id: quoteId }).count().should.equal(1);
+      });
+
+      it('copies the customer id', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a' });
+        const quoteId = Meteor.call('quote.copy', 'b');
+
+        Quotes.findOne(quoteId).customerId.should.equal('a');
+      });
+
+      it('updates the customer with the new quote id', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a', cargo: { totalPackages: 1 } });
+        const quoteId = Meteor.call('quote.copy', 'b');
+
+        Customers.findOne('a').quotes.should.contain(quoteId);
+      });
+
+      it('copies the cargo', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a', cargo: { totalPackages: 1 } });
+        const quoteId = Meteor.call('quote.copy', 'b');
+
+        Quotes.findOne(quoteId).cargo.should.eql({ totalPackages: 1 });
+      });
+
+      it('copies the movement', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a', movement: { pickup: { location: 'abc' } } });
+        const quoteId = Meteor.call('quote.copy', 'b');
+
+        Quotes.findOne(quoteId).movement.should.eql({ pickup: { location: 'abc' } });
+      });
+
+      it('copies the other services', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a', otherServices: { insurance: false } });
+        const quoteId = Meteor.call('quote.copy', 'b');
+
+        Quotes.findOne(quoteId).otherServices.should.eql({ insurance: false });
+      });
+
+      it('does not copy the charges', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a', charges: { chargeLines: [] } });
+        const quoteId = Meteor.call('quote.copy', 'b');
+
+        Quotes.findOne(quoteId).charges.should.eql({});
+      });
+
+      it('does not copy the expiry date', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a', expiryDate: new Date('January 1, 2017') });
+        const quoteId = Meteor.call('quote.copy', 'b');
+
+        Quotes.findOne(quoteId).should.not.have.property('expiryDate');
+      });
+
+      it('sets the status to \'Draft\'', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a' });
+        const quoteId = Meteor.call('quote.copy', 'b');
+
+        Quotes.findOne(quoteId).status.should.equal('Draft');
+      });
+    });
+
     describe('quote.newFromRateSearch', () => {
       it('insert a new customer quote into the collection', () => {
         Quotes.find({}).count().should.equal(0);
@@ -118,7 +191,7 @@ if (Meteor.isServer) {
 
       it('inserts a new quote with the given options', () => {
         const customerId = 'a';
-        const movement   = {
+        const movement = {
           pickup: {
             country: 'b',
             location: 'c',
@@ -148,14 +221,14 @@ if (Meteor.isServer) {
       });
 
       it('adds the customer quote ID to the customer', () => {
-        const customerId      = 'a';
+        const customerId = 'a';
         const quoteId = Meteor.call('quote.newFromRateSearch', {
           customerId,
           cargo: {},
           movement: {},
           otherServices: {},
         });
-        const customer        = Customers.findOne(customerId);
+        const customer = Customers.findOne(customerId);
 
         customer.quotes[0].should.equal(quoteId);
       });

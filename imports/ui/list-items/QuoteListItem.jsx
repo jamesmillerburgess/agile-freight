@@ -79,7 +79,7 @@ const QuoteListItemInner = ({ quote, history }) => {
     return '';
   };
 
-  const onClickCopy = () => copyQuote(quote._id, (newQuoteId) => history.push(`/customers/${quote.customerId}/quotes/${newQuoteId}`));
+  const onClickCopy = () => copyQuote(quote._id, newQuoteId => history.push(`/customers/${quote.customerId}/quotes/${newQuoteId}`));
 
   return (
     <div className="panel">

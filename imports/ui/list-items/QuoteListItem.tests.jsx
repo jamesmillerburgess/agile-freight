@@ -12,11 +12,6 @@ import QuoteListItem from './QuoteListItem.jsx';
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { Customers } from '../../api/customers/customers-collection';
 
-// Stub the method that is used in the component
-if (Meteor.isServer) {
-  Meteor.default_server.method_handlers['quote.copy'] = () => null;
-}
-
 if (Meteor.isClient) {
   describe('QuoteListItem Component', () => {
     chai.should();
@@ -52,7 +47,7 @@ if (Meteor.isClient) {
       it('renders a copy icon', () => {
         const wrapper = mount(<QuoteListItem {...props} />);
 
-        wrapper.contains(<span className="fa fa-fw fa-clone" />).should.equal(true);
+        wrapper.find('.fa-clone').length.should.equal(1);
       });
     });
 

@@ -14,6 +14,17 @@ Meteor.methods({
 
     return quoteId;
   },
+  'quote.copy': function quoteCopy(quoteId) {
+    check(quoteId, String);
+
+    const { customerId, cargo, movement, otherServices } = Quotes.findOne(quoteId);
+
+    const newQuoteId = Quotes.insert({ customerId, cargo, movement, otherServices, charges: {}, status: 'Draft' });
+
+    Customers.update({ _id: customerId }, { $push: { quotes: newQuoteId } });
+
+    return newQuoteId;
+  },
   'quote.newFromRateSearch': function quotesNewFromRateSearch(options) {
     check(options, Object);
     check(options.customerId, String);
@@ -28,7 +39,7 @@ Meteor.methods({
     }
 
     // Insert quote
-    const update  = {
+    const update = {
       ...options,
       status: 'Draft',
       charges: [],
