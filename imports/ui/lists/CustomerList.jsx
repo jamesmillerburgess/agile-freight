@@ -10,7 +10,7 @@ const CustomerListInner = (props) => {
   const { customers, history } = props;
   return (
     <div className="">
-      <div className="content customer-list">
+      <div className="content customer">
         {
           customers.map(customer =>
             <CustomerListItem key={customer._id} customer={customer} history={history} />)

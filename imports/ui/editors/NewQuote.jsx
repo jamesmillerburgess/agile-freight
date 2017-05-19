@@ -46,32 +46,46 @@ class NewQuote extends React.Component {
 
   PackageLines() {
     return (
-      <div className="edit-group with-tabs">
-        <div className="edit-group-body">
+      <div className="">
+        <div className="">
           <div className="package-row-header">
+            <button
+              className="cargo-row-icon"
+              onClick={() => this.props.onAddPackageLine()}
+              disabled={this.props.cargo.ratedQuote}
+            >
+              <span className="fa fa-fw fa-plus-square" />
+            </button>
             <div className="package-type">
               <div className="label">
-                Package Type
+                PACKAGE TYPE
               </div>
             </div>
             <div className="num-packages">
               <div className="label">
-                # Pkgs
+                # PKGS
               </div>
             </div>
             <div className="dimensions">
               <div className="label">
-                Dimensions / Pkg
+                DIMENSIONS / PKG
               </div>
             </div>
             <div className="weight">
               <div className="label">
-                Weight / Pkg
+                WEIGHT / PKG
               </div>
             </div>
           </div>
           {this.props.cargo.packageLines.map((packageLine, index) => (
             <div key={index} className="package-row">
+              <button
+                className="cargo-row-icon"
+                onClick={() => this.props.onRemovePackageLine(index)}
+                disabled={this.props.cargo.ratedQuote}
+              >
+                <span className="fa fa-fw fa-minus-square" />
+              </button>
               <div className="package-type">
                 <Select
                   value={packageLine.packageType}
@@ -177,49 +191,36 @@ class NewQuote extends React.Component {
               </span>
                 &nbsp;{packageLine.weightUOM}
               </div>
-              <button
-                className="cargo-row-icon"
-                onClick={() =>
-                  (index === 0 ? this.props.onAddPackageLine() : this.props.onRemovePackageLine(index))}
-                disabled={this.props.cargo.ratedQuote}
-              >
-                <span className={`fa fa-fw ${index === 0 ? 'fa-plus-circle' : 'fa-minus-circle'}`} />
-              </button>
             </div>
           ))}
         </div>
         <div className="edit-group-footer">
-          <CheckboxField
-            className="checkbox-hazardous"
-            onClick={this.props.onChangeRatedQuote}
-            value={this.props.cargo.ratedQuote}
-            label="Rated Quote"
-          />
+          <div className="cargo-row-icon" />
           <CheckboxField
             className="checkbox-hazardous"
             onClick={this.props.onClickHazardous}
             value={this.props.cargo.hazardous}
-            label="Hazardous"
+            label="HAZARDOUS"
           />
           <CheckboxField
             className="checkbox-temperature-controlled"
             onClick={this.props.onClickTemperatureControlled}
             value={this.props.cargo.temperatureControlled}
-            label="Temperature Controlled"
+            label="TEMPERATURE CONTROLLED"
           />
           <div className="edit-group-totals">
-          <span className="total-shipment-label">
-            Total Shipment:
-          </span>&nbsp;
+            <span className="total-shipment-label">
+              Total Shipment:
+            </span>&nbsp;
             <span className="total-shipment-value">
-            {integerFormat(this.props.cargo.totalPackages)}
-          </span> pkgs,&nbsp;
+              {integerFormat(this.props.cargo.totalPackages)}
+            </span> pkgs,&nbsp;
             <span className="total-shipment-value">
-            {weightFormat(this.props.cargo.totalVolume)}
-          </span> {this.props.cargo.volumeUOM},&nbsp;
+              {weightFormat(this.props.cargo.totalVolume)}
+            </span> {this.props.cargo.volumeUOM},&nbsp;
             <span className="total-shipment-value">
-            {weightFormat(this.props.cargo.totalWeight)}
-          </span> {this.props.cargo.weightUOM}
+              {weightFormat(this.props.cargo.totalWeight)}
+            </span> {this.props.cargo.weightUOM}
           </div>
         </div>
       </div>
@@ -334,32 +335,54 @@ class NewQuote extends React.Component {
     return (
       <div className="new-quote">
         <div className="process-header">
+
           <div className="title">NEW QUOTE</div>
           <div className="breadcrumbs">
             <div className="breadcrumb active customer">HEADER</div>
             <div className="breadcrumb-end active customer" />
           </div>
         </div>
-        <div className="panel">
-          <div className="title">CARGO</div>
-          <button onClick={() => this.props.onChangeCargoType('Loose')}>Loose</button>
-        </div>
-        <div className="tab-bar">
-          <div
-            className={`tab ${this.props.cargo.cargoType === 'Loose' ? 'Active' : 'Inactive'}`}
-            onClick={() => this.props.onChangeCargoType('Loose')}
-          >
-            Loose Cargo
+        <div className="panel container form-section">
+          <div className="title">
+            <div className="cargo-row-icon" />
+            CARGO
           </div>
-          <div
-            className={`tab ${this.props.cargo.cargoType === 'Containerized' ? 'Active' : 'Inactive'}`}
-            onClick={() => this.props.onChangeCargoType('Containerized')}
-          >
-            Containers
+          <div className="input-row">
+            <div className="cargo-row-icon" />
+            <div className="input-group">
+              <div className="button-group col-6">
+                <button
+                  className={`radio-button ${this.props.cargo.cargoType === 'Loose' ? 'active' : 'inactive'}`}
+                  onClick={() => this.props.onChangeCargoType('Loose')}
+                >
+                  LOOSE
+                </button>
+                <button
+                  className={`radio-button ${this.props.cargo.cargoType === 'Containerized' ? 'active' : 'inactive'}`}
+                  onClick={() => this.props.onChangeCargoType('Containerized')}
+                >
+                  CONTAINERIZED
+                </button>
+              </div>
+              <div className="button-group col-6">
+                <button
+                  className={`radio-button ${this.props.cargo.ratedQuote ? 'inactive' : 'active'}`}
+                  onClick={() => this.props.onChangeRatedQuote()}
+                >
+                  ITEMIZED
+                </button>
+                <button
+                  className={`radio-button ${this.props.cargo.ratedQuote ? 'active' : 'inactive'}`}
+                  onClick={() => this.props.onChangeRatedQuote()}
+                >
+                  RATED
+                </button>
+              </div>
+            </div>
           </div>
+          {this.props.cargo.cargoType === 'Loose' ? this.PackageLines() : ''}
+          {this.props.cargo.cargoType === 'Containerized' ? this.Containers() : ''}
         </div>
-        {this.props.cargo.cargoType === 'Loose' ? this.PackageLines() : ''}
-        {this.props.cargo.cargoType === 'Containerized' ? this.Containers() : ''}
         <div className="edit-group">
           <div className="edit-group-body">
             <div className="pickup-delivery-wrapper">

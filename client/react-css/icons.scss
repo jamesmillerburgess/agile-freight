@@ -10,11 +10,11 @@
   top: 2px;
   width: 25px;
   cursor: pointer;
-  font-size: $small-icon-font-size;
-  .fa-plus-circle {
+  font-size: $extra-large-font-size;
+  .fa-plus-square {
     color: $add-icon-color;
   }
-  .fa-minus-circle {
+  .fa-minus-square {
     color: $remove-icon-color;
   }
 }
@@ -29,4 +29,8 @@
 .cargo-row-icon.active {
   box-shadow: 0 0 3pt 2pt rgba($quaternary-color, $mid-alpha);
   outline: none;
+}
+
+.fa.transparent {
+  color: transparent;
 }

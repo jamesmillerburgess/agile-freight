@@ -23,6 +23,33 @@
   }
 }
 
+.form-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.col-6 {
+  max-width: 48%;
+  padding: 0;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  .radio-button {
+    width: 150px;
+    margin-right: 15px;
+  }
+}
+
 .customer .header-panel {
   background-color: $customers-accent-color;
   color: $inverted-text-color;
@@ -36,22 +63,23 @@
   }
 }
 
-.customer-list .panel:hover,
-.customer .panel:hover {
-  background-color: $customers-accent-color;
-  color: $inverted-text-color;
-  .icon-column .fa {
+.customer a {
+  .panel:hover {
+    background-color: $customers-accent-color;
     color: $inverted-text-color;
-  }
-  .icon-column,
-  .favorite-icon {
-    color: $inverted-text-color;
-    .fa:hover {
-      color: $customers-selected-item-background-color;
+    .icon-column .fa {
+      color: $inverted-text-color;
     }
-  }
-  .favorite-icon:hover {
-    color: pink;
+    .icon-column,
+    .favorite-icon {
+      color: $inverted-text-color;
+      .fa:hover {
+        color: $customers-selected-item-background-color;
+      }
+    }
+    .favorite-icon:hover {
+      color: pink;
+    }
   }
 }
 

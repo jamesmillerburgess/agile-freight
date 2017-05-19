@@ -2,6 +2,11 @@
 
 .new-quote,
 .edit-quote {
+  .cargo-row-icon {
+    margin-right: 10px;
+    min-width: 25px;
+  }
+
   .field {
     margin-top: 0;
     margin-bottom: 0;
@@ -110,9 +115,9 @@
     .totals,
     .cargo-row-icon {
       display: inline-block;
-      margin-right: 15px;
+      margin-right: 10px;
       overflow: visible;
-      vertical-align: top;
+      vertical-align: bottom;
     }
 
     .package-type {
@@ -151,6 +156,11 @@
     }
   }
 
+  .package-row .cargo-row-icon .fa {
+    position: relative;
+    bottom: 3px;
+  }
+
   .tab {
     display: inline-block;
     border-radius: 7px 7px 0 0;
@@ -181,11 +191,10 @@
   }
 
   .label {
-    font-size: $field-label-font-size;
-    color: $content-field-label-text-color;
+    font-size: $large-font-size;
+    color: $text-color;
     font-style: normal;
     margin-bottom: 3px;
-    font-weight: 400;
   }
 
   .select,
@@ -321,12 +330,12 @@
 
   .checkbox-hazardous {
     margin-right: 25px;
-    width: 140px;
+    width: 160px;
   }
 
   .checkbox-temperature-controlled {
-    margin-right: 25px;
-    width: 180px;
+    margin-right: 125px;
+    width: 220px;
   }
 
   .submit {

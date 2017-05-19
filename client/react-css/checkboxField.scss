@@ -7,25 +7,24 @@
     height: 20px;
     width: 20px;
     background-color: $editable-input-background-color;
-    border-radius: 3px;
-    border: 1px solid $input-border-color;
+    border: 1px solid $customers-accent-color;
     display: inline-block;
     cursor: pointer;
     padding: 0;
     .fa {
+      color: $text-color;
       position: relative;
       bottom: 2px;
-      left: -1px;
+      left: -2px;
     }
   }
 
   .checkbox:hover {
-    background-color: rgba($quaternary-color, $low-alpha);
-    border-color: rgba($quaternary-color, $mid-alpha);
+    background-color: rgba($customers-accent-color, $mid-alpha);
   }
 
   .checkbox:focus {
-    box-shadow: 0 0 3pt 2pt rgba($quaternary-color, $mid-alpha);
+    box-shadow: 0 0 3pt 2pt rgba($customers-accent-color, $high-alpha);
     outline: none;
   }
 
@@ -36,10 +35,11 @@
 
   .checkbox-label {
     position: relative;
-    font-size: $field-label-font-size;
+    font-size: $large-font-size;
     display: inline-block;
     left: 5px;
-    bottom: 4px;
+    bottom: 3px;
+    color: $text-color;
   }
 
 }

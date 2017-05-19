@@ -1,8 +1,12 @@
 @import 'styleGlobals';
 
+.Select-control {
+  border-radius: 0 !important;
+  border-color: $customers-accent-color !important;
+}
+
 .Select.is-focused .Select-control {
-  box-shadow: 0 0 3pt 2pt rgba($quaternary-color, $mid-alpha) !important;
-  border-color: rgba($quaternary-color, $mid-alpha) !important;
+  box-shadow: 0 0 3pt 2pt rgba($customers-accent-color, $high-alpha) !important;
 }
 
 .Select-value-label {
@@ -13,12 +17,17 @@
   background-color: $disabled-input-background-color !important;
 }
 
+.Select-menu-outer {
+  border-radius: 0 !important;
+  border: 1px solid $customers-accent-color !important;
+}
+
 .Select-option.is-selected {
-  background-color: rgba($quaternary-color, $low-alpha) !important;
+  background-color: rgba($customers-accent-color, $low-alpha) !important;
 }
 
 .Select-option.is-focused {
-  background-color: rgba($quaternary-color, $mid-alpha) !important;
+  background-color: rgba($customers-accent-color, $mid-alpha) !important;
 }
 
 .Select-option .option-count {
