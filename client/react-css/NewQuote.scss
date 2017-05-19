@@ -143,10 +143,11 @@
     }
 
     .totals {
+      float: right;
+      text-align: right;
       position: relative;
-      top: 8px;
-      width: 200px;
-      font-size: $cargo-totals-font-size;
+      top: 6px;
+      font-size: $large-font-size;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -272,20 +273,24 @@
   }
 
   .edit-group-totals {
-    width: 300px;
     display: inline-block;
-    font-size: $edit-group-totals-font-size;
+    font-size: $large-font-size;
     position: relative;
-    top: 2px;
-    left: 20px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    bottom: 3px;
   }
 
   .total-shipment-label {
-    font-size: $total-shipment-label-font-size;
-    font-weight: bold;
+    font-size: $large-font-size;
+  }
+
+  .total-values {
+    position: relative;
+    bottom: 27px;
+    margin-right: 10px;
+    float: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .total-shipment-value {

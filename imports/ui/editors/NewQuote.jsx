@@ -210,8 +210,10 @@ class NewQuote extends React.Component {
           />
           <div className="edit-group-totals">
             <span className="total-shipment-label">
-              Total Shipment:
-            </span>&nbsp;
+              TOTAL
+            </span>
+          </div>
+          <div className="total-values">
             <span className="total-shipment-value">
               {integerFormat(this.props.cargo.totalPackages)}
             </span> pkgs,&nbsp;
@@ -222,6 +224,7 @@ class NewQuote extends React.Component {
               {weightFormat(this.props.cargo.totalWeight)}
             </span> {this.props.cargo.weightUOM}
           </div>
+
         </div>
       </div>
     );
