@@ -132,8 +132,9 @@ class EditQuoteEmail extends React.Component {
               <tr>
                 <td colSpan="4" />
                 <td className="numeric-label">SUBTOTAL</td>
-                <td
-                  className="numeric-label">{this.props.charges.currency} {currencyFormat(this.props.charges.totalOriginCharges)}</td>
+                <td className="numeric-label">
+                  {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalOriginCharges)}
+                </td>
               </tr>
             </tbody>
             <tbody>
@@ -147,8 +148,9 @@ class EditQuoteEmail extends React.Component {
               <tr>
                 <td colSpan="4" />
                 <td className="numeric-label">SUBTOTAL</td>
-                <td
-                  className="numeric-label">{this.props.charges.currency} {currencyFormat(this.props.charges.totalInternationalCharges)}</td>
+                <td className="numeric-label">
+                  {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalInternationalCharges)}
+                </td>
               </tr>
             </tbody>
             <tbody>
@@ -163,7 +165,7 @@ class EditQuoteEmail extends React.Component {
                 <td colSpan="4" />
                 <td className="numeric-label">SUBTOTAL</td>
                 <td className="numeric-label">
-                  {this.props.charges.currency} {currencyFormat(this.props.charges.totalDestinationCharges)}
+                  {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalDestinationCharges)}
                 </td>
               </tr>
             </tbody>
@@ -180,8 +182,9 @@ class EditQuoteEmail extends React.Component {
               <tr>
                 <td colSpan="4" />
                 <td className="numeric-label title">TOTAL PRICE</td>
-                <td
-                  className="numeric-label title">{this.props.charges.currency} {currencyFormat(this.props.charges.totalCharges)}</td>
+                <td className="numeric-label title">
+                  {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalCharges)}
+                </td>
               </tr>
             </tfoot>
           </table>

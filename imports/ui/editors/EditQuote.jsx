@@ -111,7 +111,7 @@ class EditQuote extends React.Component {
                     <th className="title charge-name-column">ORIGIN</th>
                     <th className="rate-basis-column">RATE BASIS</th>
                     <th className="units-column">UNITS</th>
-                    <th className="unit-price-column">UNIT PRICE</th>
+                    <th className="unit-price-column numeric-label">UNIT PRICE</th>
                     <th className="amount-local-column numeric-label">AMOUNT (LOCAL)</th>
                     <th className="amount-final-column numeric-label">FINAL (USD)</th>
                   </tr>
