@@ -95,7 +95,9 @@ const EditQuoteChargeList = (props) => {
                     value="USD"
                     options={[
                       { value: 'USD', label: 'USD' },
+                      { value: 'EUR', label: 'EUR' },
                       { value: 'CHF', label: 'CHF' },
+                      { value: 'RMB', label: 'RMB' },
                     ]}
                     clearable={false}
                     arrowRenderer={() => false}
