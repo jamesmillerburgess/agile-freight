@@ -13,6 +13,7 @@ Schemas.Quote = new SimpleSchema({
   movement: { type: Object, blackbox: true, optional: true },
   otherServices: { type: Object, blackbox: true, optional: true },
   charges: { type: Object, blackbox: true, optional: true },
+  email: { type: Object, blackbox: true, optional: true },
 });
 
 Quotes.attachSchema(Schemas.Quote);

@@ -260,6 +260,7 @@ if (Meteor.isServer) {
           movement: {},
           otherServices: {},
           charges: {},
+          email: {},
         });
         Meteor.call(
           'quote.save',
@@ -269,6 +270,7 @@ if (Meteor.isServer) {
             movement: { b: 'b' },
             otherServices: { c: 'c' },
             charges: { d: 'd' },
+            email: { e: 'e' },
           },
         );
         const quote = Quotes.findOne(quoteId);
@@ -277,6 +279,7 @@ if (Meteor.isServer) {
         quote.movement.b.should.equal('b');
         quote.otherServices.c.should.equal('c');
         quote.charges.d.should.equal('d');
+        quote.email.e.should.equal('e');
       });
 
       it('ignores changes to the status', () => {

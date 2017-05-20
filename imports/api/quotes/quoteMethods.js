@@ -66,6 +66,7 @@ Meteor.methods({
           movement: quote.movement,
           otherServices: quote.otherServices,
           charges: quote.charges,
+          email: quote.email,
         },
       },
     );
