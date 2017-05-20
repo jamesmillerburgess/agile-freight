@@ -95,6 +95,13 @@ if (Meteor.isClient) {
         stateAfter.totalDestinationCharges.should.equal(4);
         stateAfter.totalCharges.should.equal(9);
       });
+
+      it('changes the notes', () => {
+        const stateBefore = { notes: 'a' };
+        const action = { type: ACTION_TYPES.SET_CHARGE_NOTES, notes: 'b' };
+
+        charges(stateBefore, action).notes.should.equal('b');
+      });
     });
 
     describe('Charge Lines Reducer', () => {

@@ -187,8 +187,10 @@ class EditQuote extends React.Component {
                     <td colSpan="6" className="notes-cell">
                       <textarea
                         ref={node => this.notesNode = node}
+                        value={this.props.notes}
                         onChange={e => {
                           autoheight(this.notesNode);
+                          this.props.setChargeNotes(e.target.value);
                         }}
                       />
                     </td>

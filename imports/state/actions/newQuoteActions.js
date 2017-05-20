@@ -44,6 +44,7 @@ export const setChargeLineName      = makeActionCreator(ACTION_TYPES.SET_CHARGE_
 export const setChargeLineRate      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_RATE, 'id', 'rate');
 export const setChargeLineUnits     = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNITS, 'id', 'units');
 export const setChargeLineUnitPrice = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE, 'id', 'unitPrice');
+export const setChargeNotes         = makeActionCreator(ACTION_TYPES.SET_CHARGE_NOTES, 'notes');
 
 // LOAD QUOTE
 export const loadQuote = makeActionCreator(ACTION_TYPES.LOAD_QUOTE, 'quote');

@@ -1,4 +1,4 @@
-import { changePropAtId, removeAtId, addToEnd } from './reducer-utils';
+import { changeProp, changePropAtId, removeAtId, addToEnd } from './reducer-utils';
 import * as ACTION_TYPES from '../actions/actionTypes';
 
 export const chargeLines = (state = [], action = { type: '' }) => {
@@ -73,6 +73,9 @@ export const charges = (state = defaultChargesState, action = { type: '' }) => {
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
       newState = action.quote.charges || defaultChargesState;
+      break;
+    case ACTION_TYPES.SET_CHARGE_NOTES:
+      newState = changeProp(state, 'notes', action.notes);
       break;
     default:
       newState = state;
