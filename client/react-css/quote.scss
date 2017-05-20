@@ -1,0 +1,10 @@
+@import 'styleGlobals';
+
+.quote-read-only {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .header {
+    font-size: $giant-font-size;
+  }
+}

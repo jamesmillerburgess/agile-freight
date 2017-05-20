@@ -6,16 +6,18 @@ import { Meteor } from 'meteor/meteor';
 import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
+import { UNLocations } from '../../api/unlocations/unlocations-collection';
 
-import { currencyFormat } from '../formatters/numberFormatters';
+import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
 import { autoheight } from '../formatters/autoheight';
 
 class EditQuoteEmail extends React.Component {
   constructor(props) {
     super(props);
-    this.saveAndClose = this.saveAndClose.bind(this);
-    this.archive      = this.archive.bind(this);
-    this.sendEmail    = this.sendEmail.bind(this);
+    this.saveAndClose    = this.saveAndClose.bind(this);
+    this.archive         = this.archive.bind(this);
+    this.sendEmail       = this.sendEmail.bind(this);
+    this.getMovementText = this.getMovementText.bind(this);
   }
 
   componentWillMount() {
@@ -24,6 +26,22 @@ class EditQuoteEmail extends React.Component {
 
   componentDidUpdate() {
     autoheight(this.messageNode);
+  }
+
+  getMovementText() {
+    if (
+      this.props.quote &&
+      this.props.quote.movement &&
+      this.props.quote.movement.pickup &&
+      this.props.quote.movement.delivery &&
+      this.props.quote.movement.pickup.location &&
+      this.props.quote.movement.delivery.location
+    ) {
+      const pickupLocation   = UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.pickup.location)).name;
+      const deliveryLocation = UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.delivery.location)).name;
+      return `${pickupLocation} – ${deliveryLocation}`.toUpperCase();
+    }
+    return '';
   }
 
   saveAndClose() {
@@ -52,6 +70,7 @@ class EditQuoteEmail extends React.Component {
         quoteId: this.props.match.params.quoteId,
       },
     );
+    this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`);
   }
 
   render() {
@@ -116,78 +135,114 @@ class EditQuoteEmail extends React.Component {
           </div>
         </div>
         <div className="panel edit-quote">
-          <table className="table">
-            <tbody>
-              <tr className="column-title-row">
-                <th className="title charge-name-column">ORIGIN</th>
-                <th className="rate-basis-column">RATE BASIS</th>
-                <th className="units-column">UNITS</th>
-                <th className="unit-price-column">UNIT PRICE</th>
-                <th className="amount-local-column numeric-label">AMOUNT (LOCAL)</th>
-                <th className="amount-final-column numeric-label">FINAL (USD)</th>
-              </tr>
-            </tbody>
-            <EditQuoteChargeListConnect group="Origin" readOnly />
-            <tbody className="subtotal">
+          <div className="quote-read-only">
+            <div className="header">AGILITY FREIGHT QUOTATION</div>
+            <div className="title">CARGO</div>
+            <table className="table">
+              {
+                this.props.quote.cargo.packageLines.map(packageLine => (
+                  <tr>
+                    <td>{packageLine.numPackages} {packageLine.packageType}</td>
+                    <td className="numeric-label">{packageLine.length}x{packageLine.width}x{packageLine.height} {packageLine.unitVolumeUOM}</td>
+                    <td className="numeric-label">{weightFormat(packageLine.weight)} {packageLine.weightUOM} / pkg</td>
+                    <td className="numeric-label">
+                      {packageLine.numPackages} pkgs,&nbsp;
+                      {weightFormat(packageLine.volume)} {packageLine.volumeUOM},&nbsp;
+                      {weightFormat(packageLine.totalWeight)} {packageLine.weightUOM}
+                    </td>
+                  </tr>
+                ))
+              }
               <tr>
-                <td colSpan="4" />
-                <td className="numeric-label">SUBTOTAL</td>
+                <td colSpan="2" />
+                <td className="numeric-label">TOTAL</td>
                 <td className="numeric-label">
-                  {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalOriginCharges)}
+                  {this.props.quote.cargo.totalPackages} pkgs,&nbsp;
+                  {weightFormat(this.props.quote.cargo.totalVolume)} {this.props.quote.cargo.volumeUOM},&nbsp;
+                  {weightFormat(this.props.quote.cargo.totalWeight)} {this.props.quote.cargo.weightUOM}
                 </td>
               </tr>
-            </tbody>
-            <tbody>
-              <tr className="empty-row" />
-              <tr className="column-title-row">
-                <th colSpan="6" className="title">INTERNATIONAL</th>
-              </tr>
-            </tbody>
-            <EditQuoteChargeListConnect group="International" readOnly />
-            <tbody className="subtotal">
-              <tr>
-                <td colSpan="4" />
-                <td className="numeric-label">SUBTOTAL</td>
-                <td className="numeric-label">
-                  {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalInternationalCharges)}
-                </td>
-              </tr>
-            </tbody>
-            <tbody>
-              <tr className="empty-row" />
-              <tr className="column-title-row">
-                <th colSpan="6" className="title">DESTINATION</th>
-              </tr>
-            </tbody>
-            <EditQuoteChargeListConnect group="Destination" readOnly />
-            <tbody className="subtotal">
-              <tr>
-                <td colSpan="4" />
-                <td className="numeric-label">SUBTOTAL</td>
-                <td className="numeric-label">
-                  {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalDestinationCharges)}
-                </td>
-              </tr>
-            </tbody>
-            <tbody>
-              <tr className="column-title-row">
-                <td className="title">NOTES</td>
-              </tr>
-              <tr className="info-row">
-                <td colSpan="6" className="notes-cell">
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan="4" />
-                <td className="numeric-label title">TOTAL PRICE</td>
-                <td className="numeric-label title">
-                  {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalCharges)}
-                </td>
-              </tr>
-            </tfoot>
-          </table>
+            </table>
+            <span>{this.props.quote.cargo.hazardous ? 'Hazardous' : 'Non-Hazardous'}</span>
+            <span>{this.props.quote.cargo.temperatureControlled ? 'Temperature Controlled' : 'Non-Temperature Controlled'}</span>
+            <div className="title">ROUTING</div>
+            <span>{this.getMovementText()}</span>
+            <div className="title">OTHER SERVICES</div>
+            <span>{this.props.quote.otherServices.insurance ? 'Insurance' : 'No Insurance'}</span>
+            <span>{this.props.quote.otherServices.customsClearance ? 'Customs Clearance' : 'No Customs Clearance'}</span>
+            <table className="table">
+              <tbody>
+                <tr className="column-title-row">
+                  <th className="title charge-name-column">ORIGIN CHARGES</th>
+                  <th className="rate-basis-column">RATE BASIS</th>
+                  <th className="units-column">UNITS</th>
+                  <th className="unit-price-column">UNIT PRICE</th>
+                  <th className="amount-local-column numeric-label">AMOUNT (LOCAL)</th>
+                  <th className="amount-final-column numeric-label">FINAL (USD)</th>
+                </tr>
+              </tbody>
+              <EditQuoteChargeListConnect group="Origin" readOnly />
+              <tbody className="subtotal">
+                <tr>
+                  <td colSpan="4" />
+                  <td className="numeric-label">SUBTOTAL</td>
+                  <td className="numeric-label">
+                    {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalOriginCharges)}
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr className="empty-row" />
+                <tr className="column-title-row">
+                  <th colSpan="6" className="title">INTERNATIONAL CHARGES</th>
+                </tr>
+              </tbody>
+              <EditQuoteChargeListConnect group="International" readOnly />
+              <tbody className="subtotal">
+                <tr>
+                  <td colSpan="4" />
+                  <td className="numeric-label">SUBTOTAL</td>
+                  <td className="numeric-label">
+                    {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalInternationalCharges)}
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr className="empty-row" />
+                <tr className="column-title-row">
+                  <th colSpan="6" className="title">DESTINATION CHARGES</th>
+                </tr>
+              </tbody>
+              <EditQuoteChargeListConnect group="Destination" readOnly />
+              <tbody className="subtotal">
+                <tr>
+                  <td colSpan="4" />
+                  <td className="numeric-label">SUBTOTAL</td>
+                  <td className="numeric-label">
+                    {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalDestinationCharges)}
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr className="column-title-row">
+                  <td className="title">NOTES</td>
+                </tr>
+                <tr className="info-row">
+                  <td colSpan="6" className="notes-cell">
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan="4" />
+                  <td className="numeric-label title">TOTAL PRICE</td>
+                  <td className="numeric-label title">
+                    {this.props.quote.charges.currency} {currencyFormat(this.props.quote.charges.totalCharges)}
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
         </div>
       </div>
     );
