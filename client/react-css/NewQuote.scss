@@ -188,7 +188,7 @@
 
   .field {
     display: inline-block;
-    margin-right: 15px;
+    margin-right: 10px;
   }
 
   .label {
@@ -217,6 +217,13 @@
     position: absolute;
     right: 10px;
     top: 10px;
+  }
+
+  .to-label {
+    position: relative;
+    top: 33px;
+    display: inline-block;
+    margin-right: 10px;
   }
 
   .select-packages,
@@ -285,7 +292,7 @@
 
   .total-values {
     position: relative;
-    bottom: 27px;
+    bottom: 3px;
     margin-right: 10px;
     float: right;
     text-overflow: ellipsis;
@@ -307,12 +314,12 @@
     vertical-align: top;
   }
 
-  .pickup,
-  .delivery {
-    width: 50%;
-    height: 100%;
-    display: inline-block;
-  }
+  //.pickup,
+  //.delivery {
+  //  width: 50%;
+  //  height: 100%;
+  //  display: inline-block;
+  //}
 
   .pickup {
   }
@@ -343,21 +350,4 @@
     width: 220px;
   }
 
-  .submit {
-    margin: 10px 0;
-    height: 50px;
-    width: 200px;
-    font-size: $submit-button-font-size;
-    font-weight: 700;
-    border-radius: 5px;
-    border: 0;
-    color: $editable-input-background-color;
-    outline: none;
-    background-color: $submit-button-background-color;
-    cursor: pointer;
-  }
-
-  .submit:hover {
-    background-color: rgba($submit-button-background-color, $very-high-alpha);
-  }
 }

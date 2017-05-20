@@ -23,9 +23,9 @@ const getQuoteStats = quotes => ({
 class NewQuote extends React.Component {
   constructor(props) {
     super(props);
-    this.getRates = this.getRates.bind(this);
+    this.getRates     = this.getRates.bind(this);
     this.PackageLines = this.PackageLines.bind(this);
-    this.Containers = this.Containers.bind(this);
+    this.Containers   = this.Containers.bind(this);
 
     this.quoteStats = getQuoteStats(props.quotes);
   }
@@ -338,7 +338,6 @@ class NewQuote extends React.Component {
     return (
       <div className="new-quote">
         <div className="process-header">
-
           <div className="title">NEW QUOTE</div>
           <div className="breadcrumbs">
             <div className="breadcrumb active customer">HEADER</div>
@@ -386,31 +385,18 @@ class NewQuote extends React.Component {
           {this.props.cargo.cargoType === 'Loose' ? this.PackageLines() : ''}
           {this.props.cargo.cargoType === 'Containerized' ? this.Containers() : ''}
         </div>
-        <div className="edit-group">
-          <div className="edit-group-body">
+        <div className="panel container form-section">
+          <div className="">
             <div className="pickup-delivery-wrapper">
               <div className="pickup">
-                <div className="edit-group-title">
-                  Pickup From
+                <div className="title">
+                  <div className="cargo-row-icon" />
+                  ROUTING
                 </div>
+                <div className="cargo-row-icon" />
                 <div className="field select-country">
                   <div className="label">
-                    Location Type
-                  </div>
-                  <Select
-                    value={this.props.movement.pickup.locationType}
-                    options={[
-                      { value: 'Port/Airport', label: 'Port/Airport' },
-                      { value: 'Address', label: 'Address' },
-                    ]}
-                    clearable={false}
-                    onChange={selectedValue => this.props.onChangePickupLocationType(selectedValue.value)}
-                  />
-                </div>
-                <div className="empty-field" />
-                <div className="field select-country">
-                  <div className="label">
-                    Country
+                    COUNTRY
                   </div>
                   <CountryField
                     value={this.props.movement.pickup.country}
@@ -421,7 +407,7 @@ class NewQuote extends React.Component {
                 </div>
                 <div className="field select-country">
                   <div className="label">
-                    City / Port Code
+                    LOCATION
                   </div>
                   <UNLocationField
                     value={this.props.movement.pickup.location}
@@ -431,30 +417,10 @@ class NewQuote extends React.Component {
                     topLocations={this.quoteStats.pickupLocation}
                   />
                 </div>
-              </div>
-              <div className="delivery">
-                <div className="edit-group-title">
-                  Delivery To
-                </div>
+                <div className="to-label">TO</div>
                 <div className="field select-country">
                   <div className="label">
-                    Location Type
-                  </div>
-                  <Select
-                    value={this.props.movement.delivery.locationType}
-                    options={[
-                      { value: 'Port/Airport', label: 'Port/Airport' },
-                      { value: 'Address', label: 'Address' },
-                    ]}
-                    clearable={false}
-                    onChange={selectedValue =>
-                      this.props.onChangeDeliveryLocationType(selectedValue.value)}
-                  />
-                </div>
-                <div className="empty-field" />
-                <div className="field select-country">
-                  <div className="label">
-                    Country
+                    COUNTRY
                   </div>
                   <CountryField
                     value={this.props.movement.delivery.country}
@@ -465,7 +431,7 @@ class NewQuote extends React.Component {
                 </div>
                 <div className="field select-country">
                   <div className="label">
-                    City / Port Code
+                    LOCATION
                   </div>
                   <UNLocationField
                     value={this.props.movement.delivery.location}
@@ -479,28 +445,34 @@ class NewQuote extends React.Component {
             </div>
           </div>
         </div>
-        <div className="edit-group other-services">
-          <div className="edit-group-body">
+        <div className="panel container form-section">
+          <div className="">
             <div className="pickup-delivery-wrapper">
               <div className="pickup">
-                <div className="edit-group-title">Other Services</div>
+
+                <div className="title">
+                  <div className="cargo-row-icon" />
+                  OTHER SERVICES
+                </div>
+                <div className="cargo-row-icon" />
                 <CheckboxField
+                  className="checkbox-hazardous"
                   onClick={this.props.onClickInsurance}
                   value={this.props.otherServices.insurance}
-                  label="Insurance"
+                  label="INSURANCE"
                 />
                 <CheckboxField
+                  className="checkbox-temperature-controlled"
                   onClick={this.props.onClickCustomsClearance}
                   value={this.props.otherServices.customsClearance}
-                  label="Customs Clearance"
+                  label="CUSTOMS CLEARANCE"
                 />
               </div>
-              <div className="delivery">
-                <button
-                  className="submit"
-                  onClick={this.getRates}
-                >
-                  GET RATES
+              <div className="form-button-group">
+                <button className="delete-button">DELETE</button>
+                <button className="save-button">SAVE AND CLOSE</button>
+                <button className="submit-button" onClick={this.getRates}>
+                  EDIT CHARGES
                 </button>
               </div>
             </div>
