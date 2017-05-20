@@ -2,6 +2,9 @@
 
 .new-quote,
 .edit-quote {
+  .notes-cell textarea {
+    width: calc(100% - 4px);
+  }
   .cargo-row-icon {
     margin-right: 10px;
     min-width: 25px;
@@ -13,13 +16,14 @@
   }
 
   .table {
-    font-size: $table-font-size;
+    font-size: $large-font-size;
 
     th {
-      font-weight: 600;
+      font-weight: normal;
     }
     .title {
-      font-size: $table-title-font-size;
+      font-size: $extra-large-font-size;
+      line-height: 30px;
     }
 
     .title-row th {
@@ -28,7 +32,6 @@
     }
     
     .column-title-row {
-      background: rgba($quaternary-color, $high-alpha);
     }
 
     .column-title-row th:first-child {
@@ -44,37 +47,69 @@
     }
 
     tbody.striped-data tr:nth-child(odd) {
-      background: rgba($quaternary-color, $very-low-alpha);
     }
 
     tbody.striped-data tr:nth-child(even) {
-      background: rgba($quaternary-color, $low-alpha);
     }
 
     tbody.subtotal {
-      font-weight: 600;
-      background-color: rgba($quaternary-color, $mid-alpha);
+      //font-weight: 600;
+      //background-color: rgba($quaternary-color, $mid-alpha);
     }
     
     td {
       vertical-align: middle;
     }
 
-    tr.empty-row {
-      height: 20px;
-    }
     tr.summary {
       color: white;
       background-color: rgba($quaternary-color, $very-high-alpha);
     }
 
-    th.amount {
-      width: 13%;
+    th.charge-name-column {
+      width: 20%;
+    }
+
+    td.charge-name-column input {
+      width: calc(100% - 4px);
+    }
+
+    th.rate-basis-column {
+      width: 20%;
+    }
+
+    td.rate-basis-column .Select {
+      width: calc(100% - 4px);
+    }
+
+    th.units-column {
+      width: 8%;
+    }
+
+    td.units-column input {
+      width: calc(100% - 4px);
+    }
+
+    th.unit-price-column {
+      width: 15%;
+    }
+
+    td.unit-price-column .input-group {
+      width: calc(100% - 4px);
+    }
+
+    td.unit-price-column input {
+      width: calc(100% - 4px);
+    }
+
+    th.amount-local-column,
+    th.amount-final-column {
+      width: 20%;
     }
 
     td,
     th {
-      padding: 12px 7px;
+      //padding: 12px 7px;
     }
   }
 

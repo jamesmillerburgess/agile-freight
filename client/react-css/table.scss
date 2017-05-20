@@ -7,3 +7,34 @@ table {
     padding: 0 !important;
   }
 }
+
+tr.empty-row {
+  height: 8px;
+}
+
+.table th {
+  border: none;
+  padding: 0;
+}
+
+.table td {
+  border: none;
+  padding: 2px 0;
+}
+
+.table tbody+tbody {
+  border: none;
+}
+
+.numeric-label {
+  text-align: right;
+}
+
+.table-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.column-title-row th {
+  vertical-align: bottom;
+}

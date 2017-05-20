@@ -5,6 +5,12 @@
   border-color: $customers-accent-color !important;
 }
 
+.Select input,
+.Select-value-label,
+.Select-option {
+  color: $text-color !important;
+}
+
 .Select.is-focused .Select-control {
   box-shadow: 0 0 3pt 2pt rgba($customers-accent-color, $high-alpha) !important;
 }

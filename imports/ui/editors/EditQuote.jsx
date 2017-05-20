@@ -14,11 +14,27 @@ import { currencyFormat } from '../formatters/numberFormatters';
 class EditQuote extends React.Component {
   constructor(props) {
     super(props);
+    this.saveAndClose     = this.saveAndClose.bind(this);
+    this.archive          = this.archive.bind(this);
     this.saveAndLoadEmail = this.saveAndLoadEmail.bind(this);
   }
 
   componentWillMount() {
     this.props.onLoad(Quotes.findOne(this.props.match.params.quoteId));
+  }
+
+  saveAndClose() {
+    Meteor.call(
+      'quote.save',
+      { ...this.props.newQuote, _id: this.props.match.params.quoteId },
+      () => this.props.history.push(
+        `/customers/${this.props.match.params.customerId}/overview`,
+      ),
+    );
+  }
+
+  archive() {
+
   }
 
   saveAndLoadEmail() {
@@ -64,136 +80,117 @@ class EditQuote extends React.Component {
             <div className="breadcrumb-end active customer" />
           </div>
         </div>
-        <div className="edit-group">
-          <div className="edit-group-body">
-            <table className="table table-bordered">
-              <tbody>
-                <tr className="title-row">
-                  <th colSpan="7" className="title">Origin Charges</th>
-                </tr>
-                <tr className="column-title-row">
-                  <th className="amount">Fee Code</th>
-                  <th>Fee Name</th>
-                  <th>Comment</th>
-                  <th className="amount">Units</th>
-                  <th className="amount">Unit Price</th>
-                  <th className="amount">Amount</th>
-                  <th className="amount">Final Amount</th>
-                  <th className="icon-cell">
-                    <button
-                      className="cargo-row-icon"
-                      onClick={() => addChargeLine({
-                        id: new Mongo.ObjectID()._str,
-                        group: 'Origin',
-                      })}
-                    >
-                      <span className="fa fa-fw fa-plus-circle" />
-                    </button>
-                  </th>
-                </tr>
-              </tbody>
-              <EditQuoteChargeListConnect group="Origin" />
-              <tbody className="subtotal">
-                <tr>
-                  <td colSpan="5" />
-                  <td>Subtotal</td>
-                  <td>{currency} {currencyFormat(totalOriginCharges)}</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr className="empty-row" />
-                <tr className="title-row">
-                  <th colSpan="7" className="title">International Charges</th>
-                </tr>
-                <tr className="column-title-row">
-                  <th>Fee Code</th>
-                  <th>Fee Name</th>
-                  <th>Comment</th>
-                  <th>Units</th>
-                  <th>Unit Price</th>
-                  <th>Amount</th>
-                  <th>Final Amount</th>
-                  <th className="icon-cell">
-                    <button
-                      className="cargo-row-icon"
-                      onClick={() => addChargeLine({
-                        id: new Mongo.ObjectID()._str,
-                        group: 'International',
-                      })}
-                    >
-                      <span className="fa fa-fw fa-plus-circle" />
-                    </button>
-                  </th>
-                </tr>
-              </tbody>
-              <EditQuoteChargeListConnect group="International" />
-              <tbody className="subtotal">
-                <tr>
-                  <td colSpan="5" />
-                  <td>Subtotal</td>
-                  <td>{currency} {currencyFormat(totalInternationalCharges)}</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr className="empty-row" />
-                <tr className="title-row">
-                  <th colSpan="7" className="title">Destination Charges</th>
-                </tr>
-                <tr className="column-title-row">
-                  <th>Fee Code</th>
-                  <th>Fee Name</th>
-                  <th>Comment</th>
-                  <th>Units</th>
-                  <th>Unit Price</th>
-                  <th>Amount</th>
-                  <th>Final Amount</th>
-                  <th className="icon-cell">
-                    <button
-                      className="cargo-row-icon"
-                      onClick={() => addChargeLine({
-                        id: new Mongo.ObjectID()._str,
-                        group: 'Destination',
-                      })}
-                    >
-                      <span className="fa fa-fw fa-plus-circle" />
-                    </button>
-                  </th>
-                </tr>
-              </tbody>
-              <EditQuoteChargeListConnect group="Destination" />
-              <tbody className="subtotal">
-                <tr>
-                  <td colSpan="5" />
-                  <td>Subtotal</td>
-                  <td>{currency} {currencyFormat(totalDestinationCharges)}</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr className="info-row">
-                  <td colSpan="5">
-                    <textarea />
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr className="summary">
-                  <td colSpan="5">Summary</td>
-                  <td>Total Price</td>
-                  <td>{currency} {currencyFormat(totalCharges)}</td>
-                </tr>
-                <tr>
-                  <td colSpan="5" />
-                  <td colSpan="2">
-                    <button
-                      className="submit"
-                      onClick={this.saveAndLoadEmail}
-                    >
-                      SAVE AND SUBMIT TO CUSTOMER
-                    </button>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
+        <div className="">
+          <div className="panel">
+            <div className="table-wrapper">
+              <table className="table">
+                <tbody>
+                  <tr className="column-title-row">
+                    <th className="icon-cell">
+                      <button
+                        className="cargo-row-icon"
+                        onClick={() => addChargeLine({
+                          id: new Mongo.ObjectID()._str,
+                          group: 'Origin',
+                        })}
+                      >
+                        <span className="fa fa-fw fa-plus-square" />
+                      </button>
+                    </th>
+                    <th className="title charge-name-column">ORIGIN</th>
+                    <th className="rate-basis-column">RATE BASIS</th>
+                    <th className="units-column">UNITS</th>
+                    <th className="unit-price-column">UNIT PRICE</th>
+                    <th className="amount-local-column numeric-label">AMOUNT (LOCAL)</th>
+                    <th className="amount-final-column numeric-label">FINAL (USD)</th>
+                  </tr>
+                </tbody>
+                <EditQuoteChargeListConnect group="Origin" />
+                <tbody className="subtotal">
+                  <tr>
+                    <td colSpan="5" />
+                    <td className="numeric-label">SUBTOTAL</td>
+                    <td className="numeric-label">{currency} {currencyFormat(totalOriginCharges)}</td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr className="empty-row" />
+                  <tr className="column-title-row">
+                    <th className="icon-cell">
+                      <button
+                        className="cargo-row-icon"
+                        onClick={() => addChargeLine({
+                          id: new Mongo.ObjectID()._str,
+                          group: 'International',
+                        })}
+                      >
+                        <span className="fa fa-fw fa-plus-square" />
+                      </button>
+                    </th>
+                    <th colSpan="6" className="title">INTERNATIONAL</th>
+                  </tr>
+                </tbody>
+                <EditQuoteChargeListConnect group="International" />
+                <tbody className="subtotal">
+                  <tr>
+                    <td colSpan="5" />
+                    <td className="numeric-label">SUBTOTAL</td>
+                    <td className="numeric-label">{currency} {currencyFormat(totalInternationalCharges)}</td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr className="empty-row" />
+                  <tr className="column-title-row">
+                    <th className="icon-cell">
+                      <button
+                        className="cargo-row-icon"
+                        onClick={() => addChargeLine({
+                          id: new Mongo.ObjectID()._str,
+                          group: 'Destination',
+                        })}
+                      >
+                        <span className="fa fa-fw fa-plus-square" />
+                      </button>
+                    </th>
+                    <th colSpan="6" className="title">DESTINATION</th>
+                  </tr>
+                </tbody>
+                <EditQuoteChargeListConnect group="Destination" />
+                <tbody className="subtotal">
+                  <tr>
+                    <td colSpan="5" />
+                    <td className="numeric-label">SUBTOTAL</td>
+                    <td className="numeric-label">{currency} {currencyFormat(totalDestinationCharges)}</td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr className="column-title-row">
+                    <td />
+                    <td className="title">NOTES</td>
+                  </tr>
+                  <tr className="info-row">
+                    <td />
+                    <td colSpan="6" className="notes-cell">
+                      <textarea />
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan="5" />
+                    <td className="numeric-label title">TOTAL PRICE</td>
+                    <td className="numeric-label title">{currency} {currencyFormat(totalCharges)}</td>
+                  </tr>
+                </tfoot>
+              </table>
+              <div className="form-button-group">
+                <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
+                <button className="save-button" onClick={this.saveAndClose}>SAVE AND CLOSE</button>
+                <button className="submit-button" onClick={this.editEmail}>
+                  EDIT EMAIL
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <Modal isOpen={isOpen} contentLabel="Modal">

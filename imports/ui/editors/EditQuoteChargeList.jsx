@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
 
 import { currencyFormat } from '../formatters/numberFormatters';
 
@@ -19,19 +20,19 @@ const EditQuoteChargeList = (props) => {
     <tbody className="striped-data">
       {chargeLines.map(chargeLine => (
         <tr key={chargeLine.id}>
-          <td>
-            {
-              readOnly ?
-                '' :
-                <input
-                  type="text"
-                  placeholder=""
-                  value={chargeLine.code || ''}
-                  onChange={e => setChargeLineCode(chargeLine.id, e.target.value)}
-                />
-            }
-          </td>
-          <td>
+          {
+            readOnly ?
+              null :
+              <td className="icon-cell">
+                <button
+                  className="cargo-row-icon"
+                  onClick={() => removeChargeLine(chargeLine.id)}
+                >
+                  <span className="fa fa-fw fa-minus-square" />
+                </button>
+              </td>
+          }
+          <td className="charge-name-column">
             {
               readOnly ?
                 chargeLine.name :
@@ -43,19 +44,25 @@ const EditQuoteChargeList = (props) => {
                 />
             }
           </td>
-          <td>
+          <td className="rate-basis-column">
             {
               readOnly ?
                 chargeLine.rate :
-                <textarea
-                  type="text"
-                  placeholder=""
+                <Select
+                  className="input-group-last addon"
                   value={chargeLine.rate || ''}
-                  onChange={e => setChargeLineRate(chargeLine.id, e.target.value)}
+                  options={[
+                    { value: 'Per Container', label: 'Per Container' },
+                    { value: 'Per Shipment', label: 'Per Shipment' },
+                  ]}
+                  onChange={selectedValue => setChargeLineRate(chargeLine.id, selectedValue.value)}
+                  arrowRenderer={() => false}
+                  searchable
+                  clearable={false}
                 />
             }
           </td>
-          <td>
+          <td className="units-column">
             {
               readOnly ?
                 chargeLine.units :
@@ -68,33 +75,34 @@ const EditQuoteChargeList = (props) => {
                 />
             }
           </td>
-          <td>
+          <td className="unit-price-column">
             {
               readOnly ?
                 chargeLine.unitPrice :
-                <input
-                  className="input-numeric"
-                  type="number"
-                  placeholder=""
-                  value={chargeLine.unitPrice || ''}
-                  onChange={e => setChargeLineUnitPrice(chargeLine.id, +e.target.value)}
-                />
+                <div className="input-group">
+                  <input
+                    className="input-numeric input-group-first"
+                    type="number"
+                    placeholder=""
+                    value={chargeLine.unitPrice || ''}
+                    onChange={e => setChargeLineUnitPrice(chargeLine.id, +e.target.value)}
+                  />
+                  <Select
+                    className="input-group-last addon"
+                    value="USD"
+                    options={[
+                      { value: 'USD', label: 'USD' },
+                      { value: 'CHF', label: 'CHF' },
+                    ]}
+                    clearable={false}
+                    arrowRenderer={() => false}
+                    searchable={false}
+                  />
+                </div>
             }
           </td>
-          <td>{currencyFormat(chargeLine.amount)}</td>
-          <td />
-          {
-            readOnly ?
-              null :
-              <td className="icon-cell">
-                <button
-                  className="cargo-row-icon"
-                  onClick={() => removeChargeLine(chargeLine.id)}
-                >
-                  <span className="fa fa-fw fa-minus-circle" />
-                </button>
-              </td>
-          }
+          <td className="numeric-label amount-local-column">{currencyFormat(chargeLine.amount)}</td>
+          <td className="amount-final-column" />
         </tr>
       ))}
     </tbody>
