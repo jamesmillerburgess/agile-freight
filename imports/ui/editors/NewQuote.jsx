@@ -23,6 +23,8 @@ const getQuoteStats = quotes => ({
 class NewQuote extends React.Component {
   constructor(props) {
     super(props);
+    this.archive      = this.archive.bind(this);
+    this.saveAndClose = this.saveAndClose.bind(this);
     this.getRates     = this.getRates.bind(this);
     this.PackageLines = this.PackageLines.bind(this);
     this.Containers   = this.Containers.bind(this);
@@ -42,6 +44,20 @@ class NewQuote extends React.Component {
         `/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
       ),
     );
+  }
+
+  saveAndClose() {
+    Meteor.call(
+      'quote.save',
+      { ...this.props.quote, _id: this.props.match.params.quoteId },
+      () => this.props.history.push(
+        `/customers/${this.props.match.params.customerId}/overview`,
+      ),
+    );
+  }
+
+  archive() {
+
   }
 
   PackageLines() {
@@ -232,19 +248,33 @@ class NewQuote extends React.Component {
 
   Containers() {
     return (
-      <div className="edit-group with-tabs">
-        <div className="edit-group-body">
+      <div className="">
+        <div className="">
           <div className="container-header">
+            <button
+              className="cargo-row-icon"
+              onClick={() => this.props.onAddContainerLine()}
+              disabled={this.props.cargo.ratedQuote}
+            >
+              <span className="fa fa-fw fa-plus-square" />
+            </button>
             <div className="num-containers label">
-              Quantity
+              QUANTITY
             </div>
             <div className="container-type label">
-              Container Type
+              CONTAINER TYPE
             </div>
           </div>
           {
             this.props.cargo.containerLines.map((containerLine, index) => (
               <div key={index} className="container-row">
+                <button
+                  className="cargo-row-icon"
+                  onClick={() => this.props.onRemoveContainerLine(index)}
+                  disabled={this.props.cargo.ratedQuote}
+                >
+                  <span className="fa fa-fw fa-minus-square" />
+                </button>
                 <div className="num-containers">
                   <input
                     value={containerLine.numContainers}
@@ -292,17 +322,8 @@ class NewQuote extends React.Component {
                     className={`fa fa-fw ${containerLine.temperatureControlled ? 'fa-check' : ' '}`}
                   />
                   </button>
-                  <div className="checkbox-label">Temperature Controlled</div>
+                  <div className="checkbox-label">TEMPERATURE CONTROLLED</div>
                 </div>
-                <button
-                  className="cargo-row-icon"
-                  onClick={() =>
-                    (index === 0 ? this.props.onAddContainerLine() : this.props.onRemoveContainerLine(index))}
-                  disabled={this.props.cargo.ratedQuote}
-                >
-                <span
-                  className={`fa fa-fw ${index === 0 ? 'fa-plus-circle' : 'fa-minus-circle'}`} />
-                </button>
               </div>
             ))
           }
@@ -310,18 +331,12 @@ class NewQuote extends React.Component {
         <div className="edit-group-footer">
           <CheckboxField
             className="checkbox-hazardous"
-            onClick={this.props.onChangeRatedQuote}
-            value={this.props.cargo.ratedQuote}
-            label="Rated Quote"
-          />
-          <CheckboxField
-            className="checkbox-hazardous"
             onClick={this.props.onClickHazardous}
             value={this.props.cargo.hazardous}
-            label="Hazardous"
+            label="HAZARDOUS"
           />
           <div className="edit-group-totals">
-            <span className="total-shipment-label">Total Shipment:</span>&nbsp;
+            <span className="total-shipment-label">TOTAL</span>&nbsp;
             <span className="total-shipment-value">
             {integerFormat(this.props.cargo.totalContainers)}
           </span> containers,&nbsp;
@@ -469,8 +484,8 @@ class NewQuote extends React.Component {
                 />
               </div>
               <div className="form-button-group">
-                <button className="delete-button">DELETE</button>
-                <button className="save-button">SAVE AND CLOSE</button>
+                <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
+                <button className="save-button" onClick={this.saveAndClose}>SAVE AND CLOSE</button>
                 <button className="submit-button" onClick={this.getRates}>
                   EDIT CHARGES
                 </button>
