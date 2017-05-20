@@ -12,6 +12,9 @@ const emailDefaultState = {
 export const email = (state = emailDefaultState, action = { type: '' }) => {
   let newState = {};
   switch (action.type) {
+    case ACTION_TYPES.LOAD_QUOTE:
+      newState = action.quote.email || emailDefaultState;
+      break;
     case ACTION_TYPES.LOAD_EMAIL:
       newState = action.email;
       break;

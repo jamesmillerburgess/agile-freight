@@ -2,10 +2,12 @@ import { connect } from 'react-redux';
 
 import EditQuoteEmail from './EditQuoteEmail.jsx';
 import * as actionCreators from '../../state/actions/emailActions';
+import { loadQuote } from '../../state/actions/newQuoteActions';
 
-const mapStateToProps = state => ({ ...state.email, ...state.newQuote });
+const mapStateToProps = state => ({ quote: state.newQuote });
 
 const mapDispatchToProps = dispatch => ({
+  onLoad: quote => dispatch(loadQuote(quote)),
   setEmailIsOpen: (id, code) => dispatch(actionCreators.setEmailIsOpen(id, code)),
   setEmailTo: (id, name) => dispatch(actionCreators.setEmailTo(id, name)),
   setEmailCC: (id, rate) => dispatch(actionCreators.setEmailCC(id, rate)),

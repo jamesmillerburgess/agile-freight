@@ -10,4 +10,11 @@ textarea {
   outline: none;
   height: 36px;
   resize: none;
+  overflow: hidden;
+}
+
+textarea:focus {
+  box-shadow: 0 0 3pt 2pt rgba($customers-accent-color, $high-alpha);
+  border: 1px solid $customers-accent-color;
+  z-index: 1000;
 }

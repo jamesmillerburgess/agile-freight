@@ -18,15 +18,19 @@
   .breadcrumb-start {
     width: 0;
     height: 0;
-    border-top: 16.5px solid $customers-accent-color;
-    border-bottom: 16.5px solid $customers-accent-color;
+    border-top: 16.5px solid $panel-background-color;
+    border-bottom: 16.5px solid $panel-background-color;
     border-left: 12px solid transparent;
+  }
+  .breadcrumb-start.active.customer {
+    border-top-color: $customers-accent-color;
+    border-bottom-color: $customers-accent-color;
   }
   .breadcrumb {
     font-size: $extra-large-font-size;
     background-color: $panel-background-color;
     margin: 0;
-    padding: 0 5px;
+    padding: 0 10px;
     border-radius: 0;
     cursor: pointer;
   }

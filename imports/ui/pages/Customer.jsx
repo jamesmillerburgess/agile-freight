@@ -6,9 +6,11 @@ import { createContainer } from 'meteor/react-meteor-data';
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
 import QuoteListItem from '../list-items/QuoteListItem.jsx';
 
+
 import { Customers } from '../../api/customers/customers-collection';
 import NewQuoteConnect from '../editors/NewQuoteConnect.jsx';
 import EditQuoteConnect from '../editors/EditQuoteConnect';
+import EditQuoteEmailConnect from '../editors/EditQuoteEmailConnect';
 
 const CustomerInner = ({ customer, history }) => {
   return (
@@ -24,7 +26,8 @@ const CustomerInner = ({ customer, history }) => {
                   <Link
                     key={quoteId}
                     className="list-item"
-                    to={`/customers/${customer._id}/quotes/${quoteId}/header`}>
+                    to={`/customers/${customer._id}/quotes/${quoteId}/header`}
+                  >
                     <QuoteListItem {...props} quoteId={quoteId} />
                   </Link>
                 ))}
@@ -39,6 +42,10 @@ const CustomerInner = ({ customer, history }) => {
         <Route
           path="/customers/:customerId/quotes/:quoteId/charges"
           render={props => <EditQuoteConnect {...props} />}
+        />
+        <Route
+          path="/customers/:customerId/quotes/:quoteId/email"
+          render={props => <EditQuoteEmailConnect {...props} />}
         />
       </div>
 

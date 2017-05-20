@@ -5,144 +5,192 @@ import { Meteor } from 'meteor/meteor';
 
 import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
 
+import { Quotes } from '../../api/quotes/quotesCollection';
+
 import { currencyFormat } from '../formatters/numberFormatters';
+import { autoheight } from '../formatters/autoheight';
 
-const EditQuoteEmail = (props) => {
-  const
-    {
-      setEmailIsOpen,
-      to,
-      setEmailTo,
-      cc,
-      setEmailCC,
-      subject,
-      setEmailSubject,
-      message,
-      setEmailMessage,
-      charges,
-    } = props;
+class EditQuoteEmail extends React.Component {
+  constructor(props) {
+    super(props);
+    this.saveAndClose = this.saveAndClose.bind(this);
+    this.archive      = this.archive.bind(this);
+    this.sendEmail    = this.sendEmail.bind(this);
+  }
 
-  const sendEmail = () => {
-    setEmailIsOpen(false);
+  componentWillMount() {
+    this.props.onLoad(Quotes.findOne(this.props.match.params.quoteId));
+  }
+
+  componentDidUpdate() {
+    autoheight(this.messageNode);
+  }
+
+  saveAndClose() {
+    Meteor.call(
+      'quote.save',
+      { ...this.props.quote, _id: this.props.match.params.quoteId },
+      () => this.props.history.push(
+        `/customers/${this.props.match.params.customerId}/overview`,
+      ),
+    );
+  }
+
+  archive() {
+
+  }
+
+  sendEmail() {
     Meteor.call(
       'email.send',
       {
         from: 'agilityfreightdemo@gmail.com',
-        to,
-        cc,
-        subject,
-        message,
-        quoteId: 'NSD9kRZWPtbTtprwA',
+        to: this.props.quote.email.to,
+        cc: this.props.quote.email.cc,
+        subject: this.props.quote.email.subject,
+        message: this.props.quote.email.message,
+        quoteId: this.props.match.params.quoteId,
       },
     );
-  };
+  }
 
-  return (
-    <div>
-      <h1>Email Customer</h1>
-      To: <input id="to" value={to} onChange={e => setEmailTo(e.target.value)} /><br />
-      cc: <input id="cc" value={cc} onChange={e => setEmailCC(e.target.value)} /><br />
-      Subject: <input id="subject" value={subject}
-                      onChange={e => setEmailSubject(e.target.value)} /><br />
-      Message: <textarea id="message" value={message}
-                         onChange={e => setEmailMessage(e.target.value)} /><br />
-      <button id="send-email-button" onClick={sendEmail}>
-        Send Email
-      </button>
-      <div className="edit-group">
-        <div className="edit-group-body">
-          <table className="table table-bordered">
+  render() {
+    return (
+      <div>
+        <div className="process-header">
+          <div className="title">NEW QUOTE</div>
+          <div className="breadcrumbs">
+            <div
+              className="breadcrumb"
+              onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
+            >
+              HEADER
+            </div>
+            <div className="breadcrumb-end" />
+            <div className="breadcrumb-start" />
+            <div
+              className="breadcrumb"
+              onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`)}
+            >
+              CHARGES
+            </div>
+            <div className="breadcrumb-end" />
+            <div className="breadcrumb-start active customer" />
+            <div className="breadcrumb active customer">EMAIL</div>
+            <div className="breadcrumb-end active customer" />
+          </div>
+        </div>
+        <div className="panel email">
+          <div className="email-inputs">
+            <div className="email-input">
+              <span className="label">TO</span>
+              <input id="to" value={this.props.quote.email.to}
+                     onChange={e => this.props.setEmailTo(e.target.value)} />
+            </div>
+            <div className="email-input">
+              <span className="label">CC</span>
+              <input id="cc" value={this.props.quote.email.cc}
+                     onChange={e => this.props.setEmailCC(e.target.value)} />
+            </div>
+            <div className="email-input">
+              <span className="label">SUBJECT</span>
+              <input id="subject" value={this.props.quote.email.subject}
+                     onChange={e => this.props.setEmailSubject(e.target.value)} />
+            </div>
+            <div className="email-input">
+              <span className="label">MESSAGE</span>
+              <textarea
+                ref={node => this.messageNode = node}
+                id="message" value={this.props.quote.email.message}
+                onChange={e => {
+                  autoheight(this.messageNode);
+                  this.props.setEmailMessage(e.target.value);
+                }}
+              />
+            </div>
+            <div className="form-button-group">
+              <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
+              <button className="save-button" onClick={this.saveAndClose}>SAVE AND CLOSE</button>
+              <button className="submit-button" onClick={this.sendEmail}>SEND EMAIL</button>
+            </div>
+          </div>
+        </div>
+        <div className="panel edit-quote">
+          <table className="table">
             <tbody>
-              <tr className="title-row">
-                <th colSpan="7" className="title">Origin Charges</th>
-              </tr>
               <tr className="column-title-row">
-                <th className="amount">Fee Code</th>
-                <th>Fee Name</th>
-                <th>Comment</th>
-                <th className="amount">Units</th>
-                <th className="amount">Unit Price</th>
-                <th className="amount">Amount</th>
-                <th className="amount">Final Amount</th>
+                <th className="title charge-name-column">ORIGIN</th>
+                <th className="rate-basis-column">RATE BASIS</th>
+                <th className="units-column">UNITS</th>
+                <th className="unit-price-column">UNIT PRICE</th>
+                <th className="amount-local-column numeric-label">AMOUNT (LOCAL)</th>
+                <th className="amount-final-column numeric-label">FINAL (USD)</th>
               </tr>
             </tbody>
             <EditQuoteChargeListConnect group="Origin" readOnly />
             <tbody className="subtotal">
               <tr>
-                <td colSpan="5" />
-                <td>Subtotal</td>
+                <td colSpan="4" />
+                <td className="numeric-label">SUBTOTAL</td>
                 <td
-                  id="origin-subtotal">{charges.currency} {currencyFormat(charges.totalOriginCharges)}</td>
+                  className="numeric-label">{this.props.charges.currency} {currencyFormat(this.props.charges.totalOriginCharges)}</td>
               </tr>
             </tbody>
             <tbody>
               <tr className="empty-row" />
-              <tr className="title-row">
-                <th colSpan="7" className="title">International Charges</th>
-              </tr>
               <tr className="column-title-row">
-                <th>Fee Code</th>
-                <th>Fee Name</th>
-                <th>Comment</th>
-                <th>Units</th>
-                <th>Unit Price</th>
-                <th>Amount</th>
-                <th>Final Amount</th>
+                <th colSpan="6" className="title">INTERNATIONAL</th>
               </tr>
             </tbody>
             <EditQuoteChargeListConnect group="International" readOnly />
             <tbody className="subtotal">
               <tr>
-                <td colSpan="5" />
-                <td>Subtotal</td>
+                <td colSpan="4" />
+                <td className="numeric-label">SUBTOTAL</td>
                 <td
-                  id="international-subtotal">{charges.currency} {currencyFormat(charges.totalInternationalCharges)}</td>
+                  className="numeric-label">{this.props.charges.currency} {currencyFormat(this.props.charges.totalInternationalCharges)}</td>
               </tr>
             </tbody>
             <tbody>
               <tr className="empty-row" />
-              <tr className="title-row">
-                <th colSpan="7" className="title">Destination Charges</th>
-              </tr>
               <tr className="column-title-row">
-                <th>Fee Code</th>
-                <th>Fee Name</th>
-                <th>Comment</th>
-                <th>Units</th>
-                <th>Unit Price</th>
-                <th>Amount</th>
-                <th>Final Amount</th>
+                <th colSpan="6" className="title">DESTINATION</th>
               </tr>
             </tbody>
             <EditQuoteChargeListConnect group="Destination" readOnly />
             <tbody className="subtotal">
               <tr>
-                <td colSpan="5" />
-                <td>Subtotal</td>
-                <td
-                  id="destination-subtotal">{charges.currency} {currencyFormat(charges.totalDestinationCharges)}</td>
+                <td colSpan="4" />
+                <td className="numeric-label">SUBTOTAL</td>
+                <td className="numeric-label">
+                  {this.props.charges.currency} {currencyFormat(this.props.charges.totalDestinationCharges)}
+                </td>
               </tr>
             </tbody>
             <tbody>
+              <tr className="column-title-row">
+                <td className="title">NOTES</td>
+              </tr>
               <tr className="info-row">
-                <td colSpan="5">
-                  <textarea />
+                <td colSpan="6" className="notes-cell">
                 </td>
               </tr>
             </tbody>
             <tfoot>
-              <tr className="summary">
-                <td colSpan="5">Summary</td>
-                <td>Total Price</td>
-                <td id="total">{charges.currency} {currencyFormat(charges.totalCharges)}</td>
+              <tr>
+                <td colSpan="4" />
+                <td className="numeric-label title">TOTAL PRICE</td>
+                <td
+                  className="numeric-label title">{this.props.charges.currency} {currencyFormat(this.props.charges.totalCharges)}</td>
               </tr>
             </tfoot>
           </table>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
+;
 
 EditQuoteEmail.propTypes = {
   isOpen: PropTypes.bool,

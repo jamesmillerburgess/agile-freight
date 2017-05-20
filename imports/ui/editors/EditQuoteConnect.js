@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
       totalCharges,
       currency,
     } = state.newQuote.charges;
-  const { isOpen } = state.email;
+  const { isOpen } = state.newQuote.email;
   const newQuote = state.newQuote;
   return {
     totalOriginCharges,

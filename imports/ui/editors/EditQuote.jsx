@@ -14,9 +14,9 @@ import { currencyFormat } from '../formatters/numberFormatters';
 class EditQuote extends React.Component {
   constructor(props) {
     super(props);
-    this.saveAndClose     = this.saveAndClose.bind(this);
-    this.archive          = this.archive.bind(this);
-    this.saveAndLoadEmail = this.saveAndLoadEmail.bind(this);
+    this.saveAndClose = this.saveAndClose.bind(this);
+    this.archive      = this.archive.bind(this);
+    this.editEmail    = this.editEmail.bind(this);
   }
 
   componentWillMount() {
@@ -37,16 +37,22 @@ class EditQuote extends React.Component {
 
   }
 
-  saveAndLoadEmail() {
-    Meteor.call('quote.save', { ...this.props.newQuote, _id: this.props.match.params.quoteId });
-    this.props.loadEmail({
-      isOpen: true,
+  editEmail() {
+    const email = this.props.newQuote.email || {
       to: 'agilityfreightdemo@gmail.com',
       cc: '',
       subject: 'Your Freight Quote',
       message: `Dear customer,
-  Thank you for your interest in our services. Please find attached a quote for the freight charges as per your request.`,
-    });
+    Thank you for your interest in our services. Please find attached a quote for the freight charges as per your request.`,
+    };
+    this.props.loadEmail(email);
+    Meteor.call(
+      'quote.save',
+      { ...this.props.newQuote, email, _id: this.props.match.params.quoteId },
+      () => this.props.history.push(
+        `/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/email`,
+      ),
+    );
   }
 
   render() {
@@ -110,7 +116,8 @@ class EditQuote extends React.Component {
                   <tr>
                     <td colSpan="5" />
                     <td className="numeric-label">SUBTOTAL</td>
-                    <td className="numeric-label">{currency} {currencyFormat(totalOriginCharges)}</td>
+                    <td
+                      className="numeric-label">{currency} {currencyFormat(totalOriginCharges)}</td>
                   </tr>
                 </tbody>
                 <tbody>
@@ -135,7 +142,8 @@ class EditQuote extends React.Component {
                   <tr>
                     <td colSpan="5" />
                     <td className="numeric-label">SUBTOTAL</td>
-                    <td className="numeric-label">{currency} {currencyFormat(totalInternationalCharges)}</td>
+                    <td
+                      className="numeric-label">{currency} {currencyFormat(totalInternationalCharges)}</td>
                   </tr>
                 </tbody>
                 <tbody>
@@ -160,7 +168,8 @@ class EditQuote extends React.Component {
                   <tr>
                     <td colSpan="5" />
                     <td className="numeric-label">SUBTOTAL</td>
-                    <td className="numeric-label">{currency} {currencyFormat(totalDestinationCharges)}</td>
+                    <td
+                      className="numeric-label">{currency} {currencyFormat(totalDestinationCharges)}</td>
                   </tr>
                 </tbody>
                 <tbody>
@@ -179,16 +188,15 @@ class EditQuote extends React.Component {
                   <tr>
                     <td colSpan="5" />
                     <td className="numeric-label title">TOTAL PRICE</td>
-                    <td className="numeric-label title">{currency} {currencyFormat(totalCharges)}</td>
+                    <td
+                      className="numeric-label title">{currency} {currencyFormat(totalCharges)}</td>
                   </tr>
                 </tfoot>
               </table>
               <div className="form-button-group">
                 <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
                 <button className="save-button" onClick={this.saveAndClose}>SAVE AND CLOSE</button>
-                <button className="submit-button" onClick={this.editEmail}>
-                  EDIT EMAIL
-                </button>
+                <button className="submit-button" onClick={this.editEmail}>EDIT EMAIL</button>
               </div>
             </div>
           </div>
