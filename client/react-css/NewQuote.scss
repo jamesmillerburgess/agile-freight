@@ -17,6 +17,7 @@
 
   .table {
     font-size: $large-font-size;
+    max-width: 100%;
 
     th {
       font-weight: normal;
@@ -71,6 +72,7 @@
     }
 
     td.charge-name-column input {
+      text-align: left;
       width: calc(100% - 4px);
     }
 
@@ -83,7 +85,7 @@
     }
 
     th.units-column {
-      width: 8%;
+      width: 6%;
     }
 
     td.units-column input {
@@ -104,7 +106,15 @@
 
     th.amount-local-column,
     th.amount-final-column {
-      width: 20%;
+      width: 19%;
+    }
+
+    td.amount-local-column,
+    td.amount-final-column {
+      max-width: 19%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     td,
@@ -129,7 +139,7 @@
     .container-type {
       display: inline-block;
       margin-right: 15px;
-      vertical-align: top;
+      vertical-align: bottom;
     }
     .radio-button {
       width: 100px;
@@ -381,7 +391,6 @@
   }
 
   .checkbox-temperature-controlled {
-    margin-right: 125px;
     width: 220px;
   }
 

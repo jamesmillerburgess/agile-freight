@@ -240,7 +240,6 @@ class NewQuote extends React.Component {
               {weightFormat(this.props.cargo.totalWeight)}
             </span> {this.props.cargo.weightUOM}
           </div>
-
         </div>
       </div>
     );
@@ -258,11 +257,15 @@ class NewQuote extends React.Component {
             >
               <span className="fa fa-fw fa-plus-square" />
             </button>
-            <div className="num-containers label">
-              QUANTITY
+            <div className="num-containers">
+              <div className="label">
+                QUANTITY
+              </div>
             </div>
-            <div className="container-type label">
-              CONTAINER TYPE
+            <div className="container-type">
+              <div className="label">
+                CONTAINER TYPE
+              </div>
             </div>
           </div>
           {
@@ -329,6 +332,7 @@ class NewQuote extends React.Component {
           }
         </div>
         <div className="edit-group-footer">
+          <div className="cargo-row-icon" />
           <CheckboxField
             className="checkbox-hazardous"
             onClick={this.props.onClickHazardous}
@@ -336,10 +340,14 @@ class NewQuote extends React.Component {
             label="HAZARDOUS"
           />
           <div className="edit-group-totals">
-            <span className="total-shipment-label">TOTAL</span>&nbsp;
+            <span className="total-shipment-label">
+              TOTAL
+            </span>
+          </div>
+          <div className="total-values">
             <span className="total-shipment-value">
             {integerFormat(this.props.cargo.totalContainers)}
-          </span> containers,&nbsp;
+          </span> CONTAINERS,&nbsp;
             <span className="total-shipment-value">
             {integerFormat(this.props.cargo.totalTEU)}
           </span> TEU&nbsp;

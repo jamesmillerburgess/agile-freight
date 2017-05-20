@@ -52,8 +52,11 @@ const EditQuoteChargeList = (props) => {
                   className="input-group-last addon"
                   value={chargeLine.rate || ''}
                   options={[
-                    { value: 'Per Container', label: 'Per Container' },
-                    { value: 'Per Shipment', label: 'Per Shipment' },
+                    { value: 'Shipment', label: 'Shipment' },
+                    { value: 'KG', label: 'KG' },
+                    { value: 'CBM', label: 'CBM' },
+                    { value: 'Container', label: 'Container' },
+                    { value: 'TEU', label: 'TEU' },
                   ]}
                   onChange={selectedValue => setChargeLineRate(chargeLine.id, selectedValue.value)}
                   arrowRenderer={() => false}
