@@ -66,5 +66,6 @@ button:focus {
 .radio-button:disabled,
 .radio-button.active:disabled {
   background-color: $disabled-input-background-color;
+  color: $text-color;
   cursor: default;
 }
