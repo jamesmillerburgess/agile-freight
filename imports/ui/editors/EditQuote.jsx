@@ -10,6 +10,7 @@ import EditQuoteEmailConnect from './EditQuoteEmailConnect';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
 import { currencyFormat } from '../formatters/numberFormatters';
+import { autoheight } from '../formatters/autoheight';
 
 class EditQuote extends React.Component {
   constructor(props) {
@@ -21,6 +22,10 @@ class EditQuote extends React.Component {
 
   componentWillMount() {
     this.props.onLoad(Quotes.findOne(this.props.match.params.quoteId));
+  }
+
+  componentDidUpdate() {
+    autoheight(this.notesNode);
   }
 
   saveAndClose() {
@@ -39,12 +44,12 @@ class EditQuote extends React.Component {
 
   editEmail() {
     const email = this.props.newQuote.email || {
-      to: 'agilityfreightdemo@gmail.com',
-      cc: '',
-      subject: 'Your Freight Quote',
-      message: `Dear customer,
+        to: 'agilityfreightdemo@gmail.com',
+        cc: '',
+        subject: 'Your Freight Quote',
+        message: `Dear customer,
     Thank you for your interest in our services. Please find attached a quote for the freight charges as per your request.`,
-    };
+      };
     this.props.loadEmail(email);
     Meteor.call(
       'quote.save',
@@ -180,7 +185,12 @@ class EditQuote extends React.Component {
                   <tr className="info-row">
                     <td />
                     <td colSpan="6" className="notes-cell">
-                      <textarea />
+                      <textarea
+                        ref={node => this.notesNode = node}
+                        onChange={e => {
+                          autoheight(this.notesNode);
+                        }}
+                      />
                     </td>
                   </tr>
                 </tbody>
