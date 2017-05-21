@@ -17,6 +17,7 @@ const mapStateToProps = (state) => {
   const { isOpen } = state.newQuote.email;
   const newQuote = state.newQuote;
   return {
+    quote: state.newQuote,
     totalOriginCharges,
     totalInternationalCharges,
     totalDestinationCharges,

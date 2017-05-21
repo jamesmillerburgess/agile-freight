@@ -2,22 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
-import Modal from 'react-modal';
 
 import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
-import EditQuoteEmailConnect from './EditQuoteEmailConnect';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
+import { UNLocations } from '../../api/unlocations/unlocations-collection';
 
-import { currencyFormat } from '../formatters/numberFormatters';
+import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
 import { autoheight } from '../formatters/autoheight';
 
 class EditQuote extends React.Component {
   constructor(props) {
     super(props);
-    this.saveAndClose = this.saveAndClose.bind(this);
-    this.archive      = this.archive.bind(this);
-    this.editEmail    = this.editEmail.bind(this);
+    this.saveAndClose    = this.saveAndClose.bind(this);
+    this.archive         = this.archive.bind(this);
+    this.editEmail       = this.editEmail.bind(this);
+    this.getMovementText = this.getMovementText.bind(this);
   }
 
   componentWillMount() {
@@ -26,6 +26,22 @@ class EditQuote extends React.Component {
 
   componentDidUpdate() {
     autoheight(this.notesNode);
+  }
+
+  getMovementText() {
+    if (
+      this.props.quote &&
+      this.props.quote.movement &&
+      this.props.quote.movement.pickup &&
+      this.props.quote.movement.delivery &&
+      this.props.quote.movement.pickup.location &&
+      this.props.quote.movement.delivery.location
+    ) {
+      const pickupLocation   = UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.pickup.location)).name;
+      const deliveryLocation = UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.delivery.location)).name;
+      return `${pickupLocation} – ${deliveryLocation}`.toUpperCase();
+    }
+    return '';
   }
 
   saveAndClose() {
@@ -212,10 +228,51 @@ class EditQuote extends React.Component {
               </div>
             </div>
           </div>
+          <div className="panel edit-quote">
+            <div className="quote-read-only">
+              <div className="header">AGILITY FREIGHT QUOTATION</div>
+              <div className="title">CARGO</div>
+              <table className="table">
+                <tbody>
+                  {
+                    this.props.quote.cargo.packageLines.map((packageLine, index) => (
+                      <tr key={index}>
+                        <td>{packageLine.numPackages} {packageLine.packageType}</td>
+                        <td
+                          className="numeric-label">{packageLine.length}x{packageLine.width}x{packageLine.height} {packageLine.unitVolumeUOM}</td>
+                        <td
+                          className="numeric-label">{weightFormat(packageLine.weight)} {packageLine.weightUOM}
+                          / pkg
+                        </td>
+                        <td className="numeric-label">
+                          {packageLine.numPackages} pkgs,&nbsp;
+                          {weightFormat(packageLine.volume)} {packageLine.volumeUOM},&nbsp;
+                          {weightFormat(packageLine.totalWeight)} {packageLine.weightUOM}
+                        </td>
+                      </tr>
+                    ))
+                  }
+                  <tr>
+                    <td colSpan="2" />
+                    <td className="numeric-label">TOTAL</td>
+                    <td className="numeric-label">
+                      {this.props.quote.cargo.totalPackages} pkgs,&nbsp;
+                      {weightFormat(this.props.quote.cargo.totalVolume)} {this.props.quote.cargo.volumeUOM},&nbsp;
+                      {weightFormat(this.props.quote.cargo.totalWeight)} {this.props.quote.cargo.weightUOM}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <span>{this.props.quote.cargo.hazardous ? 'Hazardous' : 'Non-Hazardous'}</span>
+              <span>{this.props.quote.cargo.temperatureControlled ? 'Temperature Controlled' : 'Non-Temperature Controlled'}</span>
+              <div className="title">ROUTING</div>
+              <span>{this.getMovementText()}</span>
+              <div className="title">OTHER SERVICES</div>
+              <span>{this.props.quote.otherServices.insurance ? 'Insurance' : 'No Insurance'}</span>
+              <span>{this.props.quote.otherServices.customsClearance ? 'Customs Clearance' : 'No Customs Clearance'}</span>
+            </div>
+          </div>
         </div>
-        <Modal isOpen={isOpen} contentLabel="Modal">
-          <EditQuoteEmailConnect />
-        </Modal>
       </div>
     );
   }

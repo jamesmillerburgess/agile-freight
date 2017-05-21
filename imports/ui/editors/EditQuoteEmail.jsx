@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 
 import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
 
@@ -139,29 +140,31 @@ class EditQuoteEmail extends React.Component {
             <div className="header">AGILITY FREIGHT QUOTATION</div>
             <div className="title">CARGO</div>
             <table className="table">
-              {
-                this.props.quote.cargo.packageLines.map(packageLine => (
-                  <tr>
-                    <td>{packageLine.numPackages} {packageLine.packageType}</td>
-                    <td className="numeric-label">{packageLine.length}x{packageLine.width}x{packageLine.height} {packageLine.unitVolumeUOM}</td>
-                    <td className="numeric-label">{weightFormat(packageLine.weight)} {packageLine.weightUOM} / pkg</td>
-                    <td className="numeric-label">
-                      {packageLine.numPackages} pkgs,&nbsp;
-                      {weightFormat(packageLine.volume)} {packageLine.volumeUOM},&nbsp;
-                      {weightFormat(packageLine.totalWeight)} {packageLine.weightUOM}
-                    </td>
+              <tbody>
+                {
+                  this.props.quote.cargo.packageLines.map((packageLine, index) => (
+                  <tr key={index}>
+                  <td>{packageLine.numPackages} {packageLine.packageType}</td>
+                  <td className="numeric-label">{packageLine.length}x{packageLine.width}x{packageLine.height} {packageLine.unitVolumeUOM}</td>
+                  <td className="numeric-label">{weightFormat(packageLine.weight)} {packageLine.weightUOM} / pkg</td>
+                  <td className="numeric-label">
+                  {packageLine.numPackages} pkgs,&nbsp;
+                  {weightFormat(packageLine.volume)} {packageLine.volumeUOM},&nbsp;
+                  {weightFormat(packageLine.totalWeight)} {packageLine.weightUOM}
+                  </td>
                   </tr>
-                ))
-              }
-              <tr>
-                <td colSpan="2" />
-                <td className="numeric-label">TOTAL</td>
-                <td className="numeric-label">
-                  {this.props.quote.cargo.totalPackages} pkgs,&nbsp;
-                  {weightFormat(this.props.quote.cargo.totalVolume)} {this.props.quote.cargo.volumeUOM},&nbsp;
-                  {weightFormat(this.props.quote.cargo.totalWeight)} {this.props.quote.cargo.weightUOM}
-                </td>
-              </tr>
+                  ))
+                }
+                <tr>
+                  <td colSpan="2" />
+                  <td className="numeric-label">TOTAL</td>
+                  <td className="numeric-label">
+                    {this.props.quote.cargo.totalPackages} pkgs,&nbsp;
+                    {weightFormat(this.props.quote.cargo.totalVolume)} {this.props.quote.cargo.volumeUOM},&nbsp;
+                    {weightFormat(this.props.quote.cargo.totalWeight)} {this.props.quote.cargo.weightUOM}
+                  </td>
+                </tr>
+              </tbody>
             </table>
             <span>{this.props.quote.cargo.hazardous ? 'Hazardous' : 'Non-Hazardous'}</span>
             <span>{this.props.quote.cargo.temperatureControlled ? 'Temperature Controlled' : 'Non-Temperature Controlled'}</span>
