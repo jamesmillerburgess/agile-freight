@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
@@ -75,7 +76,7 @@ class EditQuoteEmail extends React.Component {
         ...email,
         quoteId,
       },
-      () => Meteor.call('quote.submit', quoteId, email),
+      () => Meteor.call('quote.submit', quoteId, email, moment().add(1, 'month').format()),
     );
     this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`);
   }

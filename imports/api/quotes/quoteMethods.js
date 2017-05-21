@@ -57,9 +57,10 @@ Meteor.methods({
     Customers.update({ _id: options.customerId }, { $push: { quotes: quoteId } });
     return quoteId;
   },
-  'quote.submit': function quoteSubmit(quoteId, email) {
+  'quote.submit': function quoteSubmit(quoteId, email, expiryDate) {
     check(quoteId, String);
     check(email, Object);
+    check(expiryDate, String);
 
     const quote = Quotes.findOne(quoteId);
     if (!quote) {
@@ -74,6 +75,7 @@ Meteor.methods({
         $set: {
           status: 'Submitted',
           email: { ...email, sentDate: new Date() },
+          expiryDate: new Date(expiryDate),
         },
       },
     );

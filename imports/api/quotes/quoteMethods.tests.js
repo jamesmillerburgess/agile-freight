@@ -237,6 +237,7 @@ if (Meteor.isServer) {
     describe('quote.submit', () => {
       let quoteId;
       let email;
+      let expiryDate;
       beforeEach(() => {
         quoteId = Quotes.insert({
           status: 'Draft',
@@ -252,15 +253,16 @@ if (Meteor.isServer) {
           subject: 'Subject',
           message: 'Message',
         };
+        expiryDate = new Date('January 1, 2017').toString();
       });
 
       it('changes the quote status to \'Submitted\'', () => {
-        Meteor.call('quote.submit', quoteId, email);
+        Meteor.call('quote.submit', quoteId, email, expiryDate);
         Quotes.findOne(quoteId).status.should.equal('Submitted');
       });
 
-      it('saves the email against the quote object', () => {
-        Meteor.call('quote.submit', quoteId, email);
+      it('saves the email against the quote', () => {
+        Meteor.call('quote.submit', quoteId, email, expiryDate);
         const quote = Quotes.findOne(quoteId);
         quote.email.to.should.equal('a@a.com');
         quote.email.cc.should.equal('b@b.com');
@@ -269,13 +271,19 @@ if (Meteor.isServer) {
       });
 
       it('adds a timestamp to the email for the sent date', () => {
-        Meteor.call('quote.submit', quoteId, email);
+        Meteor.call('quote.submit', quoteId, email, expiryDate);
         Quotes.findOne(quoteId).email.sentDate.should.be.instanceOf(Date);
       });
 
-      it('requires a quote id and an email object', () => {
-        (() => Meteor.call('quote.submit', quoteId)).should.throw(Error);
-        (() => Meteor.call('quote.submit', null, email)).should.throw(Error);
+      it('saves the expiry date against the quote', () => {
+        Meteor.call('quote.submit', quoteId, email, expiryDate);
+        Quotes.findOne(quoteId).expiryDate.toString().should.equal(expiryDate.toString());
+      });
+
+      it('requires a quote id, an email object, and an expiry date', () => {
+        (() => Meteor.call('quote.submit', null, email, expiryDate)).should.throw(Error);
+        (() => Meteor.call('quote.submit', quoteId, null, expiryDate)).should.throw(Error);
+        (() => Meteor.call('quote.submit', quoteId, email, null)).should.throw(Error);
       });
 
       it('throws an error if the quote does not exist', () => {
