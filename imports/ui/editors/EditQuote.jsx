@@ -4,6 +4,7 @@ import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 
 import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
+import Quote from '../objects/Quote.jsx';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
@@ -234,6 +235,7 @@ class EditQuote extends React.Component {
               </div>
             </div>
           </div>
+          <Quote quote={this.props.quote} />
           <div className="panel edit-quote">
             <div className="quote-read-only">
               <div className="header">AGILITY FREIGHT QUOTATION</div>

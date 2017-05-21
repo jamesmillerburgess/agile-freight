@@ -50,35 +50,35 @@ if (Meteor.isClient) {
       childContextTypes: { store: React.PropTypes.object.isRequired },
     };
 
-    it('should render a component', () => {
+    it('renders a component', () => {
       const editQuoteEmail = mount(<EditQuoteEmail />, options);
 
       editQuoteEmail.exists().should.equal(true);
       editQuoteEmail.unmount();
     });
 
-    it('should default the to value into the to input', () => {
+    it('defaults the to value into the to input', () => {
       const editQuoteEmail = mount(<EditQuoteEmail to="a" />, options);
 
       editQuoteEmail.find('#to').prop('value').should.equal('a');
       editQuoteEmail.unmount();
     });
 
-    it('should default the cc value into the cc input', () => {
+    it('defaults the cc value into the cc input', () => {
       const editQuoteEmail = mount(<EditQuoteEmail cc="a" />, options);
 
       editQuoteEmail.find('#cc').prop('value').should.equal('a');
       editQuoteEmail.unmount();
     });
 
-    it('should default the subject value into the subject input', () => {
+    it('defaults the subject value into the subject input', () => {
       const editQuoteEmail = mount(<EditQuoteEmail subject="a" />, options);
 
       editQuoteEmail.find('#subject').prop('value').should.equal('a');
       editQuoteEmail.unmount();
     });
 
-    it('should default the message value into the message input', () => {
+    it('defaults the message value into the message input', () => {
       const editQuoteEmail = mount(<EditQuoteEmail message="a" />, options);
 
       editQuoteEmail.find('#message').prop('value').should.equal('a');
