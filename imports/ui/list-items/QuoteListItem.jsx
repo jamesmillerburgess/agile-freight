@@ -36,7 +36,7 @@ const QuoteListItemInner = ({ quote, history }) => {
       }
       return `${totalPackages} PKG${totalPackages !== 1 ? 'S' : ''}, ${weightFormat(totalVolume)} ${volumeUOM.toUpperCase()}, ${weightFormat(totalWeight)} ${weightUOM.toUpperCase()}`;
     }
-    return '';
+    return 'NO CARGO ENTERED';
   };
 
   const getMovementText = () => {
@@ -52,7 +52,7 @@ const QuoteListItemInner = ({ quote, history }) => {
       const deliveryLocation = UNLocations.findOne(new Mongo.ObjectID(quote.movement.delivery.location)).name;
       return `${pickupLocation} – ${deliveryLocation}`.toUpperCase();
     }
-    return '';
+    return 'NO ROUTING ENTERED';
   };
 
   const getOtherServicesText = () => {
@@ -73,7 +73,7 @@ const QuoteListItemInner = ({ quote, history }) => {
 
   const getTotalPriceText = () => {
     if (!quote || !quote.charges || !quote.charges.totalCharges || !quote.charges.currency) {
-      return '';
+      return 'NO CHARGES ENTERED';
     }
     return `${quote.charges.currency} ${currencyFormat(quote.charges.totalCharges)}`;
   };

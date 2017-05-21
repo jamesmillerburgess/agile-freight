@@ -32,8 +32,14 @@ if (Meteor.isClient) {
         },
       });
       Customers.insert({ _id: 'b', quotes: ['a'] });
-      UNLocations.insert({ _id: new Mongo.ObjectID('aaaaaaaaaaaaaaaaaaaaaaaa'), name: 'Location1' });
-      UNLocations.insert({ _id: new Mongo.ObjectID('bbbbbbbbbbbbbbbbbbbbbbbb'), name: 'Location2' });
+      UNLocations.insert({
+        _id: new Mongo.ObjectID('aaaaaaaaaaaaaaaaaaaaaaaa'),
+        name: 'Location1'
+      });
+      UNLocations.insert({
+        _id: new Mongo.ObjectID('bbbbbbbbbbbbbbbbbbbbbbbb'),
+        name: 'Location2'
+      });
     });
 
     afterEach(() => {
@@ -150,8 +156,9 @@ if (Meteor.isClient) {
           });
         const wrapper = mount(<QuoteListItem {...props} />);
 
-        wrapper.contains(<span
-          className="label">1 PKG, 0.111 CBM, 0.222 KG</span>).should.equal(true);
+        wrapper.contains(
+          <span className="label">1 PKG, 0.111 CBM, 0.222 KG</span>,
+        ).should.equal(true);
         wrapper.unmount();
       });
 
@@ -160,6 +167,14 @@ if (Meteor.isClient) {
         const quoteListItem = mount(<QuoteListItem {...props} />);
 
         quoteListItem.contains(<span className="label">RATED, LOOSE</span>).should.equal(true);
+        quoteListItem.unmount();
+      });
+
+      it('renders a message if no cargo has been saved', () => {
+        Quotes.update({ _id: 'a' }, { $set: { cargo: {} } });
+        const quoteListItem = mount(<QuoteListItem {...props} />);
+
+        quoteListItem.contains(<span className="label">NO CARGO ENTERED</span>).should.equal(true);
         quoteListItem.unmount();
       });
     });
@@ -180,11 +195,11 @@ if (Meteor.isClient) {
         wrapper.unmount();
       });
 
-      it('doesn\'t render the route if it is missing', () => {
+      it('renders a message if the route is missing', () => {
         Quotes.update({ _id: 'a' }, { $set: { movement: {} } });
         const wrapper = mount(<QuoteListItem {...props} />);
 
-        wrapper.contains(<span className="label"> – </span>).should.equal(false);
+        wrapper.contains(<span className="label">NO ROUTING ENTERED</span>).should.equal(true);
         wrapper.unmount();
       });
     });
@@ -195,14 +210,15 @@ if (Meteor.isClient) {
           $set: {
             otherServices: {
               insurance: true,
-              customsClearance: true
-            }
-          }
+              customsClearance: true,
+            },
+          },
         });
         const wrapper = mount(<QuoteListItem {...props} />);
 
-        wrapper.contains(<span
-          className="label">INSURANCE, CUSTOMS CLEARANCE</span>).should.equal(true);
+        wrapper.contains(
+          <span className="label">INSURANCE, CUSTOMS CLEARANCE</span>
+        ).should.equal(true);
         wrapper.unmount();
       });
 
@@ -227,9 +243,9 @@ if (Meteor.isClient) {
           $set: {
             otherServices: {
               insurance: false,
-              customsClearance: false
-            }
-          }
+              customsClearance: false,
+            },
+          },
         });
         let wrapper = mount(<QuoteListItem {...props} />);
 
@@ -250,6 +266,14 @@ if (Meteor.isClient) {
         const wrapper = mount(<QuoteListItem {...props} />);
 
         wrapper.contains(<span className="label">USD 1.00</span>).should.equal(true);
+        wrapper.unmount();
+      });
+
+      it('renders a message if no total price is present', () => {
+        Quotes.update({ _id: 'a' }, { $set: { charges: {} } });
+        const wrapper = mount(<QuoteListItem {...props} />);
+
+        wrapper.contains(<span className="label">NO CHARGES ENTERED</span>).should.equal(true);
         wrapper.unmount();
       });
     });
