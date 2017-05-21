@@ -235,8 +235,10 @@ if (Meteor.isServer) {
     });
 
     describe('quote.submit', () => {
-      it('changes the quote status to \'Submitted\'', () => {
-        const quoteId = Quotes.insert({
+      let quoteId;
+      let email;
+      beforeEach(() => {
+        quoteId = Quotes.insert({
           status: 'Draft',
           customerId: 'a',
           cargo: {},
@@ -244,10 +246,50 @@ if (Meteor.isServer) {
           otherServices: {},
           charges: {},
         });
-        Meteor.call('quote.submit', quoteId);
-        const quote = Quotes.findOne(quoteId);
+        email = {
+          to: 'a@a.com',
+          cc: 'b@b.com',
+          subject: 'Subject',
+          message: 'Message',
+        };
+      });
 
-        quote.status.should.equal('Submitted');
+      it('changes the quote status to \'Submitted\'', () => {
+        Meteor.call('quote.submit', quoteId, email);
+        Quotes.findOne(quoteId).status.should.equal('Submitted');
+      });
+
+      it('saves the email against the quote object', () => {
+        Meteor.call('quote.submit', quoteId, email);
+        const quote = Quotes.findOne(quoteId);
+        quote.email.to.should.equal('a@a.com');
+        quote.email.cc.should.equal('b@b.com');
+        quote.email.subject.should.equal('Subject');
+        quote.email.message.should.equal('Message');
+      });
+
+      it('adds a timestamp to the email for the sent date', () => {
+        Meteor.call('quote.submit', quoteId, email);
+        Quotes.findOne(quoteId).email.sentDate.should.be.instanceOf(Date);
+      });
+
+      it('requires a quote id and an email object', () => {
+        (() => Meteor.call('quote.submit', quoteId)).should.throw(Error);
+        (() => Meteor.call('quote.submit', null, email)).should.throw(Error);
+      });
+
+      it('throws an error if the quote does not exist', () => {
+        (() => Meteor.call('quote.submit', 'abc', email)).should.throw(Error);
+      });
+
+      it('throws an error if the status is \'Submitted\'', () => {
+        Quotes.update({ _id: quoteId }, { $set: { status: 'Submitted' } });
+        (() => Meteor.call('quote.submit', quoteId, email)).should.throw(Error);
+      });
+
+      it('throws an error if the status is \'Expired\'', () => {
+        Quotes.update({ _id: quoteId }, { $set: { status: 'Expired' } });
+        (() => Meteor.call('quote.submit', quoteId)).should.throw(Error);
       });
     });
 
@@ -322,7 +364,7 @@ if (Meteor.isServer) {
       });
 
       it('throws an error if the quote does not exist', () => {
-        (() => Meteor.call('quote.archive', 'x')).should.Throw;
+        (() => Meteor.call('quote.archive', 'x')).should.throw(Error);
       });
 
       it('throws an error if the status is Submitted', () => {
@@ -335,7 +377,7 @@ if (Meteor.isServer) {
           charges: {},
         });
 
-        (() => Meteor.call('quote.archive', quoteId)).should.Throw;
+        (() => Meteor.call('quote.archive', quoteId)).should.throw(Error);
       });
 
       it('throws an error if the status is Expired', () => {
@@ -348,7 +390,7 @@ if (Meteor.isServer) {
           charges: {},
         });
 
-        (() => Meteor.call('quote.archive', quoteId)).should.Throw;
+        (() => Meteor.call('quote.archive', quoteId)).should.throw(Error);
       });
 
       it('throws an error if the status is not Draft', () => {
@@ -361,7 +403,7 @@ if (Meteor.isServer) {
           charges: {},
         });
 
-        (() => Meteor.call('quote.archive', quoteId)).should.Throw;
+        (() => Meteor.call('quote.archive', quoteId)).should.throw(Error);
       });
     });
   });

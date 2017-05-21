@@ -25,7 +25,7 @@ Meteor.methods({
       movement,
       otherServices,
       charges: {},
-      status: 'Draft'
+      status: 'Draft',
     });
 
     Customers.update({ _id: customerId }, { $push: { quotes: newQuoteId } });
@@ -46,7 +46,7 @@ Meteor.methods({
     }
 
     // Insert quote
-    const update = {
+    const update  = {
       ...options,
       status: 'Draft',
       charges: [],
@@ -57,10 +57,26 @@ Meteor.methods({
     Customers.update({ _id: options.customerId }, { $push: { quotes: quoteId } });
     return quoteId;
   },
-  'quote.submit': function quoteSubmit(quoteId) {
-    check(quoteId, quoteId);
+  'quote.submit': function quoteSubmit(quoteId, email) {
+    check(quoteId, String);
+    check(email, Object);
 
-    Quotes.update({ _id: quoteId }, { $set: { status: 'Submitted' } });
+    const quote = Quotes.findOne(quoteId);
+    if (!quote) {
+      throw new Error(`No quote exists with quote id ${quoteId}`);
+    }
+    if (quote.status === 'Submitted' || quote.status === 'Expired') {
+      throw new Error('This quote has already been submitted.');
+    }
+    Quotes.update(
+      { _id: quoteId },
+      {
+        $set: {
+          status: 'Submitted',
+          email: { ...email, sentDate: new Date() },
+        },
+      },
+    );
   },
   'quote.save': function quoteSave(quote) {
     check(quote, Object);

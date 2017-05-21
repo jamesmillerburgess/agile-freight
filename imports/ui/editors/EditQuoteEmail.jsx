@@ -66,16 +66,16 @@ class EditQuoteEmail extends React.Component {
   }
 
   sendEmail() {
+    const email   = this.props.quote.email;
+    const quoteId = this.props.match.params.quoteId;
     Meteor.call(
       'email.send',
       {
         from: 'agilityfreightdemo@gmail.com',
-        to: this.props.quote.email.to,
-        cc: this.props.quote.email.cc,
-        subject: this.props.quote.email.subject,
-        message: this.props.quote.email.message,
-        quoteId: this.props.match.params.quoteId,
+        ...email,
+        quoteId,
       },
+      () => Meteor.call('quote.submit', quoteId, email),
     );
     this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`);
   }
@@ -149,16 +149,16 @@ class EditQuoteEmail extends React.Component {
               <tbody>
                 {
                   this.props.quote.cargo.packageLines.map((packageLine, index) => (
-                  <tr key={index}>
-                  <td>{packageLine.numPackages} {packageLine.packageType}</td>
-                  <td className="numeric-label">{packageLine.length}x{packageLine.width}x{packageLine.height} {packageLine.unitVolumeUOM}</td>
-                  <td className="numeric-label">{weightFormat(packageLine.weight)} {packageLine.weightUOM} / pkg</td>
-                  <td className="numeric-label">
-                  {packageLine.numPackages} pkgs,&nbsp;
-                  {weightFormat(packageLine.volume)} {packageLine.volumeUOM},&nbsp;
-                  {weightFormat(packageLine.totalWeight)} {packageLine.weightUOM}
-                  </td>
-                  </tr>
+                    <tr key={index}>
+                      <td>{packageLine.numPackages} {packageLine.packageType}</td>
+                      <td className="numeric-label">{packageLine.length}x{packageLine.width}x{packageLine.height} {packageLine.unitVolumeUOM}</td>
+                      <td className="numeric-label">{weightFormat(packageLine.weight)} {packageLine.weightUOM} / pkg</td>
+                      <td className="numeric-label">
+                        {packageLine.numPackages} pkgs,&nbsp;
+                        {weightFormat(packageLine.volume)} {packageLine.volumeUOM},&nbsp;
+                        {weightFormat(packageLine.totalWeight)} {packageLine.weightUOM}
+                      </td>
+                    </tr>
                   ))
                 }
                 <tr>
