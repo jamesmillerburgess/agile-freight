@@ -279,7 +279,7 @@ if (Meteor.isClient) {
     });
 
     describe('Quote Status', () => {
-      it('renders the status if it is Draft', () => {
+      it('renders the status if it is \'Draft\'', () => {
         Quotes.update({ _id: 'a' }, { $set: { status: 'Draft' } });
         const wrapper = mount(<QuoteListItem {...props} />);
 
@@ -287,7 +287,15 @@ if (Meteor.isClient) {
         wrapper.unmount();
       });
 
-      it('renders the status if it is Expired', () => {
+      it('renders the status if it is \'Archived\'', () => {
+        Quotes.update({ _id: 'a' }, { $set: { status: 'Archived' } });
+        const wrapper = mount(<QuoteListItem {...props} />);
+
+        wrapper.contains(<span className="label">ARCHIVED</span>).should.equal(true);
+        wrapper.unmount();
+      });
+
+      it('renders the status if it is \'Expired\'', () => {
         Quotes.update({ _id: 'a' }, { $set: { status: 'Expired' } });
         const wrapper = mount(<QuoteListItem {...props} />);
 

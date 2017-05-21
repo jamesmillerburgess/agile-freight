@@ -82,7 +82,7 @@ const QuoteListItemInner = ({ quote, history }) => {
     if (!quote || !quote.status) {
       return '';
     }
-    if (quote.status === 'Draft' || quote.status === 'Expired') {
+    if (quote.status === 'Draft' || quote.status === 'Archived' || quote.status === 'Expired') {
       return quote.status.toUpperCase();
     }
     if (quote.status === 'Active' && quote.expiryDate) {
