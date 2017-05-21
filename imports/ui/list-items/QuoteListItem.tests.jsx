@@ -34,11 +34,11 @@ if (Meteor.isClient) {
       Customers.insert({ _id: 'b', quotes: ['a'] });
       UNLocations.insert({
         _id: new Mongo.ObjectID('aaaaaaaaaaaaaaaaaaaaaaaa'),
-        name: 'Location1'
+        name: 'Location1',
       });
       UNLocations.insert({
         _id: new Mongo.ObjectID('bbbbbbbbbbbbbbbbbbbbbbbb'),
-        name: 'Location2'
+        name: 'Location2',
       });
     });
 
@@ -104,8 +104,9 @@ if (Meteor.isClient) {
         );
         const quoteListItem = mount(<QuoteListItem {...props} />);
 
-        quoteListItem.contains(<span
-          className="label">RATED, CONTAINERIZED</span>).should.equal(true);
+        quoteListItem.contains((
+          <span className="label">RATED, CONTAINERIZED</span>
+        )).should.equal(true);
         quoteListItem.unmount();
       });
 
@@ -127,14 +128,16 @@ if (Meteor.isClient) {
           });
         const quoteListItem1 = mount(<QuoteListItem {...props} />);
 
-        quoteListItem1.contains(<span
-          className="label">1 PKG, 3 CBM, 2 KG</span>).should.equal(true);
+        quoteListItem1.contains((
+          <span className="label">1 PKG, 3 CBM, 2 KG</span>
+        )).should.equal(true);
         quoteListItem1.unmount();
 
         Quotes.update({ _id: 'a' }, { $set: { 'cargo.totalPackages': 2 } });
         const quoteListItem2 = mount(<QuoteListItem {...props} />);
-        quoteListItem2.contains(<span
-          className="label">2 PKGS, 3 CBM, 2 KG</span>).should.equal(true);
+        quoteListItem2.contains((
+          <span className="label">2 PKGS, 3 CBM, 2 KG</span>
+        )).should.equal(true);
         quoteListItem2.unmount();
       });
 
@@ -216,9 +219,9 @@ if (Meteor.isClient) {
         });
         const wrapper = mount(<QuoteListItem {...props} />);
 
-        wrapper.contains(
+        wrapper.contains((
           <span className="label">INSURANCE, CUSTOMS CLEARANCE</span>
-        ).should.equal(true);
+        )).should.equal(true);
         wrapper.unmount();
       });
 
@@ -303,12 +306,12 @@ if (Meteor.isClient) {
         wrapper.unmount();
       });
 
-      it('renders the expiry date if the status is Active', () => {
+      it('renders the expiry date if the status is Submitted', () => {
         Quotes.update({ _id: 'a' }, {
           $set: {
-            status: 'Active',
-            expiryDate: new Date('Jan 1, 2017')
-          }
+            status: 'Submitted',
+            expiryDate: new Date('Jan 1, 2017'),
+          },
         });
         const wrapper = mount(<QuoteListItem {...props} />);
 

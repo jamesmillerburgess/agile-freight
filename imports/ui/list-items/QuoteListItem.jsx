@@ -85,7 +85,7 @@ const QuoteListItemInner = ({ quote, history }) => {
     if (quote.status === 'Draft' || quote.status === 'Archived' || quote.status === 'Expired') {
       return quote.status.toUpperCase();
     }
-    if (quote.status === 'Active' && quote.expiryDate) {
+    if (quote.status === 'Submitted' && quote.expiryDate) {
       return `EXPIRES ${moment(quote.expiryDate).format('DD MMM YYYY').toUpperCase()}`;
     }
     return '';
