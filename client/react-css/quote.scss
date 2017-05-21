@@ -10,7 +10,11 @@
   .status {
 
   }
-  .cargo-row {
+  .section {
+    margin-bottom: 8px;
+  }
+  .cargo-row,
+  .charge-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -22,6 +26,31 @@
   }
   .cargo-totals-values {
     width: 30%;
+  }
+  .routing-and-other-services {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .routing,
+  .other-services {
+    width: 50%;
+  }
+  .routing,
+  .other-services,
+  .charges {
+    display: flex;
+    flex-direction: column;
+  }
+  .subtotal-row,
+  .total-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    .value {
+      text-align: right;
+      width: 30%;
+    }
   }
 }
 
