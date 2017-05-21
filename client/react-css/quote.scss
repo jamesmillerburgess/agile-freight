@@ -15,6 +15,14 @@
     flex-direction: row;
     justify-content: space-between;
   }
+  .cargo-totals {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  .cargo-totals-values {
+    width: 30%;
+  }
 }
 
 .quote-read-only {
