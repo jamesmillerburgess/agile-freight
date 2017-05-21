@@ -56,7 +56,13 @@ class EditQuoteEmail extends React.Component {
   }
 
   archive() {
-
+    Meteor.call(
+      'quote.archive',
+      this.props.match.params.quoteId,
+      () => this.props.history.push(
+        `/customers/${this.props.match.params.customerId}/overview`,
+      ),
+    );
   }
 
   sendEmail() {
