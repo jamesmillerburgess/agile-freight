@@ -19,7 +19,14 @@ Meteor.methods({
 
     const { customerId, cargo, movement, otherServices } = Quotes.findOne(quoteId);
 
-    const newQuoteId = Quotes.insert({ customerId, cargo, movement, otherServices, charges: {}, status: 'Draft' });
+    const newQuoteId = Quotes.insert({
+      customerId,
+      cargo,
+      movement,
+      otherServices,
+      charges: {},
+      status: 'Draft'
+    });
 
     Customers.update({ _id: customerId }, { $push: { quotes: newQuoteId } });
 
@@ -67,6 +74,26 @@ Meteor.methods({
           otherServices: quote.otherServices,
           charges: quote.charges,
           email: quote.email,
+        },
+      },
+    );
+  },
+  'quote.archive': function quoteArchive(quoteId) {
+    check(quoteId, String);
+
+    const quote = Quotes.findOne(quoteId);
+    if (!quote) {
+      throw new Error('Quote does not exist.');
+    }
+    if (quote.status !== 'Draft') {
+      throw new Error(`This quote's status is '${quote.status}'. Only quotes with status 'Draft' can be archived.`);
+    }
+
+    Quotes.update(
+      { _id: quoteId },
+      {
+        $set: {
+          status: 'Archived',
         },
       },
     );

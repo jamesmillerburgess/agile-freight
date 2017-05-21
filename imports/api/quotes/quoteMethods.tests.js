@@ -191,7 +191,7 @@ if (Meteor.isServer) {
 
       it('inserts a new quote with the given options', () => {
         const customerId = 'a';
-        const movement = {
+        const movement   = {
           pickup: {
             country: 'b',
             location: 'c',
@@ -222,13 +222,13 @@ if (Meteor.isServer) {
 
       it('adds the customer quote ID to the customer', () => {
         const customerId = 'a';
-        const quoteId = Meteor.call('quote.newFromRateSearch', {
+        const quoteId    = Meteor.call('quote.newFromRateSearch', {
           customerId,
           cargo: {},
           movement: {},
           otherServices: {},
         });
-        const customer = Customers.findOne(customerId);
+        const customer   = Customers.findOne(customerId);
 
         customer.quotes[0].should.equal(quoteId);
       });
@@ -302,6 +302,66 @@ if (Meteor.isServer) {
         const quote = Quotes.findOne(quoteId);
 
         quote.status.should.equal('Draft');
+      });
+    });
+
+    describe('quote.archive', () => {
+      it('changes the status to Archived', () => {
+        const quoteId = Quotes.insert({
+          status: 'Draft',
+          customerId: 'a',
+          cargo: {},
+          movement: {},
+          otherServices: {},
+          charges: {},
+        });
+        Meteor.call('quote.archive', quoteId);
+        const quote = Quotes.findOne(quoteId);
+
+        quote.status.should.equal('Archived');
+      });
+
+      it('throws an error if the quote does not exist', () => {
+        (() => Meteor.call('quote.archive', 'x')).should.Throw;
+      });
+
+      it('throws an error if the status is Submitted', () => {
+        const quoteId = Quotes.insert({
+          status: 'Submitted',
+          customerId: 'a',
+          cargo: {},
+          movement: {},
+          otherServices: {},
+          charges: {},
+        });
+
+        (() => Meteor.call('quote.archive', quoteId)).should.Throw;
+      });
+
+      it('throws an error if the status is Expired', () => {
+        const quoteId = Quotes.insert({
+          status: 'Expired',
+          customerId: 'a',
+          cargo: {},
+          movement: {},
+          otherServices: {},
+          charges: {},
+        });
+
+        (() => Meteor.call('quote.archive', quoteId)).should.Throw;
+      });
+
+      it('throws an error if the status is not Draft', () => {
+        const quoteId = Quotes.insert({
+          status: 'Not Draft',
+          customerId: 'a',
+          cargo: {},
+          movement: {},
+          otherServices: {},
+          charges: {},
+        });
+
+        (() => Meteor.call('quote.archive', quoteId)).should.Throw;
       });
     });
   });
