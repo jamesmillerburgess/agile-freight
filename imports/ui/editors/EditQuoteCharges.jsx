@@ -235,7 +235,7 @@ class EditQuoteCharges extends React.Component {
               </div>
             </div>
           </div>
-          <Quote quote={this.props.quote} />
+          <Quote quote={Quotes.findOne(this.props.match.params.quoteId)} />
         </div>
       </div>
     );
