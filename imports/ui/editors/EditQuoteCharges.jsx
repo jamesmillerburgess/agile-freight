@@ -107,6 +107,12 @@ class EditQuoteCharges extends React.Component {
             <div className="breadcrumb active customer">CHARGES</div>
             <div className="breadcrumb-end active customer" />
           </div>
+          <button
+            className="back-button"
+            onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`)}
+          >
+            BACK TO CUSTOMER
+          </button>
         </div>
         <div className="">
           <div className="panel">

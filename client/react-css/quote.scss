@@ -29,13 +29,16 @@
     flex-direction: row;
     justify-content: space-between;
   }
+  .cargo-row span {
+    width: 25%;
+  }
   .cargo-totals {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
   }
-  .cargo-totals-values {
-    width: 30%;
+  .cargo-totals span {
+    width: 25%;
   }
   .routing-and-other-services {
     display: flex;

@@ -11,7 +11,7 @@ import { Customers } from '../../api/customers/customers-collection';
 import EditQuoteHeaderConnect from '../editors/EditQuoteHeaderConnect.jsx';
 import EditQuoteChargesConnect from '../editors/EditQuoteChargesConnect';
 import EditQuoteEmailConnect from '../editors/EditQuoteEmailConnect';
-import QuoteContainer from '../objects/QuoteContainer';
+import ViewQuote from '../objects/ViewQuote.jsx';
 
 const CustomerInner = ({ customer, history }) => (
   <div className="">
@@ -43,7 +43,7 @@ const CustomerInner = ({ customer, history }) => (
       />
       <Route
         path="/customers/:customerId/quotes/:quoteId/view"
-        render={props => <QuoteContainer {...props} quoteId={props.match.params.quoteId} />}
+        render={props => <ViewQuote {...props} />}
       />
     </div>
     <div className="content-footer-accent customers-footer-accent" />
