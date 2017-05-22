@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const NavInner = ({ user, history }) => {
@@ -19,9 +19,9 @@ const NavInner = ({ user, history }) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
         <div className="navbar-brand">
-          <button className="brand">
+          <Link to="/" className="brand">
             <span className="brand-highlight">AGILITY</span> FREIGHT
-          </button>
+          </Link>
         </div>
         <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
           <NavLink to="/customers" className="nav-item">
@@ -91,7 +91,7 @@ const NavInner = ({ user, history }) => {
 };
 
 NavInner.propTypes = {
-  history: PropTypes.object,
+  history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   user: PropTypes.object,
 };
 
