@@ -5,6 +5,8 @@ import moment from 'moment';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
+import Quote from '../objects/Quote.jsx';
+
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
 

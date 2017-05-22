@@ -8,6 +8,7 @@ import { countByValue } from '../statsUtils';
 import CheckboxField from '../fields/CheckboxField.jsx';
 import CountryField from '../fields/CountryField.jsx';
 import UNLocationField from '../fields/UNLocationField.jsx';
+import Quote from '../objects/Quote.jsx';
 
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
 import { Countries } from '../../api/countries/countries-collection';
@@ -507,6 +508,7 @@ class EditQuoteHeader extends React.Component {
             </div>
           </div>
         </div>
+        <Quote quote={Quotes.findOne(this.props.match.params.quoteId)} />
       </div>
     );
   }
