@@ -5,12 +5,9 @@ import moment from 'moment';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import EditQuoteChargeListConnect from './EditQuoteChargeGroupConnect';
-
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
 
-import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
 import { autoheight } from '../formatters/autoheight';
 
 class EditQuoteEmail extends React.Component {
