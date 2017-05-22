@@ -9,7 +9,7 @@ import { countByValue } from '../statsUtils';
 import CheckboxField from '../fields/CheckboxField.jsx';
 import CountryField from '../fields/CountryField.jsx';
 import UNLocationField from '../fields/UNLocationField.jsx';
-import Quote from '../objects/Quote.jsx';
+import QuoteContainer from '../objects/QuoteContainer';
 
 import { quotePropTypes } from '../objects/quotePropTypes';
 
@@ -51,10 +51,7 @@ class EditQuoteHeader extends React.Component {
   }
 
   save() {
-    Meteor.call(
-      'quote.save',
-      { ...this.props.quote, _id: this.props.match.params.quoteId },
-    );
+    Meteor.call('quote.save', { ...this.props.quote, _id: this.props.match.params.quoteId });
   }
 
   archive() {
@@ -507,7 +504,7 @@ class EditQuoteHeader extends React.Component {
               </div>
               <div className="form-button-group">
                 <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
-                <button className="save-button" onClick={this.save}>SAVE AND CLOSE</button>
+                <button className="save-button" onClick={this.save}>SAVE</button>
                 <button className="submit-button" onClick={this.getRates}>
                   EDIT CHARGES
                 </button>
@@ -515,7 +512,7 @@ class EditQuoteHeader extends React.Component {
             </div>
           </div>
         </div>
-        <Quote quote={Quotes.findOne(this.props.match.params.quoteId)} />
+        <QuoteContainer quoteId={this.props.match.params.quoteId} />
       </div>
     );
   }
@@ -530,3 +527,4 @@ EditQuoteHeader.propTypes = {
 };
 
 export default EditQuoteHeader;
+

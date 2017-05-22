@@ -4,12 +4,12 @@ import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 
 import EditQuoteChargeGroupConnect from './EditQuoteChargeGroupConnect';
-import Quote from '../objects/Quote.jsx';
+import QuoteContainer from '../objects/QuoteContainer';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
 
-import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
+import { currencyFormat } from '../formatters/numberFormatters';
 import { resizeHeight } from '../formatters/resizeHeight';
 
 class EditQuoteCharges extends React.Component {
@@ -235,7 +235,7 @@ class EditQuoteCharges extends React.Component {
               </div>
             </div>
           </div>
-          <Quote quote={Quotes.findOne(this.props.match.params.quoteId)} />
+          <QuoteContainer quoteId={this.props.match.params.quoteId} />
         </div>
       </div>
     );

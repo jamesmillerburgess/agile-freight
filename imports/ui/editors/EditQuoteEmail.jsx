@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import Quote from '../objects/Quote.jsx';
+import QuoteContainer from '../objects/QuoteContainer';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
@@ -156,7 +156,7 @@ class EditQuoteEmail extends React.Component {
             </div>
           </div>
         </div>
-        <Quote quote={Quotes.findOne(this.props.match.params.quoteId)} />
+        <QuoteContainer quoteId={this.props.match.params.quoteId} />
       </div>
     );
   }
