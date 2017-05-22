@@ -146,11 +146,9 @@ class EditQuoteEmail extends React.Component {
     );
   }
 }
-;
 
 EditQuoteEmail.propTypes = {
-  isOpen: PropTypes.bool,
-  setEmailIsOpen: PropTypes.func,
+  onLoad: PropTypes.func.isRequired,
   to: PropTypes.string,
   setEmailTo: PropTypes.func,
   cc: PropTypes.string,
@@ -159,14 +157,9 @@ EditQuoteEmail.propTypes = {
   setEmailSubject: PropTypes.func,
   message: PropTypes.string,
   setEmailMessage: PropTypes.func,
-  cargo: PropTypes.object,
-  movement: PropTypes.object,
-  otherServices: PropTypes.object,
-  charges: PropTypes.object,
 };
 
 EditQuoteEmail.defaultProps = {
-  setEmailIsOpen: () => null,
   to: '',
   setEmailTo: () => null,
   cc: '',
@@ -175,14 +168,6 @@ EditQuoteEmail.defaultProps = {
   setEmailSubject: () => null,
   message: '',
   setEmailMessage: () => null,
-  charges: {
-    chargeLines: [],
-    currency: '',
-    totalOriginCharges: 0,
-    totalInternationalCharges: 0,
-    totalDestinationCharges: 0,
-    totalCharges: 0,
-  },
 };
 
 export default EditQuoteEmail;

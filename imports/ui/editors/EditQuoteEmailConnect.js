@@ -8,7 +8,6 @@ const mapStateToProps = state => ({ quote: state.newQuote });
 
 const mapDispatchToProps = dispatch => ({
   onLoad: quote => dispatch(loadQuote(quote)),
-  setEmailIsOpen: (id, code) => dispatch(actionCreators.setEmailIsOpen(id, code)),
   setEmailTo: (id, name) => dispatch(actionCreators.setEmailTo(id, name)),
   setEmailCC: (id, rate) => dispatch(actionCreators.setEmailCC(id, rate)),
   setEmailSubject: (id, units) => dispatch(actionCreators.setEmailSubject(id, units)),
