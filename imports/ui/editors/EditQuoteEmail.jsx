@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
+import EditQuoteChargeListConnect from './EditQuoteChargeGroupConnect';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
@@ -191,7 +191,7 @@ class EditQuoteEmail extends React.Component {
                   <th className="amount-final-column numeric-label">FINAL (USD)</th>
                 </tr>
               </tbody>
-              <EditQuoteChargeListConnect group="Origin" readOnly />
+              <EditQuoteChargeGroupConnect group="Origin" readOnly />
               <tbody className="subtotal">
                 <tr>
                   <td colSpan="4" />
@@ -207,7 +207,7 @@ class EditQuoteEmail extends React.Component {
                   <th colSpan="6" className="title">INTERNATIONAL CHARGES</th>
                 </tr>
               </tbody>
-              <EditQuoteChargeListConnect group="International" readOnly />
+              <EditQuoteChargeGroupConnect group="International" readOnly />
               <tbody className="subtotal">
                 <tr>
                   <td colSpan="4" />
@@ -223,7 +223,7 @@ class EditQuoteEmail extends React.Component {
                   <th colSpan="6" className="title">DESTINATION CHARGES</th>
                 </tr>
               </tbody>
-              <EditQuoteChargeListConnect group="Destination" readOnly />
+              <EditQuoteChargeGroupConnect group="Destination" readOnly />
               <tbody className="subtotal">
                 <tr>
                   <td colSpan="4" />

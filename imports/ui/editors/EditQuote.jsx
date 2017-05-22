@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 
-import EditQuoteChargeListConnect from './EditQuoteChargeListConnect';
+import EditQuoteChargeGroupConnect from './EditQuoteChargeGroupConnect';
 import Quote from '../objects/Quote.jsx';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
@@ -139,7 +139,7 @@ class EditQuote extends React.Component {
                     <th className="amount-final-column numeric-label">FINAL (USD)</th>
                   </tr>
                 </tbody>
-                <EditQuoteChargeListConnect group="Origin" />
+                <EditQuoteChargeGroupConnect group="Origin" />
                 <tbody className="subtotal">
                   <tr>
                     <td colSpan="5" />
@@ -165,7 +165,7 @@ class EditQuote extends React.Component {
                     <th colSpan="6" className="title">INTERNATIONAL</th>
                   </tr>
                 </tbody>
-                <EditQuoteChargeListConnect group="International" />
+                <EditQuoteChargeGroupConnect group="International" />
                 <tbody className="subtotal">
                   <tr>
                     <td colSpan="5" />
@@ -191,7 +191,7 @@ class EditQuote extends React.Component {
                     <th colSpan="6" className="title">DESTINATION</th>
                   </tr>
                 </tbody>
-                <EditQuoteChargeListConnect group="Destination" />
+                <EditQuoteChargeGroupConnect group="Destination" />
                 <tbody className="subtotal">
                   <tr>
                     <td colSpan="5" />

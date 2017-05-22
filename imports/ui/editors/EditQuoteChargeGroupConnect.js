@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import EditQuoteChargeList from './EditQuoteChargeList.jsx';
+import EditQuoteChargeGroup from './EditQuoteChargeGroup.jsx';
 import * as actionCreators from '../../state/actions/newQuoteActions';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -17,6 +17,6 @@ const mapDispatchToProps = dispatch => ({
   removeChargeLine: id => dispatch(actionCreators.removeChargeLine(id)),
 });
 
-const EditQuoteChargeListConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuoteChargeList);
+const EditQuoteChargeGroupConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuoteChargeGroup);
 
-export default EditQuoteChargeListConnect;
+export default EditQuoteChargeGroupConnect;

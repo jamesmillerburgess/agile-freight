@@ -4,7 +4,7 @@ import Select from 'react-select';
 
 import { currencyFormat } from '../formatters/numberFormatters';
 
-const EditQuoteChargeList = (props) => {
+const EditQuoteChargeGroup = (props) => {
   const
     {
       chargeLines,
@@ -114,10 +114,10 @@ const EditQuoteChargeList = (props) => {
   );
 };
 
-EditQuoteChargeList.propTypes = {
+EditQuoteChargeGroup.propTypes = {
   group: PropTypes.string,
   chargeLines: PropTypes.array,
   removeChargeLine: PropTypes.func,
 };
 
-export default EditQuoteChargeList;
+export default EditQuoteChargeGroup;
