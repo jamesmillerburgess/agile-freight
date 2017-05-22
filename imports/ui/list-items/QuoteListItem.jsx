@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import moment from 'moment';
 import { Mongo } from 'meteor/mongo';
@@ -48,7 +49,7 @@ const QuoteListItemInner = ({ quote, history }) => {
       quote.movement.pickup.location &&
       quote.movement.delivery.location
     ) {
-      const pickupLocation   = UNLocations.findOne(new Mongo.ObjectID(quote.movement.pickup.location)).name;
+      const pickupLocation = UNLocations.findOne(new Mongo.ObjectID(quote.movement.pickup.location)).name;
       const deliveryLocation = UNLocations.findOne(new Mongo.ObjectID(quote.movement.delivery.location)).name;
       return `${pickupLocation} – ${deliveryLocation}`.toUpperCase();
     }
@@ -96,27 +97,36 @@ const QuoteListItemInner = ({ quote, history }) => {
     copyQuote(quote._id, (err, newQuoteId) => history.push(`/customers/${quote.customerId}/quotes/${newQuoteId}/header`));
   };
 
+  const quoteLink = () => {
+    if (quote.status === 'Submitted') {
+      return `/customers/${quote.customerId}/quotes/${quote._id}/view`;
+    }
+    return `/customers/${quote.customerId}/quotes/${quote._id}/header`;
+  };
+
   return (
-    <div className="panel">
-      <div className="icon-column">
-        <span className="fa fa-fw fa-clone" onClick={onClickCopy} />
-      </div>
-      <div className="container panel-body">
-        <div className="row no-gutters">
-          <div className="col-4">
-            <span className="label">{getCargoText()}</span><br />
-            <span className="label">{getMovementText()}</span>
-          </div>
-          <div className="col-4">
-            <span className="label">{getOtherServicesText()}</span><br />
-            <span className="label">{getTotalPriceText()}</span>
-          </div>
-          <div className="col-4">
-            <span className="label">{getStatusText()}</span>
+    <Link className="list-item" to={quoteLink()}>
+      <div className="panel">
+        <div className="icon-column">
+          <span className="fa fa-fw fa-clone" onClick={onClickCopy} />
+        </div>
+        <div className="container panel-body">
+          <div className="row no-gutters">
+            <div className="col-4">
+              <span className="label">{getCargoText()}</span><br />
+              <span className="label">{getMovementText()}</span>
+            </div>
+            <div className="col-4">
+              <span className="label">{getOtherServicesText()}</span><br />
+              <span className="label">{getTotalPriceText()}</span>
+            </div>
+            <div className="col-4">
+              <span className="label">{getStatusText()}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -155,7 +165,7 @@ QuoteListItemInner.defaultProps = {
 
 const QuoteListItem = createContainer((props) => {
   const { quoteId } = props;
-  const quote       = Quotes.findOne(quoteId);
+  const quote = Quotes.findOne(quoteId);
   return { quote };
 }, QuoteListItemInner);
 

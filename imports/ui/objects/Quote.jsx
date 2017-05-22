@@ -232,24 +232,24 @@ class Quote extends React.Component {
           <div className="email">
             <div className="title">EMAIL</div>
             <div className="email-field">
-              <span>SENT</span>
-              <span>{moment(this.props.quote.email.sentDate).format('DD MMM YYYY hh:mm').toUpperCase()}</span>
+              <span className="label">SENT</span>
+              <span className="value">{moment(this.props.quote.email.sentDate).format('DD MMM YYYY hh:mm').toUpperCase()}</span>
             </div>
             <div className="email-field">
-              <span>TO</span>
-              <span>{this.props.quote.email.to}</span>
+              <span className="label">TO</span>
+              <span className="value">{this.props.quote.email.to}</span>
             </div>
             <div className="email-field">
-              <span>CC</span>
-              <span>{this.props.quote.email.cc}</span>
+              <span className="label">CC</span>
+              <span className="value">{this.props.quote.email.cc}</span>
             </div>
             <div className="email-field">
-              <span>SUBJECT</span>
-              <span>{this.props.quote.email.subject}</span>
+              <span className="label">SUBJECT</span>
+              <span className="value">{this.props.quote.email.subject}</span>
             </div>
             <div className="email-field">
-              <span>MESSAGE</span>
-              <pre>{this.props.quote.email.message}</pre>
+              <span className="label">MESSAGE</span>
+              <pre className="value">{this.props.quote.email.message}</pre>
             </div>
           </div>
         </div>

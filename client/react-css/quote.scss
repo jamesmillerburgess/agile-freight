@@ -4,9 +4,19 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  .header {
-    font-size: $giant-font-size;
+  .header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    .header {
+      font-size: $giant-font-size;
+    }
+    .title {
+      text-align: right;
+    }
   }
+
   .status {
 
   }
@@ -54,6 +64,22 @@
   }
 }
 
+.email {
+  width: 100%;
+}
+
+.email-field {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  .label {
+    width: 20%;
+  }
+  .value {
+    width: 80%;
+  }
+}
+
 .quote-read-only {
   width: 100%;
   display: flex;
@@ -67,3 +93,4 @@
   background-color: rgba($customers-accent-color, $very-high-alpha);
   transition: none;
 }
+

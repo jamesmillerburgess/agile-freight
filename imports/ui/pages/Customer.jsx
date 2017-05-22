@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
@@ -11,6 +11,7 @@ import { Customers } from '../../api/customers/customers-collection';
 import EditQuoteHeaderConnect from '../editors/EditQuoteHeaderConnect.jsx';
 import EditQuoteChargesConnect from '../editors/EditQuoteChargesConnect';
 import EditQuoteEmailConnect from '../editors/EditQuoteEmailConnect';
+import QuoteContainer from '../objects/QuoteContainer';
 
 const CustomerInner = ({ customer, history }) => (
   <div className="">
@@ -22,13 +23,7 @@ const CustomerInner = ({ customer, history }) => (
           props => (
             <div>
               {customer.quotes.map(quoteId => (
-                <Link
-                  key={quoteId}
-                  className="list-item"
-                  to={`/customers/${customer._id}/quotes/${quoteId}/header`}
-                >
-                  <QuoteListItem {...props} quoteId={quoteId} />
-                </Link>
+                <QuoteListItem key={quoteId} {...props} quoteId={quoteId} />
               ))}
             </div>
           )
@@ -45,6 +40,10 @@ const CustomerInner = ({ customer, history }) => (
       <Route
         path="/customers/:customerId/quotes/:quoteId/email"
         render={props => <EditQuoteEmailConnect {...props} />}
+      />
+      <Route
+        path="/customers/:customerId/quotes/:quoteId/view"
+        render={props => <QuoteContainer {...props} quoteId={props.match.params.quoteId} />}
       />
     </div>
     <div className="content-footer-accent customers-footer-accent" />
