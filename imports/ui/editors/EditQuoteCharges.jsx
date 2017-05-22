@@ -224,7 +224,7 @@ class EditQuoteCharges extends React.Component {
               </table>
               <div className="form-button-group">
                 <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
-                <button className="save-button" onClick={this.save}>SAVE AND CLOSE</button>
+                <button className="save-button" onClick={this.save}>SAVE</button>
                 <button className="submit-button" onClick={this.editEmail}>EDIT EMAIL</button>
               </div>
             </div>
