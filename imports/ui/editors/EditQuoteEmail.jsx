@@ -10,23 +10,24 @@ import Quote from '../objects/Quote.jsx';
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
 
-import { autoheight } from '../formatters/autoheight';
+import { resizeHeight } from '../formatters/resizeHeight';
+import { quotePropTypes } from '../objects/quotePropTypes';
 
 class EditQuoteEmail extends React.Component {
   constructor(props) {
     super(props);
-    this.saveAndClose    = this.saveAndClose.bind(this);
-    this.archive         = this.archive.bind(this);
-    this.sendEmail       = this.sendEmail.bind(this);
+    this.saveAndClose = this.saveAndClose.bind(this);
+    this.archive = this.archive.bind(this);
+    this.sendEmail = this.sendEmail.bind(this);
     this.getMovementText = this.getMovementText.bind(this);
   }
 
   componentWillMount() {
-    this.props.onLoad(Quotes.findOne(this.props.match.params.quoteId));
+    this.props.dispatchers.onLoad(Quotes.findOne(this.props.match.params.quoteId));
   }
 
   componentDidUpdate() {
-    autoheight(this.messageNode);
+    resizeHeight(this.messageNode);
   }
 
   getMovementText() {
@@ -38,8 +39,10 @@ class EditQuoteEmail extends React.Component {
       this.props.quote.movement.pickup.location &&
       this.props.quote.movement.delivery.location
     ) {
-      const pickupLocation   = UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.pickup.location)).name;
-      const deliveryLocation = UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.delivery.location)).name;
+      const pickupLocation =
+        UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.pickup.location)).name;
+      const deliveryLocation =
+        UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.delivery.location)).name;
       return `${pickupLocation} – ${deliveryLocation}`.toUpperCase();
     }
     return '';
@@ -66,7 +69,7 @@ class EditQuoteEmail extends React.Component {
   }
 
   sendEmail() {
-    const email   = this.props.quote.email;
+    const email = this.props.quote.email;
     const quoteId = this.props.match.params.quoteId;
     Meteor.call(
       'email.send',
@@ -86,20 +89,20 @@ class EditQuoteEmail extends React.Component {
         <div className="process-header">
           <div className="title">NEW QUOTE</div>
           <div className="breadcrumbs">
-            <div
+            <button
               className="breadcrumb"
               onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
             >
               HEADER
-            </div>
+            </button>
             <div className="breadcrumb-end" />
             <div className="breadcrumb-start" />
-            <div
+            <button
               className="breadcrumb"
               onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`)}
             >
               CHARGES
-            </div>
+            </button>
             <div className="breadcrumb-end" />
             <div className="breadcrumb-start active customer" />
             <div className="breadcrumb active customer">EMAIL</div>
@@ -110,27 +113,39 @@ class EditQuoteEmail extends React.Component {
           <div className="email-inputs">
             <div className="email-input">
               <span className="label">TO</span>
-              <input id="to" value={this.props.quote.email.to}
-                     onChange={e => this.props.setEmailTo(e.target.value)} />
+              <input
+                id="to"
+                value={this.props.quote.email.to}
+                onChange={e => this.props.dispatchers.setEmailTo(e.target.value)}
+              />
             </div>
             <div className="email-input">
               <span className="label">CC</span>
-              <input id="cc" value={this.props.quote.email.cc}
-                     onChange={e => this.props.setEmailCC(e.target.value)} />
+              <input
+                id="cc"
+                value={this.props.quote.email.cc}
+                onChange={e => this.props.dispatchers.setEmailCC(e.target.value)}
+              />
             </div>
             <div className="email-input">
               <span className="label">SUBJECT</span>
-              <input id="subject" value={this.props.quote.email.subject}
-                     onChange={e => this.props.setEmailSubject(e.target.value)} />
+              <input
+                id="subject"
+                value={this.props.quote.email.subject}
+                onChange={e => this.props.dispatchers.setEmailSubject(e.target.value)}
+              />
             </div>
             <div className="email-input">
               <span className="label">MESSAGE</span>
               <textarea
-                ref={node => this.messageNode = node}
-                id="message" value={this.props.quote.email.message}
-                onChange={e => {
-                  autoheight(this.messageNode);
-                  this.props.setEmailMessage(e.target.value);
+                ref={(node) => {
+                  this.messageNode = node;
+                }}
+                id="message"
+                value={this.props.quote.email.message}
+                onChange={(e) => {
+                  resizeHeight(this.messageNode);
+                  this.props.dispatchers.setEmailMessage(e.target.value);
                 }}
               />
             </div>
@@ -148,26 +163,10 @@ class EditQuoteEmail extends React.Component {
 }
 
 EditQuoteEmail.propTypes = {
-  onLoad: PropTypes.func.isRequired,
-  to: PropTypes.string,
-  setEmailTo: PropTypes.func,
-  cc: PropTypes.string,
-  setEmailCC: PropTypes.func,
-  subject: PropTypes.string,
-  setEmailSubject: PropTypes.func,
-  message: PropTypes.string,
-  setEmailMessage: PropTypes.func,
-};
-
-EditQuoteEmail.defaultProps = {
-  to: '',
-  setEmailTo: () => null,
-  cc: '',
-  setEmailCC: () => null,
-  subject: '',
-  setEmailSubject: () => null,
-  message: '',
-  setEmailMessage: () => null,
+  quote: quotePropTypes.isRequired,
+  dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
+  history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  match: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default EditQuoteEmail;

@@ -10,7 +10,7 @@ import { Quotes } from '../../api/quotes/quotesCollection';
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
 
 import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
-import { autoheight } from '../formatters/autoheight';
+import { resizeHeight } from '../formatters/resizeHeight';
 
 class EditQuoteCharges extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class EditQuoteCharges extends React.Component {
   }
 
   componentDidUpdate() {
-    autoheight(this.notesNode);
+    resizeHeight(this.notesNode);
   }
 
   getMovementText() {
@@ -212,7 +212,7 @@ class EditQuoteCharges extends React.Component {
                         ref={node => this.notesNode = node}
                         value={this.props.notes}
                         onChange={e => {
-                          autoheight(this.notesNode);
+                          resizeHeight(this.notesNode);
                           this.props.setChargeNotes(e.target.value);
                         }}
                       />

@@ -7,11 +7,13 @@ import { loadQuote } from '../../state/actions/newQuoteActions';
 const mapStateToProps = state => ({ quote: state.newQuote });
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: quote => dispatch(loadQuote(quote)),
-  setEmailTo: (id, name) => dispatch(actionCreators.setEmailTo(id, name)),
-  setEmailCC: (id, rate) => dispatch(actionCreators.setEmailCC(id, rate)),
-  setEmailSubject: (id, units) => dispatch(actionCreators.setEmailSubject(id, units)),
-  setEmailMessage: (id, unitPrice) => dispatch(actionCreators.setEmailMessage(id, unitPrice)),
+  dispatchers: {
+    onLoad: quote => dispatch(loadQuote(quote)),
+    setEmailTo: (id, name) => dispatch(actionCreators.setEmailTo(id, name)),
+    setEmailCC: (id, rate) => dispatch(actionCreators.setEmailCC(id, rate)),
+    setEmailSubject: (id, units) => dispatch(actionCreators.setEmailSubject(id, units)),
+    setEmailMessage: (id, unitPrice) => dispatch(actionCreators.setEmailMessage(id, unitPrice)),
+  },
 });
 
 const EditQuoteEmailConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuoteEmail);
