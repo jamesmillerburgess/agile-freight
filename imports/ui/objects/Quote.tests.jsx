@@ -50,7 +50,7 @@ if (Meteor.isClient) {
 
       it('renders the status if it is not in \'Submitted\' status', () => {
         wrapper.setProps({ quote: { status: 'Draft' } });
-        wrapper.contains(<span className="status">DRAFT</span>).should.equal(true);
+        wrapper.contains(<span className="title">DRAFT</span>).should.equal(true);
       });
 
       it('renders the expiry if it is in \'Submitted\' status', () => {
@@ -60,7 +60,7 @@ if (Meteor.isClient) {
             expiryDate: new Date('January 1, 2017'),
           },
         });
-        wrapper.contains(<span className="status">EXPIRES 01 JAN 2017</span>).should.equal(true);
+        wrapper.contains(<span className="title">EXPIRES 01 JAN 2017</span>).should.equal(true);
       });
     });
 

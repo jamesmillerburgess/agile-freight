@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 
 import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
+import { quotePropTypes } from './quotePropTypes';
 
 const Quote = (props) => {
   const getStatus = () => {
@@ -215,7 +216,7 @@ const Quote = (props) => {
         <div className="quote">
           <div className="header-row">
             <span className="header">AGILITY FREIGHT QUOTATION</span>
-            <span className="status">{getStatus()}</span>
+            <span className="title">{getStatus()}</span>
           </div>
           <span className="title">CARGO</span>
           {
@@ -258,10 +259,9 @@ const Quote = (props) => {
                   <pre>{props.quote.charges.notes}</pre>
                   <div className="total-row">
                     <span className="title">TOTAL PRICE</span>
-
                     <span className="title value">
-                    {currencyFormat(props.quote.charges.totalCharges)} {props.quote.charges.currency}
-                  </span>
+                      {currencyFormat(props.quote.charges.totalCharges)} {props.quote.charges.currency}
+                    </span>
                   </div>
                 </div> :
                 <span className="title">NO CHARGES ENTERED</span>
@@ -272,6 +272,10 @@ const Quote = (props) => {
       {Email()}
     </div>
   );
+};
+
+Quote.propTypes = {
+  quote: quotePropTypes,
 };
 
 Quote.defaultProps = {

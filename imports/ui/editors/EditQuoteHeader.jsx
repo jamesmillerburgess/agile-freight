@@ -28,7 +28,7 @@ class EditQuoteHeader extends React.Component {
   constructor(props) {
     super(props);
     this.archive = this.archive.bind(this);
-    this.saveAndClose = this.saveAndClose.bind(this);
+    this.save = this.save.bind(this);
     this.getRates = this.getRates.bind(this);
     this.PackageLines = this.PackageLines.bind(this);
     this.Containers = this.Containers.bind(this);
@@ -50,13 +50,10 @@ class EditQuoteHeader extends React.Component {
     );
   }
 
-  saveAndClose() {
+  save() {
     Meteor.call(
       'quote.save',
       { ...this.props.quote, _id: this.props.match.params.quoteId },
-      () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/overview`,
-      ),
     );
   }
 
@@ -510,7 +507,7 @@ class EditQuoteHeader extends React.Component {
               </div>
               <div className="form-button-group">
                 <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
-                <button className="save-button" onClick={this.saveAndClose}>SAVE AND CLOSE</button>
+                <button className="save-button" onClick={this.save}>SAVE AND CLOSE</button>
                 <button className="submit-button" onClick={this.getRates}>
                   EDIT CHARGES
                 </button>
