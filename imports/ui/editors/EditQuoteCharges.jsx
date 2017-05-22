@@ -15,7 +15,7 @@ import { resizeHeight } from '../formatters/resizeHeight';
 class EditQuoteCharges extends React.Component {
   constructor(props) {
     super(props);
-    this.saveAndClose    = this.saveAndClose.bind(this);
+    this.save    = this.save.bind(this);
     this.archive         = this.archive.bind(this);
     this.editEmail       = this.editEmail.bind(this);
     this.getMovementText = this.getMovementText.bind(this);
@@ -45,14 +45,8 @@ class EditQuoteCharges extends React.Component {
     return '';
   }
 
-  saveAndClose() {
-    Meteor.call(
-      'quote.save',
-      { ...this.props.newQuote, _id: this.props.match.params.quoteId },
-      () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/overview`,
-      ),
-    );
+  save() {
+    Meteor.call('quote.save', { ...this.props.newQuote, _id: this.props.match.params.quoteId });
   }
 
   archive() {
@@ -230,7 +224,7 @@ class EditQuoteCharges extends React.Component {
               </table>
               <div className="form-button-group">
                 <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
-                <button className="save-button" onClick={this.saveAndClose}>SAVE AND CLOSE</button>
+                <button className="save-button" onClick={this.save}>SAVE AND CLOSE</button>
                 <button className="submit-button" onClick={this.editEmail}>EDIT EMAIL</button>
               </div>
             </div>

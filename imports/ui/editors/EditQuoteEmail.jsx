@@ -16,7 +16,7 @@ import { quotePropTypes } from '../objects/quotePropTypes';
 class EditQuoteEmail extends React.Component {
   constructor(props) {
     super(props);
-    this.saveAndClose = this.saveAndClose.bind(this);
+    this.save = this.save.bind(this);
     this.archive = this.archive.bind(this);
     this.sendEmail = this.sendEmail.bind(this);
     this.getMovementText = this.getMovementText.bind(this);
@@ -48,14 +48,8 @@ class EditQuoteEmail extends React.Component {
     return '';
   }
 
-  saveAndClose() {
-    Meteor.call(
-      'quote.save',
-      { ...this.props.quote, _id: this.props.match.params.quoteId },
-      () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/overview`,
-      ),
-    );
+  save() {
+    Meteor.call('quote.save', { ...this.props.quote, _id: this.props.match.params.quoteId });
   }
 
   archive() {
@@ -151,7 +145,7 @@ class EditQuoteEmail extends React.Component {
             </div>
             <div className="form-button-group">
               <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
-              <button className="save-button" onClick={this.saveAndClose}>SAVE AND CLOSE</button>
+              <button className="save-button" onClick={this.save}>SAVE AND CLOSE</button>
               <button className="submit-button" onClick={this.sendEmail}>SEND EMAIL</button>
             </div>
           </div>
