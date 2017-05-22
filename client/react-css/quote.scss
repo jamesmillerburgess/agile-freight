@@ -62,3 +62,8 @@
     font-size: $giant-font-size;
   }
 }
+
+.quote-container.update .panel {
+  background-color: rgba($customers-accent-color, $very-high-alpha);
+  transition: none;
+}

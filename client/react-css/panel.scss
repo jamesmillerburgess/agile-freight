@@ -88,3 +88,7 @@
     font-weight: bold;
   }
 }
+
+.panel.transition {
+  transition: background-color 500ms ease-in-out;
+}
