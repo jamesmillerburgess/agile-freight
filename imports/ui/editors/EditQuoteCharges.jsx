@@ -236,50 +236,6 @@ class EditQuoteCharges extends React.Component {
             </div>
           </div>
           <Quote quote={this.props.quote} />
-          <div className="panel edit-quote">
-            <div className="quote-read-only">
-              <div className="header">AGILITY FREIGHT QUOTATION</div>
-              <div className="title">CARGO</div>
-              <table className="table">
-                <tbody>
-                  {
-                    this.props.quote.cargo.packageLines.map((packageLine, index) => (
-                      <tr key={index}>
-                        <td>{packageLine.numPackages} {packageLine.packageType}</td>
-                        <td
-                          className="numeric-label">{packageLine.length}x{packageLine.width}x{packageLine.height} {packageLine.unitVolumeUOM}</td>
-                        <td
-                          className="numeric-label">{weightFormat(packageLine.weight)} {packageLine.weightUOM}
-                          / pkg
-                        </td>
-                        <td className="numeric-label">
-                          {packageLine.numPackages} pkgs,&nbsp;
-                          {weightFormat(packageLine.volume)} {packageLine.volumeUOM},&nbsp;
-                          {weightFormat(packageLine.totalWeight)} {packageLine.weightUOM}
-                        </td>
-                      </tr>
-                    ))
-                  }
-                  <tr>
-                    <td colSpan="2" />
-                    <td className="numeric-label">TOTAL</td>
-                    <td className="numeric-label">
-                      {this.props.quote.cargo.totalPackages} pkgs,&nbsp;
-                      {weightFormat(this.props.quote.cargo.totalVolume)} {this.props.quote.cargo.volumeUOM},&nbsp;
-                      {weightFormat(this.props.quote.cargo.totalWeight)} {this.props.quote.cargo.weightUOM}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <span>{this.props.quote.cargo.hazardous ? 'Hazardous' : 'Non-Hazardous'}</span>
-              <span>{this.props.quote.cargo.temperatureControlled ? 'Temperature Controlled' : 'Non-Temperature Controlled'}</span>
-              <div className="title">ROUTING</div>
-              <span>{this.getMovementText()}</span>
-              <div className="title">OTHER SERVICES</div>
-              <span>{this.props.quote.otherServices.insurance ? 'Insurance' : 'No Insurance'}</span>
-              <span>{this.props.quote.otherServices.customsClearance ? 'Customs Clearance' : 'No Customs Clearance'}</span>
-            </div>
-          </div>
         </div>
       </div>
     );
