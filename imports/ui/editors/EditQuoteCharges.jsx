@@ -12,7 +12,7 @@ import { UNLocations } from '../../api/unlocations/unlocations-collection';
 import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
 import { autoheight } from '../formatters/autoheight';
 
-class EditQuote extends React.Component {
+class EditQuoteCharges extends React.Component {
   constructor(props) {
     super(props);
     this.saveAndClose    = this.saveAndClose.bind(this);
@@ -286,8 +286,8 @@ class EditQuote extends React.Component {
   }
 }
 
-EditQuote.propTypes = {
+EditQuoteCharges.propTypes = {
   onLoad: PropTypes.func.isRequired,
 };
 
-export default EditQuote;
+export default EditQuoteCharges;

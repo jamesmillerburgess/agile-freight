@@ -9,7 +9,7 @@ import { uniqueValues } from '../statsUtils';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 
-import EditQuoteConnect from '../editors/EditQuoteConnect';
+import EditQuoteConnect from '../editors/EditQuoteChargesConnect';
 import NewQuoteConnect from '../editors/EditQuoteHeaderConnect.jsx';
 
 const CustomerQuotesInner = ({ customer, quotes }) => {
@@ -29,7 +29,7 @@ const CustomerQuotesInner = ({ customer, quotes }) => {
         />
         <Route
           path="/customer/:customerId/quotes/:quoteId/edit"
-          render={props => <EditQuoteConnect {...props} quotes={quotes} />}
+          render={props => <EditQuoteChargesConnect {...props} quotes={quotes} />}
         />
       </div>
     </div>

@@ -9,7 +9,7 @@ import QuoteListItem from '../list-items/QuoteListItem.jsx';
 
 import { Customers } from '../../api/customers/customers-collection';
 import EditQuoteHeaderConnect from '../editors/EditQuoteHeaderConnect.jsx';
-import EditQuoteConnect from '../editors/EditQuoteConnect';
+import EditQuoteChargesConnect from '../editors/EditQuoteChargesConnect';
 import EditQuoteEmailConnect from '../editors/EditQuoteEmailConnect';
 
 const CustomerInner = ({ customer, history }) => {
@@ -41,14 +41,13 @@ const CustomerInner = ({ customer, history }) => {
         />
         <Route
           path="/customers/:customerId/quotes/:quoteId/charges"
-          render={props => <EditQuoteConnect {...props} />}
+          render={props => <EditQuoteChargesConnect {...props} />}
         />
         <Route
           path="/customers/:customerId/quotes/:quoteId/email"
           render={props => <EditQuoteEmailConnect {...props} />}
         />
       </div>
-
       <div className="content-footer-accent customers-footer-accent" />
     </div>
   );

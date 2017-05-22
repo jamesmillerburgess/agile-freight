@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import EditQuote from './EditQuote.jsx';
+import EditQuoteCharges from './EditQuoteCharges.jsx';
 import { loadQuote, addChargeLine, setChargeNotes } from '../../state/actions/newQuoteActions';
 import { loadEmail } from '../../state/actions/emailActions';
 
@@ -36,6 +36,6 @@ const mapDispatchToProps = dispatch => ({
   loadEmail: email => dispatch(loadEmail(email)),
 });
 
-const EditQuoteConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuote);
+const EditQuoteChargesConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuoteCharges);
 
-export default EditQuoteConnect;
+export default EditQuoteChargesConnect;
