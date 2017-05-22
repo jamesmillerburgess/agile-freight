@@ -20,7 +20,7 @@ const getQuoteStats = quotes => ({
   deliveryLocation: countByValue(quotes, 'movement.delivery.location'),
 });
 
-class NewQuote extends React.Component {
+class EditQuoteHeader extends React.Component {
   constructor(props) {
     super(props);
     this.archive      = this.archive.bind(this);
@@ -512,4 +512,4 @@ class NewQuote extends React.Component {
   }
 }
 
-export default NewQuote;
+export default EditQuoteHeader;

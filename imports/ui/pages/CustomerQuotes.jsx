@@ -10,7 +10,7 @@ import { uniqueValues } from '../statsUtils';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
 import EditQuoteConnect from '../editors/EditQuoteConnect';
-import NewQuoteConnect from '../editors/NewQuoteConnect.jsx';
+import NewQuoteConnect from '../editors/EditQuoteHeaderConnect.jsx';
 
 const CustomerQuotesInner = ({ customer, quotes }) => {
   return (
@@ -25,7 +25,7 @@ const CustomerQuotesInner = ({ customer, quotes }) => {
       <div className="content-body">
         <Route
           path="/customer/:customerId/quotes/new-quote"
-          render={props => <NewQuoteConnect {...props} quotes={quotes} />}
+          render={props => <EditQuoteHeaderConnect {...props} quotes={quotes} />}
         />
         <Route
           path="/customer/:customerId/quotes/:quoteId/edit"

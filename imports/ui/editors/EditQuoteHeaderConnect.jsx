@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 
 import * as newQuoteActions from '../../state/actions/newQuoteActions';
-import NewQuote from './NewQuote.jsx';
+import EditQuoteHeader from './EditQuoteHeader.jsx';
 
-const mapStateToProps    = state => ({ ...state.newQuote, quote: state.newQuote });
+const mapStateToProps = state => ({ ...state.newQuote, quote: state.newQuote });
 const mapDispatchToProps = dispatch => ({
   onLoad: quote => dispatch(newQuoteActions.loadQuote(quote)),
 
@@ -42,6 +42,7 @@ const mapDispatchToProps = dispatch => ({
   onClickInsurance: () => dispatch(newQuoteActions.toggleInsurance()),
   onClickCustomsClearance: () => dispatch(newQuoteActions.toggleCustomsClearance()),
 });
-const NewQuoteConnect    = connect(mapStateToProps, mapDispatchToProps)(NewQuote);
 
-export default NewQuoteConnect;
+const EditQuoteHeaderConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuoteHeader);
+
+export default EditQuoteHeaderConnect;
