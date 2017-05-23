@@ -11,7 +11,7 @@ import { UNLocations } from '../../api/unlocations/unlocations-collection';
 import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
 import { copyQuote } from '../quoteUtils';
 
-const QuoteListItemInner = ({ quote, history }) => {
+export const QuoteListItemInner = ({ quote, history }) => {
   const
     {
       cargoType,

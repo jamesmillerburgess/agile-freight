@@ -3,12 +3,12 @@
 
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { chai } from 'meteor/practicalmeteor:chai';
 import StubCollections from 'meteor/hwillson:stub-collections';
 import { Mongo } from 'meteor/mongo';
 
-import QuoteListItem from './QuoteListItem.jsx';
+import QuoteListItem, { QuoteListItemInner } from './QuoteListItem.jsx';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { Customers } from '../../api/customers/customers-collection';
@@ -19,7 +19,7 @@ if (Meteor.isClient) {
     chai.should();
 
     const props = { quoteId: 'a' };
-
+    let wrapper;
     beforeEach(() => {
       StubCollections.stub([Quotes, Customers, UNLocations]);
       Quotes.insert({
@@ -40,6 +40,7 @@ if (Meteor.isClient) {
         _id: new Mongo.ObjectID('bbbbbbbbbbbbbbbbbbbbbbbb'),
         name: 'Location2',
       });
+      wrapper = shallow(<QuoteListItemInner quote={Quotes.findOne('a')} />);
     });
 
     afterEach(() => {
@@ -47,16 +48,11 @@ if (Meteor.isClient) {
     });
 
     it('should render a component', () => {
-      const quoteListItem = mount(<QuoteListItem {...props} />);
-
-      quoteListItem.exists().should.equal(true);
-      quoteListItem.unmount();
+      wrapper.exists().should.equal(true);
     });
 
     describe('Icons', () => {
       it('renders a copy icon', () => {
-        const wrapper = mount(<QuoteListItem {...props} />);
-
         wrapper.find('.fa-clone').length.should.equal(1);
       });
     });
@@ -75,10 +71,8 @@ if (Meteor.isClient) {
               },
             },
           });
-        const quoteListItem1 = mount(<QuoteListItem {...props} />);
-
-        quoteListItem1.contains(<span className="label">1 UNIT, 2 TEU</span>).should.equal(true);
-        quoteListItem1.unmount();
+        wrapper.setProps({ quote: Quotes.findOne('a') });
+        wrapper.contains(<span className="label">1 UNIT, 2 TEU</span>).should.equal(true);
 
         Quotes.update(
           { _id: 'a' },
@@ -91,10 +85,8 @@ if (Meteor.isClient) {
               },
             },
           });
-        const quoteListItem2 = mount(<QuoteListItem {...props} />);
-
-        quoteListItem2.contains(<span className="label">2 UNITS, 2 TEU</span>).should.equal(true);
-        quoteListItem2.unmount();
+        wrapper.setProps({ quote: Quotes.findOne('a') });
+        wrapper.contains(<span className="label">2 UNITS, 2 TEU</span>).should.equal(true);
       });
 
       it('renders a string in place of cargo totals for rated, containerized quotes', () => {
@@ -102,12 +94,11 @@ if (Meteor.isClient) {
           { _id: 'a' },
           { $set: { cargo: { ratedQuote: true, cargoType: 'Containerized' } } },
         );
-        const quoteListItem = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
-        quoteListItem.contains((
+        wrapper.contains((
           <span className="label">RATED, CONTAINERIZED</span>
         )).should.equal(true);
-        quoteListItem.unmount();
       });
 
       it('renders the cargo totals for loose cargo on an itemized quote', () => {
@@ -126,19 +117,17 @@ if (Meteor.isClient) {
               },
             },
           });
-        const quoteListItem1 = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
-        quoteListItem1.contains((
+        wrapper.contains((
           <span className="label">1 PKG, 3 CBM, 2 KG</span>
         )).should.equal(true);
-        quoteListItem1.unmount();
 
         Quotes.update({ _id: 'a' }, { $set: { 'cargo.totalPackages': 2 } });
-        const quoteListItem2 = mount(<QuoteListItem {...props} />);
-        quoteListItem2.contains((
+        wrapper.setProps({ quote: Quotes.findOne('a') });
+        wrapper.contains((
           <span className="label">2 PKGS, 3 CBM, 2 KG</span>
         )).should.equal(true);
-        quoteListItem2.unmount();
       });
 
       it('rounds the values for the volume and gross weight', () => {
@@ -157,28 +146,25 @@ if (Meteor.isClient) {
               },
             },
           });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(
           <span className="label">1 PKG, 0.111 CBM, 0.222 KG</span>,
         ).should.equal(true);
-        wrapper.unmount();
       });
 
       it('renders a string in place of cargo totals for rated, loose quotes', () => {
         Quotes.update({ _id: 'a' }, { $set: { cargo: { ratedQuote: true, cargoType: 'Loose' } } });
-        const quoteListItem = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
-        quoteListItem.contains(<span className="label">RATED, LOOSE</span>).should.equal(true);
-        quoteListItem.unmount();
+        wrapper.contains(<span className="label">RATED, LOOSE</span>).should.equal(true);
       });
 
       it('renders a message if no cargo has been saved', () => {
         Quotes.update({ _id: 'a' }, { $set: { cargo: {} } });
-        const quoteListItem = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
-        quoteListItem.contains(<span className="label">NO CARGO ENTERED</span>).should.equal(true);
-        quoteListItem.unmount();
+        wrapper.contains(<span className="label">NO CARGO ENTERED</span>).should.equal(true);
       });
     });
 
@@ -192,18 +178,16 @@ if (Meteor.isClient) {
             },
           },
         });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">LOCATION1 – LOCATION2</span>).should.equal(true);
-        wrapper.unmount();
       });
 
       it('renders a message if the route is missing', () => {
         Quotes.update({ _id: 'a' }, { $set: { movement: {} } });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">NO ROUTING ENTERED</span>).should.equal(true);
-        wrapper.unmount();
       });
     });
 
@@ -217,28 +201,25 @@ if (Meteor.isClient) {
             },
           },
         });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains((
           <span className="label">INSURANCE, CUSTOMS CLEARANCE</span>
         )).should.equal(true);
-        wrapper.unmount();
       });
 
       it('renders insurance if it is the only other service present', () => {
         Quotes.update({ _id: 'a' }, { $set: { otherServices: { insurance: true } } });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">INSURANCE</span>).should.equal(true);
-        wrapper.unmount();
       });
 
       it('renders customs clearance if it is the only other service present', () => {
         Quotes.update({ _id: 'a' }, { $set: { otherServices: { customsClearance: true } } });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">CUSTOMS CLEARANCE</span>).should.equal(true);
-        wrapper.unmount();
       });
 
       it('renders no other services if none are present', () => {
@@ -250,60 +231,53 @@ if (Meteor.isClient) {
             },
           },
         });
-        let wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">NO OTHER SERVICES</span>).should.equal(true);
-        wrapper.unmount();
 
         Quotes.update({ _id: 'a' }, { $set: { otherServices: null } });
-        wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">NO OTHER SERVICES</span>).should.equal(true);
-        wrapper.unmount();
       });
     });
 
     describe('Total Price', () => {
       it('renders the total price if present', () => {
         Quotes.update({ _id: 'a' }, { $set: { charges: { totalCharges: 1, currency: 'USD' } } });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">USD 1.00</span>).should.equal(true);
-        wrapper.unmount();
       });
 
       it('renders a message if no total price is present', () => {
         Quotes.update({ _id: 'a' }, { $set: { charges: {} } });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">NO CHARGES ENTERED</span>).should.equal(true);
-        wrapper.unmount();
       });
     });
 
     describe('Quote Status', () => {
       it('renders the status if it is \'Draft\'', () => {
         Quotes.update({ _id: 'a' }, { $set: { status: 'Draft' } });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">DRAFT</span>).should.equal(true);
-        wrapper.unmount();
       });
 
       it('renders the status if it is \'Archived\'', () => {
         Quotes.update({ _id: 'a' }, { $set: { status: 'Archived' } });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">ARCHIVED</span>).should.equal(true);
-        wrapper.unmount();
       });
 
       it('renders the status if it is \'Expired\'', () => {
         Quotes.update({ _id: 'a' }, { $set: { status: 'Expired' } });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">EXPIRED</span>).should.equal(true);
-        wrapper.unmount();
       });
 
       it('renders the expiry date if the status is Submitted', () => {
@@ -313,26 +287,23 @@ if (Meteor.isClient) {
             expiryDate: new Date('Jan 1, 2017'),
           },
         });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">EXPIRES 01 JAN 2017</span>).should.equal(true);
-        wrapper.unmount();
       });
 
       it('doesn\'t render if the status is invalid', () => {
         Quotes.update({ _id: 'a' }, { $set: { status: 'Invalid' } });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">INVALID</span>).should.equal(false);
-        wrapper.unmount();
       });
 
       it('doesn\'t render if the status is Active but there is no expiry date', () => {
         Quotes.update({ _id: 'a' }, { $set: { status: 'Active' } });
-        const wrapper = mount(<QuoteListItem {...props} />);
+        wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">ACTIVE </span>).should.equal(false);
-        wrapper.unmount();
       });
     });
   });
