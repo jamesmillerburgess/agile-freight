@@ -185,11 +185,7 @@ class Quote extends React.Component {
     const groupChargeLines = this.props.quote.charges.chargeLines.filter(charge => charge.group === group);
     if (groupChargeLines.length === 0) {
       return (
-        <div className="charge-group section">
-          <span className="title">
-            NO {group.toUpperCase()} CHARGES
-          </span>
-        </div>
+        <div />
       );
     }
     return (
@@ -277,21 +273,23 @@ class Quote extends React.Component {
               <span className="header">AGILITY FREIGHT QUOTATION</span>
               <span className="title">{this.getStatus()}</span>
             </div>
-            <span className="title">CARGO</span>
-            {
-              this.hasCargo() ?
-                <div className="cargo">
-                  {this.props.quote.cargo.cargoType === 'Loose' ? this.PackageLines() : this.ContainerLines()}
-                  <div className="cargo-totals">
-                    <span className="label">TOTAL</span>
-                    {this.props.quote.cargo.cargoType === 'Loose' ? this.LooseCargoTotals() : this.ContainerizedCargoTotals()}
-                  </div>
-                  <div className="cargo-attributes">
-                    {this.props.quote.cargo.cargoType === 'Loose' ? this.LooseCargoAttributes() : this.ContainerizedCargoAttributes()}
-                  </div>
-                </div> :
-                <span>NO CARGO ENTERED</span>
-            }
+            <div className="cargo section">
+              <span className="title">CARGO</span>
+              {
+                this.hasCargo() ?
+                  <div className="">
+                    {this.props.quote.cargo.cargoType === 'Loose' ? this.PackageLines() : this.ContainerLines()}
+                    <div className="cargo-totals">
+                      <span className="label">TOTAL</span>
+                      {this.props.quote.cargo.cargoType === 'Loose' ? this.LooseCargoTotals() : this.ContainerizedCargoTotals()}
+                    </div>
+                    <div className="cargo-attributes">
+                      {this.props.quote.cargo.cargoType === 'Loose' ? this.LooseCargoAttributes() : this.ContainerizedCargoAttributes()}
+                    </div>
+                  </div> :
+                  <span>NO CARGO ENTERED</span>
+              }
+            </div>
             <div className="routing-and-other-services section">
               <div className="routing">
                 <span className="title">ROUTING</span>
@@ -314,10 +312,12 @@ class Quote extends React.Component {
                     {this.ChargeGroup('Origin')}
                     {this.ChargeGroup('International')}
                     {this.ChargeGroup('Destination')}
-                    <span className="title">NOTES</span>
-                    <pre>
-                    {this.props.quote.charges.notes}
-                  </pre>
+                    <div className="notes">
+                      <span className="title">NOTES</span>
+                      <pre>
+                        {this.props.quote.charges.notes}
+                      </pre>
+                    </div>
                     <div className="total-row">
                       <span className="title">TOTAL PRICE</span>
                       <span className="title value">
