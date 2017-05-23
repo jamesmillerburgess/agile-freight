@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import moment from 'moment';
 
 import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
@@ -8,29 +7,35 @@ import { quotePropTypes } from './quotePropTypes';
 class Quote extends React.Component {
   constructor(props) {
     super(props);
-    this.getStatus = this.getStatus.bind(this);
-    this.hasCargo = this.hasCargo.bind(this);
-    this.PackageLines = this.PackageLines.bind(this);
-    this.ContainerLines = this.ContainerLines.bind(this);
-    this.LooseCargoTotals = this.LooseCargoTotals.bind(this);
-    this.ContainerizedCargoTotals = this.ContainerizedCargoTotals.bind(this);
-    this.LooseCargoAttributes = this.LooseCargoAttributes.bind(this);
+    this.getStatus                    = this.getStatus.bind(this);
+    this.hasCargo                     = this.hasCargo.bind(this);
+    this.PackageLines                 = this.PackageLines.bind(this);
+    this.ContainerLines               = this.ContainerLines.bind(this);
+    this.LooseCargoTotals             = this.LooseCargoTotals.bind(this);
+    this.ContainerizedCargoTotals     = this.ContainerizedCargoTotals.bind(this);
+    this.LooseCargoAttributes         = this.LooseCargoAttributes.bind(this);
     this.ContainerizedCargoAttributes = this.ContainerizedCargoAttributes.bind(this);
-    this.hasRouting = this.hasRouting.bind(this);
-    this.Routing = this.Routing.bind(this);
-    this.Insurance = this.Insurance.bind(this);
-    this.CustomsClearance = this.CustomsClearance.bind(this);
-    this.hasCharges = this.hasCharges.bind(this);
-    this.ChargeGroup = this.ChargeGroup.bind(this);
-    this.Email = this.Email.bind(this);
+    this.hasRouting                   = this.hasRouting.bind(this);
+    this.Routing                      = this.Routing.bind(this);
+    this.Insurance                    = this.Insurance.bind(this);
+    this.CustomsClearance             = this.CustomsClearance.bind(this);
+    this.hasCharges                   = this.hasCharges.bind(this);
+    this.ChargeGroup                  = this.ChargeGroup.bind(this);
+    this.Email                        = this.Email.bind(this);
   }
 
   componentWillUpdate() {
-    ReactDOM.findDOMNode(this).classList.add('update');
+    if (this.node && this.node.classList) {
+      this.node.classList.add('update');
+    }
   }
 
   componentDidUpdate() {
-    setTimeout(() => ReactDOM.findDOMNode(this).classList.remove('update'), 1);
+    setTimeout(() => {
+      if (this.node && this.node.classList) {
+        this.node.classList.remove('update');
+      }
+    }, 1);
   }
 
   getStatus() {
@@ -260,7 +265,12 @@ class Quote extends React.Component {
 
   render() {
     return (
-      <div className="quote-container">
+      <div
+        ref={(node) => {
+          this.node = node;
+        }}
+        className="quote-container"
+      >
         <div className="panel transition">
           <div className="quote">
             <div className="header-row">

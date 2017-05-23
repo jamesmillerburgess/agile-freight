@@ -650,24 +650,24 @@ if (Meteor.isClient) {
           <div className="email">
             <div className="title">EMAIL</div>
             <div className="email-field">
-              <span>SENT</span>
-              <span>01 JAN 2017 12:00</span>
+              <span className="label">SENT</span>
+              <span className="value">01 JAN 2017 12:00</span>
             </div>
             <div className="email-field">
-              <span>TO</span>
-              <span>a@a.com</span>
+              <span className="label">TO</span>
+              <span className="value">a@a.com</span>
             </div>
             <div className="email-field">
-              <span>CC</span>
-              <span>b@b.com</span>
+              <span className="label">CC</span>
+              <span className="value">b@b.com</span>
             </div>
             <div className="email-field">
-              <span>SUBJECT</span>
-              <span>Subject</span>
+              <span className="label">SUBJECT</span>
+              <span className="value">Subject</span>
             </div>
             <div className="email-field">
-              <span>MESSAGE</span>
-              <pre>Message</pre>
+              <span className="label">MESSAGE</span>
+              <pre className="value">Message</pre>
             </div>
           </div>
         )).should.equal(true);
