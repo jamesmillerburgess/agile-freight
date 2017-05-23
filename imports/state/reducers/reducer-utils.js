@@ -1,3 +1,5 @@
+// TODO: changeDeepProp
+
 export const changeProp = (obj, prop, val) => Object.assign({}, obj, { [prop]: val });
 
 export const changePropAtIndex = (arr, prop, index, val) => [

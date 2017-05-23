@@ -3,10 +3,13 @@
 
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import StubCollections from 'meteor/hwillson:stub-collections';
 import { mount } from 'enzyme';
 import { chai } from 'meteor/practicalmeteor:chai';
 
 import EditQuoteEmail from './EditQuoteEmail.jsx';
+
+import { Quotes } from '../../api/quotes/quotesCollection';
 
 // Stub the method that is used in the component
 Meteor.methods({ 'email.send': () => null });
@@ -15,8 +18,14 @@ if (Meteor.isClient) {
   describe('EditQuoteEmail Component', () => {
     chai.should();
 
-    const state = {
-      newQuote: {
+
+    let countOnLoad;
+    let countSetEmailTo;
+    let countSetEmailCC;
+    let countSetEmailSubject;
+    let countSetEmailMessage;
+    const props = {
+      quote: {
         cargo: {},
         movement: {},
         charges: {
@@ -27,21 +36,38 @@ if (Meteor.isClient) {
           totalDestinationCharges: 0,
           totalCharges: 0,
         },
+        email: {
+          isOpen: false,
+          to: '',
+          cc: '',
+          subject: '',
+          message: '',
+        },
       },
-      email: {
-        isOpen: false,
-        to: '',
-        cc: '',
-        subject: '',
-        message: '',
+      dispatchers: {
+        onLoad: () => {
+          countOnLoad += 1;
+        },
+        setEmailTo: () => {
+          countSetEmailTo += 1;
+        },
+        setEmailCC: () => {
+          countSetEmailCC += 1;
+        },
+        setEmailSubject: () => {
+          countSetEmailSubject += 1;
+        },
+        setEmailMessage: () => {
+          countSetEmailMessage += 1;
+        },
       },
+      history: {},
+      match: { params: { quoteId: 'a' } },
     };
 
     const store = {
-      subscribe: () => {
-      },
-      dispatch: () => {
-      },
+      subscribe: () => null,
+      dispatch: () => null,
       getState: () => state,
     };
 
@@ -50,129 +76,73 @@ if (Meteor.isClient) {
       childContextTypes: { store: React.PropTypes.object.isRequired },
     };
 
-    it('renders a component', () => {
-      const editQuoteEmail = mount(<EditQuoteEmail />, options);
+    let wrapper;
+    beforeEach(() => {
+      StubCollections.stub(Quotes);
+      Quotes.insert({ _id: 'a' });
+      countOnLoad          = 0;
+      countSetEmailTo      = 0;
+      countSetEmailCC      = 0;
+      countSetEmailSubject = 0;
+      countSetEmailMessage = 0;
+      wrapper              = mount(<EditQuoteEmail {...props} />, options);
+    });
 
-      editQuoteEmail.exists().should.equal(true);
-      editQuoteEmail.unmount();
+    afterEach(() => {
+      wrapper.unmount();
+      StubCollections.restore();
+    });
+
+    it('renders a component', () => {
+      wrapper.exists().should.equal(true);
+    });
+
+    it('loads a quote into the store before mounting', () => {
+      countOnLoad.should.equal(1);
     });
 
     it('defaults the to value into the to input', () => {
-      const editQuoteEmail = mount(<EditQuoteEmail to="a" />, options);
-
-      editQuoteEmail.find('#to').prop('value').should.equal('a');
-      editQuoteEmail.unmount();
+      wrapper.setProps({ quote: { email: { to: 'a' } } });
+      wrapper.find('#to').prop('value').should.equal('a');
     });
 
     it('defaults the cc value into the cc input', () => {
-      const editQuoteEmail = mount(<EditQuoteEmail cc="a" />, options);
-
-      editQuoteEmail.find('#cc').prop('value').should.equal('a');
-      editQuoteEmail.unmount();
+      wrapper.setProps({ quote: { email: { cc: 'a' } } });
+      wrapper.find('#cc').prop('value').should.equal('a');
     });
 
     it('defaults the subject value into the subject input', () => {
-      const editQuoteEmail = mount(<EditQuoteEmail subject="a" />, options);
-
-      editQuoteEmail.find('#subject').prop('value').should.equal('a');
-      editQuoteEmail.unmount();
+      wrapper.setProps({ quote: { email: { subject: 'a' } } });
+      wrapper.find('#subject').prop('value').should.equal('a');
     });
 
     it('defaults the message value into the message input', () => {
-      const editQuoteEmail = mount(<EditQuoteEmail message="a" />, options);
-
-      editQuoteEmail.find('#message').prop('value').should.equal('a');
-      editQuoteEmail.unmount();
-    });
-
-    it('defaults the currency value into the various totals', () => {
-      const editQuoteEmail = mount(<EditQuoteEmail charges={{ currency: 'a' }} />, options);
-
-      editQuoteEmail.find('#origin-subtotal').text().split(' ')[0].should.equal('a');
-      editQuoteEmail.find('#international-subtotal').text().split(' ')[0].should.equal('a');
-      editQuoteEmail.find('#destination-subtotal').text().split(' ')[0].should.equal('a');
-      editQuoteEmail.find('#total').text().split(' ')[0].should.equal('a');
-      editQuoteEmail.unmount();
-    });
-
-    it('defaults the various subtotals with currency formatting into their cells', () => {
-      const charges        = {
-        totalOriginCharges: 1,
-        totalInternationalCharges: 2,
-        totalDestinationCharges: 3,
-        totalCharges: 4,
-      };
-      const editQuoteEmail = mount(<EditQuoteEmail charges={charges} />, options);
-
-      editQuoteEmail.find('#origin-subtotal').text().split(' ')[1].should.equal('1.00');
-      editQuoteEmail.find('#international-subtotal').text().split(' ')[1].should.equal('2.00');
-      editQuoteEmail.find('#destination-subtotal').text().split(' ')[1].should.equal('3.00');
-      editQuoteEmail.find('#total').text().split(' ')[1].should.equal('4.00');
+      wrapper.setProps({ quote: { email: { message: 'a' } } });
+      wrapper.find('#message').prop('value').should.equal('a');
     });
 
     it('should fire setEmailTo when to input changes', () => {
-      let count = 0;
-      const setEmailTo = () => {
-        count += 1;
-      };
-      const editQuoteEmail = mount(<EditQuoteEmail setEmailTo={setEmailTo} />, options);
-
-      count.should.equal(0);
-      editQuoteEmail.find('#to').simulate('change', { target: { value: 'a' } });
-      count.should.equal(1);
-      editQuoteEmail.unmount();
+      countSetEmailTo.should.equal(0);
+      wrapper.find('#to').simulate('change', { target: { value: 'a' } });
+      countSetEmailTo.should.equal(1);
     });
 
     it('should fire setEmailCC when cc input changes', () => {
-      let count = 0;
-      const setEmailCC     = () => {
-        count += 1;
-      };
-      const editQuoteEmail = mount(<EditQuoteEmail setEmailCC={setEmailCC} />, options);
-
-      count.should.equal(0);
-      editQuoteEmail.find('#cc').simulate('change', { target: { value: 'a' } });
-      count.should.equal(1);
-      editQuoteEmail.unmount();
+      countSetEmailCC.should.equal(0);
+      wrapper.find('#cc').simulate('change', { target: { value: 'a' } });
+      countSetEmailCC.should.equal(1);
     });
 
     it('should fire setEmailSubject when subject input changes', () => {
-      let count = 0;
-      const setEmailSubject = () => {
-        count += 1;
-      };
-      const editQuoteEmail = mount(<EditQuoteEmail setEmailSubject={setEmailSubject} />, options);
-
-      count.should.equal(0);
-      editQuoteEmail.find('#subject').simulate('change', { target: { value: 'a' } });
-      count.should.equal(1);
-      editQuoteEmail.unmount();
+      countSetEmailSubject.should.equal(0);
+      wrapper.find('#subject').simulate('change', { target: { value: 'a' } });
+      countSetEmailSubject.should.equal(1);
     });
 
     it('should fire setEmailMessage when message input changes', () => {
-      let count = 0;
-      const setEmailMessage = () => {
-        count += 1;
-      };
-      const editQuoteEmail = mount(<EditQuoteEmail setEmailMessage={setEmailMessage} />, options);
-
-      count.should.equal(0);
-      editQuoteEmail.find('#message').simulate('change', { target: { value: 'a' } });
-      count.should.equal(1);
-      editQuoteEmail.unmount();
-    });
-
-    it('should fire setEmailIsOpen when the send button is clicked', () => {
-      let count = 0;
-      const setEmailIsOpen = () => {
-        count += 1;
-      };
-      const editQuoteEmail = mount(<EditQuoteEmail setEmailIsOpen={setEmailIsOpen} />, options);
-
-      count.should.equal(0);
-      editQuoteEmail.find('#send-email-button').simulate('click');
-      count.should.equal(1);
-      editQuoteEmail.unmount();
+      countSetEmailMessage.should.equal(0);
+      wrapper.find('#message').simulate('change', { target: { value: 'a' } });
+      countSetEmailMessage.should.equal(1);
     });
   });
 }
