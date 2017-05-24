@@ -70,14 +70,14 @@ class Quote extends React.Component {
     return (
       this.props.quote.cargo.packageLines.map((packageLine, index) => (
         <div key={index} className="cargo-row">
-          <span>{packageLine.numPackages} {packageLine.packageType}</span>
-          <span className="numeric-label">
+          <span className="packages">{packageLine.numPackages} {packageLine.packageType}</span>
+          <span className="dimensions numeric-label">
             {packageLine.length}x{packageLine.width}x{packageLine.height} {packageLine.unitVolumeUOM}
           </span>
-          <span className="numeric-label">
+          <span className="weight numeric-label">
             {weightFormat(packageLine.weight)} {packageLine.weightUOM} / pkg
           </span>
-          <span className="numeric-label">
+          <span className="totals numeric-label">
             {packageLine.numPackages} pkgs,&nbsp;
             {weightFormat(packageLine.volume)} {packageLine.volumeUOM},&nbsp;
             {weightFormat(packageLine.totalWeight)} {packageLine.weightUOM}
@@ -195,9 +195,9 @@ class Quote extends React.Component {
         </span>
         {groupChargeLines.map((chargeLine, index) => (
           <div key={index} className="charge-row">
-            <span>{chargeLine.name}</span>
-            <span>{chargeLine.rate}</span>
-            <span className="units">{chargeLine.units}</span>
+            <span className="name">{chargeLine.name}</span>
+            <span className="rate">{chargeLine.rate}</span>
+            <span className="units units">{chargeLine.units}</span>
             <span className="amount">{currencyFormat(chargeLine.unitPrice)} {chargeLine.localCurrency}</span>
             <span className="amount">{currencyFormat(chargeLine.localTotal)} {chargeLine.localCurrency}</span>
             <span className="amount">{currencyFormat(chargeLine.total)} {this.props.quote.charges.currency}</span>

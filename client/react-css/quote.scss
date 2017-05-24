@@ -42,9 +42,28 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-  }
-  .cargo-row span {
-    width: 25%;
+    .packages,
+    .dimensions,
+    .weight,
+    .name,
+    .rate {
+      width: 20%;
+    }
+
+    .totals {
+      width: 40%;
+    }
+    .name,
+    .rate {
+      width: 23%;
+    }
+    .units {
+      width: 9%;
+    }
+    .amount {
+      text-align: right;
+      width: 15%;
+    }
   }
   .cargo-totals {
     display: flex;
