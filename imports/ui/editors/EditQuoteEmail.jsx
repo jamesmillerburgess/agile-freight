@@ -39,11 +39,9 @@ class EditQuoteEmail extends React.Component {
       this.props.quote.movement.pickup.location &&
       this.props.quote.movement.delivery.location
     ) {
-      const pickupLocation =
-        UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.pickup.location)).name;
-      const deliveryLocation =
-        UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.delivery.location)).name;
-      return `${pickupLocation} – ${deliveryLocation}`.toUpperCase();
+      const pickupLocationName = this.props.quote.movement.pickup.locationName;
+      const deliveryLocationName = this.props.quote.movement.delivery.locationName;
+      return `${pickupLocationName} – ${deliveryLocationName}`.toUpperCase();
     }
     return '';
   }
