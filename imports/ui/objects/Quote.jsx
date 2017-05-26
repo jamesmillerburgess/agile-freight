@@ -145,8 +145,7 @@ class Quote extends React.Component {
       return false;
     }
     return true;
-    
-  }
+  }     
 
   Routing() {
     return (
