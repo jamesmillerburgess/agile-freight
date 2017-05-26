@@ -18,7 +18,6 @@ if (Meteor.isClient) {
   describe('QuoteListItem Component', () => {
     chai.should();
 
-    const props = { quoteId: 'a' };
     let wrapper;
     beforeEach(() => {
       StubCollections.stub([Quotes, Customers, UNLocations]);
@@ -173,8 +172,8 @@ if (Meteor.isClient) {
         Quotes.update({ _id: 'a' }, {
           $set: {
             movement: {
-              pickup: { location: 'aaaaaaaaaaaaaaaaaaaaaaaa' },
-              delivery: { location: 'bbbbbbbbbbbbbbbbbbbbbbbb' },
+              pickup: { location: 'aaaaaaaaaaaaaaaaaaaaaaaa', locationName: 'LOCATION1' },
+              delivery: { location: 'bbbbbbbbbbbbbbbbbbbbbbbb', locationName: 'LOCATION2' },
             },
           },
         });
@@ -188,6 +187,20 @@ if (Meteor.isClient) {
         wrapper.setProps({ quote: Quotes.findOne('a') });
 
         wrapper.contains(<span className="label">NO ROUTING ENTERED</span>).should.equal(true);
+      });
+
+      it('renders the name that was stored on the quote, rather than the one that is in the database', () => {
+        Quotes.update({ _id: 'a' }, {
+          $set: {
+            movement: {
+              pickup: { location: 'aaaaaaaaaaaaaaaaaaaaaaaa', locationName: 'LOCATION3' },
+              delivery: { location: 'bbbbbbbbbbbbbbbbbbbbbbbb', locationName: 'LOCATION4' },
+            },
+          },
+        });
+        wrapper.setProps({ quote: Quotes.findOne('a') });
+
+        wrapper.contains(<span className="label">LOCATION3 – LOCATION4</span>).should.equal(true);
       });
     });
 

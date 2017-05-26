@@ -46,8 +46,8 @@ export const QuoteListItemInner = ({ quote, history }) => {
       quote.movement &&
       quote.movement.pickup &&
       quote.movement.delivery &&
-      quote.movement.pickup.location &&
-      quote.movement.delivery.location
+      quote.movement.pickup.locationName &&
+      quote.movement.delivery.locationName
     ) {
       const pickupLocationName = quote.movement.pickup.locationName;
       const deliveryLocationName = quote.movement.delivery.locationName;
