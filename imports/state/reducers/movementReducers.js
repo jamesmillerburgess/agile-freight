@@ -25,6 +25,9 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
     case ACTION_TYPES.SET_PICKUP_LOCATION_TYPE:
       newState = changeProp(state, 'pickup', changeProp(state.pickup, 'locationType', action.locationType));
       break;
+    case ACTION_TYPES.SET_PICKUP_LOCATION_NAME:
+      newState = changeProp(state, 'pickup', changeProp(state.pickup, 'locationName', action.locationName));
+      break;
     case ACTION_TYPES.SET_PICKUP_COUNTRY:
       newState = changeProp(state, 'pickup', changeProp(state.pickup, 'country', action.country));
       if (action.country !== state.pickup.country) {
@@ -36,6 +39,9 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
       break;
     case ACTION_TYPES.SET_DELIVERY_LOCATION_TYPE:
       newState = changeProp(state, 'delivery', changeProp(state.delivery, 'locationType', action.locationType));
+      break;
+    case ACTION_TYPES.SET_DELIVERY_LOCATION_NAME:
+      newState = changeProp(state, 'delivery', changeProp(state.delivery, 'locationName', action.locationName));
       break;
     case ACTION_TYPES.SET_DELIVERY_COUNTRY:
       newState = changeProp(state, 'delivery', changeProp(state.delivery, 'country', action.country));

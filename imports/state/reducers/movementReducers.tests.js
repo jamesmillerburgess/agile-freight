@@ -63,6 +63,14 @@ if (Meteor.isClient) {
       movement(stateBefore, action).pickup.location.should.eql('111111');
     });
 
+    it('sets the pickup location name', () => {
+      const stateBefore = { pickup: { locationName: 'a' } };
+      const action = { type: ACTION_TYPES.SET_PICKUP_LOCATION_NAME, locationName: 'b' };
+      deepFreeze(stateBefore);
+
+      movement(stateBefore, action).pickup.locationName.should.equal('b');
+    });
+
     it('sets the delivery location type', () => {
       const stateBefore = { delivery: { locationType: 'port' } };
       const action = { type: ACTION_TYPES.SET_DELIVERY_LOCATION_TYPE, locationType: 'address' };
@@ -94,6 +102,14 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
 
       movement(stateBefore, action).delivery.location.should.eql('111111');
+    });
+
+    it('sets the delivery location name', () => {
+      const stateBefore = { delivery: { locationName: 'a' } };
+      const action = { type: ACTION_TYPES.SET_DELIVERY_LOCATION_NAME, locationName: 'b' };
+      deepFreeze(stateBefore);
+
+      movement(stateBefore, action).delivery.locationName.should.equal('b');
     });
   });
 }
