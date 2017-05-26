@@ -26,9 +26,11 @@ export const toggleTemperatureControlled              = makeActionCreator(ACTION
 
 // MOVEMENT
 export const setPickupLocationType   = makeActionCreator(ACTION_TYPES.SET_PICKUP_LOCATION_TYPE, 'locationType');
+export const setPickupLocationName   = makeActionCreator(ACTION_TYPES.SET_PICKUP_LOCATION_NAME, 'locationName');
 export const setPickupCountry        = makeActionCreator(ACTION_TYPES.SET_PICKUP_COUNTRY, 'country');
 export const setPickupLocation       = makeActionCreator(ACTION_TYPES.SET_PICKUP_LOCATION, 'location');
 export const setDeliveryLocationType = makeActionCreator(ACTION_TYPES.SET_DELIVERY_LOCATION_TYPE, 'locationType');
+export const setDeliveryLocationName = makeActionCreator(ACTION_TYPES.SET_DELIVERY_LOCATION_NAME, 'locationName');
 export const setDeliveryCountry      = makeActionCreator(ACTION_TYPES.SET_DELIVERY_COUNTRY, 'country');
 export const setDeliveryLocation     = makeActionCreator(ACTION_TYPES.SET_DELIVERY_LOCATION, 'location');
 
