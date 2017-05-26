@@ -44,10 +44,14 @@ const mapDispatchToProps = dispatch => ({
     // MOVEMENT
     onChangePickupLocationType: locationType =>
       dispatch(newQuoteActions.setPickupLocationType(locationType)),
+    onChangePickupLocationName: locationName =>
+      dispatch(newQuoteActions.setPickupLocationName(locationName)),
     onChangePickupCountry: country => dispatch(newQuoteActions.setPickupCountry(country)),
     onChangePickupLocation: location => dispatch(newQuoteActions.setPickupLocation(location)),
     onChangeDeliveryLocationType: locationType =>
       dispatch(newQuoteActions.setDeliveryLocationType(locationType)),
+    onChangeDeliveryLocationName: locationName =>
+      dispatch(newQuoteActions.setDeliveryLocationName(locationName)),
     onChangeDeliveryCountry: country => dispatch(newQuoteActions.setDeliveryCountry(country)),
     onChangeDeliveryLocation: location => dispatch(newQuoteActions.setDeliveryLocation(location)),
 
