@@ -19,7 +19,6 @@ class EditQuoteEmail extends React.Component {
     this.save = this.save.bind(this);
     this.archive = this.archive.bind(this);
     this.sendEmail = this.sendEmail.bind(this);
-    this.getMovementText = this.getMovementText.bind(this);
   }
 
   componentWillMount() {
@@ -28,22 +27,6 @@ class EditQuoteEmail extends React.Component {
 
   componentDidUpdate() {
     resizeHeight(this.messageNode);
-  }
-
-  getMovementText() {
-    if (
-      this.props.quote &&
-      this.props.quote.movement &&
-      this.props.quote.movement.pickup &&
-      this.props.quote.movement.delivery &&
-      this.props.quote.movement.pickup.location &&
-      this.props.quote.movement.delivery.location
-    ) {
-      const pickupLocationName = this.props.quote.movement.pickup.locationName;
-      const deliveryLocationName = this.props.quote.movement.delivery.locationName;
-      return `${pickupLocationName} – ${deliveryLocationName}`.toUpperCase();
-    }
-    return '';
   }
 
   save() {
