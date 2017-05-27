@@ -11,14 +11,16 @@ import { UNLocations } from '../../api/unlocations/unlocations-collection';
 
 import { currencyFormat } from '../formatters/numberFormatters';
 import { resizeHeight } from '../formatters/resizeHeight';
+import { combinations, uniqueValues } from '../statsUtils';
 
 class EditQuoteCharges extends React.Component {
   constructor(props) {
     super(props);
-    this.save    = this.save.bind(this);
+    this.save            = this.save.bind(this);
     this.archive         = this.archive.bind(this);
     this.editEmail       = this.editEmail.bind(this);
     this.getMovementText = this.getMovementText.bind(this);
+    this.getFXRates      = this.getFXRates.bind(this);
   }
 
   componentWillMount() {
@@ -77,18 +79,43 @@ class EditQuoteCharges extends React.Component {
     );
   }
 
+  getFXRates() {
+    const quoteCurrency = 'USD';
+    const currencies = uniqueValues(this.props.newQuote.charges.chargeLines, 'unitPriceCurrency');
+    const fxCombinations = combinations(quoteCurrency, currencies);
+    if (fxCombinations.length === 0) {
+      return null;
+    }
+    return (
+      <tbody>
+        <tr>
+          <td />
+          <td className="title" colSpan="6">FX RATES</td>
+        </tr>
+        {fxCombinations.map((combination, index) => (
+          <tr key={index}>
+            <td />
+            <td>
+              {combination.baseCurrency}/{combination.currency}
+            </td>
+            <td>
+              <input type="number" className="fx-rate" />
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    );
+  }
+
   render() {
     const
       {
-        quotes,
         totalOriginCharges,
         totalInternationalCharges,
         totalDestinationCharges,
         totalCharges,
         currency,
         addChargeLine,
-        loadEmail,
-        isOpen,
         history,
       } = this.props;
     return (
@@ -219,6 +246,7 @@ class EditQuoteCharges extends React.Component {
                     </td>
                   </tr>
                 </tbody>
+                {this.getFXRates()}
                 <tfoot>
                   <tr>
                     <td colSpan="5" />

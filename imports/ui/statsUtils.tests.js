@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { chai } from 'meteor/practicalmeteor:chai';
 import deepFreeze from 'deep-freeze';
 
-import { getDeepVal, countByTimePeriod, sumByTimePeriod, uniqueValues, countByValue } from './statsUtils';
+import { combinations, getDeepVal, countByTimePeriod, sumByTimePeriod, uniqueValues, countByValue } from './statsUtils';
 
 if (Meteor.isClient) {
   describe('Stats Utilities', () => {
@@ -322,6 +322,18 @@ if (Meteor.isClient) {
 
         Object.keys(values).length.should.equal(0);
       });
+
+      it('handles missing keys', () => {
+        const data = [
+          { key: 'a' },
+          {},
+        ];
+        const path = 'key';
+        deepFreeze(data);
+        const values = uniqueValues(data, path);
+
+        Object.keys(values).length.should.equal(1);
+      });
     });
 
     describe('countByValue', () => {
@@ -387,6 +399,32 @@ if (Meteor.isClient) {
         const counts = countByValue(data);
 
         Object.keys(counts).length.should.equal(0);
+      });
+    });
+
+    describe('combinations', () => {
+      it('returns a an array', () => {
+        combinations().should.be.an.instanceof(Array);
+      });
+
+      it('returns no combinations if the baseCurrency is missing', () => {
+        combinations(null, ['A']).should.have.length(0);
+      });
+
+      it('returns one combination for each currency passed', () => {
+        combinations('A', ['B', 'C']).should.have.length(2);
+      });
+
+      it('ignores duplicate currencies', () => {
+        combinations('A', ['B', 'B']).should.have.length(1);
+      });
+
+      it('ignores currencies which equal the base currency', () => {
+        combinations('A', ['A', 'B']).should.have.length(1);
+      });
+
+      it('ignores null currencies', () => {
+        combinations('A', new Array(2)).should.have.length(0);
       });
     });
   });

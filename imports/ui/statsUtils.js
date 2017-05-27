@@ -1,5 +1,18 @@
 import moment from 'moment';
 
+export const combinations = (baseCurrency, currencies = []) => {
+  const res = [];
+  if (baseCurrency) {
+    currencies.forEach((currency, index) => {
+      // Ignore duplicates
+      if (currency !== baseCurrency && currencies.indexOf(currency) === index) {
+        res.push({ baseCurrency, currency });
+      }
+    });
+  }
+  return res;
+};
+
 export const getDeepVal = (obj, path) => {
   let val = obj;
   let splitPath = path;
@@ -55,7 +68,7 @@ export const uniqueValues = (data = [], path) => {
   return data.reduce((acc, val) => {
     const key = getDeepVal(val, splitPath);
     const res = [...acc];
-    if (acc.indexOf(key) === -1) {
+    if (typeof key !== 'undefined' && acc.indexOf(key) === -1) {
       res.push(key);
     }
     return res;

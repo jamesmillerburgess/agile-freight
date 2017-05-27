@@ -33,3 +33,8 @@ input[type=number] {
 input:disabled {
   background-color: $disabled-input-background-color;
 }
+
+input.fx-rate {
+  width: 100%;
+  text-align: right;
+}
