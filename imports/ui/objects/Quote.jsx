@@ -145,17 +145,21 @@ class Quote extends React.Component {
       return false;
     }
     return true;
-  }     
+  }
 
   Routing() {
     return (
       <div>
-        <span>
-          {this.props.quote.movement.pickup.locationName} – {this.props.quote.movement.delivery.locationName}
-        </span>
-        <span>
-          {this.props.quote.movement.pickup.isPort ? 'PORT' : 'DOOR'} TO {this.props.quote.movement.delivery.isPort ? 'PORT' : 'DOOR'}
-        </span>
+        <div>
+          <span>
+            {this.props.quote.movement.pickup.locationName} – {this.props.quote.movement.delivery.locationName}
+          </span>
+        </div>
+        <div>
+          <span>
+            {this.props.quote.movement.pickup.isPort ? 'PORT' : 'DOOR'} TO {this.props.quote.movement.delivery.isPort ? 'PORT' : 'DOOR'}
+          </span>
+        </div>
       </div>
     );
   }
