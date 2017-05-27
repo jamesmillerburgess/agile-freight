@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import EditQuoteCharges from './EditQuoteCharges.jsx';
-import { loadQuote, addChargeLine, setChargeNotes } from '../../state/actions/newQuoteActions';
+import { loadQuote, addChargeLine, setChargeNotes, setFXConversionRate } from '../../state/actions/newQuoteActions';
 import { loadEmail } from '../../state/actions/emailActions';
 
 const mapStateToProps = (state) => {
@@ -34,6 +34,7 @@ const mapDispatchToProps = dispatch => ({
   addChargeLine: chargeLine => dispatch(addChargeLine(chargeLine)),
   setChargeNotes: notes => dispatch(setChargeNotes(notes)),
   loadEmail: email => dispatch(loadEmail(email)),
+  setFXConversionRate: (currency, rate) => dispatch(setFXConversionRate(currency, rate)),
 });
 
 const EditQuoteChargesConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuoteCharges);

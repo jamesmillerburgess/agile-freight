@@ -5,13 +5,13 @@ import { Meteor } from 'meteor/meteor';
 
 import EditQuoteChargeGroupConnect from './EditQuoteChargeGroupConnect';
 import QuoteContainer from '../objects/QuoteContainer';
+import CurrencyField from '../fields/CurrencyField.jsx';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
 
 import { currencyFormat } from '../formatters/numberFormatters';
 import { resizeHeight } from '../formatters/resizeHeight';
-import { combinations, uniqueValues } from '../statsUtils';
 
 class EditQuoteCharges extends React.Component {
   constructor(props) {
@@ -80,23 +80,22 @@ class EditQuoteCharges extends React.Component {
   }
 
   getFXRates() {
-    const quoteCurrency = 'USD';
-    const currencies = uniqueValues(this.props.newQuote.charges.chargeLines, 'unitPriceCurrency');
-    const fxCombinations = combinations(quoteCurrency, currencies);
-    if (fxCombinations.length === 0) {
-      return null;
-    }
     return (
       <tbody>
         <tr>
           <td />
           <td className="title" colSpan="6">FX RATES</td>
         </tr>
-        {fxCombinations.map((combination, index) => (
+        <tr>
+          <td />
+          <td>Quote Currency</td>
+          <td><CurrencyField /></td>
+        </tr>
+        {Object.keys(this.props.newQuote.charges.fxConversions).map((currency, index) => (
           <tr key={index}>
             <td />
             <td>
-              {combination.baseCurrency}/{combination.currency}
+              {this.props.newQuote.charges.currency}/{currency}
             </td>
             <td>
               <input type="number" className="fx-rate" />
