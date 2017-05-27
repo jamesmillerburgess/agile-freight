@@ -16,7 +16,28 @@ export const APIGlobals = {
   roadServiceOptions: ['FTL', 'LTL', ''],
 
   // Common
-  currencyOptions: ['USD', 'EUR', 'RMB', 'CHF', ''],
+  currencyOptions: [
+    { value: 'AED', label: 'AED' },
+    { value: 'AFN', label: 'AFN' },
+    { value: 'ALL', label: 'ALL' },
+    { value: 'AMD', label: 'AMD' },
+    { value: 'ANG', label: 'ANG' },
+    { value: 'AOA', label: 'AOA' },
+    { value: 'ARS', label: 'ARS' },
+    { value: 'AUD', label: 'AUD' },
+    { value: 'AZN', label: 'AZN' },
+    { value: 'BAM', label: 'BAM' },
+    { value: 'BBD', label: 'BBD' },
+    { value: 'BDT', label: 'BDT' },
+    { value: 'BGN', label: 'BGN' },
+    { value: 'BHD', label: 'BHD' },
+    { value: 'BIF', label: 'BIF' },
+    { value: 'BMD', label: 'BMD' },
+    { value: 'BND', label: 'BND' },
+    { value: 'BOB', label: 'BOB' },
+    { value: 'BRL', label: 'BRL' },
+    { value: 'BSD', label: 'BSD' },
+  ],
   chargeUOMOptions: ['kg', 'cbm', 'lb', 'cu ft', 'km', 'mile', 'container', ''],
 
   // Cargo
@@ -42,4 +63,7 @@ export const APIGlobals = {
   portOptions: ['Rotterdam - NLROT', 'Hamburg - DEHAM', 'Singapore - SGSIN', ''],
   indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],
   ukPortOptions: ['GBFXT', 'GBSOU', 'GBLGW'],
+
+  // Functions
+  noop: () => null,
 };
