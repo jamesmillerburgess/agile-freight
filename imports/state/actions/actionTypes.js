@@ -52,6 +52,7 @@ export const SET_CHARGE_LINE_UNIT_PRICE          = 'SET_CHARGE_LINE_UNIT_PRICE';
 export const SET_CHARGE_LINE_UNIT_PRICE_CURRENCY = 'SET_CHARGE_LINE_UNIT_PRICES_CURRENCY';
 export const SET_CHARGE_NOTES                    = 'SET_CHARGE_NOTES';
 export const SET_FX_CONVERSION_RATE              = 'SET_FX_CONVERSION_RATE';
+export const SET_QUOTE_CURRENCY                  = 'SET_QUOTE_CURRENCY';
 
 // LOAD QUOTE
 export const LOAD_QUOTE = 'LOAD_QUOTE';

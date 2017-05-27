@@ -47,12 +47,14 @@ export const fxConversions = (state = {}, action = { type: '' }) => {
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY:
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
+    case ACTION_TYPES.SET_QUOTE_CURRENCY:
       const currencies = uniqueValues(state.chargeLines, 'unitPriceCurrency');
       currencies.forEach((currency) => {
         if (currency === state.currency) {
-          return;
-        }
-        if (!newState[currency]) {
+          if (newState[currency]) {
+            newState = changeProp(newState, currency, changeProp(newState[currency], 'active', false));
+          }
+        } else if (!newState[currency]) {
           newState = changeProp(newState, currency, { active: true });
         } else if (!newState[currency].active) {
           newState = changeProp(newState, currency, changeProp(newState[currency], 'active', true));
@@ -67,6 +69,7 @@ export const fxConversions = (state = {}, action = { type: '' }) => {
     default:
       break;
   }
+  console.log(newState);
   return newState;
 };
 
@@ -112,6 +115,9 @@ export const charges = (state = defaultChargesState, action = { type: '' }) => {
       break;
     case ACTION_TYPES.SET_CHARGE_NOTES:
       newState = changeProp(state, 'notes', action.notes);
+      break;
+    case ACTION_TYPES.SET_QUOTE_CURRENCY:
+      newState = changeProp(state, 'currency', action.currency);
       break;
     default:
       newState = state;

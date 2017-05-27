@@ -103,6 +103,12 @@ if (Meteor.isClient) {
 
         charges(stateBefore, action).notes.should.equal('b');
       });
+
+      it('changes the quote currency', () => {
+        const stateBefore = { currency: 'a' };
+        const action      = { type: ACTION_TYPES.SET_QUOTE_CURRENCY, currency: 'b' };
+        charges(stateBefore, action).currency.should.equal('b');
+      });
     });
 
     describe('Charge Lines Reducer', () => {
@@ -230,7 +236,7 @@ if (Meteor.isClient) {
         stateAfter.should.have.property('c');
         stateAfter.c.active.should.equal(true);
 
-        action = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
+        action     = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
         stateAfter = fxConversions(stateBefore, action);
 
         stateAfter.should.have.property('c');
@@ -243,14 +249,14 @@ if (Meteor.isClient) {
           fxConversions: { b: { rate: 1 } },
           chargeLines: [{ unitPriceCurrency: 'c' }],
         };
-        let action      = { type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY };
+        let action        = { type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY };
         deepFreeze(stateBefore);
 
         let stateAfter = fxConversions(stateBefore, action);
         stateAfter.should.have.property('b');
         stateAfter.b.active.should.equal(false);
 
-        action      = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
+        action = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
         deepFreeze(stateBefore);
 
         stateAfter = fxConversions(stateBefore, action);
@@ -265,7 +271,7 @@ if (Meteor.isClient) {
           fxConversions: { b: { active: false, rate: 1 } },
           chargeLines: [{ unitPriceCurrency: 'b' }],
         };
-        let action      = { type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY };
+        let action        = { type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY };
         deepFreeze(stateBefore);
 
         let stateAfter = fxConversions(stateBefore, action);
@@ -273,7 +279,7 @@ if (Meteor.isClient) {
         stateAfter.b.active.should.equal(true);
         stateAfter.b.rate.should.equal(1);
 
-        action      = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
+        action = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
 
         stateAfter = fxConversions(stateBefore, action);
         stateAfter.should.have.property('b');
@@ -287,16 +293,30 @@ if (Meteor.isClient) {
           fxConversions: {},
           chargeLines: [{ unitPriceCurrency: 'a' }],
         };
-        let action      = { type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY };
+        let action        = { type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY };
         deepFreeze(stateBefore);
         let stateAfter = fxConversions(stateBefore, action);
 
         stateAfter.should.not.have.property('a');
 
-        action      = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
+        action     = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
         stateAfter = fxConversions(stateBefore, action);
 
         stateAfter.should.not.have.property('a');
+      });
+
+      it('updates when the quote currency changes', () => {
+        const stateBefore = {
+          currency: 'b',
+          fxConversions: { b: { rate: 1 } },
+          chargeLines: [{ unitPriceCurrency: 'b' }],
+        };
+        const action        = { type: ACTION_TYPES.SET_QUOTE_CURRENCY, currency: 'b' };
+        deepFreeze(stateBefore);
+        const stateAfter = fxConversions(stateBefore, action);
+
+        console.log(stateAfter);
+        stateAfter.b.active.should.equal(false);
       });
 
       it('defaults an empty object', () => {
