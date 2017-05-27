@@ -49,6 +49,7 @@ export const setChargeLineUnitPrice         = makeActionCreator(ACTION_TYPES.SET
 export const setChargeLineUnitPriceCurrency = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY, 'id', 'unitPriceCurrency');
 export const setChargeNotes                 = makeActionCreator(ACTION_TYPES.SET_CHARGE_NOTES, 'notes');
 export const setFXConversionRate            = makeActionCreator(ACTION_TYPES.SET_FX_CONVERSION_RATE, 'currency', 'rate');
+export const setQuoteCurrency               = makeActionCreator(ACTION_TYPES.SET_QUOTE_CURRENCY, 'currency');
 
 // LOAD QUOTE
 export const loadQuote = makeActionCreator(ACTION_TYPES.LOAD_QUOTE, 'quote');

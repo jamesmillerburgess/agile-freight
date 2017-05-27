@@ -89,7 +89,12 @@ class EditQuoteCharges extends React.Component {
         <tr>
           <td />
           <td>Quote Currency</td>
-          <td><CurrencyField /></td>
+          <td>
+            <CurrencyField
+              value={this.props.newQuote.charges.currency}
+              onChange={e => this.props.setQuoteCurrency(e.value)}
+            />
+          </td>
         </tr>
         {Object.keys(this.props.newQuote.charges.fxConversions).map((currency, index) => (
           <tr key={index}>
@@ -162,7 +167,7 @@ class EditQuoteCharges extends React.Component {
                     <th className="units-column">UNITS</th>
                     <th className="unit-price-column numeric-label">UNIT PRICE</th>
                     <th className="amount-local-column numeric-label">AMOUNT (LOCAL)</th>
-                    <th className="amount-final-column numeric-label">FINAL (USD)</th>
+                    <th className="amount-final-column numeric-label">FINAL ({this.props.newQuote.charges.currency})</th>
                   </tr>
                 </tbody>
                 <EditQuoteChargeGroupConnect group="Origin" />
@@ -170,8 +175,9 @@ class EditQuoteCharges extends React.Component {
                   <tr>
                     <td colSpan="5" />
                     <td className="numeric-label">SUBTOTAL</td>
-                    <td
-                      className="numeric-label">{currency} {currencyFormat(totalOriginCharges)}</td>
+                    <td className="numeric-label">
+                      {currencyFormat(totalOriginCharges)} {this.props.newQuote.charges.currency}
+                    </td>
                   </tr>
                 </tbody>
                 <tbody>
@@ -196,8 +202,9 @@ class EditQuoteCharges extends React.Component {
                   <tr>
                     <td colSpan="5" />
                     <td className="numeric-label">SUBTOTAL</td>
-                    <td
-                      className="numeric-label">{currency} {currencyFormat(totalInternationalCharges)}</td>
+                    <td className="numeric-label">
+                      {currencyFormat(totalInternationalCharges)} {this.props.newQuote.charges.currency}
+                    </td>
                   </tr>
                 </tbody>
                 <tbody>
@@ -222,8 +229,9 @@ class EditQuoteCharges extends React.Component {
                   <tr>
                     <td colSpan="5" />
                     <td className="numeric-label">SUBTOTAL</td>
-                    <td
-                      className="numeric-label">{currency} {currencyFormat(totalDestinationCharges)}</td>
+                    <td className="numeric-label">
+                      {currencyFormat(totalDestinationCharges)} {this.props.newQuote.charges.currency}
+                    </td>
                   </tr>
                 </tbody>
                 <tbody>
@@ -250,8 +258,9 @@ class EditQuoteCharges extends React.Component {
                   <tr>
                     <td colSpan="5" />
                     <td className="numeric-label title">TOTAL PRICE</td>
-                    <td
-                      className="numeric-label title">{currency} {currencyFormat(totalCharges)}</td>
+                    <td className="numeric-label title">
+                      {currencyFormat(totalCharges)} {this.props.newQuote.charges.currency}
+                    </td>
                   </tr>
                 </tfoot>
               </table>
