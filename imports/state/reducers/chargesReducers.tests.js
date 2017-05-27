@@ -137,6 +137,7 @@ if (Meteor.isClient) {
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore, action)[0].code.should.equal('b');
+        chargeLines(stateBefore, action)[1].code.should.equal('c');
       });
 
       it('changes the name at the charge line with the specified id', () => {
@@ -145,6 +146,7 @@ if (Meteor.isClient) {
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore, action)[0].name.should.equal('b');
+        chargeLines(stateBefore, action)[1].name.should.equal('c');
       });
 
       it('changes the rate at at the charge line with the specified id', () => {
@@ -153,6 +155,7 @@ if (Meteor.isClient) {
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore, action)[0].rate.should.equal('b');
+        chargeLines(stateBefore, action)[1].rate.should.equal('c');
       });
 
       it('changes the units at the charge line with the specified id', () => {
@@ -161,6 +164,7 @@ if (Meteor.isClient) {
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore, action)[0].units.should.equal(2);
+        chargeLines(stateBefore, action)[1].units.should.equal(3);
       });
 
       it('changes the unit price at the charge line with the specified id', () => {
@@ -173,6 +177,20 @@ if (Meteor.isClient) {
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore, action)[0].unitPrice.should.equal(2);
+        chargeLines(stateBefore, action)[1].unitPrice.should.equal(3);
+      });
+
+      it('changes the unit price currency at the charge line with the specified id', () => {
+        const stateBefore = [{ id: 'a', unitPriceCrrency: 'a' }, { id: 'b', unitPriceCurrency: 'c' }];
+        const action      = {
+          type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY,
+          id: 'a',
+          unitPriceCurrency: 'b',
+        };
+        deepFreeze(stateBefore);
+
+        chargeLines(stateBefore, action)[0].unitPriceCurrency.should.equal('b');
+        chargeLines(stateBefore, action)[1].unitPriceCurrency.should.equal('c');
       });
 
       it('auto-calculates the amount', () => {

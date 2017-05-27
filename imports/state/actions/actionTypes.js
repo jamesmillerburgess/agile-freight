@@ -42,14 +42,15 @@ export const TOGGLE_INSURANCE         = 'TOGGLE_INSURANCE';
 export const TOGGLE_CUSTOMS_CLEARANCE = 'TOGGLE_CUSTOMS_CLEARANCE';
 
 // CHARGES
-export const ADD_CHARGE_LINE            = 'ADD_CHARGE_LINE';
-export const REMOVE_CHARGE_LINE         = 'REMOVE_CHARGE_LINE';
-export const SET_CHARGE_LINE_CODE       = 'SET_CHARGE_LINE_CODE';
-export const SET_CHARGE_LINE_NAME       = 'SET_CHARGE_LINE_NAME';
-export const SET_CHARGE_LINE_RATE       = 'SET_CHARGE_LINE_RATE';
-export const SET_CHARGE_LINE_UNITS      = 'SET_CHARGE_LINE_UNITS';
-export const SET_CHARGE_LINE_UNIT_PRICE = 'SET_CHARGE_LINE_AMOUNT';
-export const SET_CHARGE_NOTES           = 'SET_CHARGE_NOTES';
+export const ADD_CHARGE_LINE                     = 'ADD_CHARGE_LINE';
+export const REMOVE_CHARGE_LINE                  = 'REMOVE_CHARGE_LINE';
+export const SET_CHARGE_LINE_CODE                = 'SET_CHARGE_LINE_CODE';
+export const SET_CHARGE_LINE_NAME                = 'SET_CHARGE_LINE_NAME';
+export const SET_CHARGE_LINE_RATE                = 'SET_CHARGE_LINE_RATE';
+export const SET_CHARGE_LINE_UNITS               = 'SET_CHARGE_LINE_UNITS';
+export const SET_CHARGE_LINE_UNIT_PRICE          = 'SET_CHARGE_LINE_UNIT_PRICE';
+export const SET_CHARGE_LINE_UNIT_PRICE_CURRENCY = 'SET_CHARGE_LINE_UNIT_PRICES_CURRENCY';
+export const SET_CHARGE_NOTES                    = 'SET_CHARGE_NOTES';
 
 // LOAD QUOTE
 export const LOAD_QUOTE = 'LOAD_QUOTE';

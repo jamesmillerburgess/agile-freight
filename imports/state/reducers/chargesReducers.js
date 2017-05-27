@@ -25,6 +25,9 @@ export const chargeLines = (state = [], action = { type: '' }) => {
     case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE:
       newState = changePropAtId(state, 'unitPrice', action.id, action.unitPrice);
       break;
+    case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY:
+      newState = changePropAtId(state, 'unitPriceCurrency', action.id, action.unitPriceCurrency);
+      break;
     default:
       newState = state;
   }
