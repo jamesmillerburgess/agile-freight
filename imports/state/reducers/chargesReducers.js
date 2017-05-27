@@ -1,4 +1,6 @@
 import { changeProp, changePropAtId, removeAtId, addToEnd } from './reducer-utils';
+import { uniqueValues } from '../../ui/statsUtils';
+
 import * as ACTION_TYPES from '../actions/actionTypes';
 
 export const chargeLines = (state = [], action = { type: '' }) => {
@@ -37,6 +39,37 @@ export const chargeLines = (state = [], action = { type: '' }) => {
   }));
 };
 
+export const fxConversions = (state = {}, action = { type: '' }) => {
+  let newState = Object.assign(state.fxConversions || {}, {});
+  switch (action.type) {
+    case ACTION_TYPES.SET_FX_CONVERSION_RATE:
+      newState = changeProp(newState, action.currency, changeProp(newState[action.currency], 'rate', action.rate));
+      break;
+    case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY:
+    case ACTION_TYPES.REMOVE_CHARGE_LINE:
+      const currencies = uniqueValues(state.chargeLines, 'unitPriceCurrency');
+      currencies.forEach((currency) => {
+        if (currency === state.currency) {
+          return;
+        }
+        if (!newState[currency]) {
+          newState = changeProp(newState, currency, { active: true });
+        } else if (!newState[currency].active) {
+          newState = changeProp(newState, currency, changeProp(newState[currency], 'active', true));
+        }
+      });
+      Object.keys(newState).forEach((currency) => {
+        if (currencies.indexOf(currency) === -1) {
+          newState[currency] = changeProp(newState[currency], 'active', false);
+        }
+      });
+      break;
+    default:
+      break;
+  }
+  return newState;
+};
+
 export const chargeTotals = arr =>
   arr.reduce((acc, val) => {
     const res = { ...acc };
@@ -72,7 +105,7 @@ const defaultChargesState = {
 };
 
 export const charges = (state = defaultChargesState, action = { type: '' }) => {
-  let newState = {};
+  let newState = Object.assign(state, {});
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
       newState = action.quote.charges || defaultChargesState;
@@ -83,8 +116,10 @@ export const charges = (state = defaultChargesState, action = { type: '' }) => {
     default:
       newState = state;
   }
-  newState.chargeLines = chargeLines(newState.chargeLines, action);
-  const totals = chargeTotals(newState.chargeLines);
+  newState.chargeLines   = chargeLines(newState.chargeLines, action);
+  newState.fxConversions = fxConversions(newState, action);
+  newState.fxConversions = fxConversions(newState, action);
+  const totals           = chargeTotals(newState.chargeLines);
   return {
     ...newState,
     ...totals,
