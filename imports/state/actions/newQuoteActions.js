@@ -39,14 +39,15 @@ export const toggleInsurance        = makeActionCreator(ACTION_TYPES.TOGGLE_INSU
 export const toggleCustomsClearance = makeActionCreator(ACTION_TYPES.TOGGLE_CUSTOMS_CLEARANCE);
 
 // CHARGES
-export const addChargeLine          = makeActionCreator(ACTION_TYPES.ADD_CHARGE_LINE, 'chargeLine');
-export const removeChargeLine       = makeActionCreator(ACTION_TYPES.REMOVE_CHARGE_LINE, 'id');
-export const setChargeLineCode      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_CODE, 'id', 'code');
-export const setChargeLineName      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_NAME, 'id', 'name');
-export const setChargeLineRate      = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_RATE, 'id', 'rate');
-export const setChargeLineUnits     = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNITS, 'id', 'units');
-export const setChargeLineUnitPrice = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE, 'id', 'unitPrice');
-export const setChargeNotes         = makeActionCreator(ACTION_TYPES.SET_CHARGE_NOTES, 'notes');
+export const addChargeLine                  = makeActionCreator(ACTION_TYPES.ADD_CHARGE_LINE, 'chargeLine');
+export const removeChargeLine               = makeActionCreator(ACTION_TYPES.REMOVE_CHARGE_LINE, 'id');
+export const setChargeLineCode              = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_CODE, 'id', 'code');
+export const setChargeLineName              = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_NAME, 'id', 'name');
+export const setChargeLineRate              = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_RATE, 'id', 'rate');
+export const setChargeLineUnits             = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNITS, 'id', 'units');
+export const setChargeLineUnitPrice         = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE, 'id', 'unitPrice');
+export const setChargeLineUnitPriceCurrency = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY, 'id', 'unitPriceCurrency');
+export const setChargeNotes                 = makeActionCreator(ACTION_TYPES.SET_CHARGE_NOTES, 'notes');
 
 // LOAD QUOTE
 export const loadQuote = makeActionCreator(ACTION_TYPES.LOAD_QUOTE, 'quote');

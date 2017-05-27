@@ -13,10 +13,14 @@ const mapDispatchToProps = dispatch => ({
   setChargeLineName: (id, name) => dispatch(actionCreators.setChargeLineName(id, name)),
   setChargeLineRate: (id, rate) => dispatch(actionCreators.setChargeLineRate(id, rate)),
   setChargeLineUnits: (id, units) => dispatch(actionCreators.setChargeLineUnits(id, units)),
-  setChargeLineUnitPrice: (id, unitPrice) => dispatch(actionCreators.setChargeLineUnitPrice(id, unitPrice)),
+  setChargeLineUnitPrice: (id, unitPrice) =>
+    dispatch(actionCreators.setChargeLineUnitPrice(id, unitPrice)),
+  setChargeLineUnitPriceCurrency: (id, unitPriceCurrency) =>
+    dispatch(actionCreators.setChargeLineUnitPriceCurrency(id, unitPriceCurrency)),
   removeChargeLine: id => dispatch(actionCreators.removeChargeLine(id)),
 });
 
-const EditQuoteChargeGroupConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuoteChargeGroup);
+const EditQuoteChargeGroupConnect =
+        connect(mapStateToProps, mapDispatchToProps)(EditQuoteChargeGroup);
 
 export default EditQuoteChargeGroupConnect;

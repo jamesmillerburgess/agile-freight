@@ -34,11 +34,11 @@ if (Meteor.isClient) {
     describe('Props', () => {
       it('passes the className prop as the className prop on the Select', () => {
         wrapper.setProps({ className: 'class' });
-        wrapper.hasClass('class').should.equal(true);
+        wrapper.props().className.should.equal('currency-field class');
       });
 
-      it('defaults an empty string as the className prop on the Select', () => {
-        wrapper.props().className.should.equal('');
+      it('defaults an \'currency-field\' as the className prop on the Select', () => {
+        wrapper.props().className.should.equal('currency-field');
       });
 
       it('passes the value prop as the value prop on the Select', () => {
@@ -50,22 +50,16 @@ if (Meteor.isClient) {
         wrapper.props().value.should.equal('');
       });
 
-      it('passes the onChange prop as the onChange prop on the Select', () => {
-        const onChange = () => null;
-        wrapper.setProps({ onChange });
-        wrapper.props().onChange.should.equal(onChange);
-      });
-
-      it('defaults noop as the onChange prop on the Select', () => {
-        wrapper.props().onChange.should.equal(APIGlobals.noop);
-      });
-
       it('is not clearable', () => {
         wrapper.props().clearable.should.equal(false);
       });
 
       it('is searchable', () => {
         wrapper.props().searchable.should.equal(true);
+      });
+
+      it('has no placeholder text', () => {
+        wrapper.props().placeholder.should.equal(false);
       });
 
       it('does not render an arrow', () => {

@@ -6,13 +6,14 @@ import { APIGlobals } from '../../api/api-globals';
 
 const CurrencyField = props => (
   <Select
-    className={props.className}
+    className={props.className ? `currency-field ${props.className}` : 'currency-field'}
     value={props.value}
     options={APIGlobals.currencyOptions}
     clearable={false}
     arrowRenderer={APIGlobals.noop}
     searchable
-    onChange={props.onChange}
+    onChange={e => props.onChange(e)}
+    placeholder={false}
   />
 );
 

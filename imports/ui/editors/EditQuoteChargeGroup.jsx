@@ -15,6 +15,7 @@ const EditQuoteChargeGroup = (props) => {
       setChargeLineRate,
       setChargeLineUnits,
       setChargeLineUnitPrice,
+      setChargeLineUnitPriceCurrency,
     } = props;
   return (
     <tbody className="striped-data">
@@ -73,11 +74,12 @@ const EditQuoteChargeGroup = (props) => {
             />
             <CurrencyField
               className="input-group-last addon"
-              value={chargeLine.currency}
+              value={chargeLine.unitPriceCurrency}
+              onChange={e => setChargeLineUnitPriceCurrency(chargeLine.id, e.value)}
             />
           </div>
         </td>
-        <td className="numeric-label amount-local-column">{currencyFormat(chargeLine.amount)}</td>
+        <td className="numeric-label amount-local-column">{currencyFormat(chargeLine.amount)} {chargeLine.unitPriceCurrency}</td>
         <td className="amount-final-column" />
       </tr>
     ))}

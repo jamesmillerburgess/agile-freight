@@ -43,3 +43,7 @@
   border-radius: 3px;
   background-color: rgba($shading-color, $low-alpha);
 }
+
+.Select.currency-field .Select-menu-outer {
+  width: calc(100% + 17px);
+}
