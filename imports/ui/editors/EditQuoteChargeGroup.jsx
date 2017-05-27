@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
+import CurrencyField from '../fields/CurrencyField.jsx';
+
 import { currencyFormat } from '../formatters/numberFormatters';
 
 const EditQuoteChargeGroup = (props) => {
@@ -69,18 +71,9 @@ const EditQuoteChargeGroup = (props) => {
               value={chargeLine.unitPrice || ''}
               onChange={e => setChargeLineUnitPrice(chargeLine.id, +e.target.value)}
             />
-            <Select
+            <CurrencyField
               className="input-group-last addon"
-              value="USD"
-              options={[
-                { value: 'USD', label: 'USD' },
-                { value: 'EUR', label: 'EUR' },
-                { value: 'CHF', label: 'CHF' },
-                { value: 'RMB', label: 'RMB' },
-              ]}
-              clearable={false}
-              arrowRenderer={() => false}
-              searchable={false}
+              value={chargeLine.currency}
             />
           </div>
         </td>
