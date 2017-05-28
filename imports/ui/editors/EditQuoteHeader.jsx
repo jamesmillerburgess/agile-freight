@@ -33,7 +33,7 @@ class EditQuoteHeader extends React.Component {
     this.PackageLines = this.PackageLines.bind(this);
     this.Containers   = this.Containers.bind(this);
 
-    this.quoteStats = getQuoteStats(props.quotes);
+    // this.quoteStats = getQuoteStats(props.quotes);
   }
 
   componentWillMount() {
@@ -439,7 +439,6 @@ class EditQuoteHeader extends React.Component {
                     onChange={selectedValue =>
                       this.props.dispatchers.onChangePickupCountry(selectedValue.value)}
                     countries={Countries}
-                    topCountries={this.quoteStats.pickupCountry}
                   />
                 </div>
                 <div className="field select-country">
@@ -447,17 +446,13 @@ class EditQuoteHeader extends React.Component {
                     LOCATION
                   </div>
                   <UNLocationField
-                    value={{
-                      value: this.props.quote.movement.pickup.location,
-                      label: this.props.quote.movement.pickup.locationName,
-                    }}
+                    value={this.props.quote.movement.pickup.location}
                     country={this.props.quote.movement.pickup.country}
                     onChange={(selectedValue) => {
                       this.props.dispatchers.onChangePickupLocation(selectedValue.value);
                       this.props.dispatchers.onChangePickupLocationName(selectedValue.label);
                     }}
                     unLocations={UNLocations}
-                    topLocations={this.quoteStats.pickupLocation}
                   />
                 </div>
                 <div className="to-label">TO</div>
@@ -470,7 +465,6 @@ class EditQuoteHeader extends React.Component {
                     onChange={selectedValue =>
                       this.props.dispatchers.onChangeDeliveryCountry(selectedValue.value)}
                     countries={Countries}
-                    topCountries={this.quoteStats.deliveryCountry}
                   />
                 </div>
                 <div className="field select-country">
@@ -478,17 +472,13 @@ class EditQuoteHeader extends React.Component {
                     LOCATION
                   </div>
                   <UNLocationField
-                    value={{
-                      value: this.props.quote.movement.delivery.location,
-                      label: this.props.quote.movement.delivery.locationName,
-                    }}
+                    value={this.props.quote.movement.delivery.location}
                     country={this.props.quote.movement.delivery.country}
                     onChange={(selectedValue) => {
                       this.props.dispatchers.onChangeDeliveryLocation(selectedValue.value);
                       this.props.dispatchers.onChangeDeliveryLocationName(selectedValue.label);
                     }}
                     unLocations={UNLocations}
-                    topLocations={this.quoteStats.deliveryLocation}
                   />
                 </div>
               </div>
@@ -536,7 +526,6 @@ class EditQuoteHeader extends React.Component {
 
 EditQuoteHeader.propTypes = {
   quote: quotePropTypes.isRequired,
-  quotes: PropTypes.arrayOf(quotePropTypes).isRequired,
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
   history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   match: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

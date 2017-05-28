@@ -14,8 +14,8 @@ class UNLocationField extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (this.props.value.value !== nextProps.value.value) {
-      this.setOptions(nextProps.value.label, this.getCountryCode(nextProps.country));
+    if (this.props.value !== nextProps.value || !this.state.options) {
+      this.setOptions(nextProps.value, this.getCountryCode(nextProps.country));
     }
   }
 
@@ -50,14 +50,12 @@ class UNLocationField extends React.Component {
   }
 
   render() {
-    const { value, onChange } = this.props;
-    const { options }         = this.state;
     return (
       <Select
-        value={value.value}
-        options={options}
+        value={this.props.value}
+        options={this.state.options}
         clearable={false}
-        onChange={unLocation => onChange(unLocation)}
+        onChange={unLocation => this.props.onChange(unLocation)}
         onInputChange={input => this.setOptions(input, this.getCountryCode(this.props.country))}
         optionRenderer={this.renderOption}
       />
@@ -66,15 +64,14 @@ class UNLocationField extends React.Component {
 }
 
 UNLocationField.propTypes = {
-  value: PropTypes.object,
+  value: PropTypes.string,
   countryCode: PropTypes.string,
   onChange: PropTypes.func,
   unLocations: PropTypes.object.isRequired,
-  topLocations: PropTypes.object,
 };
 
 UNLocationField.defaultProps = {
-  value: {},
+  value: '',
   countryCode: '',
   onChange: () => null,
   topLocations: {},
