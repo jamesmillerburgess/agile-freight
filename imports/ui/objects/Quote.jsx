@@ -22,6 +22,7 @@ class Quote extends React.Component {
     this.hasCharges                   = this.hasCharges.bind(this);
     this.ChargeGroup                  = this.ChargeGroup.bind(this);
     this.Email                        = this.Email.bind(this);
+    this.FXRates                      = this.FXRates.bind(this);
   }
 
   componentWillUpdate() {
@@ -193,7 +194,7 @@ class Quote extends React.Component {
       );
     }
     return (
-      <div className="charge-group">
+      <div className="charge-group section">
         <span className="title">
           {group.toUpperCase()} CHARGES
         </span>
@@ -263,6 +264,33 @@ class Quote extends React.Component {
     return null;
   }
 
+  FXRates() {
+    const currencies =
+            Object
+              .keys(this.props.quote.charges.fxConversions)
+              .filter(currency => this.props.quote.charges.fxConversions[currency].active);
+    if (!currencies.length) {
+      return null;
+    }
+    return (
+      <div className="fx-rates">
+        <div className="title">FX RATES</div>
+        {
+          currencies.map(currency => (
+            <div className="field">
+              <div className="label">
+                {this.props.quote.charges.currency}/{currency}
+              </div>
+              <div className="value">
+                {this.props.quote.charges.fxConversions[currency].rate}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    );
+  }
+
   render() {
     return (
       <div
@@ -316,11 +344,14 @@ class Quote extends React.Component {
                     {this.ChargeGroup('Origin')}
                     {this.ChargeGroup('International')}
                     {this.ChargeGroup('Destination')}
-                    <div className="notes">
-                      <span className="title">NOTES</span>
-                      <pre>
-                        {this.props.quote.charges.notes}
-                      </pre>
+                    <div className="notes-and-fx-rates">
+                      <div className="notes">
+                        <span className="title">NOTES</span>
+                        <pre>
+                    {this.props.quote.charges.notes}
+                  </pre>
+                      </div>
+                      {this.FXRates()}
                     </div>
                     <div className="total-row">
                       <span className="title">TOTAL PRICE</span>

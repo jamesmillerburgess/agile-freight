@@ -17,20 +17,8 @@ const EditQuoteChargeGroup = (props) => {
       setChargeLineUnitPriceCurrency,
     } = props;
 
-  const getFinalAmount = (chargeLine) => {
-    let finalAmount = 0;
-    if (
-      props.fxConversions &&
-      props.fxConversions[chargeLine.unitPriceCurrency] &&
-      props.fxConversions[chargeLine.unitPriceCurrency].rate
-    ) {
-      finalAmount = chargeLine.amount * props.fxConversions[chargeLine.unitPriceCurrency].rate;
-    }
-    return finalAmount;
-  };
-
   const getSubtotalAmount = () =>
-    props.chargeLines.reduce((acc, chargeLine) => acc + getFinalAmount(chargeLine), 0);
+    props.chargeLines.reduce((acc, chargeLine) => acc + chargeLine.finalAmount, 0);
 
   return (
     <tbody className="striped-data">
