@@ -112,6 +112,7 @@ class EditQuoteCharges extends React.Component {
                   <input
                     type="number"
                     className="fx-rate"
+                    value={this.props.newQuote.charges.fxConversions[currency].rate}
                     onChange={e => this.props.setFXConversionRate(currency, e.target.value)}
                   />
                 </td>
