@@ -122,7 +122,7 @@ class Quote extends React.Component {
   LooseCargoAttributes() {
     return (
       <span className="label">
-      {this.props.quote.cargo.hazardous ? '' : 'NON-'}HAZARDOUS, {this.props.quote.cargo.temperatureControlled ? '' : 'NON-'}TEMPERATURE CONTROLLED
+      {this.props.quote.cargo.hazardous ? '' : 'Non-'}Hazardous, {this.props.quote.cargo.temperatureControlled ? '' : 'Non-'}Temperature Controlled
     </span>
     );
   }
@@ -130,7 +130,7 @@ class Quote extends React.Component {
   ContainerizedCargoAttributes() {
     return (
       <span className="label">
-      {this.props.quote.cargo.hazardous ? '' : 'NON-'}HAZARDOUS
+      {this.props.quote.cargo.hazardous ? '' : 'Non-'}Hazardous
     </span>
     );
   }
@@ -158,7 +158,7 @@ class Quote extends React.Component {
         </div>
         <div>
           <span>
-            {this.props.quote.movement.pickup.isPort ? 'PORT' : 'DOOR'} TO {this.props.quote.movement.delivery.isPort ? 'PORT' : 'DOOR'}
+            {this.props.quote.movement.pickup.isPort ? 'Port' : 'Door'} TO {this.props.quote.movement.delivery.isPort ? 'Port' : 'Door'}
           </span>
         </div>
       </div>
@@ -167,13 +167,13 @@ class Quote extends React.Component {
 
   Insurance() {
     return (
-      <span>{this.props.quote.otherServices && this.props.quote.otherServices.insurance ? '' : 'NO '}INSURANCE</span>
+      <span>{this.props.quote.otherServices && this.props.quote.otherServices.insurance ? '' : 'No '}Insurance</span>
     );
   }
 
   CustomsClearance() {
     return (
-      <span>{this.props.quote.otherServices && this.props.quote.otherServices.customsClearance ? '' : 'NO '}CUSTOMS CLEARANCE</span>
+      <span>{this.props.quote.otherServices && this.props.quote.otherServices.customsClearance ? '' : 'No '}Customs Clearance</span>
     );
   }
 
@@ -202,10 +202,26 @@ class Quote extends React.Component {
           <div key={index} className="charge-row">
             <span className="name">{chargeLine.name}</span>
             <span className="units units" />
-            <span className="rate">{chargeLine.units} {chargeLine.rate}</span>
-            <span className="amount">{currencyFormat(chargeLine.unitPrice)} {chargeLine.unitPriceCurrency}</span>
-            <span className="amount">{currencyFormat(chargeLine.amount)} {chargeLine.unitPriceCurrency}</span>
-            <span className="amount">{currencyFormat(chargeLine.finalAmount)} {this.props.quote.charges.currency}</span>
+            <span className="rate">
+              {chargeLine.units} {chargeLine.rate}
+            </span>
+            <span className="amount">
+              {
+                chargeLine.units !== 1 ?
+                  `${currencyFormat(chargeLine.unitPrice)} ${chargeLine.unitPriceCurrency}` :
+                  null
+              }
+            </span>
+            <span className="amount">
+              {
+                chargeLine.unitPriceCurrency !== this.props.quote.charges.currency ?
+                  `${currencyFormat(chargeLine.amount)} ${chargeLine.unitPriceCurrency}` :
+                  null
+              }
+            </span>
+            <span className="amount">
+              {currencyFormat(chargeLine.finalAmount)} {this.props.quote.charges.currency}
+            </span>
           </div>
         ))}
         <div className="subtotal-row">
@@ -305,6 +321,18 @@ class Quote extends React.Component {
               <span className="header">AGILITY FREIGHT QUOTATION</span>
               <span className="title">{this.getStatus()}</span>
             </div>
+            {
+              this.hasCharges() ?
+                <div>
+                  <div className="total-row">
+                    <span className="title">TOTAL PRICE</span>
+                    <span className="title value">
+                      {currencyFormat(this.props.quote.charges.totalCharges)} {this.props.quote.charges.currency}
+                    </span>
+                  </div>
+                </div> :
+                null
+            }
             <div className="cargo section">
               <span className="title">CARGO</span>
               {
