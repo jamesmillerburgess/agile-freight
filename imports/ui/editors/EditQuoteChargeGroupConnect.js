@@ -4,6 +4,8 @@ import EditQuoteChargeGroup from './EditQuoteChargeGroup.jsx';
 import * as actionCreators from '../../state/actions/newQuoteActions';
 
 const mapStateToProps = (state, ownProps) => ({
+  currency: state.newQuote.charges.currency,
+  fxConversions: state.newQuote.charges.fxConversions,
   chargeLines: state.newQuote.charges.chargeLines
     .filter(chargeLine => chargeLine.group === ownProps.group),
 });

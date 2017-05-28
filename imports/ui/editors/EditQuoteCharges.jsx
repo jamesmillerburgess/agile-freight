@@ -103,7 +103,11 @@ class EditQuoteCharges extends React.Component {
               {this.props.newQuote.charges.currency}/{currency}
             </td>
             <td>
-              <input type="number" className="fx-rate" />
+              <input
+                type="number"
+                className="fx-rate"
+                onChange={e => this.props.setFXConversionRate(currency, e.target.value)}
+              />
             </td>
           </tr>
         ))}
@@ -171,15 +175,6 @@ class EditQuoteCharges extends React.Component {
                   </tr>
                 </tbody>
                 <EditQuoteChargeGroupConnect group="Origin" />
-                <tbody className="subtotal">
-                  <tr>
-                    <td colSpan="5" />
-                    <td className="numeric-label">SUBTOTAL</td>
-                    <td className="numeric-label">
-                      {currencyFormat(totalOriginCharges)} {this.props.newQuote.charges.currency}
-                    </td>
-                  </tr>
-                </tbody>
                 <tbody>
                   <tr className="empty-row" />
                   <tr className="column-title-row">
@@ -198,15 +193,6 @@ class EditQuoteCharges extends React.Component {
                   </tr>
                 </tbody>
                 <EditQuoteChargeGroupConnect group="International" />
-                <tbody className="subtotal">
-                  <tr>
-                    <td colSpan="5" />
-                    <td className="numeric-label">SUBTOTAL</td>
-                    <td className="numeric-label">
-                      {currencyFormat(totalInternationalCharges)} {this.props.newQuote.charges.currency}
-                    </td>
-                  </tr>
-                </tbody>
                 <tbody>
                   <tr className="empty-row" />
                   <tr className="column-title-row">
@@ -225,15 +211,6 @@ class EditQuoteCharges extends React.Component {
                   </tr>
                 </tbody>
                 <EditQuoteChargeGroupConnect group="Destination" />
-                <tbody className="subtotal">
-                  <tr>
-                    <td colSpan="5" />
-                    <td className="numeric-label">SUBTOTAL</td>
-                    <td className="numeric-label">
-                      {currencyFormat(totalDestinationCharges)} {this.props.newQuote.charges.currency}
-                    </td>
-                  </tr>
-                </tbody>
                 <tbody>
                   <tr className="column-title-row">
                     <td />
