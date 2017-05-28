@@ -39,16 +39,19 @@ if (Meteor.isClient) {
             rate: 'd',
             units: 1,
             unitPrice: 2,
+            unitPriceCurrency: 'e',
             amount: 2,
+            finalAmount: 2,
           }],
+          fxConversions: { e: { rate: 1 } },
           totalOriginCharges: 2,
           totalInternationalCharges: 0,
           totalDestinationCharges: 0,
           totalCharges: 2,
-          currency: 'e',
+          currency: 'f',
         };
         const action        = { type: ACTION_TYPES.LOAD_QUOTE, quote: { charges: chargesToLoad } };
-
+        
         charges({}, action).should.eql(chargesToLoad);
       });
 
@@ -63,6 +66,7 @@ if (Meteor.isClient) {
               rate: 'd',
               units: 1,
               unitPrice: 2,
+              unitPriceCurrency: 'e',
             },
             {
               group: 'International',
@@ -72,6 +76,7 @@ if (Meteor.isClient) {
               rate: 'd',
               units: 1,
               unitPrice: 3,
+              unitPriceCurrency: 'e',
             },
             {
               group: 'Destination',
@@ -81,9 +86,11 @@ if (Meteor.isClient) {
               rate: 'd',
               units: 1,
               unitPrice: 4,
+              unitPriceCurrency: 'e',
             },
           ],
-          currency: 'e',
+          currency: 'f',
+          fxConversions: { e: { rate: 1 } },
         };
         const action        = { type: ACTION_TYPES.LOAD_QUOTE, quote: { charges: chargesToLoad } };
         const stateAfter    = charges({}, action);
@@ -91,6 +98,9 @@ if (Meteor.isClient) {
         stateAfter.chargeLines[0].amount.should.equal(2);
         stateAfter.chargeLines[1].amount.should.equal(3);
         stateAfter.chargeLines[2].amount.should.equal(4);
+        stateAfter.chargeLines[0].finalAmount.should.equal(2);
+        stateAfter.chargeLines[1].finalAmount.should.equal(3);
+        stateAfter.chargeLines[2].finalAmount.should.equal(4);
         stateAfter.totalOriginCharges.should.equal(2);
         stateAfter.totalInternationalCharges.should.equal(3);
         stateAfter.totalDestinationCharges.should.equal(4);
@@ -123,6 +133,28 @@ if (Meteor.isClient) {
 
         stateAfter.length.should.equal(1);
         stateAfter[0].group.should.equal('Origin');
+      });
+
+      it('sets the unit price currency of a new charge line to the quote currency, if no currency is specified', () => {
+        const stateBefore = [];
+        const parentState = { currency: 'a' };
+        const chargeLine  = { group: 'Origin' };
+        const action      = { type: ACTION_TYPES.ADD_CHARGE_LINE, chargeLine };
+        deepFreeze(stateBefore);
+        const stateAfter = chargeLines(stateBefore, action, parentState);
+
+        stateAfter[0].unitPriceCurrency.should.equal('a');
+      });
+
+      it('keeps the specified unit price currency if one is provided', () => {
+        const stateBefore = [];
+        const parentState = { currency: 'a' };
+        const chargeLine  = { group: 'Origin', unitPriceCurrency: 'b' };
+        const action      = { type: ACTION_TYPES.ADD_CHARGE_LINE, chargeLine };
+        deepFreeze(stateBefore);
+        const stateAfter = chargeLines(stateBefore, action, parentState);
+
+        stateAfter[0].unitPriceCurrency.should.equal('b');
       });
 
       it('removes a charge line with the specified id', () => {
@@ -208,6 +240,15 @@ if (Meteor.isClient) {
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore)[0].amount.should.equal(2);
+      });
+
+      it('auto-calculates the final amount', () => {
+        const stateBefore = [{ units: 1, unitPrice: 2, unitPriceCurrency: 'a' }];
+        const parentState = { currency: 'b', fxConversions: { a: { rate: 2 } } };
+        deepFreeze(stateBefore);
+        const stateAfter = chargeLines(stateBefore, {}, parentState);
+
+        stateAfter[0].finalAmount.should.equal(4);
       });
     });
 
@@ -327,27 +368,29 @@ if (Meteor.isClient) {
       const { chargeTotals } = chargesReducers;
       it('calculates the total charges by group', () => {
         const stateBefore = [
-          { group: 'Origin', amount: 1 },
-          { group: 'Origin', amount: 1 },
-          { group: 'International', amount: 2 },
-          { group: 'International', amount: 2 },
-          { group: 'Destination', amount: 3 },
-          { group: 'Destination', amount: 3 },
+          { group: 'Origin', finalAmount: 1 },
+          { group: 'Origin', finalAmount: 1 },
+          { group: 'International', finalAmount: 2 },
+          { group: 'International', finalAmount: 2 },
+          { group: 'Destination', finalAmount: 3 },
+          { group: 'Destination', finalAmount: 3 },
         ];
         deepFreeze(stateBefore);
         const stateAfter = chargeTotals(stateBefore);
 
         stateAfter.totalOriginCharges.should.equal(2);
+        stateAfter.totalInternationalCharges.should.equal(4);
+        stateAfter.totalDestinationCharges.should.equal(6);
       });
 
       it('calculates the total charges overall', () => {
         const stateBefore = [
-          { group: 'Origin', amount: 1 },
-          { group: 'Origin', amount: 1 },
-          { group: 'International', amount: 2 },
-          { group: 'International', amount: 2 },
-          { group: 'Destination', amount: 3 },
-          { group: 'Destination', amount: 3 },
+          { group: 'Origin', finalAmount: 1 },
+          { group: 'Origin', finalAmount: 1 },
+          { group: 'International', finalAmount: 2 },
+          { group: 'International', finalAmount: 2 },
+          { group: 'Destination', finalAmount: 3 },
+          { group: 'Destination', finalAmount: 3 },
         ];
         deepFreeze(stateBefore);
         const stateAfter = chargeTotals(stateBefore);
