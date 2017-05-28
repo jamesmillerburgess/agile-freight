@@ -96,7 +96,7 @@ const EditQuoteChargeGroup = (props) => {
           </td>
           <td className="numeric-label amount-local-column">{currencyFormat(chargeLine.amount)} {chargeLine.unitPriceCurrency}</td>
           <td className="numeric-label amount-final-column">
-            {currencyFormat(getFinalAmount(chargeLine))} {props.currency}
+            {currencyFormat(chargeLine.finalAmount)} {props.currency}
           </td>
         </tr>
       ))}
