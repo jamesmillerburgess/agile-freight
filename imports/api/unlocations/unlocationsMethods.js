@@ -12,10 +12,13 @@ Meteor.methods({
     check(options.country, String);
     check(options.search, String);
 
-    if (!Countries.findOne(options.country)) {
+    if (!Countries.findOne({ countryCode: options.country })) {
       throw new Error(`Invalid country '${options.country}'`);
     }
-    const query = { country: options.country, name: { $regex: buildSearchRegExp(options.search) } };
+    const query = {
+      country: options.country,
+      name: { $regex: buildSearchRegExp(options.search) },
+    };
     return UNLocations.find(query, { limit: 10 }).fetch();
   },
 });

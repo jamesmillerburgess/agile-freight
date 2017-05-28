@@ -27,11 +27,11 @@ const getQuoteStats = quotes => ({
 class EditQuoteHeader extends React.Component {
   constructor(props) {
     super(props);
-    this.archive = this.archive.bind(this);
-    this.save = this.save.bind(this);
-    this.getRates = this.getRates.bind(this);
+    this.archive      = this.archive.bind(this);
+    this.save         = this.save.bind(this);
+    this.getRates     = this.getRates.bind(this);
     this.PackageLines = this.PackageLines.bind(this);
-    this.Containers = this.Containers.bind(this);
+    this.Containers   = this.Containers.bind(this);
 
     this.quoteStats = getQuoteStats(props.quotes);
   }
@@ -447,7 +447,10 @@ class EditQuoteHeader extends React.Component {
                     LOCATION
                   </div>
                   <UNLocationField
-                    value={this.props.quote.movement.pickup.location}
+                    value={{
+                      value: this.props.quote.movement.pickup.location,
+                      label: this.props.quote.movement.pickup.locationName,
+                    }}
                     country={this.props.quote.movement.pickup.country}
                     onChange={(selectedValue) => {
                       this.props.dispatchers.onChangePickupLocation(selectedValue.value);
@@ -475,7 +478,10 @@ class EditQuoteHeader extends React.Component {
                     LOCATION
                   </div>
                   <UNLocationField
-                    value={this.props.quote.movement.delivery.location}
+                    value={{
+                      value: this.props.quote.movement.delivery.location,
+                      label: this.props.quote.movement.delivery.locationName,
+                    }}
                     country={this.props.quote.movement.delivery.country}
                     onChange={(selectedValue) => {
                       this.props.dispatchers.onChangeDeliveryLocation(selectedValue.value);

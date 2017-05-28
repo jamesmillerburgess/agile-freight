@@ -6,53 +6,30 @@ import { Mongo } from 'meteor/mongo';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Countries } from '../../api/countries/countries-collection';
 
-class UNLocationFieldInner extends React.Component {
+class UNLocationField extends React.Component {
   constructor(props) {
     super(props);
-    this.state           = { options: [] };
-    this.setOptions      = this.setOptions.bind(this);
-    this.filterLocations = this.filterLocations.bind(this);
+    this.state = { options: [] };
+    this.setOptions = this.setOptions.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const options = this.filterLocations('', nextProps.country, this.props.unLocations);
-    this.setState({ options });
-  }
-
-  setOptions(input) {
-    const { country, unLocations } = this.props;
-    const options                  = this.filterLocations(input, country, unLocations);
-    this.setState({ options });
-  }
-
-  filterLocations(filter, countryId, collection) {
-    if (!countryId) {
-      return [];
+  componentWillUpdate(nextProps) {
+    if (this.props.value.value !== nextProps.value.value) {
+      this.setOptions(nextProps.value.label, this.getCountryCode(nextProps.country));
     }
-    const doc     = Countries.findOne({ _id: new Mongo.ObjectID(countryId) });
-    const country = doc && doc.countryCode;
-    const query   = { country };
-    if (filter) {
-      query.name = { $regex: filter, $options: 'i' };
+  }
+
+  setOptions(input = '', countryCode = '') {
+    if (!countryCode) {
+      return;
     }
-    const results = collection.find(query, { limit: 10 }).fetch();
-    return results
-      .map(unLocation => (
-        {
-          value: unLocation._id._str,
-          label: `${unLocation.name}${unLocation.subdivision ? `, ${unLocation.subdivision}` : ''}`,
-          count: this.props.topLocations[unLocation._id._str] ? this.props.topLocations[unLocation._id._str] : 0,
-        }
-      ))
-      .sort((a, b) => {
-        if (a.count !== b.count) {
-          return b.count - a.count;
-        }
-        if (a.label.toUpperCase() < b.label.toUpperCase()) {
-          return -1;
-        }
-        return 1;
-      });
+    Meteor.call('unlocations.search', {
+      country: countryCode,
+      search: input,
+    }, (err, res) => {
+      const options = res.map(loc => ({ value: loc._id._str, label: loc.name }));
+      this.setState({ options });
+    });
   }
 
   renderOption(option) {
@@ -64,43 +41,43 @@ class UNLocationFieldInner extends React.Component {
     );
   }
 
+  getCountryCode(id) {
+    const country = Countries.findOne(new Mongo.ObjectID(id));
+    if (!country || !country.countryCode) {
+      return '';
+    }
+    return country.countryCode;
+  }
+
   render() {
     const { value, onChange } = this.props;
     const { options }         = this.state;
     return (
       <Select
-        value={value}
+        value={value.value}
         options={options}
         clearable={false}
         onChange={unLocation => onChange(unLocation)}
-        onInputChange={this.setOptions}
+        onInputChange={input => this.setOptions(input, this.getCountryCode(this.props.country))}
         optionRenderer={this.renderOption}
       />
     );
   }
 }
 
-UNLocationFieldInner.propTypes = {
-  value: PropTypes.string,
-  country: PropTypes.string,
+UNLocationField.propTypes = {
+  value: PropTypes.object,
+  countryCode: PropTypes.string,
   onChange: PropTypes.func,
   unLocations: PropTypes.object.isRequired,
   topLocations: PropTypes.object,
 };
 
-UNLocationFieldInner.defaultProps = {
-  value: '',
-  country: '',
+UNLocationField.defaultProps = {
+  value: {},
+  countryCode: '',
   onChange: () => null,
   topLocations: {},
 };
-
-const UNLocationField = createContainer((props) => {
-  const country          = Countries.findOne(new Mongo.ObjectID(props.country));
-  const countryCode      = country ? country.countryCode : '';
-  const locationsHandler = Meteor.subscribe('unlocations.country', countryCode);
-  const loading          = !locationsHandler.ready();
-  return { ...props };
-}, UNLocationFieldInner);
 
 export default UNLocationField;
