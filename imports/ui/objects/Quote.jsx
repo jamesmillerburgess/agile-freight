@@ -200,11 +200,11 @@ class Quote extends React.Component {
         {groupChargeLines.map((chargeLine, index) => (
           <div key={index} className="charge-row">
             <span className="name">{chargeLine.name}</span>
-            <span className="rate">{chargeLine.rate}</span>
-            <span className="units units">{chargeLine.units}</span>
-            <span className="amount">{currencyFormat(chargeLine.unitPrice)} {chargeLine.localCurrency}</span>
-            <span className="amount">{currencyFormat(chargeLine.localTotal)} {chargeLine.localCurrency}</span>
-            <span className="amount">{currencyFormat(chargeLine.total)} {this.props.quote.charges.currency}</span>
+            <span className="units units" />
+            <span className="rate">{chargeLine.units} {chargeLine.rate}</span>
+            <span className="amount">{currencyFormat(chargeLine.unitPrice)} {chargeLine.unitPriceCurrency}</span>
+            <span className="amount">{currencyFormat(chargeLine.amount)} {chargeLine.unitPriceCurrency}</span>
+            <span className="amount">{currencyFormat(chargeLine.finalAmount)} {this.props.quote.charges.currency}</span>
           </div>
         ))}
         <div className="subtotal-row">
