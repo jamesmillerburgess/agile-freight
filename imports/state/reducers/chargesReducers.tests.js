@@ -315,7 +315,6 @@ if (Meteor.isClient) {
         deepFreeze(stateBefore);
         const stateAfter = fxConversions(stateBefore, action);
 
-        console.log(stateAfter);
         stateAfter.b.active.should.equal(false);
       });
 
