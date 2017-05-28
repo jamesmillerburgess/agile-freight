@@ -8,7 +8,7 @@ Meteor.methods({
   'quote.new': function quoteNew(customerId) {
     check(customerId, String);
 
-    const quoteId = Quotes.insert({ customerId });
+    const quoteId = Quotes.insert({ customerId, createdOn: new Date() });
 
     Customers.update({ _id: customerId }, { $push: { quotes: quoteId } });
 
@@ -26,6 +26,7 @@ Meteor.methods({
       otherServices,
       charges: {},
       status: 'Draft',
+      createdOn: new Date(),
     });
 
     Customers.update({ _id: customerId }, { $push: { quotes: newQuoteId } });

@@ -49,6 +49,12 @@ if (Meteor.isServer) {
 
         Customers.findOne('a').quotes[0].should.equal(quoteId);
       });
+
+      it('sets the created on date', () => {
+        const quoteId = Meteor.call('quote.new', 'a');
+
+        Quotes.findOne(quoteId).createdOn.should.be.instanceof(Date);
+      });
     });
 
     describe('quote.copy', () => {
@@ -121,6 +127,13 @@ if (Meteor.isServer) {
         const quoteId = Meteor.call('quote.copy', 'b');
 
         Quotes.findOne(quoteId).status.should.equal('Draft');
+      });
+
+      it('sets the created on date', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a' });
+        const quoteId = Meteor.call('quote.copy', 'b');
+
+        Quotes.findOne(quoteId).createdOn.should.be.instanceof(Date);
       });
     });
 

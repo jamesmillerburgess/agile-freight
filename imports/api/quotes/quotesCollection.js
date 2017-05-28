@@ -7,6 +7,7 @@ export const Schemas = {};
 
 Schemas.Quote = new SimpleSchema({
   status: { type: String, defaultValue: 'Draft' },
+  createdOn: { type: Date, optional: true },
   expiryDate: { type: Date, optional: true },
   customerId: String,
   cargo: { type: Object, blackbox: true, optional: true },
