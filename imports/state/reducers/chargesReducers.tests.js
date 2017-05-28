@@ -51,7 +51,7 @@ if (Meteor.isClient) {
           currency: 'f',
         };
         const action        = { type: ACTION_TYPES.LOAD_QUOTE, quote: { charges: chargesToLoad } };
-        
+
         charges({}, action).should.eql(chargesToLoad);
       });
 
@@ -118,6 +118,33 @@ if (Meteor.isClient) {
         const stateBefore = { currency: 'a' };
         const action      = { type: ACTION_TYPES.SET_QUOTE_CURRENCY, currency: 'b' };
         charges(stateBefore, action).currency.should.equal('b');
+      });
+
+      it('calculates amounts only after updating individual components of the calculation', () => {
+        const stateBefore = {
+          chargeLines: [
+            {
+              group: 'Origin',
+              id: 'a',
+              code: 'b',
+              name: 'c',
+              rate: 'd',
+              units: 1,
+              unitPrice: 2,
+              unitPriceCurrency: 'e',
+              finalAmount: 4,
+            },
+          ],
+          currency: 'f',
+          fxConversions: { e: { rate: 2 } },
+        };
+        const action      = { type: ACTION_TYPES.SET_FX_CONVERSION_RATE, currency: 'e', rate: 1 };
+        const stateAfter  = charges(stateBefore, action);
+
+        stateAfter.chargeLines[0].amount.should.equal(2);
+        stateAfter.chargeLines[0].finalAmount.should.equal(2);
+        stateAfter.totalOriginCharges.should.equal(2);
+        stateAfter.totalCharges.should.equal(2);
       });
     });
 
@@ -361,7 +388,7 @@ if (Meteor.isClient) {
           fxConversions: { b: { rate: 1 } },
           chargeLines: [{ unitPriceCurrency: 'b' }],
         };
-        const action        = { type: ACTION_TYPES.SET_QUOTE_CURRENCY, currency: 'b' };
+        const action      = { type: ACTION_TYPES.SET_QUOTE_CURRENCY, currency: 'b' };
         deepFreeze(stateBefore);
         const stateAfter = fxConversions(stateBefore, action);
 

@@ -134,6 +134,22 @@ export const charges = (state = defaultChargesState, action = { type: '' }) => {
     case ACTION_TYPES.SET_QUOTE_CURRENCY:
       newState = changeProp(state, 'currency', action.currency);
       break;
+    case ACTION_TYPES.SET_FX_CONVERSION_RATE:
+      newState =
+        changeProp(
+          state,
+          'fxConversions',
+          changeProp(
+            state.fxConversions,
+            action.currency,
+            changeProp(
+              state.fxConversions[action.currency],
+              'rate',
+              action.rate,
+            ),
+          ),
+        );
+      break;
     default:
       newState = state;
   }
