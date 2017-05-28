@@ -96,21 +96,29 @@ class EditQuoteCharges extends React.Component {
             />
           </td>
         </tr>
-        {Object.keys(this.props.newQuote.charges.fxConversions).map((currency, index) => (
-          <tr key={index}>
-            <td />
-            <td>
-              {this.props.newQuote.charges.currency}/{currency}
-            </td>
-            <td>
-              <input
-                type="number"
-                className="fx-rate"
-                onChange={e => this.props.setFXConversionRate(currency, e.target.value)}
-              />
-            </td>
-          </tr>
-        ))}
+        {Object
+          .keys(this.props.newQuote.charges.fxConversions)
+          .map((currency, index) => {
+            if (!this.props.newQuote.charges.fxConversions[currency].active) {
+              return null;
+            }
+            return (
+              <tr key={index}>
+                <td />
+                <td>
+                  {this.props.newQuote.charges.currency}/{currency}
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    className="fx-rate"
+                    onChange={e => this.props.setFXConversionRate(currency, e.target.value)}
+                  />
+                </td>
+              </tr>
+            );
+          })
+        }
       </tbody>
     );
   }
