@@ -250,6 +250,15 @@ if (Meteor.isClient) {
 
         stateAfter[0].finalAmount.should.equal(4);
       });
+
+      it('uses 1 as the fx rate when the unit price currency equals the quote currency', () => {
+        const stateBefore = [{ units: 1, unitPrice: 2, unitPriceCurrency: 'a' }];
+        const parentState = { currency: 'a' };
+        deepFreeze(stateBefore);
+        const stateAfter = chargeLines(stateBefore, {}, parentState);
+
+        stateAfter[0].finalAmount.should.equal(2);
+      });
     });
 
     describe('FX Conversions Reducer', () => {

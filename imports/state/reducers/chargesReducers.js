@@ -36,19 +36,23 @@ export const chargeLines = (state = [], action = { type: '' }, parentState = {})
     default:
       newState = state;
   }
-  return newState.map(chargeLine => ({
-    ...chargeLine,
-    amount: (chargeLine.units || 0) * (chargeLine.unitPrice || 0),
-    finalAmount: (
-      (chargeLine.units || 0) *
-      (chargeLine.unitPrice || 0) *
-      (
-        (parentState.fxConversions || 0) &&
-        (parentState.fxConversions[chargeLine.unitPriceCurrency] || 0) &&
-        (parentState.fxConversions[chargeLine.unitPriceCurrency].rate || 0)
-      )
-    ),
-  }));
+  return newState.map((chargeLine) => {
+    const res  = { ...chargeLine };
+    res.amount = (chargeLine.units || 0) * (chargeLine.unitPrice || 0);
+    if (chargeLine.unitPriceCurrency === parentState.currency) {
+      res.finalAmount = res.amount;
+    } else if (
+      parentState.fxConversions &&
+      parentState.fxConversions[chargeLine.unitPriceCurrency] &&
+      parentState.fxConversions[chargeLine.unitPriceCurrency].rate
+    ) {
+      res.finalAmount =
+        res.amount * parentState.fxConversions[chargeLine.unitPriceCurrency].rate;
+    } else {
+      res.finalAmount = 0;
+    }
+    return res;
+  });
 };
 
 export const fxConversions = (state = {}, action = { type: '' }) => {
