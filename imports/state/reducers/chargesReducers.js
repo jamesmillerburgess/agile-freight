@@ -69,7 +69,6 @@ export const fxConversions = (state = {}, action = { type: '' }) => {
     default:
       break;
   }
-  console.log(newState);
   return newState;
 };
 
