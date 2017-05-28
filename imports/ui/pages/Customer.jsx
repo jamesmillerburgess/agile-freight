@@ -2,18 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
 import QuoteListItem from '../list-items/QuoteListItem.jsx';
 
-
 import { Customers } from '../../api/customers/customers-collection';
+import { Quotes } from '../../api/quotes/quotesCollection';
+
 import EditQuoteHeaderConnect from '../editors/EditQuoteHeaderConnect.jsx';
 import EditQuoteChargesConnect from '../editors/EditQuoteChargesConnect';
 import EditQuoteEmailConnect from '../editors/EditQuoteEmailConnect';
 import ViewQuote from '../objects/ViewQuote.jsx';
 
-const CustomerInner = ({ customer, history }) => (
+const CustomerInner = ({ customer, quotes, loading, history }) => (
   <div className="">
     <div className="content customer">
       <CustomerListItem customer={customer} history={history} header />
@@ -22,9 +24,23 @@ const CustomerInner = ({ customer, history }) => (
         render={
           props => (
             <div>
-              {customer.quotes.map(quoteId => (
-                <QuoteListItem key={quoteId} {...props} quoteId={quoteId} />
-              ))}
+              {
+                loading ?
+                  null :
+                  quotes
+                    .sort((a, b) => {
+                      if (a.createdOn > b.createdOn) {
+                        return -1;
+                      }
+                      if (a.createdOn < b.createdOn) {
+                        return 1;
+                      }
+                      return 0;
+                    })
+                    .map(quote => (
+                      <QuoteListItem key={quote._id} {...props} quoteId={quote._id} />
+                    ))
+              }
             </div>
           )
         }
@@ -56,10 +72,15 @@ CustomerInner.propTypes = {
 };
 
 const Customer = createContainer((props) => {
-  const customerId = props.match.params.id;
-  const customer = Customers.findOne(customerId);
+  const customerId    = props.match.params.id;
+  const customer      = Customers.findOne(customerId);
+  const quotesHandler = Meteor.subscribe('quotes.list', customer.quotes);
+  const loading       = !quotesHandler.ready();
+  const quotes        = Quotes.find({ _id: { $in: customer.quotes } }).fetch();
   return {
     customer,
+    quotes,
+    loading,
   };
 }, CustomerInner);
 
