@@ -158,7 +158,7 @@ class Quote extends React.Component {
         </div>
         <div>
           <span>
-            {this.props.quote.movement.pickup.isPort ? 'Port' : 'Door'} TO {this.props.quote.movement.delivery.isPort ? 'Port' : 'Door'}
+            {this.props.quote.movement.pickup.isPort ? 'Port' : 'Door'} to {this.props.quote.movement.delivery.isPort ? 'Port' : 'Door'}
           </span>
         </div>
       </div>
