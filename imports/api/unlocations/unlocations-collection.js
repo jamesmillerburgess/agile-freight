@@ -6,10 +6,10 @@ export const UNLocations = new Mongo.Collection('UNLocations');
 export const Schemas = {};
 
 Schemas.UNLocation = new SimpleSchema({
-  country: String,
-  locationCode: String,
-  name: String,
-  nameWoDiacritics: String,
+  country: { type: String, optional: true },
+  locationCode: { type: String, optional: true },
+  name: { type: String, optional: true },
+  nameWoDiacritics: { type: String, optional: true },
   subdivision: { type: String, optional: true },
   IATA: { type: String, optional: true },
   isUnknown: { type: Boolean, defaultValue: false },
