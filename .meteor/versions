@@ -10,7 +10,6 @@ binary-heap@1.0.10
 blaze@2.3.2
 blaze-tools@1.0.10
 boilerplate-generator@1.1.0
-bundle-visualizer@1.0.1
 caching-compiler@1.1.9
 caching-html-compiler@1.1.2
 callback-hook@1.0.10
@@ -46,12 +45,10 @@ johanbrook:publication-collector@1.0.7
 jquery@1.11.10
 launch-screen@1.1.1
 livedata@1.0.18
-lmieulet:meteor-coverage@1.1.4
 localstorage@1.1.0
 logging@1.1.17
 meteor@1.6.1
 meteor-base@1.1.0
-meteorhacks:picker@1.0.3
 minifier-css@1.2.16
 minifier-js@2.1.0
 minimongo@1.2.0

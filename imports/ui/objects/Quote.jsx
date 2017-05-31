@@ -281,6 +281,9 @@ class Quote extends React.Component {
   }
 
   FXRates() {
+    if (!this.props.quote.charges.fxConversions) {
+      return null;
+    }
     const currencies =
             Object
               .keys(this.props.quote.charges.fxConversions)

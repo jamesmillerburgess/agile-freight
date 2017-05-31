@@ -10,8 +10,13 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
+const LoadableMyComponent = Loadable({
+  loader: () => import('../../ui/app-core/Main.jsx'),
+  LoadingComponent: () => null,
+});
+
 export const renderRoutes = () => (
   <Provider store={store}>
-    <Loadable loader={() => import('../../ui/app-core/Main.jsx')} />
+      <LoadableMyComponent />
   </Provider>
 );

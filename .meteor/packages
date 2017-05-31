@@ -27,10 +27,8 @@ dynamic-import
 dispatch:mocha
 practicalmeteor:mocha
 practicalmeteor:chai
-lmieulet:meteor-coverage
 practicalmeteor:mocha-console-runner
 dburles:factory
 hwillson:stub-collections
-bundle-visualizer
 johanbrook:publication-collector
 xolvio:email-stub
