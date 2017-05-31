@@ -1,9 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import Loadable from 'react-loadable';
 
 import app from '../../state/app';
-import Main from '../../ui/app-core/Main.jsx';
 
 const store = createStore(
   app,
@@ -12,6 +12,6 @@ const store = createStore(
 
 export const renderRoutes = () => (
   <Provider store={store}>
-    <Main />
+    <Loadable loader={() => import('../../ui/app-core/Main.jsx')} />
   </Provider>
 );
