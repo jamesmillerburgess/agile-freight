@@ -2,12 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import { currencyFormat } from '../formatters/numberFormatters';
+import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
 
 const STYLES = {
-  MESSAGE: { backgroundColor: '#FFFFFF' },
-  QUOTE: { width: '600px', backgroundColor: '#CCD4D2', padding: '7px', fontFamily: '"Tw Cen MT", Arial, sans-serif' },
-  TABLE: { width: '586px' },
+  MESSAGE: { fontFamily: 'inherit' },
+  QUOTE: {
+    width: '600px',
+    backgroundColor: '#CCD4D2',
+    padding: '7px',
+    fontFamily: '"Tw Cen MT", Arial, sans-serif',
+    color: '#666666',
+  },
+  TABLE: { width: '586px', borderSpacing: '0' },
   HEADER: { fontSize: '28px' },
   TITLE: { fontSize: '18px' },
   ALIGN_RIGHT: { textAlign: 'right' },
@@ -26,6 +32,13 @@ const STYLES = {
   HALF_SECTION: { width: '270px' },
   CHARGE_CELL: { width: '146px' },
   ALIGN_TOP: { verticalAlign: 'top' },
+  CELL: {
+    padding: '0',
+    fontFamily: '"Tw Cen MT", Arial, sans-serif',
+    color: '#666666',
+    boxSizing: 'border-box',
+    borderCollapse: 'collapse',
+  },
 };
 
 const QuoteEmail = (props) => {
@@ -33,13 +46,21 @@ const QuoteEmail = (props) => {
     <tbody>
       {props.quote.cargo.packageLines.map((packageLine, index) => (
         <tr key={index}>
-          <td>{packageLine.numPackages} {packageLine.packageType}</td>
-          <td>{packageLine.length}x{packageLine.width}x{packageLine.height}</td>
-          <td>{packageLine.weight} {packageLine.weightUOM} / pkg</td>
-          <td style={STYLES.ALIGN_RIGHT}>
+          <td style={STYLES.CELL}>
+            {packageLine.numPackages} {packageLine.packageType}
+          </td>
+          <td style={STYLES.CELL}>
+            {weightFormat(packageLine.length)}x
+            {weightFormat(packageLine.width)}x
+            {weightFormat(packageLine.height)}
+          </td>
+          <td style={STYLES.CELL}>
+            {weightFormat(packageLine.weight)} {packageLine.weightUOM} / pkg
+          </td>
+          <td style={{ ...STYLES.CELL, ...STYLES.ALIGN_RIGHT }}>
             {packageLine.numPackages} pkgs,&nbsp;
-            {packageLine.volume} {packageLine.volumeUOM},&nbsp;
-            {packageLine.totalWeight} {packageLine.weightUOM}
+            {weightFormat(packageLine.volume)} {packageLine.volumeUOM},&nbsp;
+            {weightFormat(packageLine.totalWeight)} {packageLine.weightUOM}
           </td>
         </tr>
       ))}
@@ -51,12 +72,12 @@ const QuoteEmail = (props) => {
   const PackageTotals = () => (
     <tbody>
       <tr>
-        <td style={STYLES.TOTAL_SPACER} />
-        <td>TOTAL</td>
-        <td style={STYLES.ALIGN_RIGHT}>
+        <td style={{ ...STYLES.CELL, ...STYLES.TOTAL_SPACER }} />
+        <td style={STYLES.CELL}>TOTAL</td>
+        <td style={{ ...STYLES.CELL, ...STYLES.ALIGN_RIGHT }}>
           {props.quote.cargo.totalPackages} pkgs,&nbsp;
-          {props.quote.cargo.totalVolume} {props.quote.cargo.volumeUOM},&nbsp;
-          {props.quote.cargo.totalWeight} {props.quote.cargo.weightUOM}
+          {weightFormat(props.quote.cargo.totalVolume)} {props.quote.cargo.volumeUOM},&nbsp;
+          {weightFormat(props.quote.cargo.totalWeight)} {props.quote.cargo.weightUOM}
         </td>
       </tr>
     </tbody>
@@ -67,7 +88,7 @@ const QuoteEmail = (props) => {
   const LooseCargoAttributes = () => (
     <tbody>
       <tr>
-        <td>
+        <td style={STYLES.CELL}>
           {props.quote.cargo.hazardous ?
             '' :
             'Non-'}Hazardous,&nbsp;
@@ -92,14 +113,14 @@ const QuoteEmail = (props) => {
     return (
       <tbody style={STYLES.SECTION}>
         <tr>
-          <td style={STYLES.SECTION_HEADER} colSpan="5">
+          <td style={{ ...STYLES.CELL, ...STYLES.SECTION_HEADER }} colSpan="5">
             {group.toUpperCase()} CHARGES
           </td>
         </tr>
         {groupChargeLines.map((chargeLine, index) => (
           <tr key={index}>
-            <td style={STYLES.CHARGE_CELL}>{chargeLine.name}</td>
-            <td style={STYLES.CHARGE_CELL}>
+            <td style={{ ...STYLES.CELL, ...STYLES.CHARGE_CELL }}>{chargeLine.name}</td>
+            <td style={{ ...STYLES.CELL, ...STYLES.CHARGE_CELL }}>
               {chargeLine.units} {chargeLine.rate}&nbsp;
               {
                 chargeLine.units !== 1 ?
@@ -107,14 +128,14 @@ const QuoteEmail = (props) => {
                   null
               }
             </td>
-            <td style={{ ...STYLES.CHARGE_CELL, ...STYLES.ALIGN_RIGHT }}>
+            <td style={{ ...STYLES.CELL, ...STYLES.CHARGE_CELL, ...STYLES.ALIGN_RIGHT }}>
               {
                 chargeLine.unitPriceCurrency !== props.quote.charges.currency ?
                   `${currencyFormat(chargeLine.amount)} ${chargeLine.unitPriceCurrency}` :
                   null
               }
             </td>
-            <td style={{ ...STYLES.CHARGE_CELL, ...STYLES.ALIGN_RIGHT }}>
+            <td style={{ ...STYLES.CELL, ...STYLES.CHARGE_CELL, ...STYLES.ALIGN_RIGHT }}>
               {currencyFormat(chargeLine.finalAmount)} {props.quote.charges.currency}
             </td>
           </tr>
@@ -134,9 +155,9 @@ const QuoteEmail = (props) => {
     return (
       <tbody>
         <tr>
-          <td style={STYLES.TOTAL_SPACER} />
-          <td>SUBTOTAL</td>
-          <td style={STYLES.ALIGN_RIGHT}>
+          <td style={{ ...STYLES.CELL, ...STYLES.TOTAL_SPACER }} />
+          <td style={STYLES.CELL}>SUBTOTAL</td>
+          <td style={{ ...STYLES.CELL, ...STYLES.ALIGN_RIGHT }}>
             {(() => {
               switch (group) {
                 case 'Origin':
@@ -170,17 +191,17 @@ const QuoteEmail = (props) => {
       <table>
         <tbody>
           <tr>
-            <td style={{ ...STYLES.SECTION_HEADER, ...STYLES.HALF_SECTION }} colSpan="2">
+            <td style={{ ...STYLES.CELL, ...STYLES.SECTION_HEADER, ...STYLES.HALF_SECTION }} colSpan="2">
               FX RATES
             </td>
           </tr>
           {
             currencies.map(currency => (
               <tr key={currency}>
-                <td>
+                <td style={STYLES.CELL}>
                   {props.quote.charges.currency}/{currency}
                 </td>
-                <td style={STYLES.ALIGN_RIGHT}>
+                <td style={{ ...STYLES.CELL, ...STYLES.ALIGN_RIGHT }}>
                   {props.quote.charges.fxConversions[currency].rate}
                 </td>
               </tr>
@@ -193,13 +214,13 @@ const QuoteEmail = (props) => {
 
   return (
     <div>
-      <pre>{props.message}</pre>
+      <pre style={STYLES.MESSAGE}>{props.message}</pre>
       <div style={STYLES.QUOTE}>
         <table style={{ ...STYLES.TABLE, ...STYLES.SECTION }}>
           <tbody>
             <tr>
-              <td style={STYLES.HEADER}>AGILITY FREIGHT QUOTATION</td>
-              <td style={{ ...STYLES.TITLE, ...STYLES.ALIGN_RIGHT }}>
+              <td style={{ ...STYLES.CELL, ...STYLES.HEADER }}>AGILITY FREIGHT QUOTATION</td>
+              <td style={{ ...STYLES.CELL, ...STYLES.TITLE, ...STYLES.ALIGN_RIGHT }}>
                 EXPIRES {moment(props.quote.expiryDate).format('DD MMM YYYY').toUpperCase()}
               </td>
             </tr>
@@ -209,9 +230,9 @@ const QuoteEmail = (props) => {
           <tbody>
             <tr>
               <td style={STYLES.TOTAL_SPACER} />
-              <td style={STYLES.TOTAL_ROW_CELL}>TOTAL PRICE</td>
-              <td style={{ ...STYLES.TOTAL_ROW_CELL, ...STYLES.ALIGN_RIGHT }}>
-                {props.quote.charges.totalCharges} {props.quote.charges.currency}
+              <td style={{ ...STYLES.CELL, ...STYLES.TOTAL_ROW_CELL }}>TOTAL PRICE</td>
+              <td style={{ ...STYLES.CELL, ...STYLES.TOTAL_ROW_CELL, ...STYLES.ALIGN_RIGHT }}>
+                {currencyFormat(props.quote.charges.totalCharges)} {props.quote.charges.currency}
               </td>
             </tr>
           </tbody>
@@ -219,7 +240,7 @@ const QuoteEmail = (props) => {
         <table style={STYLES.TABLE}>
           <tbody>
             <tr style={STYLES.SECTION_HEADER}>
-              <td>CARGO</td>
+              <td style={STYLES.CELL}>CARGO</td>
             </tr>
           </tbody>
         </table>
@@ -233,7 +254,7 @@ const QuoteEmail = (props) => {
             PackageTotals() :
             ContainerTotals()}
         </table>
-        <table style={STYLES.TABLE}>
+        <table style={{ ...STYLES.TABLE, ...STYLES.SECTION }}>
           {props.quote.cargo.cargoType === 'Loose' ?
             LooseCargoAttributes() :
             ContainerizedCargoAttributes()}
@@ -241,31 +262,31 @@ const QuoteEmail = (props) => {
         <table style={{ ...STYLES.TABLE, ...STYLES.SECTION }}>
           <tbody>
             <tr>
-              <td style={{ ...STYLES.SECTION_HEADER, ...STYLES.HALF_SECTION }}>
+              <td style={{ ...STYLES.CELL, ...STYLES.SECTION_HEADER, ...STYLES.HALF_SECTION }}>
                 ROUTING
               </td>
-              <td />
-              <td style={{ ...STYLES.SECTION_HEADER, ...STYLES.HALF_SECTION }}>
+              <td style={STYLES.CELL} />
+              <td style={{ ...STYLES.CELL, ...STYLES.SECTION_HEADER, ...STYLES.HALF_SECTION }}>
                 OTHER SERVICES
               </td>
             </tr>
             <tr>
-              <td style={STYLES.HALF_SECTION}>
+              <td style={{ ...STYLES.CELL, ...STYLES.HALF_SECTION }}>
                 {props.quote.movement.pickup.locationName} –&nbsp;
                 {props.quote.movement.delivery.locationName}
               </td>
-              <td />
-              <td style={STYLES.HALF_SECTION}>
+              <td style={STYLES.CELL} />
+              <td style={{ ...STYLES.CELL, ...STYLES.HALF_SECTION }}>
                 {props.quote.otherServices.insurance ? '' : 'No '}Insurance
               </td>
             </tr>
             <tr>
-              <td>
+              <td style={STYLES.CELL}>
                 {props.quote.movement.pickup.isPort ? 'Port' : 'Door'} to&nbsp;
                 {props.quote.movement.delivery.isPort ? 'Port' : 'Door'}
               </td>
-              <td />
-              <td style={STYLES.HALF_SECTION}>
+              <td style={STYLES.CELL} />
+              <td style={{ ...STYLES.CELL, ...STYLES.HALF_SECTION }}>
                 {props.quote.otherServices.customsClearance ?
                   '' :
                   'No '}Customs Clearance
@@ -291,27 +312,31 @@ const QuoteEmail = (props) => {
         <table style={{ ...STYLES.TABLE, ...STYLES.SECTION }}>
           {ChargeGroupSubtotal('Destination')}
         </table>
-        <table style={STYLES.TABLE}>
+        <table style={{ ...STYLES.TABLE, ...STYLES.SECTION }}>
           <tbody>
             <tr>
-              <td style={{ ...STYLES.HALF_SECTION, ...STYLES.ALIGN_TOP }}>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td style={{ ...STYLES.SECTION_HEADER, ...STYLES.HALF_SECTION }}>
-                        NOTES
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <pre>{props.quote.charges.notes}</pre>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <td style={{ ...STYLES.CELL, ...STYLES.HALF_SECTION, ...STYLES.ALIGN_TOP }}>
+                {
+                  props.quote.charges.notes ?
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td style={{ ...STYLES.CELL, ...STYLES.SECTION_HEADER, ...STYLES.HALF_SECTION }}>
+                            NOTES
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={STYLES.CELL}>
+                            <pre style={STYLES.CELL}>{props.quote.charges.notes}</pre>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table> :
+                    null
+                }
               </td>
-              <td />
-              <td style={{ ...STYLES.HALF_SECTION, ...STYLES.ALIGN_TOP }}>
+              <td style={STYLES.CELL} />
+              <td style={{ ...STYLES.CELL, ...STYLES.HALF_SECTION, ...STYLES.ALIGN_TOP }}>
                 {FXRates()}
               </td>
             </tr>
@@ -320,10 +345,10 @@ const QuoteEmail = (props) => {
         <table style={{ ...STYLES.TABLE, ...STYLES.SECTION }}>
           <tbody>
             <tr>
-              <td style={STYLES.TOTAL_SPACER} />
-              <td style={STYLES.TOTAL_ROW_CELL}>TOTAL PRICE</td>
-              <td style={{ ...STYLES.TOTAL_ROW_CELL, ...STYLES.ALIGN_RIGHT }}>
-                {props.quote.charges.totalCharges} {props.quote.charges.currency}
+              <td style={{ ...STYLES.CELL, ...STYLES.TOTAL_SPACER }} />
+              <td style={{ ...STYLES.CELL, ...STYLES.TOTAL_ROW_CELL }}>TOTAL PRICE</td>
+              <td style={{ ...STYLES.CELL, ...STYLES.TOTAL_ROW_CELL, ...STYLES.ALIGN_RIGHT }}>
+                {currencyFormat(props.quote.charges.totalCharges)} {props.quote.charges.currency}
               </td>
             </tr>
           </tbody>

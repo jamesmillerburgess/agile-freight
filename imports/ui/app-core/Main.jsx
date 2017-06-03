@@ -59,12 +59,12 @@ const MainInner = ({ loading }) => {
                 />
                 <Route
                   path="/email-test"
+                  message={`Dear James,
+
+    Here is the quote you requested!`}
                   render={routeProps =>
                     <QuoteEmail
                       {...routeProps}
-                      message={`Dear James,
-
-Here is the quote you requested!`}
                       quote={{
                         expiryDate: new Date('01 January 2017'),
                         cargo: {

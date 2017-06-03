@@ -13,8 +13,7 @@ Meteor.methods({
     this.unblock();
     const quote = Quotes.findOne(options.quoteId);
     const html  = ReactDOMServer
-      .renderToStaticMarkup(<QuoteEmail quote={quote} />);
-    console.log(html);
+      .renderToStaticMarkup(<QuoteEmail message={options.message} quote={quote} />);
     Email.send({
       ...options,
       html,
