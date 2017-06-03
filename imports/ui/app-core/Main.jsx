@@ -67,10 +67,6 @@ const MainInner = ({ loading }) => {
 Here is the quote you requested!`}
                       quote={{
                         expiryDate: new Date('01 January 2017'),
-                        charges: {
-                          currency: 'AMD',
-                          totalCharges: '1892.60',
-                        },
                         cargo: {
                           cargoType: 'Loose',
                           packageLines: [
@@ -93,6 +89,70 @@ Here is the quote you requested!`}
                           volumeUOM: 'cbm',
                           totalWeight: 123,
                           weightUOM: 'kg',
+                          hazardous: true,
+                          temperatureControlled: true,
+                        },
+                        movement: {
+                          pickup: {
+                            locationName: 'Berat',
+                            isPort: false,
+                          },
+                          delivery: {
+                            locationName: 'Fituita',
+                            isPort: false,
+                          },
+                        },
+                        otherServices: {
+                          insurance: true,
+                          customsClearance: true,
+                        },
+                        charges: {
+                          chargeLines: [
+                            {
+                              group: 'Origin',
+                              name: 'sdfaf',
+                              units: 1,
+                              rate: 'KG',
+                              unitPrice: 123,
+                              unitPriceCurrency: 'AED',
+                              amount: 123,
+                              finalAmount: 98.40,
+                            },
+                            {
+                              group: 'International',
+                              name: '12',
+                              units: 12,
+                              rate: 'KG',
+                              unitPrice: 123,
+                              unitPriceCurrency: 'ALL',
+                              amount: 1476,
+                              finalAmount: 1771.20,
+                            },
+                            {
+                              group: 'Destination',
+                              name: 'qwdqw',
+                              units: 1,
+                              rate: 'Container',
+                              unitPrice: 23,
+                              unitPriceCurrency: 'AMD',
+                              amount: 23,
+                              finalAmount: 23,
+                            },
+                          ],
+                          currency: 'AMD',
+                          totalOriginCharges: 98.4,
+                          totalInternationalCharges: 1771.2,
+                          totalDestinationCharges: 23,
+                          totalCharges: '1892.60',
+                          notes: `adsgadsgsaFdsa
+G
+sdag
+sdg
+sd`,
+                          fxConversions: {
+                            AED: { rate: 0.8, active: true },
+                            ALL: { rate: 1.2, active: true },
+                          },
                         },
                       }}
                     />
@@ -112,7 +172,7 @@ MainInner.propTypes = {
 };
 
 const Main = createContainer(() => {
-  const branch = Meteor.subscribe('branch.active');
+  const branch  = Meteor.subscribe('branch.active');
   const loading = !branch.ready();
   return {
     loading,
