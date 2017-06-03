@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Email } from 'meteor/email';
+import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import { Quotes } from '../quotes/quotesCollection';
@@ -14,10 +15,10 @@ Meteor.methods({
     const html  = ReactDOMServer
       .renderToStaticMarkup(<QuoteEmail quote={quote} />);
     console.log(html);
-    // Email.send({
-    //   ...options,
-    //   html,
-    // });
+    Email.send({
+      ...options,
+      html,
+    });
   },
 });
 

@@ -12,6 +12,7 @@ import Customer from '../pages/Customer.jsx';
 import UserProfile from '../editors/UserProfile.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
+import QuoteEmail from '../../ui/objects/QuoteEmail.jsx';
 
 const MainInner = ({ loading }) => {
   const verifyAuth = (component, props) => {
@@ -55,6 +56,47 @@ const MainInner = ({ loading }) => {
                 <Route
                   path="/profile"
                   render={routeProps => verifyAuth(UserProfile, routeProps)}
+                />
+                <Route
+                  path="/email-test"
+                  render={routeProps =>
+                    <QuoteEmail
+                      {...routeProps}
+                      message={`Dear James,
+
+Here is the quote you requested!`}
+                      quote={{
+                        expiryDate: new Date('01 January 2017'),
+                        charges: {
+                          currency: 'AMD',
+                          totalCharges: '1892.60',
+                        },
+                        cargo: {
+                          cargoType: 'Loose',
+                          packageLines: [
+                            {
+                              numPackages: 1,
+                              packageType: 'Package',
+                              length: 123,
+                              width: 123,
+                              height: 123,
+                              weight: 123,
+                              weightUOM: 'kg',
+                              volume: 1.861,
+                              volumeUOM: 'cbm',
+                              totalWeight: 123,
+                            },
+                          ],
+                          containerLines: [],
+                          totalPackages: 1,
+                          totalVolume: 1.861,
+                          volumeUOM: 'cbm',
+                          totalWeight: 123,
+                          weightUOM: 'kg',
+                        },
+                      }}
+                    />
+                  }
                 />
               </div>
             }
