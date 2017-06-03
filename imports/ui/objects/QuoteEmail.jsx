@@ -6,7 +6,7 @@ import { currencyFormat } from '../formatters/numberFormatters';
 
 const STYLES = {
   MESSAGE: { backgroundColor: '#FFFFFF' },
-  QUOTE: { width: '600px', backgroundColor: '#CCD4D2', padding: '7px' },
+  QUOTE: { width: '600px', backgroundColor: '#CCD4D2', padding: '7px', fontFamily: '"Tw Cen MT", Arial, sans-serif' },
   TABLE: { width: '586px' },
   HEADER: { fontSize: '28px' },
   TITLE: { fontSize: '18px' },
