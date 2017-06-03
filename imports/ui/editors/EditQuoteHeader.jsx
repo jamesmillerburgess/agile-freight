@@ -32,12 +32,12 @@ class EditQuoteHeader extends React.Component {
     this.getRates     = this.getRates.bind(this);
     this.PackageLines = this.PackageLines.bind(this);
     this.Containers   = this.Containers.bind(this);
-
+    props.dispatchers.onLoad(Quotes.findOne(props.match.params.quoteId));
     // this.quoteStats = getQuoteStats(props.quotes);
   }
 
   componentWillMount() {
-    this.props.dispatchers.onLoad(Quotes.findOne(this.props.match.params.quoteId));
+
   }
 
   getRates() {
@@ -452,7 +452,6 @@ class EditQuoteHeader extends React.Component {
                       this.props.dispatchers.onChangePickupLocation(selectedValue.value);
                       this.props.dispatchers.onChangePickupLocationName(selectedValue.label);
                     }}
-                    unLocations={UNLocations}
                   />
                 </div>
                 <div className="to-label">TO</div>
@@ -478,7 +477,6 @@ class EditQuoteHeader extends React.Component {
                       this.props.dispatchers.onChangeDeliveryLocation(selectedValue.value);
                       this.props.dispatchers.onChangeDeliveryLocationName(selectedValue.label);
                     }}
-                    unLocations={UNLocations}
                   />
                 </div>
               </div>

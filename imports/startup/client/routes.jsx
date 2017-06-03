@@ -17,6 +17,6 @@ const LoadableMyComponent = Loadable({
 
 export const renderRoutes = () => (
   <Provider store={store}>
-      <LoadableMyComponent />
+    <LoadableMyComponent />
   </Provider>
 );

@@ -3,78 +3,67 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { createContainer } from 'meteor/react-meteor-data';
+
 import { Countries } from '../../api/countries/countries-collection';
 
-class UNLocationField extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { options: [] };
-    this.setOptions = this.setOptions.bind(this);
-  }
-
-  componentWillUpdate(nextProps) {
-    if (this.props.value !== nextProps.value || !this.state.options) {
-      this.setOptions(nextProps.value, this.getCountryCode(nextProps.country));
-    }
-  }
-
-  setOptions(input = '', countryCode = '') {
-    if (!countryCode) {
-      return;
-    }
-    Meteor.call('unlocations.search', {
-      country: countryCode,
-      search: input,
-    }, (err, res) => {
-      const options = res.map(loc => ({ value: loc._id._str, label: loc.name }));
-      this.setState({ options });
-    });
-  }
-
-  renderOption(option) {
-    return (
-      <div>
-        <span className="option-label">{option.label}</span>
-        {option.count ? <div className="option-count">{option.count}</div> : ''}
-      </div>
-    );
-  }
-
-  getCountryCode(id) {
+const UNLocationField = (props) => {
+  const getCountryCode = (id) => {
     const country = Countries.findOne(new Mongo.ObjectID(id));
     if (!country || !country.countryCode) {
       return '';
     }
     return country.countryCode;
-  }
+  };
 
-  render() {
-    return (
-      <Select
-        value={this.props.value}
-        options={this.state.options}
-        clearable={false}
-        onChange={unLocation => this.props.onChange(unLocation)}
-        onInputChange={input => this.setOptions(input, this.getCountryCode(this.props.country))}
-        optionRenderer={this.renderOption}
-      />
-    );
-  }
-}
+  const getOptions = (input, cb) => {
+    const countryCode = getCountryCode(props.country);
+    if (!countryCode) {
+      cb(null, []);
+    } else {
+      Meteor.call(
+        'unlocations.search',
+        {
+          country: countryCode,
+          search: input,
+        },
+        (err, res) => {
+          const options = res.map(opt => ({
+            value: opt._id._str,
+            label: opt.name,
+          }));
+          cb(null, { options });
+        },
+      );
+    }
+  };
+
+  return (
+    <div>
+      {
+        props.country ?
+          <Select.Async
+            value={props.value}
+            loadOptions={getOptions}
+            cache={false}
+            onChange={unLocation => props.onChange(unLocation)}
+            autoload
+          /> :
+          <Select disabled />
+      }
+    </div>
+  );
+};
 
 UNLocationField.propTypes = {
   value: PropTypes.string,
-  countryCode: PropTypes.string,
+  country: PropTypes.string,
   onChange: PropTypes.func,
-  unLocations: PropTypes.object.isRequired,
 };
 
 UNLocationField.defaultProps = {
   value: '',
-  countryCode: '',
+  country: '',
   onChange: () => null,
-  topLocations: {},
 };
 
 export default UNLocationField;
