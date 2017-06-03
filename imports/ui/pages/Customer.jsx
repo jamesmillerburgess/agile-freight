@@ -1,99 +1,86 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Route, NavLink } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
 
-import CustomerOverview from './CustomerOverview.jsx';
-import CustomerQuotes from './CustomerQuotes.jsx';
-import CustomerShipments from './CustomerShipments.jsx';
-import CustomerInvoices from './CustomerInvoices.jsx';
-import CustomerConfiguration from './CustomerConfiguration.jsx';
+import CustomerListItem from '../list-items/CustomerListItem.jsx';
+import QuoteListItem from '../list-items/QuoteListItem.jsx';
 
-import { Customers } from '../../api/customers/customers';
+import { Customers } from '../../api/customers/customers-collection';
+import { Quotes } from '../../api/quotes/quotesCollection';
 
-const CustomerInner = ({ customer }) =>
-  (
-    <div className="row sidebar-container no-gutters">
-      <div className="col-2 sidebar">
-        <div className="sidebar-section-spacer" />
-        <div className="sidebar-section-header">
-          <NavLink
-            to={`/customer/${customer._id}/configuration`}
-            activeClassName="active"
-            isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/configuration`) !== -1}
-          >
-            {customer.name} (<i className="fa fa-fw fa-pencil" />Add)
-          </NavLink>
-        </div>
-        <NavLink
-          to={`/customer/${customer._id}/quotes/active`}
-          activeClassName="active"
-          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/quotes`) !== -1}
-        >
-          1. Quotes (4)
-        </NavLink>
-        <NavLink
-          to={`/customer/${customer._id}/shipments/active`}
-          activeClassName="active"
-          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/shipments`) !== -1}
-        >
-          2. Shipments (2)
-        </NavLink>
-        <NavLink
-          to={`/customer/${customer._id}/invoices/active`}
-          activeClassName="active"
-          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/invoices`) !== -1}
-        >
-          3. Invoices (1)
-        </NavLink>
-        <NavLink
-          to={`/customer/${customer._id}/overview/ytd`}
-          activeClassName="active"
-          isActive={(match, location) => location.pathname.indexOf(`/customer/${customer._id}/overview`) !== -1}
-        >
-          Overview
-        </NavLink>
-      </div>
-      <div className="col-10 content">
-        <div className="content-header">
-          <div className="content-header-inner">
-            {customer.name}
-          </div>
-        </div>
-        <Route
-          path={`/customer/${customer._id}/overview/:kpiPeriod`}
-          render={props => <CustomerOverview {...props} customer={customer} />}
-        />
-        <Route
-          path={`/customer/${customer._id}/quotes`}
-          render={props => <CustomerQuotes {...props} customer={customer} />}
-        />
-        <Route
-          path={`/customer/${customer._id}/shipments`}
-          render={props => <CustomerShipments {...props} customer={customer} />}
-        />
-        <Route
-          path={`/customer/${customer._id}/invoices`}
-          render={props => <CustomerInvoices {...props} customer={customer} />}
-        />
-        <Route
-          path={`/customer/${customer._id}/configuration`}
-          render={props => <CustomerConfiguration {...props} customer={customer} />}
-        />
+import EditQuoteHeaderConnect from '../editors/EditQuoteHeaderConnect.jsx';
+import EditQuoteChargesConnect from '../editors/EditQuoteChargesConnect';
+import EditQuoteEmailConnect from '../editors/EditQuoteEmailConnect';
+import ViewQuote from '../objects/ViewQuote.jsx';
 
-      </div>
+const CustomerInner = ({ customer, quotes, loading, history }) => (
+  <div className="">
+    <div className="content customer">
+      <CustomerListItem customer={customer} history={history} header />
+      <Route
+        path="/customers/:customerId/overview"
+        render={
+          props => (
+            <div>
+              {
+                loading ?
+                  null :
+                  quotes
+                    .sort((a, b) => {
+                      if (a.createdOn > b.createdOn) {
+                        return -1;
+                      }
+                      if (a.createdOn < b.createdOn) {
+                        return 1;
+                      }
+                      return 0;
+                    })
+                    .map(quote => (
+                      <QuoteListItem key={quote._id} {...props} quoteId={quote._id} />
+                    ))
+              }
+            </div>
+          )
+        }
+      />
+      <Route
+        path="/customers/:customerId/quotes/:quoteId/header"
+        render={props => <EditQuoteHeaderConnect {...props} />}
+      />
+      <Route
+        path="/customers/:customerId/quotes/:quoteId/charges"
+        render={props => <EditQuoteChargesConnect {...props} />}
+      />
+      <Route
+        path="/customers/:customerId/quotes/:quoteId/email"
+        render={props => <EditQuoteEmailConnect {...props} />}
+      />
+      <Route
+        path="/customers/:customerId/quotes/:quoteId/view"
+        render={props => <ViewQuote {...props} />}
+      />
     </div>
-  );
+    <div className="content-footer-accent customers-footer-accent" />
+  </div>
+);
 
 CustomerInner.propTypes = {
   customer: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 const Customer = createContainer((props) => {
-  const customerId = props.match.params.id;
-  const customer = Customers.findOne(customerId);
+  const customerId    = props.match.params.id;
+  const customer      = Customers.findOne(customerId);
+  const quotesHandler = Meteor.subscribe('quotes.list', customer.quotes);
+  const loading       = !quotesHandler.ready();
+  const quotes        = Quotes.find({ _id: { $in: customer.quotes } }).fetch();
   return {
     customer,
+    quotes,
+    loading,
   };
 }, CustomerInner);
 

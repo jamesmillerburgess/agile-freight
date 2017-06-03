@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const NavInner = ({ user, history }) => {
@@ -18,77 +18,80 @@ const NavInner = ({ user, history }) => {
         <span className="navbar-toggler-icon" />
       </button>
       <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <Link to="/" className="navbar-brand">Agility Freight</Link>
+        <div className="navbar-brand">
+          <Link to="/" className="brand">
+            <span className="brand-highlight">AGILITY</span> FREIGHT
+          </Link>
+        </div>
         <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li className="nav-item">
-            <Link to="/customers" className="nav-link">
-              Customers <span className="sr-only">(current)</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/rates" className="nav-link">Rates</Link>
+          <NavLink to="/customers" className="nav-item">
+            <button className="button customers-button">
+              <span className="label">
+                CUSTOMERS
+              </span>
+            </button>
+          </NavLink>
+          <NavLink to="/rates" className="nav-item">
+            <button className="button rates-button">
+              <span className="label">
+                RATES
+              </span>
+            </button>
+          </NavLink>
+          <NavLink to="profile" className="nav-item">
+            <button className="button profile-button">
+              <span className="label">
+                PROFILE
+              </span>
+            </button>
+          </NavLink>
+          <li>
+            <div className="form-inline">
+              <input className="focis-input mr-sm-2 search" type="text" placeholder="Search..." />
+            </div>
           </li>
         </ul>
-        <form className="form-inline">
-          <input className="focis-input mr-sm-2" type="text" placeholder="Search" />
-        </form>
+
         {user ?
           <form className="form-inline my-2 my-lg-0">
             <div className="dropdown">
-              <a
-                id="navbar-profile-button"
-                className="profile-button btn btn-secondary"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <img className="profile-pic" src="/lib/jburgess%20profile%20pic.png" alt="" />
-                <span className="user-name">{user.profile.name}</span>
-              </a>
+              <button className="sign-in-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div className="label">{user.profile.name.toUpperCase()}</div>
+              </button>
               <div className="dropdown-menu">
                 <div className="a-container">
-                  <Link to="/user-profile" id="edit-profile-link" className="dropdown-item">
-                    <i className="fa fa-fw fa-pencil" />
-                    Edit Profile
-                  </Link>
+                  <button className="dropdown-item">
+                    <span className="label">
+                      <span className="fa fa-fw fa-pencil" />
+                      EDIT PROFILE
+                    </span>
+                  </button>
                 </div>
                 <div className="a-container">
-                  <a
-                    id="sign-out-link"
-                    className="dropdown-item"
-                    onClick={logout}
-                  >
-                    <i className="fa fa-fw fa-sign-out" />
-                    Sign Out
-                  </a>
+                  <button className="dropdown-item" onClick={logout}>
+                    <span className="label">
+                      <span className="fa fa-fw fa-sign-out" />
+                      SIGN OUT
+                    </span>
+                  </button>
                 </div>
               </div>
             </div>
-          </form> :
-
+          </form>
+          :
           <form className="form-inline my-2 my-lg-0">
-            <Link
-              to="/sign-in"
-              className="profile-button btn btn-secondary"
-            >
-              <span className="user-name">
-                Sign In
-              </span>
-            </Link>
+            <button className="sign-in-button">
+              <span className="label">SIGN IN</span>
+            </button>
           </form>
         }
-        <div className="alert-button-container">
-          <button className="alert-button btn btn-secondary">
-            <i className="fa fa-fw fa-bell-o alert-icon" />
-          </button>
-        </div>
       </div>
     </nav>
   );
 };
 
 NavInner.propTypes = {
-  history: PropTypes.object,
+  history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   user: PropTypes.object,
 };
 

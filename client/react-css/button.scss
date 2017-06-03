@@ -1,0 +1,72 @@
+@import 'styleGlobals';
+
+button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: $text-color;
+  font-family: $application-font-family;
+}
+
+button:focus {
+  outline: none;
+}
+
+.radio-button {
+  font-family: $application-font-family;
+  outline: none;
+  border: 1px solid $input-border-color;
+  background-color: $editable-input-background-color;
+  padding: 5px 5px 4px 5px;
+  color: $text-color;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.customer .radio-button {
+  border-color: $customers-accent-color;
+}
+
+.radio-button:hover {
+  background-color: rgba($quaternary-color, $low-alpha);
+}
+
+.customer .radio-button:hover {
+  background-color: rgba($customers-accent-color, $mid-alpha);
+}
+
+.radio-button.active {
+  background-color: rgba($quaternary-color, $mid-alpha);
+}
+
+.customer .radio-button.active {
+  background-color: rgba($customers-accent-color, $very-high-alpha);
+  color: $inverted-text-color;
+}
+
+.radio-button.active:hover {
+  background-color: rgba($quaternary-color, $high-alpha);
+}
+
+.customer .radio-button.active:hover {
+  background-color: rgba($customers-accent-color, $high-alpha);
+}
+
+.radio-button:focus {
+  box-shadow: 0 0 3pt 2pt rgba($quaternary-color, $mid-alpha);
+  outline: none;
+}
+
+.customer .radio-button:focus {
+  box-shadow: 0 0 3pt 2pt rgba($customers-accent-color, $high-alpha);
+}
+
+.radio-button:disabled,
+.radio-button.active:disabled {
+  background-color: $disabled-input-background-color;
+  color: $text-color;
+  cursor: default;
+}

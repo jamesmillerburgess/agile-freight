@@ -1,0 +1,24 @@
+@import 'styleGlobals';
+
+.content-container {
+  padding-bottom: 200px;
+}
+
+.content {
+  width: $content-width;
+  background-color: $content-background-color;
+  margin: $content-margin;
+  left: auto;
+  right: auto;
+  padding: $content-padding;
+
+  .heading {
+    font-size: $brand-font-size;
+    font-weight: bold;
+    line-height: 34px;
+  }
+
+  .horizontal-label {
+    float: left;
+  }
+}

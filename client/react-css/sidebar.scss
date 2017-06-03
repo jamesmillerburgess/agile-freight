@@ -1,0 +1,39 @@
+@import 'styleGlobals';
+
+.sidebar-container {
+  height: 100%;
+}
+
+.sidebar {
+  padding-top: 7px;
+  background-color: $primary-color;
+  color: $editable-input-background-color;
+  font-size: $sidebar-font-size;
+
+  height: 100%;
+
+  .sidebar-section-header {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  a {
+    padding: 2px 15px;
+    display: block;
+    color: $sidebar-link-text-color;
+  }
+
+  a.active {
+    color: $tertiary-color;
+    font-weight: bold;
+  }
+
+  a:hover {
+    background-color: rgba($quaternary-color, $mid-alpha);
+  }
+
+  .sidebar-section-spacer {
+    height: 10px;
+  }
+
+}

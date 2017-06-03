@@ -1,0 +1,49 @@
+@import 'styleGlobals';
+
+.Select-control {
+  border-radius: 0 !important;
+  border-color: $customers-accent-color !important;
+}
+
+.Select input,
+.Select-value-label,
+.Select-option {
+  color: $text-color !important;
+}
+
+.Select.is-focused .Select-control {
+  box-shadow: 0 0 3pt 2pt rgba($customers-accent-color, $high-alpha) !important;
+}
+
+.Select-value-label {
+  font-weight: 300;
+}
+
+.Select.is-disabled .Select-control {
+  background-color: $disabled-input-background-color !important;
+}
+
+.Select-menu-outer {
+  border-radius: 0 !important;
+  border: 1px solid $customers-accent-color !important;
+}
+
+.Select-option.is-selected {
+  background-color: rgba($customers-accent-color, $low-alpha) !important;
+}
+
+.Select-option.is-focused {
+  background-color: rgba($customers-accent-color, $mid-alpha) !important;
+}
+
+.Select-option .option-count {
+  float: right;
+  font-size: $select-option-badge-font-size;
+  padding: 2px 4px;
+  border-radius: 3px;
+  background-color: rgba($shading-color, $low-alpha);
+}
+
+.Select.currency-field .Select-menu-outer {
+  width: calc(100% + 17px);
+}

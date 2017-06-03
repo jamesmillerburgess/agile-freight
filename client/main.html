@@ -1,8 +1,61 @@
 <head>
   <title>Agility Freight</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="mf.json">
+  <meta name="theme-color" content="orange">
 </head>
 
 <body>
-<div id="app"></div>
+<div id="app" class="app">
+  <nav class="navbar navbar-toggleable-md navbar-light navbar-inverse">
+    <button
+        class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01" aria-expanded="false"
+        aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <div class="navbar-brand">
+        <button class="brand">
+          <span class="brand-highlight">AGILITY</span> FREIGHT
+        </button>
+      </div>
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <button class="button customers-button">
+            <span class="label">
+              CUSTOMERS
+            </span>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="button rates-button">
+            <span class="label">
+              RATES
+            </span>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="button profile-button">
+            <span class="label">
+              PROFILE
+            </span>
+          </button>
+        </li>
+      </ul>
+      <div class="form-inline">
+        <input class="focis-input mr-sm-2 search" type="text" placeholder="Search..."/>
+      </div>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="sign-in-button">
+          <span class="label">
+            LOADING
+          </span>
+        </button>
+      </form>
+    </div>
+  </nav>
+</div>
 </body>

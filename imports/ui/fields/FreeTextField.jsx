@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 const FreeTextField = ({
                          value,

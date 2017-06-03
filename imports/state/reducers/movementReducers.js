@@ -17,24 +17,43 @@ const defaultMovementState = {
 };
 
 export const movement = (state = defaultMovementState, action = { type: '' }) => {
+  let newState = {};
   switch (action.type) {
+    case ACTION_TYPES.LOAD_QUOTE:
+      newState = action.quote.movement || defaultMovementState;
+      break;
     case ACTION_TYPES.SET_PICKUP_LOCATION_TYPE:
-      return changeProp(state, 'pickup', changeProp(state.pickup, 'locationType', action.locationType));
+      newState = changeProp(state, 'pickup', changeProp(state.pickup, 'locationType', action.locationType));
+      break;
+    case ACTION_TYPES.SET_PICKUP_LOCATION_NAME:
+      newState = changeProp(state, 'pickup', changeProp(state.pickup, 'locationName', action.locationName));
+      break;
     case ACTION_TYPES.SET_PICKUP_COUNTRY:
-      return changeProp(state, 'pickup', changeProp(state.pickup, 'country', action.country));
-    case ACTION_TYPES.SET_PICKUP_POSTAL_CODE:
-      return changeProp(state, 'pickup', changeProp(state.pickup, 'postalCode', action.postalCode));
-    case ACTION_TYPES.SET_PICKUP_PORT_CODE:
-      return changeProp(state, 'pickup', changeProp(state.pickup, 'portCode', action.portCode));
+      newState = changeProp(state, 'pickup', changeProp(state.pickup, 'country', action.country));
+      if (action.country !== state.pickup.country) {
+        newState.pickup.location = '';
+      }
+      break;
+    case ACTION_TYPES.SET_PICKUP_LOCATION:
+      newState = changeProp(state, 'pickup', changeProp(state.pickup, 'location', action.location));
+      break;
     case ACTION_TYPES.SET_DELIVERY_LOCATION_TYPE:
-      return changeProp(state, 'delivery', changeProp(state.delivery, 'locationType', action.locationType));
+      newState = changeProp(state, 'delivery', changeProp(state.delivery, 'locationType', action.locationType));
+      break;
+    case ACTION_TYPES.SET_DELIVERY_LOCATION_NAME:
+      newState = changeProp(state, 'delivery', changeProp(state.delivery, 'locationName', action.locationName));
+      break;
     case ACTION_TYPES.SET_DELIVERY_COUNTRY:
-      return changeProp(state, 'delivery', changeProp(state.delivery, 'country', action.country));
-    case ACTION_TYPES.SET_DELIVERY_POSTAL_CODE:
-      return changeProp(state, 'delivery', changeProp(state.delivery, 'postalCode', action.postalCode));
-    case ACTION_TYPES.SET_DELIVERY_PORT_CODE:
-      return changeProp(state, 'delivery', changeProp(state.delivery, 'portCode', action.portCode));
+      newState = changeProp(state, 'delivery', changeProp(state.delivery, 'country', action.country));
+      if (action.country !== state.delivery.country) {
+        newState.delivery.location = '';
+      }
+      break;
+    case ACTION_TYPES.SET_DELIVERY_LOCATION:
+      newState = changeProp(state, 'delivery', changeProp(state.delivery, 'location', action.location));
+      break;
     default:
-      return state;
+      newState = state;
   }
+  return newState;
 };

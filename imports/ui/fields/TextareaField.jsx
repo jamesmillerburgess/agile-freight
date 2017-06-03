@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { autoheight } from '../formatters/autoheight';
+import { resizeHeight } from '../formatters/resizeHeight';
 
 export default class TextareaField extends React.Component {
   constructor(props) {
@@ -12,16 +12,16 @@ export default class TextareaField extends React.Component {
   }
 
   componentDidMount() {
-    autoheight(this.textareaNode);
+    resizeHeight(this.textareaNode);
   }
 
   handleFieldButtonClick() {
     $('.dropdown-textarea-input').select();
-    autoheight(this.textareaNode);
+    resizeHeight(this.textareaNode);
   }
 
   handleTextareaInput() {
-    autoheight(this.textareaNode);
+    resizeHeight(this.textareaNode);
   }
 
   handleConfirmButtonClick(event) {

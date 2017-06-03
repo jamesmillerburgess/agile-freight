@@ -1,0 +1,94 @@
+@import 'styleGlobals';
+
+.panel {
+  background-color: $panel-background-color;
+  margin: $panel-margin;
+  padding: $panel-padding;
+  display: flex;
+  justify-content: space-between;
+  .title {
+    font-size: $extra-large-font-size;
+  }
+  .icon-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 0;
+    .fa {
+      color: $panel-background-color;
+    }
+  }
+  .favorite-icon {
+    color: $panel-background-color;
+  }
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.col-6 {
+  max-width: 48%;
+  padding: 0;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  .radio-button {
+    width: 150px;
+    margin-right: 15px;
+  }
+}
+
+.customer .header-panel {
+  background-color: $customers-accent-color;
+  color: $inverted-text-color;
+  .icon-column {
+    .fa {
+      color: $inverted-text-color;
+    }
+  }
+  .favorite-icon {
+    color: $inverted-text-color;
+  }
+}
+
+.customer a {
+  .panel:hover {
+    background-color: $customers-accent-color;
+    color: $inverted-text-color;
+    .icon-column .fa {
+      color: $inverted-text-color;
+    }
+    .icon-column,
+    .favorite-icon {
+      color: $inverted-text-color;
+      .fa:hover {
+        color: $customers-selected-item-background-color;
+      }
+    }
+    .favorite-icon:hover {
+      color: pink;
+    }
+  }
+}
+
+.list-item {
+  .list-item-header {
+    font-weight: bold;
+  }
+}
+
+.panel.transition {
+  transition: background-color 500ms ease-in-out;
+}

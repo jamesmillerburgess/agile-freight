@@ -1,4 +1,4 @@
-import { changeProp, changePropAtIndex, removeAtIndex, addToEnd } from './reducer-utils';
+import { changePropAtIndex, removeAtIndex, addToEnd } from './reducer-utils';
 import * as ACTION_TYPES from '../actions/actionTypes';
 
 export const cargoType = (state = 'loose', action = { type: '' }) => {
@@ -162,7 +162,7 @@ export const cargoTotals = (state = { packageLines: null }) => {
 const defaultContainerLinesState = [{
   numContainers: 1,
   containerType: '20\'',
-  temperatureControlled: false
+  temperatureControlled: false,
 }];
 
 export const containerLines = (state = defaultContainerLinesState, action = { type: '' }) => {
@@ -200,15 +200,31 @@ export const temperatureControlled = (state = false, action = { type: '' }) => {
   }
 };
 
+const cargoDefaultState = {
+  ratedQuote: false,
+  cargoType: 'Loose',
+  packageLines: defaultPackageLinesState,
+  containerLines: defaultContainerLinesState,
+  hazardous: false,
+  temperatureControlled: false,
+};
+
 export const cargo = (state = {}, action = { type: '' }) => {
-  const newBaseState = {
-    cargoType: cargoType(state.cargoType, action),
-    ratedQuote: ratedQuote(state.ratedQuote, action),
-    packageLines: packageLines(state.packageLines, action),
-    containerLines: containerLines(state.containerLines, action),
-    hazardous: hazardous(state.hazardous, action),
-    temperatureControlled: temperatureControlled(state.temperatureControlled, action),
-  };
+  let newBaseState = {};
+  switch (action.type) {
+    case ACTION_TYPES.LOAD_QUOTE:
+      newBaseState = action.quote.cargo || cargoDefaultState;
+      break;
+    default:
+      newBaseState = {
+        cargoType: cargoType(state.cargoType, action),
+        ratedQuote: ratedQuote(state.ratedQuote, action),
+        packageLines: packageLines(state.packageLines, action),
+        containerLines: containerLines(state.containerLines, action),
+        hazardous: hazardous(state.hazardous, action),
+        temperatureControlled: temperatureControlled(state.temperatureControlled, action),
+      };
+  }
   return {
     ...newBaseState,
     ...cargoTotals(newBaseState),

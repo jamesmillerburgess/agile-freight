@@ -16,8 +16,8 @@ export default class customerFixtures {
         quotes: [],
         shipments: [],
         invoices: [],
-        activeQuotes: ['1', '2'],
-        activeJobs: ['1'],
+        activeQuotes: [],
+        activeJobs: [],
         credit: {
           currency: 'INR',
           total: Math.floor(rand * (900000 - 100000)) + 100000,

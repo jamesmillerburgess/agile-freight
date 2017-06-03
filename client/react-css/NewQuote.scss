@@ -1,0 +1,398 @@
+@import 'styleGlobals';
+
+.new-quote,
+.edit-quote {
+  .notes-cell textarea {
+    width: calc(100% - 4px);
+  }
+  .cargo-row-icon {
+    margin-right: 10px;
+    min-width: 25px;
+  }
+
+  .field {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .table {
+    font-size: $large-font-size;
+    max-width: 100%;
+
+    th {
+      font-weight: normal;
+    }
+    .title {
+      font-size: $extra-large-font-size;
+      line-height: 30px;
+    }
+
+    .title-row th {
+      padding-bottom: 7px;
+      vertical-align: bottom;
+    }
+    
+    .column-title-row {
+    }
+
+    .column-title-row th:first-child {
+      border-top-left-radius: 10px;
+    }
+
+    .column-title-row th:last-child {
+      border-top-right-radius: 10px;
+    }
+
+    .info-row td {
+      vertical-align: top;
+    }
+
+    tbody.striped-data tr:nth-child(odd) {
+    }
+
+    tbody.striped-data tr:nth-child(even) {
+    }
+
+    tbody.subtotal {
+      //font-weight: 600;
+      //background-color: rgba($quaternary-color, $mid-alpha);
+    }
+    
+    td {
+      vertical-align: middle;
+    }
+
+    tr.summary {
+      color: white;
+      background-color: rgba($quaternary-color, $very-high-alpha);
+    }
+
+    th.charge-name-column {
+      width: 20%;
+    }
+
+    td.charge-name-column input {
+      text-align: left;
+      width: calc(100% - 4px);
+    }
+
+    th.rate-basis-column {
+      width: 20%;
+    }
+
+    td.rate-basis-column .Select {
+      width: calc(100% - 4px);
+    }
+
+    th.units-column {
+      width: 6%;
+    }
+
+    td.units-column input {
+      width: calc(100% - 4px);
+    }
+
+    th.unit-price-column {
+      width: 15%;
+    }
+
+    td.unit-price-column .input-group {
+      width: calc(100% - 4px);
+    }
+
+    td.unit-price-column input {
+      text-align: right;
+      width: calc(100% - 4px);
+    }
+
+    th.amount-local-column,
+    th.amount-final-column {
+      width: 19%;
+    }
+
+    td.amount-local-column,
+    td.amount-final-column {
+      max-width: 19%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    td,
+    th {
+      //padding: 12px 7px;
+    }
+  }
+
+  margin: 0;
+
+  .package-row {
+    margin-bottom: 7px;
+  }
+
+  .container-row {
+    margin-bottom: 7px;
+  }
+  .container-row,
+  .container-header {
+    .label,
+    .num-containers,
+    .container-type {
+      display: inline-block;
+      margin-right: 15px;
+      vertical-align: bottom;
+    }
+    .radio-button {
+      width: 100px;
+      margin-right: 15px;
+    }
+    .checkbox-temperature-controlled {
+      position: relative;
+      top: 5px;
+    }
+  }
+
+  .package-row,
+  .package-row-header {
+    .package-type,
+    .num-packages,
+    .dimensions,
+    .weight,
+    .totals,
+    .cargo-row-icon {
+      display: inline-block;
+      margin-right: 10px;
+      overflow: visible;
+      vertical-align: bottom;
+    }
+
+    .package-type {
+      width: 200px;
+    }
+
+    .dimensions {
+      width: 224px;
+    }
+
+    .num-packages {
+      width: 60px;
+      input {
+        width: 100%;
+      }
+    }
+
+    .weight {
+      width: 126px;
+      input {
+        width: 70px;
+      }
+    }
+
+    .totals {
+      float: right;
+      text-align: right;
+      position: relative;
+      top: 6px;
+      font-size: $large-font-size;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      .value {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .package-row .cargo-row-icon .fa {
+    position: relative;
+    bottom: 3px;
+  }
+
+  .tab {
+    display: inline-block;
+    border-radius: 7px 7px 0 0;
+    padding: 7px 25px;
+    margin-right: 7px;
+    font-size: $content-tab-font-size;
+    font-weight: 500;
+    background-color: $inactive-tab-background-color;
+    cursor: pointer;
+    color: $content-tab-text-color;
+  }
+
+  .tab.active {
+    background-color: $content-background-color;
+  }
+
+  .tab.inactive {
+    -moz-box-shadow: 0 -1px 0 0 rgba($shading-color, 0.05) inset, 0 0 0 1px rgba($shading-color, 0.13) inset;
+    -webkit-box-shadow: 0 -1px 0 0 rgba($shading-color, 0.05) inset, 0 0 0 1px rgba($shading-color, 0.13) inset;
+    box-shadow: 0 -1px 0 0 rgba($shading-color, 0.05) inset, 0 0 0 1px rgba($shading-color, 0.13) inset;
+  }
+
+
+
+  .field {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .label {
+    font-size: $large-font-size;
+    color: $text-color;
+    font-style: normal;
+    margin-bottom: 3px;
+  }
+
+  .select,
+  .input-group {
+    background-color: $editable-input-background-color;
+  }
+
+  .select {
+    border: 1px solid $input-border-color;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    font-weight: 300;
+    color: $input-text-color;
+  }
+
+  .select-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
+  .to-label {
+    position: relative;
+    top: 33px;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .select-packages,
+  .select-location-type,
+  .select-country {
+    width: 200px;
+    vertical-align: top;
+  }
+
+  .select-num-packages {
+    width: 60px;
+  }
+
+  input {
+    width: 56px;
+    text-align: center;
+  }
+
+  .input-group {
+    background-color: transparent;
+    input {
+      width: 56px;
+    }
+    .input-group-first {
+      border-right: 0;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+    .input-group-middle {
+      border-radius: 0;
+      border-right: 0;
+    }
+    .input-group-last {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+    .addon .Select-control {
+      text-align: center;
+      width: 56px;
+      background-color: $input-addon-background-color;
+      font-weight: bold;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
+
+  .input-weight {
+    width: 80px;
+  }
+
+  .package-row-totals {
+    display: inline-block;
+    font-size: $package-row-totals-font-size;
+  }
+
+  .edit-group-totals {
+    display: inline-block;
+    font-size: $large-font-size;
+    position: relative;
+    bottom: 3px;
+  }
+
+  .total-shipment-label {
+    font-size: $large-font-size;
+  }
+
+  .total-values {
+    position: relative;
+    bottom: 3px;
+    margin-right: 10px;
+    float: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .total-shipment-value {
+    font-weight: bold;
+  }
+
+  .edit-group-title {
+    font-size: $content-group-font-size;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .pickup-delivery-wrapper {
+    vertical-align: top;
+  }
+
+  //.pickup,
+  //.delivery {
+  //  width: 50%;
+  //  height: 100%;
+  //  display: inline-block;
+  //}
+
+  .pickup {
+  }
+
+  .delivery {
+    border-left: 2px solid $input-border-color;
+    padding-left: 15px;
+    float: right;
+  }
+
+  .empty-field {
+    width: 50%;
+  }
+
+  .other-services {
+    .field {
+      width: 45%;
+    }
+  }
+
+  .checkbox-hazardous {
+    margin-right: 25px;
+    width: 160px;
+  }
+
+  .checkbox-temperature-controlled {
+    width: 220px;
+  }
+
+}

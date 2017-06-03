@@ -26,14 +26,30 @@ export const toggleTemperatureControlled              = makeActionCreator(ACTION
 
 // MOVEMENT
 export const setPickupLocationType   = makeActionCreator(ACTION_TYPES.SET_PICKUP_LOCATION_TYPE, 'locationType');
+export const setPickupLocationName   = makeActionCreator(ACTION_TYPES.SET_PICKUP_LOCATION_NAME, 'locationName');
 export const setPickupCountry        = makeActionCreator(ACTION_TYPES.SET_PICKUP_COUNTRY, 'country');
-export const setPickupPostalCode     = makeActionCreator(ACTION_TYPES.SET_PICKUP_POSTAL_CODE, 'postalCode');
-export const setPickupPortCode       = makeActionCreator(ACTION_TYPES.SET_PICKUP_PORT_CODE, 'portCode');
+export const setPickupLocation       = makeActionCreator(ACTION_TYPES.SET_PICKUP_LOCATION, 'location');
 export const setDeliveryLocationType = makeActionCreator(ACTION_TYPES.SET_DELIVERY_LOCATION_TYPE, 'locationType');
+export const setDeliveryLocationName = makeActionCreator(ACTION_TYPES.SET_DELIVERY_LOCATION_NAME, 'locationName');
 export const setDeliveryCountry      = makeActionCreator(ACTION_TYPES.SET_DELIVERY_COUNTRY, 'country');
-export const setDeliveryPostalCode   = makeActionCreator(ACTION_TYPES.SET_DELIVERY_POSTAL_CODE, 'postalCode');
-export const setDeliveryPortCode     = makeActionCreator(ACTION_TYPES.SET_DELIVERY_PORT_CODE, 'portCode');
+export const setDeliveryLocation     = makeActionCreator(ACTION_TYPES.SET_DELIVERY_LOCATION, 'location');
 
 // OTHER SERVICES
 export const toggleInsurance        = makeActionCreator(ACTION_TYPES.TOGGLE_INSURANCE);
 export const toggleCustomsClearance = makeActionCreator(ACTION_TYPES.TOGGLE_CUSTOMS_CLEARANCE);
+
+// CHARGES
+export const addChargeLine                  = makeActionCreator(ACTION_TYPES.ADD_CHARGE_LINE, 'chargeLine');
+export const removeChargeLine               = makeActionCreator(ACTION_TYPES.REMOVE_CHARGE_LINE, 'id');
+export const setChargeLineCode              = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_CODE, 'id', 'code');
+export const setChargeLineName              = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_NAME, 'id', 'name');
+export const setChargeLineRate              = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_RATE, 'id', 'rate');
+export const setChargeLineUnits             = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNITS, 'id', 'units');
+export const setChargeLineUnitPrice         = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE, 'id', 'unitPrice');
+export const setChargeLineUnitPriceCurrency = makeActionCreator(ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY, 'id', 'unitPriceCurrency');
+export const setChargeNotes                 = makeActionCreator(ACTION_TYPES.SET_CHARGE_NOTES, 'notes');
+export const setFXConversionRate            = makeActionCreator(ACTION_TYPES.SET_FX_CONVERSION_RATE, 'currency', 'rate');
+export const setQuoteCurrency               = makeActionCreator(ACTION_TYPES.SET_QUOTE_CURRENCY, 'currency');
+
+// LOAD QUOTE
+export const loadQuote = makeActionCreator(ACTION_TYPES.LOAD_QUOTE, 'quote');

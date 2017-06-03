@@ -2,62 +2,67 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
-import { createContainer } from 'meteor/react-meteor-data';
+import { Mongo } from 'meteor/mongo';
 
-import { UNLocations } from '../../api/unlocations/unlocations-collection';
+import { Countries } from '../../api/countries/countries-collection';
 
-class UNLocationFieldInner extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state      = { options: [] };
-    this.setOptions = this.setOptions.bind(this);
-  }
+const UNLocationField = (props) => {
+  const getCountryCode = (id) => {
+    const country = Countries.findOne(new Mongo.ObjectID(id));
+    if (!country || !country.countryCode) {
+      return '';
+    }
+    return country.countryCode;
+  };
 
-  setOptions(input) {
-    const { country } = this.props;
-    const query       = { country, name: { $regex: input, $options: 'i' } };
-    const options     = UNLocations.find(query, { limit: 10 }).fetch().map(unLocation => ({
-      value: unLocation.locationCode,
-      label: `${unLocation.name}${unLocation.subdivision ? `, ${unLocation.subdivision}` : ''}`,
-    }));
-    this.setState({ options });
-  }
+  const getOptions = (input, cb) => {
+    const countryCode = getCountryCode(props.country);
+    if (!countryCode) {
+      cb(null, []);
+    } else {
+      Meteor.call(
+        'unlocations.search',
+        {
+          country: countryCode,
+          search: input,
+        },
+        (err, res) => {
+          const options = res.map(opt => ({
+            value: opt._id._str,
+            label: opt.name,
+          }));
+          cb(null, { options });
+        },
+      );
+    }
+  };
 
-  render() {
-    const { value, onChange } = this.props;
-    const { options }         = this.state;
-    return (
-      <div>
-        <Select
-          value={value}
-          options={options}
-          clearable={false}
-          onChange={unLocation => onChange(unLocation)}
-          onInputChange={this.setOptions}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {
+        props.country ?
+          <Select.Async
+            value={props.value}
+            loadOptions={getOptions}
+            cache={false}
+            onChange={unLocation => props.onChange(unLocation)}
+            autoload
+          /> :
+          <Select disabled />
+      }
+    </div>
+  );
+};
 
-UNLocationFieldInner.propTypes = {
+UNLocationField.propTypes = {
   value: PropTypes.string,
   country: PropTypes.string,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
 };
 
-UNLocationFieldInner.defaultProps = {
+UNLocationField.defaultProps = {
   value: '',
   country: '',
-  onChange: () => null,
 };
-
-const UNLocationField = createContainer((props) => {
-  const { country } = props;
-  Meteor.subscribe('unlocations.country', country);
-  return {
-    ...props,
-  };
-}, UNLocationFieldInner);
 
 export default UNLocationField;
