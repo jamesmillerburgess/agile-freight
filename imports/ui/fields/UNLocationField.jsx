@@ -57,13 +57,12 @@ const UNLocationField = (props) => {
 UNLocationField.propTypes = {
   value: PropTypes.string,
   country: PropTypes.string,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
 };
 
 UNLocationField.defaultProps = {
   value: '',
   country: '',
-  onChange: () => null,
 };
 
 export default UNLocationField;
