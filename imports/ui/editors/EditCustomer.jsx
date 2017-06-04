@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const EditCustomer = () => (
+const EditCustomer = ({ customer, dispatchers }) => (
   <div>
     <div className="content customer">
       <div className="process-header">
@@ -15,25 +16,41 @@ const EditCustomer = () => (
           <div className="col">
             <div className="vertical-input-group">
               <span className="label">NAME</span>
-              <input />
+              <input
+                value={customer.name}
+                onChange={e => dispatchers.setCustomerName(e.target.value)}
+              />
             </div>
             <div className="vertical-input-group">
               <span className="label">ADDRESS</span>
-              <textarea className="address" />
-            </div>
-            <div className="vertical-input-group">
-              <span className="label">CURRENCY</span>
-              <input />
+              <textarea
+                className="address"
+                value={customer.address}
+                onChange={e => dispatchers.setCustomerAddress(e.target.value)}
+              />
             </div>
             <div className="vertical-input-group">
               <span className="label">EMAIL ADDRESS</span>
-              <input />
+              <input
+                value={customer.emailAddress}
+                onChange={e => dispatchers.setCustomerEmailAddress(e.target.value)}
+              />
+            </div>
+            <div className="vertical-input-group">
+              <span className="label">CURRENCY</span>
+              <input
+                value={customer.currency}
+                onChange={e => dispatchers.setCustomerCurrency(e.target.value)}
+              />
             </div>
           </div>
           <div className="col">
             <div className="vertical-input-group">
               <span className="label">BRANCH</span>
-              <input />
+              <input
+                value={customer.branch}
+                onChange={e => dispatchers.setCustomerBranch(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -43,5 +60,26 @@ const EditCustomer = () => (
     <div className="content-footer-accent customers-footer-accent" />
   </div>
 );
+
+EditCustomer.propTypes = {
+  customer: PropTypes.shape({
+    name: PropTypes.string,
+    address: PropTypes.string,
+    emailAddress: PropTypes.string,
+    currency: PropTypes.string,
+    branch: PropTypes.string,
+  }),
+  dispatchers: PropTypes.objectOf(PropTypes.func),
+};
+
+EditCustomer.defaultProps = {
+  customer: {
+    name: '',
+    address: '',
+    emailAddress: '',
+    currency: '',
+    branch: '',
+  },
+};
 
 export default EditCustomer;
