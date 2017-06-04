@@ -39,8 +39,8 @@ if (Meteor.isServer) {
       it('returns locations for the specified country', () => {
         UNLocations.insert({ country: 'country', name: 'name' });
         UNLocations.insert({ country: 'differentCountry', name: 'name' });
-        Countries.insert({ _id: 'country' });
-        Countries.insert({ _id: 'differentCountry' });
+        Countries.insert({ countryCode: 'country' });
+        Countries.insert({ countryCode: 'differentCountry' });
         const searchResults = Meteor.call('unlocations.search', { country: 'country', search: '' });
 
         searchResults.length.should.equal(1);
@@ -54,7 +54,7 @@ if (Meteor.isServer) {
         UNLocations.insert({ country: 'country', name: 'word3 word1 word2' });
         UNLocations.insert({ country: 'country', name: 'aword3a bword2b bword1b notaword' });
         UNLocations.insert({ country: 'country', name: 'word4 word2 word3' });
-        Countries.insert({ _id: 'country' });
+        Countries.insert({ countryCode: 'country' });
         const searchResults = Meteor.call('unlocations.search', { country: 'country', search: 'word1 word2 word3' });
 
         searchResults.length.should.equal(4);
@@ -65,7 +65,7 @@ if (Meteor.isServer) {
       });
 
       it('throws an error if an invalid country is passed', () => {
-        Countries.insert({ _id: 'country' });
+        Countries.insert({ countryCode: 'country' });
 
         (() => Meteor.call('unlocations.search', { country: 'notACountry', search: '' })).should.throw();
       });
