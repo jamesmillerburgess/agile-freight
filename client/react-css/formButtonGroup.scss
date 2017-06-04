@@ -10,45 +10,4 @@
     margin-left: 10px;
     font-weight: bold;
   }
-
-  button:focus {
-    box-shadow: 0 0 3pt 2pt rgba($customers-accent-color, $high-alpha);
-  }
-
-  .delete-button {
-    background-color: $delete-button-background-color;
-
-  }
-
-  .save-button {
-    background-color: $save-button-background-color;
-  }
-
-  .delete-button,
-  .save-button {
-    width: 150px;
-    height: 35px;
-    color: $inverted-text-color;
-  }
-
-  .submit-button {
-    height: 50px;
-    width: 200px;
-    border: 0;
-    color: $editable-input-background-color;
-    outline: none;
-    background-color: $submit-button-background-color;
-  }
-
-  .delete-button:hover {
-    background-color: rgba($delete-button-background-color, $very-high-alpha);
-  }
-
-  .save-button:hover {
-    background-color: rgba($save-button-background-color, $very-high-alpha);
-  }
-
-  .submit-button:hover {
-    background-color: rgba($submit-button-background-color, $very-high-alpha);
-  }
 }

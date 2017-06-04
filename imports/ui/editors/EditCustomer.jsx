@@ -15,6 +15,23 @@ const EditCustomer = () => (
           <span className="label">NAME</span>
           <input />
         </div>
+        <div className="vertical-input-group">
+          <span className="label">ADDRESS</span>
+          <textarea />
+        </div>
+        <div className="vertical-input-group">
+          <span className="label">BRANCH</span>
+          <input />
+        </div>
+        <div className="vertical-input-group">
+          <span className="label">CURRENCY</span>
+          <input />
+        </div>
+        <div className="vertical-input-group">
+          <span className="label">EMAIL ADDRESS</span>
+          <input />
+        </div>
+        <button className="button-submit">CREATE CUSTOMER</button>
       </div>
     </div>
     <div className="content-footer-accent customers-footer-accent" />

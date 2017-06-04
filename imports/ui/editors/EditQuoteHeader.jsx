@@ -509,7 +509,7 @@ class EditQuoteHeader extends React.Component {
               <div className="form-button-group">
                 <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
                 <button className="save-button" onClick={this.save}>SAVE</button>
-                <button className="submit-button" onClick={this.getRates}>
+                <button className="button-submit" onClick={this.getRates}>
                   EDIT CHARGES
                 </button>
               </div>

@@ -97,16 +97,94 @@ if (Meteor.isClient) {
       it('renders a name input field', () => {
         wrapper
           .find('.panel .vertical-input-group')
+          .at(0)
           .childAt(0)
           .contains(<span className="label">NAME</span>)
           .should
           .equal(true);
         wrapper
           .find('.panel .vertical-input-group')
+          .at(0)
           .childAt(1)
           .name()
           .should
           .equal('input');
+      });
+
+      it('renders an address textarea field', () => {
+        wrapper
+          .find('.panel .vertical-input-group')
+          .at(1)
+          .childAt(0)
+          .contains(<span className="label">ADDRESS</span>)
+          .should
+          .equal(true);
+        wrapper
+          .find('.panel .vertical-input-group')
+          .at(1)
+          .childAt(1)
+          .name()
+          .should
+          .equal('textarea');
+      });
+
+      it('renders a branch input field', () => {
+        wrapper
+          .find('.panel .vertical-input-group')
+          .at(2)
+          .childAt(0)
+          .contains(<span className="label">BRANCH</span>)
+          .should
+          .equal(true);
+        wrapper
+          .find('.panel .vertical-input-group')
+          .at(2)
+          .childAt(1)
+          .name()
+          .should
+          .equal('input');
+      });
+
+      it('renders a currency input field', () => {
+        wrapper
+          .find('.panel .vertical-input-group')
+          .at(3)
+          .childAt(0)
+          .contains(<span className="label">CURRENCY</span>)
+          .should
+          .equal(true);
+        wrapper
+          .find('.panel .vertical-input-group')
+          .at(3)
+          .childAt(1)
+          .name()
+          .should
+          .equal('input');
+      });
+
+      it('renders an email address input field', () => {
+        wrapper
+          .find('.panel .vertical-input-group')
+          .at(4)
+          .childAt(0)
+          .contains(<span className="label">EMAIL ADDRESS</span>)
+          .should
+          .equal(true);
+        wrapper
+          .find('.panel .vertical-input-group')
+          .at(4)
+          .childAt(1)
+          .name()
+          .should
+          .equal('input');
+      });
+
+      it('renders a create customer button', () => {
+        wrapper
+          .find('.panel')
+          .contains(<button className="button-submit">CREATE CUSTOMER</button>)
+          .should
+          .equal(true);
       });
     });
   });
