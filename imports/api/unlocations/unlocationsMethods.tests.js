@@ -5,7 +5,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
 import StubCollections from 'meteor/hwillson:stub-collections';
 
-import { UNLocations } from './unlocations-collection';
+import { UNLocations } from './unlocationsCollection';
 import { Countries } from '../countries/countriesCollection';
 
 import './unlocationsMethods';
