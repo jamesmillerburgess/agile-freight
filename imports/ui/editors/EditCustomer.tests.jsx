@@ -128,34 +128,17 @@ if (Meteor.isClient) {
           .equal('textarea');
       });
 
-      it('renders a branch input field', () => {
-        wrapper
-          .find('.panel .vertical-input-group')
-          .at(2)
-          .childAt(0)
-          .contains(<span className="label">BRANCH</span>)
-          .should
-          .equal(true);
-        wrapper
-          .find('.panel .vertical-input-group')
-          .at(2)
-          .childAt(1)
-          .name()
-          .should
-          .equal('input');
-      });
-
       it('renders a currency input field', () => {
         wrapper
           .find('.panel .vertical-input-group')
-          .at(3)
+          .at(2)
           .childAt(0)
           .contains(<span className="label">CURRENCY</span>)
           .should
           .equal(true);
         wrapper
           .find('.panel .vertical-input-group')
-          .at(3)
+          .at(2)
           .childAt(1)
           .name()
           .should
@@ -165,9 +148,26 @@ if (Meteor.isClient) {
       it('renders an email address input field', () => {
         wrapper
           .find('.panel .vertical-input-group')
-          .at(4)
+          .at(3)
           .childAt(0)
           .contains(<span className="label">EMAIL ADDRESS</span>)
+          .should
+          .equal(true);
+        wrapper
+          .find('.panel .vertical-input-group')
+          .at(3)
+          .childAt(1)
+          .name()
+          .should
+          .equal('input');
+      });
+
+      it('renders a branch input field', () => {
+        wrapper
+          .find('.panel .vertical-input-group')
+          .at(4)
+          .childAt(0)
+          .contains(<span className="label">BRANCH</span>)
           .should
           .equal(true);
         wrapper

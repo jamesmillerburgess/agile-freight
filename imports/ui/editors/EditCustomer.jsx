@@ -11,25 +11,31 @@ const EditCustomer = () => (
         </Link>
       </div>
       <div className="panel">
-        <div className="vertical-input-group">
-          <span className="label">NAME</span>
-          <input />
-        </div>
-        <div className="vertical-input-group">
-          <span className="label">ADDRESS</span>
-          <textarea />
-        </div>
-        <div className="vertical-input-group">
-          <span className="label">BRANCH</span>
-          <input />
-        </div>
-        <div className="vertical-input-group">
-          <span className="label">CURRENCY</span>
-          <input />
-        </div>
-        <div className="vertical-input-group">
-          <span className="label">EMAIL ADDRESS</span>
-          <input />
+        <div className="row">
+          <div className="col">
+            <div className="vertical-input-group">
+              <span className="label">NAME</span>
+              <input />
+            </div>
+            <div className="vertical-input-group">
+              <span className="label">ADDRESS</span>
+              <textarea className="address" />
+            </div>
+            <div className="vertical-input-group">
+              <span className="label">CURRENCY</span>
+              <input />
+            </div>
+            <div className="vertical-input-group">
+              <span className="label">EMAIL ADDRESS</span>
+              <input />
+            </div>
+          </div>
+          <div className="col">
+            <div className="vertical-input-group">
+              <span className="label">BRANCH</span>
+              <input />
+            </div>
+          </div>
         </div>
         <button className="button-submit">CREATE CUSTOMER</button>
       </div>
