@@ -60,6 +60,9 @@
     color: $inverted-text-color;
     font-weight: bold;
   }
+  a {
+    margin-left: auto;
+  }
   .horizontal-input-group {
     display: flex;
     flex-direction: row;

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Customers } from '../../api/customers/customers-collection';
@@ -17,7 +18,9 @@ export const CustomerListInner = (props) => {
             <div className="label">BRANCH</div>
             <input />
           </div>
-          <button className="button-primary">NEW CUSTOMER</button>
+          <Link to="/customers/new">
+            <button className="button-primary">NEW CUSTOMER</button>
+          </Link>
         </div>
         {
           customers.map(customer =>
