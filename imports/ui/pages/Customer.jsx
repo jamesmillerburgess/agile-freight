@@ -10,6 +10,7 @@ import QuoteListItem from '../list-items/QuoteListItem.jsx';
 import { Customers } from '../../api/customers/customers-collection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
+import EditCustomer from '../editors/EditCustomer.jsx';
 import EditQuoteHeaderConnect from '../editors/EditQuoteHeaderConnect.jsx';
 import EditQuoteChargesConnect from '../editors/EditQuoteChargesConnect';
 import EditQuoteEmailConnect from '../editors/EditQuoteEmailConnect';
@@ -44,6 +45,10 @@ const CustomerInner = ({ customer, quotes, loading, history }) => (
             </div>
           )
         }
+      />
+      <Route
+        path="/customers/:customerId/edit"
+        render={props => <EditCustomer {...props} />}
       />
       <Route
         path="/customers/:customerId/quotes/:quoteId/header"
