@@ -6,7 +6,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 import deepFreeze from 'deep-freeze';
 
 import { movement } from './movementReducers';
-import * as ACTION_TYPES from '../actions/actionTypes';
+import * as ACTION_TYPES from '../../actions/actionTypes';
 
 if (Meteor.isClient) {
   describe('Movement Reducer', () => {

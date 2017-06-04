@@ -1,1 +1,1 @@
-export { newQuote } from './newQuoteReducers';
+export { newQuote } from './quote/newQuoteReducers';

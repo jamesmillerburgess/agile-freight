@@ -6,7 +6,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 import deepFreeze from 'deep-freeze';
 
 import * as cargoReducers from './cargoReducers';
-import * as ACTION_TYPES from '../actions/actionTypes';
+import * as ACTION_TYPES from '../../actions/actionTypes';
 
 if (Meteor.isClient) {
   describe('Cargo Reducers', () => {

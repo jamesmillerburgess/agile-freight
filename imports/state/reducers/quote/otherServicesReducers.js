@@ -1,5 +1,5 @@
-import { changeProp } from './reducer-utils';
-import * as ACTION_TYPES from '../actions/actionTypes';
+import { changeProp } from '../reducer-utils';
+import * as ACTION_TYPES from '../../actions/actionTypes';
 
 const otherServicesDefaultState = { insurance: false, customsClearance: false };
 

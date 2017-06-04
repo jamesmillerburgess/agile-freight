@@ -1,5 +1,5 @@
-import * as ACTION_TYPES from '../actions/actionTypes';
-import { changeProp } from './reducer-utils';
+import * as ACTION_TYPES from '../../actions/actionTypes';
+import { changeProp } from '../reducer-utils';
 
 const defaultMovementState = {
   pickup: {

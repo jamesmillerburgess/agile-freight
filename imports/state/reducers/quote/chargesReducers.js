@@ -1,7 +1,7 @@
-import { changeProp, changePropAtId, removeAtId, addToEnd } from './reducer-utils';
-import { uniqueValues } from '../../ui/statsUtils';
+import { changeProp, changePropAtId, removeAtId, addToEnd } from '../reducer-utils';
+import { uniqueValues } from '../../../ui/statsUtils';
 
-import * as ACTION_TYPES from '../actions/actionTypes';
+import * as ACTION_TYPES from '../../actions/actionTypes';
 
 export const chargeLines = (state = [], action = { type: '' }, parentState = {}) => {
   let newState = [];
