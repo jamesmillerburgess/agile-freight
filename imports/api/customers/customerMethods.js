@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { Customers } from './customers-collection';
+import { Customers } from './customersCollection';
 
 Meteor.methods({
   'customer.new': function quotesNewMethod(options = {}) {

@@ -3,7 +3,7 @@ import '../../api/users/user-methods';
 import '../../api/users/server/user-publications';
 import '../../api/offices/server/publications';
 import '../../api/offices/office-methods';
-import '../../api/customers/customer-methods';
+import '../../api/customers/customerMethods';
 import '../../api/unlocations/unlocationsMethods';
 import '../../api/unlocations/server/unlocations-publications';
 import '../../api/countries/server/countriesPublications';

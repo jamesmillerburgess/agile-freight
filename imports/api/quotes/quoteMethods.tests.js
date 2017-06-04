@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import StubCollections from 'meteor/hwillson:stub-collections';
 
 import { Quotes } from './quotesCollection';
-import { Customers } from '../customers/customers-collection';
+import { Customers } from '../customers/customersCollection';
 
 import './quoteMethods';
 

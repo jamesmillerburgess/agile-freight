@@ -5,8 +5,8 @@ import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
 import StubCollections from 'meteor/hwillson:stub-collections';
 
-import { Customers } from './customers-collection';
-import './customer-methods';
+import { Customers } from './customersCollection';
+import './customerMethods';
 
 chai.should();
 

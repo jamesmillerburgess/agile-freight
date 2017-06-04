@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { Customers } from '../../customers/customers-collection';
+import { Customers } from '../../customers/customersCollection';
 import { Countries } from '../../countries/countriesCollection';
 import { Quotes } from '../../quotes/quotesCollection';
 import { UNLocations } from '../../unlocations/unlocationsCollection';

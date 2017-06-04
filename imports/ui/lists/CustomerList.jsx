@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Customers } from '../../api/customers/customers-collection';
+import { Customers } from '../../api/customers/customersCollection';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
 

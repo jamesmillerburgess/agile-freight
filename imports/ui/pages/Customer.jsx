@@ -7,7 +7,7 @@ import { Meteor } from 'meteor/meteor';
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
 import QuoteListItem from '../list-items/QuoteListItem.jsx';
 
-import { Customers } from '../../api/customers/customers-collection';
+import { Customers } from '../../api/customers/customersCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
 import EditCustomer from '../editors/EditCustomer.jsx';

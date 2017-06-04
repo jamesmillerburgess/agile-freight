@@ -11,7 +11,7 @@ import { Mongo } from 'meteor/mongo';
 import QuoteListItem, { QuoteListItemInner } from './QuoteListItem.jsx';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
-import { Customers } from '../../api/customers/customers-collection';
+import { Customers } from '../../api/customers/customersCollection';
 import { UNLocations } from '../../api/unlocations/unlocationsCollection';
 
 if (Meteor.isClient) {

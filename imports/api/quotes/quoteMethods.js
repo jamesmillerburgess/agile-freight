@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Quotes } from './quotesCollection';
-import { Customers } from '../customers/customers-collection';
+import { Customers } from '../customers/customersCollection';
 
 Meteor.methods({
   'quote.new': function quoteNew(customerId) {
