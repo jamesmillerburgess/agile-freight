@@ -41,6 +41,73 @@ if (Meteor.isClient) {
           .should
           .equal(true);
       });
+
+      it('renders a process header', () => {
+        wrapper
+          .find('.content')
+          .childAt(0)
+          .hasClass('process-header')
+          .should
+          .equal(true);
+      });
+
+      it('renders a title in the process header', () => {
+        wrapper
+          .find('.process-header')
+          .childAt(0)
+          .contains(<div className="title">NEW CUSTOMER</div>)
+          .should
+          .equal(true);
+      });
+
+      it('renders a link back to the customer list', () => {
+        wrapper
+          .find('.process-header')
+          .childAt(1)
+          .name()
+          .should
+          .equal('Link');
+        wrapper
+          .find('Link')
+          .props()
+          .to
+          .should
+          .equal('/customers');
+      });
+
+      it('renders a customer list button in the link', () => {
+        wrapper
+          .find('Link')
+          .contains((
+            <button className="button-primary">BACK TO CUSTOMER LIST</button>
+          ))
+          .should
+          .equal(true);
+      });
+
+      it('renders a panel', () => {
+        wrapper
+          .find('.content')
+          .childAt(1)
+          .hasClass('panel')
+          .should
+          .equal(true);
+      });
+
+      it('renders a name input field', () => {
+        wrapper
+          .find('.panel .vertical-input-group')
+          .childAt(0)
+          .contains(<span className="label">NAME</span>)
+          .should
+          .equal(true);
+        wrapper
+          .find('.panel .vertical-input-group')
+          .childAt(1)
+          .name()
+          .should
+          .equal('input');
+      });
     });
   });
 }

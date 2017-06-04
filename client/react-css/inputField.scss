@@ -38,3 +38,18 @@ input.fx-rate {
   width: 100%;
   text-align: right;
 }
+
+.horizontal-input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.horizontal-input-group .label {
+  margin-right: 15px;
+}
+
+.vertical-input-group {
+  display: flex;
+  flex-direction: column;
+}
