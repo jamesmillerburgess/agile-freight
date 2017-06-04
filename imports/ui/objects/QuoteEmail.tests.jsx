@@ -26,39 +26,17 @@ if (Meteor.isClient) {
         wrapper.exists().should.equal(true);
       });
 
-      it('is a table', () => {
-        wrapper.name().should.equal('table');
-      });
-
-      it('is 600px wide', () => {
-        wrapper.prop('style').width.should.equal('600px');
-      });
-
-      it('contains a tbody', () => {
-        wrapper.childAt(0).name().should.equal('tbody');
+      it('is a div', () => {
+        wrapper.name().should.equal('div');
       });
     });
 
     describe('Props', () => {
       it('renders the message at the top in a pre', () => {
         wrapper.setProps({ message: 'Hello' });
-        wrapper.contains(<pre>Hello</pre>).should.equal(true);
-      });
-
-      it('renders the expiry date', () => {
-        wrapper.setProps({
-          quote: { expiryDate: new Date('1 January, 2017') },
-        });
-        wrapper.contains(
-          <td
-            style={{
-              fontSize: '18px',
-              textAlign: 'right',
-            }}
-          >
-            EXPIRES 01 JAN 2017
-          </td>,
-        ).should.equal(true);
+        wrapper.contains((
+          <pre style={{ fontFamily: 'inherit' }}>Hello</pre>
+        )).should.equal(true);
       });
     });
   });

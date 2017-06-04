@@ -366,6 +366,20 @@ QuoteEmail.propTypes = {
 QuoteEmail.defaultProps = {
   message: '',
   quote: {
+    movement: {
+      pickup: {
+        locationName: '',
+        isPort: false,
+      },
+      delivery: {
+        locationName: '',
+        isPort: false,
+      },
+    },
+    otherServices: {
+      insurance: false,
+      customsClearance: false,
+    },
     charges: {
       chargeLines: [],
     },
