@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
 
 import QuoteContainer from '../objects/QuoteContainer';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
-import { UNLocations } from '../../api/unlocations/unlocationsCollection';
 
 import { resizeHeight } from '../formatters/resizeHeight';
-import { quotePropTypes } from '../objects/quotePropTypes';
 
 class EditQuoteEmail extends React.Component {
   constructor(props) {
@@ -144,7 +141,7 @@ class EditQuoteEmail extends React.Component {
 }
 
 EditQuoteEmail.propTypes = {
-  quote: quotePropTypes.isRequired,
+  quote: PropTypes.object.isRequired,
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
   history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   match: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
