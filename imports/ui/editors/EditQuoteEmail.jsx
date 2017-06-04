@@ -35,7 +35,7 @@ class EditQuoteEmail extends React.Component {
       'quote.archive',
       this.props.match.params.quoteId,
       () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/overview`,
+        `/customers/view/${this.props.match.params.customerId}/overview`,
       ),
     );
   }
@@ -52,7 +52,7 @@ class EditQuoteEmail extends React.Component {
       },
       () => Meteor.call('quote.submit', quoteId, email, moment().add(1, 'month').format()),
     );
-    this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`);
+    this.props.history.push(`/customers/view/${this.props.match.params.customerId}/overview`);
   }
 
   render() {
@@ -63,7 +63,7 @@ class EditQuoteEmail extends React.Component {
           <div className="breadcrumbs">
             <button
               className="breadcrumb"
-              onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
+              onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
             >
               HEADER
             </button>
@@ -71,7 +71,7 @@ class EditQuoteEmail extends React.Component {
             <div className="breadcrumb-start" />
             <button
               className="breadcrumb"
-              onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`)}
+              onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`)}
             >
               CHARGES
             </button>
@@ -82,7 +82,7 @@ class EditQuoteEmail extends React.Component {
           </div>
           <button
             className="button-primary"
-            onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`)}
+            onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/overview`)}
           >
             BACK TO CUSTOMER
           </button>

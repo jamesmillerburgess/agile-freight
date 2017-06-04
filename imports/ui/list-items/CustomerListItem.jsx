@@ -9,12 +9,12 @@ const CustomerListItem = ({ customer, header, history }) => {
     Meteor.call(
       'quote.new',
       customer._id,
-      (err, quoteId) => history.push(`/customers/${customer._id}/quotes/${quoteId}/header`),
+      (err, quoteId) => history.push(`/customers/view/${customer._id}/quotes/${quoteId}/header`),
     );
   };
 
   return (
-    <Link to={`/customers/${customer._id}/overview`} className="list-item">
+    <Link to={`/customers/view/${customer._id}/overview`} className="list-item">
       <div className={`panel ${header ? 'header-panel' : ''}`}>
         <div className="icon-column">
           <button onClick={newQuote}>

@@ -94,14 +94,14 @@ export const QuoteListItemInner = ({ quote, history }) => {
 
   const onClickCopy = (e) => {
     e.preventDefault();
-    copyQuote(quote._id, (err, newQuoteId) => history.push(`/customers/${quote.customerId}/quotes/${newQuoteId}/header`));
+    copyQuote(quote._id, (err, newQuoteId) => history.push(`/customers/view/${quote.customerId}/quotes/${newQuoteId}/header`));
   };
 
   const quoteLink = () => {
     if (quote.status === 'Submitted') {
-      return `/customers/${quote.customerId}/quotes/${quote._id}/view`;
+      return `/customers/view/${quote.customerId}/quotes/${quote._id}/view`;
     }
-    return `/customers/${quote.customerId}/quotes/${quote._id}/header`;
+    return `/customers/view/${quote.customerId}/quotes/${quote._id}/header`;
   };
 
   return (

@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import Nav from '../../ui/app-core/Nav.jsx';
 import Home from '../pages/Home.jsx';
 import CustomerList from '../lists/CustomerList.jsx';
+import EditCustomer from '../editors/EditCustomer.jsx';
 import Customer from '../pages/Customer.jsx';
 import UserProfile from '../editors/UserProfile.jsx';
 import SignIn from './SignIn.jsx';
@@ -50,7 +51,12 @@ const MainInner = ({ loading }) => {
                   render={routeProps => verifyAuth(CustomerList, routeProps)}
                 />
                 <Route
-                  path="/customers/:id"
+                  path="/customers/new"
+                  exact
+                  render={routeProps => verifyAuth(EditCustomer, routeProps)}
+                />
+                <Route
+                  path="/customers/view/:id"
                   render={routeProps => verifyAuth(Customer, routeProps)}
                 />
                 <Route

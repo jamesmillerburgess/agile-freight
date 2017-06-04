@@ -21,7 +21,7 @@ const CustomerInner = ({ customer, quotes, loading, history }) => (
     <div className="content customer">
       <CustomerListItem customer={customer} history={history} header />
       <Route
-        path="/customers/:customerId/overview"
+        path="/customers/view/:customerId/overview"
         render={
           props => (
             <div>
@@ -51,19 +51,19 @@ const CustomerInner = ({ customer, quotes, loading, history }) => (
         render={props => <EditCustomer {...props} />}
       />
       <Route
-        path="/customers/:customerId/quotes/:quoteId/header"
+        path="/customers/view/:customerId/quotes/:quoteId/header"
         render={props => <EditQuoteHeaderConnect {...props} />}
       />
       <Route
-        path="/customers/:customerId/quotes/:quoteId/charges"
+        path="/customers/view/:customerId/quotes/:quoteId/charges"
         render={props => <EditQuoteChargesConnect {...props} />}
       />
       <Route
-        path="/customers/:customerId/quotes/:quoteId/email"
+        path="/customers/view/:customerId/quotes/:quoteId/email"
         render={props => <EditQuoteEmailConnect {...props} />}
       />
       <Route
-        path="/customers/:customerId/quotes/:quoteId/view"
+        path="/customers/view/:customerId/quotes/:quoteId/view"
         render={props => <ViewQuote {...props} />}
       />
     </div>

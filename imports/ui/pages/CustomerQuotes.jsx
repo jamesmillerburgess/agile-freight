@@ -17,7 +17,7 @@ const CustomerQuotesInner = ({ customer, quotes }) => {
     <div className="customer-quotes">
       <div className="content-navbar">
         <div className="content-navbar-inner">
-          <NavLink to={`/customer/${customer._id}/quotes/new-quote`}>
+          <NavLink to={`/customer/view/${customer._id}/quotes/new-quote`}>
             <i className="fa fa-fw fa-plus" /> New Quote
           </NavLink>
         </div>

@@ -56,7 +56,7 @@ class EditQuoteCharges extends React.Component {
       'quote.archive',
       this.props.match.params.quoteId,
       () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/overview`,
+        `/customers/view/${this.props.match.params.customerId}/overview`,
       ),
     );
   }
@@ -74,7 +74,7 @@ class EditQuoteCharges extends React.Component {
       'quote.save',
       { ...this.props.newQuote, email, _id: this.props.match.params.quoteId },
       () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/email`,
+        `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/email`,
       ),
     );
   }
@@ -142,7 +142,7 @@ class EditQuoteCharges extends React.Component {
           <div className="breadcrumbs">
             <div
               className="breadcrumb"
-              onClick={() => history.push(`/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
+              onClick={() => history.push(`/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
             >
               HEADER
             </div>
@@ -153,7 +153,7 @@ class EditQuoteCharges extends React.Component {
           </div>
           <button
             className="button-primary"
-            onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`)}
+            onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/overview`)}
           >
             BACK TO CUSTOMER
           </button>

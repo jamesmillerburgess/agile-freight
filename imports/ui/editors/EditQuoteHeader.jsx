@@ -45,7 +45,7 @@ class EditQuoteHeader extends React.Component {
       'quote.save',
       { ...this.props.quote, _id: this.props.match.params.quoteId },
       () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
+        `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
       ),
     );
   }
@@ -59,7 +59,7 @@ class EditQuoteHeader extends React.Component {
       'quote.archive',
       this.props.match.params.quoteId,
       () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/overview`,
+        `/customers/view/${this.props.match.params.customerId}/overview`,
       ),
     );
   }
@@ -375,7 +375,7 @@ class EditQuoteHeader extends React.Component {
           </div>
           <button
             className="button-primary"
-            onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`)}
+            onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/overview`)}
           >
             BACK TO CUSTOMER
           </button>
