@@ -6,7 +6,7 @@ import { Customers } from '../../api/customers/customers-collection';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
 
-const CustomerListInner = (props) => {
+export const CustomerListInner = (props) => {
   const { customers, history } = props;
   return (
     <div className="">
@@ -26,10 +26,12 @@ CustomerListInner.propTypes = {
   history: PropTypes.object,
 };
 
-const CustomerList = createContainer(() => {
-  return {
-    customers: Customers.find().fetch(),
-  };
-}, CustomerListInner);
+CustomerListInner.defaultProps = {
+  customers: [],
+};
+
+const CustomerList = createContainer(() => ({
+  customers: Customers.find().fetch(),
+}), CustomerListInner);
 
 export default CustomerList;
