@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "test": "TEST_BROWSER_DRIVER=nightmare SERVER_TEST_REPORTER=nyan meteor test --once --driver-package dispatch:mocha"
+    "test": "spacejam test --driver-package practicalmeteor:mocha-console-runner"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",

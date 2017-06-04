@@ -24,7 +24,6 @@ fourseven:scss
 dynamic-import
 
 # Test
-dispatch:mocha
 practicalmeteor:mocha
 practicalmeteor:chai
 practicalmeteor:mocha-console-runner

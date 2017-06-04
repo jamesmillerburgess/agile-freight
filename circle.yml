@@ -5,6 +5,7 @@ dependencies:
   override:
     - curl https://install.meteor.com | /bin/sh
     - npm install
+    - npm install -g spacejam
 checkout:
   post:
     - git submodule update --init
