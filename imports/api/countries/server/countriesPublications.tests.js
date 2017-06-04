@@ -4,7 +4,7 @@
 import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
 
-import './countries-publications';
+import './countriesPublications';
 
 chai.should();
 

@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 
-import { Countries } from '../countries-collection';
+import { Countries } from '../countriesCollection';
 
 Meteor.publish('countries', () => Countries.find({}));

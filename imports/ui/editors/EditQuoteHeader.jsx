@@ -14,7 +14,7 @@ import QuoteContainer from '../objects/QuoteContainer';
 import { quotePropTypes } from '../objects/quotePropTypes';
 
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
-import { Countries } from '../../api/countries/countries-collection';
+import { Countries } from '../../api/countries/countriesCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
 const getQuoteStats = quotes => ({

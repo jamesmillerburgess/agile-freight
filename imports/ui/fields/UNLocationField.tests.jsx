@@ -10,7 +10,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 
 import UNLocationField from './UNLocationField.jsx';
 import { UNLocations } from '../../api/unlocations/unlocations-collection';
-import { Countries } from '../../api/countries/countries-collection';
+import { Countries } from '../../api/countries/countriesCollection';
 
 if (Meteor.isClient) {
   describe('UN Location Field', () => {

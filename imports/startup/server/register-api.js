@@ -6,7 +6,7 @@ import '../../api/offices/office-methods';
 import '../../api/customers/customer-methods';
 import '../../api/unlocations/unlocationsMethods';
 import '../../api/unlocations/server/unlocations-publications';
-import '../../api/countries/server/countries-publications';
+import '../../api/countries/server/countriesPublications';
 import '../../api/quotes/quoteMethods';
 import '../../api/quotes/server/quotePublications';
 import '../../api/email/emailMethods';

@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import { Countries } from '../../api/countries/countries-collection';
+import { Countries } from '../../api/countries/countriesCollection';
 
 const UNLocationField = (props) => {
   const getCountryCode = (id) => {

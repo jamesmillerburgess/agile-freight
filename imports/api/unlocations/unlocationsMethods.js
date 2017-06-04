@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { UNLocations } from './unlocations-collection';
-import { Countries } from '../countries/countries-collection';
+import { Countries } from '../countries/countriesCollection';
 
 import { buildSearchRegExp } from '../../ui/searchUtils';
 

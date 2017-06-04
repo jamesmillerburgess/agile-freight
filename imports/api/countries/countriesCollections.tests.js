@@ -5,7 +5,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
 import StubCollections from 'meteor/hwillson:stub-collections';
 
-import { Countries, Schemas } from './countries-collection';
+import { Countries } from './countriesCollection';
 
 chai.should();
 
@@ -13,7 +13,6 @@ if (Meteor.isServer) {
   describe('Countries Collection', () => {
     beforeEach(() => {
       StubCollections.stub(Countries);
-      Countries.attachSchema(Schemas.Country);
     });
 
     afterEach(() => {
