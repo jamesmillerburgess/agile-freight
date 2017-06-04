@@ -8,8 +8,6 @@ import { chai } from 'meteor/practicalmeteor:chai';
 
 import QuoteEmail from './QuoteEmail.jsx';
 
-// Stub the method that is used in the component
-
 if (Meteor.isClient) {
   chai.should();
   describe('QuoteEmail Component', () => {
