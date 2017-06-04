@@ -38,19 +38,15 @@ const UNLocationField = (props) => {
   };
 
   return (
-    <div>
-      {
-        props.country ?
-          <Select.Async
-            value={props.value}
-            loadOptions={getOptions}
-            cache={false}
-            onChange={unLocation => props.onChange(unLocation)}
-            autoload
-          /> :
-          <Select disabled />
-      }
-    </div>
+    props.country ?
+      <Select.Async
+        value={props.value}
+        loadOptions={getOptions}
+        cache={false}
+        onChange={unLocation => props.onChange(unLocation)}
+        autoload
+      /> :
+      <Select disabled />
   );
 };
 
