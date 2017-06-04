@@ -113,7 +113,6 @@ if (Meteor.isClient) {
 
     describe('Structure', () => {
       it('renders a component', () => {
-        console.log(wrapper.debug());
         wrapper.exists().should.equal(true);
       });
     });
