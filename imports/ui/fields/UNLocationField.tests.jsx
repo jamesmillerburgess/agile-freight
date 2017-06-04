@@ -9,7 +9,7 @@ import StubCollections from 'meteor/hwillson:stub-collections';
 import { chai } from 'meteor/practicalmeteor:chai';
 
 import UNLocationField from './UNLocationField.jsx';
-import { UNLocations } from '../../api/unlocations/unlocations-collection';
+import { UNLocations } from '../../api/unlocations/unlocationsCollection';
 import { Countries } from '../../api/countries/countriesCollection';
 
 if (Meteor.isClient) {

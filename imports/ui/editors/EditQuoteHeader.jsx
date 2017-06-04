@@ -13,7 +13,7 @@ import QuoteContainer from '../objects/QuoteContainer';
 
 import { quotePropTypes } from '../objects/quotePropTypes';
 
-import { UNLocations } from '../../api/unlocations/unlocations-collection';
+import { UNLocations } from '../../api/unlocations/unlocationsCollection';
 import { Countries } from '../../api/countries/countriesCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 

@@ -8,7 +8,7 @@ import { Mongo } from 'meteor/mongo';
 import QuoteContainer from '../objects/QuoteContainer';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
-import { UNLocations } from '../../api/unlocations/unlocations-collection';
+import { UNLocations } from '../../api/unlocations/unlocationsCollection';
 
 import { resizeHeight } from '../formatters/resizeHeight';
 import { quotePropTypes } from '../objects/quotePropTypes';

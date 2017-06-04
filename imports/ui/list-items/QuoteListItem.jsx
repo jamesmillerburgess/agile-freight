@@ -6,7 +6,7 @@ import moment from 'moment';
 import { Mongo } from 'meteor/mongo';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
-import { UNLocations } from '../../api/unlocations/unlocations-collection';
+import { UNLocations } from '../../api/unlocations/unlocationsCollection';
 
 import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
 import { copyQuote } from '../quoteUtils';

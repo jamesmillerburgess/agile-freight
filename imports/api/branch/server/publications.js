@@ -3,7 +3,7 @@ import { Mongo } from 'meteor/mongo';
 import { Customers } from '../../customers/customers-collection';
 import { Countries } from '../../countries/countriesCollection';
 import { Quotes } from '../../quotes/quotesCollection';
-import { UNLocations } from '../../unlocations/unlocations-collection';
+import { UNLocations } from '../../unlocations/unlocationsCollection';
 
 Meteor.publish('branch.active', function publishBranchActive() {
   const cursors = [];

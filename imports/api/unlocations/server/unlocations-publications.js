@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
-import { UNLocations } from '../unlocations-collection';
+import { UNLocations } from '../unlocationsCollection';
 
 Meteor.publish('unlocations.list', (list = []) => {
   check(list, Array);
