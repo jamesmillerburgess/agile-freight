@@ -7,7 +7,6 @@ import { shallow } from 'enzyme';
 import { chai } from 'meteor/practicalmeteor:chai';
 
 import CustomerList, { CustomerListInner } from './CustomerList.jsx';
-import { Customers } from '../../api/customers/customers-collection';
 
 if (Meteor.isClient) {
   chai.should();
@@ -20,10 +19,71 @@ if (Meteor.isClient) {
       wrapper.unmount();
     });
 
-    describe('Outer Structure', () => {
+    describe('Structure', () => {
       it('renders a component', () => {
-        console.log(wrapper.debug());
         wrapper.exists().should.equal(true);
+      });
+
+      it('renders a content', () => {
+        wrapper
+          .childAt(0)
+          .hasClass('content')
+          .should
+          .equal(true);
+      });
+
+      it('renders a process header', () => {
+        wrapper
+          .find('.content')
+          .childAt(0)
+          .hasClass('process-header')
+          .should
+          .equal(true);
+      });
+
+      it('renders a title', () => {
+        wrapper
+          .find('.process-header')
+          .childAt(0)
+          .contains(<div className="title">CUSTOMER LIST</div>)
+          .should
+          .equal(true);
+      });
+
+      it('renders a horizontal input group', () => {
+        wrapper
+          .find('.process-header')
+          .childAt(1)
+          .hasClass('horizontal-input-group')
+          .should
+          .equal(true);
+      });
+
+      it('renders a branch label', () => {
+        wrapper
+          .find('.horizontal-input-group')
+          .childAt(0)
+          .contains(<div className="label">BRANCH</div>)
+          .should
+          .equal(true);
+      });
+
+      it('renders an input', () => {
+        wrapper
+          .find('.horizontal-input-group')
+          .childAt(1)
+          .contains(<input />)
+          .should
+          .equal(true);
+      });
+
+      it('renders a new customer button', () => {
+        wrapper
+          .find('.process-header')
+          .childAt(2)
+          .contains(<button className="button-primary">NEW CUSTOMER</button>)
+          .should
+          .equal(true);
       });
     });
   });
@@ -37,7 +97,7 @@ if (Meteor.isClient) {
       wrapper.unmount();
     });
 
-    describe('Outer Structure', () => {
+    describe('Structure', () => {
       it('renders a component', () => {
         console.log(wrapper.debug());
         wrapper.exists().should.equal(true);

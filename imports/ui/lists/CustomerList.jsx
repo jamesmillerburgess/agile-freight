@@ -9,8 +9,16 @@ import CustomerListItem from '../list-items/CustomerListItem.jsx';
 export const CustomerListInner = (props) => {
   const { customers, history } = props;
   return (
-    <div className="">
+    <div>
       <div className="content customer">
+        <div className="process-header">
+          <div className="title">CUSTOMER LIST</div>
+          <div className="horizontal-input-group">
+            <div className="label">BRANCH</div>
+            <input />
+          </div>
+          <button className="button-primary">NEW CUSTOMER</button>
+        </div>
         {
           customers.map(customer =>
             <CustomerListItem key={customer._id} customer={customer} history={history} />)

@@ -52,12 +52,20 @@
   .breadcrumb-end.active.customer {
     border-left-color: $customers-accent-color;
   }
-  .back-button {
+  .button-primary {
     height: 33px;
     margin-left: auto;
     padding: 0 10px;
     background-color: $customers-accent-color;
     color: $inverted-text-color;
     font-weight: bold;
+  }
+  .horizontal-input-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .horizontal-input-group .label {
+    margin-right: 15px;
   }
 }

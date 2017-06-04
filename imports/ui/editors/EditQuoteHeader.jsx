@@ -374,7 +374,7 @@ class EditQuoteHeader extends React.Component {
             <div className="breadcrumb-end active customer" />
           </div>
           <button
-            className="back-button"
+            className="button-primary"
             onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`)}
           >
             BACK TO CUSTOMER
