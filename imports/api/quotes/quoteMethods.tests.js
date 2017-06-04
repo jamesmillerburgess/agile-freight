@@ -5,7 +5,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
 import StubCollections from 'meteor/hwillson:stub-collections';
 
-import { Quotes, Schemas } from './quotesCollection';
+import { Quotes } from './quotesCollection';
 import { Customers } from '../customers/customers-collection';
 
 import './quoteMethods';
@@ -16,7 +16,6 @@ if (Meteor.isServer) {
   describe('Quote Methods', () => {
     beforeEach(() => {
       StubCollections.stub([Quotes, Customers]);
-      Quotes.attachSchema(Schemas.Quote);
       Customers.insert({ _id: 'a' });
     });
 
