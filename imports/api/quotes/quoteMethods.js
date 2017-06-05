@@ -14,6 +14,7 @@ Meteor.methods({
       customerId,
       createdOn: new Date(),
       charges: { currency },
+      status: 'Draft',
     });
 
     Customers.update({ _id: customerId }, { $push: { quotes: quoteId } });

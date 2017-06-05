@@ -55,6 +55,11 @@ if (Meteor.isServer) {
         const quoteId = Meteor.call('quote.new', 'a');
         Quotes.findOne(quoteId).createdOn.should.be.instanceof(Date);
       });
+
+      it('sets the status to \'Draft\'', () => {
+        const quoteId = Meteor.call('quote.new', 'a');
+        Quotes.findOne(quoteId).status.should.equal('Draft');
+      });
     });
 
     describe('quote.copy', () => {
