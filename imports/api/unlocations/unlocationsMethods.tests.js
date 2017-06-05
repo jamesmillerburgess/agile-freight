@@ -3,6 +3,7 @@
 
 import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import StubCollections from 'meteor/hwillson:stub-collections';
 
 import { UNLocations } from './unlocationsCollection';
@@ -41,7 +42,10 @@ if (Meteor.isServer) {
         UNLocations.insert({ country: 'differentCountry', name: 'name' });
         Countries.insert({ countryCode: 'country' });
         Countries.insert({ countryCode: 'differentCountry' });
-        const searchResults = Meteor.call('unlocations.search', { country: 'country', search: '' });
+        const searchResults = Meteor.call('unlocations.search', {
+          country: 'country',
+          search: ''
+        });
 
         searchResults.length.should.equal(1);
         searchResults[0].country.should.equal('country');
@@ -52,10 +56,16 @@ if (Meteor.isServer) {
         UNLocations.insert({ country: 'country', name: 'word1 word2 word3' });
         UNLocations.insert({ country: 'country', name: 'word2 word3 word1' });
         UNLocations.insert({ country: 'country', name: 'word3 word1 word2' });
-        UNLocations.insert({ country: 'country', name: 'aword3a bword2b bword1b notaword' });
+        UNLocations.insert({
+          country: 'country',
+          name: 'aword3a bword2b bword1b notaword'
+        });
         UNLocations.insert({ country: 'country', name: 'word4 word2 word3' });
         Countries.insert({ countryCode: 'country' });
-        const searchResults = Meteor.call('unlocations.search', { country: 'country', search: 'word1 word2 word3' });
+        const searchResults = Meteor.call('unlocations.search', {
+          country: 'country',
+          search: 'word1 word2 word3'
+        });
 
         searchResults.length.should.equal(4);
         searchResults[0].name.should.equal('word1 word2 word3');
@@ -67,7 +77,24 @@ if (Meteor.isServer) {
       it('throws an error if an invalid country is passed', () => {
         Countries.insert({ countryCode: 'country' });
 
-        (() => Meteor.call('unlocations.search', { country: 'notACountry', search: '' })).should.throw();
+        (() => Meteor.call('unlocations.search', {
+          country: 'notACountry',
+          search: '',
+        })).should.throw();
+      });
+
+      it('prioritizes a search for an id over text', () => {
+        const id = new Mongo.ObjectID();
+        UNLocations.insert({ _id: id, country: 'b', name: 'c' });
+        UNLocations.insert({ _id: 'd', country: 'b', name: 'e' });
+        Countries.insert({ countryCode: 'b' });
+        const searchResults = Meteor.call('unlocations.search', {
+          country: 'b',
+          search: '',
+          id: id._str,
+        });
+        searchResults.length.should.equal(1);
+        searchResults[0].name.should.equal('c');
       });
     });
   });

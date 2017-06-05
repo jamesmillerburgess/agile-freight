@@ -16,6 +16,7 @@ const UNLocationField = (props) => {
   };
 
   const getOptions = (input, cb) => {
+    console.log(input);
     const countryCode = getCountryCode(props.country);
     if (!countryCode) {
       cb(null, []);
@@ -36,7 +37,8 @@ const UNLocationField = (props) => {
       );
     }
   };
-
+  console.log(props);
+  console.log(props.country ? true : false);
   return (
     props.country ?
       <Select.Async
