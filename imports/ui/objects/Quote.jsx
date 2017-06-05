@@ -296,8 +296,8 @@ class Quote extends React.Component {
       <div className="fx-rates">
         <div className="title">FX RATES</div>
         {
-          currencies.map(currency => (
-            <div className="field">
+          currencies.map((currency, index) => (
+            <div key={index} className="field">
               <div className="label">
                 {this.props.quote.charges.currency}/{currency}
               </div>

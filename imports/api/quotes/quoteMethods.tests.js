@@ -86,42 +86,70 @@ if (Meteor.isServer) {
       });
 
       it('updates the customer with the new quote id', () => {
-        Quotes.insert({ _id: 'b', customerId: 'a', cargo: { totalPackages: 1 } });
+        Quotes.insert({
+          _id: 'b',
+          customerId: 'a',
+          cargo: { totalPackages: 1 },
+        });
         const quoteId = Meteor.call('quote.copy', 'b');
 
         Customers.findOne('a').quotes.should.contain(quoteId);
       });
 
       it('copies the cargo', () => {
-        Quotes.insert({ _id: 'b', customerId: 'a', cargo: { totalPackages: 1 } });
+        Quotes.insert({
+          _id: 'b',
+          customerId: 'a',
+          cargo: { totalPackages: 1 },
+        });
         const quoteId = Meteor.call('quote.copy', 'b');
 
         Quotes.findOne(quoteId).cargo.should.eql({ totalPackages: 1 });
       });
 
       it('copies the movement', () => {
-        Quotes.insert({ _id: 'b', customerId: 'a', movement: { pickup: { location: 'abc' } } });
+        Quotes.insert({
+          _id: 'b',
+          customerId: 'a',
+          movement: { pickup: { location: 'abc' } },
+        });
         const quoteId = Meteor.call('quote.copy', 'b');
 
         Quotes.findOne(quoteId).movement.should.eql({ pickup: { location: 'abc' } });
       });
 
       it('copies the other services', () => {
-        Quotes.insert({ _id: 'b', customerId: 'a', otherServices: { insurance: false } });
+        Quotes.insert({
+          _id: 'b',
+          customerId: 'a',
+          otherServices: { insurance: false },
+        });
         const quoteId = Meteor.call('quote.copy', 'b');
 
         Quotes.findOne(quoteId).otherServices.should.eql({ insurance: false });
       });
 
-      it('does not copy the charges', () => {
-        Quotes.insert({ _id: 'b', customerId: 'a', charges: { chargeLines: [] } });
+      it('copies the charges', () => {
+        Quotes.insert({
+          _id: 'b',
+          customerId: 'a',
+          charges: { chargeLines: [] },
+        });
         const quoteId = Meteor.call('quote.copy', 'b');
 
-        Quotes.findOne(quoteId).charges.should.eql({});
+        Quotes
+          .findOne(quoteId)
+          .charges
+          .should
+          .eql({ chargeLines: [] });
       });
 
       it('does not copy the expiry date', () => {
-        Quotes.insert({ _id: 'b', customerId: 'a', expiryDate: new Date('January 1, 2017') });
+        Quotes.insert({
+          _id: 'b',
+          customerId: 'a',
+          expiryDate: new Date('January 1, 2017')
+        });
         const quoteId = Meteor.call('quote.copy', 'b');
 
         Quotes.findOne(quoteId).should.not.have.property('expiryDate');

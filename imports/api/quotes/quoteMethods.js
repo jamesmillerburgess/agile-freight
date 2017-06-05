@@ -24,14 +24,20 @@ Meteor.methods({
   'quote.copy': function quoteCopy(quoteId) {
     check(quoteId, String);
 
-    const { customerId, cargo, movement, otherServices } = Quotes.findOne(quoteId);
+    const {
+            customerId,
+            cargo,
+            movement,
+            charges,
+            otherServices,
+          } = Quotes.findOne(quoteId);
 
     const newQuoteId = Quotes.insert({
       customerId,
       cargo,
       movement,
       otherServices,
-      charges: {},
+      charges,
       status: 'Draft',
       createdOn: new Date(),
     });
