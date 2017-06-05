@@ -7,7 +7,16 @@ Meteor.methods({
     // Check the parameters
     check(options, Object);
 
+    // Fill in missing defaults
+    const newCustomer = { ...options };
+    if (!newCustomer.quotes) {
+      newCustomer.quotes = [];
+    }
+    if (!newCustomer.shipments) {
+      newCustomer.shipments = [];
+    }
+
     // Insert the new customer
-    Customers.insert(options);
+    return Customers.insert(newCustomer);
   },
 });

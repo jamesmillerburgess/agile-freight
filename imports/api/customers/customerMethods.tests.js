@@ -33,6 +33,23 @@ if (Meteor.isServer) {
         (() => Meteor.call('customer.new', [])).should.throw();
         (() => Meteor.call('customer.new', true)).should.throw();
       });
+
+      it('returns the id of the new customer', () => {
+        const id = Meteor.call('customer.new', {});
+        Customers.findOne(id)._id.should.equal(id);
+      });
+
+      it('adds an empty array of quotes if none are provided', () => {
+        const id = Meteor.call('customer.new', {});
+        Customers.findOne(id).quotes.should.be.instanceOf(Array);
+        Customers.findOne(id).quotes.length.should.equal(0);
+      });
+
+      it('adds an empty array of shipments if none are provided', () => {
+        const id = Meteor.call('customer.new', {});
+        Customers.findOne(id).shipments.should.be.instanceOf(Array);
+        Customers.findOne(id).shipments.length.should.equal(0);
+      });
     });
   });
 }

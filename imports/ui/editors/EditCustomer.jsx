@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
 
-const EditCustomer = ({ customer, dispatchers }) => (
+const EditCustomer = ({ customer, dispatchers, history }) => (
   <div>
     <div className="content customer">
       <div className="process-header">
@@ -54,7 +55,16 @@ const EditCustomer = ({ customer, dispatchers }) => (
             </div>
           </div>
         </div>
-        <button className="button-submit">CREATE CUSTOMER</button>
+        <button
+          className="button-submit"
+          onClick={() => {
+            Meteor.call('customer.new', customer, (err, res) => {
+              history.push(`/customers/view/${res}/overview`);
+            });
+          }}
+        >
+          CREATE CUSTOMER
+        </button>
       </div>
     </div>
     <div className="content-footer-accent customers-footer-accent" />
@@ -70,6 +80,7 @@ EditCustomer.propTypes = {
     branch: PropTypes.string,
   }),
   dispatchers: PropTypes.objectOf(PropTypes.func),
+  history: PropTypes.object,
 };
 
 EditCustomer.defaultProps = {

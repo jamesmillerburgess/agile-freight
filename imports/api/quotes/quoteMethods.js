@@ -8,7 +8,13 @@ Meteor.methods({
   'quote.new': function quoteNew(customerId) {
     check(customerId, String);
 
-    const quoteId = Quotes.insert({ customerId, createdOn: new Date() });
+    const { currency } = Customers.findOne(customerId);
+
+    const quoteId = Quotes.insert({
+      customerId,
+      createdOn: new Date(),
+      charges: { currency },
+    });
 
     Customers.update({ _id: customerId }, { $push: { quotes: quoteId } });
 
@@ -47,7 +53,7 @@ Meteor.methods({
     }
 
     // Insert quote
-    const update  = {
+    const update = {
       ...options,
       status: 'Draft',
       charges: [],

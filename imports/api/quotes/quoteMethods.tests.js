@@ -16,7 +16,7 @@ if (Meteor.isServer) {
   describe('Quote Methods', () => {
     beforeEach(() => {
       StubCollections.stub([Quotes, Customers]);
-      Customers.insert({ _id: 'a' });
+      Customers.insert({ _id: 'a', currency: 'b' });
     });
 
     afterEach(() => {
@@ -33,25 +33,26 @@ if (Meteor.isServer) {
 
       it('returns the id of the new quote', () => {
         const quoteId = Meteor.call('quote.new', 'a');
-
         Quotes.findOne()._id.should.equal(quoteId);
       });
 
       it('inserts a quote with the given customerId', () => {
         const quoteId = Meteor.call('quote.new', 'a');
-
         Quotes.findOne(quoteId).customerId.should.equal('a');
       });
 
       it('updates the given customer with the new quote id', () => {
         const quoteId = Meteor.call('quote.new', 'a');
-
         Customers.findOne('a').quotes[0].should.equal(quoteId);
+      });
+
+      it('sets the currency to that of the customer', () => {
+        const quoteId = Meteor.call('quote.new', 'a');
+        Quotes.findOne(quoteId).charges.currency.should.equal('b');
       });
 
       it('sets the created on date', () => {
         const quoteId = Meteor.call('quote.new', 'a');
-
         Quotes.findOne(quoteId).createdOn.should.be.instanceof(Date);
       });
     });

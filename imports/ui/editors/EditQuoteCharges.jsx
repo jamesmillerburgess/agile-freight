@@ -9,6 +9,7 @@ import CurrencyField from '../fields/CurrencyField.jsx';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 import { UNLocations } from '../../api/unlocations/unlocationsCollection';
+import { Customers } from '../../api/customers/customersCollection';
 
 import { currencyFormat } from '../formatters/numberFormatters';
 import { resizeHeight } from '../formatters/resizeHeight';
@@ -48,7 +49,10 @@ class EditQuoteCharges extends React.Component {
   }
 
   save() {
-    Meteor.call('quote.save', { ...this.props.newQuote, _id: this.props.match.params.quoteId });
+    Meteor.call('quote.save', {
+      ...this.props.newQuote,
+      _id: this.props.match.params.quoteId
+    });
   }
 
   archive() {
@@ -62,13 +66,17 @@ class EditQuoteCharges extends React.Component {
   }
 
   editEmail() {
-    const email = this.props.newQuote.email || {
-        to: 'agilityfreightdemo@gmail.com',
-        cc: '',
-        subject: 'Your Freight Quote',
-        message: `Dear customer,
+    const to = Customers
+      .findOne(this.props.match.params.customerId)
+      .emailAddress;
+    const email = {
+      to,
+      cc: '',
+      subject: 'Your Freight Quote',
+      message: `Dear customer,
+      
     Thank you for your interest in our services. Please find attached a quote for the freight charges as per your request.`,
-      };
+    };
     this.props.loadEmail(email);
     Meteor.call(
       'quote.save',
