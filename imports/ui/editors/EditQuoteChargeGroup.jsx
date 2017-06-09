@@ -50,6 +50,9 @@ const EditQuoteChargeGroup = (props) => {
                 { value: 'CBM', label: 'CBM' },
                 { value: 'Container', label: 'Container' },
                 { value: 'TEU', label: 'TEU' },
+                { value: 'Package', label: 'Package' },
+                { value: 'Declaration', label: 'Declaration' },
+                { value: 'HAWB', label: 'HAWB' },
               ]}
               onChange={selectedValue => setChargeLineRate(chargeLine.id, selectedValue.value)}
               arrowRenderer={() => false}

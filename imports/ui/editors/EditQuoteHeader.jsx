@@ -113,6 +113,7 @@ class EditQuoteHeader extends React.Component {
                     { value: 'Packages', label: 'Packages' },
                     { value: 'Boxes', label: 'Boxes' },
                     { value: 'Pallets', label: 'Pallets' },
+                    { value: 'Cases', label: 'Cases' },
                   ]}
                   clearable={false}
                   onChange={selectedValue => this.props.dispatchers
