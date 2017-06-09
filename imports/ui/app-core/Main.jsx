@@ -178,8 +178,9 @@ MainInner.propTypes = {
 };
 
 const Main = createContainer(() => {
+  const branches = Meteor.subscribe('branch.all');
   const branch  = Meteor.subscribe('branch.active');
-  const loading = !branch.ready();
+  const loading = !branch.ready() || !branches.ready();
   return {
     loading,
   };
