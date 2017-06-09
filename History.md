@@ -1,6 +1,6 @@
-# v.NEXT Branches
+# v.NEXT – Branches
 
-# v0.1.0 Speed Demo
+# v0.1.0 – Speed Demo
 
 * Create and email an LCL quote that matches an existing Agility quote
 * Other quote types partially supported
