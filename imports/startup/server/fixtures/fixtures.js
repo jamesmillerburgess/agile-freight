@@ -17,9 +17,12 @@ Meteor.startup(() => {
 
     Branches.remove({});
     Branches.insert({ name: 'Basel' });
+
     Customers.remove({});
     Customers._ensureIndex({ search: 1 });
+
     Quotes.remove({});
+    
     Meteor.users.remove({});
     Accounts.createUser({
       username: 'd',
