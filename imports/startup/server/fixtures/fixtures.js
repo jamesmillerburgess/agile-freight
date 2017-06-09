@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
+import { Branches } from '../../../api/branch/branchCollection';
 import { Offices } from '../../../api/offices/offices';
 import { Customers } from '../../../api/customers/customersCollection';
 import { Quotes } from '../../../api/quotes/quotesCollection';
@@ -13,6 +14,9 @@ Meteor.startup(() => {
   if (Meteor.settings.reset) {
     Offices.remove({});
     Offices._ensureIndex({ search: 1 });
+
+    Branches.remove({});
+    Branches.insert({ name: 'Basel' });
     Customers.remove({});
     Customers._ensureIndex({ search: 1 });
     Quotes.remove({});
@@ -22,6 +26,7 @@ Meteor.startup(() => {
       email: 'd@d.com',
       password: 'd',
       profile: {
+        branch: Branches.findOne({ name: 'Basel' })._id,
         name: 'James Burgess',
         address: `Beim Goldenen Loewen 16
 4052 Basel
