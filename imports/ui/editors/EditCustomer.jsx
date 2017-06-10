@@ -6,11 +6,17 @@ import { Meteor } from 'meteor/meteor';
 import BranchField from '../fields/BranchField.jsx';
 import { Branches } from '../../api/branch/branchCollection';
 
-const EditCustomer = ({ customer, dispatchers, history }) => (
+const EditCustomer = props => (
   <div>
     <div className="content customer">
       <div className="process-header">
-        <div className="title">NEW CUSTOMER</div>
+        <div className="title">
+          {
+            props.editMode ?
+              'EDIT CUSTOMER' :
+              'NEW CUSTOMER'
+          }
+        </div>
         <Link to="/customers">
           <button className="button-primary">BACK TO CUSTOMER LIST</button>
         </Link>
@@ -21,38 +27,38 @@ const EditCustomer = ({ customer, dispatchers, history }) => (
             <div className="vertical-input-group">
               <span className="label">BRANCH</span>
               <BranchField
-                value={customer.branch}
+                value={props.customer.branch}
                 options={Branches.find().fetch()}
-                onChange={value => dispatchers.setCustomerBranch(value)}
+                onChange={value => props.dispatchers.setCustomerBranch(value)}
               />
             </div>
             <div className="vertical-input-group">
               <span className="label">NAME</span>
               <input
-                value={customer.name}
-                onChange={e => dispatchers.setCustomerName(e.target.value)}
+                value={props.customer.name}
+                onChange={e => props.dispatchers.setCustomerName(e.target.value)}
               />
             </div>
             <div className="vertical-input-group">
               <span className="label">ADDRESS</span>
               <textarea
                 className="address"
-                value={customer.address}
-                onChange={e => dispatchers.setCustomerAddress(e.target.value)}
+                value={props.customer.address}
+                onChange={e => props.dispatchers.setCustomerAddress(e.target.value)}
               />
             </div>
             <div className="vertical-input-group">
               <span className="label">EMAIL ADDRESS</span>
               <input
-                value={customer.emailAddress}
-                onChange={e => dispatchers.setCustomerEmailAddress(e.target.value)}
+                value={props.customer.emailAddress}
+                onChange={e => props.dispatchers.setCustomerEmailAddress(e.target.value)}
               />
             </div>
             <div className="vertical-input-group">
               <span className="label">CURRENCY</span>
               <input
-                value={customer.currency}
-                onChange={e => dispatchers.setCustomerCurrency(e.target.value)}
+                value={props.customer.currency}
+                onChange={e => props.dispatchers.setCustomerCurrency(e.target.value)}
               />
             </div>
           </div>
@@ -60,9 +66,16 @@ const EditCustomer = ({ customer, dispatchers, history }) => (
         <button
           className="button-submit"
           onClick={() => {
-            Meteor.call('customer.new', customer, (err, res) => {
-              history.push(`/customers/view/${res}/overview`);
-            });
+            if (props.editMode) {
+              const { customerId } = props.match.params;
+              Meteor.call('customer.edit', customerId, props.customer, () => {
+                props.history.push(`/customers/view/${customerId}/overview`);
+              });
+            } else {
+              Meteor.call('customer.new', props.customer, (err, res) => {
+                props.history.push(`/customers/view/${res}/overview`);
+              });
+            }
           }}
         >
           CREATE CUSTOMER
@@ -74,6 +87,7 @@ const EditCustomer = ({ customer, dispatchers, history }) => (
 );
 
 EditCustomer.propTypes = {
+  editMode: PropTypes.bool,
   customer: PropTypes.shape({
     name: PropTypes.string,
     address: PropTypes.string,
