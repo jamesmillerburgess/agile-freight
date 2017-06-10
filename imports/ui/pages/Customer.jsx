@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
@@ -20,6 +20,12 @@ const CustomerInner = ({ customer, loading, history }) => {
   return (
     <div className="">
       <div className="content customer">
+        <div className="process-header">
+          <div className="title">CUSTOMER</div>
+          <Link to="/customers">
+            <button className="button-primary">BACK TO CUSTOMER LIST</button>
+          </Link>
+        </div>
         {
           loading ?
             null :

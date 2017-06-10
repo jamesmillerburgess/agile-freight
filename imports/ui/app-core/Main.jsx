@@ -83,6 +83,13 @@ const MainInner = ({ loading }) => {
                   render={routeProps => verifyAdminAuth(EditBranchConnect, routeProps)}
                 />
                 <Route
+                  path="/branches/edit/:branchId"
+                  render={routeProps => verifyAdminAuth(EditBranchConnect, {
+                    ...routeProps,
+                    editMode: true,
+                  })}
+                />
+                <Route
                   path="/email-test"
                   message={`Dear James,
 
