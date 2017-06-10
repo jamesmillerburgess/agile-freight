@@ -12,9 +12,14 @@ const NavInner = ({ user, history }) => {
     { value: 'profile', label: 'Profile' },
     { value: 'logout', label: 'Logout' },
   ];
-  if (Meteor.user().profile.admin) {
-    options.push({ value: 'branches', label: 'Branches', admin: true });
+  if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.admin) {
+    options.push({ value: 'branches', label: 'Branches' });
   }
+  const onChange = (values) => {
+    if (values[1].value === 'logout') {
+      logout();
+    }
+  };
 
   return (
     <nav className="navbar navbar-toggleable-md navbar-light navbar-inverse">
@@ -73,6 +78,7 @@ const NavInner = ({ user, history }) => {
               searchable={false}
               multi
               options={options}
+              onChange={onChange}
             />
           </div>
           :
