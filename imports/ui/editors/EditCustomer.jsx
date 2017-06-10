@@ -78,7 +78,7 @@ const EditCustomer = props => (
             }
           }}
         >
-          CREATE CUSTOMER
+          SAVE CUSTOMER
         </button>
       </div>
     </div>

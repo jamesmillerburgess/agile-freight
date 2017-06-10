@@ -10,7 +10,7 @@ import QuoteListItem from '../list-items/QuoteListItem.jsx';
 import { Customers } from '../../api/customers/customersCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
-import EditCustomer from '../editors/EditCustomer.jsx';
+import EditCustomerConnect from '../editors/EditCustomerConnect';
 import EditQuoteHeaderConnect from '../editors/EditQuoteHeaderConnect.jsx';
 import EditQuoteChargesConnect from '../editors/EditQuoteChargesConnect';
 import EditQuoteEmailConnect from '../editors/EditQuoteEmailConnect';
@@ -60,10 +60,6 @@ const CustomerInner = ({ customer, loading, history }) => {
           }
         />
         <Route
-          path="/customers/:customerId/edit"
-          render={props => <EditCustomer {...props} />}
-        />
-        <Route
           path="/customers/view/:customerId/quotes/:quoteId/header"
           render={props => <EditQuoteHeaderConnect {...props} />}
         />
@@ -83,7 +79,7 @@ const CustomerInner = ({ customer, loading, history }) => {
       <div className="content-footer-accent customers-footer-accent" />
     </div>
   );
-}
+};
 
 CustomerInner.propTypes = {
   customer: PropTypes.object,

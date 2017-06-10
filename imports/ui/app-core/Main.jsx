@@ -69,6 +69,13 @@ const MainInner = ({ loading }) => {
                   render={routeProps => verifyAuth(Customer, routeProps)}
                 />
                 <Route
+                  path="/customers/edit/:customerId"
+                  render={routeProps => verifyAuth(EditCustomerConnect, {
+                    ...routeProps,
+                    editMode: true,
+                  })}
+                />
+                <Route
                   path="/profile"
                   render={routeProps => verifyAuth(UserProfile, routeProps)}
                 />
