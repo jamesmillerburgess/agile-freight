@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 // All the pages to render
 import Nav from '../../ui/app-core/Nav.jsx';
 import Home from '../pages/Home.jsx';
-import CustomerList from '../lists/CustomerList.jsx';
+import CustomerListConnect from '../lists/CustomerListConnect.jsx';
 import EditCustomerConnect from '../editors/EditCustomerConnect';
 import Customer from '../pages/Customer.jsx';
 import UserProfile from '../editors/UserProfile.jsx';
@@ -57,7 +57,7 @@ const MainInner = ({ loading }) => {
                 <Route
                   path="/customers"
                   exact
-                  render={routeProps => verifyAuth(CustomerList, routeProps)}
+                  render={routeProps => verifyAuth(CustomerListConnect, routeProps)}
                 />
                 <Route
                   path="/customers/new"

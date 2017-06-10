@@ -6,9 +6,12 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Customers } from '../../api/customers/customersCollection';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
+import BranchField from '../fields/BranchField.jsx';
+
+import { Branches } from '../../api/branch/branchCollection';
 
 export const CustomerListInner = (props) => {
-  const { customers, history } = props;
+  const { customers, customerList, dispatchers, history } = props;
   return (
     <div>
       <div className="content customer">
@@ -16,15 +19,28 @@ export const CustomerListInner = (props) => {
           <div className="title">CUSTOMER LIST</div>
           <div className="horizontal-input-group">
             <div className="label">BRANCH</div>
-            <input />
+            <div className="field">
+              <BranchField
+                value={customerList.filter}
+                options={Branches.find().fetch()}
+                onChange={option => dispatchers.setCustomerListFilter(option._id)}
+              />
+            </div>
           </div>
           <Link to="/customers/new">
             <button className="button-primary">NEW CUSTOMER</button>
           </Link>
         </div>
         {
-          customers.map(customer =>
-            <CustomerListItem key={customer._id} customer={customer} history={history} />)
+          customers
+            .filter(customer => customer.branch._id === customerList.filter)
+            .map(customer => (
+              <CustomerListItem
+                key={customer._id}
+                customer={customer}
+                history={history}
+              />
+            ))
         }
       </div>
       <div className="content-footer-accent customers-footer-accent" />
@@ -34,6 +50,8 @@ export const CustomerListInner = (props) => {
 
 CustomerListInner.propTypes = {
   customers: PropTypes.array,
+  customerList: PropTypes.object,
+  dispatchers: PropTypes.objectOf(PropTypes.func),
   history: PropTypes.object,
 };
 
