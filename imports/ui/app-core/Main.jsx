@@ -14,6 +14,7 @@ import UserProfile from '../editors/UserProfile.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
 import QuoteEmail from '../../ui/objects/QuoteEmail.jsx';
+import BranchList from '../lists/BranchList.jsx';
 
 const MainInner = ({ loading }) => {
   const verifyAuth = (component, props) => {
@@ -21,6 +22,13 @@ const MainInner = ({ loading }) => {
       return React.createElement(component, props);
     }
     return <Redirect to={{ pathname: '/sign-in' }} />;
+  };
+
+  const verifyAdminAuth = (component, props) => {
+    if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.admin) {
+      return React.createElement(component, props);
+    }
+    return <Redirect to={{ pathname: '/' }} />;
   };
 
   return (
@@ -62,6 +70,11 @@ const MainInner = ({ loading }) => {
                 <Route
                   path="/profile"
                   render={routeProps => verifyAuth(UserProfile, routeProps)}
+                />
+                <Route
+                  path="/branches"
+                  exact
+                  render={routeProps => verifyAdminAuth(BranchList, routeProps)}
                 />
                 <Route
                   path="/email-test"

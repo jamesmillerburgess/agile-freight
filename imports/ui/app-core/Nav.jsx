@@ -6,7 +6,6 @@ import Select from 'react-select';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const NavInner = ({ user, history }) => {
-  const logout  = () => Meteor.logout(() => history.push('/sign-in'));
   const options = [
     { value: 'name', label: 'Name' },
     { value: 'profile', label: 'Profile' },
@@ -17,10 +16,13 @@ const NavInner = ({ user, history }) => {
   }
   const onChange = (values) => {
     if (values[1].value === 'logout') {
-      logout();
+      Meteor.logout(() => history.push('/sign-in'));
     }
     if (values[1].value === 'profile') {
       history.push('/profile');
+    }
+    if (values[1].value === 'branches') {
+      history.push('/branches');
     }
   };
 
