@@ -22,7 +22,7 @@ Meteor.startup(() => {
     Customers._ensureIndex({ search: 1 });
 
     Quotes.remove({});
-    
+
     Meteor.users.remove({});
     Accounts.createUser({
       username: 'user',
@@ -64,7 +64,7 @@ Switzerland`,
       },
     ];
     _.each(officeFixtures, (doc) => {
-      const newDoc = doc;
+      const newDoc  = doc;
       newDoc.search = `${doc.name}
 ${doc.address}`;
       Offices.insert(newDoc);
