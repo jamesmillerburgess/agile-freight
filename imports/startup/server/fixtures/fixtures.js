@@ -30,7 +30,7 @@ Meteor.startup(() => {
       password: 'user',
       profile: {
         admin: false,
-        branch: Branches.findOne({ name: 'Basel' })._id,
+        branch: Branches.findOne({ name: 'Basel' }),
         name: 'James Burgess',
         address: `Beim Goldenen Loewen 16
 4052 Basel
@@ -43,7 +43,7 @@ Switzerland`,
       password: 'admin',
       profile: {
         admin: true,
-        branch: Branches.findOne({ name: 'Basel' })._id,
+        branch: Branches.findOne({ name: 'Basel' }),
         name: 'James Burgess',
         address: `Beim Goldenen Loewen 16
 4052 Basel

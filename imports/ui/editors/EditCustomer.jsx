@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 
+import BranchField from '../fields/BranchField.jsx';
+import { Branches } from '../../api/branch/branchCollection';
+
 const EditCustomer = ({ customer, dispatchers, history }) => (
   <div>
     <div className="content customer">
@@ -12,9 +15,17 @@ const EditCustomer = ({ customer, dispatchers, history }) => (
           <button className="button-primary">BACK TO CUSTOMER LIST</button>
         </Link>
       </div>
-      <div className="panel">
+      <div className="panel container">
         <div className="row">
           <div className="col">
+            <div className="vertical-input-group">
+              <span className="label">BRANCH</span>
+              <BranchField
+                value={customer.branch}
+                options={Branches.find().fetch()}
+                onChange={value => dispatchers.setCustomerBranch(value)}
+              />
+            </div>
             <div className="vertical-input-group">
               <span className="label">NAME</span>
               <input
@@ -42,15 +53,6 @@ const EditCustomer = ({ customer, dispatchers, history }) => (
               <input
                 value={customer.currency}
                 onChange={e => dispatchers.setCustomerCurrency(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="col">
-            <div className="vertical-input-group">
-              <span className="label">BRANCH</span>
-              <input
-                value={customer.branch}
-                onChange={e => dispatchers.setCustomerBranch(e.target.value)}
               />
             </div>
           </div>
