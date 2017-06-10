@@ -57,13 +57,6 @@ const NavInner = ({ user, history }) => {
               </span>
             </button>
           </NavLink>
-          <NavLink to="profile" className="nav-item">
-            <button className="button profile-button">
-              <span className="label">
-                PROFILE
-              </span>
-            </button>
-          </NavLink>
           <li>
             <div className="form-inline">
               <input className="focis-input mr-sm-2 search" type="text" placeholder="Search..." />
