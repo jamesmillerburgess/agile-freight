@@ -15,6 +15,7 @@ import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
 import QuoteEmail from '../../ui/objects/QuoteEmail.jsx';
 import BranchList from '../lists/BranchList.jsx';
+import EditBranchConnect from '../editors/EditBranchConnect.jsx';
 
 const MainInner = ({ loading }) => {
   const verifyAuth = (component, props) => {
@@ -75,6 +76,11 @@ const MainInner = ({ loading }) => {
                   path="/branches"
                   exact
                   render={routeProps => verifyAdminAuth(BranchList, routeProps)}
+                />
+                <Route
+                  path="/branches/new"
+                  exact
+                  render={routeProps => verifyAdminAuth(EditBranchConnect, routeProps)}
                 />
                 <Route
                   path="/email-test"

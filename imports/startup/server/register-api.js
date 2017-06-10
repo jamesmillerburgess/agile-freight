@@ -1,4 +1,4 @@
-import '../../api/branch/branchCollection';
+import '../../api/branch/branchMethods';
 import '../../api/branch/server/branchPublications';
 import '../../api/users/user-methods';
 import '../../api/users/server/user-publications';

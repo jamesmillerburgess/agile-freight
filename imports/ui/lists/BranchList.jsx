@@ -11,7 +11,7 @@ export const BranchListInner = props => (
     <div className="content admin">
       <div className="process-header">
         <div className="title">BRANCH LIST</div>
-        <Link to="/customers/new">
+        <Link to="/branches/new">
           <button className="button-primary">NEW BRANCH</button>
         </Link>
       </div>

@@ -25,14 +25,14 @@ const EditBranch = ({ branch, dispatchers, history }) => (
           </div>
         </div>
         <button
-          className="button-submit"
+          className="button-submit"            
           onClick={() => {
             Meteor.call('branch.new', branch, () => {
               history.push('/branches');
             });
           }}
         >
-          CREATE CUSTOMER
+          CREATE BRANCH
         </button>
       </div>
     </div>

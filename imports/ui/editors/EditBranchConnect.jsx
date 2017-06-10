@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import EditBranch from './EditBranch.jsx';
 import * as actionCreators from '../../state/actions/branchActions';
 
-const mapStateToProps = ({ customer }) => ({ customer });
+const mapStateToProps = ({ branch }) => ({ branch });
 
 const mapDispatchToProps = dispatch => ({
   dispatchers: {
