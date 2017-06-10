@@ -33,10 +33,7 @@ if (Meteor.isServer) {
         Branches.findOne()._id.should.equal(id);
       });
 
-      it('requires a name property', () => {
-        (() => Meteor.call('branch.new', {}))
-          .should
-          .throw();
+      it('accepts a name property', () => {
         (() => Meteor.call('branch.new', { name: 'newBranch' }))
           .should
           .not
@@ -47,6 +44,21 @@ if (Meteor.isServer) {
         (() => Meteor.call('branch.new', { name: 'newBranch', prop: 'prop' }))
           .should
           .throw();
+      });
+    });
+
+    describe('branch.update', () => {
+      let branchId;
+      beforeEach(() => {
+        branchId = Branches.insert({ name: 'a' });
+      });
+
+      afterEach(() => {
+        StubCollections.restore();
+      });
+      it('updates the branch name', () => {
+        Meteor.call('branch.edit', branchId, { name: 'b' });
+        Branches.findOne(branchId).name.should.equal('b');
       });
     });
   });
