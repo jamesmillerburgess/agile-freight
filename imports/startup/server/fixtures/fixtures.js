@@ -25,10 +25,24 @@ Meteor.startup(() => {
     
     Meteor.users.remove({});
     Accounts.createUser({
-      username: 'd',
-      email: 'd@d.com',
-      password: 'd',
+      username: 'user',
+      email: 'user@example.com',
+      password: 'user',
       profile: {
+        admin: false,
+        branch: Branches.findOne({ name: 'Basel' })._id,
+        name: 'James Burgess',
+        address: `Beim Goldenen Loewen 16
+4052 Basel
+Switzerland`,
+      },
+    });
+    Accounts.createUser({
+      username: 'admin',
+      email: 'admin@example.com',
+      password: 'admin',
+      profile: {
+        admin: true,
         branch: Branches.findOne({ name: 'Basel' })._id,
         name: 'James Burgess',
         address: `Beim Goldenen Loewen 16
