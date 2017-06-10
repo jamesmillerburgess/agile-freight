@@ -107,7 +107,6 @@
 
   .sign-in-button .Select-input {
     height: 30px;
-    position: absolute !important;
   }
 
   .sign-in-button .Select-placeholder,
@@ -115,10 +114,8 @@
     color: $text-color;
     text-overflow: initial;
     width: auto;
-    position: relative !important;
     border: 0;
     background-color: transparent;
-    margin-left: 0;
   }
 
   .sign-in-button .Select-value-icon {

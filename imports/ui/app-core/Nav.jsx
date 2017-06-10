@@ -19,6 +19,9 @@ const NavInner = ({ user, history }) => {
     if (values[1].value === 'logout') {
       logout();
     }
+    if (values[1].value === 'profile') {
+      history.push('/profile');
+    }
   };
 
   return (
@@ -77,6 +80,7 @@ const NavInner = ({ user, history }) => {
               clearable={false}
               searchable={false}
               multi
+              autosize
               options={options}
               onChange={onChange}
             />
