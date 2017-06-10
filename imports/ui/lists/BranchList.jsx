@@ -19,7 +19,7 @@ export const BranchListInner = props => (
         props.branches.map(branch => (
           <BranchListItem
             key={branch._id}
-            customer={branch}
+            branch={branch}
             history={props.history}
           />
         ))

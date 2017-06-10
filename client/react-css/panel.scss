@@ -63,6 +63,13 @@
   }
 }
 
+.admin a {
+  .panel:hover {
+    background-color: $home-accent-color;
+    color: $inverted-text-color;
+  }
+}
+
 .customer a {
   .panel:hover {
     background-color: $customers-accent-color;
