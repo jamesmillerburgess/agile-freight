@@ -1,3 +1,7 @@
+// BRANCH
+export const LOAD_BRANCH     = 'LOAD_BRANCH';
+export const SET_BRANCH_NAME = 'SET_BRANCH_NAME';
+
 // CUSTOMER
 export const LOAD_CUSTOMER              = 'LOAD_CUSTOMER';
 export const SET_CUSTOMER_NAME          = 'SET_CUSTOMER_NAME';
