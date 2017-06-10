@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Link, NavLink } from 'react-router-dom';
+import Select from 'react-select';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const NavInner = ({ user, history }) => {
@@ -53,31 +54,23 @@ const NavInner = ({ user, history }) => {
         </ul>
 
         {user ?
-          <form className="form-inline my-2 my-lg-0">
-            <div className="dropdown">
-              <button className="sign-in-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div className="label">{user.profile.name.toUpperCase()}</div>
-              </button>
-              <div className="dropdown-menu">
-                <div className="a-container">
-                  <button className="dropdown-item">
-                    <span className="label">
-                      <span className="fa fa-fw fa-pencil" />
-                      EDIT PROFILE
-                    </span>
-                  </button>
-                </div>
-                <div className="a-container">
-                  <button className="dropdown-item" onClick={logout}>
-                    <span className="label">
-                      <span className="fa fa-fw fa-sign-out" />
-                      SIGN OUT
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
+          <div className="form-inline my-2 my-lg-0">
+            <Select
+              className="sign-in-button"
+              arrowRenderer={() => null}
+              valueRenderer={() => Meteor.user().profile.name}
+              placeholder={Meteor.user().profile.name}
+              value="name"
+              clearable={false}
+              searchable={false}
+              multi
+              options={[
+                { value: 'name', label: 'Name' },
+                { value: 'profile', label: 'Profile' },
+                { value: 'logout', label: 'Logout' },
+              ]}
+            />
+          </div>
           :
           <form className="form-inline my-2 my-lg-0">
             <button className="sign-in-button">
