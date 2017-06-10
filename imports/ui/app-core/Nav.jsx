@@ -6,7 +6,15 @@ import Select from 'react-select';
 import { createContainer } from 'meteor/react-meteor-data';
 
 const NavInner = ({ user, history }) => {
-  const logout = () => Meteor.logout(() => history.push('/sign-in'));
+  const logout  = () => Meteor.logout(() => history.push('/sign-in'));
+  const options = [
+    { value: 'name', label: 'Name' },
+    { value: 'profile', label: 'Profile' },
+    { value: 'logout', label: 'Logout' },
+  ];
+  if (Meteor.user().profile.admin) {
+    options.push({ value: 'branches', label: 'Branches', admin: true });
+  }
 
   return (
     <nav className="navbar navbar-toggleable-md navbar-light navbar-inverse">
@@ -64,11 +72,7 @@ const NavInner = ({ user, history }) => {
               clearable={false}
               searchable={false}
               multi
-              options={[
-                { value: 'name', label: 'Name' },
-                { value: 'profile', label: 'Profile' },
-                { value: 'logout', label: 'Logout' },
-              ]}
+              options={options}
             />
           </div>
           :
@@ -90,7 +94,7 @@ NavInner.propTypes = {
 
 const Nav = createContainer((props) => {
   const { history } = props;
-  const user = Meteor.user();
+  const user        = Meteor.user();
   return {
     history,
     user,
