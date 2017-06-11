@@ -10,7 +10,7 @@ Meteor.methods({
     });
     return Branches.insert({ ...options });
   },
-  'branch.edit': function branchEditMethod(branchId, options) {
+  'branch.save': function branchEditMethod(branchId, options) {
     check(branchId, String);
     check(options, {
       name: Match.Maybe(String),

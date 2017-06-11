@@ -47,7 +47,7 @@ if (Meteor.isServer) {
       });
     });
 
-    describe('branch.update', () => {
+    describe('branch.save', () => {
       let branchId;
       beforeEach(() => {
         branchId = Branches.insert({ name: 'a' });
@@ -57,7 +57,7 @@ if (Meteor.isServer) {
         StubCollections.restore();
       });
       it('updates the branch name', () => {
-        Meteor.call('branch.edit', branchId, { name: 'b' });
+        Meteor.call('branch.save', branchId, { name: 'b' });
         Branches.findOne(branchId).name.should.equal('b');
       });
     });

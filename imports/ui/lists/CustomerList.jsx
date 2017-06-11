@@ -12,6 +12,12 @@ import { Branches } from '../../api/branch/branchCollection';
 
 export const CustomerListInner = (props) => {
   const { customers, customerList, dispatchers, history } = props;
+
+  const newCustomer = () => {
+    dispatchers.loadCustomer({ branch: customerList.filter });
+    history.push('/customers/new');
+  };
+
   return (
     <div>
       <div className="content customer">
@@ -27,13 +33,16 @@ export const CustomerListInner = (props) => {
               />
             </div>
           </div>
-          <Link to="/customers/new">
-            <button className="button-primary">NEW CUSTOMER</button>
-          </Link>
+          <button
+            className="button-primary"
+            onClick={newCustomer}
+          >
+            NEW CUSTOMER
+          </button>
         </div>
         {
           customers
-            .filter(customer => customer.branch._id === customerList.filter)
+            .filter(customer => customer.branch === customerList.filter)
             .map(customer => (
               <CustomerListItem
                 key={customer._id}

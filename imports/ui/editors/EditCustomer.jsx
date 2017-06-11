@@ -29,7 +29,7 @@ const EditCustomer = props => (
               <BranchField
                 value={props.customer.branch}
                 options={Branches.find().fetch()}
-                onChange={value => props.dispatchers.setCustomerBranch(value)}
+                onChange={value => props.dispatchers.setCustomerBranch(value._id)}
               />
             </div>
             <div className="vertical-input-group">
@@ -68,7 +68,7 @@ const EditCustomer = props => (
           onClick={() => {
             if (props.editMode) {
               const { customerId } = props.match.params;
-              Meteor.call('customer.edit', customerId, props.customer, () => {
+              Meteor.call('customer.save', customerId, props.customer, () => {
                 props.history.push(`/customers/view/${customerId}/overview`);
               });
             } else {

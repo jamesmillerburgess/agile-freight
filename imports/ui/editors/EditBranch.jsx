@@ -34,7 +34,7 @@ const EditBranch = props => (
           className="button-submit"
           onClick={() => {
             if (props.editMode) {
-              Meteor.call('branch.edit', props.match.params.branchId, props.branch, () => {
+              Meteor.call('branch.save', props.match.params.branchId, props.branch, () => {
                 props.history.push('/branches');
               });
             } else {

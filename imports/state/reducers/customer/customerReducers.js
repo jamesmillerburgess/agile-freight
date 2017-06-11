@@ -13,7 +13,17 @@ export const customer = (state = defaultCustomerState, action = { type: '' }) =>
   let newState = {};
   switch (action.type) {
     case ACTION_TYPES.LOAD_CUSTOMER:
-      newState = action.customer;
+      if (action.customer) {
+        newState = {
+          name: action.customer.name || defaultCustomerState.name,
+          address: action.customer.address || defaultCustomerState.address,
+          emailAddress: action.customer.emailAddress || defaultCustomerState.emailAddress,
+          currency: action.customer.currency || defaultCustomerState.currency,
+          branch: action.customer.branch || defaultCustomerState.branch,
+        };
+      } else {
+        newState = defaultCustomerState;
+      }
       break;
     case ACTION_TYPES.SET_CUSTOMER_NAME:
       newState = changeProp(state, 'name', action.name);
