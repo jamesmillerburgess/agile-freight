@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 
 import BranchField from '../fields/BranchField.jsx';
+import { Branches } from '../../api/branch/branchCollection';
 
-const UserProfile = (props) => {
+const EditUserProfile = (props) => {
 
   return (
     <div className="">
@@ -13,8 +14,8 @@ const UserProfile = (props) => {
           <div className="title">
             {
               props.editMode ?
-                'NEW USER PROFILE' :
-                'EDIT USER PROFILE'
+                'EDIT USER PROFILE' :
+                'NEW USER PROFILE'
             }
           </div>
           <Link to="/customers">
@@ -27,7 +28,7 @@ const UserProfile = (props) => {
               <div className="vertical-input-group">
                 <span className="label">BRANCH</span>
                 <BranchField
-                  value={props.user.profile.branch}
+                  value={props.userProfile.branch}
                   options={Branches.find().fetch()}
                   onChange={value => props.dispatchers.setUserBranch(value._id)}
                 />
@@ -35,22 +36,14 @@ const UserProfile = (props) => {
               <div className="vertical-input-group">
                 <span className="label">NAME</span>
                 <input
-                  value={props.user.profile.name}
+                  value={props.userProfile.name}
                   onChange={e => props.dispatchers.setUserName(e.target.value)}
-                />
-              </div>
-              <div className="vertical-input-group">
-                <span className="label">ADDRESS</span>
-                <textarea
-                  className="address"
-                  value={props.user.profile.address}
-                  onChange={e => props.dispatchers.setUserAddress(e.target.value)}
                 />
               </div>
               <div className="vertical-input-group">
                 <span className="label">EMAIL ADDRESS</span>
                 <input
-                  value={props.user.profile.emailAddress}
+                  value={props.userProfile.emailAddress}
                   onChange={e => props.dispatchers.setUserEmailAddress(e.target.value)}
                 />
               </div>
@@ -60,13 +53,13 @@ const UserProfile = (props) => {
             className="button-submit"
             onClick={() => {
               if (props.editMode) {
-                const { customerId } = props.match.params;
-                Meteor.call('user.save', customerId, props.customer, () => {
-                  props.history.push(`/customers/view/${customerId}/overview`);
+                const { userId } = Meteor.user()._id;
+                Meteor.call('user.save', userId, props.userProfile, () => {
+                  props.history.push('/');
                 });
               } else {
-                Meteor.call('user.new', props.customer, (err, res) => {
-                  props.history.push(`/customers/view/${res}/overview`);
+                Meteor.call('user.new', props.userProfile, () => {
+                  props.history.push('/');
                 });
               }
             }}
@@ -80,4 +73,4 @@ const UserProfile = (props) => {
   );
 };
 
-export default UserProfile;
+export default EditUserProfile;

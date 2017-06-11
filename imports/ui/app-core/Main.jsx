@@ -10,7 +10,7 @@ import Home from '../pages/Home.jsx';
 import CustomerListConnect from '../lists/CustomerListConnect.jsx';
 import EditCustomerConnect from '../editors/EditCustomerConnect';
 import Customer from '../pages/Customer.jsx';
-import UserProfile from '../editors/UserProfile.jsx';
+import UserProfileConnect from '../editors/EditUserProfileConnect.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
 import QuoteEmail from '../../ui/objects/QuoteEmail.jsx';
@@ -77,7 +77,10 @@ const MainInner = ({ loading }) => {
                 />
                 <Route
                   path="/profile"
-                  render={routeProps => verifyAuth(UserProfile, routeProps)}
+                  render={routeProps => verifyAuth(UserProfileConnect, {
+                    ...routeProps,
+                    editMode: true,
+                  })}
                 />
                 <Route
                   path="/branches"
