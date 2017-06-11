@@ -1,93 +1,83 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { createContainer } from 'meteor/react-meteor-data';
 
-import FreeTextField from '../fields/FreeTextField.jsx';
-import TextareaField from '../fields/TextareaField.jsx';
+import BranchField from '../fields/BranchField.jsx';
 
-class UserProfileInner extends React.Component {
-  updateValue(path, value) {
-    if (Meteor.user()[path] !== value) {
-      Meteor.call('users.updateField', Meteor.user()._id, path, value);
-    }
-  }
+const UserProfile = (props) => {
 
-  render() {
-    return (
-      <div className="panel">
-        <div className="panel-header">
-          <div className="panel-header-inner">
-            <div className="icon-container hidden-md-down">
-              <i className="icon fa fa-fw fa-user" />
-            </div>
-            <div className="panel-header-content container">
-              <div className="row">
-                <div className="panel-title col-12 col-lg-6 align-left">
-                  User Profile
-                </div>
-                <div className="col-6 col-lg-3 align-right">
-                </div>
-                <div className="col-6 col-lg-3 align-right">
-                </div>
-              </div>
-            </div>
+  return (
+    <div className="">
+      <div className="content customer">
+        <div className="process-header">
+          <div className="title">
+            {
+              props.editMode ?
+                'NEW USER PROFILE' :
+                'EDIT USER PROFILE'
+            }
           </div>
-
+          <Link to="/customers">
+            <button className="button-primary">BACK TO CUSTOMER LIST</button>
+          </Link>
         </div>
-        <div className="panel-body">
-          <div className="panel-body-inner">
-            <div className="row">
-              <div className="col-12 col-lg-3">
-                <div className="label">
-                  Name
-                </div>
-                {Meteor.loggingIn() ?
-                  <span>Loading</span> :
-                  <FreeTextField
-                    value={Meteor.user().profile.name}
-                    path="profile.name"
-                    valueUpdateCallback={this.updateValue}
-                  />
-                }
+        <div className="panel container">
+          <div className="row">
+            <div className="col">
+              <div className="vertical-input-group">
+                <span className="label">BRANCH</span>
+                <BranchField
+                  value={props.user.profile.branch}
+                  options={Branches.find().fetch()}
+                  onChange={value => props.dispatchers.setUserBranch(value._id)}
+                />
               </div>
-              <div className="col-12 col-lg-3">
-                <div className="label">
-                  Address
-                </div>
-                {Meteor.loggingIn() ?
-                  <span>Loading</span> :
-                  <TextareaField
-                    value={Meteor.user().profile.address}
-                    path="profile.address"
-                    valueUpdateCallback={this.updateValue}
-                  />
-                }
+              <div className="vertical-input-group">
+                <span className="label">NAME</span>
+                <input
+                  value={props.user.profile.name}
+                  onChange={e => props.dispatchers.setUserName(e.target.value)}
+                />
               </div>
-              <div className="col-12 col-lg-3">
-                <div className="label">
-                  Email
-                </div>
-                {Meteor.loggingIn() ?
-                  <span>Loading</span> :
-                  <FreeTextField
-                    value={Meteor.user().emails[0].address}
-                    path="emails[0].address"
-                    valueUpdateCallback={this.updateValue}
-                  />
-                }
+              <div className="vertical-input-group">
+                <span className="label">ADDRESS</span>
+                <textarea
+                  className="address"
+                  value={props.user.profile.address}
+                  onChange={e => props.dispatchers.setUserAddress(e.target.value)}
+                />
+              </div>
+              <div className="vertical-input-group">
+                <span className="label">EMAIL ADDRESS</span>
+                <input
+                  value={props.user.profile.emailAddress}
+                  onChange={e => props.dispatchers.setUserEmailAddress(e.target.value)}
+                />
               </div>
             </div>
           </div>
+          <button
+            className="button-submit"
+            onClick={() => {
+              if (props.editMode) {
+                const { customerId } = props.match.params;
+                Meteor.call('user.save', customerId, props.customer, () => {
+                  props.history.push(`/customers/view/${customerId}/overview`);
+                });
+              } else {
+                Meteor.call('user.new', props.customer, (err, res) => {
+                  props.history.push(`/customers/view/${res}/overview`);
+                });
+              }
+            }}
+          >
+            SAVE USER PROFILE
+          </button>
         </div>
       </div>
-    );
-  }
-}
-
-const UserProfile = createContainer(() => {
-  return {
-    user: Meteor.user(),
-  };
-}, UserProfileInner);
+      <div className="content-footer-accent admin-footer-accent" />
+    </div>
+  );
+};
 
 export default UserProfile;
