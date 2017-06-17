@@ -228,7 +228,7 @@ if (Meteor.isClient) {
         const action      = {
           type: ACTION_TYPES.SET_CHARGE_LINE_NAME,
           id: 0,
-          name: 'b'
+          name: 'b',
         };
         deepFreeze(stateBefore);
 
@@ -269,6 +269,45 @@ if (Meteor.isClient) {
           rate: 'KG',
         };
         const quoteState = { cargo: { totalWeight: 10, weightUOM: 'kg' } };
+        deepFreeze(stateBefore);
+
+        chargeLines(stateBefore, action, {}, quoteState)[0].units.should.equal(10);
+      });
+
+      it('sets the units to the total CBM when the rate is changed to \'CBM\'', () => {
+        const stateBefore = [{ id: 0, rate: 'a' }];
+        const action      = {
+          type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+          id: 0,
+          rate: 'CBM',
+        };
+        const quoteState = { cargo: { totalVolume: 10, weightUOM: 'cbm' } };
+        deepFreeze(stateBefore);
+
+        chargeLines(stateBefore, action, {}, quoteState)[0].units.should.equal(10);
+      });
+
+      it('sets the units to the total containers when the rate is changed to \'Container\'', () => {
+        const stateBefore = [{ id: 0, rate: 'a' }];
+        const action      = {
+          type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+          id: 0,
+          rate: 'Container',
+        };
+        const quoteState = { cargo: { totalContainers: 10 } };
+        deepFreeze(stateBefore);
+
+        chargeLines(stateBefore, action, {}, quoteState)[0].units.should.equal(10);
+      });
+
+      it('sets the units to the total TEU when the rate is changed to \'TEU\'', () => {
+        const stateBefore = [{ id: 0, rate: 'a' }];
+        const action      = {
+          type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+          id: 0,
+          rate: 'TEU',
+        };
+        const quoteState = { cargo: { totalTEU: 10 } };
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore, action, {}, quoteState)[0].units.should.equal(10);

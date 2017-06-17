@@ -15,6 +15,12 @@ export const defaultUnits = (rate, cargo) => {
       return 1;
     case 'KG':
       return cargo.totalWeight;
+    case 'CBM':
+      return cargo.totalVolume;
+    case 'Container':
+      return cargo.totalContainers;
+    case 'TEU':
+      return cargo.totalTEU;
     default:
       return 1;
   }
