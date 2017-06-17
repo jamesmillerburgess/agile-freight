@@ -1,6 +1,6 @@
 import '../../api/branch/branchMethods';
 import '../../api/branch/server/branchPublications';
-import '../../api/users/user-methods';
+import '../../api/users/userMethods';
 import '../../api/users/server/user-publications';
 import '../../api/offices/server/publications';
 import '../../api/offices/office-methods';

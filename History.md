@@ -2,6 +2,7 @@
 
 * Create branches (name only)
 * Choose customer branch from select component
+* Edit customer
 * Filter customer list by branch
 * Default customer list filter to user branch
 
