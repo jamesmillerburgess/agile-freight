@@ -32,7 +32,14 @@ export const chargeLines = (state = [], action = { type: '' }, parentState = {},
   let newState = [];
   switch (action.type) {
     case ACTION_TYPES.ADD_CHARGE_LINE:
-      newState = addToEnd(state, action.chargeLine);
+      newState = addToEnd(
+        state,
+        {
+          ...action.chargeLine,
+          rate: 'Shipment',
+          units: defaultUnits('Shipment'),
+        },
+      );
       if (!newState[newState.length - 1].unitPriceCurrency) {
         newState = changePropAtId(newState, 'unitPriceCurrency', newState[newState.length - 1].id, parentState.currency);
       }

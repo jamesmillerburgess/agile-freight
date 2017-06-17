@@ -150,7 +150,7 @@ if (Meteor.isClient) {
         const action      = {
           type: ACTION_TYPES.SET_FX_CONVERSION_RATE,
           currency: 'e',
-          rate: 1
+          rate: 1,
         };
         const stateAfter  = charges(stateBefore, action);
 
@@ -197,6 +197,17 @@ if (Meteor.isClient) {
         stateAfter[0].unitPriceCurrency.should.equal('b');
       });
 
+      it('sets the rate basis to shipment and defaults the units when adding a new charge line', () => {
+        const stateBefore = [];
+        const chargeLine  = { group: 'Origin', unitPriceCurrency: 'b' };
+        const action      = { type: ACTION_TYPES.ADD_CHARGE_LINE, chargeLine };
+        deepFreeze(stateBefore);
+        const stateAfter = chargeLines(stateBefore, action);
+
+        stateAfter[0].rate.should.equal('Shipment');
+        stateAfter[0].units.should.equal(1);
+      });
+
       it('removes a charge line with the specified id', () => {
         const stateBefore = [
           { id: 'a', group: 'Origin' },
@@ -215,7 +226,7 @@ if (Meteor.isClient) {
         const action      = {
           type: ACTION_TYPES.SET_CHARGE_LINE_CODE,
           id: 0,
-          code: 'b'
+          code: 'b',
         };
         deepFreeze(stateBefore);
 
