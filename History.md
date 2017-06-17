@@ -1,6 +1,7 @@
 # v.NEXT – Charge Defaults
 
 * Defaults units on charge lines based on the rate basis
+* Defaults new charge lines rate basis to 'Shipment'
  
 # v0.2.0 – Branches
 
