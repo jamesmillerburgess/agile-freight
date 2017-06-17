@@ -91,17 +91,43 @@
     box-shadow: none;
   }
 
-  .sign-in-button {
-    height: 30px;
+  .sign-in-button .Select-control{
+    height: 30px !important;
     width: auto;
     padding: 0 10px;
     font-size: $medium-font-size;
     background-color: $panel-background-color;
     color: $text-color;
+    border: 0;
   }
 
-  .sign-in-button:hover {
+  .sign-in-button .Select-control:hover {
     background-color: $home-accent-color;
+  }
+
+  .sign-in-button .Select-input {
+    height: 30px;
+  }
+
+  .sign-in-button .Select-placeholder,
+  .sign-in-button .Select-value {
+    color: $text-color;
+    text-overflow: initial;
+    width: auto;
+    border: 0;
+    background-color: transparent;
+  }
+
+  .sign-in-button .Select-value-icon {
+    display: none;
+  }
+
+  .sign-in-button .Select-value-label {
+    font-size: $medium-font-size;
+  }
+
+  .sign-in-button .Select-arrow-zone {
+    position: absolute;
   }
 
   .alerts {

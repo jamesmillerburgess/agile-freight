@@ -7,13 +7,15 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 // All the pages to render
 import Nav from '../../ui/app-core/Nav.jsx';
 import Home from '../pages/Home.jsx';
-import CustomerList from '../lists/CustomerList.jsx';
+import CustomerListConnect from '../lists/CustomerListConnect.jsx';
 import EditCustomerConnect from '../editors/EditCustomerConnect';
 import Customer from '../pages/Customer.jsx';
-import UserProfile from '../editors/UserProfile.jsx';
+import UserProfileConnect from '../editors/EditUserProfileConnect.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
 import QuoteEmail from '../../ui/objects/QuoteEmail.jsx';
+import BranchList from '../lists/BranchList.jsx';
+import EditBranchConnect from '../editors/EditBranchConnect.jsx';
 
 const MainInner = ({ loading }) => {
   const verifyAuth = (component, props) => {
@@ -21,6 +23,13 @@ const MainInner = ({ loading }) => {
       return React.createElement(component, props);
     }
     return <Redirect to={{ pathname: '/sign-in' }} />;
+  };
+
+  const verifyAdminAuth = (component, props) => {
+    if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.admin) {
+      return React.createElement(component, props);
+    }
+    return <Redirect to={{ pathname: '/' }} />;
   };
 
   return (
@@ -48,7 +57,7 @@ const MainInner = ({ loading }) => {
                 <Route
                   path="/customers"
                   exact
-                  render={routeProps => verifyAuth(CustomerList, routeProps)}
+                  render={routeProps => verifyAuth(CustomerListConnect, routeProps)}
                 />
                 <Route
                   path="/customers/new"
@@ -60,8 +69,35 @@ const MainInner = ({ loading }) => {
                   render={routeProps => verifyAuth(Customer, routeProps)}
                 />
                 <Route
+                  path="/customers/edit/:customerId"
+                  render={routeProps => verifyAuth(EditCustomerConnect, {
+                    ...routeProps,
+                    editMode: true,
+                  })}
+                />
+                <Route
                   path="/profile"
-                  render={routeProps => verifyAuth(UserProfile, routeProps)}
+                  render={routeProps => verifyAuth(UserProfileConnect, {
+                    ...routeProps,
+                    editMode: true,
+                  })}
+                />
+                <Route
+                  path="/branches"
+                  exact
+                  render={routeProps => verifyAdminAuth(BranchList, routeProps)}
+                />
+                <Route
+                  path="/branches/new"
+                  exact
+                  render={routeProps => verifyAdminAuth(EditBranchConnect, routeProps)}
+                />
+                <Route
+                  path="/branches/edit/:branchId"
+                  render={routeProps => verifyAdminAuth(EditBranchConnect, {
+                    ...routeProps,
+                    editMode: true,
+                  })}
                 />
                 <Route
                   path="/email-test"
@@ -178,8 +214,19 @@ MainInner.propTypes = {
 };
 
 const Main = createContainer(() => {
-  const branch  = Meteor.subscribe('branch.active');
-  const loading = !branch.ready();
+  const branches = Meteor.subscribe('branch.all');
+  let branch;
+  if (
+    Meteor.user() &&
+    Meteor.user().profile &&
+    Meteor.user().profile.branch
+  ) {
+    branch = Meteor.subscribe('branch.active', Meteor.user().profile.branch);
+  } else {
+    branch = Meteor.subscribe('branch.active');
+  }
+
+  const loading = !branch.ready() || !branches.ready();
   return {
     loading,
   };

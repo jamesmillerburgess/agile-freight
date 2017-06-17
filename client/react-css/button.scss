@@ -111,3 +111,11 @@ button:focus {
 .button-submit:hover {
   background-color: rgba($submit-button-background-color, $very-high-alpha);
 }
+
+.customer .button-primary {
+  background-color: $customers-accent-color;
+}
+
+.admin .button-primary {
+  background-color: $home-accent-color;
+}

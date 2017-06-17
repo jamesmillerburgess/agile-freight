@@ -21,7 +21,7 @@ if (Meteor.isClient) {
       defaultCustomerState.branch.should.equal('');
     });
 
-    it('loads the otherServices section of a quote', () => {
+    it('loads the customer', () => {
       const customerToLoad = {
         name: 'a',
         address: 'b',
@@ -35,6 +35,11 @@ if (Meteor.isClient) {
       };
 
       customer({}, action).should.eql(customerToLoad);
+    });
+
+    it('loads the default customer if none is provided', () => {
+      const action = { type: ACTION_TYPES.LOAD_CUSTOMER };
+      customer({}, action).should.eql(defaultCustomerState);
     });
 
     it('sets the name', () => {

@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
+import { Branches } from '../../../api/branch/branchCollection';
 import { Offices } from '../../../api/offices/offices';
 import { Customers } from '../../../api/customers/customersCollection';
 import { Quotes } from '../../../api/quotes/quotesCollection';
@@ -13,15 +14,36 @@ Meteor.startup(() => {
   if (Meteor.settings.reset) {
     Offices.remove({});
     Offices._ensureIndex({ search: 1 });
+
+    Branches.remove({});
+    Branches.insert({ name: 'Basel' });
+
     Customers.remove({});
     Customers._ensureIndex({ search: 1 });
+
     Quotes.remove({});
+
     Meteor.users.remove({});
     Accounts.createUser({
-      username: 'd',
-      email: 'd@d.com',
-      password: 'd',
+      username: 'user',
+      email: 'user@example.com',
+      password: 'user',
       profile: {
+        admin: false,
+        branch: Branches.findOne({ name: 'Basel' })._id,
+        name: 'James Burgess',
+        address: `Beim Goldenen Loewen 16
+4052 Basel
+Switzerland`,
+      },
+    });
+    Accounts.createUser({
+      username: 'admin',
+      email: 'admin@example.com',
+      password: 'admin',
+      profile: {
+        admin: true,
+        branch: Branches.findOne({ name: 'Basel' })._id,
         name: 'James Burgess',
         address: `Beim Goldenen Loewen 16
 4052 Basel
@@ -42,7 +64,7 @@ Switzerland`,
       },
     ];
     _.each(officeFixtures, (doc) => {
-      const newDoc = doc;
+      const newDoc  = doc;
       newDoc.search = `${doc.name}
 ${doc.address}`;
       Offices.insert(newDoc);

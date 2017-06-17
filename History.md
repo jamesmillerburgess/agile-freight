@@ -1,6 +1,12 @@
-# v.NEXT Branches
+# v.NEXT – Branches
 
-# v0.1.0 Speed Demo
+* Create branches (name only)
+* Choose customer branch from select component
+* Edit customer
+* Filter customer list by branch
+* Default customer list filter to user branch
+
+# v0.1.0 – Speed Demo
 
 * Create and email an LCL quote that matches an existing Agility quote
 * Other quote types partially supported

@@ -1,9 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import { Branches } from '../branchCollection';
 import { Customers } from '../../customers/customersCollection';
 import { Countries } from '../../countries/countriesCollection';
 import { Quotes } from '../../quotes/quotesCollection';
 import { UNLocations } from '../../unlocations/unlocationsCollection';
+
+const publishBranchAll = () => Branches.find({});
+
+Meteor.publish('branch.all', publishBranchAll);
 
 Meteor.publish('branch.active', function publishBranchActive() {
   const cursors = [];

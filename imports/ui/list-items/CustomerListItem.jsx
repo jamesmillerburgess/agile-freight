@@ -13,6 +13,11 @@ const CustomerListItem = ({ customer, header, history }) => {
     );
   };
 
+  const editCustomer = (e) => {
+    e.preventDefault();
+    history.push(`/customers/edit/${customer._id}`);
+  };
+
   return (
     <Link to={`/customers/view/${customer._id}/overview`} className="list-item">
       <div className={`panel ${header ? 'header-panel' : ''}`}>
@@ -26,8 +31,9 @@ const CustomerListItem = ({ customer, header, history }) => {
         <div className="container panel-body">
           <div className="row no-gutters">
             <div className="col-6">
-              <span className="list-item-header">{customer.name.toUpperCase()} <span
-                className="fa fa-fw fa-heart-o favorite-icon" /></span>
+              <span className="list-item-header">{customer.name.toUpperCase()}&nbsp;
+                <span className="fa fa-fw fa-heart-o favorite-icon" />
+              </span>
               <br />
               <span className="customer-active-quotes">
                 {customer.quotes.length} QUOTES
@@ -46,6 +52,11 @@ const CustomerListItem = ({ customer, header, history }) => {
               <span className="label">58 % CREDIT USAGE</span>
             </div>
           </div>
+        </div>
+        <div className="icon-column">
+          <button onClick={editCustomer}>
+            <span className="fa fa-fw fa-pencil" />
+          </button>
         </div>
       </div>
     </Link>
