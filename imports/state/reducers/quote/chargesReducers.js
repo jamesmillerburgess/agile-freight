@@ -21,6 +21,8 @@ export const defaultUnits = (rate, cargo) => {
       return cargo.totalContainers;
     case 'TEU':
       return cargo.totalTEU;
+    case 'Package':
+      return cargo.totalPackages;
     default:
       return 1;
   }

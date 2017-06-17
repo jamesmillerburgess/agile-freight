@@ -313,6 +313,19 @@ if (Meteor.isClient) {
         chargeLines(stateBefore, action, {}, quoteState)[0].units.should.equal(10);
       });
 
+      it('sets the units to the total packages when the rate is changed to \'Package\'', () => {
+        const stateBefore = [{ id: 0, rate: 'a' }];
+        const action      = {
+          type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+          id: 0,
+          rate: 'Package',
+        };
+        const quoteState = { cargo: { totalPackages: 10 } };
+        deepFreeze(stateBefore);
+
+        chargeLines(stateBefore, action, {}, quoteState)[0].units.should.equal(10);
+      });
+
       it('changes the units at the charge line with the specified id', () => {
         const stateBefore = [{ id: 'a', units: 1 }, { id: 'b', units: 3 }];
         const action      = {
