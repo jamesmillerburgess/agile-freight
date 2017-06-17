@@ -1,4 +1,8 @@
-# v.NEXT – Branches
+# v.NEXT – Charge Defaults
+
+* Defaults units on charge lines based on the rate basis
+ 
+# v0.2.0 – Branches
 
 * Create branches (name only)
 * Choose customer branch from select component
