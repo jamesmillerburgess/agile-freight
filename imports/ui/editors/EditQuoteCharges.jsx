@@ -20,7 +20,6 @@ class EditQuoteCharges extends React.Component {
     this.save            = this.save.bind(this);
     this.archive         = this.archive.bind(this);
     this.editEmail       = this.editEmail.bind(this);
-    this.getMovementText = this.getMovementText.bind(this);
     this.getFXRates      = this.getFXRates.bind(this);
   }
 
@@ -32,25 +31,9 @@ class EditQuoteCharges extends React.Component {
     resizeHeight(this.notesNode);
   }
 
-  getMovementText() {
-    if (
-      this.props.quote &&
-      this.props.quote.movement &&
-      this.props.quote.movement.pickup &&
-      this.props.quote.movement.delivery &&
-      this.props.quote.movement.pickup.location &&
-      this.props.quote.movement.delivery.location
-    ) {
-      const pickupLocation   = UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.pickup.location)).name;
-      const deliveryLocation = UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.delivery.location)).name;
-      return `${pickupLocation} – ${deliveryLocation}`.toUpperCase();
-    }
-    return '';
-  }
-
   save() {
     Meteor.call('quote.save', {
-      ...this.props.newQuote,
+      ...this.props.quote,
       _id: this.props.match.params.quoteId
     });
   }
@@ -80,7 +63,7 @@ class EditQuoteCharges extends React.Component {
     this.props.loadEmail(email);
     Meteor.call(
       'quote.save',
-      { ...this.props.newQuote, email, _id: this.props.match.params.quoteId },
+      { ...this.props.quote, email, _id: this.props.match.params.quoteId },
       () => this.props.history.push(
         `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/email`,
       ),
@@ -99,28 +82,28 @@ class EditQuoteCharges extends React.Component {
           <td>Quote Currency</td>
           <td>
             <CurrencyField
-              value={this.props.newQuote.charges.currency}
+              value={this.props.quote.charges.currency}
               onChange={e => this.props.setQuoteCurrency(e.value)}
             />
           </td>
         </tr>
         {Object
-          .keys(this.props.newQuote.charges.fxConversions)
+          .keys(this.props.quote.charges.fxConversions)
           .map((currency, index) => {
-            if (!this.props.newQuote.charges.fxConversions[currency].active) {
+            if (!this.props.quote.charges.fxConversions[currency].active) {
               return null;
             }
             return (
               <tr key={index}>
                 <td />
                 <td>
-                  {this.props.newQuote.charges.currency}/{currency}
+                  {this.props.quote.charges.currency}/{currency}
                 </td>
                 <td>
                   <input
                     type="number"
                     className="fx-rate"
-                    value={this.props.newQuote.charges.fxConversions[currency].rate}
+                    value={this.props.quote.charges.fxConversions[currency].rate}
                     onChange={e => this.props.setFXConversionRate(currency, e.target.value)}
                   />
                 </td>
@@ -135,11 +118,6 @@ class EditQuoteCharges extends React.Component {
   render() {
     const
       {
-        totalOriginCharges,
-        totalInternationalCharges,
-        totalDestinationCharges,
-        totalCharges,
-        currency,
         addChargeLine,
         history,
       } = this.props;
@@ -188,7 +166,7 @@ class EditQuoteCharges extends React.Component {
                     <th className="units-column">UNITS</th>
                     <th className="unit-price-column numeric-label">UNIT PRICE</th>
                     <th className="amount-local-column numeric-label">AMOUNT (LOCAL)</th>
-                    <th className="amount-final-column numeric-label">FINAL ({this.props.newQuote.charges.currency})</th>
+                    <th className="amount-final-column numeric-label">FINAL ({this.props.quote.charges.currency})</th>
                   </tr>
                 </tbody>
                 <EditQuoteChargeGroupConnect group="Origin" />
@@ -238,7 +216,7 @@ class EditQuoteCharges extends React.Component {
                     <td colSpan="6" className="notes-cell">
                       <textarea
                         ref={node => this.notesNode = node}
-                        value={this.props.notes}
+                        value={this.props.quote.charges.notes}
                         onChange={e => {
                           resizeHeight(this.notesNode);
                           this.props.setChargeNotes(e.target.value);
@@ -253,7 +231,7 @@ class EditQuoteCharges extends React.Component {
                     <td colSpan="5" />
                     <td className="numeric-label title">TOTAL PRICE</td>
                     <td className="numeric-label title">
-                      {currencyFormat(totalCharges)} {this.props.newQuote.charges.currency}
+                      {currencyFormat(this.props.quote.charges.totalCharges)} {this.props.quote.charges.currency}
                     </td>
                   </tr>
                 </tfoot>

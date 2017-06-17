@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 
 import EditQuoteChargeGroup from './EditQuoteChargeGroup.jsx';
-import * as actionCreators from '../../state/actions/newQuoteActions';
+import * as actionCreators from '../../state/actions/quoteActions';
 
 const mapStateToProps = (state, ownProps) => ({
-  currency: state.newQuote.charges.currency,
-  fxConversions: state.newQuote.charges.fxConversions,
-  chargeLines: state.newQuote.charges.chargeLines
+  currency: state.quote.charges.currency,
+  fxConversions: state.quote.charges.fxConversions,
+  chargeLines: state.quote.charges.chargeLines
     .filter(chargeLine => chargeLine.group === ownProps.group),
 });
 

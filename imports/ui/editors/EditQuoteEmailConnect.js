@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 
 import EditQuoteEmail from './EditQuoteEmail.jsx';
 import * as actionCreators from '../../state/actions/emailActions';
-import { loadQuote } from '../../state/actions/newQuoteActions';
+import { loadQuote } from '../../state/actions/quoteActions';
 
-const mapStateToProps = state => ({ quote: state.newQuote });
+const mapStateToProps = state => ({ quote: state.quote });
 
 const mapDispatchToProps = dispatch => ({
   dispatchers: {

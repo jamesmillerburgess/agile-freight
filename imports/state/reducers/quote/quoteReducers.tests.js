@@ -4,13 +4,13 @@
 import { Meteor } from 'meteor/meteor';
 import { chai } from 'meteor/practicalmeteor:chai';
 
-import { newQuote } from './newQuoteReducers';
+import { quote } from './quoteReducers';
 
 if (Meteor.isClient) {
   describe('New Quote Reducers', () => {
     chai.should();
     it('defaults the various sections', () => {
-      const newNewQuote = newQuote();
+      const newNewQuote = quote();
 
       newNewQuote.should.have.property('cargo');
       newNewQuote.should.have.property('movement');

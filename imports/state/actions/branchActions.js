@@ -1,4 +1,4 @@
-import { makeActionCreator } from './action-utils';
+import { makeActionCreator } from './actionUtils';
 import * as ACTION_TYPES from './actionTypes';
 
 // BRANCH
