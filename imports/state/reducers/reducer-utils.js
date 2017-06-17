@@ -1,5 +1,15 @@
 // TODO: changeDeepProp
 
+export const itemAtId = (arr, id) => {
+  let match = null;
+  arr.forEach((item) => {
+    if (item.id === id) {
+      match = item;
+    }
+  });
+  return match;
+};
+
 export const changeProp = (obj, prop, val) => Object.assign({}, obj, { [prop]: val });
 
 export const changePropAtIndex = (arr, prop, index, val) => [

@@ -1,9 +1,26 @@
-import { changeProp, changePropAtId, removeAtId, addToEnd } from '../reducer-utils';
+import {
+  itemAtId,
+  changeProp,
+  changePropAtId,
+  removeAtId,
+  addToEnd,
+} from '../reducer-utils';
 import { uniqueValues } from '../../../ui/statsUtils';
 
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
-export const chargeLines = (state = [], action = { type: '' }, parentState = {}) => {
+export const defaultUnits = (rate, cargo) => {
+  switch (rate) {
+    case 'Shipment':
+      return 1;
+    case 'KG':
+      return cargo.totalWeight;
+    default:
+      return 1;
+  }
+};
+
+export const chargeLines = (state = [], action = { type: '' }, parentState = {}, quoteState = {}) => {
   let newState = [];
   switch (action.type) {
     case ACTION_TYPES.ADD_CHARGE_LINE:
@@ -23,6 +40,12 @@ export const chargeLines = (state = [], action = { type: '' }, parentState = {})
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_RATE:
       newState = changePropAtId(state, 'rate', action.id, action.rate);
+      newState = changePropAtId(
+        newState,
+        'units',
+        action.id,
+        defaultUnits(itemAtId(newState, action.id).rate, quoteState.cargo),
+      );
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNITS:
       newState = changePropAtId(state, 'units', action.id, action.units);
@@ -122,7 +145,7 @@ const defaultChargesState = {
   currency: '',
 };
 
-export const charges = (state = defaultChargesState, action = { type: '' }) => {
+export const charges = (state = defaultChargesState, action = { type: '' }, quoteState) => {
   let newState = Object.assign(state, {});
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
@@ -153,7 +176,7 @@ export const charges = (state = defaultChargesState, action = { type: '' }) => {
     default:
       newState = state;
   }
-  newState.chargeLines   = chargeLines(newState.chargeLines, action, newState);
+  newState.chargeLines   = chargeLines(newState.chargeLines, action, newState, quoteState);
   newState.fxConversions = fxConversions(newState, action);
   const totals           = chargeTotals(newState.chargeLines);
   return {

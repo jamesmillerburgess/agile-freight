@@ -1,9 +1,13 @@
-import { combineReducers } from 'redux';
-
 import { cargo } from './cargoReducers';
 import { movement } from './movementReducers';
 import { otherServices } from './otherServicesReducers';
 import { charges } from './chargesReducers';
 import { email } from './emailReducers';
 
-export const newQuote = combineReducers({ cargo, movement, otherServices, charges, email });
+export const newQuote = (state = {}, action) => ({
+  cargo: cargo(state.cargo || {}, action),
+  movement: movement(state.movement || {}, action),
+  otherServices: otherServices(state.otherServices || {}, action),
+  charges: charges(state.charges || {}, action, state),
+  email: email(state.email, {}, action),
+});
