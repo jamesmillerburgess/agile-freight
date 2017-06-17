@@ -8,7 +8,6 @@ const mapStateToProps = ({ userProfile }) => ({ userProfile });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   if (ownProps.editMode) {
-    console.log(Meteor.user());
     const userProfile = {
       ...Meteor.user().profile,
       emailAddress: Meteor.user().emails[0].address,
