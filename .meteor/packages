@@ -31,3 +31,4 @@ dburles:factory
 hwillson:stub-collections
 johanbrook:publication-collector
 xolvio:email-stub
+dispatch:mocha
