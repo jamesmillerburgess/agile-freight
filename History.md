@@ -1,4 +1,4 @@
-# v.NEXT
+# v.NEXT – Favorites
 
 # v0.3.0 – Charge Defaults
 
