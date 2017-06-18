@@ -9,7 +9,7 @@ import BranchField from '../fields/BranchField.jsx';
 
 import { Branches } from '../../api/branch/branchCollection';
 
-import { isFavoriteCustomer } from '../../api/users/userUtils';
+import { sortCustomers } from '../../api/customers/customerUtils';
 
 export const CustomerListInner = (props) => {
   const { customers, customerList, dispatchers, history } = props;
@@ -17,18 +17,6 @@ export const CustomerListInner = (props) => {
   const newCustomer = () => {
     dispatchers.loadCustomer({ branch: customerList.filter });
     history.push('/customers/new');
-  };
-
-  const sortCustomers = (a, b) => {
-    if (isFavoriteCustomer(a._id)) {
-      return -1;
-    }
-
-    if (isFavoriteCustomer(b._id)) {
-      return 1;
-    }
-
-    return 0;
   };
 
   return (
