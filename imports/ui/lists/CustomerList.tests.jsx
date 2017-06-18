@@ -68,36 +68,23 @@ if (Meteor.isClient) {
           .equal(true);
       });
 
-      it('renders an input', () => {
+      it('renders a BranchField', () => {
         wrapper
           .find('.horizontal-input-group')
           .childAt(1)
-          .contains(<input />)
+          .childAt(0)
+          .name()
           .should
-          .equal(true);
+          .equal('BranchField');
       });
 
-      it('renders a link to a new customer button', () => {
+      it('renders a button to a new customer button', () => {
         wrapper
           .find('.process-header')
           .childAt(2)
           .name()
           .should
-          .equal('Link');
-        wrapper
-          .find('Link')
-          .props()
-          .to
-          .should
-          .equal('/customers/new');
-      });
-
-      it('renders a new customer button in the link', () => {
-        wrapper
-          .find('Link')
-          .contains(<button className="button-primary">NEW CUSTOMER</button>)
-          .should
-          .equal(true);
+          .equal('button');
       });
     });
   });

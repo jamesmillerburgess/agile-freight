@@ -66,6 +66,7 @@ CustomerListInner.propTypes = {
 
 CustomerListInner.defaultProps = {
   customers: [],
+  customerList: {},
 };
 
 const CustomerList = createContainer(() => ({
