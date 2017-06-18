@@ -9,13 +9,25 @@ const CustomerListItem = ({ customer, header, history }) => {
     Meteor.call(
       'quote.new',
       customer._id,
-      (err, quoteId) => history.push(`/customers/view/${customer._id}/quotes/${quoteId}/header`),
+      (err,
+       quoteId) => history.push(`/customers/view/${customer._id}/quotes/${quoteId}/header`),
     );
   };
 
   const editCustomer = (e) => {
     e.preventDefault();
     history.push(`/customers/edit/${customer._id}`);
+  };
+
+  const isFavorite = customerId => Meteor.user() &&
+                                   Meteor.user().profile &&
+                                   Meteor.user().profile.favoriteCustomers &&
+                                   Meteor.user().profile.favoriteCustomers
+                                         .indexOf(customerId) !== -1;
+
+  const favoriteCustomer = (e) => {
+    e.preventDefault();
+    Meteor.call('users.favoriteCustomer', Meteor.user()._id, customer._id);
   };
 
   return (
@@ -32,7 +44,16 @@ const CustomerListItem = ({ customer, header, history }) => {
           <div className="row no-gutters">
             <div className="col-6">
               <span className="list-item-header">{customer.name.toUpperCase()}&nbsp;
-                <span className="fa fa-fw fa-heart-o favorite-icon" />
+                {
+                  isFavorite(customer._id)
+                    ?
+                  <span className="fa fa-fw fa-heart favorite-icon" />
+                    :
+                  <span
+                    className="fa fa-fw fa-heart-o favorite-icon"
+                    onClick={favoriteCustomer}
+                  />
+                }
               </span>
               <br />
               <span className="customer-active-quotes">
