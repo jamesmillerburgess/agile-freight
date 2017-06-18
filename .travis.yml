@@ -21,6 +21,13 @@ before_install:
   - npm install -g eslint coveralls codecov.io codacy-coverage node-gyp
   - meteor npm install
 
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-5
+
 script:
   - mkdir .coverage
   - meteor npm test
