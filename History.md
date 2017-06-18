@@ -1,5 +1,7 @@
 # v.NEXT
 
+# v0.5.0 – UN Locations
+
 # v0.4.0 – Favorites
 
 * Ability to favorite a customer
