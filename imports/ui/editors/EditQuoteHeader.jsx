@@ -33,7 +33,6 @@ class EditQuoteHeader extends React.Component {
     this.PackageLines = this.PackageLines.bind(this);
     this.Containers   = this.Containers.bind(this);
     props.dispatchers.onLoad(Quotes.findOne(props.match.params.quoteId));
-    // this.quoteStats = getQuoteStats(props.quotes);
   }
 
   componentWillMount() {

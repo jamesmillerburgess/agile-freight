@@ -1,31 +1,18 @@
 import { connect } from 'react-redux';
 
 import EditQuoteCharges from './EditQuoteCharges.jsx';
-import { loadQuote, addChargeLine, setChargeNotes, setFXConversionRate, setQuoteCurrency } from '../../state/actions/newQuoteActions';
+import { loadQuote, addChargeLine, setChargeNotes, setFXConversionRate, setQuoteCurrency } from '../../state/actions/quoteActions';
 import { loadEmail } from '../../state/actions/emailActions';
 
 const mapStateToProps = (state) => {
   const
     {
-      totalOriginCharges,
-      totalInternationalCharges,
-      totalDestinationCharges,
       totalCharges,
-      currency,
-      notes,
-    } = state.newQuote.charges;
-  const { isOpen } = state.newQuote.email;
-  const newQuote = state.newQuote;
+    } = state.quote.charges;
+  const quote = state.quote;
   return {
-    quote: state.newQuote,
-    totalOriginCharges,
-    totalInternationalCharges,
-    totalDestinationCharges,
     totalCharges,
-    currency,
-    notes,
-    newQuote,
-    isOpen,
+    quote,
   };
 };
 
