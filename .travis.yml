@@ -20,7 +20,7 @@ before_install:
   - if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
 
   # Install dependencies
-  - npm install -g coveralls node-gyp
+  - npm install -g node-gyp
   - meteor npm install
 
 addons:
@@ -37,6 +37,4 @@ install:
   - meteor npm install
 
 script:
-  - mkdir .coverage
   - meteor npm test
-  - cat .coverage/lcov.info | coveralls || cat .coverage/lcov.info || true # ignore coveralls error
