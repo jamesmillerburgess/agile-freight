@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
+    "chromedriver": "^2.30.1",
     "deep-freeze": "0.0.1",
     "enzyme": "^2.8.2",
     "eslint": "^3.18.0",
