@@ -18,7 +18,7 @@ before_install:
   - if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
 
   # Install dependencies
-  - npm install -g eslint coveralls codecov.io codacy-coverage spacejam
+  - npm install -g eslint coveralls codecov.io codacy-coverage
   - meteor npm install
 
 script:
