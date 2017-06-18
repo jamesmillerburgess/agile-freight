@@ -3,7 +3,6 @@
 
 import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
-import StubCollections from 'meteor/hwillson:stub-collections';
 
 import { Countries } from './countriesCollection';
 
@@ -12,11 +11,7 @@ chai.should();
 if (Meteor.isServer) {
   describe('Countries Collection', () => {
     beforeEach(() => {
-      StubCollections.stub(Countries);
-    });
-
-    afterEach(() => {
-      StubCollections.restore();
+      Countries.remove({});
     });
 
     it('should have all mandatory and default properties upon insert', () => {

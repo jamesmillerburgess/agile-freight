@@ -3,19 +3,32 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 
+import { isFavoriteCustomer } from '../../api/users/userUtils';
+
 const CustomerListItem = ({ customer, header, history }) => {
   const newQuote = (e) => {
     e.preventDefault();
     Meteor.call(
       'quote.new',
       customer._id,
-      (err, quoteId) => history.push(`/customers/view/${customer._id}/quotes/${quoteId}/header`),
+      (err,
+       quoteId) => history.push(`/customers/view/${customer._id}/quotes/${quoteId}/header`),
     );
   };
 
   const editCustomer = (e) => {
     e.preventDefault();
     history.push(`/customers/edit/${customer._id}`);
+  };
+
+  const favoriteCustomer = (e) => {
+    e.preventDefault();
+    Meteor.call('users.favoriteCustomer', Meteor.user()._id, customer._id);
+  };
+
+  const unfavoriteCustomer = (e) => {
+    e.preventDefault();
+    Meteor.call('users.unfavoriteCustomer', Meteor.user()._id, customer._id);
   };
 
   return (
@@ -32,7 +45,19 @@ const CustomerListItem = ({ customer, header, history }) => {
           <div className="row no-gutters">
             <div className="col-6">
               <span className="list-item-header">{customer.name.toUpperCase()}&nbsp;
-                <span className="fa fa-fw fa-heart-o favorite-icon" />
+                {
+                  isFavoriteCustomer(customer._id, Meteor.user())
+                    ?
+                  <span
+                    className="fa fa-fw fa-heart favorite-icon"
+                    onClick={unfavoriteCustomer}
+                  />
+                    :
+                  <span
+                    className="fa fa-fw fa-heart-o favorite-icon"
+                    onClick={favoriteCustomer}
+                  />
+                }
               </span>
               <br />
               <span className="customer-active-quotes">

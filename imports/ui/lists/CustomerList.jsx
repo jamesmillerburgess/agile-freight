@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Customers } from '../../api/customers/customersCollection';
@@ -9,6 +9,8 @@ import CustomerListItem from '../list-items/CustomerListItem.jsx';
 import BranchField from '../fields/BranchField.jsx';
 
 import { Branches } from '../../api/branch/branchCollection';
+
+import { compareCustomers } from '../../api/customers/customerUtils';
 
 export const CustomerListInner = (props) => {
   const { customers, customerList, dispatchers, history } = props;
@@ -43,6 +45,7 @@ export const CustomerListInner = (props) => {
         {
           customers
             .filter(customer => customer.branch === customerList.filter)
+            .sort((a, b) => compareCustomers(a, b, Meteor.user()))
             .map(customer => (
               <CustomerListItem
                 key={customer._id}

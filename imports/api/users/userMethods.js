@@ -1,23 +1,55 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
+import { Customers } from '../customers/customersCollection';
+
 Meteor.methods({
-  'users.updateField': function usersUpdateField(userId, path, value) {
-    // Check the parameters
+  'users.favoriteCustomer': function usersFavoriteCustomer(userId, customerId) {
     check(userId, String);
-    check(path, String);
-    check(value, String);
+    check(customerId, String);
 
-    // Build the query and update criteria
-    const query = { _id: userId };
-    const update = { $set: { [path]: value } };
+    const user = Meteor.users.findOne(userId);
+    if (!user) {
+      throw new Error(`UserId ${userId} does not exist.`);
+    }
 
-    // Update the job
-    Meteor.users.update(query, update);
+    if (!Customers.findOne(customerId)) {
+      throw new Error(`CustomerId ${customerId} does not exist.`);
+    }
 
-    return Meteor.users.findOne(query);
+    if (
+      user.profile &&
+      user.profile.favoriteCustomers &&
+      user.profile.favoriteCustomers.indexOf(customerId) !== -1
+    ) {
+      throw new Error(`CustomerId ${customerId} is already a favorite`);
+    }
 
-    // Update search
-    // updateSearch(jobId);
+    Meteor.users.update({ _id: userId },
+      { $push: { 'profile.favoriteCustomers': customerId } });
+  },
+  'users.unfavoriteCustomer': function unfavoriteCustomer(userId, customerId) {
+    check(userId, String);
+    check(customerId, String);
+
+    const user = Meteor.users.findOne(userId);
+    if (!user) {
+      throw new Error(`UserId ${userId} does not exist.`);
+    }
+
+    if (!Customers.findOne(customerId)) {
+      throw new Error(`CustomerId ${customerId} does not exist.`);
+    }
+
+    if (
+      user.profile &&
+      user.profile.favoriteCustomers &&
+      user.profile.favoriteCustomers.indexOf(customerId) === -1
+    ) {
+      throw new Error(`CustomerId ${customerId} is not a favorite.`);
+    }
+
+    Meteor.users.update({ _id: userId },
+      { $pull: { 'profile.favoriteCustomers': customerId } });
   },
 });

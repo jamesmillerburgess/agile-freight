@@ -3,6 +3,8 @@ language: node_js
 node_js:
   - 4.6.2
 
+sudo: required
+
 cache:
   directories:
     - $HOME/.meteor
@@ -18,7 +20,20 @@ before_install:
   - if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
 
   # Install dependencies
-  - npm install -g eslint coveralls codecov.io codacy-coverage spacejam
+  - npm install -g eslint coveralls codecov.io codacy-coverage node-gyp
+  - meteor npm install
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-5
+    - xvfb
+
+install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
   - meteor npm install
 
 script:

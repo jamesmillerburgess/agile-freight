@@ -1,5 +1,11 @@
 # v.NEXT
 
+# v0.4.0 – Favorites
+
+* Ability to favorite a customer
+* Ability to unfavorite a customer
+* Favorite customers appear at the top of the customer list
+
 # v0.3.0 – Charge Defaults
 
 * Defaults units on charge lines based on the rate basis
