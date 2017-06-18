@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "test": "TEST_BROWSER_DRIVER=chrome meteor test --once --driver-package dispatch:mocha"
+    "test": "TEST_BROWSER_DRIVER=nightmare meteor test --once --driver-package dispatch:mocha"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
-    "chromedriver": "^2.30.1",
     "deep-freeze": "0.0.1",
     "enzyme": "^2.8.2",
     "eslint": "^3.18.0",
@@ -42,7 +41,6 @@
     "react-addons-test-utils": "^15.5.1",
     "react-test-renderer": "^15.5.4",
     "redux-devtools": "^3.3.2",
-    "selenium-webdriver": "^3.4.0"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
