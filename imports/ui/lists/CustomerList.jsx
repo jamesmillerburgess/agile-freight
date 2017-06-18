@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Customers } from '../../api/customers/customersCollection';
@@ -9,7 +10,7 @@ import BranchField from '../fields/BranchField.jsx';
 
 import { Branches } from '../../api/branch/branchCollection';
 
-import { sortCustomers } from '../../api/customers/customerUtils';
+import { compareCustomers } from '../../api/customers/customerUtils';
 
 export const CustomerListInner = (props) => {
   const { customers, customerList, dispatchers, history } = props;
@@ -44,7 +45,7 @@ export const CustomerListInner = (props) => {
         {
           customers
             .filter(customer => customer.branch === customerList.filter)
-            .sort(sortCustomers)
+            .sort((a, b) => compareCustomers(a, b, Meteor.user()))
             .map(customer => (
               <CustomerListItem
                 key={customer._id}

@@ -1,11 +1,17 @@
 import { isFavoriteCustomer } from '../users/userUtils';
 
-export const sortCustomers = (a, b) => {
-  if (isFavoriteCustomer(a._id)) {
+export const compareCustomers = (a, b, user) => {
+  const aFav = isFavoriteCustomer(a._id, user);
+  const bFav = isFavoriteCustomer(b._id, user);
+  if (aFav && bFav) {
+    return 0;
+  }
+
+  if (aFav) {
     return -1;
   }
 
-  if (isFavoriteCustomer(b._id)) {
+  if (bFav) {
     return 1;
   }
 

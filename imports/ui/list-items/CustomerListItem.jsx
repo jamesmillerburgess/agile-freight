@@ -46,7 +46,7 @@ const CustomerListItem = ({ customer, header, history }) => {
             <div className="col-6">
               <span className="list-item-header">{customer.name.toUpperCase()}&nbsp;
                 {
-                  isFavoriteCustomer(customer._id)
+                  isFavoriteCustomer(customer._id, Meteor.user())
                     ?
                   <span
                     className="fa fa-fw fa-heart favorite-icon"
