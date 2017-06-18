@@ -182,7 +182,16 @@ export const APIGlobals = {
   chargeUOMOptions: ['kg', 'cbm', 'lb', 'cu ft', 'km', 'mile', 'container', ''],
 
   // Cargo
-  packageTypeOptions: ['Packages', 'Boxes', 'Cartons', 'Bags', 'Bales', 'Bolts', 'Bottles', ''],
+  packageTypeOptions: [
+    'Packages',
+    'Boxes',
+    'Cartons',
+    'Bags',
+    'Bales',
+    'Bolts',
+    'Bottles',
+    '',
+  ],
 
   // Quotes
   quoteStatusOptions: ['Issued', 'Expired', 'Draft', 'Canceled'],

@@ -8,7 +8,8 @@ import QuoteContainer from '../objects/QuoteContainer';
 import CurrencyField from '../fields/CurrencyField.jsx';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
-import { UNLocations } from '../../api/unlocations/unlocations-collection';
+import { UNLocations } from '../../api/unlocations/unlocationsCollection';
+import { Customers } from '../../api/customers/customersCollection';
 
 import { currencyFormat } from '../formatters/numberFormatters';
 import { resizeHeight } from '../formatters/resizeHeight';
@@ -19,7 +20,6 @@ class EditQuoteCharges extends React.Component {
     this.save            = this.save.bind(this);
     this.archive         = this.archive.bind(this);
     this.editEmail       = this.editEmail.bind(this);
-    this.getMovementText = this.getMovementText.bind(this);
     this.getFXRates      = this.getFXRates.bind(this);
   }
 
@@ -31,24 +31,11 @@ class EditQuoteCharges extends React.Component {
     resizeHeight(this.notesNode);
   }
 
-  getMovementText() {
-    if (
-      this.props.quote &&
-      this.props.quote.movement &&
-      this.props.quote.movement.pickup &&
-      this.props.quote.movement.delivery &&
-      this.props.quote.movement.pickup.location &&
-      this.props.quote.movement.delivery.location
-    ) {
-      const pickupLocation   = UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.pickup.location)).name;
-      const deliveryLocation = UNLocations.findOne(new Mongo.ObjectID(this.props.quote.movement.delivery.location)).name;
-      return `${pickupLocation} – ${deliveryLocation}`.toUpperCase();
-    }
-    return '';
-  }
-
   save() {
-    Meteor.call('quote.save', { ...this.props.newQuote, _id: this.props.match.params.quoteId });
+    Meteor.call('quote.save', {
+      ...this.props.quote,
+      _id: this.props.match.params.quoteId
+    });
   }
 
   archive() {
@@ -56,25 +43,29 @@ class EditQuoteCharges extends React.Component {
       'quote.archive',
       this.props.match.params.quoteId,
       () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/overview`,
+        `/customers/view/${this.props.match.params.customerId}/overview`,
       ),
     );
   }
 
   editEmail() {
-    const email = this.props.newQuote.email || {
-        to: 'agilityfreightdemo@gmail.com',
-        cc: '',
-        subject: 'Your Freight Quote',
-        message: `Dear customer,
+    const to = Customers
+      .findOne(this.props.match.params.customerId)
+      .emailAddress;
+    const email = {
+      to,
+      cc: '',
+      subject: 'Your Freight Quote',
+      message: `Dear customer,
+      
     Thank you for your interest in our services. Please find attached a quote for the freight charges as per your request.`,
-      };
+    };
     this.props.loadEmail(email);
     Meteor.call(
       'quote.save',
-      { ...this.props.newQuote, email, _id: this.props.match.params.quoteId },
+      { ...this.props.quote, email, _id: this.props.match.params.quoteId },
       () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/email`,
+        `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/email`,
       ),
     );
   }
@@ -91,28 +82,28 @@ class EditQuoteCharges extends React.Component {
           <td>Quote Currency</td>
           <td>
             <CurrencyField
-              value={this.props.newQuote.charges.currency}
+              value={this.props.quote.charges.currency}
               onChange={e => this.props.setQuoteCurrency(e.value)}
             />
           </td>
         </tr>
         {Object
-          .keys(this.props.newQuote.charges.fxConversions)
+          .keys(this.props.quote.charges.fxConversions)
           .map((currency, index) => {
-            if (!this.props.newQuote.charges.fxConversions[currency].active) {
+            if (!this.props.quote.charges.fxConversions[currency].active) {
               return null;
             }
             return (
               <tr key={index}>
                 <td />
                 <td>
-                  {this.props.newQuote.charges.currency}/{currency}
+                  {this.props.quote.charges.currency}/{currency}
                 </td>
                 <td>
                   <input
                     type="number"
                     className="fx-rate"
-                    value={this.props.newQuote.charges.fxConversions[currency].rate}
+                    value={this.props.quote.charges.fxConversions[currency].rate}
                     onChange={e => this.props.setFXConversionRate(currency, e.target.value)}
                   />
                 </td>
@@ -127,11 +118,6 @@ class EditQuoteCharges extends React.Component {
   render() {
     const
       {
-        totalOriginCharges,
-        totalInternationalCharges,
-        totalDestinationCharges,
-        totalCharges,
-        currency,
         addChargeLine,
         history,
       } = this.props;
@@ -142,7 +128,7 @@ class EditQuoteCharges extends React.Component {
           <div className="breadcrumbs">
             <div
               className="breadcrumb"
-              onClick={() => history.push(`/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
+              onClick={() => history.push(`/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
             >
               HEADER
             </div>
@@ -152,8 +138,8 @@ class EditQuoteCharges extends React.Component {
             <div className="breadcrumb-end active customer" />
           </div>
           <button
-            className="back-button"
-            onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`)}
+            className="button-primary"
+            onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/overview`)}
           >
             BACK TO CUSTOMER
           </button>
@@ -180,7 +166,7 @@ class EditQuoteCharges extends React.Component {
                     <th className="units-column">UNITS</th>
                     <th className="unit-price-column numeric-label">UNIT PRICE</th>
                     <th className="amount-local-column numeric-label">AMOUNT (LOCAL)</th>
-                    <th className="amount-final-column numeric-label">FINAL ({this.props.newQuote.charges.currency})</th>
+                    <th className="amount-final-column numeric-label">FINAL ({this.props.quote.charges.currency})</th>
                   </tr>
                 </tbody>
                 <EditQuoteChargeGroupConnect group="Origin" />
@@ -230,7 +216,7 @@ class EditQuoteCharges extends React.Component {
                     <td colSpan="6" className="notes-cell">
                       <textarea
                         ref={node => this.notesNode = node}
-                        value={this.props.notes}
+                        value={this.props.quote.charges.notes}
                         onChange={e => {
                           resizeHeight(this.notesNode);
                           this.props.setChargeNotes(e.target.value);
@@ -245,7 +231,7 @@ class EditQuoteCharges extends React.Component {
                     <td colSpan="5" />
                     <td className="numeric-label title">TOTAL PRICE</td>
                     <td className="numeric-label title">
-                      {currencyFormat(totalCharges)} {this.props.newQuote.charges.currency}
+                      {currencyFormat(this.props.quote.charges.totalCharges)} {this.props.quote.charges.currency}
                     </td>
                   </tr>
                 </tfoot>
@@ -253,7 +239,7 @@ class EditQuoteCharges extends React.Component {
               <div className="form-button-group">
                 <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
                 <button className="save-button" onClick={this.save}>SAVE</button>
-                <button className="submit-button" onClick={this.editEmail}>EDIT EMAIL</button>
+                <button className="button-submit" onClick={this.editEmail}>EDIT EMAIL</button>
               </div>
             </div>
           </div>

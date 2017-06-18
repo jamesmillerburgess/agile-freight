@@ -1,5 +1,9 @@
 @import 'styleGlobals';
 
+.Select {
+  width: 100%;
+}
+
 .Select-control {
   border-radius: 0 !important;
   border-color: $customers-accent-color !important;

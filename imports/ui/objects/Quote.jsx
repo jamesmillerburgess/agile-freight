@@ -122,8 +122,9 @@ class Quote extends React.Component {
   LooseCargoAttributes() {
     return (
       <span className="label">
-      {this.props.quote.cargo.hazardous ? '' : 'Non-'}Hazardous, {this.props.quote.cargo.temperatureControlled ? '' : 'Non-'}Temperature Controlled
-    </span>
+        {this.props.quote.cargo.hazardous ? 'Hazardous,' : 'Non-Hazardous,'}&nbsp;
+        {this.props.quote.cargo.temperatureControlled ? 'Temperature Controlled' : 'Non-Temperature Controlled'}
+      </span>
     );
   }
 
@@ -201,7 +202,7 @@ class Quote extends React.Component {
         {groupChargeLines.map((chargeLine, index) => (
           <div key={index} className="charge-row">
             <span className="name">{chargeLine.name}</span>
-            <span className="units units" />
+            <span className="units" />
             <span className="rate">
               {chargeLine.units} {chargeLine.rate}
             </span>
@@ -295,8 +296,8 @@ class Quote extends React.Component {
       <div className="fx-rates">
         <div className="title">FX RATES</div>
         {
-          currencies.map(currency => (
-            <div className="field">
+          currencies.map((currency, index) => (
+            <div key={index} className="field">
               <div className="label">
                 {this.props.quote.charges.currency}/{currency}
               </div>

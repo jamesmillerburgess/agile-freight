@@ -1,5 +1,5 @@
 {
   "reset": false,
-  "testMode": "structure",
+  "testMode": "blank",
   "public": {}
 }

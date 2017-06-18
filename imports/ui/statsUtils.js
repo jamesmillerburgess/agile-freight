@@ -21,7 +21,9 @@ export const getDeepVal = (obj, path) => {
   }
   splitPath
     .forEach((key) => {
-      val = val[key];
+      if (val) {
+        val = val[key];
+      }
     });
   return val;
 };

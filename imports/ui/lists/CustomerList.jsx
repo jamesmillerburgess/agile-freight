@@ -1,19 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Customers } from '../../api/customers/customers-collection';
+import { Customers } from '../../api/customers/customersCollection';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
+import BranchField from '../fields/BranchField.jsx';
 
-const CustomerListInner = (props) => {
-  const { customers, history } = props;
+import { Branches } from '../../api/branch/branchCollection';
+
+import { compareCustomers } from '../../api/customers/customerUtils';
+
+export const CustomerListInner = (props) => {
+  const { customers, customerList, dispatchers, history } = props;
+
+  const newCustomer = () => {
+    dispatchers.loadCustomer({ branch: customerList.filter });
+    history.push('/customers/new');
+  };
+
   return (
-    <div className="">
+    <div>
       <div className="content customer">
+        <div className="process-header">
+          <div className="title">CUSTOMER LIST</div>
+          <div className="horizontal-input-group">
+            <div className="label">BRANCH</div>
+            <div className="field">
+              <BranchField
+                value={customerList.filter}
+                options={Branches.find().fetch()}
+                onChange={option => dispatchers.setCustomerListFilter(option._id)}
+              />
+            </div>
+          </div>
+          <button
+            className="button-primary"
+            onClick={newCustomer}
+          >
+            NEW CUSTOMER
+          </button>
+        </div>
         {
-          customers.map(customer =>
-            <CustomerListItem key={customer._id} customer={customer} history={history} />)
+          customers
+            .filter(customer => customer.branch === customerList.filter)
+            .sort((a, b) => compareCustomers(a, b, Meteor.user()))
+            .map(customer => (
+              <CustomerListItem
+                key={customer._id}
+                customer={customer}
+                history={history}
+              />
+            ))
         }
       </div>
       <div className="content-footer-accent customers-footer-accent" />
@@ -23,13 +62,18 @@ const CustomerListInner = (props) => {
 
 CustomerListInner.propTypes = {
   customers: PropTypes.array,
+  customerList: PropTypes.object,
+  dispatchers: PropTypes.objectOf(PropTypes.func),
   history: PropTypes.object,
 };
 
-const CustomerList = createContainer(() => {
-  return {
-    customers: Customers.find().fetch(),
-  };
-}, CustomerListInner);
+CustomerListInner.defaultProps = {
+  customers: [],
+  customerList: {},
+};
+
+const CustomerList = createContainer(() => ({
+  customers: Customers.find().fetch(),
+}), CustomerListInner);
 
 export default CustomerList;

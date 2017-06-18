@@ -18,7 +18,7 @@
       color: $panel-background-color;
     }
   }
-  .favorite-icon {
+  .fa-heart-o.favorite-icon {
     color: $panel-background-color;
   }
 }
@@ -59,6 +59,13 @@
     }
   }
   .favorite-icon {
+    color: $inverted-text-color;
+  }
+}
+
+.admin a {
+  .panel:hover {
+    background-color: $home-accent-color;
     color: $inverted-text-color;
   }
 }

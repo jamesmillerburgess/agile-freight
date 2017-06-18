@@ -1,26 +1,28 @@
 {
   "name": "agility-freight",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "test": "mocha"
+    "test": "TEST_BROWSER_DRIVER=nightmare SERVER_TEST_REPORTER=tap CLIENT_TEST_REPORTER=tap meteor test --once --driver-package dispatch:mocha"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
     "bcrypt": "^1.0.2",
     "chart.js": "^2.6.0",
-    "meteor-node-stubs": "^0.2.6",
+    "core-js": "^2.4.1",
+    "meteor-node-stubs": "^0.2.11",
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
-    "react": "^15.5.4",
+    "react": "^15.6.1",
     "react-chartjs-2": "^2.1.0",
-    "react-dom": "^15.5.4",
+    "react-dom": "^15.6.1",
     "react-loadable": "^3.3.1",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-select": "^1.0.0-rc.5",
-    "redux": "^3.6.0"
+    "redux": "^3.7.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
@@ -33,6 +35,7 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-meteor": "^4.0.1",
     "eslint-plugin-react": "^6.10.3",
+    "nightmare": "^2.10.0",
     "react-addons-test-utils": "^15.5.1",
     "react-test-renderer": "^15.5.4",
     "redux-devtools": "^3.3.2"

@@ -1,7 +1,7 @@
-import { makeActionCreator } from './action-utils';
+import { makeActionCreator } from './actionUtils';
 import * as ACTION_TYPES from './actionTypes';
 
-// CARGO
+// EMAIL
 export const loadEmail       = makeActionCreator(ACTION_TYPES.LOAD_EMAIL, 'email');
 export const setEmailIsOpen  = makeActionCreator(ACTION_TYPES.SET_EMAIL_IS_OPEN, 'isOpen');
 export const setEmailTo      = makeActionCreator(ACTION_TYPES.SET_EMAIL_TO, 'to');

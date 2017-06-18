@@ -18,3 +18,7 @@ textarea:focus {
   border: 1px solid $customers-accent-color;
   z-index: 1000;
 }
+
+textarea.address {
+  min-height: 100px;
+}

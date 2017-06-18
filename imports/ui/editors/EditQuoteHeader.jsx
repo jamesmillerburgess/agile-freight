@@ -13,8 +13,8 @@ import QuoteContainer from '../objects/QuoteContainer';
 
 import { quotePropTypes } from '../objects/quotePropTypes';
 
-import { UNLocations } from '../../api/unlocations/unlocations-collection';
-import { Countries } from '../../api/countries/countries-collection';
+import { UNLocations } from '../../api/unlocations/unlocationsCollection';
+import { Countries } from '../../api/countries/countriesCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
 const getQuoteStats = quotes => ({
@@ -33,7 +33,6 @@ class EditQuoteHeader extends React.Component {
     this.PackageLines = this.PackageLines.bind(this);
     this.Containers   = this.Containers.bind(this);
     props.dispatchers.onLoad(Quotes.findOne(props.match.params.quoteId));
-    // this.quoteStats = getQuoteStats(props.quotes);
   }
 
   componentWillMount() {
@@ -45,7 +44,7 @@ class EditQuoteHeader extends React.Component {
       'quote.save',
       { ...this.props.quote, _id: this.props.match.params.quoteId },
       () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
+        `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
       ),
     );
   }
@@ -59,7 +58,7 @@ class EditQuoteHeader extends React.Component {
       'quote.archive',
       this.props.match.params.quoteId,
       () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/overview`,
+        `/customers/view/${this.props.match.params.customerId}/overview`,
       ),
     );
   }
@@ -113,6 +112,7 @@ class EditQuoteHeader extends React.Component {
                     { value: 'Packages', label: 'Packages' },
                     { value: 'Boxes', label: 'Boxes' },
                     { value: 'Pallets', label: 'Pallets' },
+                    { value: 'Cases', label: 'Cases' },
                   ]}
                   clearable={false}
                   onChange={selectedValue => this.props.dispatchers
@@ -374,8 +374,8 @@ class EditQuoteHeader extends React.Component {
             <div className="breadcrumb-end active customer" />
           </div>
           <button
-            className="back-button"
-            onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`)}
+            className="button-primary"
+            onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/overview`)}
           >
             BACK TO CUSTOMER
           </button>
@@ -509,7 +509,7 @@ class EditQuoteHeader extends React.Component {
               <div className="form-button-group">
                 <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
                 <button className="save-button" onClick={this.save}>SAVE</button>
-                <button className="submit-button" onClick={this.getRates}>
+                <button className="button-submit" onClick={this.getRates}>
                   EDIT CHARGES
                 </button>
               </div>

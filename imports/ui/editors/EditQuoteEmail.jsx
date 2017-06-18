@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
 
 import QuoteContainer from '../objects/QuoteContainer';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
-import { UNLocations } from '../../api/unlocations/unlocations-collection';
 
 import { resizeHeight } from '../formatters/resizeHeight';
-import { quotePropTypes } from '../objects/quotePropTypes';
 
 class EditQuoteEmail extends React.Component {
   constructor(props) {
@@ -38,7 +35,7 @@ class EditQuoteEmail extends React.Component {
       'quote.archive',
       this.props.match.params.quoteId,
       () => this.props.history.push(
-        `/customers/${this.props.match.params.customerId}/overview`,
+        `/customers/view/${this.props.match.params.customerId}/overview`,
       ),
     );
   }
@@ -55,7 +52,7 @@ class EditQuoteEmail extends React.Component {
       },
       () => Meteor.call('quote.submit', quoteId, email, moment().add(1, 'month').format()),
     );
-    this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`);
+    this.props.history.push(`/customers/view/${this.props.match.params.customerId}/overview`);
   }
 
   render() {
@@ -66,7 +63,7 @@ class EditQuoteEmail extends React.Component {
           <div className="breadcrumbs">
             <button
               className="breadcrumb"
-              onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
+              onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
             >
               HEADER
             </button>
@@ -74,7 +71,7 @@ class EditQuoteEmail extends React.Component {
             <div className="breadcrumb-start" />
             <button
               className="breadcrumb"
-              onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`)}
+              onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`)}
             >
               CHARGES
             </button>
@@ -84,8 +81,8 @@ class EditQuoteEmail extends React.Component {
             <div className="breadcrumb-end active customer" />
           </div>
           <button
-            className="back-button"
-            onClick={() => this.props.history.push(`/customers/${this.props.match.params.customerId}/overview`)}
+            className="button-primary"
+            onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/overview`)}
           >
             BACK TO CUSTOMER
           </button>
@@ -133,7 +130,7 @@ class EditQuoteEmail extends React.Component {
             <div className="form-button-group">
               <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
               <button className="save-button" onClick={this.save}>SAVE</button>
-              <button className="submit-button" onClick={this.sendEmail}>SEND EMAIL</button>
+              <button className="button-submit" onClick={this.sendEmail}>SEND EMAIL</button>
             </div>
           </div>
         </div>
@@ -144,7 +141,7 @@ class EditQuoteEmail extends React.Component {
 }
 
 EditQuoteEmail.propTypes = {
-  quote: quotePropTypes.isRequired,
+  quote: PropTypes.object.isRequired,
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
   history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   match: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

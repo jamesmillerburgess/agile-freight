@@ -4,65 +4,47 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import StubCollections from 'meteor/hwillson:stub-collections';
 import { chai } from 'meteor/practicalmeteor:chai';
 
 import UNLocationField from './UNLocationField.jsx';
-import { UNLocations } from '../../api/unlocations/unlocations-collection';
-import { Countries } from '../../api/countries/countries-collection';
+import { UNLocations } from '../../api/unlocations/unlocationsCollection';
+import { Countries } from '../../api/countries/countriesCollection';
 
 if (Meteor.isClient) {
   describe('UN Location Field', () => {
     chai.should();
+    let wrapper;
+    const onChange = () => null;
 
     beforeEach(() => {
-      StubCollections.stub([UNLocations, Countries]);
-      Countries.insert({ _id: new Mongo.ObjectID('aaaaaaaaaaaaaaaaaaaaaaaa'), countryCode: 'aaaaaaaaaaaaaaaaaaaaaaaa' });
-      Countries.insert({ _id: new Mongo.ObjectID('bbbbbbbbbbbbbbbbbbbbbbbb'), countryCode: 'bbbbbbbbbbbbbbbbbbbbbbbb' });
+      wrapper = shallow(<UNLocationField onChange={onChange} />);
     });
 
     afterEach(() => {
-      StubCollections.restore();
+      wrapper.unmount();
     });
 
-    it('should render a Select element', () => {
-      const unLocationField = mount(<UNLocationField unLocations={UNLocations} />);
-      unLocationField.exists().should.equal(true);
-      unLocationField.hasClass('Select').should.equal(true);
-
-      unLocationField.unmount();
+    it('renders a disabled Select component if no country is provided', () => {
+      wrapper.exists().should.equal(true);
+      wrapper.name().should.equal('Select');
+      wrapper.props().disabled.should.equal(true);
     });
 
-    it('should filter options upon change of input', () => {
-      UNLocations.insert({ country: 'aaaaaaaaaaaaaaaaaaaaaaaa', name: 'Aardvark' });
-      const unLocationField = mount(<UNLocationField country="aaaaaaaaaaaaaaaaaaaaaaaa" unLocations={UNLocations} />);
-      unLocationField.find('input').simulate('change', { target: { value: 'A' } });
-
-      unLocationField.find('.option-label').text().should.equal('Aardvark');
-
-      unLocationField.find('input').simulate('change', { target: { value: 'B' } });
-      unLocationField.find('.Select-noresults').text().should.equal('No results found');
-      unLocationField.unmount();
+    it('renders an Async component if a country is provided', () => {
+      wrapper.setProps({ country: 'a', onChange });
+      wrapper.name().should.equal('Async');
     });
 
-    it('should include subdivisions in the label following a comma and a space', () => {
-      UNLocations.insert({ country: 'aaaaaaaaaaaaaaaaaaaaaaaa', name: 'Aardvark', subdivision: 'AL' });
-      const unLocationField = mount(<UNLocationField country="aaaaaaaaaaaaaaaaaaaaaaaa" unLocations={UNLocations} />);
-      unLocationField.find('input').simulate('change', { target: { value: 'A' } });
-
-      unLocationField.find('.Select-option').text().should.equal('Aardvark, AL');
-      unLocationField.unmount();
+    it('passes the value to Async', () => {
+      wrapper.setProps({ country: 'a', value: 'b', onChange });
+      wrapper.props().value.should.equal('b');
     });
 
-    it('should filter by the country prop', () => {
-      UNLocations.insert({ country: 'aaaaaaaaaaaaaaaaaaaaaaaa', name: 'Aardvark', subdivision: 'AL' });
-      UNLocations.insert({ country: 'bbbbbbbbbbbbbbbbbbbbbbbb', name: 'Basilisk', subdivision: 'BS' });
-      const unLocationField = mount(<UNLocationField country="bbbbbbbbbbbbbbbbbbbbbbbb" unLocations={UNLocations} />);
-      unLocationField.find('input').simulate('change', { target: { value: 'A' } });
-
-      unLocationField.find('.Select-option').text().should.equal('Basilisk, BS');
-      unLocationField.unmount();
+    it('sets cache to false', () => {
+      wrapper.setProps({ country: 'a', value: 'b', onChange });
+      wrapper.props().cache.should.equal(false);
     });
   });
 }

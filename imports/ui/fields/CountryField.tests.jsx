@@ -8,7 +8,7 @@ import StubCollections from 'meteor/hwillson:stub-collections';
 import { chai } from 'meteor/practicalmeteor:chai';
 
 import CountryField from './CountryField.jsx';
-import { Countries } from '../../api/countries/countries-collection';
+import { Countries } from '../../api/countries/countriesCollection';
 
 if (Meteor.isClient) {
   describe('Country Field', () => {

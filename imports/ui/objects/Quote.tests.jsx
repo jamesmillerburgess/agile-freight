@@ -113,10 +113,10 @@ if (Meteor.isClient) {
         });
         wrapper.contains((
           <div className="cargo-row">
-            <span>1 Pallet</span>
-            <span className="numeric-label">2x3x4 cm</span>
-            <span className="numeric-label">5 kg / pkg</span>
-            <span className="numeric-label">1 pkgs,&nbsp;6 cbm,&nbsp;7 kg</span>
+            <span className="packages">1 Pallet</span>
+            <span className="dimensions numeric-label">2x3x4 cm</span>
+            <span className="weight numeric-label">5 kg / pkg</span>
+            <span className="totals numeric-label">1 pkgs,&nbsp;6 cbm,&nbsp;7 kg</span>
           </div>
         )).should.equal(true);
       });
@@ -168,7 +168,7 @@ if (Meteor.isClient) {
         });
         wrapper.contains((
           <div className="cargo-attributes">
-            <span className="label">HAZARDOUS, TEMPERATURE CONTROLLED</span>
+            <span className="label">Hazardous,&nbsp;Temperature Controlled</span>
           </div>
         )).should.equal(true);
 
@@ -184,7 +184,7 @@ if (Meteor.isClient) {
         });
         wrapper.contains((
           <div className="cargo-attributes">
-            <span className="label">NON-HAZARDOUS, NON-TEMPERATURE CONTROLLED</span>
+            <span className="label">Non-Hazardous,&nbsp;Non-Temperature Controlled</span>
           </div>
         )).should.equal(true);
       });
@@ -244,7 +244,7 @@ if (Meteor.isClient) {
         });
         wrapper.contains((
           <div className="cargo-attributes">
-            <span className="label">HAZARDOUS</span>
+            <span className="label">Hazardous</span>
           </div>
         )).should.equal(true);
 
@@ -259,7 +259,7 @@ if (Meteor.isClient) {
         });
         wrapper.contains((
           <div className="cargo-attributes">
-            <span className="label">NON-HAZARDOUS</span>
+            <span className="label">Non-Hazardous</span>
           </div>
         )).should.equal(true);
       });
@@ -296,7 +296,7 @@ if (Meteor.isClient) {
             },
           },
         });
-        wrapper.contains(<span>DOOR TO DOOR</span>).should.equal(true);
+        wrapper.contains(<span>Door to Door</span>).should.equal(true);
       });
 
       it('renders \'PORT TO DOOR\' when only the pickup location is a port', () => {
@@ -308,7 +308,7 @@ if (Meteor.isClient) {
             },
           },
         });
-        wrapper.contains(<span>PORT TO DOOR</span>).should.equal(true);
+        wrapper.contains(<span>Port to Door</span>).should.equal(true);
       });
 
       it('renders \'DOOR TO PORT\' when only the delivery location is a port', () => {
@@ -320,7 +320,7 @@ if (Meteor.isClient) {
             },
           },
         });
-        wrapper.contains(<span>DOOR TO PORT</span>).should.equal(true);
+        wrapper.contains(<span>Door to Port</span>).should.equal(true);
       });
 
       it('renders \'PORT TO PORT\' when both locations are a port', () => {
@@ -332,7 +332,7 @@ if (Meteor.isClient) {
             },
           },
         });
-        wrapper.contains(<span>PORT TO PORT</span>).should.equal(true);
+        wrapper.contains(<span>Port to Port</span>).should.equal(true);
       });
     });
 
@@ -349,7 +349,7 @@ if (Meteor.isClient) {
             },
           },
         });
-        wrapper.contains(<span>INSURANCE</span>).should.equal(true);
+        wrapper.contains(<span>Insurance</span>).should.equal(true);
       });
 
       it('renders \'NO INSURANCE\' if insurance is false', () => {
@@ -360,7 +360,7 @@ if (Meteor.isClient) {
             },
           },
         });
-        wrapper.contains(<span>NO INSURANCE</span>).should.equal(true);
+        wrapper.contains(<span>No Insurance</span>).should.equal(true);
       });
 
       it('renders \'CUSTOMS CLEARANCE\' if customs clearance is true', () => {
@@ -371,7 +371,7 @@ if (Meteor.isClient) {
             },
           },
         });
-        wrapper.contains(<span>CUSTOMS CLEARANCE</span>).should.equal(true);
+        wrapper.contains(<span>Customs Clearance</span>).should.equal(true);
       });
 
       it('renders \'NO CUSTOMS CLEARANCE\' if customs clearance is false', () => {
@@ -382,7 +382,7 @@ if (Meteor.isClient) {
             },
           },
         });
-        wrapper.contains(<span>NO CUSTOMS CLEARANCE</span>).should.equal(true);
+        wrapper.contains(<span>No Customs Clearance</span>).should.equal(true);
       });
     });
 
@@ -392,9 +392,9 @@ if (Meteor.isClient) {
         wrapper.contains(<span className="title">NO CHARGES ENTERED</span>).should.equal(true);
       });
 
-      it('renders the \'NO ORIGIN CHARGES\' title if there are charges but none are origin', () => {
+      it('does not render the \'ORIGIN CHARGES\' title if are no origin charges', () => {
         wrapper.setProps({ quote: { charges: { chargeLines: [{}] } } });
-        wrapper.contains(<span className="title">NO ORIGIN CHARGES</span>).should.equal(true);
+        wrapper.contains(<span className="title">ORIGIN CHARGES</span>).should.equal(false);
       });
 
       it('renders the \'ORIGIN CHARGES\' title if there is an origin charge', () => {
@@ -413,24 +413,24 @@ if (Meteor.isClient) {
                 rate: 'Per Container',
                 units: 1,
                 unitPrice: 2,
-                localTotal: 3,
-                total: 4,
-                localCurrency: 'CHF',
+                amount: 3,
+                finalAmount: 4,
+                unitPriceCurrency: 'CHF',
               }],
               totalOriginCharges: 5,
             },
           },
         });
         wrapper.contains((
-          <div className="charge-group">
+          <div className="charge-group section">
             <span className="title">
               ORIGIN CHARGES
             </span>
             <div className="charge-row">
-              <span>Charge Name</span>
-              <span>Per Container</span>
-              <span className="units">{1}</span>
-              <span className="amount">2.00 CHF</span>
+              <span className="name">Charge Name</span>
+              <span className="units" />
+              <span className="rate">{1} Per Container</span>
+              <span className="amount" />
               <span className="amount">3.00 CHF</span>
               <span className="amount">4.00 USD</span>
             </div>
@@ -442,10 +442,9 @@ if (Meteor.isClient) {
         )).should.equal(true);
       });
 
-      it('renders the \'NO INTERNATIONAL CHARGES\' title if there are charges but none are international', () => {
+      it('does not render the \'INTERNATIONAL CHARGES\' title if are no international charges', () => {
         wrapper.setProps({ quote: { charges: { chargeLines: [{}] } } });
-        wrapper.contains(
-          <span className="title">NO INTERNATIONAL CHARGES</span>).should.equal(true);
+        wrapper.contains(<span className="title">INTERNATIONAL CHARGES</span>).should.equal(false);
       });
 
       it('renders the \'INTERNATIONAL CHARGES\' charges title', () => {
@@ -464,24 +463,24 @@ if (Meteor.isClient) {
                 rate: 'Per Container',
                 units: 1,
                 unitPrice: 2,
-                localTotal: 3,
-                total: 4,
-                localCurrency: 'CHF',
+                amount: 3,
+                finalAmount: 4,
+                unitPriceCurrency: 'CHF',
               }],
               totalInternationalCharges: 5,
             },
           },
         });
         wrapper.contains((
-          <div className="charge-group">
+          <div className="charge-group section">
             <span className="title">
               INTERNATIONAL CHARGES
             </span>
             <div className="charge-row">
-              <span>Charge Name</span>
-              <span>Per Container</span>
-              <span className="units">{1}</span>
-              <span className="amount">2.00 CHF</span>
+              <span className="name">Charge Name</span>
+              <span className="units" />
+              <span className="rate">{1} Per Container</span>
+              <span className="amount" />
               <span className="amount">3.00 CHF</span>
               <span className="amount">4.00 USD</span>
             </div>
@@ -493,9 +492,9 @@ if (Meteor.isClient) {
         )).should.equal(true);
       });
 
-      it('renders the \'NO DESTINATION CHARGES\' title if there are charges but none are destination', () => {
+      it('does not render the \'DESTINATION CHARGES\' title if are no destination charges', () => {
         wrapper.setProps({ quote: { charges: { chargeLines: [{}] } } });
-        wrapper.contains(<span className="title">NO DESTINATION CHARGES</span>).should.equal(true);
+        wrapper.contains(<span className="title">DESTINATION CHARGES</span>).should.equal(false);
       });
 
       it('renders the \'DESTINATION CHARGES\' charges title', () => {
@@ -514,24 +513,24 @@ if (Meteor.isClient) {
                 rate: 'Per Container',
                 units: 1,
                 unitPrice: 2,
-                localTotal: 3,
-                total: 4,
-                localCurrency: 'CHF',
+                amount: 3,
+                finalAmount: 4,
+                unitPriceCurrency: 'CHF',
               }],
               totalDestinationCharges: 5,
             },
           },
         });
         wrapper.contains((
-          <div className="charge-group">
+          <div className="charge-group section">
             <span className="title">
               DESTINATION CHARGES
             </span>
             <div className="charge-row">
-              <span>Charge Name</span>
-              <span>Per Container</span>
-              <span className="units">{1}</span>
-              <span className="amount">2.00 CHF</span>
+              <span className="name">Charge Name</span>
+              <span className="units" />
+              <span className="rate">{1} Per Container</span>
+              <span className="amount" />
               <span className="amount">3.00 CHF</span>
               <span className="amount">4.00 USD</span>
             </div>

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 
-import * as newQuoteActions from '../../state/actions/newQuoteActions';
+import * as newQuoteActions from '../../state/actions/quoteActions';
 import EditQuoteHeader from './EditQuoteHeader.jsx';
 
-const mapStateToProps = state => ({ ...state.newQuote, quote: state.newQuote });
+const mapStateToProps = state => ({ quote: state.quote });
 const mapDispatchToProps = dispatch => ({
   dispatchers: {
     onLoad: quote => dispatch(newQuoteActions.loadQuote(quote)),

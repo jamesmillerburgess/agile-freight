@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
-import { Customers } from '../customers-collection';
+import { Customers } from '../customersCollection';
 import { Quotes } from '../../quotes/quotesCollection';
-import { UNLocations } from '../../unlocations/unlocations-collection';
+import { UNLocations } from '../../unlocations/unlocationsCollection';
 
 import { uniqueValues } from '../../../ui/statsUtils';
 

@@ -2,13 +2,20 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Quotes } from './quotesCollection';
-import { Customers } from '../customers/customers-collection';
+import { Customers } from '../customers/customersCollection';
 
 Meteor.methods({
   'quote.new': function quoteNew(customerId) {
     check(customerId, String);
 
-    const quoteId = Quotes.insert({ customerId, createdOn: new Date() });
+    const { currency } = Customers.findOne(customerId);
+
+    const quoteId = Quotes.insert({
+      customerId,
+      createdOn: new Date(),
+      charges: { currency },
+      status: 'Draft',
+    });
 
     Customers.update({ _id: customerId }, { $push: { quotes: quoteId } });
 
@@ -17,14 +24,20 @@ Meteor.methods({
   'quote.copy': function quoteCopy(quoteId) {
     check(quoteId, String);
 
-    const { customerId, cargo, movement, otherServices } = Quotes.findOne(quoteId);
+    const {
+            customerId,
+            cargo,
+            movement,
+            charges,
+            otherServices,
+          } = Quotes.findOne(quoteId);
 
     const newQuoteId = Quotes.insert({
       customerId,
       cargo,
       movement,
       otherServices,
-      charges: {},
+      charges,
       status: 'Draft',
       createdOn: new Date(),
     });
@@ -32,31 +45,6 @@ Meteor.methods({
     Customers.update({ _id: customerId }, { $push: { quotes: newQuoteId } });
 
     return newQuoteId;
-  },
-  'quote.newFromRateSearch': function quotesNewFromRateSearch(options) {
-    check(options, Object);
-    check(options.customerId, String);
-    check(options.cargo, Object);
-    check(options.movement, Object);
-    check(options.otherServices, Object);
-
-    // Check if the customerId is valid
-    const customer = Customers.findOne(options.customerId);
-    if (!customer) {
-      throw new Error('Invalid customer ID');
-    }
-
-    // Insert quote
-    const update  = {
-      ...options,
-      status: 'Draft',
-      charges: [],
-    };
-    const quoteId = Quotes.insert(update);
-
-    // Update the customer
-    Customers.update({ _id: options.customerId }, { $push: { quotes: quoteId } });
-    return quoteId;
   },
   'quote.submit': function quoteSubmit(quoteId, email, expiryDate) {
     check(quoteId, String);

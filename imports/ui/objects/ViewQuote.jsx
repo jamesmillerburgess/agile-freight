@@ -7,8 +7,8 @@ const ViewQuote = props => (
     <div className="process-header">
       <div className="title">VIEW QUOTE</div>
       <button
-        className="back-button"
-        onClick={() => props.history.push(`/customers/${props.match.params.customerId}/overview`)}
+        className="button-primary"
+        onClick={() => props.history.push(`/customers/view/${props.match.params.customerId}/overview`)}
       >
         BACK TO CUSTOMER
       </button>

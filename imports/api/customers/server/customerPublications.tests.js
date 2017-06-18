@@ -7,9 +7,9 @@ import { PublicationCollector } from 'meteor/johanbrook:publication-collector';
 import { Random } from 'meteor/random';
 
 import './customerPublications';
-import { Customers } from '../customers-collection';
+import { Customers } from '../customersCollection';
 import { Quotes } from '../../quotes/quotesCollection';
-import { UNLocations } from '../../unlocations/unlocations-collection';
+import { UNLocations } from '../../unlocations/unlocationsCollection';
 
 chai.should();
 

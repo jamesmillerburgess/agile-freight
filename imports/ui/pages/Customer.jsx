@@ -1,85 +1,102 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
 import CustomerListItem from '../list-items/CustomerListItem.jsx';
 import QuoteListItem from '../list-items/QuoteListItem.jsx';
 
-import { Customers } from '../../api/customers/customers-collection';
+import { Customers } from '../../api/customers/customersCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
+import EditCustomerConnect from '../editors/EditCustomerConnect';
 import EditQuoteHeaderConnect from '../editors/EditQuoteHeaderConnect.jsx';
 import EditQuoteChargesConnect from '../editors/EditQuoteChargesConnect';
 import EditQuoteEmailConnect from '../editors/EditQuoteEmailConnect';
 import ViewQuote from '../objects/ViewQuote.jsx';
 
-const CustomerInner = ({ customer, quotes, loading, history }) => (
-  <div className="">
-    <div className="content customer">
-      <CustomerListItem customer={customer} history={history} header />
-      <Route
-        path="/customers/:customerId/overview"
-        render={
-          props => (
-            <div>
-              {
-                loading ?
-                  null :
-                  quotes
-                    .sort((a, b) => {
-                      if (a.createdOn > b.createdOn) {
-                        return -1;
-                      }
-                      if (a.createdOn < b.createdOn) {
-                        return 1;
-                      }
-                      return 0;
-                    })
-                    .map(quote => (
-                      <QuoteListItem key={quote._id} {...props} quoteId={quote._id} />
-                    ))
-              }
-            </div>
-          )
+const CustomerInner = ({ customer, loading, history }) => {
+  return (
+    <div className="">
+      <div className="content customer">
+        <div className="process-header">
+          <div className="title">CUSTOMER</div>
+          <Link to="/customers">
+            <button className="button-primary">BACK TO CUSTOMER LIST</button>
+          </Link>
+        </div>
+        {
+          loading ?
+            null :
+            <CustomerListItem customer={customer} history={history} header />
         }
-      />
-      <Route
-        path="/customers/:customerId/quotes/:quoteId/header"
-        render={props => <EditQuoteHeaderConnect {...props} />}
-      />
-      <Route
-        path="/customers/:customerId/quotes/:quoteId/charges"
-        render={props => <EditQuoteChargesConnect {...props} />}
-      />
-      <Route
-        path="/customers/:customerId/quotes/:quoteId/email"
-        render={props => <EditQuoteEmailConnect {...props} />}
-      />
-      <Route
-        path="/customers/:customerId/quotes/:quoteId/view"
-        render={props => <ViewQuote {...props} />}
-      />
+        <Route
+          path="/customers/view/:customerId/overview"
+          render={
+            props => (
+              <div>
+                {
+                  loading ?
+                    null :
+                    Quotes
+                      .find({ _id: { $in: customer.quotes } })
+                      .fetch()
+                      .sort((a, b) => {
+                        if (a.createdOn > b.createdOn) {
+                          return -1;
+                        }
+                        if (a.createdOn < b.createdOn) {
+                          return 1;
+                        }
+                        return 0;
+                      })
+                      .map(quote => (
+                        <QuoteListItem key={quote._id} {...props} quoteId={quote._id} />
+                      ))
+                }
+              </div>
+            )
+          }
+        />
+        <Route
+          path="/customers/view/:customerId/quotes/:quoteId/header"
+          render={props => <EditQuoteHeaderConnect {...props} />}
+        />
+        <Route
+          path="/customers/view/:customerId/quotes/:quoteId/charges"
+          render={props => <EditQuoteChargesConnect {...props} />}
+        />
+        <Route
+          path="/customers/view/:customerId/quotes/:quoteId/email"
+          render={props => <EditQuoteEmailConnect {...props} />}
+        />
+        <Route
+          path="/customers/view/:customerId/quotes/:quoteId/view"
+          render={props => <ViewQuote {...props} />}
+        />
+      </div>
+      <div className="content-footer-accent customers-footer-accent" />
     </div>
-    <div className="content-footer-accent customers-footer-accent" />
-  </div>
-);
+  );
+};
 
 CustomerInner.propTypes = {
-  customer: PropTypes.object.isRequired,
+  customer: PropTypes.object,
+  loading: PropTypes.bool,
   history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 const Customer = createContainer((props) => {
-  const customerId    = props.match.params.id;
-  const customer      = Customers.findOne(customerId);
-  const quotesHandler = Meteor.subscribe('quotes.list', customer.quotes);
-  const loading       = !quotesHandler.ready();
-  const quotes        = Quotes.find({ _id: { $in: customer.quotes } }).fetch();
+  const customerId      = props.match.params.customerId;
+  const customerHandler = Meteor.subscribe(
+    'customers.deepCustomer',
+    customerId,
+  );
+  const customer        = Customers.find({ _id: customerId }).fetch()[0];
+  const loading         = !customerHandler.ready();
   return {
     customer,
-    quotes,
     loading,
   };
 }, CustomerInner);

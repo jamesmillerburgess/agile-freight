@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import { Countries } from '../../api/countries/countries-collection';
+import { Countries } from '../../api/countries/countriesCollection';
 
 const UNLocationField = (props) => {
   const getCountryCode = (id) => {
@@ -25,6 +25,7 @@ const UNLocationField = (props) => {
         {
           country: countryCode,
           search: input,
+          id: props.value,
         },
         (err, res) => {
           const options = res.map(opt => ({
@@ -38,19 +39,15 @@ const UNLocationField = (props) => {
   };
 
   return (
-    <div>
-      {
-        props.country ?
-          <Select.Async
-            value={props.value}
-            loadOptions={getOptions}
-            cache={false}
-            onChange={unLocation => props.onChange(unLocation)}
-            autoload
-          /> :
-          <Select disabled />
-      }
-    </div>
+    props.country ?
+      <Select.Async
+        value={props.value}
+        loadOptions={getOptions}
+        cache={false}
+        onChange={unLocation => props.onChange(unLocation)}
+        autoload
+      /> :
+      <Select disabled />
   );
 };
 
