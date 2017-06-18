@@ -20,7 +20,7 @@ before_install:
   - if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
 
   # Install dependencies
-  - npm install -g eslint coveralls codecov.io codacy-coverage node-gyp
+  - npm install -g coveralls node-gyp
   - meteor npm install
 
 addons:
@@ -40,6 +40,3 @@ script:
   - mkdir .coverage
   - meteor npm test
   - cat .coverage/lcov.info | coveralls || cat .coverage/lcov.info || true # ignore coveralls error
-  - cat .coverage/lcov.info | codecov || cat .coverage/lcov.info || true # ignore codecov error
-  - cat .coverage/lcov.info | codacy-coverage || true # ignore codacy error
-  - meteor npm run lint || true # ignore eslint error
