@@ -24,7 +24,6 @@ fourseven:scss
 dynamic-import
 
 # Test
-practicalmeteor:mocha
 practicalmeteor:chai
 practicalmeteor:mocha-console-runner
 dburles:factory
@@ -32,3 +31,4 @@ hwillson:stub-collections
 johanbrook:publication-collector
 xolvio:email-stub
 dispatch:mocha
+practicalmeteor:mocha

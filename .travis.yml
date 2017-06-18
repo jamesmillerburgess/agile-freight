@@ -3,6 +3,8 @@ language: node_js
 node_js:
   - 4.6.2
 
+sudo: required
+
 cache:
   directories:
     - $HOME/.meteor
