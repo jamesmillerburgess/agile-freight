@@ -10,7 +10,6 @@ const emailDefaultState = {
 };
 
 export const email = (state = emailDefaultState, action = { type: '' }) => {
-  console.log(state, action);
   let newState = {};
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
