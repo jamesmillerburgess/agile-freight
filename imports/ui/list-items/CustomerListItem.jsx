@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 
+import { isFavoriteCustomer } from '../../api/users/userUtils';
+
 const CustomerListItem = ({ customer, header, history }) => {
   const newQuote = (e) => {
     e.preventDefault();
@@ -18,12 +20,6 @@ const CustomerListItem = ({ customer, header, history }) => {
     e.preventDefault();
     history.push(`/customers/edit/${customer._id}`);
   };
-
-  const isFavorite = customerId => Meteor.user() &&
-                                   Meteor.user().profile &&
-                                   Meteor.user().profile.favoriteCustomers &&
-                                   Meteor.user().profile.favoriteCustomers
-                                         .indexOf(customerId) !== -1;
 
   const favoriteCustomer = (e) => {
     e.preventDefault();
@@ -45,7 +41,7 @@ const CustomerListItem = ({ customer, header, history }) => {
             <div className="col-6">
               <span className="list-item-header">{customer.name.toUpperCase()}&nbsp;
                 {
-                  isFavorite(customer._id)
+                  isFavoriteCustomer(customer._id)
                     ?
                   <span className="fa fa-fw fa-heart favorite-icon" />
                     :
