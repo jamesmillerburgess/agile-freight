@@ -1,4 +1,4 @@
-# v.NEXT – Charge Defaults
+# v.NEXT
 
 # v0.3.0 – Charge Defaults
 
