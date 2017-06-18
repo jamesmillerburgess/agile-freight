@@ -26,6 +26,11 @@ const CustomerListItem = ({ customer, header, history }) => {
     Meteor.call('users.favoriteCustomer', Meteor.user()._id, customer._id);
   };
 
+  const unfavoriteCustomer = (e) => {
+    e.preventDefault();
+    Meteor.call('users.unfavoriteCustomer', Meteor.user()._id, customer._id);
+  };
+
   return (
     <Link to={`/customers/view/${customer._id}/overview`} className="list-item">
       <div className={`panel ${header ? 'header-panel' : ''}`}>
@@ -43,7 +48,10 @@ const CustomerListItem = ({ customer, header, history }) => {
                 {
                   isFavoriteCustomer(customer._id)
                     ?
-                  <span className="fa fa-fw fa-heart favorite-icon" />
+                  <span
+                    className="fa fa-fw fa-heart favorite-icon"
+                    onClick={unfavoriteCustomer}
+                  />
                     :
                   <span
                     className="fa fa-fw fa-heart-o favorite-icon"
