@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "test": "TEST_BROWSER_DRIVER=nightmare meteor test --once --driver-package dispatch:mocha"
+    "test": "TEST_BROWSER_DRIVER=nightmare SERVER_TEST_REPORTER=tap CLIENT_TEST_REPORTER=tap meteor test --once --driver-package dispatch:mocha"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
