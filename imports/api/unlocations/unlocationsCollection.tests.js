@@ -3,20 +3,15 @@
 
 import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
-import StubCollections from 'meteor/hwillson:stub-collections';
 
-import { UNLocations, Schemas } from './unlocationsCollection';
+import { UNLocations } from './unlocationsCollection';
 
 chai.should();
 
 if (Meteor.isServer) {
   describe('UNLocations Collection', () => {
     beforeEach(() => {
-      StubCollections.stub(UNLocations);
-    });
-
-    afterEach(() => {
-      StubCollections.restore();
+      UNLocations.remove({});
     });
 
     it('should have all mandatory and default properties upon insert', () => {
