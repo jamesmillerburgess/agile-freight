@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Customers } from '../../api/customers/customersCollection';
@@ -10,12 +9,26 @@ import BranchField from '../fields/BranchField.jsx';
 
 import { Branches } from '../../api/branch/branchCollection';
 
+import { isFavoriteCustomer } from '../../api/users/userUtils';
+
 export const CustomerListInner = (props) => {
   const { customers, customerList, dispatchers, history } = props;
 
   const newCustomer = () => {
     dispatchers.loadCustomer({ branch: customerList.filter });
     history.push('/customers/new');
+  };
+
+  const sortCustomers = (a, b) => {
+    if (isFavoriteCustomer(a._id)) {
+      return -1;
+    }
+
+    if (isFavoriteCustomer(b._id)) {
+      return 1;
+    }
+
+    return 0;
   };
 
   return (
@@ -43,6 +56,7 @@ export const CustomerListInner = (props) => {
         {
           customers
             .filter(customer => customer.branch === customerList.filter)
+            .sort(sortCustomers)
             .map(customer => (
               <CustomerListItem
                 key={customer._id}
