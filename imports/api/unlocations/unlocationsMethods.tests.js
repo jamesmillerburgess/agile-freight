@@ -3,7 +3,6 @@
 
 import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
 
 import { UNLocations } from './unlocationsCollection';
 import { Countries } from '../countries/countriesCollection';
@@ -97,7 +96,7 @@ if (Meteor.isServer) {
         const searchResults = Meteor.call('unlocations.search', {
           country: 'b',
           search: '',
-          id: id,
+          id,
         });
         searchResults.length.should.equal(1);
         searchResults[0].search.should.equal('c');
