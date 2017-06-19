@@ -31,6 +31,8 @@ const UNLocationField = (props) => {
           const options = res.map(opt => ({
             value: opt._id,
             label: opt.name,
+            isPort: opt.isPort,
+            isAirport: opt.isAirport,
           }));
           cb(null, { options });
         },
@@ -38,17 +40,31 @@ const UNLocationField = (props) => {
     }
   };
 
+  const locationRenderer = option => (
+    <div>
+      {option.isPort ?
+        <span><span className="fa fa-fw fa-ship" />&nbsp;</span> : ''}
+      {option.isAirport ?
+        <span><span className="fa fa-fw fa-plane" />&nbsp;</span> : ''}
+      {!option.isPort && !option.isAirport ?
+        <span><span className="fa fa-fw" />&nbsp;</span> : ''}
+      {option.label}
+    </div>
+  );
+
   return (
     props.country ?
-      <Select.Async
-        value={props.value}
-        loadOptions={getOptions}
-        cache={false}
-        filterOption={() => true}
-        onChange={unLocation => props.onChange(unLocation)}
-        autoload
-      /> :
-      <Select disabled />
+    <Select.Async
+      value={props.value}
+      loadOptions={getOptions}
+      cache={false}
+      filterOption={() => true}
+      optionRenderer={locationRenderer}
+      valueRenderer={locationRenderer}
+      onChange={unLocation => props.onChange(unLocation)}
+      autoload
+    /> :
+    <Select disabled />
   );
 };
 
