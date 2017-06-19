@@ -25,14 +25,29 @@ if (Meteor.isClient) {
         (() => buildSearchRegExp(null)).should.throw();
       });
 
-      it('returns a regular expression that looks for all words in a string in any order', () => {
-        const regexp = buildSearchRegExp('word1 word2 word3');
+      it(
+        'returns a regular expression that looks for all words in a string in any order',
+        () => {
+          const regexp = buildSearchRegExp('word1 word2 word3');
 
-        regexp.test('word1 word2 word3').should.equal(true);
-        regexp.test('word2 word3 word1').should.equal(true);
-        regexp.test('word3 word2 word1').should.equal(true);
-        regexp.test('aword3a bword2b bword1b notaword').should.equal(true);
-        regexp.test('word4 word2 word3').should.equal(false);
+          regexp.test('word1 word2 word3').should.equal(true);
+          regexp.test('word2 word3 word1').should.equal(true);
+          regexp.test('word3 word2 word1').should.equal(true);
+          regexp.test('aword3a bword2b bword1b notaword').should.equal(true);
+          regexp.test('word4 word2 word3').should.equal(false);
+        });
+
+      it('finds a UNLocation by full code', () => {
+        const regexp = buildSearchRegExp('inmaa');
+
+        regexp
+          .test('INMAA Chennai (ex Madras) Chennai (ex Madras) TN port airport')
+          .should.equal(true);
+      });
+
+      it('handles special characters', () => {
+        const regexp = buildSearchRegExp('/[');
+        console.log(regexp);
       });
     });
   });
