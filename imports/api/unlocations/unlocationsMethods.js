@@ -23,7 +23,7 @@ Meteor.methods({
     }
     const query = {
       countryCode: options.country,
-      name: { $regex: buildSearchRegExp(options.search) },
+      search: { $regex: buildSearchRegExp(options.search) },
     };
     return UNLocations.find(query, { limit: 10 }).fetch();
   },

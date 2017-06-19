@@ -44,6 +44,7 @@ const UNLocationField = (props) => {
         value={props.value}
         loadOptions={getOptions}
         cache={false}
+        filterOption={() => true}
         onChange={unLocation => props.onChange(unLocation)}
         autoload
       /> :
