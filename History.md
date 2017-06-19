@@ -2,6 +2,8 @@
 
 # v0.5.0 – UN Locations
 
+* Script to import and process UNLocations from .csv files
+
 # v0.4.0 – Favorites
 
 * Ability to favorite a customer
