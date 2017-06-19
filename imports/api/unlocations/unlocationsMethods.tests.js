@@ -29,13 +29,13 @@ if (Meteor.isServer) {
       //
       // it('requires country and search options', () => {
       //   (() => Meteor.call('unlocations.search', {})).should.throw();
-      //   (() => Meteor.call('unlocations.search', { country: 'a' })).should.throw();
-      //   (() => Meteor.call('unlocations.search', { search: 'a' })).should.throw();
-      // });
+      //   (() => Meteor.call('unlocations.search', { country: 'a'
+      // })).should.throw(); (() => Meteor.call('unlocations.search', { search:
+      // 'a' })).should.throw(); });
 
       it('returns locations for the specified country', () => {
-        UNLocations.insert({ country: 'country', name: 'name' });
-        UNLocations.insert({ country: 'differentCountry', name: 'name' });
+        UNLocations.insert({ countryCode: 'country', search: 'name' });
+        UNLocations.insert({ countryCode: 'differentCountry', search: 'name' });
         Countries.insert({ countryCode: 'country' });
         Countries.insert({ countryCode: 'differentCountry' });
         const searchResults = Meteor.call('unlocations.search', {
@@ -44,31 +44,41 @@ if (Meteor.isServer) {
         });
 
         searchResults.length.should.equal(1);
-        searchResults[0].country.should.equal('country');
-        searchResults[0].name.should.equal('name');
+        searchResults[0].countryCode.should.equal('country');
+        searchResults[0].search.should.equal('name');
       });
 
-      it('returns locations matching each of the search words in any order', () => {
-        UNLocations.insert({ country: 'country', name: 'word1 word2 word3' });
-        UNLocations.insert({ country: 'country', name: 'word2 word3 word1' });
-        UNLocations.insert({ country: 'country', name: 'word3 word1 word2' });
-        UNLocations.insert({
-          country: 'country',
-          name: 'aword3a bword2b bword1b notaword',
-        });
-        UNLocations.insert({ country: 'country', name: 'word4 word2 word3' });
-        Countries.insert({ countryCode: 'country' });
-        const searchResults = Meteor.call('unlocations.search', {
-          country: 'country',
-          search: 'word1 word2 word3',
-        });
+      it('returns locations matching each of the search words in any order',
+        () => {
+          UNLocations.insert({
+            countryCode: 'country', search: 'word1 word2 word3',
+          });
+          UNLocations.insert({
+            countryCode: 'country', search: 'word2 word3 word1',
+          });
+          UNLocations.insert({
+            countryCode: 'country', search: 'word3 word1 word2',
+          });
+          UNLocations.insert({
+            countryCode: 'country',
+            search: 'aword3a bword2b bword1b notaword',
+          });
+          UNLocations.insert({
+            countryCode: 'country', search: 'word4 word2 word3',
+          });
+          Countries.insert({ countryCode: 'country' });
+          const searchResults = Meteor.call('unlocations.search', {
+            country: 'country',
+            search: 'word1 word2 word3',
+          });
 
-        searchResults.length.should.equal(4);
-        searchResults[0].name.should.equal('word1 word2 word3');
-        searchResults[1].name.should.equal('word2 word3 word1');
-        searchResults[2].name.should.equal('word3 word1 word2');
-        searchResults[3].name.should.equal('aword3a bword2b bword1b notaword');
-      });
+          searchResults.length.should.equal(4);
+          searchResults[0].search.should.equal('word1 word2 word3');
+          searchResults[1].search.should.equal('word2 word3 word1');
+          searchResults[2].search.should.equal('word3 word1 word2');
+          searchResults[3].search.should.equal(
+            'aword3a bword2b bword1b notaword');
+        });
 
       // it('throws an error if an invalid country is passed', () => {
       //   Countries.insert({ countryCode: 'country' });
@@ -80,17 +90,17 @@ if (Meteor.isServer) {
       // });
 
       it('prioritizes a search for an id over text', () => {
-        const id = new Mongo.ObjectID();
-        UNLocations.insert({ _id: id, country: 'b', name: 'c' });
-        UNLocations.insert({ _id: 'd', country: 'b', name: 'e' });
+        const id = 'a';
+        UNLocations.insert({ _id: id, countryCode: 'b', search: 'c' });
+        UNLocations.insert({ _id: 'd', countryCode: 'b', search: 'e' });
         Countries.insert({ countryCode: 'b' });
         const searchResults = Meteor.call('unlocations.search', {
           country: 'b',
           search: '',
-          id: id._str,
+          id: id,
         });
         searchResults.length.should.equal(1);
-        searchResults[0].name.should.equal('c');
+        searchResults[0].search.should.equal('c');
       });
     });
   });
