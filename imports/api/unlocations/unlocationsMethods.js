@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
-import { Mongo } from 'meteor/mongo';
 
 import { UNLocations } from './unlocationsCollection';
 import { Countries } from '../countries/countriesCollection';
@@ -15,15 +14,15 @@ Meteor.methods({
       id: Match.Maybe(String),
     });
 
-    if (options.id) {
-      return UNLocations.find({ _id: new Mongo.ObjectID(options.id) }).fetch();
+    if (!options.search && options.id) {
+      return UNLocations.find({ _id: options.id }).fetch();
     }
 
     if (!Countries.findOne({ countryCode: options.country })) {
       throw new Error(`Invalid country '${options.country}'`);
     }
     const query = {
-      country: options.country,
+      countryCode: options.country,
       name: { $regex: buildSearchRegExp(options.search) },
     };
     return UNLocations.find(query, { limit: 10 }).fetch();

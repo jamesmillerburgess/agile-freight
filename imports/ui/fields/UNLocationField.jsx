@@ -29,7 +29,7 @@ const UNLocationField = (props) => {
         },
         (err, res) => {
           const options = res.map(opt => ({
-            value: opt._id._str,
+            value: opt._id,
             label: opt.name,
           }));
           cb(null, { options });
