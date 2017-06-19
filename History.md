@@ -1,8 +1,13 @@
 # v.NEXT
 
+# v0.6.0
+
 # v0.5.0 – UN Locations
 
 * Script to import and process UNLocations from .csv files
+* Ability to search with or without diacritics and by location code
+* Port and airport icons appear next to location options and value
+* Fixed issue with special characters in country and location fields
 
 # v0.4.0 – Favorites
 
