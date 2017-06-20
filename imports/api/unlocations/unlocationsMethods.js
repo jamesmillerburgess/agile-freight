@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
 
 import { UNLocations } from './unlocationsCollection';
+import { Airports } from './airportsCollection';
+import { Seaports } from './seaportsCollection';
 import { Countries } from '../countries/countriesCollection';
 
 import { buildSearchRegExp } from '../../ui/searchUtils';
@@ -21,10 +23,14 @@ Meteor.methods({
     if (!Countries.findOne({ countryCode: options.country })) {
       throw new Error(`Invalid country '${options.country}'`);
     }
-    const query = {
+    const query   = {
       countryCode: options.country,
       search: { $regex: buildSearchRegExp(options.search) },
     };
-    return UNLocations.find(query, { limit: 10 }).fetch();
+    return [
+      ...UNLocations.find(query, { limit: 10 }).fetch(),
+      ...Airports.find(query, { limit: 10 }).fetch(),
+      ...Seaports.find(query, { limit: 10 }).fetch(),
+    ];
   },
 });
