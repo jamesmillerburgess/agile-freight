@@ -3,6 +3,9 @@
 # v0.6.0 – Airports and Seaports
 
 * Script to build reference data now includes airports and some seaports
+* Location search goes across airports, seaports, and normal locations
+* Ability to select mode in the routing section of a quote
+* Movement type displayed in edit quote header screen and in quote output
 
 # v0.5.0 – UN Locations
 
