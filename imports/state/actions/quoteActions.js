@@ -25,6 +25,7 @@ export const toggleHazardous                          = makeActionCreator(ACTION
 export const toggleTemperatureControlled              = makeActionCreator(ACTION_TYPES.TOGGLE_TEMPERATURE_CONTROLLED);
 
 // MOVEMENT
+export const setMovementMode         = makeActionCreator(ACTION_TYPES.SET_MOVEMENT_MODE, 'mode');
 export const setPickupLocationType   = makeActionCreator(ACTION_TYPES.SET_PICKUP_LOCATION_TYPE, 'locationType');
 export const setPickupLocationName   = makeActionCreator(ACTION_TYPES.SET_PICKUP_LOCATION_NAME, 'locationName');
 export const setPickupCountry        = makeActionCreator(ACTION_TYPES.SET_PICKUP_COUNTRY, 'country');

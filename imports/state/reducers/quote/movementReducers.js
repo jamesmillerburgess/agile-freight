@@ -3,13 +3,13 @@ import { changeProp } from '../reducer-utils';
 
 const defaultMovementState = {
   pickup: {
-    locationType: 'port',
+    locationType: '',
     country: '',
     postalCode: '',
     portCode: '',
   },
   delivery: {
-    locationType: 'port',
+    locationType: '',
     country: '',
     postalCode: '',
     portCode: '',
@@ -21,6 +21,9 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
       newState = action.quote.movement || defaultMovementState;
+      break;
+    case ACTION_TYPES.SET_MOVEMENT_MODE:
+      newState = changeProp(state, 'mode', action.mode);
       break;
     case ACTION_TYPES.SET_PICKUP_LOCATION_TYPE:
       newState = changeProp(state, 'pickup', changeProp(state.pickup, 'locationType', action.locationType));
