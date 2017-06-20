@@ -30,6 +30,13 @@ if (Meteor.isClient) {
       movement({}, action).should.eql(movementToLoad);
     });
 
+    it('sets the mode', () => {
+      const stateBefore = { mode: '' };
+      const action = { type: ACTION_TYPES.SET_MOVEMENT_MODE, mode: 'a' };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).mode.should.equal('a');
+    });
+
     it('sets the pickup location type', () => {
       const stateBefore = { pickup: { locationType: 'port' } };
       const action = { type: ACTION_TYPES.SET_PICKUP_LOCATION_TYPE, locationType: 'address' };

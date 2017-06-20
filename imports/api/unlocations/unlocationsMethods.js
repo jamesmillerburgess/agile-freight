@@ -25,6 +25,19 @@ Meteor.methods({
       countryCode: options.country,
       search: { $regex: buildSearchRegExp(options.search) },
     };
-    return UNLocations.find(query, { limit: 10 }).fetch();
+    return [
+      ...UNLocations.find(
+        { ...query, isSeaport: false, isAirport: false },
+        { limit: 10 },
+      ).fetch(),
+      ...UNLocations.find(
+        { ...query, isAirport: true },
+        { limit: 10 },
+      ).fetch(),
+      ...UNLocations.find(
+        { ...query, isSeaport: true },
+        { limit: 10 },
+      ).fetch(),
+    ];
   },
 });

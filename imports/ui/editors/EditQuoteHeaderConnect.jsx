@@ -1,63 +1,65 @@
 import { connect } from 'react-redux';
 
-import * as newQuoteActions from '../../state/actions/quoteActions';
+import * as quoteActions from '../../state/actions/quoteActions';
 import EditQuoteHeader from './EditQuoteHeader.jsx';
 
 const mapStateToProps = state => ({ quote: state.quote });
 const mapDispatchToProps = dispatch => ({
   dispatchers: {
-    onLoad: quote => dispatch(newQuoteActions.loadQuote(quote)),
+    onLoad: quote => dispatch(quoteActions.loadQuote(quote)),
 
-    onChangeCargoType: cargoType => dispatch(newQuoteActions.setCargoType(cargoType)),
-    onChangeRatedQuote: () => dispatch(newQuoteActions.toggleRatedQuote()),
-    onAddPackageLine: () => dispatch(newQuoteActions.addPackageLine()),
-    onRemovePackageLine: index => dispatch(newQuoteActions.removePackageLine(index)),
+    onChangeCargoType: cargoType => dispatch(quoteActions.setCargoType(cargoType)),
+    onChangeRatedQuote: () => dispatch(quoteActions.toggleRatedQuote()),
+    onAddPackageLine: () => dispatch(quoteActions.addPackageLine()),
+    onRemovePackageLine: index => dispatch(quoteActions.removePackageLine(index)),
     onChangePackageType: (index, packageType) =>
-      dispatch(newQuoteActions.setPackageLinePackageType(index, packageType)),
+      dispatch(quoteActions.setPackageLinePackageType(index, packageType)),
     onChangeNumPackages: (index, numPackages) =>
-      dispatch(newQuoteActions.setPackageLineNumPackages(index, numPackages)),
+      dispatch(quoteActions.setPackageLineNumPackages(index, numPackages)),
 
     onChangeLength: (index, length) =>
-      dispatch(newQuoteActions.setPackageLineLength(index, length)),
-    onChangeWidth: (index, width) => dispatch(newQuoteActions.setPackageLineWidth(index, width)),
+      dispatch(quoteActions.setPackageLineLength(index, length)),
+    onChangeWidth: (index, width) => dispatch(quoteActions.setPackageLineWidth(index, width)),
     onChangeHeight: (index, height) =>
-      dispatch(newQuoteActions.setPackageLineHeight(index, height)),
+      dispatch(quoteActions.setPackageLineHeight(index, height)),
     onChangePackageLineUnitVolumeUOM: (index, unitVolumeUOM) =>
-      dispatch(newQuoteActions.setPackageLineUnitVolumeUOM(index, unitVolumeUOM)),
+      dispatch(quoteActions.setPackageLineUnitVolumeUOM(index, unitVolumeUOM)),
     onChangeWeight: (index, weight) =>
-      dispatch(newQuoteActions.setPackageLineWeight(index, weight)),
+      dispatch(quoteActions.setPackageLineWeight(index, weight)),
     onChangePackageLineWeightUOM: (index, weightUOM) =>
-      dispatch(newQuoteActions.setPackageLineWeightUOM(index, weightUOM)),
+      dispatch(quoteActions.setPackageLineWeightUOM(index, weightUOM)),
 
-    onAddContainerLine: () => dispatch(newQuoteActions.addContainerLine()),
-    onRemoveContainerLine: index => dispatch(newQuoteActions.removeContainerLine(index)),
+    onAddContainerLine: () => dispatch(quoteActions.addContainerLine()),
+    onRemoveContainerLine: index => dispatch(quoteActions.removeContainerLine(index)),
     onChangeContainerLineNumContainers: (index, numContainers) =>
-      dispatch(newQuoteActions.setContainerLineNumContainers(index, numContainers)),
+      dispatch(quoteActions.setContainerLineNumContainers(index, numContainers)),
     onChangeContainerLineContainerType: (index, containerType) =>
-      dispatch(newQuoteActions.setContainerLineContainerType(index, containerType)),
+      dispatch(quoteActions.setContainerLineContainerType(index, containerType)),
     onClickContainerLineTemperatureControlled: index =>
-      dispatch(newQuoteActions.toggleContainerLineTemperatureControlled(index)),
+      dispatch(quoteActions.toggleContainerLineTemperatureControlled(index)),
 
-    onClickHazardous: () => dispatch(newQuoteActions.toggleHazardous()),
-    onClickTemperatureControlled: () => dispatch(newQuoteActions.toggleTemperatureControlled()),
+    onClickHazardous: () => dispatch(quoteActions.toggleHazardous()),
+    onClickTemperatureControlled: () => dispatch(quoteActions.toggleTemperatureControlled()),
 
     // MOVEMENT
+    onChangeMovementMode: mode =>
+      dispatch(quoteActions.setMovementMode(mode)),
     onChangePickupLocationType: locationType =>
-      dispatch(newQuoteActions.setPickupLocationType(locationType)),
+      dispatch(quoteActions.setPickupLocationType(locationType)),
     onChangePickupLocationName: locationName =>
-      dispatch(newQuoteActions.setPickupLocationName(locationName)),
-    onChangePickupCountry: country => dispatch(newQuoteActions.setPickupCountry(country)),
-    onChangePickupLocation: location => dispatch(newQuoteActions.setPickupLocation(location)),
+      dispatch(quoteActions.setPickupLocationName(locationName)),
+    onChangePickupCountry: country => dispatch(quoteActions.setPickupCountry(country)),
+    onChangePickupLocation: location => dispatch(quoteActions.setPickupLocation(location)),
     onChangeDeliveryLocationType: locationType =>
-      dispatch(newQuoteActions.setDeliveryLocationType(locationType)),
+      dispatch(quoteActions.setDeliveryLocationType(locationType)),
     onChangeDeliveryLocationName: locationName =>
-      dispatch(newQuoteActions.setDeliveryLocationName(locationName)),
-    onChangeDeliveryCountry: country => dispatch(newQuoteActions.setDeliveryCountry(country)),
-    onChangeDeliveryLocation: location => dispatch(newQuoteActions.setDeliveryLocation(location)),
+      dispatch(quoteActions.setDeliveryLocationName(locationName)),
+    onChangeDeliveryCountry: country => dispatch(quoteActions.setDeliveryCountry(country)),
+    onChangeDeliveryLocation: location => dispatch(quoteActions.setDeliveryLocation(location)),
 
     // OTHER SERVICES
-    onClickInsurance: () => dispatch(newQuoteActions.toggleInsurance()),
-    onClickCustomsClearance: () => dispatch(newQuoteActions.toggleCustomsClearance()),
+    onClickInsurance: () => dispatch(quoteActions.toggleInsurance()),
+    onClickCustomsClearance: () => dispatch(quoteActions.toggleCustomsClearance()),
   },
 });
 

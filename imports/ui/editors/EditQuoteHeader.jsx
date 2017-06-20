@@ -13,16 +13,8 @@ import QuoteContainer from '../objects/QuoteContainer';
 
 import { quotePropTypes } from '../objects/quotePropTypes';
 
-import { UNLocations } from '../../api/unlocations/unlocationsCollection';
 import { Countries } from '../../api/countries/countriesCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
-
-const getQuoteStats = quotes => ({
-  pickupCountry: countByValue(quotes, 'movement.pickup.country'),
-  pickupLocation: countByValue(quotes, 'movement.pickup.location'),
-  deliveryCountry: countByValue(quotes, 'movement.delivery.country'),
-  deliveryLocation: countByValue(quotes, 'movement.delivery.location'),
-});
 
 class EditQuoteHeader extends React.Component {
   constructor(props) {
@@ -50,7 +42,8 @@ class EditQuoteHeader extends React.Component {
   }
 
   save() {
-    Meteor.call('quote.save', { ...this.props.quote, _id: this.props.match.params.quoteId });
+    Meteor.call('quote.save',
+      { ...this.props.quote, _id: this.props.match.params.quoteId });
   }
 
   archive() {
@@ -116,7 +109,8 @@ class EditQuoteHeader extends React.Component {
                   ]}
                   clearable={false}
                   onChange={selectedValue => this.props.dispatchers
-                    .onChangePackageType(index, selectedValue.value)}
+                                                 .onChangePackageType(index,
+                                                   selectedValue.value)}
                   disabled={this.props.quote.cargo.ratedQuote}
                 />
               </div>
@@ -126,7 +120,9 @@ class EditQuoteHeader extends React.Component {
                   type="number"
                   placeholder=""
                   value={packageLine.numPackages}
-                  onChange={e => this.props.dispatchers.onChangeNumPackages(index, e.target.value === '' ? '' : +e.target.value)}
+                  onChange={e => this.props.dispatchers.onChangeNumPackages(
+                    index,
+                    e.target.value === '' ? '' : +e.target.value)}
                   disabled={this.props.quote.cargo.ratedQuote}
                 />
               </div>
@@ -137,7 +133,8 @@ class EditQuoteHeader extends React.Component {
                     type="number"
                     placeholder="L"
                     value={packageLine.length}
-                    onChange={e => this.props.dispatchers.onChangeLength(index, e.target.value === '' ? '' : +e.target.value)}
+                    onChange={e => this.props.dispatchers.onChangeLength(index,
+                      e.target.value === '' ? '' : +e.target.value)}
                     disabled={this.props.quote.cargo.ratedQuote}
                   />
                   <input
@@ -145,7 +142,8 @@ class EditQuoteHeader extends React.Component {
                     type="number"
                     placeholder="W"
                     value={packageLine.width}
-                    onChange={e => this.props.dispatchers.onChangeWidth(index, e.target.value === '' ? '' : +e.target.value)}
+                    onChange={e => this.props.dispatchers.onChangeWidth(index,
+                      e.target.value === '' ? '' : +e.target.value)}
                     disabled={this.props.quote.cargo.ratedQuote}
                   />
                   <input
@@ -153,7 +151,8 @@ class EditQuoteHeader extends React.Component {
                     type="number"
                     placeholder="H"
                     value={packageLine.height}
-                    onChange={e => this.props.dispatchers.onChangeHeight(index, e.target.value === '' ? '' : +e.target.value)}
+                    onChange={e => this.props.dispatchers.onChangeHeight(index,
+                      e.target.value === '' ? '' : +e.target.value)}
                     disabled={this.props.quote.cargo.ratedQuote}
                   />
                   <Select
@@ -165,7 +164,9 @@ class EditQuoteHeader extends React.Component {
                     ]}
                     clearable={false}
                     onChange={selectedValue => this.props.dispatchers
-                      .onChangePackageLineUnitVolumeUOM(index, selectedValue.value)}
+                                                   .onChangePackageLineUnitVolumeUOM(
+                                                     index,
+                                                     selectedValue.value)}
                     arrowRenderer={() => false}
                     searchable={false}
                     disabled={this.props.quote.cargo.ratedQuote}
@@ -179,7 +180,8 @@ class EditQuoteHeader extends React.Component {
                     type="number"
                     placeholder="Weight"
                     value={packageLine.weight}
-                    onChange={e => this.props.dispatchers.onChangeWeight(index, e.target.value === '' ? '' : +e.target.value)}
+                    onChange={e => this.props.dispatchers.onChangeWeight(index,
+                      e.target.value === '' ? '' : +e.target.value)}
                     disabled={this.props.quote.cargo.ratedQuote}
                   />
                   <Select
@@ -191,7 +193,9 @@ class EditQuoteHeader extends React.Component {
                     ]}
                     clearable={false}
                     onChange={selectedValue => this.props.dispatchers
-                      .onChangePackageLineWeightUOM(index, selectedValue.value)}
+                                                   .onChangePackageLineWeightUOM(
+                                                     index,
+                                                     selectedValue.value)}
                     arrowRenderer={() => false}
                     searchable={false}
                     disabled={this.props.quote.cargo.ratedQuote}
@@ -274,11 +278,13 @@ class EditQuoteHeader extends React.Component {
             </div>
           </div>
           {
-            this.props.quote.cargo.containerLines.map((containerLine, index) => (
+            this.props.quote.cargo.containerLines.map((containerLine,
+                                                       index) => (
               <div key={index} className="container-row">
                 <button
                   className="cargo-row-icon"
-                  onClick={() => this.props.dispatchers.onRemoveContainerLine(index)}
+                  onClick={() => this.props.dispatchers.onRemoveContainerLine(
+                    index)}
                   disabled={this.props.quote.cargo.ratedQuote}
                 >
                   <span className="fa fa-fw fa-minus-square" />
@@ -287,35 +293,48 @@ class EditQuoteHeader extends React.Component {
                   <input
                     value={containerLine.numContainers}
                     onChange={e => this.props.dispatchers
-                      .onChangeContainerLineNumContainers(index, +e.target.value)}
+                                       .onChangeContainerLineNumContainers(index,
+                                         +e.target.value)}
                     disabled={this.props.quote.cargo.ratedQuote}
                   />
                 </div>
                 <div className="container-type">
                   <button
-                    className={`radio-button ${containerLine.containerType === '20\'' ? 'active' : ''}`}
-                    onClick={() => this.props.dispatchers.onChangeContainerLineContainerType(index, '20\'')}
+                    className={`radio-button ${containerLine.containerType ===
+                                               '20\'' ? 'active' : ''}`}
+                    onClick={() => this.props.dispatchers.onChangeContainerLineContainerType(
+                      index,
+                      '20\'')}
                     disabled={this.props.quote.cargo.ratedQuote}
                   >
                     20&apos;
                   </button>
                   <button
-                    className={`radio-button ${containerLine.containerType === '40\'' ? 'active' : ''}`}
-                    onClick={() => this.props.dispatchers.onChangeContainerLineContainerType(index, '40\'')}
+                    className={`radio-button ${containerLine.containerType ===
+                                               '40\'' ? 'active' : ''}`}
+                    onClick={() => this.props.dispatchers.onChangeContainerLineContainerType(
+                      index,
+                      '40\'')}
                     disabled={this.props.quote.cargo.ratedQuote}
                   >
                     40&apos;
                   </button>
                   <button
-                    className={`radio-button ${containerLine.containerType === '40\'HC' ? 'active' : ''}`}
-                    onClick={() => this.props.dispatchers.onChangeContainerLineContainerType(index, '40\'HC')}
+                    className={`radio-button ${containerLine.containerType ===
+                                               '40\'HC' ? 'active' : ''}`}
+                    onClick={() => this.props.dispatchers.onChangeContainerLineContainerType(
+                      index,
+                      '40\'HC')}
                     disabled={this.props.quote.cargo.ratedQuote}
                   >
                     40&apos;HC
                   </button>
                   <button
-                    className={`radio-button ${containerLine.containerType === '45\'HC' ? 'active' : ''}`}
-                    onClick={() => this.props.dispatchers.onChangeContainerLineContainerType(index, '45\'HC')}
+                    className={`radio-button ${containerLine.containerType ===
+                                               '45\'HC' ? 'active' : ''}`}
+                    onClick={() => this.props.dispatchers.onChangeContainerLineContainerType(
+                      index,
+                      '45\'HC')}
                     disabled={this.props.quote.cargo.ratedQuote}
                   >
                     45&apos;HC
@@ -325,11 +344,13 @@ class EditQuoteHeader extends React.Component {
                   <button
                     className="checkbox"
                     onClick={() =>
-                      this.props.dispatchers.onClickContainerLineTemperatureControlled(index)}
+                      this.props.dispatchers.onClickContainerLineTemperatureControlled(
+                        index)}
                     disabled={this.props.quote.cargo.ratedQuote}
                   >
                     <span
-                      className={`fa fa-fw ${containerLine.temperatureControlled ? 'fa-check' : ' '}`}
+                      className={`fa fa-fw ${containerLine.temperatureControlled ?
+                                             'fa-check' : ' '}`}
                     />
                   </button>
                   <div className="checkbox-label">TEMPERATURE CONTROLLED</div>
@@ -390,27 +411,34 @@ class EditQuoteHeader extends React.Component {
             <div className="input-group">
               <div className="button-group col-6">
                 <button
-                  className={`radio-button ${this.props.quote.cargo.cargoType === 'Loose' ? 'active' : 'inactive'}`}
-                  onClick={() => this.props.dispatchers.onChangeCargoType('Loose')}
+                  className={`radio-button ${this.props.quote.cargo.cargoType ===
+                                             'Loose' ? 'active' : 'inactive'}`}
+                  onClick={() => this.props.dispatchers.onChangeCargoType(
+                    'Loose')}
                 >
                   LOOSE
                 </button>
                 <button
-                  className={`radio-button ${this.props.quote.cargo.cargoType === 'Containerized' ? 'active' : 'inactive'}`}
-                  onClick={() => this.props.dispatchers.onChangeCargoType('Containerized')}
+                  className={`radio-button ${this.props.quote.cargo.cargoType ===
+                                             'Containerized' ? 'active' :
+                                             'inactive'}`}
+                  onClick={() => this.props.dispatchers.onChangeCargoType(
+                    'Containerized')}
                 >
                   CONTAINERIZED
                 </button>
               </div>
               <div className="button-group col-6">
                 <button
-                  className={`radio-button ${this.props.quote.cargo.ratedQuote ? 'inactive' : 'active'}`}
+                  className={`radio-button ${this.props.quote.cargo.ratedQuote ?
+                                             'inactive' : 'active'}`}
                   onClick={() => this.props.dispatchers.onChangeRatedQuote()}
                 >
                   ITEMIZED
                 </button>
                 <button
-                  className={`radio-button ${this.props.quote.cargo.ratedQuote ? 'active' : 'inactive'}`}
+                  className={`radio-button ${this.props.quote.cargo.ratedQuote ?
+                                             'active' : 'inactive'}`}
                   onClick={() => this.props.dispatchers.onChangeRatedQuote()}
                 >
                   RATED
@@ -418,17 +446,37 @@ class EditQuoteHeader extends React.Component {
               </div>
             </div>
           </div>
-          {this.props.quote.cargo.cargoType === 'Loose' ? this.PackageLines() : ''}
-          {this.props.quote.cargo.cargoType === 'Containerized' ? this.Containers() : ''}
+          {this.props.quote.cargo.cargoType === 'Loose' ? this.PackageLines() :
+           ''}
+          {this.props.quote.cargo.cargoType === 'Containerized' ?
+           this.Containers() : ''}
         </div>
         <div className="panel container form-section">
           <div className="">
+            <div className="title">
+              <div className="cargo-row-icon" />
+              ROUTING
+            </div>
+            <div className="pickup-delivery-wrapper">
+              <div className="cargo-row-icon" />
+              <div className="field select-country">
+                <div className="label">
+                  MODE
+                </div>
+                <Select
+                  value={this.props.quote.movement.mode}
+                  options={[
+                    { value: 'Air', label: 'Air' },
+                    { value: 'Sea', label: 'Sea' },
+                    { value: 'Road', label: 'Road' },
+                  ]}
+                  onChange={selectedValue =>
+                    this.props.dispatchers.onChangeMovementMode(selectedValue.value)}
+                />
+              </div>
+            </div>
             <div className="pickup-delivery-wrapper">
               <div className="pickup">
-                <div className="title">
-                  <div className="cargo-row-icon" />
-                  ROUTING
-                </div>
                 <div className="cargo-row-icon" />
                 <div className="field select-country">
                   <div className="label">
@@ -449,8 +497,22 @@ class EditQuoteHeader extends React.Component {
                     value={this.props.quote.movement.pickup.location}
                     country={this.props.quote.movement.pickup.country}
                     onChange={(selectedValue) => {
-                      this.props.dispatchers.onChangePickupLocation(selectedValue.value);
-                      this.props.dispatchers.onChangePickupLocationName(selectedValue.label);
+                      this.props.dispatchers
+                          .onChangePickupLocation(selectedValue.value);
+                      this.props.dispatchers
+                          .onChangePickupLocationName(selectedValue.label);
+                      let locationType = 'Door';
+                      if (selectedValue.isAirport) {
+                        locationType = 'Airport';
+                      }
+                      if (selectedValue.isSeaport) {
+                        locationType = 'Seaport';
+                      }
+                      if (!selectedValue.value) {
+                        locationType = '';
+                      }
+                      this.props.dispatchers
+                          .onChangePickupLocationType(locationType);
                     }}
                   />
                 </div>
@@ -462,7 +524,8 @@ class EditQuoteHeader extends React.Component {
                   <CountryField
                     value={this.props.quote.movement.delivery.country}
                     onChange={selectedValue =>
-                      this.props.dispatchers.onChangeDeliveryCountry(selectedValue.value)}
+                      this.props.dispatchers.onChangeDeliveryCountry(
+                        selectedValue.value)}
                     countries={Countries}
                   />
                 </div>
@@ -474,11 +537,37 @@ class EditQuoteHeader extends React.Component {
                     value={this.props.quote.movement.delivery.location}
                     country={this.props.quote.movement.delivery.country}
                     onChange={(selectedValue) => {
-                      this.props.dispatchers.onChangeDeliveryLocation(selectedValue.value);
-                      this.props.dispatchers.onChangeDeliveryLocationName(selectedValue.label);
+                      this.props.dispatchers
+                          .onChangeDeliveryLocation(selectedValue.value);
+                      this.props.dispatchers
+                          .onChangeDeliveryLocationName(selectedValue.label);
+                      let locationType = 'Door';
+                      if (selectedValue.isAirport) {
+                        locationType = 'Airport';
+                      }
+                      if (selectedValue.isSeaport) {
+                        locationType = 'Seaport';
+                      }
+                      if (!selectedValue.value) {
+                        locationType = '';
+                      }
+                      this.props.dispatchers
+                          .onChangeDeliveryLocationType(locationType);
                     }}
                   />
                 </div>
+              </div>
+            </div>
+            <div className="edit-group-footer">
+              <div className="edit-group-totals">
+                <span className="total-shipment-label">
+                  MOVEMENT
+                </span>
+              </div>
+              <div className="total-values">
+                {this.props.quote.movement.pickup.locationType || 'Door'}
+                &nbsp;to&nbsp;
+                {this.props.quote.movement.delivery.locationType || 'Door'}
               </div>
             </div>
           </div>
@@ -525,8 +614,10 @@ class EditQuoteHeader extends React.Component {
 EditQuoteHeader.propTypes = {
   quote: quotePropTypes.isRequired,
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
-  history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  match: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  history: PropTypes.object.isRequired, // eslint-disable-line
+                                        // react/forbid-prop-types
+  match: PropTypes.object.isRequired, // eslint-disable-line
+                                      // react/forbid-prop-types
 };
 
 export default EditQuoteHeader;

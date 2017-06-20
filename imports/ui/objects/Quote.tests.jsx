@@ -287,52 +287,40 @@ if (Meteor.isClient) {
         wrapper.contains(<span>Here – There</span>).should.equal(true);
       });
 
-      it('renders \'DOOR TO DOOR\' when neither location is a port', () => {
+      it('renders \'Door to Door\' when neither location is a port', () => {
         wrapper.setProps({
           quote: {
             movement: {
-              pickup: { locationName: 'Here', isPort: false },
-              delivery: { locationName: 'There', isPort: false },
+              pickup: { locationName: 'Here', locationType: 'Door' },
+              delivery: { locationName: 'There', locationType: 'Door' },
             },
           },
         });
         wrapper.contains(<span>Door to Door</span>).should.equal(true);
       });
 
-      it('renders \'PORT TO DOOR\' when only the pickup location is a port', () => {
+      it('renders \'Seaport to Seaport\' when both locations are seaports', () => {
         wrapper.setProps({
           quote: {
             movement: {
-              pickup: { locationName: 'Here', isPort: true },
-              delivery: { locationName: 'There', isPort: false },
+              pickup: { locationName: 'Here', locationType: 'Seaport' },
+              delivery: { locationName: 'There', locationType: 'Seaport' },
             },
           },
         });
-        wrapper.contains(<span>Port to Door</span>).should.equal(true);
+        wrapper.contains(<span>Seaport to Seaport</span>).should.equal(true);
       });
 
-      it('renders \'DOOR TO PORT\' when only the delivery location is a port', () => {
+      it('renders \'Airport to Airport\' when both locations are airports', () => {
         wrapper.setProps({
           quote: {
             movement: {
-              pickup: { locationName: 'Here', isPort: false },
-              delivery: { locationName: 'There', isPort: true },
+              pickup: { locationName: 'Here', locationType: 'Airport' },
+              delivery: { locationName: 'There', locationType: 'Airport' },
             },
           },
         });
-        wrapper.contains(<span>Door to Port</span>).should.equal(true);
-      });
-
-      it('renders \'PORT TO PORT\' when both locations are a port', () => {
-        wrapper.setProps({
-          quote: {
-            movement: {
-              pickup: { locationName: 'Here', isPort: true },
-              delivery: { locationName: 'There', isPort: true },
-            },
-          },
-        });
-        wrapper.contains(<span>Port to Port</span>).should.equal(true);
+        wrapper.contains(<span>Airport to Airport</span>).should.equal(true);
       });
     });
 

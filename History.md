@@ -1,8 +1,18 @@
 # v.NEXT
 
+# v0.6.0 – Airports and Seaports
+
+* Script to build reference data now includes airports and some seaports
+* Location search goes across airports, seaports, and normal locations
+* Ability to select mode in the routing section of a quote
+* Movement type displayed in edit quote header screen and in quote output
+
 # v0.5.0 – UN Locations
 
 * Script to import and process UNLocations from .csv files
+* Ability to search with or without diacritics and by location code
+* Port and airport icons appear next to location options and value
+* Fixed issue with special characters in country and location fields
 
 # v0.4.0 – Favorites
 
