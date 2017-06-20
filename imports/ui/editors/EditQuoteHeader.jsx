@@ -13,16 +13,8 @@ import QuoteContainer from '../objects/QuoteContainer';
 
 import { quotePropTypes } from '../objects/quotePropTypes';
 
-import { UNLocations } from '../../api/unlocations/unlocationsCollection';
 import { Countries } from '../../api/countries/countriesCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
-
-const getQuoteStats = quotes => ({
-  pickupCountry: countByValue(quotes, 'movement.pickup.country'),
-  pickupLocation: countByValue(quotes, 'movement.pickup.location'),
-  deliveryCountry: countByValue(quotes, 'movement.delivery.country'),
-  deliveryLocation: countByValue(quotes, 'movement.delivery.location'),
-});
 
 class EditQuoteHeader extends React.Component {
   constructor(props) {
