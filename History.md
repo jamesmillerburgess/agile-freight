@@ -1,5 +1,7 @@
 # v.NEXT
 
+# v0.7.0 – ???
+
 # v0.6.0 – Airports and Seaports
 
 * Script to build reference data now includes airports and some seaports
