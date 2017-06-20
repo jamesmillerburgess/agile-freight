@@ -153,6 +153,9 @@ class Quote extends React.Component {
     return (
       <div>
         <div>
+          <span>{this.props.quote.movement.mode}</span>
+        </div>
+        <div>
           <span>
             {this.props.quote.movement.pickup.locationName} – {this.props.quote.movement.delivery.locationName}
           </span>
