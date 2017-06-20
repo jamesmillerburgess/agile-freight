@@ -21,7 +21,7 @@ while (altNames.hasNext()) {
   db.UNLocations.remove({ _id: doc._id });
 }
 
-printjson('Alt Names Recorded');
+printjson('Alternate names processed');
 
 var c = db.UNLocations.find({ props: { $exists: true } });
 var i = 1;
@@ -53,9 +53,8 @@ while (c.hasNext()) {
         nameWoDiacritics: doc.nameWoDiacritics,
         altNamesWoDiacritics: doc.altNamesWoDiacritics || [],
         subdivision: doc.subdivision,
+        isAirport: doc.props[3] === '4',
         iataCode: doc.iataCode,
-        isPort: doc.props.indexOf('1') !== -1,
-        isAirport: doc.props.indexOf('3') !== -1,
         longitude: longitude,
         latitude: latitude,
         search: doc.countryCode +
@@ -63,10 +62,7 @@ while (c.hasNext()) {
                 doc.name + ' ' +
                 doc.nameWoDiacritics +
                 (doc.subdivision ? ' ' + doc.subdivision : '') +
-                (doc.props.indexOf('1') !== -1 ? ' port' : '') +
-                (doc.props.indexOf('3') !== -1 ? ' airport' : '') +
                 (doc.iataCode ? ' ' + doc.iataCode : ''),
-
       }
     );
   }
@@ -74,8 +70,8 @@ while (c.hasNext()) {
     db.UNLocations.remove(doc);
   }
   if (i % 10000 === 0) {
-    printjson(i + ' records processed');
+    printjson(i + ' locations processed');
   }
 }
 
-printjson(i + ' records processed');
+printjson(i + ' locations processed');
