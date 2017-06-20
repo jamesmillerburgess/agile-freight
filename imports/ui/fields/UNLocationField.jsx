@@ -31,7 +31,7 @@ const UNLocationField = (props) => {
           const options = res.map(opt => ({
             value: opt._id,
             label: opt.name,
-            isPort: opt.isPort,
+            isSeaport: opt.isSeaport,
             isAirport: opt.isAirport,
           }));
           cb(null, { options });
@@ -42,6 +42,21 @@ const UNLocationField = (props) => {
 
   const locationRenderer = option => (
     <div>
+      {
+        option.isSeaport ?
+        (
+          <span><span className="fa fa-fw fa-ship" />&nbsp;</span>
+        ) : ''}
+      {
+        option.isAirport ?
+        (
+          <span><span className="fa fa-fw fa-plane" />&nbsp;</span>
+        ) : ''}
+      {
+        !option.isSeaport && !option.isAirport ?
+        (
+          <span><span className="fa fa-fw" />&nbsp;</span>
+        ) : ''}
       {option.label}
     </div>
   );

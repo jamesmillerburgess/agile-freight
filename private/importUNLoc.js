@@ -53,6 +53,7 @@ while (c.hasNext()) {
         nameWoDiacritics: doc.nameWoDiacritics,
         altNamesWoDiacritics: doc.altNamesWoDiacritics || [],
         subdivision: doc.subdivision,
+        isSeaport: false,
         isAirport: doc.props[3] === '4',
         iataCode: doc.iataCode,
         longitude: longitude,

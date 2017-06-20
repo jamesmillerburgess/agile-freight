@@ -161,6 +161,7 @@ SEAPORTS.forEach(function (seaport) {
   });
   if (seaportLocation) {
     seaportLocation._id = ObjectId().str;
+    seaportLocation.isSeaport = true;
     db.Seaports.insert(seaportLocation);
   } else {
     printjson('Invalid location code: ' + seaport);
