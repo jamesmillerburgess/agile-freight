@@ -33,8 +33,18 @@ if (Meteor.isServer) {
       // 'a' })).should.throw(); });
 
       it('returns locations for the specified country', () => {
-        UNLocations.insert({ countryCode: 'country', search: 'name' });
-        UNLocations.insert({ countryCode: 'differentCountry', search: 'name' });
+        UNLocations.insert({
+          countryCode: 'country',
+          search: 'name',
+          isSeaport: false,
+          isAirport: false,
+        });
+        UNLocations.insert({
+          countryCode: 'differentCountry',
+          search: 'name',
+          isSeaport: false,
+          isAirport: false,
+        });
         Countries.insert({ countryCode: 'country' });
         Countries.insert({ countryCode: 'differentCountry' });
         const searchResults = Meteor.call('unlocations.search', {
@@ -50,20 +60,34 @@ if (Meteor.isServer) {
       it('returns locations matching each of the search words in any order',
         () => {
           UNLocations.insert({
-            countryCode: 'country', search: 'word1 word2 word3',
+            countryCode: 'country',
+            search: 'word1 word2 word3',
+            isSeaport: false,
+            isAirport: false,
           });
           UNLocations.insert({
-            countryCode: 'country', search: 'word2 word3 word1',
+            countryCode: 'country',
+            search: 'word2 word3 word1',
+            isSeaport: false,
+            isAirport: false,
           });
           UNLocations.insert({
-            countryCode: 'country', search: 'word3 word1 word2',
+            countryCode: 'country',
+            search: 'word3 word1 word2',
+            isSeaport: false,
+            isAirport: false,
           });
           UNLocations.insert({
             countryCode: 'country',
             search: 'aword3a bword2b bword1b notaword',
+            isSeaport: false,
+            isAirport: false,
           });
           UNLocations.insert({
-            countryCode: 'country', search: 'word4 word2 word3',
+            countryCode: 'country',
+            search: 'word4 word2 word3',
+            isSeaport: false,
+            isAirport: false,
           });
           Countries.insert({ countryCode: 'country' });
           const searchResults = Meteor.call('unlocations.search', {
@@ -90,8 +114,20 @@ if (Meteor.isServer) {
 
       it('prioritizes a search for an id over text', () => {
         const id = 'a';
-        UNLocations.insert({ _id: id, countryCode: 'b', search: 'c' });
-        UNLocations.insert({ _id: 'd', countryCode: 'b', search: 'e' });
+        UNLocations.insert({
+          _id: id,
+          countryCode: 'b',
+          search: 'c',
+          isSeaport: false,
+          isAirport: false,
+        });
+        UNLocations.insert({
+          _id: 'd',
+          countryCode: 'b',
+          search: 'e',
+          isSeaport: false,
+          isAirport: false,
+        });
         Countries.insert({ countryCode: 'b' });
         const searchResults = Meteor.call('unlocations.search', {
           country: 'b',
