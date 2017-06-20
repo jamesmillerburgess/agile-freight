@@ -473,6 +473,15 @@ class EditQuoteHeader extends React.Component {
                 </div>
               </div>
             </div>
+            <div className="edit-group-footer">
+              <div className="cargo-row-icon" />
+              <CheckboxField
+                className="checkbox-hazardous"
+                onClick={this.props.dispatchers.onClickHazardous}
+                value={this.props.quote.cargo.hazardous}
+                label="HAZARDOUS"
+              />
+            </div>
           </div>
         </div>
         <div className="panel container form-section">
