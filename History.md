@@ -7,8 +7,7 @@
 * Add incoterm to movement section of quote
 * Incoterm is unavailable for brokerage quotes
 * Add commercial party to movement section of quote
-* TODO: Smarter calculation of movement type
-* TODO: Default a set of charges based on mode + movement + incoterm
+* Default a set of charges based on mode + commercial party + incoterm + locations
 
 # v0.6.0 – Airports and Seaports
 
