@@ -28,6 +28,9 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
         newState = changeProp(newState, 'termsOfSale', '');
       }
       break;
+    case ACTION_TYPES.SET_MOVEMENT_COMMERCIAL_PARTY:
+      newState = changeProp(state, 'commercialParty', action.commercialParty);
+      break;
     case ACTION_TYPES.SET_MOVEMENT_TERMS_OF_SALE:
       newState = changeProp(state, 'termsOfSale', action.termsOfSale);
       break;

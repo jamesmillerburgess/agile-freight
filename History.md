@@ -2,9 +2,11 @@
 
 # v0.7.0 – Charge Defaults
 
+* Rename 'Routing' to 'Movement' in quote
 * Add brokerage as a mode
-* Add incoterm to routing section of quote
+* Add incoterm to movement section of quote
 * Incoterm is unavailable for brokerage quotes
+* Add commercial party to movement section of quote
 * TODO: Smarter calculation of movement type
 * TODO: Default a set of charges based on mode + movement + incoterm
 

@@ -56,6 +56,8 @@ const mapDispatchToProps = dispatch => ({
     // MOVEMENT
     onChangeMovementMode: mode =>
       dispatch(quoteActions.setMovementMode(mode)),
+    onChangeMovementCommercialParty: commercialParty =>
+      dispatch(quoteActions.setMovementCommercialParty(commercialParty)),
     onChangeMovementTermsOfSale: termsOfSale =>
       dispatch(quoteActions.setMovementTermsOfSale(termsOfSale)),
     onChangePickupLocationType: locationType =>

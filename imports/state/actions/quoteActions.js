@@ -86,6 +86,10 @@ export const setMovementMode = makeActionCreator(
   ACTION_TYPES.SET_MOVEMENT_MODE,
   'mode',
 );
+export const setMovementCommercialParty = makeActionCreator(
+  ACTION_TYPES.SET_MOVEMENT_COMMERCIAL_PARTY,
+  'commercialParty',
+);
 export const setMovementTermsOfSale = makeActionCreator(
   ACTION_TYPES.SET_MOVEMENT_TERMS_OF_SALE,
   'termsOfSale',

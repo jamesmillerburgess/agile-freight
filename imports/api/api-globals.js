@@ -14,6 +14,10 @@ export const APIGlobals = {
     { value: 'FCA', label: 'FCA' },
     { value: 'FOB', label: 'FOB' },
   ],
+  commercialPartyOptions: [
+    { value: 'Seller', label: 'Seller' },
+    { value: 'Buyer', label: 'Buyer' },
+  ],
   mblTypeOptions: ['Waybill', 'Original', ''],
   mblTermsOptions: ['Prepaid', 'Collect', ''],
   seaquestTypeOptions: ['Original', 'Express', ''],
