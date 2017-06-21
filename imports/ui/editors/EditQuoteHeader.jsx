@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 
 import { integerFormat, weightFormat } from '../formatters/numberFormatters';
 
@@ -12,6 +13,10 @@ import QuoteContainer from '../objects/QuoteContainer';
 
 import { quotePropTypes } from '../objects/quotePropTypes';
 import { APIGlobals } from '../../api/api-globals';
+import {
+  getDefaultMovementCharges,
+}
+  from '../../api/charges/chargeDefaultUtils';
 
 import { Countries } from '../../api/countries/countriesCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
@@ -27,14 +32,27 @@ class EditQuoteHeader extends React.Component {
     props.dispatchers.onLoad(Quotes.findOne(props.match.params.quoteId));
   }
 
-  componentWillMount() {
-
-  }
-
   getRates() {
+    const charges = getDefaultMovementCharges(this.props.quote.movement);
+    const chargeLines = charges.map(charge =>
+      ({
+        ...charge,
+        id: new Mongo.ObjectID()._str,
+        rate: 'Shipment',
+        units: 1,
+        unitPriceCurrency: this.props.quote.charges.currency,
+      }),
+    );
     Meteor.call(
       'quote.save',
-      { ...this.props.quote, _id: this.props.match.params.quoteId },
+      {
+        ...this.props.quote,
+        _id: this.props.match.params.quoteId,
+        charges: {
+          ...this.props.quote.charges,
+          chargeLines,
+        },
+      },
       () => this.props.history.push(
         `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
       ),
@@ -294,9 +312,9 @@ class EditQuoteHeader extends React.Component {
           </div>
           {
             this.props.quote.cargo.containerLines.map((
-                                                        containerLine,
-                                                        index,
-                                                      ) => (
+              containerLine,
+              index,
+            ) => (
               <div key={index} className="container-row">
                 <button
                   className="cargo-row-icon"

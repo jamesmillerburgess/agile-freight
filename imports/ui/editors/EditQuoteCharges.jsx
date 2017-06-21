@@ -8,7 +8,6 @@ import QuoteContainer from '../objects/QuoteContainer';
 import CurrencyField from '../fields/CurrencyField.jsx';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
-import { UNLocations } from '../../api/unlocations/unlocationsCollection';
 import { Customers } from '../../api/customers/customersCollection';
 
 import { currencyFormat } from '../formatters/numberFormatters';

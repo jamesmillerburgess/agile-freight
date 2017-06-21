@@ -79,7 +79,11 @@ const mapDispatchToProps = dispatch => ({
 
     // OTHER SERVICES
     onClickInsurance: () => dispatch(quoteActions.toggleInsurance()),
-    onClickCustomsClearance: () => dispatch(quoteActions.toggleCustomsClearance()),
+    onClickCustomsClearance: () =>
+      dispatch(quoteActions.toggleCustomsClearance()),
+
+    // CHARGES
+    onAddChargeLine: chargeLine => dispatch(quoteActions.addChargeLine(chargeLine)),
   },
 });
 
