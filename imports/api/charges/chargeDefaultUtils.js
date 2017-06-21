@@ -111,6 +111,11 @@ export const hasInternationalFreight = (movement) => {
   return false;
 };
 
+/**
+ * Gets all default charges which are determined by the movement.
+ * @param movement
+ * @returns {Array}
+ */
 export const getDefaultMovementCharges = (movement) => {
   const charges = [];
   if (hasCollection(movement)) {
