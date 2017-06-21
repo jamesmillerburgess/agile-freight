@@ -1,6 +1,11 @@
 # v.NEXT
 
-# v0.7.0 – ???
+# v0.7.0 – Charge Defaults
+
+* TODO: Add incoterm to routing section of quote
+* TODO: Smarter calculation of movement type
+* TODO: Way to specify brokerage
+* TODO: Default a set of charges based on mode + movement + incoterm
 
 # v0.6.0 – Airports and Seaports
 
