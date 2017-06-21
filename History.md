@@ -1,5 +1,15 @@
 # v.NEXT
 
+# v0.7.0 – Charge Defaults
+
+* Rename 'Routing' to 'Movement' in quote
+* Add brokerage as a mode
+* Add incoterm to movement section of quote
+* Incoterm is unavailable for brokerage quotes
+* Add commercial party to movement section of quote
+* Default a set of charges based on mode + commercial party + incoterm + locations
+* Updated list of seaports to all countries
+
 # v0.6.0 – Airports and Seaports
 
 * Script to build reference data now includes airports and some seaports

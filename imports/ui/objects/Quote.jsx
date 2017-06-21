@@ -7,22 +7,23 @@ import { quotePropTypes } from './quotePropTypes';
 class Quote extends React.Component {
   constructor(props) {
     super(props);
-    this.getStatus                    = this.getStatus.bind(this);
-    this.hasCargo                     = this.hasCargo.bind(this);
-    this.PackageLines                 = this.PackageLines.bind(this);
-    this.ContainerLines               = this.ContainerLines.bind(this);
-    this.LooseCargoTotals             = this.LooseCargoTotals.bind(this);
-    this.ContainerizedCargoTotals     = this.ContainerizedCargoTotals.bind(this);
-    this.LooseCargoAttributes         = this.LooseCargoAttributes.bind(this);
-    this.ContainerizedCargoAttributes = this.ContainerizedCargoAttributes.bind(this);
-    this.hasRouting                   = this.hasRouting.bind(this);
-    this.Routing                      = this.Routing.bind(this);
-    this.Insurance                    = this.Insurance.bind(this);
-    this.CustomsClearance             = this.CustomsClearance.bind(this);
-    this.hasCharges                   = this.hasCharges.bind(this);
-    this.ChargeGroup                  = this.ChargeGroup.bind(this);
-    this.Email                        = this.Email.bind(this);
-    this.FXRates                      = this.FXRates.bind(this);
+    this.getStatus = this.getStatus.bind(this);
+    this.hasCargo = this.hasCargo.bind(this);
+    this.PackageLines = this.PackageLines.bind(this);
+    this.ContainerLines = this.ContainerLines.bind(this);
+    this.LooseCargoTotals = this.LooseCargoTotals.bind(this);
+    this.ContainerizedCargoTotals = this.ContainerizedCargoTotals.bind(this);
+    this.LooseCargoAttributes = this.LooseCargoAttributes.bind(this);
+    this.ContainerizedCargoAttributes =
+      this.ContainerizedCargoAttributes.bind(this);
+    this.hasRouting = this.hasRouting.bind(this);
+    this.Movement = this.Movement.bind(this);
+    this.Insurance = this.Insurance.bind(this);
+    this.CustomsClearance = this.CustomsClearance.bind(this);
+    this.hasCharges = this.hasCharges.bind(this);
+    this.ChargeGroup = this.ChargeGroup.bind(this);
+    this.Email = this.Email.bind(this);
+    this.FXRates = this.FXRates.bind(this);
   }
 
   componentWillUpdate() {
@@ -46,7 +47,9 @@ class Quote extends React.Component {
     if (this.props.quote.status !== 'Submitted') {
       return this.props.quote.status.toUpperCase();
     }
-    return `EXPIRES ${moment(this.props.quote.expiryDate).format('DD MMM YYYY').toUpperCase()}`;
+    return `EXPIRES ${moment(this.props.quote.expiryDate)
+      .format('DD MMM YYYY')
+      .toUpperCase()}`;
   }
 
   hasCargo() {
@@ -93,7 +96,9 @@ class Quote extends React.Component {
       this.props.quote.cargo.containerLines.map((containerLine, index) => (
         <div key={index} className="cargo-row">
         <span>
-          {containerLine.numContainers} {containerLine.containerType} {containerLine.temperatureControlled ? 'Temperature Controlled' : ''}
+          {containerLine.numContainers} {containerLine.containerType} {containerLine.temperatureControlled ?
+                                                                       'Temperature Controlled' :
+                                                                       ''}
         </span>
         </div>
       ))
@@ -122,8 +127,12 @@ class Quote extends React.Component {
   LooseCargoAttributes() {
     return (
       <span className="label">
-        {this.props.quote.cargo.hazardous ? 'Hazardous,' : 'Non-Hazardous,'}&nbsp;
-        {this.props.quote.cargo.temperatureControlled ? 'Temperature Controlled' : 'Non-Temperature Controlled'}
+        {this.props.quote.cargo.hazardous ?
+         'Hazardous,' :
+         'Non-Hazardous,'}&nbsp;
+        {this.props.quote.cargo.temperatureControlled ?
+         'Temperature Controlled' :
+         'Non-Temperature Controlled'}
       </span>
     );
   }
@@ -149,11 +158,23 @@ class Quote extends React.Component {
     return true;
   }
 
-  Routing() {
+  Movement() {
     return (
       <div>
         <div>
-          <span>{this.props.quote.movement.mode}</span>
+          <span>
+            {this.props.quote.movement.mode}
+            {
+              this.props.quote.movement.commercialParty ?
+              ` – ${this.props.quote.movement.commercialParty}` :
+              ''
+            }
+            {
+              this.props.quote.movement.termsOfSale ?
+              ` – ${this.props.quote.movement.termsOfSale}` :
+              ''
+            }
+          </span>
         </div>
         <div>
           <span>
@@ -171,13 +192,19 @@ class Quote extends React.Component {
 
   Insurance() {
     return (
-      <span>{this.props.quote.otherServices && this.props.quote.otherServices.insurance ? '' : 'No '}Insurance</span>
+      <span>{this.props.quote.otherServices &&
+             this.props.quote.otherServices.insurance ?
+             '' :
+             'No '}Insurance</span>
     );
   }
 
   CustomsClearance() {
     return (
-      <span>{this.props.quote.otherServices && this.props.quote.otherServices.customsClearance ? '' : 'No '}Customs Clearance</span>
+      <span>{this.props.quote.otherServices &&
+             this.props.quote.otherServices.customsClearance ?
+             '' :
+             'No '}Customs Clearance</span>
     );
   }
 
@@ -191,7 +218,8 @@ class Quote extends React.Component {
   }
 
   ChargeGroup(group) {
-    const groupChargeLines = this.props.quote.charges.chargeLines.filter(charge => charge.group === group);
+    const groupChargeLines = this.props.quote.charges.chargeLines.filter(
+      charge => charge.group === group);
     if (groupChargeLines.length === 0) {
       return (
         <div />
@@ -212,15 +240,16 @@ class Quote extends React.Component {
             <span className="amount">
               {
                 chargeLine.units !== 1 ?
-                  `${currencyFormat(chargeLine.unitPrice)} ${chargeLine.unitPriceCurrency}` :
-                  null
+                `${currencyFormat(chargeLine.unitPrice)} ${chargeLine.unitPriceCurrency}` :
+                null
               }
             </span>
             <span className="amount">
               {
-                chargeLine.unitPriceCurrency !== this.props.quote.charges.currency ?
-                  `${currencyFormat(chargeLine.amount)} ${chargeLine.unitPriceCurrency}` :
-                  null
+                chargeLine.unitPriceCurrency !==
+                this.props.quote.charges.currency ?
+                `${currencyFormat(chargeLine.amount)} ${chargeLine.unitPriceCurrency}` :
+                null
               }
             </span>
             <span className="amount">
@@ -259,7 +288,9 @@ class Quote extends React.Component {
             <div className="title">EMAIL</div>
             <div className="email-field">
               <span className="label">SENT</span>
-              <span className="value">{moment(this.props.quote.email.sentDate).format('DD MMM YYYY hh:mm').toUpperCase()}</span>
+              <span className="value">{moment(this.props.quote.email.sentDate)
+                .format('DD MMM YYYY hh:mm')
+                .toUpperCase()}</span>
             </div>
             <div className="email-field">
               <span className="label">TO</span>
@@ -289,9 +320,10 @@ class Quote extends React.Component {
       return null;
     }
     const currencies =
-            Object
-              .keys(this.props.quote.charges.fxConversions)
-              .filter(currency => this.props.quote.charges.fxConversions[currency].active);
+      Object
+        .keys(this.props.quote.charges.fxConversions)
+        .filter(
+          currency => this.props.quote.charges.fxConversions[currency].active);
     if (!currencies.length) {
       return null;
     }
@@ -330,40 +362,49 @@ class Quote extends React.Component {
             </div>
             {
               this.hasCharges() ?
-                <div>
-                  <div className="total-row">
-                    <span className="title">TOTAL PRICE</span>
-                    <span className="title value">
+              <div>
+                <div className="total-row">
+                  <span className="title">TOTAL PRICE</span>
+                  <span className="title value">
                       {currencyFormat(this.props.quote.charges.totalCharges)} {this.props.quote.charges.currency}
                     </span>
-                  </div>
-                </div> :
-                null
+                </div>
+              </div> :
+              null
             }
             <div className="cargo section">
               <span className="title">CARGO</span>
               {
                 this.hasCargo() ?
-                  <div className="">
-                    {this.props.quote.cargo.cargoType === 'Loose' ? this.PackageLines() : this.ContainerLines()}
-                    <div className="cargo-totals">
-                      <span className="label">TOTAL</span>
-                      {this.props.quote.cargo.cargoType === 'Loose' ? this.LooseCargoTotals() : this.ContainerizedCargoTotals()}
-                    </div>
-                    <div className="cargo-attributes">
-                      {this.props.quote.cargo.cargoType === 'Loose' ? this.LooseCargoAttributes() : this.ContainerizedCargoAttributes()}
-                    </div>
-                  </div> :
-                  <span>NO CARGO ENTERED</span>
+                <div className="">
+                  {this.props.quote.cargo.cargoType ===
+                   'Loose' ?
+                   this.PackageLines() :
+                   this.ContainerLines()}
+                  <div className="cargo-totals">
+                    <span className="label">TOTAL</span>
+                    {this.props.quote.cargo.cargoType ===
+                     'Loose' ?
+                     this.LooseCargoTotals() :
+                     this.ContainerizedCargoTotals()}
+                  </div>
+                  <div className="cargo-attributes">
+                    {this.props.quote.cargo.cargoType ===
+                     'Loose' ?
+                     this.LooseCargoAttributes() :
+                     this.ContainerizedCargoAttributes()}
+                  </div>
+                </div> :
+                <span>NO CARGO ENTERED</span>
               }
             </div>
             <div className="routing-and-other-services section">
               <div className="routing">
-                <span className="title">ROUTING</span>
+                <span className="title">MOVEMENT</span>
                 {
                   this.hasRouting() ?
-                    this.Routing() :
-                    <span>NO ROUTING ENTERED</span>
+                  this.Movement() :
+                  <span>NO ROUTING ENTERED</span>
                 }
               </div>
               <div className="other-services">
@@ -375,27 +416,27 @@ class Quote extends React.Component {
             <div className="charges section">
               {
                 this.hasCharges() ?
-                  <div>
-                    {this.ChargeGroup('Origin')}
-                    {this.ChargeGroup('International')}
-                    {this.ChargeGroup('Destination')}
-                    <div className="notes-and-fx-rates">
-                      <div className="notes">
-                        <span className="title">NOTES</span>
-                        <pre>
+                <div>
+                  {this.ChargeGroup('Origin')}
+                  {this.ChargeGroup('International')}
+                  {this.ChargeGroup('Destination')}
+                  <div className="notes-and-fx-rates">
+                    <div className="notes">
+                      <span className="title">NOTES</span>
+                      <pre>
                     {this.props.quote.charges.notes}
                   </pre>
-                      </div>
-                      {this.FXRates()}
                     </div>
-                    <div className="total-row">
-                      <span className="title">TOTAL PRICE</span>
-                      <span className="title value">
+                    {this.FXRates()}
+                  </div>
+                  <div className="total-row">
+                    <span className="title">TOTAL PRICE</span>
+                    <span className="title value">
                       {currencyFormat(this.props.quote.charges.totalCharges)} {this.props.quote.charges.currency}
                     </span>
-                    </div>
-                  </div> :
-                  <span className="title">NO CHARGES ENTERED</span>
+                  </div>
+                </div> :
+                <span className="title">NO CHARGES ENTERED</span>
               }
             </div>
           </div>

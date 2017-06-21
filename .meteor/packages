@@ -25,7 +25,6 @@ dynamic-import
 
 # Test
 practicalmeteor:chai
-practicalmeteor:mocha-console-runner
 dburles:factory
 hwillson:stub-collections
 johanbrook:publication-collector

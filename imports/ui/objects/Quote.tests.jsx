@@ -265,9 +265,9 @@ if (Meteor.isClient) {
       });
     });
 
-    describe('Routing Section', () => {
-      it('renders the routing title', () => {
-        wrapper.contains(<span className="title">ROUTING</span>).should.equal(true);
+    describe('Movement Section', () => {
+      it('renders the movement title', () => {
+        wrapper.contains(<span className="title">MOVEMENT</span>).should.equal(true);
       });
 
       it('renders a message if there is not a complete route', () => {
