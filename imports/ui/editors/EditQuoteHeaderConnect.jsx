@@ -8,10 +8,12 @@ const mapDispatchToProps = dispatch => ({
   dispatchers: {
     onLoad: quote => dispatch(quoteActions.loadQuote(quote)),
 
-    onChangeCargoType: cargoType => dispatch(quoteActions.setCargoType(cargoType)),
+    onChangeCargoType:
+      cargoType => dispatch(quoteActions.setCargoType(cargoType)),
     onChangeRatedQuote: () => dispatch(quoteActions.toggleRatedQuote()),
     onAddPackageLine: () => dispatch(quoteActions.addPackageLine()),
-    onRemovePackageLine: index => dispatch(quoteActions.removePackageLine(index)),
+    onRemovePackageLine:
+      index => dispatch(quoteActions.removePackageLine(index)),
     onChangePackageType: (index, packageType) =>
       dispatch(quoteActions.setPackageLinePackageType(index, packageType)),
     onChangeNumPackages: (index, numPackages) =>
@@ -19,7 +21,10 @@ const mapDispatchToProps = dispatch => ({
 
     onChangeLength: (index, length) =>
       dispatch(quoteActions.setPackageLineLength(index, length)),
-    onChangeWidth: (index, width) => dispatch(quoteActions.setPackageLineWidth(index, width)),
+    onChangeWidth: (index, width) => dispatch(quoteActions.setPackageLineWidth(
+      index,
+      width,
+    )),
     onChangeHeight: (index, height) =>
       dispatch(quoteActions.setPackageLineHeight(index, height)),
     onChangePackageLineUnitVolumeUOM: (index, unitVolumeUOM) =>
@@ -30,11 +35,18 @@ const mapDispatchToProps = dispatch => ({
       dispatch(quoteActions.setPackageLineWeightUOM(index, weightUOM)),
 
     onAddContainerLine: () => dispatch(quoteActions.addContainerLine()),
-    onRemoveContainerLine: index => dispatch(quoteActions.removeContainerLine(index)),
+    onRemoveContainerLine: index => dispatch(quoteActions.removeContainerLine(
+      index)),
     onChangeContainerLineNumContainers: (index, numContainers) =>
-      dispatch(quoteActions.setContainerLineNumContainers(index, numContainers)),
+      dispatch(quoteActions.setContainerLineNumContainers(
+        index,
+        numContainers,
+      )),
     onChangeContainerLineContainerType: (index, containerType) =>
-      dispatch(quoteActions.setContainerLineContainerType(index, containerType)),
+      dispatch(quoteActions.setContainerLineContainerType(
+        index,
+        containerType,
+      )),
     onClickContainerLineTemperatureControlled: index =>
       dispatch(quoteActions.toggleContainerLineTemperatureControlled(index)),
 
@@ -44,18 +56,24 @@ const mapDispatchToProps = dispatch => ({
     // MOVEMENT
     onChangeMovementMode: mode =>
       dispatch(quoteActions.setMovementMode(mode)),
+    onChangeMovementTermsOfSale: termsOfSale =>
+      dispatch(quoteActions.setMovementTermsOfSale(termsOfSale)),
     onChangePickupLocationType: locationType =>
       dispatch(quoteActions.setPickupLocationType(locationType)),
     onChangePickupLocationName: locationName =>
       dispatch(quoteActions.setPickupLocationName(locationName)),
-    onChangePickupCountry: country => dispatch(quoteActions.setPickupCountry(country)),
-    onChangePickupLocation: location => dispatch(quoteActions.setPickupLocation(location)),
+    onChangePickupCountry: country => dispatch(quoteActions.setPickupCountry(
+      country)),
+    onChangePickupLocation: location => dispatch(quoteActions.setPickupLocation(
+      location)),
     onChangeDeliveryLocationType: locationType =>
       dispatch(quoteActions.setDeliveryLocationType(locationType)),
     onChangeDeliveryLocationName: locationName =>
       dispatch(quoteActions.setDeliveryLocationName(locationName)),
-    onChangeDeliveryCountry: country => dispatch(quoteActions.setDeliveryCountry(country)),
-    onChangeDeliveryLocation: location => dispatch(quoteActions.setDeliveryLocation(location)),
+    onChangeDeliveryCountry:
+      country => dispatch(quoteActions.setDeliveryCountry(country)),
+    onChangeDeliveryLocation:
+      location => dispatch(quoteActions.setDeliveryLocation(location)),
 
     // OTHER SERVICES
     onClickInsurance: () => dispatch(quoteActions.toggleInsurance()),
@@ -63,6 +81,10 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const EditQuoteHeaderConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuoteHeader);
+const EditQuoteHeaderConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(
+  EditQuoteHeader);
 
 export default EditQuoteHeaderConnect;

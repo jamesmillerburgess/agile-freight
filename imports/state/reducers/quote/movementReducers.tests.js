@@ -25,22 +25,48 @@ if (Meteor.isClient) {
           location: 'f',
         },
       };
-      const action = { type: ACTION_TYPES.LOAD_QUOTE, quote: { movement: movementToLoad } };
+      const action         = {
+        type: ACTION_TYPES.LOAD_QUOTE,
+        quote: { movement: movementToLoad },
+      };
 
       movement({}, action).should.eql(movementToLoad);
     });
 
     it('sets the mode', () => {
       const stateBefore = { mode: '' };
-      const action = { type: ACTION_TYPES.SET_MOVEMENT_MODE, mode: 'a' };
+      const action      = { type: ACTION_TYPES.SET_MOVEMENT_MODE, mode: 'a' };
       deepFreeze(stateBefore);
       movement(stateBefore, action).mode.should.equal('a');
     });
 
+    it('sets the terms of sale', () => {
+      const stateBefore = { termsOfSale: '' };
+      const action      = {
+        type: ACTION_TYPES.SET_MOVEMENT_TERMS_OF_SALE,
+        termsOfSale: 'a',
+      };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).termsOfSale.should.equal('a');
+    });
+    
+    it('clears the mode if terms of sale are set to \'Brokerage\'', () => {
+      const stateBefore = { mode: '', termsOfSale: 'CFR' };
+      const action = {
+        type: ACTION_TYPES.SET_MOVEMENT_MODE,
+        mode: 'Brokerage',
+      };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).termsOfSale.should.equal('');
+    });
+
     it('sets the pickup location type', () => {
       const stateBefore = { pickup: { locationType: 'port' } };
-      const action = { type: ACTION_TYPES.SET_PICKUP_LOCATION_TYPE, locationType: 'address' };
-      const stateAfter = { pickup: { locationType: 'address' } };
+      const action      = {
+        type: ACTION_TYPES.SET_PICKUP_LOCATION_TYPE,
+        locationType: 'address',
+      };
+      const stateAfter  = { pickup: { locationType: 'address' } };
       deepFreeze(stateBefore);
 
       movement(stateBefore, action).should.eql(stateAfter);
@@ -48,7 +74,10 @@ if (Meteor.isClient) {
 
     it('sets the pickup country', () => {
       const stateBefore = { pickup: { country: 'India' } };
-      const action = { type: ACTION_TYPES.SET_PICKUP_COUNTRY, country: 'China' };
+      const action      = {
+        type: ACTION_TYPES.SET_PICKUP_COUNTRY,
+        country: 'China',
+      };
       deepFreeze(stateBefore);
 
       movement(stateBefore, action).pickup.country.should.equal('China');
@@ -56,7 +85,10 @@ if (Meteor.isClient) {
 
     it('clears the pickup location if the pickup country changes', () => {
       const stateBefore = { pickup: { country: 'India', location: 'NSA' } };
-      const action = { type: ACTION_TYPES.SET_PICKUP_COUNTRY, country: 'China' };
+      const action      = {
+        type: ACTION_TYPES.SET_PICKUP_COUNTRY,
+        country: 'China',
+      };
       deepFreeze(stateBefore);
 
       movement(stateBefore, action).pickup.location.should.equal('');
@@ -64,7 +96,10 @@ if (Meteor.isClient) {
 
     it('sets the pickup location', () => {
       const stateBefore = { pickup: { location: '000000' } };
-      const action = { type: ACTION_TYPES.SET_PICKUP_LOCATION, location: '111111' };
+      const action      = {
+        type: ACTION_TYPES.SET_PICKUP_LOCATION,
+        location: '111111',
+      };
       deepFreeze(stateBefore);
 
       movement(stateBefore, action).pickup.location.should.eql('111111');
@@ -72,7 +107,10 @@ if (Meteor.isClient) {
 
     it('sets the pickup location name', () => {
       const stateBefore = { pickup: { locationName: 'a' } };
-      const action = { type: ACTION_TYPES.SET_PICKUP_LOCATION_NAME, locationName: 'b' };
+      const action      = {
+        type: ACTION_TYPES.SET_PICKUP_LOCATION_NAME,
+        locationName: 'b',
+      };
       deepFreeze(stateBefore);
 
       movement(stateBefore, action).pickup.locationName.should.equal('b');
@@ -80,8 +118,11 @@ if (Meteor.isClient) {
 
     it('sets the delivery location type', () => {
       const stateBefore = { delivery: { locationType: 'port' } };
-      const action = { type: ACTION_TYPES.SET_DELIVERY_LOCATION_TYPE, locationType: 'address' };
-      const stateAfter = { delivery: { locationType: 'address' } };
+      const action      = {
+        type: ACTION_TYPES.SET_DELIVERY_LOCATION_TYPE,
+        locationType: 'address',
+      };
+      const stateAfter  = { delivery: { locationType: 'address' } };
       deepFreeze(stateBefore);
 
       movement(stateBefore, action).should.eql(stateAfter);
@@ -89,7 +130,10 @@ if (Meteor.isClient) {
 
     it('sets the delivery country', () => {
       const stateBefore = { delivery: { country: 'India' } };
-      const action = { type: ACTION_TYPES.SET_DELIVERY_COUNTRY, country: 'China' };
+      const action      = {
+        type: ACTION_TYPES.SET_DELIVERY_COUNTRY,
+        country: 'China',
+      };
       deepFreeze(stateBefore);
 
       movement(stateBefore, action).delivery.country.should.equal('China');
@@ -97,7 +141,10 @@ if (Meteor.isClient) {
 
     it('clears the delivery location if the delivery country changes', () => {
       const stateBefore = { delivery: { country: 'India', location: 'NSA' } };
-      const action = { type: ACTION_TYPES.SET_DELIVERY_COUNTRY, country: 'China' };
+      const action      = {
+        type: ACTION_TYPES.SET_DELIVERY_COUNTRY,
+        country: 'China',
+      };
       deepFreeze(stateBefore);
 
       movement(stateBefore, action).delivery.location.should.equal('');
@@ -105,7 +152,10 @@ if (Meteor.isClient) {
 
     it('sets the delivery location', () => {
       const stateBefore = { delivery: { location: '000000' } };
-      const action = { type: ACTION_TYPES.SET_DELIVERY_LOCATION, location: '111111' };
+      const action      = {
+        type: ACTION_TYPES.SET_DELIVERY_LOCATION,
+        location: '111111',
+      };
       deepFreeze(stateBefore);
 
       movement(stateBefore, action).delivery.location.should.eql('111111');
@@ -113,7 +163,10 @@ if (Meteor.isClient) {
 
     it('sets the delivery location name', () => {
       const stateBefore = { delivery: { locationName: 'a' } };
-      const action = { type: ACTION_TYPES.SET_DELIVERY_LOCATION_NAME, locationName: 'b' };
+      const action      = {
+        type: ACTION_TYPES.SET_DELIVERY_LOCATION_NAME,
+        locationName: 'b',
+      };
       deepFreeze(stateBefore);
 
       movement(stateBefore, action).delivery.locationName.should.equal('b');

@@ -2,9 +2,10 @@
 
 # v0.7.0 – Charge Defaults
 
-* TODO: Add incoterm to routing section of quote
+* Add brokerage as a mode
+* Add incoterm to routing section of quote
+* Incoterm is unavailable for brokerage quotes
 * TODO: Smarter calculation of movement type
-* TODO: Way to specify brokerage
 * TODO: Default a set of charges based on mode + movement + incoterm
 
 # v0.6.0 – Airports and Seaports

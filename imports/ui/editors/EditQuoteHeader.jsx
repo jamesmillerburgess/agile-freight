@@ -4,7 +4,6 @@ import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
 
 import { integerFormat, weightFormat } from '../formatters/numberFormatters';
-import { countByValue } from '../statsUtils';
 
 import CheckboxField from '../fields/CheckboxField.jsx';
 import CountryField from '../fields/CountryField.jsx';
@@ -12,6 +11,7 @@ import UNLocationField from '../fields/UNLocationField.jsx';
 import QuoteContainer from '../objects/QuoteContainer';
 
 import { quotePropTypes } from '../objects/quotePropTypes';
+import { APIGlobals } from '../../api/api-globals';
 
 import { Countries } from '../../api/countries/countriesCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
@@ -469,9 +469,26 @@ class EditQuoteHeader extends React.Component {
                     { value: 'Air', label: 'Air' },
                     { value: 'Sea', label: 'Sea' },
                     { value: 'Road', label: 'Road' },
+                    { value: 'Brokerage', label: 'Brokerage' },
                   ]}
                   onChange={selectedValue =>
-                    this.props.dispatchers.onChangeMovementMode(selectedValue.value)}
+                    this.props
+                        .dispatchers
+                        .onChangeMovementMode(selectedValue.value)}
+                />
+              </div>
+              <div className="field select-country">
+                <div className="label">
+                  TERMS OF SALE
+                </div>
+                <Select
+                  value={this.props.quote.movement.termsOfSale}
+                  options={APIGlobals.incotermOptions}
+                  onChange={selectedValue =>
+                    this.props
+                        .dispatchers
+                        .onChangeMovementTermsOfSale(selectedValue.value)}
+                  disabled={this.props.quote.movement.mode === 'Brokerage'}
                 />
               </div>
             </div>

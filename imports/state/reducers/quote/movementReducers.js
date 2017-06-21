@@ -24,6 +24,12 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
       break;
     case ACTION_TYPES.SET_MOVEMENT_MODE:
       newState = changeProp(state, 'mode', action.mode);
+      if (newState.mode === 'Brokerage') {
+        newState = changeProp(newState, 'termsOfSale', '');
+      }
+      break;
+    case ACTION_TYPES.SET_MOVEMENT_TERMS_OF_SALE:
+      newState = changeProp(state, 'termsOfSale', action.termsOfSale);
       break;
     case ACTION_TYPES.SET_PICKUP_LOCATION_TYPE:
       newState = changeProp(state, 'pickup', changeProp(state.pickup, 'locationType', action.locationType));

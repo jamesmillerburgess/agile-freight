@@ -1,5 +1,19 @@
 export const APIGlobals = {
-  incotermOptions: ['CFR', 'CIF', 'CIP', 'CPT', 'DAF', 'DAP', 'DAT', 'DDP', 'DDU', 'EXW', 'FAS', 'FCA', 'FOB', ''],
+  incotermOptions: [
+    { value: 'CFR', label: 'CFR' },
+    { value: 'CIF', label: 'CIF' },
+    { value: 'CIP', label: 'CIP' },
+    { value: 'CPT', label: 'CPT' },
+    { value: 'DAF', label: 'DAF' },
+    { value: 'DAP', label: 'DAP' },
+    { value: 'DAT', label: 'DAT' },
+    { value: 'DDP', label: 'DDP' },
+    { value: 'DDU', label: 'DDU' },
+    { value: 'EXW', label: 'EXW' },
+    { value: 'FAS', label: 'FAS' },
+    { value: 'FCA', label: 'FCA' },
+    { value: 'FOB', label: 'FOB' },
+  ],
   mblTypeOptions: ['Waybill', 'Original', ''],
   mblTermsOptions: ['Prepaid', 'Collect', ''],
   seaquestTypeOptions: ['Original', 'Express', ''],
@@ -199,7 +213,16 @@ export const APIGlobals = {
   quoteRateTypeOptions: ['Rated', 'Itemized'],
 
   // Shipments
-  shipmentStatusOptions: ['Received', 'Booked', 'Departed', 'Arrived', 'Released', 'Delivered', 'Closed', 'Canceled'],
+  shipmentStatusOptions: [
+    'Received',
+    'Booked',
+    'Departed',
+    'Arrived',
+    'Released',
+    'Delivered',
+    'Closed',
+    'Canceled'
+  ],
 
   // Invoices
   invoiceStatusOptions: ['Issued', 'Draft', 'Canceled'],
@@ -209,8 +232,18 @@ export const APIGlobals = {
 
   // TEMP!!!!
   cityOptions: ['Shanghai', 'Basel', 'Seoul', ''],
-  airportOptions: ['Shanghai Hongquiao - SHA', 'Shanghai Pudong - PVG', 'Frankfurt - FRA', 'Basel Mulhouse - BSL'],
-  portOptions: ['Rotterdam - NLROT', 'Hamburg - DEHAM', 'Singapore - SGSIN', ''],
+  airportOptions: [
+    'Shanghai Hongquiao - SHA',
+    'Shanghai Pudong - PVG',
+    'Frankfurt - FRA',
+    'Basel Mulhouse - BSL'
+  ],
+  portOptions: [
+    'Rotterdam - NLROT',
+    'Hamburg - DEHAM',
+    'Singapore - SGSIN',
+    ''
+  ],
   indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],
   ukPortOptions: ['GBFXT', 'GBSOU', 'GBLGW'],
 
