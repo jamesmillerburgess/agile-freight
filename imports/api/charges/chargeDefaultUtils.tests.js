@@ -13,7 +13,7 @@ if (Meteor.isClient) {
     describe('hasCollection function', () => {
       const { hasCollection } = chargeDefaultUtils;
 
-      it('is true when Seller, CIF, Door to', () => {
+      it('returns true when Seller, CIF, Door to', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'CIF',
@@ -22,7 +22,7 @@ if (Meteor.isClient) {
         hasCollection(movement).should.equal(true);
       });
 
-      it('is false when Seller, CIF, Seaport to', () => {
+      it('returns false when Seller, CIF, Seaport to', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'CIF',
@@ -31,7 +31,7 @@ if (Meteor.isClient) {
         hasCollection(movement).should.equal(false);
       });
 
-      it('is false when Seller, CIF, Airport to', () => {
+      it('returns false when Seller, CIF, Airport to', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'CIF',
@@ -40,7 +40,7 @@ if (Meteor.isClient) {
         hasCollection(movement).should.equal(false);
       });
 
-      it('is false when Seller, EXW, Door to', () => {
+      it('returns false when Seller, EXW, Door to', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'EXW',
@@ -49,7 +49,7 @@ if (Meteor.isClient) {
         hasCollection(movement).should.equal(false);
       });
 
-      it('is true when Buyer, EXW, Door to', () => {
+      it('returns true when Buyer, EXW, Door to', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'EXW',
@@ -58,7 +58,7 @@ if (Meteor.isClient) {
         hasCollection(movement).should.equal(true);
       });
 
-      it('is false when Buyer, EXW, Seaport to', () => {
+      it('returns false when Buyer, EXW, Seaport to', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'EXW',
@@ -67,7 +67,7 @@ if (Meteor.isClient) {
         hasCollection(movement).should.equal(false);
       });
 
-      it('is false when Buyer, EXW, Airport to', () => {
+      it('returns false when Buyer, EXW, Airport to', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'EXW',
@@ -76,7 +76,7 @@ if (Meteor.isClient) {
         hasCollection(movement).should.equal(false);
       });
 
-      it('is false when Buyer, CIF, Door to', () => {
+      it('returns false when Buyer, CIF, Door to', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'CIF',
@@ -85,7 +85,7 @@ if (Meteor.isClient) {
         hasCollection(movement).should.equal(false);
       });
 
-      it('is false when Brokerage', () => {
+      it('returns false when Brokerage', () => {
         const movement = {
           mode: 'Brokerage',
           commercialParty: 'Seller',
@@ -99,7 +99,7 @@ if (Meteor.isClient) {
     describe('hasDelivery function', () => {
       const { hasDelivery } = chargeDefaultUtils;
 
-      it('is true if Seller, DAP, to Door', () => {
+      it('returns true if Seller, DAP, to Door', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'DAP',
@@ -108,7 +108,7 @@ if (Meteor.isClient) {
         hasDelivery(movement).should.equal(true);
       });
 
-      it('is false if Seller, DAP, to Seaport', () => {
+      it('returns false if Seller, DAP, to Seaport', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'DAP',
@@ -117,7 +117,7 @@ if (Meteor.isClient) {
         hasDelivery(movement).should.equal(false);
       });
 
-      it('is false if Seller, DAP, to Airport', () => {
+      it('returns false if Seller, DAP, to Airport', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'DAP',
@@ -126,7 +126,7 @@ if (Meteor.isClient) {
         hasDelivery(movement).should.equal(false);
       });
 
-      it('is false if Seller, CFR, to Door', () => {
+      it('returns false if Seller, CFR, to Door', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'CFR',
@@ -135,7 +135,7 @@ if (Meteor.isClient) {
         hasDelivery(movement).should.equal(false);
       });
 
-      it('is true when Buyer, CFR, to Door', () => {
+      it('returns true when Buyer, CFR, to Door', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'CFR',
@@ -144,7 +144,7 @@ if (Meteor.isClient) {
         hasDelivery(movement).should.equal(true);
       });
 
-      it('is false when Buyer, CFR, to Seaport', () => {
+      it('returns false when Buyer, CFR, to Seaport', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'CFR',
@@ -153,7 +153,7 @@ if (Meteor.isClient) {
         hasDelivery(movement).should.equal(false);
       });
 
-      it('is false when Buyer, CFR, to Airport', () => {
+      it('returns false when Buyer, CFR, to Airport', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'CFR',
@@ -162,13 +162,67 @@ if (Meteor.isClient) {
         hasDelivery(movement).should.equal(false);
       });
 
-      it('is false when Buyer, DAP, to Door', () => {
+      it('returns false when Buyer, DAP, to Door', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'DAP',
           delivery: { locationType: 'Door' },
         };
         hasDelivery(movement).should.equal(false);
+      });
+      
+      it('returns false when Brokerage', () => {
+        const movement = {
+          mode: 'Brokerage',
+          commercialParty: 'Buyer',
+          termsOfSale: 'CFR',
+          delivery: { locationType: 'Door' },
+        };
+        hasDelivery(movement).should.equal(false);
+      });
+    });
+
+    describe('hasInternationalFreight function', () => {
+      const { hasInternationalFreight } = chargeDefaultUtils;
+      it('returns true when Seller, CFR', () => {
+        const movement = {
+          commercialParty: 'Seller',
+          termsOfSale: 'CFR',
+        };
+        hasInternationalFreight(movement).should.equal(true);
+      });
+
+      it('returns false when Seller, EXW', () => {
+        const movement = {
+          commercialParty: 'Seller',
+          termsOfSale: 'EXW',
+        };
+        hasInternationalFreight(movement).should.equal(false);
+      });
+
+      it('returns true when Buyer, EXW', () => {
+        const movement = {
+          commercialParty: 'Buyer',
+          termsOfSale: 'EXW',
+        };
+        hasInternationalFreight(movement).should.equal(true);
+      });
+
+      it('returns false when Buyer, CFR', () => {
+        const movement = {
+          commercialParty: 'Buyer',
+          termsOfSale: 'CFR',
+        };
+        hasInternationalFreight(movement).should.equal(false);
+      });
+
+      it('returns false when Brokerage', () => {
+        const movement = {
+          mode: 'Brokerage',
+          commercialParty: 'Seller',
+          termsOfSale: 'CFR',
+        };
+        hasInternationalFreight(movement).should.equal(false);
       });
     });
   });

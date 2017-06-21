@@ -63,3 +63,48 @@ export const hasDelivery = (movement) => {
   }
   return false;
 };
+
+/**
+ * Determines if a given movement object includes international freight or not.
+ * @param movement
+ * @returns {boolean}
+ */
+export const hasInternationalFreight = (movement) => {
+  if (movement.mode !== 'Brokerage') {
+    if (movement.commercialParty === 'Seller') {
+      if (
+        [
+          'CFR',
+          'CIF',
+          'CIP',
+          'CPT',
+          'DAF',
+          'DAP',
+          'DAT',
+          'DDP',
+          'DDU',
+        ].indexOf(movement.termsOfSale) !== -1
+      ) {
+        return true;
+      }
+    }
+    if (movement.commercialParty === 'Buyer') {
+      if (
+        [
+          'CFR',
+          'CIF',
+          'CIP',
+          'CPT',
+          'DAF',
+          'DAP',
+          'DAT',
+          'DDP',
+          'DDU',
+        ].indexOf(movement.termsOfSale) === -1
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
