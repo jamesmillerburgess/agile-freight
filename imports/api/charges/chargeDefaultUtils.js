@@ -1,3 +1,5 @@
+import { APIGlobals } from '../api-globals';
+
 /**
  * Determines if a given movement object includes collection or not.
  * @param movement
@@ -107,4 +109,18 @@ export const hasInternationalFreight = (movement) => {
     }
   }
   return false;
+};
+
+export const getDefaultMovementCharges = (movement) => {
+  const charges = [];
+  if (hasCollection(movement)) {
+    charges.push(...APIGlobals.defaultCollectionCharges);
+  }
+  if (hasInternationalFreight(movement)) {
+    charges.push(...APIGlobals.defaultInternationalFreightCharges);
+  }
+  if (hasDelivery(movement)) {
+    charges.push(...APIGlobals.defaultDeliveryCharges);
+  }
+  return charges;
 };

@@ -1,4 +1,21 @@
 export const APIGlobals = {
+  // DEFAULT CHARGES
+  defaultCollectionCharges: [
+    { name: 'Collection', group: 'Origin' },
+    { name: 'Fuel Surcharge', group: 'Origin' },
+  ],
+
+  defaultInternationalFreightCharges: [
+    { name: 'Terminal Handling Charge', group: 'Origin' },
+    { name: 'International Freight', group: 'International' },
+    { name: 'Terminal Handling Charge', group: 'Destination' },
+  ],
+
+  defaultDeliveryCharges: [
+    { name: 'Inland Transport', group: 'Destination' },
+    { name: 'Fuel Surcharge', group: 'Destination' },
+  ],
+
   incotermOptions: [
     { value: 'CFR', label: 'CFR' },
     { value: 'CIF', label: 'CIF' },
@@ -225,7 +242,7 @@ export const APIGlobals = {
     'Released',
     'Delivered',
     'Closed',
-    'Canceled'
+    'Canceled',
   ],
 
   // Invoices
@@ -240,13 +257,13 @@ export const APIGlobals = {
     'Shanghai Hongquiao - SHA',
     'Shanghai Pudong - PVG',
     'Frankfurt - FRA',
-    'Basel Mulhouse - BSL'
+    'Basel Mulhouse - BSL',
   ],
   portOptions: [
     'Rotterdam - NLROT',
     'Hamburg - DEHAM',
     'Singapore - SGSIN',
-    ''
+    '',
   ],
   indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],
   ukPortOptions: ['GBFXT', 'GBSOU', 'GBLGW'],

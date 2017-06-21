@@ -5,6 +5,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
 
 import * as chargeDefaultUtils from './chargeDefaultUtils';
+import { APIGlobals } from '../api-globals';
 
 chai.should();
 
@@ -170,7 +171,7 @@ if (Meteor.isClient) {
         };
         hasDelivery(movement).should.equal(false);
       });
-      
+
       it('returns false when Brokerage', () => {
         const movement = {
           mode: 'Brokerage',
@@ -223,6 +224,95 @@ if (Meteor.isClient) {
           termsOfSale: 'CFR',
         };
         hasInternationalFreight(movement).should.equal(false);
+      });
+    });
+
+    describe('getDefaultMovementCharges function', () => {
+      const { getDefaultMovementCharges } = chargeDefaultUtils;
+      it('returns collection charges when Seller, FOB, Door to Seaport', () => {
+        const movement = {
+          commercialParty: 'Seller',
+          termsOfSale: 'FOB',
+          pickup: { locationType: 'Door' },
+          delivery: { locationType: 'Seaport' },
+        };
+        getDefaultMovementCharges(movement)
+          .should
+          .eql(APIGlobals.defaultCollectionCharges);
+      });
+
+      it('returns delivery charges when Buyer, CFR, Seaport to Door', () => {
+        const movement = {
+          commercialParty: 'Buyer',
+          termsOfSale: 'CFR',
+          pickup: { locationType: 'Seaport' },
+          delivery: { locationType: 'Door' },
+        };
+        getDefaultMovementCharges(movement)
+          .should
+          .eql(APIGlobals.defaultDeliveryCharges);
+      });
+
+      it('returns international freight charges when Seller, CFR,' +
+         ' Seaport to Door', () => {
+        const movement = {
+          commercialParty: 'Seller',
+          termsOfSale: 'CFR',
+          pickup: { locationType: 'Seaport' },
+          delivery: { locationType: 'Door' },
+        };
+        getDefaultMovementCharges(movement)
+          .should
+          .eql(APIGlobals.defaultInternationalFreightCharges);
+      });
+
+      it('returns collection and international freight charges when Seller, ' +
+         'CFR, Door to Door', () => {
+        const movement = {
+          commercialParty: 'Seller',
+          termsOfSale: 'CFR',
+          pickup: { locationType: 'Door' },
+          delivery: { locationType: 'Door' },
+        };
+        getDefaultMovementCharges(movement)
+          .should
+          .eql([
+                 ...APIGlobals.defaultCollectionCharges,
+                 ...APIGlobals.defaultInternationalFreightCharges,
+               ]);
+      });
+
+      it('returns international freight and delivery charges when Buyer, ' +
+         'FOB, Door to Door', () => {
+        const movement = {
+          commercialParty: 'Buyer',
+          termsOfSale: 'FOB',
+          pickup: { locationType: 'Door' },
+          delivery: { locationType: 'Door' },
+        };
+        getDefaultMovementCharges(movement)
+          .should
+          .eql([
+                 ...APIGlobals.defaultInternationalFreightCharges,
+                 ...APIGlobals.defaultDeliveryCharges,
+               ]);
+      });
+
+      it('returns collection, international freight, and delivery charges ' +
+         'when Buyer, EXW, Door to Door', () => {
+        const movement = {
+          commercialParty: 'Buyer',
+          termsOfSale: 'EXW',
+          pickup: { locationType: 'Door' },
+          delivery: { locationType: 'Door' },
+        };
+        getDefaultMovementCharges(movement)
+          .should
+          .eql([
+                 ...APIGlobals.defaultCollectionCharges,
+                 ...APIGlobals.defaultInternationalFreightCharges,
+                 ...APIGlobals.defaultDeliveryCharges,
+               ]);
       });
     });
   });
