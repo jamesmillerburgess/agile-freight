@@ -1,5 +1,7 @@
 # v.NEXT
 
+# v0.8.0 – 
+
 # v0.7.0 – Charge Defaults
 
 * Rename 'Routing' to 'Movement' in quote
