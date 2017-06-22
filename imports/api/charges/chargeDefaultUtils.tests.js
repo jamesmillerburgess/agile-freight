@@ -349,7 +349,6 @@ if (Meteor.isClient) {
           COL: {
             global: {
               rate: 'Mile',
-              unit: 50,
               unitPrice: 0.5,
               currency: 'USD',
             },
@@ -358,7 +357,7 @@ if (Meteor.isClient) {
         getSellRate(charge, sellRates).should.eql(blankRate);
       });
 
-      it('returns the global rate if it the only rate available', () => {
+      it('returns the global rate if it the only rate applicable', () => {
         const charge = {
           name: 'Collection',
           group: 'Origin',
@@ -367,7 +366,6 @@ if (Meteor.isClient) {
         };
         const globalRate = {
           rate: 'Mile',
-          unit: 50,
           unitPrice: 0.5,
           currency: 'USD',
         };
@@ -384,7 +382,6 @@ if (Meteor.isClient) {
         };
         const countryRate = {
           rate: 'Mile',
-          unit: 50,
           unitPrice: 0.5,
           currency: 'USD',
         };
@@ -392,11 +389,11 @@ if (Meteor.isClient) {
           receipt: 'USMIA',
           departure: 'USTPA',
         };
-        const sellRates = { COL: { country: { US: countryRate } } };
+        const sellRates = { COL: { country: { USUS: countryRate } } };
         getSellRate(charge, sellRates, movement).should.eql(countryRate);
       });
 
-      it('returns the country rate if both a country and global rate are' +
+      it('returns the country rate if both a country and global rate are ' +
          'applicable', () => {
         const charge = {
           name: 'Collection',
@@ -406,13 +403,11 @@ if (Meteor.isClient) {
         };
         const globalRate = {
           rate: 'Mile',
-          unit: 50,
-          unitPrice: 0.5,
+          unitPrice: 1,
           currency: 'USD',
         };
         const countryRate = {
           rate: 'Mile',
-          unit: 50,
           unitPrice: 0.5,
           currency: 'USD',
         };
@@ -423,10 +418,67 @@ if (Meteor.isClient) {
         const sellRates = {
           COL: {
             global: globalRate,
-            country: { US: countryRate },
+            country: { USUS: countryRate },
           },
         };
         getSellRate(charge, sellRates, movement).should.eql(countryRate);
+      });
+
+      it('returns the location rate if it is the only rate applicable', () => {
+        const charge = {
+          name: 'Collection',
+          group: 'Origin',
+          chargeCode: 'COL',
+          route: ['receipt', 'departure'],
+        };
+        const locationRate = {
+          rate: 'Mile',
+          unitPrice: 0.5,
+          currency: 'USD',
+        };
+        const movement = {
+          receipt: 'USMIA',
+          departure: 'USTPA',
+        };
+        const sellRates = { COL: { location: { USMIAUSTPA: locationRate } } };
+        getSellRate(charge, sellRates, movement).should.eql(locationRate);
+      });
+
+      it('returns the location rate if location, country, or global rates ' +
+         'are applicable', () => {
+        const charge = {
+          name: 'Collection',
+          group: 'Origin',
+          chargeCode: 'COL',
+          route: ['receipt', 'departure'],
+        };
+        const globalRate = {
+          rate: 'Mile',
+          unitPrice: 1,
+          currency: 'USD',
+        };
+        const countryRate = {
+          rate: 'Mile',
+          unitPrice: 0.75,
+          currency: 'USD',
+        };
+        const locationRate = {
+          rate: 'Mile',
+          unitPrice: 0.5,
+          currency: 'USD',
+        };
+        const movement = {
+          receipt: 'USMIA',
+          departure: 'USTPA',
+        };
+        const sellRates = {
+          COL: {
+            global: globalRate,
+            country: { USUS: countryRate },
+            location: { USMIAUSTPA: locationRate },
+          },
+        };
+        getSellRate(charge, sellRates, movement).should.eql(locationRate);
       });
     });
   });

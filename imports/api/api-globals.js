@@ -31,23 +31,44 @@ export const APIGlobals = {
       name: 'Collection',
       group: 'Origin',
       chargeCode: 'COL',
-      route: ['Receipt', 'Port Of Loading'],
+      route: ['receipt', 'departure'],
     },
     {
       name: 'Fuel Surcharge',
       group: 'Origin',
+      route: ['receipt', 'departure'],
     },
   ],
 
   defaultInternationalFreightCharges: [
-    { name: 'Terminal Handling Charge', group: 'Origin' },
-    { name: 'International Freight', group: 'International' },
-    { name: 'Terminal Handling Charge', group: 'Destination' },
+    {
+      name: 'Terminal Handling Charge',
+      group: 'Origin',
+      route: ['departure'],
+    },
+    {
+      name: 'International Freight',
+      group: 'International',
+      route: ['departure', 'arrival'],
+    },
+    {
+      name: 'Terminal Handling Charge',
+      group: 'Destination',
+      route: ['arrival'],
+    },
   ],
 
   defaultDeliveryCharges: [
-    { name: 'Inland Transport', group: 'Destination' },
-    { name: 'Fuel Surcharge', group: 'Destination' },
+    {
+      name: 'Inland Transport',
+      group: 'Destination',
+      route: ['arrival', 'delivery'],
+    },
+    {
+      name: 'Fuel Surcharge',
+      group: 'Destination',
+      route: ['arrival', 'delivery'],
+    },
   ],
 
   incotermOptions: [

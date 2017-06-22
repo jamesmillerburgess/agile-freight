@@ -130,7 +130,7 @@ export const getDefaultMovementCharges = (movement) => {
   return charges;
 };
 
-export const blankRate = { rate: 'Shipment', units: 1 };
+export const blankRate = { rate: 'Shipment', unitPrice: 0 };
 
 /**
  * Checks that all route components are present in the movement object.
@@ -148,15 +148,71 @@ export const hasApplicableRoute = (route = [], movement = {}) => {
   return res;
 };
 
+/**
+ * Compiles the location-level route and checks for an applicable rate.
+ * @param route
+ * @param locationSellRates
+ * @param movement
+ * @returns {*}
+ */
+export const getLocationLevelRate = (
+  route = [],
+  locationSellRates = {},
+  movement = {},
+) => {
+  const locationRoute = route.reduce(
+    (acc, component) => acc + movement[component], '',
+  );
+  if (locationSellRates[locationRoute]) {
+    return locationSellRates[locationRoute];
+  }
+  return null;
+};
+
+/**
+ * Compiles the country-level route and checks for an applicable rate.
+ * @param route
+ * @param countrySellRates
+ * @param movement
+ * @returns {*}
+ */
+export const getCountryLevelRate = (
+  route = [],
+  countrySellRates = {},
+  movement = {},
+) => {
+  const countryRoute = route.reduce(
+    (acc, component) => acc + movement[component].slice(0, 2), '',
+  );
+  if (countrySellRates[countryRoute]) {
+    return countrySellRates[countryRoute];
+  }
+  return null;
+};
+
 export const getSellRate = (charge = {}, sellRates, movement) => {
   if (charge.chargeCode && sellRates && sellRates[charge.chargeCode]) {
     const chargeCodeRates = sellRates[charge.chargeCode];
     // Does the movement have the route required for the charge applicability?
     if (hasApplicableRoute(charge.route, movement)) {
-      // Is there a rate for the first country in the route?
-      const firstCountry = movement[charge.route[0]].slice(0, 2);
-      if (chargeCodeRates.country && chargeCodeRates.country[firstCountry]) {
-        return chargeCodeRates.country[firstCountry];
+      // Is there a rate for the location-level route?
+      const locationLevelRate = getLocationLevelRate(
+        charge.route,
+        chargeCodeRates.location,
+        movement,
+      );
+      if (locationLevelRate) {
+        return locationLevelRate;
+      }
+
+      // Is there a rate for the country-level route?
+      const countryLevelRate = getCountryLevelRate(
+        charge.route,
+        chargeCodeRates.country,
+        movement,
+      );
+      if (countryLevelRate) {
+        return countryLevelRate;
       }
     }
 
