@@ -129,3 +129,41 @@ export const getDefaultMovementCharges = (movement) => {
   }
   return charges;
 };
+
+export const blankRate = { rate: 'Shipment', units: 1 };
+
+/**
+ * Checks that all route components are present in the movement object.
+ * @param route
+ * @param movement
+ * @returns {boolean}
+ */
+export const hasApplicableRoute = (route = [], movement = {}) => {
+  let res = true;
+  route.forEach((component) => {
+    if (!movement[component]) {
+      res = false;
+    }
+  });
+  return res;
+};
+
+export const getSellRate = (charge = {}, sellRates, movement) => {
+  if (charge.chargeCode && sellRates && sellRates[charge.chargeCode]) {
+    const chargeCodeRates = sellRates[charge.chargeCode];
+    // Does the movement have the route required for the charge applicability?
+    if (hasApplicableRoute(charge.route, movement)) {
+      // Is there a rate for the first country in the route?
+      const firstCountry = movement[charge.route[0]].slice(0, 2);
+      if (chargeCodeRates.country && chargeCodeRates.country[firstCountry]) {
+        return chargeCodeRates.country[firstCountry];
+      }
+    }
+
+    // Does the global rate exist?
+    if (sellRates[charge.chargeCode].global) {
+      return sellRates[charge.chargeCode].global;
+    }
+  }
+  return blankRate;
+};

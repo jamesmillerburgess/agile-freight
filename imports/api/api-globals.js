@@ -27,8 +27,16 @@ export const APIGlobals = {
 
   // DEFAULT CHARGES
   defaultCollectionCharges: [
-    { name: 'Collection', group: 'Origin', code: 'COL' },
-    { name: 'Fuel Surcharge', group: 'Origin' },
+    {
+      name: 'Collection',
+      group: 'Origin',
+      chargeCode: 'COL',
+      route: ['Receipt', 'Port Of Loading'],
+    },
+    {
+      name: 'Fuel Surcharge',
+      group: 'Origin',
+    },
   ],
 
   defaultInternationalFreightCharges: [
