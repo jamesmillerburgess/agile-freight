@@ -15,6 +15,7 @@ import { quotePropTypes } from '../objects/quotePropTypes';
 import { APIGlobals } from '../../api/api-globals';
 import {
   getDefaultMovementCharges,
+  getApplicableSellRates,
 }
   from '../../api/charges/chargeDefaultUtils';
 
@@ -34,14 +35,36 @@ class EditQuoteHeader extends React.Component {
 
   getRates() {
     const charges = getDefaultMovementCharges(this.props.quote.movement);
-    const chargeLines = charges.map(charge =>
-      ({
-        ...charge,
-        id: new Mongo.ObjectID()._str,
-        rate: 'Shipment',
-        units: 1,
-        unitPriceCurrency: this.props.quote.charges.currency,
-      }),
+    const chargeLines = charges.map(
+      (charge) => {
+        const applicableSellRates = getApplicableSellRates(
+          charge,
+          APIGlobals.sellRates,
+          {
+            supplier: 'MAEU',
+            receipt: 'USMIA',
+            departure: 'USTPA',
+            arrival: 'CNSHA',
+            delivery: 'CNPNY',
+          },
+        );
+        let sellRate = {};
+        let selectedRate = '';
+        if (applicableSellRates.suggested) {
+          sellRate = applicableSellRates[applicableSellRates.suggested];
+          selectedRate = applicableSellRates.suggested;
+        } else {
+          sellRate.unitPriceCurrency = this.props.quote.charges.currency;
+          selectedRate = 'custom';
+        }
+        return {
+          id: new Mongo.ObjectID()._str,
+          ...charge,
+          ...sellRate,
+          applicableSellRates,
+          selectedRate,
+        };
+      },
     );
     Meteor.call(
       'quote.save',

@@ -1,19 +1,109 @@
 export const APIGlobals = {
+  // SIMPLE SELL RATES
+  sellRates: {
+    ITP: {
+      global: {
+        rate: 'Mile',
+        unitPrice: 0.5,
+        unitPriceCurrency: 'USD',
+      },
+      country: {
+        USUS: {
+          rate: 'Mile',
+          unitPrice: 0.25,
+          unitPriceCurrency: 'USD',
+        },
+        CNCN: {
+          rate: 'KM',
+          unitPrice: 7.2,
+          unitPriceCurrency: 'CNY',
+        },
+      },
+    },
+    THC: {
+      location: {
+        USTPA: {
+          rate: 'TEU',
+          unitPrice: 250,
+          unitPriceCurrency: 'USD',
+        },
+        CNSHA: {
+          rate: 'TEU',
+          unitPrice: 1230,
+          unitPriceCurrency: 'CNY',
+        },
+      },
+    },
+    FSC: {
+      country: {
+        USUS: {
+          rate: 'Mile',
+          unitPrice: 0.75,
+          unitPriceCurrency: 'USD',
+        },
+      },
+    },
+    IFR: {
+      location: {
+        USTPACNSHA: {
+          rate: 'TEU',
+          unitPrice: 550,
+          unitPriceCurrency: 'USD',
+        },
+      },
+    },
+  },
+
   // DEFAULT CHARGES
   defaultCollectionCharges: [
-    { name: 'Collection', group: 'Origin' },
-    { name: 'Fuel Surcharge', group: 'Origin' },
+    {
+      name: 'Inland Transport',
+      group: 'Origin',
+      chargeCode: 'ITP',
+      route: ['receipt', 'departure'],
+    },
+    {
+      name: 'Fuel Surcharge',
+      group: 'Origin',
+      chargeCode: 'FSC',
+      route: ['receipt', 'departure'],
+    },
   ],
 
   defaultInternationalFreightCharges: [
-    { name: 'Terminal Handling Charge', group: 'Origin' },
-    { name: 'International Freight', group: 'International' },
-    { name: 'Terminal Handling Charge', group: 'Destination' },
+    {
+      name: 'Terminal Handling Charge',
+      group: 'Origin',
+      chargeCode: 'THC',
+      route: ['departure'],
+    },
+    {
+      name: 'International Freight',
+      group: 'International',
+      chargeCode: 'IFR',
+      route: ['departure', 'arrival'],
+    },
+    {
+      name: 'Terminal Handling Charge',
+      group: 'Destination',
+      chargeCode: 'THC',
+      route: ['arrival'],
+    },
   ],
 
   defaultDeliveryCharges: [
-    { name: 'Inland Transport', group: 'Destination' },
-    { name: 'Fuel Surcharge', group: 'Destination' },
+    {
+      name: 'Inland Transport',
+      group: 'Destination',
+      chargeCode: 'ITP',
+      route: ['arrival', 'delivery'],
+    },
+    {
+      name: 'Fuel Surcharge',
+      group: 'Destination',
+      chargeCode: 'FSC',
+      route: ['arrival', 'delivery'],
+    },
   ],
 
   incotermOptions: [

@@ -150,6 +150,11 @@ export const setChargeLineName = makeActionCreator(
   'id',
   'name',
 );
+export const setChargeLineSelectedRate = makeActionCreator(
+  ACTION_TYPES.SET_CHARGE_LINE_SELECTED_RATE,
+  'id',
+  'selectedRate',
+);
 export const setChargeLineRate = makeActionCreator(
   ACTION_TYPES.SET_CHARGE_LINE_RATE,
   'id',

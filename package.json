@@ -11,6 +11,7 @@
     "bcrypt": "^1.0.2",
     "chart.js": "^2.6.0",
     "core-js": "^2.4.1",
+    "enzyme": "^2.9.0",
     "meteor-node-stubs": "^0.2.11",
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
