@@ -58,6 +58,7 @@ class EditQuoteHeader extends React.Component {
           id: new Mongo.ObjectID()._str,
           ...charge,
           ...sellRate,
+          applicableSellRates,
         };
       },
     );
