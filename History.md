@@ -5,6 +5,7 @@
 * TODO: Sell rate fallback structure: Global => Country => Location
 * TODO: Rates also segregated by mode
 * TODO: Indicator in charge edit to show where rate default came from
+* TODO: Charges and rates are currently hard-coded – this will move to a database editor in a future release 
 
 # v0.7.0 – Charge Defaults
 
