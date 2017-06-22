@@ -1,6 +1,10 @@
 # v.NEXT
 
-# v0.8.0 – 
+# v0.8.0 – Simple Sell Rates
+
+* TODO: Sell rate fallback structure: Global => Country => Location
+* TODO: Rates also segregated by mode
+* TODO: Indicator in charge edit to show where rate default came from
 
 # v0.7.0 – Charge Defaults
 
