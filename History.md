@@ -1,11 +1,15 @@
 # v.NEXT
 
+* TODO: Rates segregated by mode
+* TODO: Weight breaks
+* TODO: Last quote rate
+* TODO: Brokerage
+
 # v0.8.0 – Simple Sell Rates
 
-* TODO: Sell rate fallback structure: Global => Country => Location
-* TODO: Rates also segregated by mode
-* TODO: Indicator in charge edit to show where rate default came from
-* TODO: Charges and rates are currently hard-coded – this will move to a database editor in a future release 
+* Sell rate applicability fallback structure: Supplier => Location => Country => Global
+* Ability to change selected rate among applicable rates in charge edit
+* Charges and rates are currently hard-coded – this will move to a database editor in a future release 
 
 # v0.7.0 – Charge Defaults
 
