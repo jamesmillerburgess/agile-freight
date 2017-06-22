@@ -37,17 +37,21 @@ class EditQuoteHeader extends React.Component {
     const charges = getDefaultMovementCharges(this.props.quote.movement);
     const chargeLines = charges.map(
       (charge) => {
-        const sellRate = getApplicableSellRates(
+        const applicableSellRates = getApplicableSellRates(
           charge,
           APIGlobals.sellRates,
           {
+            supplier: 'MAEU',
             receipt: 'USMIA',
             departure: 'USTPA',
             arrival: 'CNSHA',
             delivery: 'CNPNY',
           },
         );
-        if (!sellRate.unitPriceCurrency) {
+        let sellRate = {};
+        if (applicableSellRates.suggested) {
+          sellRate = applicableSellRates[applicableSellRates.suggested];
+        } else {
           sellRate.unitPriceCurrency = this.props.quote.charges.currency;
         }
         return {
