@@ -12,6 +12,7 @@ const EditQuoteChargeGroup = (props) => {
     {
       removeChargeLine,
       setChargeLineName,
+      setChargeLineSelectedRate,
       setChargeLineRate,
       setChargeLineUnits,
       setChargeLineUnitPrice,
@@ -47,8 +48,13 @@ const EditQuoteChargeGroup = (props) => {
           <td className="rate-basis-column">
             <div className="horizontal-input-group">
               <RateField
-                value={chargeLine.applicableSellRates ? chargeLine.applicableSellRates.suggested : ''}
+                value={chargeLine.selectedRate}
                 rates={chargeLine.applicableSellRates}
+                onChange={
+                  selectedValue => setChargeLineSelectedRate(
+                    chargeLine,
+                    selectedValue.value,
+                  )}
               />
               <Select
                 className="input-group-last addon rate-basis"

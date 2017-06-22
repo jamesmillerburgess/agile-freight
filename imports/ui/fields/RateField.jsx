@@ -47,6 +47,7 @@ const RateField = (props) => {
       optionRenderer={optionRenderer}
       valueRenderer={valueRenderer}
       placeholder=""
+      onChange={props.onChange}
     />
   );
 };

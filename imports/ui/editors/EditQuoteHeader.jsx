@@ -49,16 +49,20 @@ class EditQuoteHeader extends React.Component {
           },
         );
         let sellRate = {};
+        let selectedRate = '';
         if (applicableSellRates.suggested) {
           sellRate = applicableSellRates[applicableSellRates.suggested];
+          selectedRate = applicableSellRates.suggested;
         } else {
           sellRate.unitPriceCurrency = this.props.quote.charges.currency;
+          selectedRate = 'custom';
         }
         return {
           id: new Mongo.ObjectID()._str,
           ...charge,
           ...sellRate,
           applicableSellRates,
+          selectedRate,
         };
       },
     );
