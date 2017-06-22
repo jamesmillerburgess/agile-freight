@@ -15,7 +15,7 @@ import { quotePropTypes } from '../objects/quotePropTypes';
 import { APIGlobals } from '../../api/api-globals';
 import {
   getDefaultMovementCharges,
-  getSellRate,
+  getApplicableSellRates,
 }
   from '../../api/charges/chargeDefaultUtils';
 
@@ -37,15 +37,19 @@ class EditQuoteHeader extends React.Component {
     const charges = getDefaultMovementCharges(this.props.quote.movement);
     const chargeLines = charges.map(
       (charge) => {
-        const sellRate = getSellRate(
+        const sellRate = getApplicableSellRates(
           charge,
           APIGlobals.sellRates,
-          { receipt: 'USMIA', departure: 'USTPA' },
+          {
+            receipt: 'USMIA',
+            departure: 'USTPA',
+            arrival: 'CNSHA',
+            delivery: 'CNPNY',
+          },
         );
         if (!sellRate.unitPriceCurrency) {
           sellRate.unitPriceCurrency = this.props.quote.charges.currency;
         }
-        console.log(sellRate);
         return {
           id: new Mongo.ObjectID()._str,
           ...charge,

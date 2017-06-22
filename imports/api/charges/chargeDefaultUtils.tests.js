@@ -336,9 +336,9 @@ if (Meteor.isClient) {
       });
     });
 
-    describe('getSellRate function', () => {
-      const { getSellRate, blankRate } = chargeDefaultUtils;
-      it('returns a blank rate if there are no applicable rates', () => {
+    describe('getApplicableSellRates function', () => {
+      const { getApplicableSellRates } = chargeDefaultUtils;
+      it('returns an empty object if there are no applicable rates', () => {
         const charge = {
           name: 'Delivery',
           group: 'Destination',
@@ -350,11 +350,11 @@ if (Meteor.isClient) {
             global: {
               rate: 'Mile',
               unitPrice: 0.5,
-              currency: 'USD',
+              unitPriceCurrency: 'USD',
             },
           },
         };
-        getSellRate(charge, sellRates).should.eql(blankRate);
+        getApplicableSellRates(charge, sellRates).should.eql({});
       });
 
       it('returns the global rate if it the only rate applicable', () => {
@@ -367,10 +367,12 @@ if (Meteor.isClient) {
         const globalRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          currency: 'USD',
+          unitPriceCurrency: 'USD',
         };
         const sellRates = { COL: { global: globalRate } };
-        getSellRate(charge, sellRates).should.eql(globalRate);
+        const applicableSellRates = getApplicableSellRates(charge, sellRates);
+        applicableSellRates.global.should.equal(globalRate);
+        applicableSellRates.suggested.should.equal('global');
       });
 
       it('returns the country rate if it is the only rate applicable', () => {
@@ -383,18 +385,24 @@ if (Meteor.isClient) {
         const countryRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          currency: 'USD',
+          unitPriceCurrency: 'USD',
         };
         const movement = {
           receipt: 'USMIA',
           departure: 'USTPA',
         };
         const sellRates = { COL: { country: { USUS: countryRate } } };
-        getSellRate(charge, sellRates, movement).should.eql(countryRate);
+        const applicableSellRates = getApplicableSellRates(
+          charge,
+          sellRates,
+          movement,
+        );
+        applicableSellRates.country.should.equal(countryRate);
+        applicableSellRates.suggested.should.equal('country');
       });
 
-      it('returns the country rate if both a country and global rate are ' +
-         'applicable', () => {
+      it('suggests the country rate and returns both rates if both a country ' +
+         'and global rate are applicable', () => {
         const charge = {
           name: 'Collection',
           group: 'Origin',
@@ -404,12 +412,12 @@ if (Meteor.isClient) {
         const globalRate = {
           rate: 'Mile',
           unitPrice: 1,
-          currency: 'USD',
+          unitPriceCurrency: 'USD',
         };
         const countryRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          currency: 'USD',
+          unitPriceCurrency: 'USD',
         };
         const movement = {
           receipt: 'USMIA',
@@ -421,7 +429,14 @@ if (Meteor.isClient) {
             country: { USUS: countryRate },
           },
         };
-        getSellRate(charge, sellRates, movement).should.eql(countryRate);
+        const applicableSellRates = getApplicableSellRates(
+          charge,
+          sellRates,
+          movement,
+        );
+        applicableSellRates.global.should.equal(globalRate);
+        applicableSellRates.country.should.equal(countryRate);
+        applicableSellRates.suggested.should.equal('country');
       });
 
       it('returns the location rate if it is the only rate applicable', () => {
@@ -434,18 +449,24 @@ if (Meteor.isClient) {
         const locationRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          currency: 'USD',
+          unitPriceCurrency: 'USD',
         };
         const movement = {
           receipt: 'USMIA',
           departure: 'USTPA',
         };
         const sellRates = { COL: { location: { USMIAUSTPA: locationRate } } };
-        getSellRate(charge, sellRates, movement).should.eql(locationRate);
+        const applicableSellRates = getApplicableSellRates(
+          charge,
+          sellRates,
+          movement,
+        );
+        applicableSellRates.location.should.equal(locationRate);
+        applicableSellRates.suggested.should.equal('location');
       });
 
-      it('returns the location rate if location, country, or global rates ' +
-         'are applicable', () => {
+      it('suggests the location rate and returns all three if location, ' +
+         'country, and global rates are applicable', () => {
         const charge = {
           name: 'Collection',
           group: 'Origin',
@@ -455,17 +476,17 @@ if (Meteor.isClient) {
         const globalRate = {
           rate: 'Mile',
           unitPrice: 1,
-          currency: 'USD',
+          unitPriceCurrency: 'USD',
         };
         const countryRate = {
           rate: 'Mile',
           unitPrice: 0.75,
-          currency: 'USD',
+          unitPriceCurrency: 'USD',
         };
         const locationRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          currency: 'USD',
+          unitPriceCurrency: 'USD',
         };
         const movement = {
           receipt: 'USMIA',
@@ -478,7 +499,95 @@ if (Meteor.isClient) {
             location: { USMIAUSTPA: locationRate },
           },
         };
-        getSellRate(charge, sellRates, movement).should.eql(locationRate);
+        const applicableSellRates = getApplicableSellRates(
+          charge,
+          sellRates,
+          movement,
+        );
+        applicableSellRates.location.should.equal(locationRate);
+        applicableSellRates.country.should.equal(countryRate);
+        applicableSellRates.global.should.equal(globalRate);
+        applicableSellRates.suggested.should.equal('location');
+      });
+
+      it('suggests the supplier rate if it is the only rate applicable', () => {
+        const charge = {
+          name: 'Collection',
+          group: 'Origin',
+          chargeCode: 'COL',
+          route: ['receipt', 'departure'],
+        };
+        const supplierRate = {
+          rate: 'Mile',
+          unitPrice: 0.5,
+          unitPriceCurrency: 'USD',
+        };
+        const movement = {
+          supplier: 'MAEU',
+          receipt: 'USMIA',
+          departure: 'USTPA',
+        };
+        const sellRates = { COL: { supplier: { MAEUUSMIAUSTPA: supplierRate } } };
+        const applicableSellRates = getApplicableSellRates(
+          charge,
+          sellRates,
+          movement,
+        );
+        applicableSellRates.supplier.should.equal(supplierRate);
+        applicableSellRates.suggested.should.equal('supplier');
+      });
+
+      it('suggests the supplier rate and returns all four if supplier, ' +
+         'location, country, and global rates are applicable', () => {
+        const charge = {
+          name: 'Collection',
+          group: 'Origin',
+          chargeCode: 'COL',
+          route: ['receipt', 'departure'],
+        };
+        const globalRate = {
+          rate: 'Mile',
+          unitPrice: 1,
+          unitPriceCurrency: 'USD',
+        };
+        const countryRate = {
+          rate: 'Mile',
+          unitPrice: 0.75,
+          unitPriceCurrency: 'USD',
+        };
+        const locationRate = {
+          rate: 'Mile',
+          unitPrice: 0.5,
+          unitPriceCurrency: 'USD',
+        };
+        const supplierRate = {
+          rate: 'Mile',
+          unitPrice: 0.25,
+          unitPriceCurrency: 'USD',
+        };
+        const movement = {
+          supplier: 'MAEU',
+          receipt: 'USMIA',
+          departure: 'USTPA',
+        };
+        const sellRates = {
+          COL: {
+            global: globalRate,
+            country: { USUS: countryRate },
+            location: { USMIAUSTPA: locationRate },
+            supplier: { MAEUUSMIAUSTPA: supplierRate },
+          },
+        };
+        const applicableSellRates = getApplicableSellRates(
+          charge,
+          sellRates,
+          movement,
+        );
+        applicableSellRates.supplier.should.equal(supplierRate);
+        applicableSellRates.location.should.equal(locationRate);
+        applicableSellRates.country.should.equal(countryRate);
+        applicableSellRates.global.should.equal(globalRate);
+        applicableSellRates.suggested.should.equal('supplier');
       });
     });
   });

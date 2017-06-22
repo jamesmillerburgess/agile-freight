@@ -1,25 +1,54 @@
 export const APIGlobals = {
   // SIMPLE SELL RATES
   sellRates: {
-    COL: {
+    ITP: {
       global: {
         rate: 'Mile',
-        unit: 50,
         unitPrice: 0.5,
         unitPriceCurrency: 'USD',
       },
       country: {
         USUS: {
           rate: 'Mile',
-          unit: 50,
           unitPrice: 0.25,
           unitPriceCurrency: 'USD',
         },
         CNCN: {
           rate: 'KM',
-          unit: 75,
           unitPrice: 7.2,
-          unitPriceCurrency: 'RMB',
+          unitPriceCurrency: 'CNY',
+        },
+      },
+    },
+    THC: {
+      location: {
+        USTPA: {
+          rate: 'TEU',
+          unitPrice: 250,
+          unitPriceCurrency: 'USD',
+        },
+        CNSHA: {
+          rate: 'TEU',
+          unitPrice: 1230,
+          unitPriceCurrency: 'CNY',
+        },
+      },
+    },
+    FSC: {
+      country: {
+        USUS: {
+          rate: 'Mile',
+          unitPrice: 0.75,
+          unitPriceCurrency: 'USD',
+        },
+      },
+    },
+    IFR: {
+      location: {
+        USTPACNSHA: {
+          rate: 'TEU',
+          unitPrice: 550,
+          unitPriceCurrency: 'USD',
         },
       },
     },
@@ -28,14 +57,15 @@ export const APIGlobals = {
   // DEFAULT CHARGES
   defaultCollectionCharges: [
     {
-      name: 'Collection',
+      name: 'Inland Transport',
       group: 'Origin',
-      chargeCode: 'COL',
+      chargeCode: 'ITP',
       route: ['receipt', 'departure'],
     },
     {
       name: 'Fuel Surcharge',
       group: 'Origin',
+      chargeCode: 'FSC',
       route: ['receipt', 'departure'],
     },
   ],
@@ -44,16 +74,19 @@ export const APIGlobals = {
     {
       name: 'Terminal Handling Charge',
       group: 'Origin',
+      chargeCode: 'THC',
       route: ['departure'],
     },
     {
       name: 'International Freight',
       group: 'International',
+      chargeCode: 'IFR',
       route: ['departure', 'arrival'],
     },
     {
       name: 'Terminal Handling Charge',
       group: 'Destination',
+      chargeCode: 'THC',
       route: ['arrival'],
     },
   ],
@@ -62,11 +95,13 @@ export const APIGlobals = {
     {
       name: 'Inland Transport',
       group: 'Destination',
+      chargeCode: 'ITP',
       route: ['arrival', 'delivery'],
     },
     {
       name: 'Fuel Surcharge',
       group: 'Destination',
+      chargeCode: 'FSC',
       route: ['arrival', 'delivery'],
     },
   ],

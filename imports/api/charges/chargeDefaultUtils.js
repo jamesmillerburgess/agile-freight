@@ -130,8 +130,6 @@ export const getDefaultMovementCharges = (movement) => {
   return charges;
 };
 
-export const blankRate = { rate: 'Shipment', unitPrice: 0 };
-
 /**
  * Checks that all route components are present in the movement object.
  * @param route
@@ -146,6 +144,28 @@ export const hasApplicableRoute = (route = [], movement = {}) => {
     }
   });
   return res;
+};
+
+/**
+ * Compiles supplier+location-level route and checks for an applicable rate.
+ * @param route
+ * @param supplierSellRates
+ * @param movement
+ * @returns {*}
+ */
+export const getSupplierLevelRate = (
+  route = [],
+  supplierSellRates = {},
+  movement = {},
+) => {
+  const supplierRoute = movement.supplier +
+                        route.reduce(
+                          (acc, component) => acc + movement[component], '',
+                        );
+  if (supplierSellRates[supplierRoute]) {
+    return supplierSellRates[supplierRoute];
+  }
+  return null;
 };
 
 /**
@@ -190,11 +210,33 @@ export const getCountryLevelRate = (
   return null;
 };
 
-export const getSellRate = (charge = {}, sellRates, movement) => {
+/**
+ * Given a charge, a set of sell rates, and the movement of the quote, return a
+ * list of applicable sell rates, along with a suggested rate.
+ * @param charge
+ * @param sellRates
+ * @param movement
+ * @returns {*}
+ */
+export const getApplicableSellRates = (charge = {}, sellRates, movement) => {
+  const applicableSellRates = {};
   if (charge.chargeCode && sellRates && sellRates[charge.chargeCode]) {
     const chargeCodeRates = sellRates[charge.chargeCode];
     // Does the movement have the route required for the charge applicability?
     if (hasApplicableRoute(charge.route, movement)) {
+      // Is there a rate for the supplier+location-level route?
+      const supplierLevelRate = getSupplierLevelRate(
+        charge.route,
+        chargeCodeRates.supplier,
+        movement,
+      );
+      if (supplierLevelRate) {
+        applicableSellRates.supplier = supplierLevelRate;
+        if (!applicableSellRates.suggested) {
+          applicableSellRates.suggested = 'supplier';
+        }
+      }
+
       // Is there a rate for the location-level route?
       const locationLevelRate = getLocationLevelRate(
         charge.route,
@@ -202,7 +244,10 @@ export const getSellRate = (charge = {}, sellRates, movement) => {
         movement,
       );
       if (locationLevelRate) {
-        return locationLevelRate;
+        applicableSellRates.location = locationLevelRate;
+        if (!applicableSellRates.suggested) {
+          applicableSellRates.suggested = 'location';
+        }
       }
 
       // Is there a rate for the country-level route?
@@ -212,14 +257,22 @@ export const getSellRate = (charge = {}, sellRates, movement) => {
         movement,
       );
       if (countryLevelRate) {
-        return countryLevelRate;
+        applicableSellRates.country = countryLevelRate;
+        if (!applicableSellRates.suggested) {
+          applicableSellRates.suggested = 'country';
+        }
       }
     }
 
     // Does the global rate exist?
-    if (sellRates[charge.chargeCode].global) {
-      return sellRates[charge.chargeCode].global;
+    const globalLevelRate = sellRates[charge.chargeCode].global;
+    if (globalLevelRate) {
+      applicableSellRates.global = globalLevelRate;
+      if (!applicableSellRates.suggested) {
+        applicableSellRates.suggested = 'global';
+      }
     }
   }
-  return blankRate;
+
+  return applicableSellRates;
 };
