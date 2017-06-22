@@ -1,7 +1,33 @@
 export const APIGlobals = {
+  // SIMPLE SELL RATES
+  sellRates: {
+    COL: {
+      global: {
+        rate: 'Mile',
+        unit: 50,
+        unitPrice: 0.5,
+        currency: 'USD',
+      },
+      country: {
+        US: {
+          rate: 'Mile',
+          unit: 50,
+          unitPrice: 0.25,
+          currency: 'USD',
+        },
+        CN: {
+          rate: 'KM',
+          unit: 75,
+          unitPrice: 7.2,
+          currency: 'RMB',
+        },
+      },
+    },
+  },
+
   // DEFAULT CHARGES
   defaultCollectionCharges: [
-    { name: 'Collection', group: 'Origin' },
+    { name: 'Collection', group: 'Origin', code: 'COL' },
     { name: 'Fuel Surcharge', group: 'Origin' },
   ],
 
