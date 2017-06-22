@@ -1,0 +1,50 @@
+@import 'styleGlobals';
+
+.rate-field {
+  width: 75px !important;
+  .Select-control {
+    background-color: $input-addon-background-color !important;
+    border-right: 0;
+  }
+  .Select-menu-outer {
+    width: 353.5px;
+  }
+  .Select-menu {
+    overflow-y: hidden;
+  }
+  .rate-option {
+    display: flex;
+    flex-direction: row;
+  }
+  .rate-option-label {
+    width: 80px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+  .rate-option-value {
+
+  }
+  .rate-option-na {
+    color: rgba($text-color, $very-high-alpha);
+  }
+
+  .Select-value {
+    padding: 0 0 0 2px !important;
+  }
+
+  .Select-value-label {
+    text-align: center;
+  }
+  
+  .Select-value-label .rate-option-label {
+    line-height: 36px;
+    width: auto;
+  }
+}
+
+
+
+.rate-basis {
+  width: calc(100% - 54px) !important;
+}
