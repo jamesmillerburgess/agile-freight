@@ -18,7 +18,10 @@ const EditQuoteChargeGroup = (props) => {
     } = props;
 
   const getSubtotalAmount = () =>
-    props.chargeLines.reduce((acc, chargeLine) => acc + chargeLine.finalAmount, 0);
+    props.chargeLines.reduce(
+      (acc, chargeLine) => acc + chargeLine.finalAmount,
+      0,
+    );
 
   return (
     <tbody className="striped-data">
@@ -53,8 +56,13 @@ const EditQuoteChargeGroup = (props) => {
                 { value: 'Package', label: 'Package' },
                 { value: 'Declaration', label: 'Declaration' },
                 { value: 'HAWB', label: 'HAWB' },
+                { value: 'KM', label: 'KM' },
+                { value: 'Mile', label: 'Mile' },
               ]}
-              onChange={selectedValue => setChargeLineRate(chargeLine.id, selectedValue.value)}
+              onChange={selectedValue => setChargeLineRate(
+                chargeLine.id,
+                selectedValue.value,
+              )}
               arrowRenderer={() => false}
               searchable
               clearable={false}
@@ -76,16 +84,23 @@ const EditQuoteChargeGroup = (props) => {
                 type="number"
                 placeholder=""
                 value={chargeLine.unitPrice || ''}
-                onChange={e => setChargeLineUnitPrice(chargeLine.id, +e.target.value)}
+                onChange={e => setChargeLineUnitPrice(
+                  chargeLine.id,
+                  +e.target.value,
+                )}
               />
               <CurrencyField
                 className="input-group-last addon"
                 value={chargeLine.unitPriceCurrency}
-                onChange={e => setChargeLineUnitPriceCurrency(chargeLine.id, e.value)}
+                onChange={e => setChargeLineUnitPriceCurrency(
+                  chargeLine.id,
+                  e.value,
+                )}
               />
             </div>
           </td>
-          <td className="numeric-label amount-local-column">{currencyFormat(chargeLine.amount)} {chargeLine.unitPriceCurrency}</td>
+          <td className="numeric-label amount-local-column">{currencyFormat(
+            chargeLine.amount)} {chargeLine.unitPriceCurrency}</td>
           <td className="numeric-label amount-final-column">
             {currencyFormat(chargeLine.finalAmount)} {props.currency}
           </td>
@@ -93,16 +108,16 @@ const EditQuoteChargeGroup = (props) => {
       ))}
       {
         props.chargeLines.length > 0 ?
-          (
-            <tr>
-              <td colSpan="5" />
-              <td className="numeric-label">SUBTOTAL</td>
-              <td className="numeric-label">
-                {currencyFormat(getSubtotalAmount())} {props.currency}
-              </td>
-            </tr>
-          ) :
-          null
+        (
+          <tr>
+            <td colSpan="5" />
+            <td className="numeric-label">SUBTOTAL</td>
+            <td className="numeric-label">
+              {currencyFormat(getSubtotalAmount())} {props.currency}
+            </td>
+          </tr>
+        ) :
+        null
       }
     </tbody>
   );

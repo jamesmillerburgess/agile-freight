@@ -6,20 +6,20 @@ export const APIGlobals = {
         rate: 'Mile',
         unit: 50,
         unitPrice: 0.5,
-        currency: 'USD',
+        unitPriceCurrency: 'USD',
       },
       country: {
-        US: {
+        USUS: {
           rate: 'Mile',
           unit: 50,
           unitPrice: 0.25,
-          currency: 'USD',
+          unitPriceCurrency: 'USD',
         },
-        CN: {
+        CNCN: {
           rate: 'KM',
           unit: 75,
           unitPrice: 7.2,
-          currency: 'RMB',
+          unitPriceCurrency: 'RMB',
         },
       },
     },
