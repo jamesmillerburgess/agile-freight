@@ -1,5 +1,7 @@
 # v.NEXT
 
+# v0.9.0 – Simple Sell Rates
+
 * TODO: Rates segregated by mode
 * TODO: Weight breaks
 * TODO: Last quote rate
