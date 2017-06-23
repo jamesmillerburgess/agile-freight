@@ -271,25 +271,25 @@ if (Meteor.isClient) {
         chargeLines(stateBefore, action)[0].selectedRate.should.equal('custom');
       });
 
-      it('changes the rate at at the charge line with the specified id', () => {
-        const stateBefore = [{ id: 0, rate: 'a' }, { id: 1, rate: 'c' }];
+      it('changes the basis at at the charge line with the specified id', () => {
+        const stateBefore = [{ id: 0, basis: 'a' }, { id: 1, basis: 'c' }];
         const action = {
           type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
           id: 0,
-          rate: 'b',
+          basis: 'b',
         };
         deepFreeze(stateBefore);
 
-        chargeLines(stateBefore, action)[0].rate.should.equal('b');
-        chargeLines(stateBefore, action)[1].rate.should.equal('c');
+        chargeLines(stateBefore, action)[0].basis.should.equal('b');
+        chargeLines(stateBefore, action)[1].basis.should.equal('c');
       });
 
-      it('sets the units to 1 when the rate is changed to \'Shipment\'', () => {
-        const stateBefore = [{ id: 0, rate: 'a' }];
+      it('sets the units to 1 when the basis is changed to \'Shipment\'', () => {
+        const stateBefore = [{ id: 0, basis: 'a' }];
         const action = {
           type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
           id: 0,
-          rate: 'Shipment',
+          basis: 'Shipment',
         };
         deepFreeze(stateBefore);
 
@@ -297,13 +297,13 @@ if (Meteor.isClient) {
       });
 
       it(
-        'sets the units to the total KG when the rate is changed to \'KG\'',
+        'sets the units to the total KG when the basis is changed to \'KG\'',
         () => {
           const stateBefore = [{ id: 0, rate: 'a' }];
           const action = {
             type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
-            rate: 'KG',
+            basis: 'KG',
           };
           const quoteState = { cargo: { totalWeight: 10, weightUOM: 'kg' } };
           deepFreeze(stateBefore);
@@ -318,13 +318,13 @@ if (Meteor.isClient) {
       );
 
       it(
-        'sets the units to the total CBM when the rate is changed to \'CBM\'',
+        'sets the units to the total CBM when the basis is changed to \'CBM\'',
         () => {
-          const stateBefore = [{ id: 0, rate: 'a' }];
+          const stateBefore = [{ id: 0, basis: 'a' }];
           const action = {
             type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
-            rate: 'CBM',
+            basis: 'CBM',
           };
           const quoteState = { cargo: { totalVolume: 10, weightUOM: 'cbm' } };
           deepFreeze(stateBefore);
@@ -339,13 +339,13 @@ if (Meteor.isClient) {
       );
 
       it(
-        'sets the units to the total containers when the rate is changed to \'Container\'',
+        'sets the units to the total containers when the basis is changed to \'Container\'',
         () => {
-          const stateBefore = [{ id: 0, rate: 'a' }];
+          const stateBefore = [{ id: 0, basis: 'a' }];
           const action = {
             type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
-            rate: 'Container',
+            basis: 'Container',
           };
           const quoteState = { cargo: { totalContainers: 10 } };
           deepFreeze(stateBefore);
@@ -360,13 +360,13 @@ if (Meteor.isClient) {
       );
 
       it(
-        'sets the units to the total TEU when the rate is changed to \'TEU\'',
+        'sets the units to the total TEU when the basis is changed to \'TEU\'',
         () => {
-          const stateBefore = [{ id: 0, rate: 'a' }];
+          const stateBefore = [{ id: 0, basis: 'a' }];
           const action = {
             type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
-            rate: 'TEU',
+            basis: 'TEU',
           };
           const quoteState = { cargo: { totalTEU: 10 } };
           deepFreeze(stateBefore);
@@ -381,13 +381,13 @@ if (Meteor.isClient) {
       );
 
       it(
-        'sets the units to the total packages when the rate is changed to \'Package\'',
+        'sets the units to the total packages when the basis is changed to \'Package\'',
         () => {
-          const stateBefore = [{ id: 0, rate: 'a' }];
+          const stateBefore = [{ id: 0, basis: 'a' }];
           const action = {
             type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
-            rate: 'Package',
+            basis: 'Package',
           };
           const quoteState = { cargo: { totalPackages: 10 } };
           deepFreeze(stateBefore);
