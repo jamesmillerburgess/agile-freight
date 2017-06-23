@@ -40,7 +40,7 @@ var db = connect('localhost:3001/meteor');
 
 db.Rates.remove({});
 
-db.collection.createIndex(
+db.Rates.createIndex(
   { type: 1, chargeCode: 1, level: 1, route: 1 },
   { unique: true }
 );
