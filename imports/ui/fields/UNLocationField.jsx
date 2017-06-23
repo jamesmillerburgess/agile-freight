@@ -5,9 +5,10 @@ import { Meteor } from 'meteor/meteor';
 
 const UNLocationField = (props) => {
   const getOptions = (input, cb) => {
+    const { value, locations, airports, seaports } = props;
     Meteor.call(
       'unlocations.search',
-      { search: input, id: props.value },
+      { search: input, id: value, locations, airports, seaports },
       (err, res) => {
         const options = res.map(opt => ({
           value: opt._id,
@@ -41,7 +42,6 @@ const UNLocationField = (props) => {
     <Select.Async
       value={props.value}
       loadOptions={getOptions}
-      cache={false}
       filterOption={() => true}
       optionRenderer={locationRenderer}
       valueRenderer={locationRenderer}
@@ -55,10 +55,16 @@ const UNLocationField = (props) => {
 UNLocationField.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  locations: PropTypes.bool,
+  airports: PropTypes.bool,
+  seaports: PropTypes.bool,
 };
 
 UNLocationField.defaultProps = {
   value: '',
+  locations: false,
+  airports: false,
+  seaports: false,
 };
 
 export default UNLocationField;

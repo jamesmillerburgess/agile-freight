@@ -585,6 +585,7 @@ class EditQuoteHeader extends React.Component {
                   </div>
                   <UNLocationField
                     value={this.props.quote.movement.pickup.location}
+                    locations
                     onChange={(selectedValue) => {
                       this.props.dispatchers
                           .onChangePickupLocation(selectedValue.value);
@@ -611,6 +612,8 @@ class EditQuoteHeader extends React.Component {
                   </div>
                   <UNLocationField
                     value={this.props.quote.movement.pickup.location}
+                    airports
+                    seaports
                     onChange={(selectedValue) => {
                       this.props.dispatchers
                           .onChangePickupLocation(selectedValue.value);
@@ -637,6 +640,8 @@ class EditQuoteHeader extends React.Component {
                   </div>
                   <UNLocationField
                     value={this.props.quote.movement.pickup.location}
+                    airports
+                    seaports
                     onChange={(selectedValue) => {
                       this.props.dispatchers
                           .onChangePickupLocation(selectedValue.value);
@@ -663,6 +668,7 @@ class EditQuoteHeader extends React.Component {
                   </div>
                   <UNLocationField
                     value={this.props.quote.movement.delivery.location}
+                    locations
                     onChange={(selectedValue) => {
                       this.props.dispatchers
                           .onChangeDeliveryLocation(selectedValue.value);

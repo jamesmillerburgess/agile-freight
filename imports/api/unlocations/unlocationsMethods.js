@@ -12,6 +12,9 @@ Meteor.methods({
       country: Match.Maybe(String),
       search: Match.Maybe(String),
       id: Match.Maybe(String),
+      locations: Boolean,
+      airports: Boolean,
+      seaports: Boolean,
     });
 
     if (!options.search && options.id) {
@@ -25,19 +28,34 @@ Meteor.methods({
       // countryCode: options.country,
       search: { $regex: buildSearchRegExp(options.search) },
     };
-    return [
-      ...UNLocations.find(
-        { ...query, isSeaport: false, isAirport: false },
-        { limit: 10 },
-      ).fetch(),
-      ...UNLocations.find(
-        { ...query, isAirport: true },
-        { limit: 10 },
-      ).fetch(),
-      ...UNLocations.find(
-        { ...query, isSeaport: true },
-        { limit: 10 },
-      ).fetch(),
-    ];
+    let results = [];
+    if (options.locations) {
+      results = [
+        ...results,
+        ...UNLocations.find(
+          { ...query, isSeaport: false, isAirport: false },
+          { limit: 10 },
+        ).fetch(),
+      ];
+    }
+    if (options.airports) {
+      results = [
+        ...results,
+        ...UNLocations.find(
+          { ...query, isAirport: true },
+          { limit: 10 },
+        ).fetch(),
+      ];
+    }
+    if (options.seaports) {
+      results = [
+        ...results,
+        ...UNLocations.find(
+          { ...query, isSeaport: true },
+          { limit: 10 },
+        ).fetch(),
+      ];
+    }
+    return results;
   },
 });
