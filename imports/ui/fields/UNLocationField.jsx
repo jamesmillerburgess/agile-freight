@@ -69,6 +69,7 @@ const UNLocationField = (props) => {
         valueRenderer={locationRenderer}
         onChange={unLocation => props.onChange(unLocation)}
         autoload
+        clearRenderer={() => null}
       />
     ) :
     (<Select disabled />)
