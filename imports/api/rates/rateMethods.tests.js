@@ -78,33 +78,6 @@ if (Meteor.isServer) {
           .equal('undefined');
       });
 
-      it('suggests custom when no rates are applicable', () => {
-        const rate = {
-          _id: 'a',
-          type: 'sell',
-          chargeCode: 'ITP',
-          level: 'global',
-          rate: {
-            basis: 'Mile',
-            unitPrice: 0.5,
-            currency: 'USD',
-          },
-        };
-        const charges = [
-          {
-            name: 'Inland Transport',
-            group: 'Origin',
-            chargeCode: 'COL',
-            route: ['receipt', 'departure'],
-          },
-        ];
-        Rates.insert(rate);
-        const result = Meteor.call('rates.getApplicableSellRates', charges);
-        result[0].suggested
-                 .should
-                 .equal('custom');
-      });
-
       it('returns global results regardless of specified route or ' +
          'supplier', () => {
         const rate = {
