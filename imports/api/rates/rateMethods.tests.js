@@ -29,15 +29,25 @@ if (Meteor.isServer) {
             currency: 'USD',
           },
         };
+        const charges = [
+          {
+            name: 'Inland Transport',
+            group: 'Origin',
+            chargeCode: 'ITP',
+            route: ['receipt', 'departure'],
+          },
+        ];
         Rates.insert(rate);
-        const options = { chargeCode: 'ITP' };
-        const result = Meteor.call('rates.getApplicableSellRates', options);
-        result.global
+        const result = Meteor.call('rates.getApplicableSellRates', charges);
+        result.length
               .should
-              .eql(rate);
-        result.suggested
-              .should
-              .equal('global');
+              .equal(1);
+        result[0].global
+                 .should
+                 .eql(rate);
+        result[0].suggested
+                 .should
+                 .equal('global');
       });
 
       it('does not return rates that do not match the specified ' +
@@ -53,10 +63,17 @@ if (Meteor.isServer) {
             currency: 'USD',
           },
         };
+        const charges = [
+          {
+            name: 'Inland Transport',
+            group: 'Origin',
+            chargeCode: 'COL',
+            route: ['receipt', 'departure'],
+          },
+        ];
         Rates.insert(rate);
-        const options = { chargeCode: 'COL' };
-        const result = Meteor.call('rates.getApplicableSellRates', options);
-        (typeof result.global)
+        const result = Meteor.call('rates.getApplicableSellRates', charges);
+        (typeof result[0].global)
           .should
           .equal('undefined');
       });
@@ -73,12 +90,19 @@ if (Meteor.isServer) {
             currency: 'USD',
           },
         };
+        const charges = [
+          {
+            name: 'Inland Transport',
+            group: 'Origin',
+            chargeCode: 'COL',
+            route: ['receipt', 'departure'],
+          },
+        ];
         Rates.insert(rate);
-        const options = { chargeCode: 'COL' };
-        const result = Meteor.call('rates.getApplicableSellRates', options);
-        result.suggested
-              .should
-              .equal('custom');
+        const result = Meteor.call('rates.getApplicableSellRates', charges);
+        result[0].suggested
+                 .should
+                 .equal('custom');
       });
 
       it('returns global results regardless of specified route or ' +
@@ -94,18 +118,32 @@ if (Meteor.isServer) {
             currency: 'USD',
           },
         };
-        Rates.insert(rate);
-        const options = {
-          chargeCode: 'ITP',
-          movement: { route: ['USMIA', 'USTPA'], supplier: 'MAEU' },
+        const charges = [
+          {
+            name: 'Inland Transport',
+            group: 'Origin',
+            chargeCode: 'ITP',
+            route: ['receipt', 'departure'],
+          },
+        ];
+        const movement = {
+          receipt: 'USMIA',
+          departure: 'USTPA',
+          arrival: 'CNSHA',
+          delivery: 'CNSHA',
         };
-        const result = Meteor.call('rates.getApplicableSellRates', options);
-        result.global
-              .should
-              .eql(rate);
-        result.suggested
-              .should
-              .equal('global');
+        Rates.insert(rate);
+        const result = Meteor.call(
+          'rates.getApplicableSellRates',
+          charges,
+          movement,
+        );
+        result[0].global
+                 .should
+                 .eql(rate);
+        result[0].suggested
+                 .should
+                 .equal('global');
       });
 
       it('returns country rates when the country route matches', () => {
@@ -121,18 +159,32 @@ if (Meteor.isServer) {
             currency: 'USD',
           },
         };
-        Rates.insert(rate);
-        const options = {
-          chargeCode: 'ITP',
-          movement: { route: ['USMIA', 'USTPA'] },
+        const charges = [
+          {
+            name: 'Inland Transport',
+            group: 'Origin',
+            chargeCode: 'ITP',
+            route: ['receipt', 'departure'],
+          },
+        ];
+        const movement = {
+          receipt: 'USMIA',
+          departure: 'USTPA',
+          arrival: 'CNSHA',
+          delivery: 'CNSHA',
         };
-        const result = Meteor.call('rates.getApplicableSellRates', options);
-        result.country
-              .should
-              .eql(rate);
-        result.suggested
-              .should
-              .equal('country');
+        Rates.insert(rate);
+        const result = Meteor.call(
+          'rates.getApplicableSellRates',
+          charges,
+          movement,
+        );
+        result[0].country
+                 .should
+                 .eql(rate);
+        result[0].suggested
+                 .should
+                 .equal('country');
       });
 
       it('returns location rates when the location route matches', () => {
@@ -148,18 +200,32 @@ if (Meteor.isServer) {
             currency: 'USD',
           },
         };
-        Rates.insert(rate);
-        const options = {
-          chargeCode: 'ITP',
-          movement: { route: ['USMIA', 'USTPA'] },
+        const charges = [
+          {
+            name: 'Inland Transport',
+            group: 'Origin',
+            chargeCode: 'ITP',
+            route: ['receipt', 'departure'],
+          },
+        ];
+        const movement = {
+          receipt: 'USMIA',
+          departure: 'USTPA',
+          arrival: 'CNSHA',
+          delivery: 'CNSHA',
         };
-        const result = Meteor.call('rates.getApplicableSellRates', options);
-        result.location
-              .should
-              .eql(rate);
-        result.suggested
-              .should
-              .equal('location');
+        Rates.insert(rate);
+        const result = Meteor.call(
+          'rates.getApplicableSellRates',
+          charges,
+          movement,
+        );
+        result[0].location
+                 .should
+                 .eql(rate);
+        result[0].suggested
+                 .should
+                 .equal('location');
       });
 
       it('returns supplier rates when the supplier route matches', () => {
@@ -175,18 +241,33 @@ if (Meteor.isServer) {
             currency: 'USD',
           },
         };
-        Rates.insert(rate);
-        const options = {
-          chargeCode: 'ITP',
-          movement: { route: ['USMIA', 'USTPA'], supplier: 'MAEU' },
+        const charges = [
+          {
+            name: 'Inland Transport',
+            group: 'Origin',
+            chargeCode: 'ITP',
+            route: ['receipt', 'departure'],
+          },
+        ];
+        const movement = {
+          receipt: 'USMIA',
+          departure: 'USTPA',
+          arrival: 'CNSHA',
+          delivery: 'CNSHA',
+          supplier: 'MAEU',
         };
-        const result = Meteor.call('rates.getApplicableSellRates', options);
-        result.supplier
-              .should
-              .eql(rate);
-        result.suggested
-              .should
-              .equal('supplier');
+        Rates.insert(rate);
+        const result = Meteor.call(
+          'rates.getApplicableSellRates',
+          charges,
+          movement,
+        );
+        result[0].supplier
+                 .should
+                 .eql(rate);
+        result[0].suggested
+                 .should
+                 .equal('supplier');
       });
     });
   });

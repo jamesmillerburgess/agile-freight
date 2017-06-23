@@ -37,16 +37,30 @@ class EditQuoteHeader extends React.Component {
     const charges = getDefaultMovementCharges(this.props.quote.movement);
     const chargeLines = charges.map(
       (charge) => {
-        const applicableSellRates = getApplicableSellRates(
-          charge,
-          APIGlobals.sellRates,
-          {
-            supplier: 'MAEU',
-            receipt: 'USMIA',
-            departure: 'USTPA',
-            arrival: 'CNSHA',
-            delivery: 'CNPNY',
-          },
+        // const applicableSellRates = getApplicableSellRates(
+        //   charge,
+        //   APIGlobals.sellRates,
+        //   {
+        //     supplier: 'MAEU',
+        //     receipt: 'USMIA',
+        //     departure: 'USTPA',
+        //     arrival: 'CNSHA',
+        //     delivery: 'CNPNY',
+        //   },
+        // );
+        const movement = {
+          supplier: 'MAEU',
+          receipt: 'USMIA',
+          departure: 'USTPA',
+          arrival: 'CNSHA',
+          delivery: 'CNPNY',
+        };
+        Meteor.call(
+          'rates.getApplicableSellRates',
+          { charge, movement },
+          (err, res) => {
+
+          }
         );
         let sellRate = {};
         let selectedRate = '';
