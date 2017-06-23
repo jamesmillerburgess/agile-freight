@@ -582,22 +582,10 @@ class EditQuoteHeader extends React.Component {
                 <div className="cargo-row-icon" />
                 <div className="field select-country">
                   <div className="label">
-                    COUNTRY
-                  </div>
-                  <CountryField
-                    value={this.props.quote.movement.pickup.country}
-                    onChange={selectedValue =>
-                      this.props.dispatchers.onChangePickupCountry(selectedValue.value)}
-                    countries={Countries}
-                  />
-                </div>
-                <div className="field select-country">
-                  <div className="label">
-                    LOCATION
+                    RECEIPT
                   </div>
                   <UNLocationField
                     value={this.props.quote.movement.pickup.location}
-                    country={this.props.quote.movement.pickup.country}
                     onChange={(selectedValue) => {
                       this.props.dispatchers
                           .onChangePickupLocation(selectedValue.value);
@@ -618,26 +606,12 @@ class EditQuoteHeader extends React.Component {
                     }}
                   />
                 </div>
-                <div className="to-label" />
                 <div className="field select-country">
                   <div className="label">
-                    COUNTRY
-                  </div>
-                  <CountryField
-                    value={this.props.quote.movement.delivery.country}
-                    onChange={selectedValue =>
-                      this.props.dispatchers.onChangeDeliveryCountry(
-                        selectedValue.value)}
-                    countries={Countries}
-                  />
-                </div>
-                <div className="field select-country">
-                  <div className="label">
-                    LOCATION
+                    DELIVERY
                   </div>
                   <UNLocationField
                     value={this.props.quote.movement.delivery.location}
-                    country={this.props.quote.movement.delivery.country}
                     onChange={(selectedValue) => {
                       this.props.dispatchers
                           .onChangeDeliveryLocation(selectedValue.value);
