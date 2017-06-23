@@ -16,7 +16,7 @@ const EditQuoteChargeGroup = (props) => {
       setChargeLineBasis,
       setChargeLineUnits,
       setChargeLineUnitPrice,
-      setChargeLineUnitPriceCurrency,
+      setChargeLineCurrency,
     } = props;
 
   const getSubtotalAmount = () =>
@@ -105,15 +105,15 @@ const EditQuoteChargeGroup = (props) => {
               <CurrencyField
                 className="input-group-last addon"
                 value={chargeLine.currency}
-                onChange={e => setChargeLineUnitPriceCurrency(
-                  chargeLine.id,
+                onChange={e => setChargeLineCurrency(
+                  chargeLine,
                   e.value,
                 )}
               />
             </div>
           </td>
           <td className="numeric-label amount-local-column">{currencyFormat(
-            chargeLine.amount)} {chargeLine.unitPriceCurrency}</td>
+            chargeLine.amount)} {chargeLine.currency}</td>
           <td className="numeric-label amount-final-column">
             {currencyFormat(chargeLine.finalAmount)} {props.currency}
           </td>

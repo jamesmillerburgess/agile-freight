@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => ({
     if (selectedRate !== 'custom') {
       dispatch(actionCreators.setChargeLineBasis(id, basis));
       dispatch(actionCreators.setChargeLineUnitPrice(id, unitPrice));
-      dispatch(actionCreators.setChargeLineUnitPriceCurrency(id, currency));
+      dispatch(actionCreators.setChargeLineCurrency(id, currency));
     }
   },
   setChargeLineBasis: (chargeLine, basis) => {
@@ -54,11 +54,13 @@ const mapDispatchToProps = dispatch => ({
     }
     dispatch(actionCreators.setChargeLineUnitPrice(id, unitPrice));
   },
-  setChargeLineUnitPriceCurrency: (id, unitPriceCurrency) =>
-    dispatch(actionCreators.setChargeLineUnitPriceCurrency(
-      id,
-      unitPriceCurrency,
-    )),
+  setChargeLineCurrency: (chargeLine, currency) => {
+    const { id, selectedRate } = chargeLine;
+    if (selectedRate !== 'custom') {
+      dispatch(actionCreators.setChargeLineSelectedRate(id, 'custom'));
+    }
+    dispatch(actionCreators.setChargeLineCurrency(id, currency));
+  },
   removeChargeLine: id => dispatch(actionCreators.removeChargeLine(id)),
 });
 
