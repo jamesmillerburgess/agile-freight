@@ -17,7 +17,7 @@ import {
   getDefaultMovementCharges,
   getApplicableSellRates,
 }
-  from '../../api/charges/chargeDefaultUtils';
+  from '../../api/rates/chargeDefaultUtils';
 
 import { Countries } from '../../api/countries/countriesCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
