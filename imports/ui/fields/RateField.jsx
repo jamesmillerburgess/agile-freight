@@ -10,8 +10,8 @@ const RateField = (props) => {
       rateValue = (
         <div className="rate-option-value">
           {currencyFormat(option.rate.unitPrice)}&nbsp;
-          {option.rate.unitPriceCurrency} /&nbsp;
-          {option.rate.rate}
+          {option.rate.currency} /&nbsp;
+          {option.rate.basis}
         </div>
       );
     }
@@ -35,11 +35,30 @@ const RateField = (props) => {
       className="rate-field"
       value={props.value || ''}
       options={[
-        { value: 'custom', label: 'CUSTOM' },
-        { value: 'supplier', label: 'SUPPLIER', rate: props.rates.supplier },
-        { value: 'location', label: 'LOCATION', rate: props.rates.location },
-        { value: 'country', label: 'COUNTRY', rate: props.rates.country },
-        { value: 'global', label: 'GLOBAL', rate: props.rates.global },
+        {
+          value: 'custom',
+          label: 'CUSTOM',
+        },
+        {
+          value: 'supplier',
+          label: 'SUPPLIER',
+          rate: props.rates.supplier ? props.rates.supplier.rate : null,
+        },
+        {
+          value: 'location',
+          label: 'LOCATION',
+          rate: props.rates.location ? props.rates.supplier.rate : null,
+        },
+        {
+          value: 'country',
+          label: 'COUNTRY',
+          rate: props.rates.country ? props.rates.country.rate : null,
+        },
+        {
+          value: 'global',
+          label: 'GLOBAL',
+          rate: props.rates.global ? props.rates.global.rate : null,
+        },
       ]}
       clearable={false}
       searchable={false}

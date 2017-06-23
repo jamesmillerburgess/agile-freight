@@ -70,7 +70,6 @@ const getApplicableSellRates = (charge, movement) => {
       route: supplierRoute,
     }),
   };
-  rates.suggested = 'custom';
   if (rates.supplier) {
     rates.suggested = 'supplier';
   } else if (rates.location) {

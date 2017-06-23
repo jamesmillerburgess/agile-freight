@@ -67,13 +67,13 @@ export const chargeLines = (
       newState =
         changePropAtId(state, 'selectedRate', action.id, action.selectedRate);
       break;
-    case ACTION_TYPES.SET_CHARGE_LINE_RATE:
-      newState = changePropAtId(state, 'rate', action.id, action.rate);
+    case ACTION_TYPES.SET_CHARGE_LINE_BASIS:
+      newState = changePropAtId(state, 'basis', action.id, action.basis);
       newState = changePropAtId(
         newState,
         'units',
         action.id,
-        defaultUnits(itemAtId(newState, action.id).rate, quoteState.cargo),
+        defaultUnits(itemAtId(newState, action.id).basis, quoteState.cargo),
       );
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNITS:

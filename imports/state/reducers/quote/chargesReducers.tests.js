@@ -274,7 +274,7 @@ if (Meteor.isClient) {
       it('changes the rate at at the charge line with the specified id', () => {
         const stateBefore = [{ id: 0, rate: 'a' }, { id: 1, rate: 'c' }];
         const action = {
-          type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+          type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
           id: 0,
           rate: 'b',
         };
@@ -287,7 +287,7 @@ if (Meteor.isClient) {
       it('sets the units to 1 when the rate is changed to \'Shipment\'', () => {
         const stateBefore = [{ id: 0, rate: 'a' }];
         const action = {
-          type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+          type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
           id: 0,
           rate: 'Shipment',
         };
@@ -301,7 +301,7 @@ if (Meteor.isClient) {
         () => {
           const stateBefore = [{ id: 0, rate: 'a' }];
           const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
             rate: 'KG',
           };
@@ -322,7 +322,7 @@ if (Meteor.isClient) {
         () => {
           const stateBefore = [{ id: 0, rate: 'a' }];
           const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
             rate: 'CBM',
           };
@@ -343,7 +343,7 @@ if (Meteor.isClient) {
         () => {
           const stateBefore = [{ id: 0, rate: 'a' }];
           const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
             rate: 'Container',
           };
@@ -364,7 +364,7 @@ if (Meteor.isClient) {
         () => {
           const stateBefore = [{ id: 0, rate: 'a' }];
           const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
             rate: 'TEU',
           };
@@ -385,7 +385,7 @@ if (Meteor.isClient) {
         () => {
           const stateBefore = [{ id: 0, rate: 'a' }];
           const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
             rate: 'Package',
           };

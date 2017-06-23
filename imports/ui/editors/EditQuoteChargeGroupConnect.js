@@ -21,26 +21,26 @@ const mapDispatchToProps = dispatch => ({
   )),
   setChargeLineSelectedRate: (chargeLine, selectedRate) => {
     const { id, applicableSellRates } = chargeLine;
-    let newRate = null;
+    let newBasis = null;
     let newUnitPrice = null;
     let newUnitPriceCurrency = null;
     if (applicableSellRates[selectedRate]) {
-      newRate = applicableSellRates[selectedRate].rate;
-      newUnitPrice = applicableSellRates[selectedRate].unitPrice;
+      newBasis = applicableSellRates[selectedRate].rate.basis;
+      newUnitPrice = applicableSellRates[selectedRate].rate.unitPrice;
       newUnitPriceCurrency =
-        applicableSellRates[selectedRate].unitPriceCurrency;
+        applicableSellRates[selectedRate].rate.currency;
     }
     dispatch(actionCreators.setChargeLineSelectedRate(id, selectedRate));
-    dispatch(actionCreators.setChargeLineRate(id, newRate));
+    dispatch(actionCreators.setChargeLineBasis(id, newBasis));
     dispatch(actionCreators.setChargeLineUnitPrice(id, newUnitPrice));
     dispatch(actionCreators.setChargeLineUnitPriceCurrency(
       id,
       newUnitPriceCurrency,
     ));
   },
-  setChargeLineRate: (id, rate) => dispatch(actionCreators.setChargeLineRate(
+  setChargeLineBasis: (id, basis) => dispatch(actionCreators.setChargeLineBasis(
     id,
-    rate,
+    basis,
   )),
   setChargeLineUnits: (id, units) => dispatch(actionCreators.setChargeLineUnits(
     id,

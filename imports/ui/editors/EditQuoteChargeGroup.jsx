@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 
 import CurrencyField from '../fields/CurrencyField.jsx';
-import RateField from '../fields/RateField';
+import RateField from '../fields/RateField.jsx';
 
 import { currencyFormat } from '../formatters/numberFormatters';
 
@@ -13,7 +13,7 @@ const EditQuoteChargeGroup = (props) => {
       removeChargeLine,
       setChargeLineName,
       setChargeLineSelectedRate,
-      setChargeLineRate,
+      setChargeLineBasis,
       setChargeLineUnits,
       setChargeLineUnitPrice,
       setChargeLineUnitPriceCurrency,
@@ -58,7 +58,7 @@ const EditQuoteChargeGroup = (props) => {
               />
               <Select
                 className="input-group-last addon rate-basis"
-                value={chargeLine.rate || ''}
+                value={chargeLine.basis || ''}
                 options={[
                   { value: 'Shipment', label: 'Shipment' },
                   { value: 'KG', label: 'KG' },
@@ -71,7 +71,7 @@ const EditQuoteChargeGroup = (props) => {
                   { value: 'KM', label: 'KM' },
                   { value: 'Mile', label: 'Mile' },
                 ]}
-                onChange={selectedValue => setChargeLineRate(
+                onChange={selectedValue => setChargeLineBasis(
                   chargeLine.id,
                   selectedValue.value,
                 )}
@@ -104,7 +104,7 @@ const EditQuoteChargeGroup = (props) => {
               />
               <CurrencyField
                 className="input-group-last addon"
-                value={chargeLine.unitPriceCurrency}
+                value={chargeLine.currency}
                 onChange={e => setChargeLineUnitPriceCurrency(
                   chargeLine.id,
                   e.value,
