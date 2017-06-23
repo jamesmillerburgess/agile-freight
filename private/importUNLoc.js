@@ -45,6 +45,11 @@ while (c.hasNext()) {
                   (+doc.coordinates.slice(9, 11) / 100 ) *
                   (doc.coordinates[11] === 'E' ? 1 : -1);
     }
+    var country = db.Countries.findOne({ countryCode: doc.countryCode });
+    var countryName = '';
+    if (country) {
+      countryName = country.countryName;
+    }
     db.UNLocations.insert(
       {
         _id: ObjectId().str,
@@ -63,7 +68,8 @@ while (c.hasNext()) {
         search: doc.countryCode +
                 doc.locationCode + ' ' +
                 doc.name + ' ' +
-                doc.nameWoDiacritics +
+                doc.nameWoDiacritics + ' ' +
+                countryName +
                 (doc.subdivision ? ' ' + doc.subdivision : '') +
                 (doc.iataCode ? ' ' + doc.iataCode : ''),
       }
