@@ -23,7 +23,7 @@ const UNLocationField = (props) => {
       Meteor.call(
         'unlocations.search',
         {
-          country: countryCode,
+          // country: countryCode,
           search: input,
           id: props.value,
         },
@@ -53,7 +53,7 @@ const UNLocationField = (props) => {
         (
           <span><span className="fa fa-fw fa-plane" />&nbsp;</span>
         ) : ''}
-      {option.code} – {option.label}
+      {option.label} – {option.code}
     </div>
   );
 

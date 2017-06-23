@@ -618,7 +618,7 @@ class EditQuoteHeader extends React.Component {
                     }}
                   />
                 </div>
-                <div className="to-label">TO</div>
+                <div className="to-label" />
                 <div className="field select-country">
                   <div className="label">
                     COUNTRY

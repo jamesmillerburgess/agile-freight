@@ -17,12 +17,12 @@ Meteor.methods({
     if (!options.search && options.id) {
       return UNLocations.find({ _id: options.id }).fetch();
     }
-
-    if (!Countries.findOne({ countryCode: options.country })) {
-      throw new Error(`Invalid country '${options.country}'`);
-    }
+    //
+    // if (!Countries.findOne({ countryCode: options.country })) {
+    //   throw new Error(`Invalid country '${options.country}'`);
+    // }
     const query = {
-      countryCode: options.country,
+      // countryCode: options.country,
       search: { $regex: buildSearchRegExp(options.search) },
     };
     return [
