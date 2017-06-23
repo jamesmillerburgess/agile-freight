@@ -25,10 +25,10 @@ const mapDispatchToProps = dispatch => ({
     let newUnitPrice = null;
     let newUnitPriceCurrency = null;
     if (applicableSellRates[selectedRate]) {
-      newBasis = applicableSellRates[selectedRate].rate.basis;
-      newUnitPrice = applicableSellRates[selectedRate].rate.unitPrice;
+      newBasis = applicableSellRates[selectedRate].basis;
+      newUnitPrice = applicableSellRates[selectedRate].unitPrice;
       newUnitPriceCurrency =
-        applicableSellRates[selectedRate].rate.currency;
+        applicableSellRates[selectedRate].currency;
     }
     dispatch(actionCreators.setChargeLineSelectedRate(id, selectedRate));
     dispatch(actionCreators.setChargeLineBasis(id, newBasis));

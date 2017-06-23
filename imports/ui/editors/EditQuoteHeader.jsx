@@ -51,7 +51,11 @@ class EditQuoteHeader extends React.Component {
           let sellRate = {};
           let selectedRate = '';
           if (applicableSellRates.suggested) {
-            sellRate = applicableSellRates[applicableSellRates.suggested].rate;
+            sellRate = {
+              basis: applicableSellRates[applicableSellRates.suggested].basis,
+              unitPrice: applicableSellRates[applicableSellRates.suggested].unitPrice,
+              currency: applicableSellRates[applicableSellRates.suggested].currency,
+            };
             selectedRate = applicableSellRates.suggested;
           } else {
             sellRate.basis = 'Shipment';
@@ -67,7 +71,6 @@ class EditQuoteHeader extends React.Component {
             selectedRate,
           };
         });
-        console.log(chargeLines);
         Meteor.call(
           'quote.save',
           {

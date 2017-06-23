@@ -42,22 +42,22 @@ const RateField = (props) => {
         {
           value: 'supplier',
           label: 'SUPPLIER',
-          rate: props.rates.supplier ? props.rates.supplier.rate : null,
+          rate: props.rates.supplier,
         },
         {
           value: 'location',
           label: 'LOCATION',
-          rate: props.rates.location ? props.rates.supplier.rate : null,
+          rate: props.rates.location,
         },
         {
           value: 'country',
           label: 'COUNTRY',
-          rate: props.rates.country ? props.rates.country.rate : null,
+          rate: props.rates.country,
         },
         {
           value: 'global',
           label: 'GLOBAL',
-          rate: props.rates.global ? props.rates.global.rate : null,
+          rate: props.rates.global,
         },
       ]}
       clearable={false}
