@@ -2,7 +2,7 @@ var db = connect('localhost:3001/meteor');
 
 var altNames = db.UNLocations.find({ ch: '=' });
 
-db.UNLocations.createIndex({ countryCode: 1, locationCode: 1 });
+db.UNLocations.createIndex({ locationCode: 1 });
 
 while (altNames.hasNext()) {
   var doc               = altNames.next();
@@ -53,6 +53,7 @@ while (c.hasNext()) {
     db.UNLocations.insert(
       {
         _id: ObjectId().str,
+        code: doc.countryCode + doc.locationCode,
         countryCode: doc.countryCode,
         locationCode: doc.locationCode,
         name: doc.name,
