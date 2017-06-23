@@ -240,15 +240,15 @@ class Quote extends React.Component {
             <span className="amount">
               {
                 chargeLine.units !== 1 ?
-                `${currencyFormat(chargeLine.unitPrice)} ${chargeLine.unitPriceCurrency}` :
+                `${currencyFormat(chargeLine.unitPrice)} ${chargeLine.currency}` :
                 null
               }
             </span>
             <span className="amount">
               {
-                chargeLine.unitPriceCurrency !==
+                chargeLine.currency !==
                 this.props.quote.charges.currency ?
-                `${currencyFormat(chargeLine.amount)} ${chargeLine.unitPriceCurrency}` :
+                `${currencyFormat(chargeLine.amount)} ${chargeLine.currency}` :
                 null
               }
             </span>

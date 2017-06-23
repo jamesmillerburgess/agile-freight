@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 
 import CurrencyField from '../fields/CurrencyField.jsx';
-import RateField from '../fields/RateField';
+import RateField from '../fields/RateField.jsx';
 
 import { currencyFormat } from '../formatters/numberFormatters';
 
@@ -13,10 +13,10 @@ const EditQuoteChargeGroup = (props) => {
       removeChargeLine,
       setChargeLineName,
       setChargeLineSelectedRate,
-      setChargeLineRate,
+      setChargeLineBasis,
       setChargeLineUnits,
       setChargeLineUnitPrice,
-      setChargeLineUnitPriceCurrency,
+      setChargeLineCurrency,
     } = props;
 
   const getSubtotalAmount = () =>
@@ -58,7 +58,7 @@ const EditQuoteChargeGroup = (props) => {
               />
               <Select
                 className="input-group-last addon rate-basis"
-                value={chargeLine.rate || ''}
+                value={chargeLine.basis || ''}
                 options={[
                   { value: 'Shipment', label: 'Shipment' },
                   { value: 'KG', label: 'KG' },
@@ -71,8 +71,8 @@ const EditQuoteChargeGroup = (props) => {
                   { value: 'KM', label: 'KM' },
                   { value: 'Mile', label: 'Mile' },
                 ]}
-                onChange={selectedValue => setChargeLineRate(
-                  chargeLine.id,
+                onChange={selectedValue => setChargeLineBasis(
+                  chargeLine,
                   selectedValue.value,
                 )}
                 arrowRenderer={() => false}
@@ -98,22 +98,22 @@ const EditQuoteChargeGroup = (props) => {
                 placeholder=""
                 value={chargeLine.unitPrice || ''}
                 onChange={e => setChargeLineUnitPrice(
-                  chargeLine.id,
+                  chargeLine,
                   +e.target.value,
                 )}
               />
               <CurrencyField
                 className="input-group-last addon"
-                value={chargeLine.unitPriceCurrency}
-                onChange={e => setChargeLineUnitPriceCurrency(
-                  chargeLine.id,
+                value={chargeLine.currency}
+                onChange={e => setChargeLineCurrency(
+                  chargeLine,
                   e.value,
                 )}
               />
             </div>
           </td>
           <td className="numeric-label amount-local-column">{currencyFormat(
-            chargeLine.amount)} {chargeLine.unitPriceCurrency}</td>
+            chargeLine.amount)} {chargeLine.currency}</td>
           <td className="numeric-label amount-final-column">
             {currencyFormat(chargeLine.finalAmount)} {props.currency}
           </td>

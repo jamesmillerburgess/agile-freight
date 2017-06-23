@@ -17,7 +17,7 @@ import {
   getDefaultMovementCharges,
   getApplicableSellRates,
 }
-  from '../../api/charges/chargeDefaultUtils';
+  from '../../api/rates/chargeDefaultUtils';
 
 import { Countries } from '../../api/countries/countriesCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
@@ -35,50 +35,57 @@ class EditQuoteHeader extends React.Component {
 
   getRates() {
     const charges = getDefaultMovementCharges(this.props.quote.movement);
-    const chargeLines = charges.map(
-      (charge) => {
-        const applicableSellRates = getApplicableSellRates(
-          charge,
-          APIGlobals.sellRates,
-          {
-            supplier: 'MAEU',
-            receipt: 'USMIA',
-            departure: 'USTPA',
-            arrival: 'CNSHA',
-            delivery: 'CNPNY',
-          },
-        );
-        let sellRate = {};
-        let selectedRate = '';
-        if (applicableSellRates.suggested) {
-          sellRate = applicableSellRates[applicableSellRates.suggested];
-          selectedRate = applicableSellRates.suggested;
-        } else {
-          sellRate.unitPriceCurrency = this.props.quote.charges.currency;
-          selectedRate = 'custom';
-        }
-        return {
-          id: new Mongo.ObjectID()._str,
-          ...charge,
-          ...sellRate,
-          applicableSellRates,
-          selectedRate,
-        };
-      },
-    );
+    const movement = {
+      supplier: 'MAEU',
+      receipt: 'USMIA',
+      departure: 'USTPA',
+      arrival: 'CNSHA',
+      delivery: 'CNPNY',
+    };
     Meteor.call(
-      'quote.save',
-      {
-        ...this.props.quote,
-        _id: this.props.match.params.quoteId,
-        charges: {
-          ...this.props.quote.charges,
-          chargeLines,
-        },
+      'rates.getApplicableSellRates',
+      charges,
+      movement,
+      (err, res) => {
+        const chargeLines = res.map((applicableSellRates, index) => {
+          let sellRate = {};
+          let selectedRate = '';
+          if (applicableSellRates.suggested) {
+            sellRate = {
+              basis: applicableSellRates[applicableSellRates.suggested].basis,
+              unitPrice: applicableSellRates[applicableSellRates.suggested].unitPrice,
+              currency: applicableSellRates[applicableSellRates.suggested].currency,
+            };
+            selectedRate = applicableSellRates.suggested;
+          } else {
+            sellRate.basis = 'Shipment';
+            sellRate.units = 1;
+            sellRate.currency = this.props.quote.charges.currency;
+            selectedRate = 'custom';
+          }
+          return {
+            id: new Mongo.ObjectID()._str,
+            ...charges[index],
+            ...sellRate,
+            applicableSellRates,
+            selectedRate,
+          };
+        });
+        Meteor.call(
+          'quote.save',
+          {
+            ...this.props.quote,
+            _id: this.props.match.params.quoteId,
+            charges: {
+              ...this.props.quote.charges,
+              chargeLines,
+            },
+          },
+          () => this.props.history.push(
+            `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
+          ),
+        );
       },
-      () => this.props.history.push(
-        `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
-      ),
     );
   }
 

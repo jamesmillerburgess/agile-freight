@@ -40,7 +40,7 @@ if (Meteor.isClient) {
               rate: 'd',
               units: 1,
               unitPrice: 2,
-              unitPriceCurrency: 'e',
+              currency: 'e',
               amount: 2,
               finalAmount: 2,
             },
@@ -71,7 +71,7 @@ if (Meteor.isClient) {
               rate: 'd',
               units: 1,
               unitPrice: 2,
-              unitPriceCurrency: 'e',
+              currency: 'e',
             },
             {
               group: 'International',
@@ -81,7 +81,7 @@ if (Meteor.isClient) {
               rate: 'd',
               units: 1,
               unitPrice: 3,
-              unitPriceCurrency: 'e',
+              currency: 'e',
             },
             {
               group: 'Destination',
@@ -91,7 +91,7 @@ if (Meteor.isClient) {
               rate: 'd',
               units: 1,
               unitPrice: 4,
-              unitPriceCurrency: 'e',
+              currency: 'e',
             },
           ],
           currency: 'f',
@@ -145,7 +145,7 @@ if (Meteor.isClient) {
                 rate: 'd',
                 units: 1,
                 unitPrice: 2,
-                unitPriceCurrency: 'e',
+                currency: 'e',
                 finalAmount: 4,
               },
             ],
@@ -191,26 +191,26 @@ if (Meteor.isClient) {
           deepFreeze(stateBefore);
           const stateAfter = chargeLines(stateBefore, action, parentState);
 
-          stateAfter[0].unitPriceCurrency.should.equal('a');
+          stateAfter[0].currency.should.equal('a');
         },
       );
 
       it('keeps the specified unit price currency if one is provided', () => {
         const stateBefore = [];
         const parentState = { currency: 'a' };
-        const chargeLine = { group: 'Origin', unitPriceCurrency: 'b' };
+        const chargeLine = { group: 'Origin', currency: 'b' };
         const action = { type: ACTION_TYPES.ADD_CHARGE_LINE, chargeLine };
         deepFreeze(stateBefore);
         const stateAfter = chargeLines(stateBefore, action, parentState);
 
-        stateAfter[0].unitPriceCurrency.should.equal('b');
+        stateAfter[0].currency.should.equal('b');
       });
 
       it(
         'sets the rate basis to shipment and defaults the units when adding a new charge line',
         () => {
           const stateBefore = [];
-          const chargeLine = { group: 'Origin', unitPriceCurrency: 'b' };
+          const chargeLine = { group: 'Origin', currency: 'b' };
           const action = { type: ACTION_TYPES.ADD_CHARGE_LINE, chargeLine };
           deepFreeze(stateBefore);
           const stateAfter = chargeLines(stateBefore, action);
@@ -271,25 +271,25 @@ if (Meteor.isClient) {
         chargeLines(stateBefore, action)[0].selectedRate.should.equal('custom');
       });
 
-      it('changes the rate at at the charge line with the specified id', () => {
-        const stateBefore = [{ id: 0, rate: 'a' }, { id: 1, rate: 'c' }];
+      it('changes the basis at at the charge line with the specified id', () => {
+        const stateBefore = [{ id: 0, basis: 'a' }, { id: 1, basis: 'c' }];
         const action = {
-          type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+          type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
           id: 0,
-          rate: 'b',
+          basis: 'b',
         };
         deepFreeze(stateBefore);
 
-        chargeLines(stateBefore, action)[0].rate.should.equal('b');
-        chargeLines(stateBefore, action)[1].rate.should.equal('c');
+        chargeLines(stateBefore, action)[0].basis.should.equal('b');
+        chargeLines(stateBefore, action)[1].basis.should.equal('c');
       });
 
-      it('sets the units to 1 when the rate is changed to \'Shipment\'', () => {
-        const stateBefore = [{ id: 0, rate: 'a' }];
+      it('sets the units to 1 when the basis is changed to \'Shipment\'', () => {
+        const stateBefore = [{ id: 0, basis: 'a' }];
         const action = {
-          type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+          type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
           id: 0,
-          rate: 'Shipment',
+          basis: 'Shipment',
         };
         deepFreeze(stateBefore);
 
@@ -297,13 +297,13 @@ if (Meteor.isClient) {
       });
 
       it(
-        'sets the units to the total KG when the rate is changed to \'KG\'',
+        'sets the units to the total KG when the basis is changed to \'KG\'',
         () => {
           const stateBefore = [{ id: 0, rate: 'a' }];
           const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
-            rate: 'KG',
+            basis: 'KG',
           };
           const quoteState = { cargo: { totalWeight: 10, weightUOM: 'kg' } };
           deepFreeze(stateBefore);
@@ -318,13 +318,13 @@ if (Meteor.isClient) {
       );
 
       it(
-        'sets the units to the total CBM when the rate is changed to \'CBM\'',
+        'sets the units to the total CBM when the basis is changed to \'CBM\'',
         () => {
-          const stateBefore = [{ id: 0, rate: 'a' }];
+          const stateBefore = [{ id: 0, basis: 'a' }];
           const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
-            rate: 'CBM',
+            basis: 'CBM',
           };
           const quoteState = { cargo: { totalVolume: 10, weightUOM: 'cbm' } };
           deepFreeze(stateBefore);
@@ -339,13 +339,13 @@ if (Meteor.isClient) {
       );
 
       it(
-        'sets the units to the total containers when the rate is changed to \'Container\'',
+        'sets the units to the total containers when the basis is changed to \'Container\'',
         () => {
-          const stateBefore = [{ id: 0, rate: 'a' }];
+          const stateBefore = [{ id: 0, basis: 'a' }];
           const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
-            rate: 'Container',
+            basis: 'Container',
           };
           const quoteState = { cargo: { totalContainers: 10 } };
           deepFreeze(stateBefore);
@@ -360,13 +360,13 @@ if (Meteor.isClient) {
       );
 
       it(
-        'sets the units to the total TEU when the rate is changed to \'TEU\'',
+        'sets the units to the total TEU when the basis is changed to \'TEU\'',
         () => {
-          const stateBefore = [{ id: 0, rate: 'a' }];
+          const stateBefore = [{ id: 0, basis: 'a' }];
           const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
-            rate: 'TEU',
+            basis: 'TEU',
           };
           const quoteState = { cargo: { totalTEU: 10 } };
           deepFreeze(stateBefore);
@@ -381,13 +381,13 @@ if (Meteor.isClient) {
       );
 
       it(
-        'sets the units to the total packages when the rate is changed to \'Package\'',
+        'sets the units to the total packages when the basis is changed to \'Package\'',
         () => {
-          const stateBefore = [{ id: 0, rate: 'a' }];
+          const stateBefore = [{ id: 0, basis: 'a' }];
           const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_RATE,
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
             id: 0,
-            rate: 'Package',
+            basis: 'Package',
           };
           const quoteState = { cargo: { totalPackages: 10 } };
           deepFreeze(stateBefore);
@@ -441,24 +441,24 @@ if (Meteor.isClient) {
           const stateBefore = [
             { id: 'a', unitPriceCrrency: 'a' }, {
               id: 'b',
-              unitPriceCurrency: 'c',
+              currency: 'c',
             },
           ];
           const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY,
+            type: ACTION_TYPES.SET_CHARGE_LINE_CURRENCY,
             id: 'a',
-            unitPriceCurrency: 'b',
+            currency: 'b',
           };
           deepFreeze(stateBefore);
 
           chargeLines(
             stateBefore,
             action,
-          )[0].unitPriceCurrency.should.equal('b');
+          )[0].currency.should.equal('b');
           chargeLines(
             stateBefore,
             action,
-          )[1].unitPriceCurrency.should.equal('c');
+          )[1].currency.should.equal('c');
         },
       );
 
@@ -474,7 +474,7 @@ if (Meteor.isClient) {
           {
             units: 1,
             unitPrice: 2,
-            unitPriceCurrency: 'a',
+            currency: 'a',
           },
         ];
         const parentState = {
@@ -494,7 +494,7 @@ if (Meteor.isClient) {
             {
               units: 1,
               unitPrice: 2,
-              unitPriceCurrency: 'a',
+              currency: 'a',
             },
           ];
           const parentState = { currency: 'a' };
@@ -534,11 +534,11 @@ if (Meteor.isClient) {
             currency: 'a',
             fxConversions: { b: {} },
             chargeLines: [
-              { unitPriceCurrency: 'b' },
-              { unitPriceCurrency: 'c' },
+              { currency: 'b' },
+              { currency: 'c' },
             ],
           };
-          let action = { type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY };
+          let action = { type: ACTION_TYPES.SET_CHARGE_LINE_CURRENCY };
           deepFreeze(stateBefore);
           let stateAfter = fxConversions(stateBefore, action);
 
@@ -559,9 +559,9 @@ if (Meteor.isClient) {
           const stateBefore = {
             currency: 'a',
             fxConversions: { b: { rate: 1 } },
-            chargeLines: [{ unitPriceCurrency: 'c' }],
+            chargeLines: [{ currency: 'c' }],
           };
-          let action = { type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY };
+          let action = { type: ACTION_TYPES.SET_CHARGE_LINE_CURRENCY };
           deepFreeze(stateBefore);
 
           let stateAfter = fxConversions(stateBefore, action);
@@ -584,9 +584,9 @@ if (Meteor.isClient) {
           const stateBefore = {
             currency: 'a',
             fxConversions: { b: { active: false, rate: 1 } },
-            chargeLines: [{ unitPriceCurrency: 'b' }],
+            chargeLines: [{ currency: 'b' }],
           };
-          let action = { type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY };
+          let action = { type: ACTION_TYPES.SET_CHARGE_LINE_CURRENCY };
           deepFreeze(stateBefore);
 
           let stateAfter = fxConversions(stateBefore, action);
@@ -607,9 +607,9 @@ if (Meteor.isClient) {
         const stateBefore = {
           currency: 'a',
           fxConversions: {},
-          chargeLines: [{ unitPriceCurrency: 'a' }],
+          chargeLines: [{ currency: 'a' }],
         };
-        let action = { type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY };
+        let action = { type: ACTION_TYPES.SET_CHARGE_LINE_CURRENCY };
         deepFreeze(stateBefore);
         let stateAfter = fxConversions(stateBefore, action);
 
@@ -625,7 +625,7 @@ if (Meteor.isClient) {
         const stateBefore = {
           currency: 'b',
           fxConversions: { b: { rate: 1 } },
-          chargeLines: [{ unitPriceCurrency: 'b' }],
+          chargeLines: [{ currency: 'b' }],
         };
         const action = {
           type: ACTION_TYPES.SET_QUOTE_CURRENCY,

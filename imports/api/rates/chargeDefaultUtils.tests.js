@@ -350,7 +350,7 @@ if (Meteor.isClient) {
             global: {
               rate: 'Mile',
               unitPrice: 0.5,
-              unitPriceCurrency: 'USD',
+              currency: 'USD',
             },
           },
         };
@@ -367,7 +367,7 @@ if (Meteor.isClient) {
         const globalRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const sellRates = { COL: { global: globalRate } };
         const applicableSellRates = getApplicableSellRates(charge, sellRates);
@@ -385,7 +385,7 @@ if (Meteor.isClient) {
         const countryRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const movement = {
           receipt: 'USMIA',
@@ -412,12 +412,12 @@ if (Meteor.isClient) {
         const globalRate = {
           rate: 'Mile',
           unitPrice: 1,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const countryRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const movement = {
           receipt: 'USMIA',
@@ -449,7 +449,7 @@ if (Meteor.isClient) {
         const locationRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const movement = {
           receipt: 'USMIA',
@@ -476,17 +476,17 @@ if (Meteor.isClient) {
         const globalRate = {
           rate: 'Mile',
           unitPrice: 1,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const countryRate = {
           rate: 'Mile',
           unitPrice: 0.75,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const locationRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const movement = {
           receipt: 'USMIA',
@@ -520,7 +520,7 @@ if (Meteor.isClient) {
         const supplierRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const movement = {
           supplier: 'MAEU',
@@ -548,22 +548,22 @@ if (Meteor.isClient) {
         const globalRate = {
           rate: 'Mile',
           unitPrice: 1,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const countryRate = {
           rate: 'Mile',
           unitPrice: 0.75,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const locationRate = {
           rate: 'Mile',
           unitPrice: 0.5,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const supplierRate = {
           rate: 'Mile',
           unitPrice: 0.25,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         };
         const movement = {
           supplier: 'MAEU',

@@ -10,8 +10,8 @@ const RateField = (props) => {
       rateValue = (
         <div className="rate-option-value">
           {currencyFormat(option.rate.unitPrice)}&nbsp;
-          {option.rate.unitPriceCurrency} /&nbsp;
-          {option.rate.rate}
+          {option.rate.currency} /&nbsp;
+          {option.rate.basis}
         </div>
       );
     }
@@ -19,7 +19,7 @@ const RateField = (props) => {
       rateValue = <div />;
     }
     return (
-      <div className="rate-option">
+      <div className={`rate-option ${option.disabled ? 'disabled' : ''}`}>
         <div className="rate-option-label">{option.label}</div>
         {rateValue}
       </div>
@@ -35,11 +35,34 @@ const RateField = (props) => {
       className="rate-field"
       value={props.value || ''}
       options={[
-        { value: 'custom', label: 'CUSTOM' },
-        { value: 'supplier', label: 'SUPPLIER', rate: props.rates.supplier },
-        { value: 'location', label: 'LOCATION', rate: props.rates.location },
-        { value: 'country', label: 'COUNTRY', rate: props.rates.country },
-        { value: 'global', label: 'GLOBAL', rate: props.rates.global },
+        {
+          value: 'custom',
+          label: 'CUSTOM',
+        },
+        {
+          value: 'supplier',
+          label: 'SUPPLIER',
+          rate: props.rates.supplier,
+          disabled: typeof props.rates.supplier === 'undefined',
+        },
+        {
+          value: 'location',
+          label: 'LOCATION',
+          rate: props.rates.location,
+          disabled: typeof props.rates.location === 'undefined',
+        },
+        {
+          value: 'country',
+          label: 'COUNTRY',
+          rate: props.rates.country,
+          disabled: typeof props.rates.country === 'undefined',
+        },
+        {
+          value: 'global',
+          label: 'GLOBAL',
+          rate: props.rates.global,
+          disabled: typeof props.rates.global === 'undefined',
+        },
       ]}
       clearable={false}
       searchable={false}

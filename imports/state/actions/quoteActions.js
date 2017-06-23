@@ -155,10 +155,10 @@ export const setChargeLineSelectedRate = makeActionCreator(
   'id',
   'selectedRate',
 );
-export const setChargeLineRate = makeActionCreator(
-  ACTION_TYPES.SET_CHARGE_LINE_RATE,
+export const setChargeLineBasis = makeActionCreator(
+  ACTION_TYPES.SET_CHARGE_LINE_BASIS,
   'id',
-  'rate',
+  'basis',
 );
 export const setChargeLineUnits = makeActionCreator(
   ACTION_TYPES.SET_CHARGE_LINE_UNITS,
@@ -170,10 +170,10 @@ export const setChargeLineUnitPrice = makeActionCreator(
   'id',
   'unitPrice',
 );
-export const setChargeLineUnitPriceCurrency = makeActionCreator(
-  ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY,
+export const setChargeLineCurrency = makeActionCreator(
+  ACTION_TYPES.SET_CHARGE_LINE_CURRENCY,
   'id',
-  'unitPriceCurrency',
+  'currency',
 );
 export const setChargeNotes = makeActionCreator(
   ACTION_TYPES.SET_CHARGE_NOTES,

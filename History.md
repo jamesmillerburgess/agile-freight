@@ -1,9 +1,8 @@
 # v.NEXT
 
-* TODO: Rates segregated by mode
-* TODO: Weight breaks
-* TODO: Last quote rate
-* TODO: Brokerage
+# v0.9.0 – Simple Sell Rates
+
+* Rates have been moved into the Mongo database with a search-efficient index
 
 # v0.8.0 – Simple Sell Rates
 

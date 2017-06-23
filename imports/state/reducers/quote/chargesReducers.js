@@ -45,10 +45,10 @@ export const chargeLines = (
           units: defaultUnits('Shipment'),
         },
       );
-      if (!newState[newState.length - 1].unitPriceCurrency) {
+      if (!newState[newState.length - 1].currency) {
         newState = changePropAtId(
           newState,
-          'unitPriceCurrency',
+          'currency',
           newState[newState.length - 1].id,
           parentState.currency,
         );
@@ -67,13 +67,13 @@ export const chargeLines = (
       newState =
         changePropAtId(state, 'selectedRate', action.id, action.selectedRate);
       break;
-    case ACTION_TYPES.SET_CHARGE_LINE_RATE:
-      newState = changePropAtId(state, 'rate', action.id, action.rate);
+    case ACTION_TYPES.SET_CHARGE_LINE_BASIS:
+      newState = changePropAtId(state, 'basis', action.id, action.basis);
       newState = changePropAtId(
         newState,
         'units',
         action.id,
-        defaultUnits(itemAtId(newState, action.id).rate, quoteState.cargo),
+        defaultUnits(itemAtId(newState, action.id).basis, quoteState.cargo),
       );
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNITS:
@@ -83,12 +83,12 @@ export const chargeLines = (
       newState =
         changePropAtId(state, 'unitPrice', action.id, action.unitPrice);
       break;
-    case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY:
+    case ACTION_TYPES.SET_CHARGE_LINE_CURRENCY:
       newState = changePropAtId(
         state,
-        'unitPriceCurrency',
+        'currency',
         action.id,
-        action.unitPriceCurrency,
+        action.currency,
       );
       break;
     default:
@@ -97,16 +97,16 @@ export const chargeLines = (
   return newState.map((chargeLine) => {
     const res = { ...chargeLine };
     res.amount = (chargeLine.units || 0) * (chargeLine.unitPrice || 0);
-    if (chargeLine.unitPriceCurrency === parentState.currency) {
+    if (chargeLine.currency === parentState.currency) {
       res.finalAmount = res.amount;
     } else if (
       parentState.fxConversions &&
-      parentState.fxConversions[chargeLine.unitPriceCurrency] &&
-      parentState.fxConversions[chargeLine.unitPriceCurrency].rate
+      parentState.fxConversions[chargeLine.currency] &&
+      parentState.fxConversions[chargeLine.currency].rate
     ) {
       res.finalAmount =
         res.amount *
-        parentState.fxConversions[chargeLine.unitPriceCurrency].rate;
+        parentState.fxConversions[chargeLine.currency].rate;
     } else {
       res.finalAmount = 0;
     }
@@ -124,10 +124,10 @@ export const fxConversions = (state = {}, action = { type: '' }) => {
         changeProp(newState[action.currency], 'rate', action.rate),
       );
       break;
-    case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY:
+    case ACTION_TYPES.SET_CHARGE_LINE_CURRENCY:
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
     case ACTION_TYPES.SET_QUOTE_CURRENCY:
-      const currencies = uniqueValues(state.chargeLines, 'unitPriceCurrency');
+      const currencies = uniqueValues(state.chargeLines, 'currency');
       currencies.forEach((currency) => {
         if (currency === state.currency) {
           if (newState[currency]) {

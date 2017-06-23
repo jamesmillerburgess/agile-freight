@@ -5,18 +5,18 @@ export const APIGlobals = {
       global: {
         rate: 'Mile',
         unitPrice: 0.5,
-        unitPriceCurrency: 'USD',
+        currency: 'USD',
       },
       country: {
         USUS: {
           rate: 'Mile',
           unitPrice: 0.25,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         },
         CNCN: {
           rate: 'KM',
           unitPrice: 7.2,
-          unitPriceCurrency: 'CNY',
+          currency: 'CNY',
         },
       },
     },
@@ -25,12 +25,12 @@ export const APIGlobals = {
         USTPA: {
           rate: 'TEU',
           unitPrice: 250,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         },
         CNSHA: {
           rate: 'TEU',
           unitPrice: 1230,
-          unitPriceCurrency: 'CNY',
+          currency: 'CNY',
         },
       },
     },
@@ -39,7 +39,7 @@ export const APIGlobals = {
         USUS: {
           rate: 'Mile',
           unitPrice: 0.75,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         },
       },
     },
@@ -48,7 +48,7 @@ export const APIGlobals = {
         USTPACNSHA: {
           rate: 'TEU',
           unitPrice: 550,
-          unitPriceCurrency: 'USD',
+          currency: 'USD',
         },
       },
     },
