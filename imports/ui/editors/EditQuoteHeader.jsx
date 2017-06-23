@@ -561,7 +561,6 @@ class EditQuoteHeader extends React.Component {
                         .onChangeMovementCommercialParty(selectedValue.value)}
                 />
               </div>
-              <div className="to-label" />
               <div className="field select-country">
                 <div className="label">
                   TERMS OF SALE
@@ -583,6 +582,58 @@ class EditQuoteHeader extends React.Component {
                 <div className="field select-country">
                   <div className="label">
                     RECEIPT
+                  </div>
+                  <UNLocationField
+                    value={this.props.quote.movement.pickup.location}
+                    onChange={(selectedValue) => {
+                      this.props.dispatchers
+                          .onChangePickupLocation(selectedValue.value);
+                      this.props.dispatchers
+                          .onChangePickupLocationName(selectedValue.label);
+                      let locationType = 'Door';
+                      if (selectedValue.isAirport) {
+                        locationType = 'Airport';
+                      }
+                      if (selectedValue.isSeaport) {
+                        locationType = 'Seaport';
+                      }
+                      if (!selectedValue.value) {
+                        locationType = '';
+                      }
+                      this.props.dispatchers
+                          .onChangePickupLocationType(locationType);
+                    }}
+                  />
+                </div>
+                <div className="field select-country">
+                  <div className="label">
+                    DEPARTURE
+                  </div>
+                  <UNLocationField
+                    value={this.props.quote.movement.pickup.location}
+                    onChange={(selectedValue) => {
+                      this.props.dispatchers
+                          .onChangePickupLocation(selectedValue.value);
+                      this.props.dispatchers
+                          .onChangePickupLocationName(selectedValue.label);
+                      let locationType = 'Door';
+                      if (selectedValue.isAirport) {
+                        locationType = 'Airport';
+                      }
+                      if (selectedValue.isSeaport) {
+                        locationType = 'Seaport';
+                      }
+                      if (!selectedValue.value) {
+                        locationType = '';
+                      }
+                      this.props.dispatchers
+                          .onChangePickupLocationType(locationType);
+                    }}
+                  />
+                </div>
+                <div className="field select-country">
+                  <div className="label">
+                    ARRIVAL
                   </div>
                   <UNLocationField
                     value={this.props.quote.movement.pickup.location}
