@@ -1,5 +1,9 @@
 ## v.NEXT
 
+## v0.10.0 – Simple Rate Management
+
+* TODO: Rate management
+
 ## v0.9.0 – Simple Rate Database
 
 * Rates have been moved into the Mongo database with a search-efficient index
