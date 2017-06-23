@@ -72,7 +72,7 @@ const EditQuoteChargeGroup = (props) => {
                   { value: 'Mile', label: 'Mile' },
                 ]}
                 onChange={selectedValue => setChargeLineBasis(
-                  chargeLine.id,
+                  chargeLine,
                   selectedValue.value,
                 )}
                 arrowRenderer={() => false}
@@ -98,7 +98,7 @@ const EditQuoteChargeGroup = (props) => {
                 placeholder=""
                 value={chargeLine.unitPrice || ''}
                 onChange={e => setChargeLineUnitPrice(
-                  chargeLine.id,
+                  chargeLine,
                   +e.target.value,
                 )}
               />

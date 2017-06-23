@@ -21,33 +21,39 @@ const mapDispatchToProps = dispatch => ({
   )),
   setChargeLineSelectedRate: (chargeLine, selectedRate) => {
     const { id, applicableSellRates } = chargeLine;
-    let newBasis = null;
-    let newUnitPrice = null;
-    let newUnitPriceCurrency = null;
+    let basis = null;
+    let unitPrice = null;
+    let currency = null;
     if (applicableSellRates[selectedRate]) {
-      newBasis = applicableSellRates[selectedRate].basis;
-      newUnitPrice = applicableSellRates[selectedRate].unitPrice;
-      newUnitPriceCurrency =
-        applicableSellRates[selectedRate].currency;
+      basis = applicableSellRates[selectedRate].basis;
+      unitPrice = applicableSellRates[selectedRate].unitPrice;
+      currency = applicableSellRates[selectedRate].currency;
     }
     dispatch(actionCreators.setChargeLineSelectedRate(id, selectedRate));
-    dispatch(actionCreators.setChargeLineBasis(id, newBasis));
-    dispatch(actionCreators.setChargeLineUnitPrice(id, newUnitPrice));
-    dispatch(actionCreators.setChargeLineUnitPriceCurrency(
-      id,
-      newUnitPriceCurrency,
-    ));
+    if (selectedRate !== 'custom') {
+      dispatch(actionCreators.setChargeLineBasis(id, basis));
+      dispatch(actionCreators.setChargeLineUnitPrice(id, unitPrice));
+      dispatch(actionCreators.setChargeLineUnitPriceCurrency(id, currency));
+    }
   },
-  setChargeLineBasis: (id, basis) => dispatch(actionCreators.setChargeLineBasis(
-    id,
-    basis,
-  )),
+  setChargeLineBasis: (chargeLine, basis) => {
+    const { id, selectedRate } = chargeLine;
+    if (selectedRate !== 'custom') {
+      dispatch(actionCreators.setChargeLineSelectedRate(id, 'custom'));
+    }
+    dispatch(actionCreators.setChargeLineBasis(id, basis));
+  },
   setChargeLineUnits: (id, units) => dispatch(actionCreators.setChargeLineUnits(
     id,
     units,
   )),
-  setChargeLineUnitPrice: (id, unitPrice) =>
-    dispatch(actionCreators.setChargeLineUnitPrice(id, unitPrice)),
+  setChargeLineUnitPrice: (chargeLine, unitPrice) => {
+    const { id, selectedRate } = chargeLine;
+    if (selectedRate !== 'custom') {
+      dispatch(actionCreators.setChargeLineSelectedRate(id, 'custom'));
+    }
+    dispatch(actionCreators.setChargeLineUnitPrice(id, unitPrice));
+  },
   setChargeLineUnitPriceCurrency: (id, unitPriceCurrency) =>
     dispatch(actionCreators.setChargeLineUnitPriceCurrency(
       id,
