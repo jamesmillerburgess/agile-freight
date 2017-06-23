@@ -33,6 +33,7 @@ const UNLocationField = (props) => {
             label: opt.name,
             isSeaport: opt.isSeaport,
             isAirport: opt.isAirport,
+            code: opt.countryCode + opt.locationCode,
           }));
           cb(null, { options });
         },
@@ -52,12 +53,7 @@ const UNLocationField = (props) => {
         (
           <span><span className="fa fa-fw fa-plane" />&nbsp;</span>
         ) : ''}
-      {
-        !option.isSeaport && !option.isAirport ?
-        (
-          <span><span className="fa fa-fw" />&nbsp;</span>
-        ) : ''}
-      {option.label}
+      {option.code} – {option.label}
     </div>
   );
 
