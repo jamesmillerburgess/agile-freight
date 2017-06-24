@@ -6,6 +6,7 @@ import CurrencyField from '../fields/CurrencyField.jsx';
 import RateField from '../fields/RateField.jsx';
 
 import { currencyFormat } from '../formatters/numberFormatters';
+import { APIGlobals } from '../../api/api-globals';
 
 const EditQuoteChargeGroup = (props) => {
   const
@@ -59,18 +60,7 @@ const EditQuoteChargeGroup = (props) => {
               <Select
                 className="input-group-last addon rate-basis"
                 value={chargeLine.basis || ''}
-                options={[
-                  { value: 'Shipment', label: 'Shipment' },
-                  { value: 'KG', label: 'KG' },
-                  { value: 'CBM', label: 'CBM' },
-                  { value: 'Container', label: 'Container' },
-                  { value: 'TEU', label: 'TEU' },
-                  { value: 'Package', label: 'Package' },
-                  { value: 'Declaration', label: 'Declaration' },
-                  { value: 'HAWB', label: 'HAWB' },
-                  { value: 'KM', label: 'KM' },
-                  { value: 'Mile', label: 'Mile' },
-                ]}
+                options={APIGlobals.rateBasisOptions}
                 onChange={selectedValue => setChargeLineBasis(
                   chargeLine,
                   selectedValue.value,

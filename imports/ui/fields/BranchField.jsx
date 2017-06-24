@@ -9,7 +9,7 @@ const BranchField = props => (
     labelKey="name"
     options={props.options}
     clearable={false}
-    onChange={country => props.onChange(country)}
+    onChange={selected => props.onChange(selected)}
   />
 );
 

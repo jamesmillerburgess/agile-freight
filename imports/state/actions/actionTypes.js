@@ -94,3 +94,14 @@ export const SET_EMAIL_TO = 'SET_EMAIL_TO';
 export const SET_EMAIL_CC = 'SET_EMAIL_CC';
 export const SET_EMAIL_SUBJECT = 'SET_EMAIL_SUBJECT';
 export const SET_EMAIL_MESSAGE = 'SET_EMAIL_MESSAGE';
+
+// RATE
+export const LOAD_RATE = 'LOAD_RATE';
+export const SET_RATE_TYPE = 'SET_RATE_TYPE';
+export const SET_RATE_CHARGE_CODE = 'SET_RATE_CHARGE_CODE';
+export const SET_RATE_LEVEL = 'SET_RATE_LEVEL';
+export const SET_RATE_ROUTE = 'SET_RATE_ROUTE';
+export const SET_RATE_CARRIER = 'SET_RATE_CARRIER';
+export const SET_RATE_BASIS = 'SET_RATE_BASIS';
+export const SET_RATE_UNIT_PRICE = 'SET_RATE_UNIT_PRICE';
+export const SET_RATE_CURRENCY = 'SET_RATE_CURRENCY';

@@ -154,12 +154,7 @@ class EditQuoteHeader extends React.Component {
               <div className="package-type">
                 <Select
                   value={packageLine.packageType}
-                  options={[
-                    { value: 'Packages', label: 'Packages' },
-                    { value: 'Boxes', label: 'Boxes' },
-                    { value: 'Pallets', label: 'Pallets' },
-                    { value: 'Cases', label: 'Cases' },
-                  ]}
+                  options={APIGlobals.packageTypeOptions}
                   clearable={false}
                   onChange={selectedValue => this.props.dispatchers
                                                  .onChangePackageType(
