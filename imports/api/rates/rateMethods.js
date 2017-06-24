@@ -34,7 +34,9 @@ export const getcarrierRoute = (route = [], movement = {}) => (
 );
 
 /**
- *
+ * Gets the applicable sell rate from each level and returns it as an object
+ * together with the suggested rate. The suggested rate is always the most
+ * specific rate applicable.
  * @param charge
  * @param movement
  * @returns {{global: (Promise|any), country: (Promise|any), location:
@@ -82,29 +84,49 @@ const getApplicableSellRates = (charge, movement) => {
   return rates;
 };
 
+/**
+ * Iterates over all charges and gets the applicable sell rates for each.
+ * @param charges
+ * @param movement
+ */
+export const getAllApplicableSellRates = (charges = [], movement) => {
+  check(charges, Array);
+  check(movement, Match.Maybe(Object));
+  return charges.map(charge => getApplicableSellRates(charge, movement));
+};
+
+export const rateSchema = {
+  type: String,
+  chargeCode: String,
+  level: String,
+  route: Match.Maybe(String),
+  basis: String,
+  unitPrice: Number,
+  currency: String,
+};
+
+/**
+ * Inserts a new rate into the collection.
+ * @param rate
+ */
 export const newRate = (rate) => {
-  check(rate, {
-    type: String,
-    chargeCode: String,
-    level: String,
-    route: Match.Maybe(String),
-    basis: String,
-    unitPrice: Number,
-    currency: String,
-  });
+  check(rate, rateSchema);
   return Rates.insert(rate);
 };
 
+/**
+ * Saves changes to an existing rate.
+ * @param rateId
+ * @param rate
+ */
 export const saveRate = (rateId, rate) => {
+  check(rateId, String);
+  check(rate, rateSchema);
   Rates.update({ _id: rateId }, rate);
 };
 
 Meteor.methods({
-  'rates.getApplicableSellRates': (charges = [], movement = {}) => {
-    check(charges, Array);
-    check(movement, Match.Maybe(Object));
-    return charges.map(charge => getApplicableSellRates(charge, movement));
-  },
+  'rates.getApplicableSellRates': getAllApplicableSellRates,
   'rates.new': newRate,
   'rates.save': saveRate,
 });
