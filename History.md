@@ -5,6 +5,7 @@
 * All four locations in routing
 * Connect routing to rate search
 * Add carrier field to quote
+* Add rate list to view all rates
 * Rate creation form for simple sell rates
 * Rate collection methods
 
