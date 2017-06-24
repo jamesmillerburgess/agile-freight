@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import AddRate from './AddRate.jsx';
+import EditRate from './EditRate.jsx';
 import * as actions from '../../state/actions/rateActionCreators';
 
 import { Rates } from '../../api/rates/rateCollection';
@@ -14,7 +14,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     };
     dispatch(actions.loadRate(rate));
   } else {
-    dispatch(actions.loadRate({ type: 'sell' }));
+    dispatch(actions.loadRate({
+      type: 'sell',
+      chargeCode: '',
+      level: '',
+      route: '',
+      basis: '',
+      unitPrice: 0,
+      currency: '',
+    }));
   }
   return {
     dispatchers: {
@@ -34,6 +42,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-const AddRateConnect = connect(mapStateToProps, mapDispatchToProps)(AddRate);
+const EditRateConnect = connect(mapStateToProps, mapDispatchToProps)(EditRate);
 
-export default AddRateConnect;
+export default EditRateConnect;

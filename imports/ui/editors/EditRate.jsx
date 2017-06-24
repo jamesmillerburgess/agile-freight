@@ -6,7 +6,7 @@ import Select from 'react-select';
 
 import { APIGlobals } from '../../api/api-globals';
 
-const AddRate = props => (
+const EditRate = props => (
   <div>
     <div className="content rate">
       <div className="process-header">
@@ -148,4 +148,4 @@ const AddRate = props => (
   </div>
 );
 
-export default AddRate;
+export default EditRate;
