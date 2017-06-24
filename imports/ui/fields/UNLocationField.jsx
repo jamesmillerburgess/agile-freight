@@ -48,25 +48,21 @@ const UNLocationField = (props) => {
   // Display an empty select until the state has been loaded.
   // This prevents 'autoload' from searching for results with an empty value.
   // TODO: Find a way to load the state before initial render of this element
-  return props.location && props.location._id ?
-         (
-           <Select.Async
-             value={props.location}
-             valueKey="_id"
-             loadOptions={getOptions}
-             filterOption={() => true}
-             optionRenderer={locationRenderer}
-             valueRenderer={locationRenderer}
-             onChange={unLocation => props.onChange(unLocation)}
-             autoload
-             clearRenderer={() => null}
-             arrowRenderer={() => null}
-             placeholder=""
-           />
-         ) :
-         (
-           <Select />
-         );
+  return (
+    <Select.Async
+      value={props.location}
+      valueKey="_id"
+      loadOptions={getOptions}
+      filterOption={() => true}
+      optionRenderer={locationRenderer}
+      valueRenderer={locationRenderer}
+      onChange={unLocation => props.onChange(unLocation)}
+      autoload
+      clearRenderer={() => null}
+      arrowRenderer={() => null}
+      placeholder=""
+    />
+  );
 };
 
 UNLocationField.propTypes = {

@@ -82,10 +82,24 @@ const getApplicableSellRates = (charge, movement) => {
   return rates;
 };
 
+export const newRate = (rate) => {
+  check(rate, {
+    type: String,
+    chargeCode: String,
+    level: String,
+    route: Match.Maybe(String),
+    basis: String,
+    unitPrice: Number,
+    currency: String,
+  });
+  return Rates.insert(rate);
+};
+
 Meteor.methods({
   'rates.getApplicableSellRates': (charges = [], movement = {}) => {
     check(charges, Array);
     check(movement, Match.Maybe(Object));
     return charges.map(charge => getApplicableSellRates(charge, movement));
   },
+  'rates.new': newRate,
 });

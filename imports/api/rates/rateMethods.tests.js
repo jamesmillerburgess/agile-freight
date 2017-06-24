@@ -243,5 +243,27 @@ if (Meteor.isServer) {
                  .equal('carrier');
       });
     });
+
+    describe('rates.new', () => {
+      const rate = {
+        type: 'sell',
+        chargeCode: 'ITP',
+        level: 'country',
+        route: 'USUS',
+        basis: 'Mile',
+        unitPrice: 1,
+        currency: 'USD',
+      };
+      it('inserts a rate into the collection', () => {
+        Rates.find().count().should.equal(0);
+        Meteor.call('rates.new', rate);
+        Rates.find().count().should.equal(1);
+      });
+
+      it('returns the id of the new rate', () => {
+        const id = Meteor.call('rates.new', rate);
+        Rates.findOne(id)._id.should.equal(id);
+      });
+    });
   });
 }

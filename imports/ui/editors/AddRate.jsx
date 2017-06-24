@@ -77,6 +77,9 @@ const AddRate = props => (
               <span className="label">ROUTE</span>
               <input
                 value={props.rate.route}
+                onChange={
+                  e => props.dispatchers.onChangeRateRoute(e.target.value)
+                }
               />
             </div>
             <div className="vertical-input-group">
@@ -97,7 +100,7 @@ const AddRate = props => (
               <input
                 value={props.rate.unitPrice}
                 onChange={e => props.dispatchers.onChangeRateUnitPrice(
-                  e.target.value)}
+                  +e.target.value)}
               />
             </div>
             <div className="vertical-input-group">
@@ -128,7 +131,10 @@ const AddRate = props => (
                 },
               );
             } else {
-              Meteor.call('rate.new', props.rate, () => {
+              console.log(props.rate);
+              Meteor.call('rates.new', props.rate, (err, res) => {
+                console.log(err);
+                console.log(res);
                 props.history.push('/rates');
               });
             }
