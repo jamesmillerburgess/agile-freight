@@ -9,11 +9,12 @@ import { Meteor } from 'meteor/meteor';
  * @param results
  */
 const mapSearchResultsToOptions = results => results.map(opt => ({
-  value: opt._id,
-  label: opt.name,
-  isSeaport: opt.isSeaport,
-  isAirport: opt.isAirport,
-  code: opt.countryCode + opt.locationCode,
+  ...opt,
+  // value: opt._id,
+  // label: opt.name,
+  // isSeaport: opt.isSeaport,
+  // isAirport: opt.isAirport,
+  // code: opt.countryCode + opt.locationCode,
 }));
 
 // TODO: Combine with most-used locations in a smart way
@@ -36,10 +37,10 @@ const handleSearchResults = (err, res, cb) => {
  */
 const UNLocationField = (props) => {
   const getOptions = (input, cb) => {
-    const { value, locations, airports, seaports } = props;
+    const { location, locations, airports, seaports } = props;
     const searchOptions = {
       search: input || '',
-      id: value,
+      id: location._id,
       locations,
       airports,
       seaports,
@@ -61,13 +62,14 @@ const UNLocationField = (props) => {
         option.isAirport ?
         (<span><span className="fa fa-fw fa-plane" />&nbsp;</span>) : ''
       }
-      {option.label} – {option.code}
+      {option.name} – {option.code}
     </div>
   );
 
   return (
     <Select.Async
-      value={props.value}
+      value={props.location._id}
+      valueKey="_id"
       loadOptions={getOptions}
       filterOption={() => true}
       optionRenderer={locationRenderer}
@@ -82,7 +84,7 @@ const UNLocationField = (props) => {
 };
 
 UNLocationField.propTypes = {
-  value: PropTypes.string,
+  location: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   locations: PropTypes.bool,
   airports: PropTypes.bool,
@@ -90,6 +92,7 @@ UNLocationField.propTypes = {
 };
 
 UNLocationField.defaultProps = {
+  location: {},
   value: '',
   locations: false,
   airports: false,

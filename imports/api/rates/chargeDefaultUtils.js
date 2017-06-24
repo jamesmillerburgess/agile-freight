@@ -8,14 +8,14 @@ import { APIGlobals } from '../api-globals';
 export const hasCollection = (movement) => {
   if (movement.mode !== 'Brokerage') {
     if (movement.commercialParty === 'Seller') {
-      if (movement.pickup.locationType === 'Door') {
+      if (movement.receipt._id) {
         if (movement.termsOfSale !== 'EXW') {
           return true;
         }
       }
     }
     if (movement.commercialParty === 'Buyer') {
-      if (movement.pickup.locationType === 'Door') {
+      if (movement.receipt._id) {
         if (movement.termsOfSale === 'EXW') {
           return true;
         }
@@ -33,7 +33,7 @@ export const hasCollection = (movement) => {
 export const hasDelivery = (movement) => {
   if (movement.mode !== 'Brokerage') {
     if (movement.commercialParty === 'Seller') {
-      if (movement.delivery.locationType === 'Door') {
+      if (movement.delivery._id) {
         if (
           [
             'DAF',
@@ -48,7 +48,7 @@ export const hasDelivery = (movement) => {
       }
     }
     if (movement.commercialParty === 'Buyer') {
-      if (movement.delivery.locationType === 'Door') {
+      if (movement.delivery._id) {
         if (
           [
             'DAF',

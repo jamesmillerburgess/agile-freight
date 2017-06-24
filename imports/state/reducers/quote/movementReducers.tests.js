@@ -70,6 +70,46 @@ if (Meteor.isClient) {
       movement(stateBefore, action).commercialParty.should.equal('Buyer');
     });
 
+    it('sets the receipt', () => {
+      const stateBefore = { receipt: {} };
+      const action = {
+        type: ACTION_TYPES.SET_RECEIPT,
+        receipt: { code: 'USMIA' },
+      };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).receipt.code.should.equal('USMIA');
+    });
+
+    it('sets the departure', () => {
+      const stateBefore = { departure: {} };
+      const action = {
+        type: ACTION_TYPES.SET_DEPARTURE,
+        departure: { code: 'USMIA' },
+      };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).departure.code.should.equal('USMIA');
+    });
+
+    it('sets the arrival', () => {
+      const stateBefore = { arrival: {} };
+      const action = {
+        type: ACTION_TYPES.SET_ARRIVAL,
+        arrival: { code: 'USMIA' },
+      };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).arrival.code.should.equal('USMIA');
+    });
+
+    it('sets the delivery', () => {
+      const stateBefore = { delivery: {} };
+      const action = {
+        type: ACTION_TYPES.SET_DELIVERY,
+        delivery: { code: 'USMIA' },
+      };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).delivery.code.should.equal('USMIA');
+    });
+
     it('sets the pickup location type', () => {
       const stateBefore = { pickup: { locationType: 'port' } };
       const action = {

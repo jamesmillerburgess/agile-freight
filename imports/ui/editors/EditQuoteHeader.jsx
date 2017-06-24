@@ -37,10 +37,10 @@ class EditQuoteHeader extends React.Component {
     const charges = getDefaultMovementCharges(this.props.quote.movement);
     const movement = {
       supplier: 'MAEU',
-      receipt: 'USMIA',
-      departure: 'USTPA',
-      arrival: 'CNSHA',
-      delivery: 'CNPNY',
+      receipt: this.props.quote.movement.receipt.code,
+      departure: this.props.quote.movement.departure.code,
+      arrival: this.props.quote.movement.arrival.code,
+      delivery: this.props.quote.movement.delivery.code,
     };
     Meteor.call(
       'rates.getApplicableSellRates',
@@ -584,25 +584,13 @@ class EditQuoteHeader extends React.Component {
                     RECEIPT
                   </div>
                   <UNLocationField
-                    value={this.props.quote.movement.pickup.location}
+                    location={this.props.quote.movement.receipt}
                     locations
                     onChange={(selectedValue) => {
-                      this.props.dispatchers
-                          .onChangePickupLocation(selectedValue.value);
-                      this.props.dispatchers
-                          .onChangePickupLocationName(selectedValue.label);
-                      let locationType = 'Door';
-                      if (selectedValue.isAirport) {
-                        locationType = 'Airport';
-                      }
-                      if (selectedValue.isSeaport) {
-                        locationType = 'Seaport';
-                      }
-                      if (!selectedValue.value) {
-                        locationType = '';
-                      }
-                      this.props.dispatchers
-                          .onChangePickupLocationType(locationType);
+                      this
+                        .props
+                        .dispatchers
+                        .onChangeReceipt(selectedValue);
                     }}
                   />
                 </div>
@@ -611,26 +599,14 @@ class EditQuoteHeader extends React.Component {
                     DEPARTURE
                   </div>
                   <UNLocationField
-                    value={this.props.quote.movement.pickup.location}
+                    location={this.props.quote.movement.departure}
                     airports
                     seaports
                     onChange={(selectedValue) => {
-                      this.props.dispatchers
-                          .onChangePickupLocation(selectedValue.value);
-                      this.props.dispatchers
-                          .onChangePickupLocationName(selectedValue.label);
-                      let locationType = 'Door';
-                      if (selectedValue.isAirport) {
-                        locationType = 'Airport';
-                      }
-                      if (selectedValue.isSeaport) {
-                        locationType = 'Seaport';
-                      }
-                      if (!selectedValue.value) {
-                        locationType = '';
-                      }
-                      this.props.dispatchers
-                          .onChangePickupLocationType(locationType);
+                      this
+                        .props
+                        .dispatchers
+                        .onChangeDeparture(selectedValue);
                     }}
                   />
                 </div>
@@ -639,26 +615,14 @@ class EditQuoteHeader extends React.Component {
                     ARRIVAL
                   </div>
                   <UNLocationField
-                    value={this.props.quote.movement.pickup.location}
+                    location={this.props.quote.movement.arrival}
                     airports
                     seaports
                     onChange={(selectedValue) => {
-                      this.props.dispatchers
-                          .onChangePickupLocation(selectedValue.value);
-                      this.props.dispatchers
-                          .onChangePickupLocationName(selectedValue.label);
-                      let locationType = 'Door';
-                      if (selectedValue.isAirport) {
-                        locationType = 'Airport';
-                      }
-                      if (selectedValue.isSeaport) {
-                        locationType = 'Seaport';
-                      }
-                      if (!selectedValue.value) {
-                        locationType = '';
-                      }
-                      this.props.dispatchers
-                          .onChangePickupLocationType(locationType);
+                      this
+                        .props
+                        .dispatchers
+                        .onChangeArrival(selectedValue);
                     }}
                   />
                 </div>
@@ -667,25 +631,13 @@ class EditQuoteHeader extends React.Component {
                     DELIVERY
                   </div>
                   <UNLocationField
-                    value={this.props.quote.movement.delivery.location}
+                    location={this.props.quote.movement.delivery}
                     locations
                     onChange={(selectedValue) => {
-                      this.props.dispatchers
-                          .onChangeDeliveryLocation(selectedValue.value);
-                      this.props.dispatchers
-                          .onChangeDeliveryLocationName(selectedValue.label);
-                      let locationType = 'Door';
-                      if (selectedValue.isAirport) {
-                        locationType = 'Airport';
-                      }
-                      if (selectedValue.isSeaport) {
-                        locationType = 'Seaport';
-                      }
-                      if (!selectedValue.value) {
-                        locationType = '';
-                      }
-                      this.props.dispatchers
-                          .onChangeDeliveryLocationType(locationType);
+                      this
+                        .props
+                        .dispatchers
+                        .onChangeDelivery(selectedValue);
                     }}
                   />
                 </div>

@@ -94,6 +94,22 @@ export const setMovementTermsOfSale = makeActionCreator(
   ACTION_TYPES.SET_MOVEMENT_TERMS_OF_SALE,
   'termsOfSale',
 );
+export const setReceipt = makeActionCreator(
+  ACTION_TYPES.SET_RECEIPT,
+  'receipt',
+);
+export const setDeparture = makeActionCreator(
+  ACTION_TYPES.SET_DEPARTURE,
+  'departure',
+);
+export const setArrival = makeActionCreator(
+  ACTION_TYPES.SET_ARRIVAL,
+  'arrival',
+);
+export const setDelivery = makeActionCreator(
+  ACTION_TYPES.SET_DELIVERY,
+  'delivery',
+);
 export const setPickupLocationType = makeActionCreator(
   ACTION_TYPES.SET_PICKUP_LOCATION_TYPE,
   'locationType',
