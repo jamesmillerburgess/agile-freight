@@ -75,23 +75,6 @@ const AddRate = props => (
               />
             </div>
             <div className="vertical-input-group">
-              <span className="label">CARRIER</span>
-              <Select
-                value={props.rate.carrier}
-                options={[
-                  { value: '', label: 'Agility Choice' },
-                  { value: 'MAEU', label: 'Maersk – MAEU' },
-                  { value: 'SUDU', label: 'Hamburg Sud – SUDU' },
-                ]}
-                onChange={selected => props.dispatchers.onChangeRateRoute(
-                  selected.value)}
-                clearRenderer={() => null}
-                arrowRenderer={() => null}
-                placeholder=""
-                clearable={false}
-              />
-            </div>
-            <div className="vertical-input-group">
               <span className="label">BASIS</span>
               <Select
                 value={props.rate.basis}
