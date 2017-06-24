@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
 
+/**
+ * Maps the results from the search into options objects that the select field
+ * can read.
+ * @param results
+ */
 const mapSearchResultsToOptions = results => results.map(opt => ({
   value: opt._id,
   label: opt.name,
@@ -11,16 +16,29 @@ const mapSearchResultsToOptions = results => results.map(opt => ({
   code: opt.countryCode + opt.locationCode,
 }));
 
+// TODO: Combine with most-used locations in a smart way
+/**
+ * Handles the search results from the Meteor Method 'unlocations.search'.
+ * @param err
+ * @param res
+ * @param cb
+ */
 const handleSearchResults = (err, res, cb) => {
   const options = mapSearchResultsToOptions(res);
   cb(null, { options });
 };
 
+/**
+ * Input field for selecting unlocations.
+ * @param props
+ * @returns {XML}
+ * @constructor
+ */
 const UNLocationField = (props) => {
   const getOptions = (input, cb) => {
     const { value, locations, airports, seaports } = props;
     const searchOptions = {
-      search: input,
+      search: input || '',
       id: value,
       locations,
       airports,
@@ -37,14 +55,12 @@ const UNLocationField = (props) => {
     <div>
       {
         option.isSeaport ?
-        (
-          <span><span className="fa fa-fw fa-ship" />&nbsp;</span>
-        ) : ''}
+        (<span><span className="fa fa-fw fa-ship" />&nbsp;</span>) : ''
+      }
       {
         option.isAirport ?
-        (
-          <span><span className="fa fa-fw fa-plane" />&nbsp;</span>
-        ) : ''}
+        (<span><span className="fa fa-fw fa-plane" />&nbsp;</span>) : ''
+      }
       {option.label} – {option.code}
     </div>
   );
