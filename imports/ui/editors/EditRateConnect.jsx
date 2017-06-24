@@ -9,9 +9,7 @@ const mapStateToProps = ({ rate }) => ({ rate });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   if (ownProps.editMode) {
-    const rate = {
-      name: Rates.findOne(ownProps.match.params.rateId).name,
-    };
+    const rate = Rates.findOne(ownProps.match.params.rateId);
     dispatch(actions.loadRate(rate));
   } else {
     dispatch(actions.loadRate({

@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { currencyFormat } from '../formatters/numberFormatters';
 
 const RateListItem = (props) => {
-  const branchLink = `/branches/edit/${props.rate._id}`;
+  const rateLink = `/rates/edit/${props.rate._id}`;
 
   return (
-    <Link className="list-item" to={branchLink}>
+    <Link className="list-item" to={rateLink}>
       <div className="panel">
         <div className="icon-column" />
         <div className="container panel-body">

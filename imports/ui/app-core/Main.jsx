@@ -97,6 +97,13 @@ const MainInner = ({ loading }) => {
                  })}
                />
                <Route
+                 path="/rates/edit/:rateId"
+                 render={routeProps => verifyAdminAuth(EditRateConnect, {
+                   ...routeProps,
+                   editMode: true,
+                 })}
+               />
+               <Route
                  path="/profile"
                  render={routeProps => verifyAuth(UserProfileConnect, {
                    ...routeProps,
