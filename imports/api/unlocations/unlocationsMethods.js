@@ -5,53 +5,75 @@ import { UNLocations } from './unlocationsCollection';
 
 import { buildSearchRegExp } from '../../ui/searchUtils';
 
+/**
+ * Pattern for searching for locations.
+ * @type {{id: *, search: *, country: *, locations: Boolean, airports: Boolean,
+ *   seaports: Boolean}}
+ */
 const unlocationsSearchPattern = {
-  country: Match.Maybe(String),
-  search: Match.Maybe(String),
   id: Match.Maybe(String),
+  search: Match.Maybe(String),
+  country: Match.Maybe(String),
   locations: Boolean,
   airports: Boolean,
   seaports: Boolean,
 };
 
+/**
+ * Finds the first ten non-airport, non-seaport locations with a given query.
+ * @param query
+ */
+const getLocations = query => UNLocations
+  .find({ ...query, isSeaport: false, isAirport: false }, { limit: 10 })
+  .fetch();
+
+/**
+ * Finds the first ten airports with a given query.
+ * @param query
+ */
+const getAirports = query => UNLocations
+  .find({ ...query, isAirport: true }, { limit: 10 })
+  .fetch();
+
+/**
+ * Finds the first ten seaports with a given query.
+ * @param query
+ */
+const getSeaports = query => UNLocations
+  .find({ ...query, isSeaport: true }, { limit: 10 })
+  .fetch();
+
+/**
+ * Searches for unlocations based on a variety of options.
+ * @param options
+ * @returns {*}
+ */
 const unlocationsSearch = (options) => {
   check(options, unlocationsSearchPattern);
 
-  if (!options.search && options.id) {
-    return UNLocations.find({ _id: options.id }).fetch();
+  const { id, search, country, locations, airports, seaports } = options;
+
+  // Prioritize a search by id
+  if (!search && id) {
+    return UNLocations.findOne(id);
   }
 
-  const query = { search: { $regex: buildSearchRegExp(options.search) } };
-  if (options.country) {
-    query.countryCode = options.country;
+  // Build up the query, with optional search within a country
+  const query = { search: { $regex: buildSearchRegExp(search) } };
+  if (country) {
+    query.countryCode = country;
   }
+
+  // Pull in the results from each type specified in the options
   let results = [];
-  if (options.locations) {
-    results = [
-      ...results,
-      ...UNLocations.find(
-        { ...query, isSeaport: false, isAirport: false },
-        { limit: 10 },
-      ).fetch(),
-    ];
+  if (locations) {
+    results = [...results, ...getLocations(query)];
   }
-  if (options.airports) {
-    results = [
-      ...results,
-      ...UNLocations.find(
-        { ...query, isAirport: true },
-        { limit: 10 },
-      ).fetch(),
-    ];
+  if (airports) {
+    results = [...results, ...getAirports(query)];
   }
-  if (options.seaports) {
-    results = [
-      ...results,
-      ...UNLocations.find(
-        { ...query, isSeaport: true },
-        { limit: 10 },
-      ).fetch(),
-    ];
+  if (seaports) {
+    results = [...results, ...getSeaports(query)];
   }
   return results;
 };
