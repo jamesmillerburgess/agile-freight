@@ -22,13 +22,13 @@ export const getLocationRoute = (route = [], movement = {}) => route.reduce(
 );
 
 /**
- * Build the supplier route from the supplier and the location codes in the
+ * Build the carrier route from the carrier and the location codes in the
  * movement.
  * @param route
  * @param movement
  */
-export const getSupplierRoute = (route = [], movement = {}) => (
-  movement.supplier + route.reduce(
+export const getcarrierRoute = (route = [], movement = {}) => (
+  movement.carrier + route.reduce(
     (acc, component) => acc + (movement[component] || ''), '',
   )
 );
@@ -38,13 +38,13 @@ export const getSupplierRoute = (route = [], movement = {}) => (
  * @param charge
  * @param movement
  * @returns {{global: (Promise|any), country: (Promise|any), location:
- *   (Promise|any), supplier: (Promise|any)}}
+ *   (Promise|any), carrier: (Promise|any)}}
  */
 const getApplicableSellRates = (charge, movement) => {
   const { chargeCode, route } = charge;
   const countryRoute = getCountryRoute(route, movement);
   const locationRoute = getLocationRoute(route, movement);
-  const supplierRoute = getSupplierRoute(route, movement);
+  const carrierRoute = getcarrierRoute(route, movement);
   const rates = {
     global: Rates.findOne({
       type: 'sell',
@@ -63,15 +63,15 @@ const getApplicableSellRates = (charge, movement) => {
       level: 'location',
       route: locationRoute,
     }),
-    supplier: Rates.findOne({
+    carrier: Rates.findOne({
       type: 'sell',
       chargeCode,
-      level: 'supplier',
-      route: supplierRoute,
+      level: 'carrier',
+      route: carrierRoute,
     }),
   };
-  if (rates.supplier) {
-    rates.suggested = 'supplier';
+  if (rates.carrier) {
+    rates.suggested = 'carrier';
   } else if (rates.location) {
     rates.suggested = 'location';
   } else if (rates.country) {

@@ -28,7 +28,7 @@ const SELL_RATES = [
   {
     type: 'sell',
     chargeCode: 'IFR',
-    level: 'supplier',
+    level: 'carrier',
     route: 'MAEUUSTPACNSHA',
     basis: 'TEU',
     unitPrice: 850,

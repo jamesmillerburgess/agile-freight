@@ -510,34 +510,34 @@ if (Meteor.isClient) {
         applicableSellRates.suggested.should.equal('location');
       });
 
-      it('suggests the supplier rate if it is the only rate applicable', () => {
+      it('suggests the carrier rate if it is the only rate applicable', () => {
         const charge = {
           name: 'Collection',
           group: 'Origin',
           chargeCode: 'COL',
           route: ['receipt', 'departure'],
         };
-        const supplierRate = {
+        const carrierRate = {
           rate: 'Mile',
           unitPrice: 0.5,
           currency: 'USD',
         };
         const movement = {
-          supplier: 'MAEU',
+          carrier: 'MAEU',
           receipt: 'USMIA',
           departure: 'USTPA',
         };
-        const sellRates = { COL: { supplier: { MAEUUSMIAUSTPA: supplierRate } } };
+        const sellRates = { COL: { carrier: { MAEUUSMIAUSTPA: carrierRate } } };
         const applicableSellRates = getApplicableSellRates(
           charge,
           sellRates,
           movement,
         );
-        applicableSellRates.supplier.should.equal(supplierRate);
-        applicableSellRates.suggested.should.equal('supplier');
+        applicableSellRates.carrier.should.equal(carrierRate);
+        applicableSellRates.suggested.should.equal('carrier');
       });
 
-      it('suggests the supplier rate and returns all four if supplier, ' +
+      it('suggests the carrier rate and returns all four if carrier, ' +
          'location, country, and global rates are applicable', () => {
         const charge = {
           name: 'Collection',
@@ -560,13 +560,13 @@ if (Meteor.isClient) {
           unitPrice: 0.5,
           currency: 'USD',
         };
-        const supplierRate = {
+        const carrierRate = {
           rate: 'Mile',
           unitPrice: 0.25,
           currency: 'USD',
         };
         const movement = {
-          supplier: 'MAEU',
+          carrier: 'MAEU',
           receipt: 'USMIA',
           departure: 'USTPA',
         };
@@ -575,7 +575,7 @@ if (Meteor.isClient) {
             global: globalRate,
             country: { USUS: countryRate },
             location: { USMIAUSTPA: locationRate },
-            supplier: { MAEUUSMIAUSTPA: supplierRate },
+            carrier: { MAEUUSMIAUSTPA: carrierRate },
           },
         };
         const applicableSellRates = getApplicableSellRates(
@@ -583,11 +583,11 @@ if (Meteor.isClient) {
           sellRates,
           movement,
         );
-        applicableSellRates.supplier.should.equal(supplierRate);
+        applicableSellRates.carrier.should.equal(carrierRate);
         applicableSellRates.location.should.equal(locationRate);
         applicableSellRates.country.should.equal(countryRate);
         applicableSellRates.global.should.equal(globalRate);
-        applicableSellRates.suggested.should.equal('supplier');
+        applicableSellRates.suggested.should.equal('carrier');
       });
     });
   });

@@ -36,7 +36,7 @@ class EditQuoteHeader extends React.Component {
   getRates() {
     const charges = getDefaultMovementCharges(this.props.quote.movement);
     const movement = {
-      supplier: 'MAEU',
+      carrier: 'MAEU',
       receipt: this.props.quote.movement.receipt.code,
       departure: this.props.quote.movement.departure.code,
       arrival: this.props.quote.movement.arrival.code,
@@ -568,6 +568,20 @@ class EditQuoteHeader extends React.Component {
                 <Select
                   value={this.props.quote.movement.termsOfSale}
                   options={APIGlobals.incotermOptions}
+                  onChange={selectedValue =>
+                    this.props
+                        .dispatchers
+                        .onChangeMovementTermsOfSale(selectedValue.value)}
+                  disabled={this.props.quote.movement.mode === 'Brokerage'}
+                />
+              </div>
+              <div className="field select-country">
+                <div className="label">
+                  CARRIER
+                </div>
+                <Select
+                  value={this.props.quote.movement.carrier}
+                  options={APIGlobals.carrierOptions}
                   onChange={selectedValue =>
                     this.props
                         .dispatchers
