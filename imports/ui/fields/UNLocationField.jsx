@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
 
+const mapSearchResultsToOptions = results => results.map(opt => ({
+  value: opt._id,
+  label: opt.name,
+  isSeaport: opt.isSeaport,
+  isAirport: opt.isAirport,
+  code: opt.countryCode + opt.locationCode,
+}));
+
 const UNLocationField = (props) => {
   const getOptions = (input, cb) => {
     const { value, locations, airports, seaports } = props;
@@ -10,13 +18,7 @@ const UNLocationField = (props) => {
       'unlocations.search',
       { search: input, id: value, locations, airports, seaports },
       (err, res) => {
-        const options = res.map(opt => ({
-          value: opt._id,
-          label: opt.name,
-          isSeaport: opt.isSeaport,
-          isAirport: opt.isAirport,
-          code: opt.countryCode + opt.locationCode,
-        }));
+        const options = mapSearchResultsToOptions(res);
         cb(null, { options });
       },
     );
