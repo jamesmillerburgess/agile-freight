@@ -7,7 +7,7 @@
 * Add carrier field to quote
 * Add rate list to view all rates
 * Rate creation form for simple sell rates
-* Rate collection methods
+* Edit and save changes to existing rates
 
 ## v0.9.0 – Simple Rate Database
 
