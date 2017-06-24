@@ -55,7 +55,7 @@ const unlocationsSearch = (options) => {
 
   // Prioritize a search by id
   if (!search && id) {
-    return UNLocations.findOne(id);
+    return UNLocations.find({ _id: id }).fetch();
   }
 
   // Build up the query, with optional search within a country
