@@ -11,16 +11,25 @@ const mapSearchResultsToOptions = results => results.map(opt => ({
   code: opt.countryCode + opt.locationCode,
 }));
 
+const handleSearchResults = (err, res, cb) => {
+  const options = mapSearchResultsToOptions(res);
+  cb(null, { options });
+};
+
 const UNLocationField = (props) => {
   const getOptions = (input, cb) => {
     const { value, locations, airports, seaports } = props;
+    const searchOptions = {
+      search: input,
+      id: value,
+      locations,
+      airports,
+      seaports,
+    };
     Meteor.call(
       'unlocations.search',
-      { search: input, id: value, locations, airports, seaports },
-      (err, res) => {
-        const options = mapSearchResultsToOptions(res);
-        cb(null, { options });
-      },
+      searchOptions,
+      (err, res) => handleSearchResults(err, res, cb),
     );
   };
 
