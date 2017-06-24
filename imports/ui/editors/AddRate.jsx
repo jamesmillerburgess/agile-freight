@@ -41,7 +41,12 @@ const AddRate = props => (
               <span className="label">CHARGE</span>
               <Select
                 value={props.rate.chargeCode}
-                options={[{ value: 'ILT', label: 'Inland Transport' }]}
+                options={[
+                  { value: 'ITP', label: 'Inland Transport – ITP' },
+                  { value: 'FSC', label: 'Fuel Surcharge – FSC' },
+                  { value: 'THC', label: 'Terminal Handling Charge – THC' },
+                  { value: 'IFR', label: 'International Freight – IFR' },
+                ]}
                 onChange={selected => props.dispatchers.onChangeRateChargeCode(
                   selected.value)}
                 clearRenderer={() => null}
