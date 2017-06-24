@@ -37,8 +37,6 @@ const handleSearchResults = (err, res, cb) => {
  */
 const UNLocationField = (props) => {
   const getOptions = (input, cb) => {
-    console.log('getOptions');
-    console.log(props);
     const { location, locations, airports, seaports } = props;
     const searchOptions = {
       search: input || location.code,
