@@ -10,6 +10,7 @@ import Home from '../pages/Home.jsx';
 import CustomerListConnect from '../lists/CustomerListConnect.jsx';
 import EditCustomerConnect from '../editors/EditCustomerConnect';
 import Customer from '../pages/Customer.jsx';
+import RateList from '../lists/RateList.jsx';
 import EditRateConnect from '../editors/EditRateConnect.jsx';
 import UserProfileConnect from '../editors/EditUserProfileConnect.jsx';
 import SignIn from './SignIn.jsx';
@@ -84,6 +85,13 @@ const MainInner = ({ loading }) => {
                />
                <Route
                  path="/rates"
+                 exact
+                 render={routeProps => verifyAdminAuth(RateList, {
+                   ...routeProps,
+                 })}
+               />
+               <Route
+                 path="/rates/new"
                  render={routeProps => verifyAdminAuth(EditRateConnect, {
                    ...routeProps,
                  })}

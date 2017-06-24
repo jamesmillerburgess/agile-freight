@@ -90,6 +90,26 @@
   }
 }
 
+.rate a {
+  .panel:hover {
+    background-color: $rates-accent-color;
+    color: $inverted-text-color;
+    .icon-column .fa {
+      color: $inverted-text-color;
+    }
+    .icon-column,
+    .favorite-icon {
+      color: $inverted-text-color;
+      .fa:hover {
+        color: rgba($rates-accent-color, $mid-alpha);
+      }
+    }
+    .favorite-icon:hover {
+      color: pink;
+    }
+  }
+}
+
 .list-item {
   .list-item-header {
     font-weight: bold;

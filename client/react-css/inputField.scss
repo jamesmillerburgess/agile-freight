@@ -18,10 +18,10 @@ input {
   input {
     border-color: $rates-accent-color;
   }
-  //input:focus {
-  //  box-shadow: 0 0 3pt 2pt rgba($rates-accent-color, $high-alpha);
-  //  border: 1px solid $rates-accent-color;
-  //}
+  input:focus {
+    box-shadow: 0 0 3pt 2pt rgba($rates-accent-color, $high-alpha);
+    border: 1px solid $rates-accent-color;
+  }
 }
 
 input:focus {

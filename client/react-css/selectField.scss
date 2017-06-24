@@ -2,6 +2,10 @@
 
 .Select {
   width: 100%;
+  input:focus {
+    box-shadow: none;
+    border: none;
+  }
 }
 
 .Select-control {
