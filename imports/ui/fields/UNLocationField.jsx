@@ -4,38 +4,13 @@ import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
 
 /**
- * Maps the results from the search into options objects that the select field
- * can read.
- * @param results
- */
-const mapSearchResultsToOptions = results => results.map(opt => ({
-  ...opt,
-  // value: opt._id,
-  // label: opt.name,
-  // isSeaport: opt.isSeaport,
-  // isAirport: opt.isAirport,
-  // code: opt.countryCode + opt.locationCode,
-}));
-
-// TODO: Combine with most-used locations in a smart way
-/**
- * Handles the search results from the Meteor Method 'unlocations.search'.
- * @param err
- * @param res
- * @param cb
- */
-const handleSearchResults = (err, res, cb) => {
-  const options = mapSearchResultsToOptions(res);
-  cb(null, { options });
-};
-
-/**
  * Input field for selecting unlocations.
  * @param props
  * @returns {XML}
  * @constructor
  */
 const UNLocationField = (props) => {
+  // TODO: Combine with most-used locations in a smart way
   const getOptions = (input, cb) => {
     const { location, locations, airports, seaports } = props;
     const searchOptions = {
@@ -48,10 +23,14 @@ const UNLocationField = (props) => {
     Meteor.call(
       'unlocations.search',
       searchOptions,
-      (err, res) => handleSearchResults(err, res, cb),
+      (err, options) => cb(null, { options }),
     );
   };
 
+  /**
+   * Render locations in the value and option elements of the Select component.
+   * @param option
+   */
   const locationRenderer = option => (
     <div>
       {
@@ -66,7 +45,10 @@ const UNLocationField = (props) => {
     </div>
   );
 
-  return props.location._id ?
+  // Display an empty select until the state has been loaded.
+  // This prevents 'autoload' from searching for results with an empty value.
+  // TODO: Find a way to load the state before initial render of this element
+  return props.location && props.location._id ?
          (
            <Select.Async
              value={props.location}
