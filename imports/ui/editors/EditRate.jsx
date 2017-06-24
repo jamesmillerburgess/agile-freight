@@ -123,7 +123,7 @@ const EditRate = props => (
           onClick={() => {
             if (props.editMode) {
               Meteor.call(
-                'rate.save',
+                'rates.save',
                 props.match.params.rateId,
                 props.rate,
                 () => {
@@ -131,10 +131,7 @@ const EditRate = props => (
                 },
               );
             } else {
-              console.log(props.rate);
               Meteor.call('rates.new', props.rate, (err, res) => {
-                console.log(err);
-                console.log(res);
                 props.history.push('/rates');
               });
             }

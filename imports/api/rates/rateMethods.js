@@ -95,6 +95,10 @@ export const newRate = (rate) => {
   return Rates.insert(rate);
 };
 
+export const saveRate = (rateId, rate) => {
+  Rates.update({ _id: rateId }, rate);
+};
+
 Meteor.methods({
   'rates.getApplicableSellRates': (charges = [], movement = {}) => {
     check(charges, Array);
@@ -102,4 +106,5 @@ Meteor.methods({
     return charges.map(charge => getApplicableSellRates(charge, movement));
   },
   'rates.new': newRate,
+  'rates.save': saveRate,
 });
