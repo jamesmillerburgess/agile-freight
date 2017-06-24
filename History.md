@@ -2,11 +2,11 @@
 
 ## v0.10.0 – Simple Rate Management
 
-* TODO: All four locations in routing
-* TODO: Add carrier field
-* TODO: Rate creation form
-* TODO: View list of rates
-* TODO: Delete rates
+* All four locations in routing
+* Connect routing to rate search
+* Add carrier field to quote
+* Rate creation form for simple sell rates
+* Rate collection methods
 
 ## v0.9.0 – Simple Rate Database
 
