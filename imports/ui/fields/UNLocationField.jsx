@@ -37,9 +37,11 @@ const handleSearchResults = (err, res, cb) => {
  */
 const UNLocationField = (props) => {
   const getOptions = (input, cb) => {
+    console.log('getOptions');
+    console.log(props);
     const { location, locations, airports, seaports } = props;
     const searchOptions = {
-      search: input || '',
+      search: input || location.code,
       id: location._id,
       locations,
       airports,
@@ -66,21 +68,25 @@ const UNLocationField = (props) => {
     </div>
   );
 
-  return (
-    <Select.Async
-      value={props.location}
-      valueKey="_id"
-      loadOptions={getOptions}
-      filterOption={() => true}
-      optionRenderer={locationRenderer}
-      valueRenderer={locationRenderer}
-      onChange={unLocation => props.onChange(unLocation)}
-      autoload
-      clearRenderer={() => null}
-      arrowRenderer={() => null}
-      placeholder=""
-    />
-  );
+  return props.location._id ?
+         (
+           <Select.Async
+             value={props.location}
+             valueKey="_id"
+             loadOptions={getOptions}
+             filterOption={() => true}
+             optionRenderer={locationRenderer}
+             valueRenderer={locationRenderer}
+             onChange={unLocation => props.onChange(unLocation)}
+             autoload
+             clearRenderer={() => null}
+             arrowRenderer={() => null}
+             placeholder=""
+           />
+         ) :
+         (
+           <Select />
+         );
 };
 
 UNLocationField.propTypes = {
