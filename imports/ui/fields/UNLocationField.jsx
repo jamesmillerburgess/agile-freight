@@ -36,8 +36,6 @@ const handleSearchResults = (err, res, cb) => {
  * @constructor
  */
 const UNLocationField = (props) => {
-  console.log(props);
-
   const getOptions = (input, cb) => {
     const { location, locations, airports, seaports } = props;
     const searchOptions = {
