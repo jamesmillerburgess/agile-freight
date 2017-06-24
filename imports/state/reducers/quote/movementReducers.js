@@ -34,6 +34,9 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
     case ACTION_TYPES.SET_MOVEMENT_TERMS_OF_SALE:
       newState = changeProp(state, 'termsOfSale', action.termsOfSale);
       break;
+    case ACTION_TYPES.SET_CARRIER:
+      newState = changeProp(state, 'carrier', action.carrier);
+      break;
     case ACTION_TYPES.SET_RECEIPT:
       newState = changeProp(state, 'receipt', action.receipt);
       break;

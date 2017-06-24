@@ -36,6 +36,8 @@ const handleSearchResults = (err, res, cb) => {
  * @constructor
  */
 const UNLocationField = (props) => {
+  console.log(props);
+
   const getOptions = (input, cb) => {
     const { location, locations, airports, seaports } = props;
     const searchOptions = {
@@ -68,7 +70,7 @@ const UNLocationField = (props) => {
 
   return (
     <Select.Async
-      value={props.location._id}
+      value={props.location}
       valueKey="_id"
       loadOptions={getOptions}
       filterOption={() => true}

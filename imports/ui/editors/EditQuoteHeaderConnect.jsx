@@ -58,6 +58,7 @@ const mapDispatchToProps = dispatch => ({
       dispatch(actions.setMovementCommercialParty(commercialParty)),
     onChangeMovementTermsOfSale: termsOfSale =>
       dispatch(actions.setMovementTermsOfSale(termsOfSale)),
+    onChangeCarrier: carrier => dispatch(actions.setCarrier(carrier)),
     onChangeReceipt: receipt => dispatch(actions.setReceipt(receipt)),
     onChangeDeparture: departure => dispatch(actions.setDeparture(departure)),
     onChangeArrival: arrival => dispatch(actions.setArrival(arrival)),

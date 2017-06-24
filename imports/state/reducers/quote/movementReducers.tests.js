@@ -70,6 +70,16 @@ if (Meteor.isClient) {
       movement(stateBefore, action).commercialParty.should.equal('Buyer');
     });
 
+    it('sets the carrier', () => {
+      const stateBefore = { carrier: '' };
+      const action = {
+        type: ACTION_TYPES.SET_CARRIER,
+        carrier: 'MAEU',
+      };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).carrier.should.equal('MAEU');
+    });
+
     it('sets the receipt', () => {
       const stateBefore = { receipt: {} };
       const action = {

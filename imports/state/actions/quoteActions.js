@@ -94,6 +94,10 @@ export const setMovementTermsOfSale = makeActionCreator(
   ACTION_TYPES.SET_MOVEMENT_TERMS_OF_SALE,
   'termsOfSale',
 );
+export const setCarrier = makeActionCreator(
+  ACTION_TYPES.SET_CARRIER,
+  'carrier',
+);
 export const setReceipt = makeActionCreator(
   ACTION_TYPES.SET_RECEIPT,
   'receipt',

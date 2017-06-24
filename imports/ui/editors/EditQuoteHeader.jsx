@@ -30,13 +30,16 @@ class EditQuoteHeader extends React.Component {
     this.getRates = this.getRates.bind(this);
     this.PackageLines = this.PackageLines.bind(this);
     this.Containers = this.Containers.bind(this);
-    props.dispatchers.onLoad(Quotes.findOne(props.match.params.quoteId));
+  }
+
+  componentWillMount() {
+    this.props.dispatchers.onLoad(Quotes.findOne(this.props.match.params.quoteId));
   }
 
   getRates() {
     const charges = getDefaultMovementCharges(this.props.quote.movement);
     const movement = {
-      carrier: 'MAEU',
+      carrier: this.props.quote.movement.carrier,
       receipt: this.props.quote.movement.receipt.code,
       departure: this.props.quote.movement.departure.code,
       arrival: this.props.quote.movement.arrival.code,
@@ -585,7 +588,7 @@ class EditQuoteHeader extends React.Component {
                   onChange={selectedValue =>
                     this.props
                         .dispatchers
-                        .onChangeMovementTermsOfSale(selectedValue.value)}
+                        .onChangeCarrier(selectedValue.value)}
                   disabled={this.props.quote.movement.mode === 'Brokerage'}
                 />
               </div>

@@ -1,4 +1,11 @@
 export const APIGlobals = {
+  // CARRIERS
+  carrierOptions: [
+    { value: '', label: 'Agility Choice' },
+    { value: 'MAEU', label: 'Maersk – MAEU' },
+    { value: 'SUDU', label: 'Hamburg Sud – SUDU' },
+  ],
+
   // SIMPLE SELL RATES
   sellRates: {
     ITP: {
