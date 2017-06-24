@@ -50,6 +50,9 @@ if (Meteor.isServer) {
         const searchResults = Meteor.call('unlocations.search', {
           country: 'country',
           search: '',
+          locations: true,
+          airports: false,
+          seaports: false,
         });
 
         searchResults.length.should.equal(1);
@@ -93,6 +96,9 @@ if (Meteor.isServer) {
           const searchResults = Meteor.call('unlocations.search', {
             country: 'country',
             search: 'word1 word2 word3',
+            locations: true,
+            airports: false,
+            seaports: false,
           });
 
           searchResults.length.should.equal(4);
@@ -133,6 +139,9 @@ if (Meteor.isServer) {
           country: 'b',
           search: '',
           id,
+          locations: true,
+          airports: false,
+          seaports: false,
         });
         searchResults.length.should.equal(1);
         searchResults[0].search.should.equal('c');
