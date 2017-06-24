@@ -26,25 +26,9 @@ if (Meteor.isClient) {
       wrapper.unmount();
     });
 
-    it('renders a disabled Select component if no country is provided', () => {
-      wrapper.exists().should.equal(true);
-      wrapper.name().should.equal('Select');
-      wrapper.props().disabled.should.equal(true);
-    });
-
-    it('renders an Async component if a country is provided', () => {
-      wrapper.setProps({ country: 'a', onChange });
-      wrapper.name().should.equal('Async');
-    });
-
     it('passes the value to Async', () => {
-      wrapper.setProps({ country: 'a', value: 'b', onChange });
+      wrapper.setProps({ location: 'b', onChange });
       wrapper.props().value.should.equal('b');
-    });
-
-    it('sets cache to false', () => {
-      wrapper.setProps({ country: 'a', value: 'b', onChange });
-      wrapper.props().cache.should.equal(false);
     });
   });
 }
