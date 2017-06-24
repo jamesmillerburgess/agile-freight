@@ -48,6 +48,8 @@ const UNLocationField = (props) => {
       onChange={unLocation => props.onChange(unLocation)}
       autoload
       clearRenderer={() => null}
+      arrowRenderer={() => null}
+      placeholder=""
     />
   );
 };
