@@ -8,14 +8,14 @@ import { APIGlobals } from '../api-globals';
 export const hasCollection = (movement) => {
   if (movement.mode !== 'Brokerage') {
     if (movement.commercialParty === 'Seller') {
-      if (movement.pickup.locationType === 'Door') {
+      if (movement.receipt._id) {
         if (movement.termsOfSale !== 'EXW') {
           return true;
         }
       }
     }
     if (movement.commercialParty === 'Buyer') {
-      if (movement.pickup.locationType === 'Door') {
+      if (movement.receipt._id) {
         if (movement.termsOfSale === 'EXW') {
           return true;
         }
@@ -33,7 +33,7 @@ export const hasCollection = (movement) => {
 export const hasDelivery = (movement) => {
   if (movement.mode !== 'Brokerage') {
     if (movement.commercialParty === 'Seller') {
-      if (movement.delivery.locationType === 'Door') {
+      if (movement.delivery._id) {
         if (
           [
             'DAF',
@@ -48,7 +48,7 @@ export const hasDelivery = (movement) => {
       }
     }
     if (movement.commercialParty === 'Buyer') {
-      if (movement.delivery.locationType === 'Door') {
+      if (movement.delivery._id) {
         if (
           [
             'DAF',
@@ -147,23 +147,23 @@ export const hasApplicableRoute = (route = [], movement = {}) => {
 };
 
 /**
- * Compiles supplier+location-level route and checks for an applicable rate.
+ * Compiles carrier+location-level route and checks for an applicable rate.
  * @param route
- * @param supplierSellRates
+ * @param carrierSellRates
  * @param movement
  * @returns {*}
  */
-export const getSupplierLevelRate = (
+export const getcarrierLevelRate = (
   route = [],
-  supplierSellRates = {},
+  carrierSellRates = {},
   movement = {},
 ) => {
-  const supplierRoute = movement.supplier +
+  const carrierRoute = movement.carrier +
                         route.reduce(
                           (acc, component) => acc + movement[component], '',
                         );
-  if (supplierSellRates[supplierRoute]) {
-    return supplierSellRates[supplierRoute];
+  if (carrierSellRates[carrierRoute]) {
+    return carrierSellRates[carrierRoute];
   }
   return null;
 };
@@ -224,16 +224,16 @@ export const getApplicableSellRates = (charge = {}, sellRates, movement) => {
     const chargeCodeRates = sellRates[charge.chargeCode];
     // Does the movement have the route required for the charge applicability?
     if (hasApplicableRoute(charge.route, movement)) {
-      // Is there a rate for the supplier+location-level route?
-      const supplierLevelRate = getSupplierLevelRate(
+      // Is there a rate for the carrier+location-level route?
+      const carrierLevelRate = getcarrierLevelRate(
         charge.route,
-        chargeCodeRates.supplier,
+        chargeCodeRates.carrier,
         movement,
       );
-      if (supplierLevelRate) {
-        applicableSellRates.supplier = supplierLevelRate;
+      if (carrierLevelRate) {
+        applicableSellRates.carrier = carrierLevelRate;
         if (!applicableSellRates.suggested) {
-          applicableSellRates.suggested = 'supplier';
+          applicableSellRates.suggested = 'carrier';
         }
       }
 

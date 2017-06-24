@@ -2,88 +2,83 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
 
-import { Countries } from '../../api/countries/countriesCollection';
-
+/**
+ * Input field for selecting unlocations.
+ * @param props
+ * @returns {XML}
+ * @constructor
+ */
 const UNLocationField = (props) => {
-  const getCountryCode = (id) => {
-    const country = Countries.findOne(new Mongo.ObjectID(id));
-    if (!country || !country.countryCode) {
-      return '';
-    }
-    return country.countryCode;
-  };
-
+  // TODO: Combine with most-used locations in a smart way
   const getOptions = (input, cb) => {
-    const countryCode = getCountryCode(props.country);
-    if (!countryCode) {
-      cb(null, []);
-    } else {
-      Meteor.call(
-        'unlocations.search',
-        {
-          country: countryCode,
-          search: input,
-          id: props.value,
-        },
-        (err, res) => {
-          const options = res.map(opt => ({
-            value: opt._id,
-            label: opt.name,
-            isSeaport: opt.isSeaport,
-            isAirport: opt.isAirport,
-            code: opt.countryCode + opt.locationCode,
-          }));
-          cb(null, { options });
-        },
-      );
-    }
+    const { location, locations, airports, seaports } = props;
+    const searchOptions = {
+      search: input || location.code,
+      id: location._id,
+      locations,
+      airports,
+      seaports,
+    };
+    Meteor.call(
+      'unlocations.search',
+      searchOptions,
+      (err, options) => cb(null, { options }),
+    );
   };
 
+  /**
+   * Render locations in the value and option elements of the Select component.
+   * @param option
+   */
   const locationRenderer = option => (
     <div>
       {
         option.isSeaport ?
-        (
-          <span><span className="fa fa-fw fa-ship" />&nbsp;</span>
-        ) : ''}
+        (<span><span className="fa fa-fw fa-ship" />&nbsp;</span>) : ''
+      }
       {
         option.isAirport ?
-        (
-          <span><span className="fa fa-fw fa-plane" />&nbsp;</span>
-        ) : ''}
-      {option.code} – {option.label}
+        (<span><span className="fa fa-fw fa-plane" />&nbsp;</span>) : ''
+      }
+      {option.name} – {option.code}
     </div>
   );
 
+  // Display an empty select until the state has been loaded.
+  // This prevents 'autoload' from searching for results with an empty value.
+  // TODO: Find a way to load the state before initial render of this element
   return (
-    props.country ?
-    (
-      <Select.Async
-        value={props.value}
-        loadOptions={getOptions}
-        cache={false}
-        filterOption={() => true}
-        optionRenderer={locationRenderer}
-        valueRenderer={locationRenderer}
-        onChange={unLocation => props.onChange(unLocation)}
-        autoload
-      />
-    ) :
-    (<Select disabled />)
+    <Select.Async
+      value={props.location}
+      valueKey="_id"
+      loadOptions={getOptions}
+      filterOption={() => true}
+      optionRenderer={locationRenderer}
+      valueRenderer={locationRenderer}
+      onChange={unLocation => props.onChange(unLocation)}
+      autoload
+      clearRenderer={() => null}
+      arrowRenderer={() => null}
+      placeholder=""
+    />
   );
 };
 
 UNLocationField.propTypes = {
-  value: PropTypes.string,
-  country: PropTypes.string,
+  location: PropTypes.object,
   onChange: PropTypes.func.isRequired,
+  locations: PropTypes.bool,
+  airports: PropTypes.bool,
+  seaports: PropTypes.bool,
 };
 
 UNLocationField.defaultProps = {
+  location: {},
   value: '',
-  country: '',
+  locations: false,
+  airports: false,
+  seaports: false,
 };
 
 export default UNLocationField;

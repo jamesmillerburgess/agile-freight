@@ -1,5 +1,14 @@
 ## v.NEXT
 
+## v0.10.0 – Simple Rate Management
+
+* All four locations in routing
+* Connect routing to rate search
+* Add carrier field to quote
+* Add rate list to view all rates
+* Rate creation form for simple sell rates
+* Edit and save changes to existing rates
+
 ## v0.9.0 – Simple Rate Database
 
 * Rates have been moved into the Mongo database with a search-efficient index

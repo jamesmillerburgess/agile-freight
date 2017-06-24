@@ -79,7 +79,7 @@ if (Meteor.isServer) {
       });
 
       it('returns global results regardless of specified route or ' +
-         'supplier', () => {
+         'carrier', () => {
         const rate = {
           _id: 'a',
           type: 'sell',
@@ -201,12 +201,12 @@ if (Meteor.isServer) {
                  .equal('location');
       });
 
-      it('returns supplier rates when the supplier route matches', () => {
+      it('returns carrier rates when the carrier route matches', () => {
         const rate = {
           _id: 'a',
           type: 'sell',
           chargeCode: 'ITP',
-          level: 'supplier',
+          level: 'carrier',
           route: 'MAEUUSMIAUSTPA',
           rate: {
             basis: 'Mile',
@@ -227,7 +227,7 @@ if (Meteor.isServer) {
           departure: 'USTPA',
           arrival: 'CNSHA',
           delivery: 'CNSHA',
-          supplier: 'MAEU',
+          carrier: 'MAEU',
         };
         Rates.insert(rate);
         const result = Meteor.call(
@@ -235,12 +235,34 @@ if (Meteor.isServer) {
           charges,
           movement,
         );
-        result[0].supplier
+        result[0].carrier
                  .should
                  .eql(rate);
         result[0].suggested
                  .should
-                 .equal('supplier');
+                 .equal('carrier');
+      });
+    });
+
+    describe('rates.new', () => {
+      const rate = {
+        type: 'sell',
+        chargeCode: 'ITP',
+        level: 'country',
+        route: 'USUS',
+        basis: 'Mile',
+        unitPrice: 1,
+        currency: 'USD',
+      };
+      it('inserts a rate into the collection', () => {
+        Rates.find().count().should.equal(0);
+        Meteor.call('rates.new', rate);
+        Rates.find().count().should.equal(1);
+      });
+
+      it('returns the id of the new rate', () => {
+        const id = Meteor.call('rates.new', rate);
+        Rates.findOne(id)._id.should.equal(id);
       });
     });
   });

@@ -40,10 +40,10 @@ const RateField = (props) => {
           label: 'CUSTOM',
         },
         {
-          value: 'supplier',
-          label: 'SUPPLIER',
-          rate: props.rates.supplier,
-          disabled: typeof props.rates.supplier === 'undefined',
+          value: 'carrier',
+          label: 'CARRIER',
+          rate: props.rates.carrier,
+          disabled: typeof props.rates.carrier === 'undefined',
         },
         {
           value: 'location',

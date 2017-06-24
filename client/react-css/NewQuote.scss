@@ -276,7 +276,7 @@
   .select-packages,
   .select-location-type,
   .select-country {
-    width: 200px;
+    width: 209px;
     vertical-align: top;
   }
 
@@ -358,23 +358,7 @@
   }
 
   .pickup-delivery-wrapper {
-    vertical-align: top;
-  }
-
-  //.pickup,
-  //.delivery {
-  //  width: 50%;
-  //  height: 100%;
-  //  display: inline-block;
-  //}
-
-  .pickup {
-  }
-
-  .delivery {
-    border-left: 2px solid $input-border-color;
-    padding-left: 15px;
-    float: right;
+    margin-bottom: 8px;
   }
 
   .empty-field {

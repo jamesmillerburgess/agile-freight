@@ -1,89 +1,94 @@
 import { connect } from 'react-redux';
 
-import * as quoteActions from '../../state/actions/quoteActions';
+import * as actions from '../../state/actions/quoteActions';
 import EditQuoteHeader from './EditQuoteHeader.jsx';
 
 const mapStateToProps = state => ({ quote: state.quote });
 const mapDispatchToProps = dispatch => ({
   dispatchers: {
-    onLoad: quote => dispatch(quoteActions.loadQuote(quote)),
+    onLoad: quote => dispatch(actions.loadQuote(quote)),
 
-    onChangeCargoType:
-      cargoType => dispatch(quoteActions.setCargoType(cargoType)),
-    onChangeRatedQuote: () => dispatch(quoteActions.toggleRatedQuote()),
-    onAddPackageLine: () => dispatch(quoteActions.addPackageLine()),
-    onRemovePackageLine:
-      index => dispatch(quoteActions.removePackageLine(index)),
+    onChangeCargoType: cargoType => dispatch(actions.setCargoType(cargoType)),
+    onChangeRatedQuote: () => dispatch(actions.toggleRatedQuote()),
+    onAddPackageLine: () => dispatch(actions.addPackageLine()),
+    onRemovePackageLine: index => dispatch(actions.removePackageLine(index)),
     onChangePackageType: (index, packageType) =>
-      dispatch(quoteActions.setPackageLinePackageType(index, packageType)),
+      dispatch(actions.setPackageLinePackageType(index, packageType)),
     onChangeNumPackages: (index, numPackages) =>
-      dispatch(quoteActions.setPackageLineNumPackages(index, numPackages)),
+      dispatch(actions.setPackageLineNumPackages(index, numPackages)),
 
     onChangeLength: (index, length) =>
-      dispatch(quoteActions.setPackageLineLength(index, length)),
-    onChangeWidth: (index, width) => dispatch(quoteActions.setPackageLineWidth(
+      dispatch(actions.setPackageLineLength(index, length)),
+    onChangeWidth: (index, width) => dispatch(actions.setPackageLineWidth(
       index,
       width,
     )),
     onChangeHeight: (index, height) =>
-      dispatch(quoteActions.setPackageLineHeight(index, height)),
+      dispatch(actions.setPackageLineHeight(index, height)),
     onChangePackageLineUnitVolumeUOM: (index, unitVolumeUOM) =>
-      dispatch(quoteActions.setPackageLineUnitVolumeUOM(index, unitVolumeUOM)),
+      dispatch(actions.setPackageLineUnitVolumeUOM(index, unitVolumeUOM)),
     onChangeWeight: (index, weight) =>
-      dispatch(quoteActions.setPackageLineWeight(index, weight)),
+      dispatch(actions.setPackageLineWeight(index, weight)),
     onChangePackageLineWeightUOM: (index, weightUOM) =>
-      dispatch(quoteActions.setPackageLineWeightUOM(index, weightUOM)),
+      dispatch(actions.setPackageLineWeightUOM(index, weightUOM)),
 
-    onAddContainerLine: () => dispatch(quoteActions.addContainerLine()),
-    onRemoveContainerLine: index => dispatch(quoteActions.removeContainerLine(
+    onAddContainerLine: () => dispatch(actions.addContainerLine()),
+    onRemoveContainerLine: index => dispatch(actions.removeContainerLine(
       index)),
     onChangeContainerLineNumContainers: (index, numContainers) =>
-      dispatch(quoteActions.setContainerLineNumContainers(
+      dispatch(actions.setContainerLineNumContainers(
         index,
         numContainers,
       )),
     onChangeContainerLineContainerType: (index, containerType) =>
-      dispatch(quoteActions.setContainerLineContainerType(
+      dispatch(actions.setContainerLineContainerType(
         index,
         containerType,
       )),
     onClickContainerLineTemperatureControlled: index =>
-      dispatch(quoteActions.toggleContainerLineTemperatureControlled(index)),
+      dispatch(actions.toggleContainerLineTemperatureControlled(index)),
 
-    onClickHazardous: () => dispatch(quoteActions.toggleHazardous()),
-    onClickTemperatureControlled: () => dispatch(quoteActions.toggleTemperatureControlled()),
+    onClickHazardous: () => dispatch(actions.toggleHazardous()),
+    onClickTemperatureControlled: () => dispatch(actions.toggleTemperatureControlled()),
 
     // MOVEMENT
     onChangeMovementMode: mode =>
-      dispatch(quoteActions.setMovementMode(mode)),
+      dispatch(actions.setMovementMode(mode)),
     onChangeMovementCommercialParty: commercialParty =>
-      dispatch(quoteActions.setMovementCommercialParty(commercialParty)),
+      dispatch(actions.setMovementCommercialParty(commercialParty)),
     onChangeMovementTermsOfSale: termsOfSale =>
-      dispatch(quoteActions.setMovementTermsOfSale(termsOfSale)),
+      dispatch(actions.setMovementTermsOfSale(termsOfSale)),
+    onChangeCarrier: carrier => dispatch(actions.setCarrier(carrier)),
+    onChangeReceipt: receipt => dispatch(actions.setReceipt(receipt)),
+    onChangeDeparture: departure => dispatch(actions.setDeparture(departure)),
+    onChangeArrival: arrival => dispatch(actions.setArrival(arrival)),
+    onChangeDelivery: delivery => dispatch(actions.setDelivery(delivery)),
+
+
     onChangePickupLocationType: locationType =>
-      dispatch(quoteActions.setPickupLocationType(locationType)),
+      dispatch(actions.setPickupLocationType(locationType)),
     onChangePickupLocationName: locationName =>
-      dispatch(quoteActions.setPickupLocationName(locationName)),
-    onChangePickupCountry: country => dispatch(quoteActions.setPickupCountry(
+      dispatch(actions.setPickupLocationName(locationName)),
+    onChangePickupCountry: country => dispatch(actions.setPickupCountry(
       country)),
-    onChangePickupLocation: location => dispatch(quoteActions.setPickupLocation(
+    onChangePickupLocation: location => dispatch(actions.setPickupLocation(
       location)),
     onChangeDeliveryLocationType: locationType =>
-      dispatch(quoteActions.setDeliveryLocationType(locationType)),
+      dispatch(actions.setDeliveryLocationType(locationType)),
     onChangeDeliveryLocationName: locationName =>
-      dispatch(quoteActions.setDeliveryLocationName(locationName)),
-    onChangeDeliveryCountry:
-      country => dispatch(quoteActions.setDeliveryCountry(country)),
-    onChangeDeliveryLocation:
-      location => dispatch(quoteActions.setDeliveryLocation(location)),
+      dispatch(actions.setDeliveryLocationName(locationName)),
+    onChangeDeliveryCountry: country => dispatch(actions.setDeliveryCountry(
+      country)),
+    onChangeDeliveryLocation: location => dispatch(actions.setDeliveryLocation(
+      location)),
 
     // OTHER SERVICES
-    onClickInsurance: () => dispatch(quoteActions.toggleInsurance()),
+    onClickInsurance: () => dispatch(actions.toggleInsurance()),
     onClickCustomsClearance: () =>
-      dispatch(quoteActions.toggleCustomsClearance()),
+      dispatch(actions.toggleCustomsClearance()),
 
     // CHARGES
-    onAddChargeLine: chargeLine => dispatch(quoteActions.addChargeLine(chargeLine)),
+    onAddChargeLine: chargeLine => dispatch(actions.addChargeLine(chargeLine)),
   },
 });
 

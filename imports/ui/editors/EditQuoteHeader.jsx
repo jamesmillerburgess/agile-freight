@@ -30,17 +30,20 @@ class EditQuoteHeader extends React.Component {
     this.getRates = this.getRates.bind(this);
     this.PackageLines = this.PackageLines.bind(this);
     this.Containers = this.Containers.bind(this);
-    props.dispatchers.onLoad(Quotes.findOne(props.match.params.quoteId));
+  }
+
+  componentWillMount() {
+    this.props.dispatchers.onLoad(Quotes.findOne(this.props.match.params.quoteId));
   }
 
   getRates() {
     const charges = getDefaultMovementCharges(this.props.quote.movement);
     const movement = {
-      supplier: 'MAEU',
-      receipt: 'USMIA',
-      departure: 'USTPA',
-      arrival: 'CNSHA',
-      delivery: 'CNPNY',
+      carrier: this.props.quote.movement.carrier,
+      receipt: this.props.quote.movement.receipt.code,
+      departure: this.props.quote.movement.departure.code,
+      arrival: this.props.quote.movement.arrival.code,
+      delivery: this.props.quote.movement.delivery.code,
     };
     Meteor.call(
       'rates.getApplicableSellRates',
@@ -151,12 +154,7 @@ class EditQuoteHeader extends React.Component {
               <div className="package-type">
                 <Select
                   value={packageLine.packageType}
-                  options={[
-                    { value: 'Packages', label: 'Packages' },
-                    { value: 'Boxes', label: 'Boxes' },
-                    { value: 'Pallets', label: 'Pallets' },
-                    { value: 'Cases', label: 'Cases' },
-                  ]}
+                  options={APIGlobals.packageTypeOptions}
                   clearable={false}
                   onChange={selectedValue => this.props.dispatchers
                                                  .onChangePackageType(
@@ -561,7 +559,6 @@ class EditQuoteHeader extends React.Component {
                         .onChangeMovementCommercialParty(selectedValue.value)}
                 />
               </div>
-              <div className="to-label" />
               <div className="field select-country">
                 <div className="label">
                   TERMS OF SALE
@@ -576,85 +573,83 @@ class EditQuoteHeader extends React.Component {
                   disabled={this.props.quote.movement.mode === 'Brokerage'}
                 />
               </div>
+              <div className="field select-country">
+                <div className="label">
+                  CARRIER
+                </div>
+                <Select
+                  value={this.props.quote.movement.carrier}
+                  options={APIGlobals.carrierOptions}
+                  onChange={selectedValue =>
+                    this.props
+                        .dispatchers
+                        .onChangeCarrier(selectedValue.value)}
+                  disabled={this.props.quote.movement.mode === 'Brokerage'}
+                />
+              </div>
             </div>
             <div className="pickup-delivery-wrapper">
               <div className="pickup">
                 <div className="cargo-row-icon" />
                 <div className="field select-country">
                   <div className="label">
-                    COUNTRY
-                  </div>
-                  <CountryField
-                    value={this.props.quote.movement.pickup.country}
-                    onChange={selectedValue =>
-                      this.props.dispatchers.onChangePickupCountry(selectedValue.value)}
-                    countries={Countries}
-                  />
-                </div>
-                <div className="field select-country">
-                  <div className="label">
-                    LOCATION
+                    RECEIPT
                   </div>
                   <UNLocationField
-                    value={this.props.quote.movement.pickup.location}
-                    country={this.props.quote.movement.pickup.country}
+                    location={this.props.quote.movement.receipt}
+                    locations
                     onChange={(selectedValue) => {
-                      this.props.dispatchers
-                          .onChangePickupLocation(selectedValue.value);
-                      this.props.dispatchers
-                          .onChangePickupLocationName(selectedValue.label);
-                      let locationType = 'Door';
-                      if (selectedValue.isAirport) {
-                        locationType = 'Airport';
-                      }
-                      if (selectedValue.isSeaport) {
-                        locationType = 'Seaport';
-                      }
-                      if (!selectedValue.value) {
-                        locationType = '';
-                      }
-                      this.props.dispatchers
-                          .onChangePickupLocationType(locationType);
+                      this
+                        .props
+                        .dispatchers
+                        .onChangeReceipt(selectedValue);
                     }}
                   />
                 </div>
-                <div className="to-label">TO</div>
                 <div className="field select-country">
                   <div className="label">
-                    COUNTRY
+                    DEPARTURE
                   </div>
-                  <CountryField
-                    value={this.props.quote.movement.delivery.country}
-                    onChange={selectedValue =>
-                      this.props.dispatchers.onChangeDeliveryCountry(
-                        selectedValue.value)}
-                    countries={Countries}
+                  <UNLocationField
+                    location={this.props.quote.movement.departure}
+                    airports
+                    seaports
+                    onChange={(selectedValue) => {
+                      this
+                        .props
+                        .dispatchers
+                        .onChangeDeparture(selectedValue);
+                    }}
                   />
                 </div>
                 <div className="field select-country">
                   <div className="label">
-                    LOCATION
+                    ARRIVAL
                   </div>
                   <UNLocationField
-                    value={this.props.quote.movement.delivery.location}
-                    country={this.props.quote.movement.delivery.country}
+                    location={this.props.quote.movement.arrival}
+                    airports
+                    seaports
                     onChange={(selectedValue) => {
-                      this.props.dispatchers
-                          .onChangeDeliveryLocation(selectedValue.value);
-                      this.props.dispatchers
-                          .onChangeDeliveryLocationName(selectedValue.label);
-                      let locationType = 'Door';
-                      if (selectedValue.isAirport) {
-                        locationType = 'Airport';
-                      }
-                      if (selectedValue.isSeaport) {
-                        locationType = 'Seaport';
-                      }
-                      if (!selectedValue.value) {
-                        locationType = '';
-                      }
-                      this.props.dispatchers
-                          .onChangeDeliveryLocationType(locationType);
+                      this
+                        .props
+                        .dispatchers
+                        .onChangeArrival(selectedValue);
+                    }}
+                  />
+                </div>
+                <div className="field select-country">
+                  <div className="label">
+                    DELIVERY
+                  </div>
+                  <UNLocationField
+                    location={this.props.quote.movement.delivery}
+                    locations
+                    onChange={(selectedValue) => {
+                      this
+                        .props
+                        .dispatchers
+                        .onChangeDelivery(selectedValue);
                     }}
                   />
                 </div>

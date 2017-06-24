@@ -14,74 +14,65 @@ if (Meteor.isClient) {
     describe('hasCollection function', () => {
       const { hasCollection } = chargeDefaultUtils;
 
-      it('returns true when Seller, CIF, Door to', () => {
+      it('returns true when Seller, CIF, receipt', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'CIF',
-          pickup: { locationType: 'Door' },
+          receipt: { _id: 'a' },
         };
         hasCollection(movement).should.equal(true);
       });
 
-      it('returns false when Seller, CIF, Seaport to', () => {
+      it('returns false when Seller, CIF, no receipt', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'CIF',
-          pickup: { locationType: 'Seaport' },
+          receipt: {},
         };
         hasCollection(movement).should.equal(false);
       });
 
-      it('returns false when Seller, CIF, Airport to', () => {
-        const movement = {
-          commercialParty: 'Seller',
-          termsOfSale: 'CIF',
-          pickup: { locationType: 'Airport' },
-        };
-        hasCollection(movement).should.equal(false);
-      });
-
-      it('returns false when Seller, EXW, Door to', () => {
+      it('returns false when Seller, EXW, has receipt', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'EXW',
-          pickup: { locationType: 'Door' },
+          receipt: { _id: 'a' },
         };
         hasCollection(movement).should.equal(false);
       });
 
-      it('returns true when Buyer, EXW, Door to', () => {
+      it('returns true when Buyer, EXW, has receipt', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'EXW',
-          pickup: { locationType: 'Door' },
+          receipt: { _id: 'a' },
         };
         hasCollection(movement).should.equal(true);
       });
 
-      it('returns false when Buyer, EXW, Seaport to', () => {
+      it('returns false when Buyer, EXW, no receipt', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'EXW',
-          pickup: { locationType: 'Seaport' },
+          receipt: {},
         };
         hasCollection(movement).should.equal(false);
       });
 
-      it('returns false when Buyer, EXW, Airport to', () => {
+      it('returns false when Buyer, EXW, no receipt', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'EXW',
-          pickup: { locationType: 'Airport' },
+          receipt: {},
         };
         hasCollection(movement).should.equal(false);
       });
 
-      it('returns false when Buyer, CIF, Door to', () => {
+      it('returns false when Buyer, CIF, has receipt', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'CIF',
-          pickup: { locationType: 'Door' },
+          receipt: { _id: 'a' },
         };
         hasCollection(movement).should.equal(false);
       });
@@ -91,7 +82,7 @@ if (Meteor.isClient) {
           mode: 'Brokerage',
           commercialParty: 'Seller',
           termsOfSale: 'CIF',
-          pickup: { locationType: 'Door' },
+          receipt: { _id: 'a' },
         };
         hasCollection(movement).should.equal(false);
       });
@@ -100,74 +91,56 @@ if (Meteor.isClient) {
     describe('hasDelivery function', () => {
       const { hasDelivery } = chargeDefaultUtils;
 
-      it('returns true if Seller, DAP, to Door', () => {
+      it('returns true if Seller, DAP, has delivery', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'DAP',
-          delivery: { locationType: 'Door' },
+          delivery: { _id: 'a' },
         };
         hasDelivery(movement).should.equal(true);
       });
 
-      it('returns false if Seller, DAP, to Seaport', () => {
+      it('returns false if Seller, DAP, no delivery', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'DAP',
-          delivery: { locationType: 'Seaport' },
+          delivery: {},
         };
         hasDelivery(movement).should.equal(false);
       });
 
-      it('returns false if Seller, DAP, to Airport', () => {
-        const movement = {
-          commercialParty: 'Seller',
-          termsOfSale: 'DAP',
-          delivery: { locationType: 'Airport' },
-        };
-        hasDelivery(movement).should.equal(false);
-      });
-
-      it('returns false if Seller, CFR, to Door', () => {
+      it('returns false if Seller, CFR, has delivery', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'CFR',
-          delivery: { locationType: 'Door' },
+          delivery: { _id: 'a' },
         };
         hasDelivery(movement).should.equal(false);
       });
 
-      it('returns true when Buyer, CFR, to Door', () => {
+      it('returns true when Buyer, CFR, has delivery', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'CFR',
-          delivery: { locationType: 'Door' },
+          delivery: { _id: 'a' },
         };
         hasDelivery(movement).should.equal(true);
       });
 
-      it('returns false when Buyer, CFR, to Seaport', () => {
+      it('returns false when Buyer, CFR, no delivery', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'CFR',
-          delivery: { locationType: 'Seaport' },
+          delivery: {},
         };
         hasDelivery(movement).should.equal(false);
       });
 
-      it('returns false when Buyer, CFR, to Airport', () => {
-        const movement = {
-          commercialParty: 'Buyer',
-          termsOfSale: 'CFR',
-          delivery: { locationType: 'Airport' },
-        };
-        hasDelivery(movement).should.equal(false);
-      });
-
-      it('returns false when Buyer, DAP, to Door', () => {
+      it('returns false when Buyer, DAP, has delivery', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'DAP',
-          delivery: { locationType: 'Door' },
+          delivery: { _id: 'a' },
         };
         hasDelivery(movement).should.equal(false);
       });
@@ -177,7 +150,7 @@ if (Meteor.isClient) {
           mode: 'Brokerage',
           commercialParty: 'Buyer',
           termsOfSale: 'CFR',
-          delivery: { locationType: 'Door' },
+          delivery: { _id: 'a' },
         };
         hasDelivery(movement).should.equal(false);
       });
@@ -229,24 +202,26 @@ if (Meteor.isClient) {
 
     describe('getDefaultMovementCharges function', () => {
       const { getDefaultMovementCharges } = chargeDefaultUtils;
-      it('returns collection charges when Seller, FOB, Door to Seaport', () => {
+      it('returns collection charges when Seller, FOB, has receipt, no ' +
+         'delivery', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'FOB',
-          pickup: { locationType: 'Door' },
-          delivery: { locationType: 'Seaport' },
+          receipt: { _id: 'a' },
+          delivery: {},
         };
         getDefaultMovementCharges(movement)
           .should
           .eql(APIGlobals.defaultCollectionCharges);
       });
 
-      it('returns delivery charges when Buyer, CFR, Seaport to Door', () => {
+      it('returns delivery charges when Buyer, CFR, no receipt, has ' +
+         'delivery', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'CFR',
-          pickup: { locationType: 'Seaport' },
-          delivery: { locationType: 'Door' },
+          receipt: {},
+          delivery: { _id: 'a' },
         };
         getDefaultMovementCharges(movement)
           .should
@@ -254,12 +229,12 @@ if (Meteor.isClient) {
       });
 
       it('returns international freight charges when Seller, CFR,' +
-         ' Seaport to Door', () => {
+         ' no receipt, has delivery', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'CFR',
-          pickup: { locationType: 'Seaport' },
-          delivery: { locationType: 'Door' },
+          receipt: {},
+          delivery: { _id: 'a' },
         };
         getDefaultMovementCharges(movement)
           .should
@@ -267,12 +242,12 @@ if (Meteor.isClient) {
       });
 
       it('returns collection and international freight charges when Seller, ' +
-         'CFR, Door to Door', () => {
+         'CFR, has receipt, has delivery', () => {
         const movement = {
           commercialParty: 'Seller',
           termsOfSale: 'CFR',
-          pickup: { locationType: 'Door' },
-          delivery: { locationType: 'Door' },
+          receipt: { _id: 'a' },
+          delivery: { _id: 'a' },
         };
         getDefaultMovementCharges(movement)
           .should
@@ -283,12 +258,12 @@ if (Meteor.isClient) {
       });
 
       it('returns international freight and delivery charges when Buyer, ' +
-         'FOB, Door to Door', () => {
+         'FOB, has receipt, has delivery', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'FOB',
-          pickup: { locationType: 'Door' },
-          delivery: { locationType: 'Door' },
+          receipt: { _id: 'a' },
+          delivery: { _id: 'a' },
         };
         getDefaultMovementCharges(movement)
           .should
@@ -299,12 +274,12 @@ if (Meteor.isClient) {
       });
 
       it('returns collection, international freight, and delivery charges ' +
-         'when Buyer, EXW, Door to Door', () => {
+         'when Buyer, EXW, has receipt, has delivery', () => {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'EXW',
-          pickup: { locationType: 'Door' },
-          delivery: { locationType: 'Door' },
+          receipt: { _id: 'a' },
+          delivery: { _id: 'a' },
         };
         getDefaultMovementCharges(movement)
           .should
@@ -510,34 +485,34 @@ if (Meteor.isClient) {
         applicableSellRates.suggested.should.equal('location');
       });
 
-      it('suggests the supplier rate if it is the only rate applicable', () => {
+      it('suggests the carrier rate if it is the only rate applicable', () => {
         const charge = {
           name: 'Collection',
           group: 'Origin',
           chargeCode: 'COL',
           route: ['receipt', 'departure'],
         };
-        const supplierRate = {
+        const carrierRate = {
           rate: 'Mile',
           unitPrice: 0.5,
           currency: 'USD',
         };
         const movement = {
-          supplier: 'MAEU',
+          carrier: 'MAEU',
           receipt: 'USMIA',
           departure: 'USTPA',
         };
-        const sellRates = { COL: { supplier: { MAEUUSMIAUSTPA: supplierRate } } };
+        const sellRates = { COL: { carrier: { MAEUUSMIAUSTPA: carrierRate } } };
         const applicableSellRates = getApplicableSellRates(
           charge,
           sellRates,
           movement,
         );
-        applicableSellRates.supplier.should.equal(supplierRate);
-        applicableSellRates.suggested.should.equal('supplier');
+        applicableSellRates.carrier.should.equal(carrierRate);
+        applicableSellRates.suggested.should.equal('carrier');
       });
 
-      it('suggests the supplier rate and returns all four if supplier, ' +
+      it('suggests the carrier rate and returns all four if carrier, ' +
          'location, country, and global rates are applicable', () => {
         const charge = {
           name: 'Collection',
@@ -560,13 +535,13 @@ if (Meteor.isClient) {
           unitPrice: 0.5,
           currency: 'USD',
         };
-        const supplierRate = {
+        const carrierRate = {
           rate: 'Mile',
           unitPrice: 0.25,
           currency: 'USD',
         };
         const movement = {
-          supplier: 'MAEU',
+          carrier: 'MAEU',
           receipt: 'USMIA',
           departure: 'USTPA',
         };
@@ -575,7 +550,7 @@ if (Meteor.isClient) {
             global: globalRate,
             country: { USUS: countryRate },
             location: { USMIAUSTPA: locationRate },
-            supplier: { MAEUUSMIAUSTPA: supplierRate },
+            carrier: { MAEUUSMIAUSTPA: carrierRate },
           },
         };
         const applicableSellRates = getApplicableSellRates(
@@ -583,11 +558,11 @@ if (Meteor.isClient) {
           sellRates,
           movement,
         );
-        applicableSellRates.supplier.should.equal(supplierRate);
+        applicableSellRates.carrier.should.equal(carrierRate);
         applicableSellRates.location.should.equal(locationRate);
         applicableSellRates.country.should.equal(countryRate);
         applicableSellRates.global.should.equal(globalRate);
-        applicableSellRates.suggested.should.equal('supplier');
+        applicableSellRates.suggested.should.equal('carrier');
       });
     });
   });

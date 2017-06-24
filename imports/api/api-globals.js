@@ -1,4 +1,11 @@
 export const APIGlobals = {
+  // CARRIERS
+  carrierOptions: [
+    { value: '', label: 'Agility Choice' },
+    { value: 'MAEU', label: 'Maersk – MAEU' },
+    { value: 'SUDU', label: 'Hamburg Sud – SUDU' },
+  ],
+
   // SIMPLE SELL RATES
   sellRates: {
     ITP: {
@@ -308,14 +315,23 @@ export const APIGlobals = {
 
   // Cargo
   packageTypeOptions: [
-    'Packages',
-    'Boxes',
-    'Cartons',
-    'Bags',
-    'Bales',
-    'Bolts',
-    'Bottles',
-    '',
+    { value: 'Packages', label: 'Packages' },
+    { value: 'Boxes', label: 'Boxes' },
+    { value: 'Pallets', label: 'Pallets' },
+    { value: 'Cases', label: 'Cases' },
+  ],
+
+  rateBasisOptions: [
+    { value: 'Shipment', label: 'Shipment' },
+    { value: 'KG', label: 'KG' },
+    { value: 'CBM', label: 'CBM' },
+    { value: 'Container', label: 'Container' },
+    { value: 'TEU', label: 'TEU' },
+    { value: 'Package', label: 'Package' },
+    { value: 'Declaration', label: 'Declaration' },
+    { value: 'HAWB', label: 'HAWB' },
+    { value: 'KM', label: 'KM' },
+    { value: 'Mile', label: 'Mile' },
   ],
 
   // Quotes

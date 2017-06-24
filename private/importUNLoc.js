@@ -2,6 +2,8 @@ var db = connect('localhost:3001/meteor');
 
 var altNames = db.UNLocations.find({ ch: '=' });
 
+db.UNLocations.createIndex({ locationCode: 1 });
+
 while (altNames.hasNext()) {
   var doc               = altNames.next();
   var names             = doc.name.split(' = ');
@@ -43,9 +45,15 @@ while (c.hasNext()) {
                   (+doc.coordinates.slice(9, 11) / 100 ) *
                   (doc.coordinates[11] === 'E' ? 1 : -1);
     }
+    var country = db.Countries.findOne({ countryCode: doc.countryCode });
+    var countryName = '';
+    if (country) {
+      countryName = country.countryName;
+    }
     db.UNLocations.insert(
       {
         _id: ObjectId().str,
+        code: doc.countryCode + doc.locationCode,
         countryCode: doc.countryCode,
         locationCode: doc.locationCode,
         name: doc.name,
@@ -61,7 +69,8 @@ while (c.hasNext()) {
         search: doc.countryCode +
                 doc.locationCode + ' ' +
                 doc.name + ' ' +
-                doc.nameWoDiacritics +
+                doc.nameWoDiacritics + ' ' +
+                countryName +
                 (doc.subdivision ? ' ' + doc.subdivision : '') +
                 (doc.iataCode ? ' ' + doc.iataCode : ''),
       }
