@@ -29,7 +29,8 @@ __User Story:__ _Get a real FCL quote scenario working with as much automation a
 
 * __FCL Quote Scenario:__ Relevant charge populates automatically
 * __FCL Quote Scenario:__ Applicable location or carrier rates populate for each charge automatically
-* __FCL Quote Scenario:__ Correct notes default onto quote
+* __FCL Quote Scenario:__ Notes default onto quote
+* Units default into charges
 
 ## v0.10.0 – Simple Rate Management
 

@@ -7,19 +7,14 @@ import { Mongo } from 'meteor/mongo';
 import { integerFormat, weightFormat } from '../formatters/numberFormatters';
 
 import CheckboxField from '../fields/CheckboxField.jsx';
-import CountryField from '../fields/CountryField.jsx';
 import UNLocationField from '../fields/UNLocationField.jsx';
 import QuoteContainer from '../objects/QuoteContainer';
 
 import { quotePropTypes } from '../objects/quotePropTypes';
 import { APIGlobals } from '../../api/api-globals';
-import {
-  getDefaultMovementCharges,
-  getApplicableSellRates,
-}
-  from '../../api/rates/chargeDefaultUtils';
+import { getDefaultMovementCharges } from '../../api/rates/chargeDefaultUtils';
+import { defaultUnits } from '../../state/reducers/quote/chargesReducers';
 
-import { Countries } from '../../api/countries/countriesCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
 class EditQuoteHeader extends React.Component {
@@ -72,6 +67,7 @@ class EditQuoteHeader extends React.Component {
             ...sellRate,
             applicableSellRates,
             selectedRate,
+            units: defaultUnits(sellRate.basis, this.props.quote.cargo),
           };
         });
         Meteor.call(
