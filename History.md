@@ -1,6 +1,35 @@
+## v.TBD
+
+### Rates
+
+* More complex rates
+* Improved rate management
+* Rate usage statistics
+* Scrape FOCiS rates
+* Calculate distance units
+
+### Customers
+
+* Export quote to PDF 
+* More rate context in quote
+* Last quote rates visible in quote
+* Improved form validations
+* Revise CustomerListItem with relevant information
+* Ability to summarize quote information (e.g. hide conversions, group charges)
+
+### Misc
+
+* Notifications
+
 ## v.NEXT
 
-## v0.11.0 – 
+## v0.11.0 – FCL Quote Scenario
+
+__User Story:__ _Get a real FCL quote scenario working with as much automation as possible._
+
+* __FCL Quote Scenario:__ Relevant charge populates automatically
+* __FCL Quote Scenario:__ Applicable location or carrier rates populate for each charge automatically
+* __FCL Quote Scenario:__ Correct notes default onto quote
 
 ## v0.10.0 – Simple Rate Management
 
