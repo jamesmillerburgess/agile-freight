@@ -82,6 +82,7 @@ class EditQuoteHeader extends React.Component {
             charges: {
               ...this.props.quote.charges,
               chargeLines,
+              notes: APIGlobals.notes,
             },
           },
           () => this.props.history.push(
