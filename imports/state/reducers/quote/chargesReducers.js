@@ -124,6 +124,7 @@ export const fxConversions = (state = {}, action = { type: '' }) => {
         changeProp(newState[action.currency], 'rate', action.rate),
       );
       break;
+    case ACTION_TYPES.LOAD_QUOTE:
     case ACTION_TYPES.SET_CHARGE_LINE_CURRENCY:
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
     case ACTION_TYPES.SET_QUOTE_CURRENCY:

@@ -31,6 +31,7 @@ __User Story:__ _Get a real FCL quote scenario working with as much automation a
 * __FCL Quote Scenario:__ Applicable location or carrier rates populate for each charge automatically
 * __FCL Quote Scenario:__ Notes default onto quote
 * Units default into charges
+* Fixed issue where exchange rate fields were not appearing in the charges
 
 ## v0.10.0 – Simple Rate Management
 
