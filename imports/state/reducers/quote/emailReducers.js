@@ -1,5 +1,5 @@
 import * as ACTION_TYPES from '../../actions/actionTypes';
-import { changeProp } from '../reducer-utils';
+import { setProp } from '../reducer-utils';
 
 const emailDefaultState = {
   isOpen: false,
@@ -19,19 +19,19 @@ export const email = (state = emailDefaultState, action = { type: '' }) => {
       newState = action.email;
       break;
     case ACTION_TYPES.SET_EMAIL_IS_OPEN:
-      newState = changeProp(state, 'isOpen', action.isOpen);
+      newState = setProp(state, 'isOpen', action.isOpen);
       break;
     case ACTION_TYPES.SET_EMAIL_TO:
-      newState = changeProp(state, 'to', action.to);
+      newState = setProp(state, 'to', action.to);
       break;
     case ACTION_TYPES.SET_EMAIL_CC:
-      newState = changeProp(state, 'cc', action.cc);
+      newState = setProp(state, 'cc', action.cc);
       break;
     case ACTION_TYPES.SET_EMAIL_SUBJECT:
-      newState = changeProp(state, 'subject', action.subject);
+      newState = setProp(state, 'subject', action.subject);
       break;
     case ACTION_TYPES.SET_EMAIL_MESSAGE:
-      newState = changeProp(state, 'message', action.message);
+      newState = setProp(state, 'message', action.message);
       break;
     default:
       newState = state;

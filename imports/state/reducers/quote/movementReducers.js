@@ -1,5 +1,5 @@
 import * as ACTION_TYPES from '../../actions/actionTypes';
-import { changeProp } from '../reducer-utils';
+import { setProp } from '../reducer-utils';
 
 const defaultMovementState = {
   pickup: {
@@ -23,61 +23,61 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
       newState = action.quote.movement || defaultMovementState;
       break;
     case ACTION_TYPES.SET_MOVEMENT_MODE:
-      newState = changeProp(state, 'mode', action.mode);
+      newState = setProp(state, 'mode', action.mode);
       if (newState.mode === 'Brokerage') {
-        newState = changeProp(newState, 'termsOfSale', '');
+        newState = setProp(newState, 'termsOfSale', '');
       }
       break;
     case ACTION_TYPES.SET_MOVEMENT_COMMERCIAL_PARTY:
-      newState = changeProp(state, 'commercialParty', action.commercialParty);
+      newState = setProp(state, 'commercialParty', action.commercialParty);
       break;
     case ACTION_TYPES.SET_MOVEMENT_TERMS_OF_SALE:
-      newState = changeProp(state, 'termsOfSale', action.termsOfSale);
+      newState = setProp(state, 'termsOfSale', action.termsOfSale);
       break;
     case ACTION_TYPES.SET_CARRIER:
-      newState = changeProp(state, 'carrier', action.carrier);
+      newState = setProp(state, 'carrier', action.carrier);
       break;
     case ACTION_TYPES.SET_RECEIPT:
-      newState = changeProp(state, 'receipt', action.receipt);
+      newState = setProp(state, 'receipt', action.receipt);
       break;
     case ACTION_TYPES.SET_DEPARTURE:
-      newState = changeProp(state, 'departure', action.departure);
+      newState = setProp(state, 'departure', action.departure);
       break;
     case ACTION_TYPES.SET_ARRIVAL:
-      newState = changeProp(state, 'arrival', action.arrival);
+      newState = setProp(state, 'arrival', action.arrival);
       break;
     case ACTION_TYPES.SET_DELIVERY:
-      newState = changeProp(state, 'delivery', action.delivery);
+      newState = setProp(state, 'delivery', action.delivery);
       break;
     case ACTION_TYPES.SET_PICKUP_LOCATION_TYPE:
-      newState = changeProp(state, 'pickup', changeProp(state.pickup, 'locationType', action.locationType));
+      newState = setProp(state, 'pickup', setProp(state.pickup, 'locationType', action.locationType));
       break;
     case ACTION_TYPES.SET_PICKUP_LOCATION_NAME:
-      newState = changeProp(state, 'pickup', changeProp(state.pickup, 'locationName', action.locationName));
+      newState = setProp(state, 'pickup', setProp(state.pickup, 'locationName', action.locationName));
       break;
     case ACTION_TYPES.SET_PICKUP_COUNTRY:
-      newState = changeProp(state, 'pickup', changeProp(state.pickup, 'country', action.country));
+      newState = setProp(state, 'pickup', setProp(state.pickup, 'country', action.country));
       if (action.country !== state.pickup.country) {
         newState.pickup.location = '';
       }
       break;
     case ACTION_TYPES.SET_PICKUP_LOCATION:
-      newState = changeProp(state, 'pickup', changeProp(state.pickup, 'location', action.location));
+      newState = setProp(state, 'pickup', setProp(state.pickup, 'location', action.location));
       break;
     case ACTION_TYPES.SET_DELIVERY_LOCATION_TYPE:
-      newState = changeProp(state, 'delivery', changeProp(state.delivery, 'locationType', action.locationType));
+      newState = setProp(state, 'delivery', setProp(state.delivery, 'locationType', action.locationType));
       break;
     case ACTION_TYPES.SET_DELIVERY_LOCATION_NAME:
-      newState = changeProp(state, 'delivery', changeProp(state.delivery, 'locationName', action.locationName));
+      newState = setProp(state, 'delivery', setProp(state.delivery, 'locationName', action.locationName));
       break;
     case ACTION_TYPES.SET_DELIVERY_COUNTRY:
-      newState = changeProp(state, 'delivery', changeProp(state.delivery, 'country', action.country));
+      newState = setProp(state, 'delivery', setProp(state.delivery, 'country', action.country));
       if (action.country !== state.delivery.country) {
         newState.delivery.location = '';
       }
       break;
     case ACTION_TYPES.SET_DELIVERY_LOCATION:
-      newState = changeProp(state, 'delivery', changeProp(state.delivery, 'location', action.location));
+      newState = setProp(state, 'delivery', setProp(state.delivery, 'location', action.location));
       break;
     default:
       newState = state;

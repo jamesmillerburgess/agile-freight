@@ -1,6 +1,6 @@
 import {
-  changeProp,
-  changePropAtId,
+  setProp,
+  setPropAtId,
   removeAtId,
   addToEnd,
 } from '../reducer-utils';
@@ -41,27 +41,27 @@ export const chargeLines = (
       newState = removeAtId(state, action.id);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_CODE:
-      newState = changePropAtId(state, 'code', action.id, action.code);
+      newState = setPropAtId(state, 'code', action.id, action.code);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_NAME:
-      newState = changePropAtId(state, 'name', action.id, action.name);
+      newState = setPropAtId(state, 'name', action.id, action.name);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_SELECTED_RATE:
       newState =
-        changePropAtId(state, 'selectedRate', action.id, action.selectedRate);
+        setPropAtId(state, 'selectedRate', action.id, action.selectedRate);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_BASIS:
-      newState = changePropAtId(state, 'basis', action.id, action.basis);
+      newState = setPropAtId(state, 'basis', action.id, action.basis);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNITS:
-      newState = changePropAtId(state, 'units', action.id, action.units);
+      newState = setPropAtId(state, 'units', action.id, action.units);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE:
       newState =
-        changePropAtId(state, 'unitPrice', action.id, action.unitPrice);
+        setPropAtId(state, 'unitPrice', action.id, action.unitPrice);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_CURRENCY:
-      newState = changePropAtId(
+      newState = setPropAtId(
         state,
         'currency',
         action.id,
@@ -95,10 +95,10 @@ export const fxConversions = (state = {}, action = { type: '' }) => {
   let newState = Object.assign(state.fxConversions || {}, {});
   switch (action.type) {
     case ACTION_TYPES.SET_FX_CONVERSION_RATE:
-      newState = changeProp(
+      newState = setProp(
         newState,
         action.currency,
-        changeProp(newState[action.currency], 'rate', action.rate),
+        setProp(newState[action.currency], 'rate', action.rate),
       );
       break;
     case ACTION_TYPES.LOAD_QUOTE:
@@ -154,20 +154,20 @@ export const charges = (state = defaultChargesState, action = { type: '' }) => {
       newState = action.quote.charges || defaultChargesState;
       break;
     case ACTION_TYPES.SET_CHARGE_NOTES:
-      newState = changeProp(state, 'notes', action.notes);
+      newState = setProp(state, 'notes', action.notes);
       break;
     case ACTION_TYPES.SET_QUOTE_CURRENCY:
-      newState = changeProp(state, 'currency', action.currency);
+      newState = setProp(state, 'currency', action.currency);
       break;
     case ACTION_TYPES.SET_FX_CONVERSION_RATE:
       newState =
-        changeProp(
+        setProp(
           state,
           'fxConversions',
-          changeProp(
+          setProp(
             state.fxConversions,
             action.currency,
-            changeProp(
+            setProp(
               state.fxConversions[action.currency],
               'rate',
               action.rate,

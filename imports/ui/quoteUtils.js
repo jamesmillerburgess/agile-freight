@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { uniqueValues } from '../ui/statsUtils';
-import { changeProp } from '../state/reducers/reducer-utils';
+import { setProp } from '../state/reducers/reducer-utils';
 import { APIGlobals } from '../api/api-globals';
 
 /**
@@ -56,20 +56,20 @@ export const getUpdatedFXConversions = (charges) => {
   currencies.forEach((currency) => {
     if (currency === charges.currency) {
       if (result[currency]) {
-        result[currency] = changeProp(result[currency], 'active', false);
+        result[currency] = setProp(result[currency], 'active', false);
       }
     } else if (!result[currency]) {
-      result = changeProp(result, currency, { active: true });
+      result = setProp(result, currency, { active: true });
     } else if (!result[currency].active) {
-      result[currency] = changeProp(result[currency], 'active', true);
+      result[currency] = setProp(result[currency], 'active', true);
     }
   });
   Object.keys(result).forEach((currency) => {
     if (currencies.indexOf(currency) === -1) {
-      result[currency] = changeProp(result[currency], 'active', false);
+      result[currency] = setProp(result[currency], 'active', false);
     }
     if (result[currency].active && !result[currency].rate) {
-      result[currency] = changeProp(result[currency], 'rate', APIGlobals.fxRates[charges.currency][currency]);
+      result[currency] = setProp(result[currency], 'rate', APIGlobals.fxRates[charges.currency][currency]);
     }
   });
   return result;

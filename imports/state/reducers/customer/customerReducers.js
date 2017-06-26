@@ -1,5 +1,5 @@
 import * as ACTION_TYPES from '../../actions/actionTypes';
-import { changeProp } from '../reducer-utils';
+import { setProp } from '../reducer-utils';
 
 export const defaultCustomerState = {
   name: '',
@@ -26,19 +26,19 @@ export const customer = (state = defaultCustomerState, action = { type: '' }) =>
       }
       break;
     case ACTION_TYPES.SET_CUSTOMER_NAME:
-      newState = changeProp(state, 'name', action.name);
+      newState = setProp(state, 'name', action.name);
       break;
     case ACTION_TYPES.SET_CUSTOMER_ADDRESS:
-      newState = changeProp(state, 'address', action.address);
+      newState = setProp(state, 'address', action.address);
       break;
     case ACTION_TYPES.SET_CUSTOMER_EMAIL_ADDRESS:
-      newState = changeProp(state, 'emailAddress', action.emailAddress);
+      newState = setProp(state, 'emailAddress', action.emailAddress);
       break;
     case ACTION_TYPES.SET_CUSTOMER_CURRENCY:
-      newState = changeProp(state, 'currency', action.currency);
+      newState = setProp(state, 'currency', action.currency);
       break;
     case ACTION_TYPES.SET_CUSTOMER_BRANCH:
-      newState = changeProp(state, 'branch', action.branch);
+      newState = setProp(state, 'branch', action.branch);
       break;
     default:
       newState = state;

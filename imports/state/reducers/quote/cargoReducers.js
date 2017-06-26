@@ -1,4 +1,4 @@
-import { changePropAtIndex, removeAtIndex, addToEnd } from '../reducer-utils';
+import { setPropAtIndex, removeAtIndex, addToEnd } from '../reducer-utils';
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
 export const cargoType = (state = 'loose', action = { type: '' }) => {
@@ -42,21 +42,21 @@ const updateBasePackageLines = (state, action) => {
     case ACTION_TYPES.REMOVE_PACKAGE_LINE:
       return removeAtIndex(state, action.index);
     case ACTION_TYPES.SET_PACKAGE_LINE_PACKAGE_TYPE:
-      return changePropAtIndex(state, 'packageType', action.index, action.packageType);
+      return setPropAtIndex(state, 'packageType', action.index, action.packageType);
     case ACTION_TYPES.SET_PACKAGE_LINE_NUM_PACKAGES:
-      return changePropAtIndex(state, 'numPackages', action.index, action.numPackages);
+      return setPropAtIndex(state, 'numPackages', action.index, action.numPackages);
     case ACTION_TYPES.SET_PACKAGE_LINE_LENGTH:
-      return changePropAtIndex(state, 'length', action.index, action.length);
+      return setPropAtIndex(state, 'length', action.index, action.length);
     case ACTION_TYPES.SET_PACKAGE_LINE_WIDTH:
-      return changePropAtIndex(state, 'width', action.index, action.width);
+      return setPropAtIndex(state, 'width', action.index, action.width);
     case ACTION_TYPES.SET_PACKAGE_LINE_HEIGHT:
-      return changePropAtIndex(state, 'height', action.index, action.height);
+      return setPropAtIndex(state, 'height', action.index, action.height);
     case ACTION_TYPES.SET_PACKAGE_LINE_UNIT_VOLUME_UOM:
-      return changePropAtIndex(state, 'unitVolumeUOM', action.index, action.unitVolumeUOM);
+      return setPropAtIndex(state, 'unitVolumeUOM', action.index, action.unitVolumeUOM);
     case ACTION_TYPES.SET_PACKAGE_LINE_WEIGHT:
-      return changePropAtIndex(state, 'weight', action.index, action.weight);
+      return setPropAtIndex(state, 'weight', action.index, action.weight);
     case ACTION_TYPES.SET_PACKAGE_LINE_WEIGHT_UOM:
-      return changePropAtIndex(state, 'weightUOM', action.index, action.weightUOM);
+      return setPropAtIndex(state, 'weightUOM', action.index, action.weightUOM);
     default:
       return state;
   }
@@ -172,11 +172,11 @@ export const containerLines = (state = defaultContainerLinesState, action = { ty
     case ACTION_TYPES.REMOVE_CONTAINER_LINE:
       return removeAtIndex(state, action.index);
     case ACTION_TYPES.SET_CONTAINER_LINE_NUM_CONTAINERS:
-      return changePropAtIndex(state, 'numContainers', action.index, action.numContainers);
+      return setPropAtIndex(state, 'numContainers', action.index, action.numContainers);
     case ACTION_TYPES.SET_CONTAINER_LINE_CONTAINER_TYPE:
-      return changePropAtIndex(state, 'containerType', action.index, action.containerType);
+      return setPropAtIndex(state, 'containerType', action.index, action.containerType);
     case ACTION_TYPES.TOGGLE_CONTAINER_LINE_TEMPERATURE_CONTROLLED:
-      return changePropAtIndex(state, 'temperatureControlled', action.index, !state[action.index].temperatureControlled);
+      return setPropAtIndex(state, 'temperatureControlled', action.index, !state[action.index].temperatureControlled);
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 import * as ACTION_TYPES from '../../actions/actionTypes';
-import { changeProp } from '../reducer-utils';
+import { setProp } from '../reducer-utils';
 
 export const defaultUserProfileState = {
   name: '',
@@ -22,13 +22,13 @@ export const userProfile = (state = defaultUserProfileState, action = { type: ''
       }
       break;
     case ACTION_TYPES.SET_USER_PROFILE_NAME:
-      newState = changeProp(state, 'name', action.name);
+      newState = setProp(state, 'name', action.name);
       break;
     case ACTION_TYPES.SET_USER_PROFILE_EMAIL_ADDRESS:
-      newState = changeProp(state, 'emailAddress', action.emailAddress);
+      newState = setProp(state, 'emailAddress', action.emailAddress);
       break;
     case ACTION_TYPES.SET_USER_PROFILE_BRANCH:
-      newState = changeProp(state, 'branch', action.branch);
+      newState = setProp(state, 'branch', action.branch);
       break;
     default:
       newState = state;

@@ -10,19 +10,19 @@ export const itemAtId = (arr, id) => {
   return match;
 };
 
-export const changeProp = (obj, prop, val) => Object.assign(
+export const setProp = (obj, prop, val) => Object.assign(
   {},
   obj,
   { [prop]: val },
 );
 
-export const changePropAtIndex = (arr, prop, index, val) => [
+export const setPropAtIndex = (arr, prop, index, val) => [
   ...arr.slice(0, index),
-  changeProp(arr[index], prop, val),
+  setProp(arr[index], prop, val),
   ...arr.slice(index + 1),
 ];
 
-export const changePropAtId = (arr, prop, id, val) => arr.map((item) => {
+export const setPropAtId = (arr, prop, id, val) => arr.map((item) => {
   const res = { ...item };
   if (item.id === id) {
     res[prop] = val;
