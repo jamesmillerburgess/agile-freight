@@ -188,7 +188,7 @@ if (Meteor.isClient) {
 
         stateAfter[0].currency.should.equal('b');
       });
-      
+
       it('removes a charge line with the specified id', () => {
         const stateBefore = [
           { id: 'a', group: 'Origin' },
@@ -240,141 +240,19 @@ if (Meteor.isClient) {
         chargeLines(stateBefore, action)[0].selectedRate.should.equal('custom');
       });
 
-      it(
-        'changes the basis at at the charge line with the specified id',
-        () => {
-          const stateBefore = [{ id: 0, basis: 'a' }, { id: 1, basis: 'c' }];
-          const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
-            id: 0,
-            basis: 'b',
-          };
-          deepFreeze(stateBefore);
+      it('changes the basis at at the charge line with the specified ' +
+         'id', () => {
+        const stateBefore = [{ id: 0, basis: 'a' }, { id: 1, basis: 'c' }];
+        const action = {
+          type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
+          id: 0,
+          basis: 'b',
+        };
+        deepFreeze(stateBefore);
 
-          chargeLines(stateBefore, action)[0].basis.should.equal('b');
-          chargeLines(stateBefore, action)[1].basis.should.equal('c');
-        },
-      );
-
-      it(
-        'sets the units to 1 when the basis is changed to \'Shipment\'',
-        () => {
-          const stateBefore = [{ id: 0, basis: 'a' }];
-          const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
-            id: 0,
-            basis: 'Shipment',
-          };
-          deepFreeze(stateBefore);
-
-          chargeLines(stateBefore, action)[0].units.should.equal(1);
-        },
-      );
-
-      it(
-        'sets the units to the total KG when the basis is changed to \'KG\'',
-        () => {
-          const stateBefore = [{ id: 0, rate: 'a' }];
-          const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
-            id: 0,
-            basis: 'KG',
-          };
-          const quoteState = { cargo: { totalWeight: 10, weightUOM: 'kg' } };
-          deepFreeze(stateBefore);
-
-          chargeLines(
-            stateBefore,
-            action,
-            {},
-            quoteState,
-          )[0].units.should.equal(10);
-        },
-      );
-
-      it(
-        'sets the units to the total CBM when the basis is changed to \'CBM\'',
-        () => {
-          const stateBefore = [{ id: 0, basis: 'a' }];
-          const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
-            id: 0,
-            basis: 'CBM',
-          };
-          const quoteState = { cargo: { totalVolume: 10, weightUOM: 'cbm' } };
-          deepFreeze(stateBefore);
-
-          chargeLines(
-            stateBefore,
-            action,
-            {},
-            quoteState,
-          )[0].units.should.equal(10);
-        },
-      );
-
-      it(
-        'sets the units to the total containers when the basis is changed to \'Container\'',
-        () => {
-          const stateBefore = [{ id: 0, basis: 'a' }];
-          const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
-            id: 0,
-            basis: 'Container',
-          };
-          const quoteState = { cargo: { totalContainers: 10 } };
-          deepFreeze(stateBefore);
-
-          chargeLines(
-            stateBefore,
-            action,
-            {},
-            quoteState,
-          )[0].units.should.equal(10);
-        },
-      );
-
-      it(
-        'sets the units to the total TEU when the basis is changed to \'TEU\'',
-        () => {
-          const stateBefore = [{ id: 0, basis: 'a' }];
-          const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
-            id: 0,
-            basis: 'TEU',
-          };
-          const quoteState = { cargo: { totalTEU: 10 } };
-          deepFreeze(stateBefore);
-
-          chargeLines(
-            stateBefore,
-            action,
-            {},
-            quoteState,
-          )[0].units.should.equal(10);
-        },
-      );
-
-      it(
-        'sets the units to the total packages when the basis is changed to \'Package\'',
-        () => {
-          const stateBefore = [{ id: 0, basis: 'a' }];
-          const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
-            id: 0,
-            basis: 'Package',
-          };
-          const quoteState = { cargo: { totalPackages: 10 } };
-          deepFreeze(stateBefore);
-
-          chargeLines(
-            stateBefore,
-            action,
-            {},
-            quoteState,
-          )[0].units.should.equal(10);
-        },
-      );
+        chargeLines(stateBefore, action)[0].basis.should.equal('b');
+        chargeLines(stateBefore, action)[1].basis.should.equal('c');
+      });
 
       it('changes the units at the charge line with the specified id', () => {
         const stateBefore = [{ id: 'a', units: 1 }, { id: 'b', units: 3 }];
