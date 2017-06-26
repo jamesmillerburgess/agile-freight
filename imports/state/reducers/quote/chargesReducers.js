@@ -5,8 +5,7 @@ import {
   removeAtId,
   addToEnd,
 } from '../reducer-utils';
-import { uniqueValues } from '../../../ui/statsUtils';
-import { APIGlobals } from '../../../api/api-globals';
+import { getUpdatedFXConversions } from '../../../ui/quoteUtils';
 
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
@@ -42,8 +41,9 @@ export const chargeLines = (
         state,
         {
           ...action.chargeLine,
-          rate: 'Shipment',
+          basis: 'Shipment',
           units: defaultUnits('Shipment'),
+          applicableSellRates: {},
         },
       );
       if (!newState[newState.length - 1].currency) {
@@ -115,39 +115,6 @@ export const chargeLines = (
   });
 };
 
-export const getUpdatedFXConversions = (charges) => {
-  let result = charges.fxConversions;
-  const currencies = uniqueValues(charges.chargeLines, 'currency');
-  currencies.forEach((currency) => {
-    if (currency === charges.currency) {
-      if (result[currency]) {
-        result = changeProp(
-          result,
-          currency,
-          changeProp(result[currency], 'active', false),
-        );
-      }
-    } else if (!result[currency]) {
-      result = changeProp(result, currency, { active: true });
-    } else if (!result[currency].active) {
-      result = changeProp(
-        result,
-        currency,
-        changeProp(result[currency], 'active', true),
-      );
-    }
-  });
-  Object.keys(result).forEach((currency) => {
-    if (currencies.indexOf(currency) === -1) {
-      result[currency] = changeProp(result[currency], 'active', false);
-    }
-    if (result[currency].active && !result[currency].rate) {
-      result[currency].rate = APIGlobals.fxRates[charges.currency][currency];
-    }
-  });
-  return result;
-};
-
 export const fxConversions = (state = {}, action = { type: '' }) => {
   let newState = Object.assign(state.fxConversions || {}, {});
   switch (action.type) {
@@ -162,31 +129,7 @@ export const fxConversions = (state = {}, action = { type: '' }) => {
     case ACTION_TYPES.SET_CHARGE_LINE_CURRENCY:
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
     case ACTION_TYPES.SET_QUOTE_CURRENCY:
-      const currencies = uniqueValues(state.chargeLines, 'currency');
-      currencies.forEach((currency) => {
-        if (currency === state.currency) {
-          if (newState[currency]) {
-            newState = changeProp(
-              newState,
-              currency,
-              changeProp(newState[currency], 'active', false),
-            );
-          }
-        } else if (!newState[currency]) {
-          newState = changeProp(newState, currency, { active: true });
-        } else if (!newState[currency].active) {
-          newState = changeProp(
-            newState,
-            currency,
-            changeProp(newState[currency], 'active', true),
-          );
-        }
-      });
-      Object.keys(newState).forEach((currency) => {
-        if (currencies.indexOf(currency) === -1) {
-          newState[currency] = changeProp(newState[currency], 'active', false);
-        }
-      });
+      newState = getUpdatedFXConversions(state);
       break;
     default:
       break;

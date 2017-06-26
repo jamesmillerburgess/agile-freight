@@ -16,10 +16,8 @@ import {
   getDefaultMovementCharges,
   getDefaultOtherServicesCharges,
 } from '../../api/rates/chargeDefaultUtils';
-import {
-  defaultUnits,
-  getUpdatedFXConversions,
-} from '../../state/reducers/quote/chargesReducers';
+import { defaultUnits } from '../../state/reducers/quote/chargesReducers';
+import { getUpdatedFXConversions } from '../quoteUtils';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 
