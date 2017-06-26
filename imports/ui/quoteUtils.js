@@ -50,7 +50,7 @@ export const newChargeLine = (group, quote) => ({
  * @returns {charges.fxConversions|{AED, ALL}}
  */
 export const getUpdatedFXConversions = (charges) => {
-  const result = charges.fxConversions;
+  const result = charges.fxConversions || {};
   const currencies = uniqueValues(charges.chargeLines, 'currency');
   currencies.forEach((currency) => {
     if (currency === charges.currency) {

@@ -131,40 +131,37 @@ if (Meteor.isClient) {
         charges(stateBefore, action).currency.should.equal('b');
       });
 
-      it(
-        'calculates amounts only after updating individual components of ' +
-        'the calculation',
-        () => {
-          const stateBefore = {
-            chargeLines: [
-              {
-                group: 'Origin',
-                id: 'a',
-                code: 'b',
-                name: 'c',
-                rate: 'd',
-                units: 1,
-                unitPrice: 2,
-                currency: 'e',
-                finalAmount: 4,
-              },
-            ],
-            currency: 'f',
-            fxConversions: { e: { rate: 2 } },
-          };
-          const action = {
-            type: ACTION_TYPES.SET_FX_CONVERSION_RATE,
-            currency: 'e',
-            rate: 1,
-          };
-          const stateAfter = charges(stateBefore, action);
+      it('calculates amounts only after updating individual components of ' +
+         'the calculation', () => {
+        const stateBefore = {
+          chargeLines: [
+            {
+              group: 'Origin',
+              id: 'a',
+              code: 'b',
+              name: 'c',
+              rate: 'd',
+              units: 1,
+              unitPrice: 2,
+              currency: 'e',
+              finalAmount: 4,
+            },
+          ],
+          currency: 'f',
+          fxConversions: { e: { rate: 2 } },
+        };
+        const action = {
+          type: ACTION_TYPES.SET_FX_CONVERSION_RATE,
+          currency: 'e',
+          rate: 1,
+        };
+        const stateAfter = charges(stateBefore, action);
 
-          stateAfter.chargeLines[0].amount.should.equal(2);
-          stateAfter.chargeLines[0].finalAmount.should.equal(2);
-          stateAfter.totalOriginCharges.should.equal(2);
-          stateAfter.totalCharges.should.equal(2);
-        },
-      );
+        stateAfter.chargeLines[0].amount.should.equal(2);
+        stateAfter.chargeLines[0].finalAmount.should.equal(2);
+        stateAfter.totalOriginCharges.should.equal(2);
+        stateAfter.totalCharges.should.equal(2);
+      });
     });
 
     describe('Charge Lines Reducer', () => {
@@ -180,20 +177,6 @@ if (Meteor.isClient) {
         stateAfter.length.should.equal(1);
         stateAfter[0].group.should.equal('Origin');
       });
-
-      it(
-        'sets the unit price currency of a new charge line to the quote currency, if no currency is specified',
-        () => {
-          const stateBefore = [];
-          const parentState = { currency: 'a' };
-          const chargeLine = { group: 'Origin' };
-          const action = { type: ACTION_TYPES.ADD_CHARGE_LINE, chargeLine };
-          deepFreeze(stateBefore);
-          const stateAfter = chargeLines(stateBefore, action, parentState);
-
-          stateAfter[0].currency.should.equal('a');
-        },
-      );
 
       it('keeps the specified unit price currency if one is provided', () => {
         const stateBefore = [];
@@ -271,30 +254,36 @@ if (Meteor.isClient) {
         chargeLines(stateBefore, action)[0].selectedRate.should.equal('custom');
       });
 
-      it('changes the basis at at the charge line with the specified id', () => {
-        const stateBefore = [{ id: 0, basis: 'a' }, { id: 1, basis: 'c' }];
-        const action = {
-          type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
-          id: 0,
-          basis: 'b',
-        };
-        deepFreeze(stateBefore);
+      it(
+        'changes the basis at at the charge line with the specified id',
+        () => {
+          const stateBefore = [{ id: 0, basis: 'a' }, { id: 1, basis: 'c' }];
+          const action = {
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
+            id: 0,
+            basis: 'b',
+          };
+          deepFreeze(stateBefore);
 
-        chargeLines(stateBefore, action)[0].basis.should.equal('b');
-        chargeLines(stateBefore, action)[1].basis.should.equal('c');
-      });
+          chargeLines(stateBefore, action)[0].basis.should.equal('b');
+          chargeLines(stateBefore, action)[1].basis.should.equal('c');
+        },
+      );
 
-      it('sets the units to 1 when the basis is changed to \'Shipment\'', () => {
-        const stateBefore = [{ id: 0, basis: 'a' }];
-        const action = {
-          type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
-          id: 0,
-          basis: 'Shipment',
-        };
-        deepFreeze(stateBefore);
+      it(
+        'sets the units to 1 when the basis is changed to \'Shipment\'',
+        () => {
+          const stateBefore = [{ id: 0, basis: 'a' }];
+          const action = {
+            type: ACTION_TYPES.SET_CHARGE_LINE_BASIS,
+            id: 0,
+            basis: 'Shipment',
+          };
+          deepFreeze(stateBefore);
 
-        chargeLines(stateBefore, action)[0].units.should.equal(1);
-      });
+          chargeLines(stateBefore, action)[0].units.should.equal(1);
+        },
+      );
 
       it(
         'sets the units to the total KG when the basis is changed to \'KG\'',

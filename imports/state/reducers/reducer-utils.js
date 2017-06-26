@@ -10,7 +10,11 @@ export const itemAtId = (arr, id) => {
   return match;
 };
 
-export const changeProp = (obj, prop, val) => Object.assign({}, obj, { [prop]: val });
+export const changeProp = (obj, prop, val) => Object.assign(
+  {},
+  obj,
+  { [prop]: val },
+);
 
 export const changePropAtIndex = (arr, prop, index, val) => [
   ...arr.slice(0, index),
