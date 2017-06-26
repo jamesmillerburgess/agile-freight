@@ -46,6 +46,7 @@ const EditRate = props => (
                   { value: 'FSC', label: 'Fuel Surcharge – FSC' },
                   { value: 'THC', label: 'Terminal Handling Charge – THC' },
                   { value: 'IFR', label: 'International Freight – IFR' },
+                  { value: 'CSY', label: 'Carrier Security – CSY' },
                 ]}
                 onChange={selected => props.dispatchers.onChangeRateChargeCode(
                   selected.value)}
