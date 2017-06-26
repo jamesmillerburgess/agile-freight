@@ -385,7 +385,6 @@ if (Meteor.isClient) {
         deepFreeze(stateBefore);
 
         let stateAfter = fxConversions(stateBefore, action);
-        console.log(stateAfter);
         stateAfter.should.have.property('b');
         stateAfter.b.active.should.equal(true);
         stateAfter.b.rate.should.equal(1);
