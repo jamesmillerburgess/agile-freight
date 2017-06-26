@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 
 import EditQuoteChargeGroup from './EditQuoteChargeGroup.jsx';
 import * as actionCreators from '../../state/actions/quoteActions';
+import { defaultUnits } from '../quoteUtils';
 
 const mapStateToProps = (state, ownProps) => ({
   currency: state.quote.charges.currency,
@@ -36,12 +37,13 @@ const mapDispatchToProps = dispatch => ({
       dispatch(actionCreators.setChargeLineCurrency(id, currency));
     }
   },
-  setChargeLineBasis: (chargeLine, basis) => {
+  setChargeLineBasis: (quote, chargeLine, basis) => {
     const { id, selectedRate } = chargeLine;
     if (selectedRate !== 'custom') {
       dispatch(actionCreators.setChargeLineSelectedRate(id, 'custom'));
     }
     dispatch(actionCreators.setChargeLineBasis(id, basis));
+    dispatch(actionCreators.setChargeLineUnits(id, defaultUnits(basis, quote.cargo)));
   },
   setChargeLineUnits: (id, units) => dispatch(actionCreators.setChargeLineUnits(
     id,

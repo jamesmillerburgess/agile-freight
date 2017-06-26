@@ -32,12 +32,10 @@ export const chargeLines = (
   state = [],
   action = { type: '' },
   parentState = {},
-  quoteState = {},
 ) => {
   let newState = [];
   switch (action.type) {
     case ACTION_TYPES.ADD_CHARGE_LINE:
-      console.log(action.chargeLine);
       newState = addToEnd(state, action.chargeLine);
       break;
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
@@ -55,12 +53,6 @@ export const chargeLines = (
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_BASIS:
       newState = changePropAtId(state, 'basis', action.id, action.basis);
-      newState = changePropAtId(
-        newState,
-        'units',
-        action.id,
-        defaultUnits(itemAtId(newState, action.id).basis, quoteState.cargo),
-      );
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNITS:
       newState = changePropAtId(state, 'units', action.id, action.units);
@@ -80,7 +72,6 @@ export const chargeLines = (
     default:
       newState = state;
   }
-  console.log(newState);
   return newState.map((chargeLine) => {
     const res = { ...chargeLine };
     res.amount = (chargeLine.units || 0) * (chargeLine.unitPrice || 0);
@@ -157,11 +148,7 @@ const defaultChargesState = {
   currency: '',
 };
 
-export const charges = (
-  state = defaultChargesState,
-  action = { type: '' },
-  quoteState,
-) => {
+export const charges = (state = defaultChargesState, action = { type: '' }) => {
   let newState = Object.assign(state, {});
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
@@ -193,7 +180,7 @@ export const charges = (
       newState = state;
   }
   newState.chargeLines =
-    chargeLines(newState.chargeLines, action, newState, quoteState);
+    chargeLines(newState.chargeLines, action, newState);
   newState.fxConversions = fxConversions(newState, action);
   const totals = chargeTotals(newState.chargeLines);
   return {

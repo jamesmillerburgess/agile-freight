@@ -3,8 +3,14 @@ import { Mongo } from 'meteor/mongo';
 import { uniqueValues } from '../ui/statsUtils';
 import { APIGlobals } from '../api/api-globals';
 
-export const defaultUnits = (rate, cargo) => {
-  switch (rate) {
+/**
+ * Defaults the units of a charge line based on the cargo properties.
+ * @param basis
+ * @param cargo
+ * @returns {number}
+ */
+export const defaultUnits = (basis, cargo) => {
+  switch (basis) {
     case 'Shipment':
       return 1;
     case 'KG':
@@ -22,6 +28,11 @@ export const defaultUnits = (rate, cargo) => {
   }
 };
 
+/**
+ * Builds a new charge line for the specified group based on quote properties.
+ * @param group
+ * @param quote
+ */
 export const newChargeLine = (group, quote) => ({
   id: new Mongo.ObjectID()._str,
   group,

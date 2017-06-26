@@ -167,7 +167,7 @@ class EditQuoteCharges extends React.Component {
                     <th className="amount-final-column numeric-label">FINAL ({this.props.quote.charges.currency})</th>
                   </tr>
                 </tbody>
-                <EditQuoteChargeGroupConnect group="Origin" />
+                <EditQuoteChargeGroupConnect group="Origin" quote={this.props.quote} />
                 <tbody>
                   <tr className="empty-row" />
                   <tr className="column-title-row">
@@ -182,7 +182,7 @@ class EditQuoteCharges extends React.Component {
                     <th colSpan="6" className="title">INTERNATIONAL</th>
                   </tr>
                 </tbody>
-                <EditQuoteChargeGroupConnect group="International" />
+                <EditQuoteChargeGroupConnect group="International" quote={this.props.quote} />
                 <tbody>
                   <tr className="empty-row" />
                   <tr className="column-title-row">
@@ -197,7 +197,7 @@ class EditQuoteCharges extends React.Component {
                     <th colSpan="6" className="title">DESTINATION</th>
                   </tr>
                 </tbody>
-                <EditQuoteChargeGroupConnect group="Destination" />
+                <EditQuoteChargeGroupConnect group="Destination" quote={this.props.quote} />
                 <tbody>
                   <tr className="column-title-row">
                     <td />
