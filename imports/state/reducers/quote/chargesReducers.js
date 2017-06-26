@@ -37,23 +37,8 @@ export const chargeLines = (
   let newState = [];
   switch (action.type) {
     case ACTION_TYPES.ADD_CHARGE_LINE:
-      newState = addToEnd(
-        state,
-        {
-          ...action.chargeLine,
-          basis: 'Shipment',
-          units: defaultUnits('Shipment'),
-          applicableSellRates: {},
-        },
-      );
-      if (!newState[newState.length - 1].currency) {
-        newState = changePropAtId(
-          newState,
-          'currency',
-          newState[newState.length - 1].id,
-          parentState.currency,
-        );
-      }
+      console.log(action.chargeLine);
+      newState = addToEnd(state, action.chargeLine);
       break;
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
       newState = removeAtId(state, action.id);
@@ -95,6 +80,7 @@ export const chargeLines = (
     default:
       newState = state;
   }
+  console.log(newState);
   return newState.map((chargeLine) => {
     const res = { ...chargeLine };
     res.amount = (chargeLine.units || 0) * (chargeLine.unitPrice || 0);

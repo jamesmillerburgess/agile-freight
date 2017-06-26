@@ -1,6 +1,36 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { uniqueValues } from '../ui/statsUtils';
 import { APIGlobals } from '../api/api-globals';
+
+export const defaultUnits = (rate, cargo) => {
+  switch (rate) {
+    case 'Shipment':
+      return 1;
+    case 'KG':
+      return cargo.totalWeight;
+    case 'CBM':
+      return cargo.totalVolume;
+    case 'Container':
+      return cargo.totalContainers;
+    case 'TEU':
+      return cargo.totalTEU;
+    case 'Package':
+      return cargo.totalPackages;
+    default:
+      return 1;
+  }
+};
+
+export const newChargeLine = (group, quote) => ({
+  id: new Mongo.ObjectID()._str,
+  group,
+  basis: 'Shipment',
+  units: defaultUnits('Shipment', quote.cargo),
+  currency: quote.charges.currency,
+  applicableSellRates: {},
+  selectedRate: 'custom',
+});
 
 /**
  * Reads through the charges object and determines if conversions need to be

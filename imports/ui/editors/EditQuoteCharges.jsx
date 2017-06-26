@@ -13,6 +13,8 @@ import { Customers } from '../../api/customers/customersCollection';
 import { currencyFormat } from '../formatters/numberFormatters';
 import { resizeHeight } from '../formatters/resizeHeight';
 
+import { newChargeLine } from '../quoteUtils';
+
 class EditQuoteCharges extends React.Component {
   constructor(props) {
     super(props);
@@ -152,10 +154,7 @@ class EditQuoteCharges extends React.Component {
                     <th className="icon-cell">
                       <button
                         className="cargo-row-icon"
-                        onClick={() => addChargeLine({
-                          id: new Mongo.ObjectID()._str,
-                          group: 'Origin',
-                        })}
+                        onClick={() => addChargeLine(newChargeLine('Origin', this.props.quote))}
                       >
                         <span className="fa fa-fw fa-plus-square" />
                       </button>
@@ -175,10 +174,7 @@ class EditQuoteCharges extends React.Component {
                     <th className="icon-cell">
                       <button
                         className="cargo-row-icon"
-                        onClick={() => addChargeLine({
-                          id: new Mongo.ObjectID()._str,
-                          group: 'International',
-                        })}
+                        onClick={() => addChargeLine(newChargeLine('International', this.props.quote))}
                       >
                         <span className="fa fa-fw fa-plus-square" />
                       </button>
@@ -193,10 +189,7 @@ class EditQuoteCharges extends React.Component {
                     <th className="icon-cell">
                       <button
                         className="cargo-row-icon"
-                        onClick={() => addChargeLine({
-                          id: new Mongo.ObjectID()._str,
-                          group: 'Destination',
-                        })}
+                        onClick={() => addChargeLine(newChargeLine('Destination', this.props.quote))}
                       >
                         <span className="fa fa-fw fa-plus-square" />
                       </button>
