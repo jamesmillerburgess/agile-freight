@@ -37,6 +37,12 @@ All business is undertaken subject to the current editions of our standard tradi
       chargeCode: 'FSC',
       route: ['receipt', 'departure'],
     },
+    {
+      name: 'Carrier Security',
+      group: 'Origin',
+      chargeCode: 'CSC',
+      route: ['departure'],
+    },
   ],
 
   defaultInternationalFreightCharges: [
