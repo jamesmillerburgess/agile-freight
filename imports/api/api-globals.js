@@ -23,61 +23,6 @@ All business is undertaken subject to the current editions of our standard tradi
     { value: 'SUDU', label: 'Hamburg Sud – SUDU' },
   ],
 
-  // SIMPLE SELL RATES
-  sellRates: {
-    ITP: {
-      global: {
-        rate: 'Mile',
-        unitPrice: 0.5,
-        currency: 'USD',
-      },
-      country: {
-        USUS: {
-          rate: 'Mile',
-          unitPrice: 0.25,
-          currency: 'USD',
-        },
-        CNCN: {
-          rate: 'KM',
-          unitPrice: 7.2,
-          currency: 'CNY',
-        },
-      },
-    },
-    THC: {
-      location: {
-        USTPA: {
-          rate: 'TEU',
-          unitPrice: 250,
-          currency: 'USD',
-        },
-        CNSHA: {
-          rate: 'TEU',
-          unitPrice: 1230,
-          currency: 'CNY',
-        },
-      },
-    },
-    FSC: {
-      country: {
-        USUS: {
-          rate: 'Mile',
-          unitPrice: 0.75,
-          currency: 'USD',
-        },
-      },
-    },
-    IFR: {
-      location: {
-        USTPACNSHA: {
-          rate: 'TEU',
-          unitPrice: 550,
-          currency: 'USD',
-        },
-      },
-    },
-  },
-
   // DEFAULT CHARGES
   defaultCollectionCharges: [
     {
