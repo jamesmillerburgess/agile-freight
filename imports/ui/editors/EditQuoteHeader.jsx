@@ -12,7 +12,10 @@ import QuoteContainer from '../objects/QuoteContainer';
 
 import { quotePropTypes } from '../objects/quotePropTypes';
 import { APIGlobals } from '../../api/api-globals';
-import { getDefaultMovementCharges } from '../../api/rates/chargeDefaultUtils';
+import {
+  getDefaultMovementCharges,
+  getDefaultOtherServicesCharges,
+} from '../../api/rates/chargeDefaultUtils';
 import { defaultUnits } from '../../state/reducers/quote/chargesReducers';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
@@ -32,7 +35,12 @@ class EditQuoteHeader extends React.Component {
   }
 
   getRates() {
-    const charges = getDefaultMovementCharges(this.props.quote.movement);
+    const charges = [
+      ...getDefaultMovementCharges(this.props.quote.movement),
+      ...getDefaultOtherServicesCharges({
+        importCustomsClearance: this.props.quote.otherServices.customsClearance,
+      }),
+    ];
     const movement = {
       carrier: this.props.quote.movement.carrier,
       receipt: this.props.quote.movement.receipt.code,
