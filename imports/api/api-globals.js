@@ -1,4 +1,11 @@
 export const APIGlobals = {
+  // EXCHANGE RATES
+  fxRates: {
+    GBP: {
+      USD: 0.80590896,
+    },
+  },
+
   // NOTES
   notes: `Current Rates are based on shipment of cargo that is suitably packed for international shipment by Ocean shipment.
 Special attention is drawn to any Wood Packing Regulations applicable, failure to comply with these conditions: which can vary from Country to Country, could result in cargo being returned to origin at your expense.
@@ -32,10 +39,10 @@ All business is undertaken subject to the current editions of our standard tradi
       route: ['receipt', 'departure'],
     },
     {
-      name: 'Fuel Surcharge',
+      name: 'Terminal Handling Charge',
       group: 'Origin',
-      chargeCode: 'FSC',
-      route: ['receipt', 'departure'],
+      chargeCode: 'THC',
+      route: ['departure'],
     },
   ],
 
@@ -53,36 +60,24 @@ All business is undertaken subject to the current editions of our standard tradi
       route: ['departure'],
     },
     {
-      name: 'Terminal Handling Charge',
-      group: 'Origin',
-      chargeCode: 'THC',
-      route: ['departure'],
-    },
-    {
       name: 'International Freight',
       group: 'International',
       chargeCode: 'IFR',
       route: ['departure', 'arrival'],
     },
+  ],
+
+  defaultDeliveryCharges: [
     {
       name: 'Terminal Handling Charge',
       group: 'Destination',
       chargeCode: 'THC',
       route: ['arrival'],
     },
-  ],
-
-  defaultDeliveryCharges: [
     {
       name: 'Inland Transport',
       group: 'Destination',
       chargeCode: 'ITP',
-      route: ['arrival', 'delivery'],
-    },
-    {
-      name: 'Fuel Surcharge',
-      group: 'Destination',
-      chargeCode: 'FSC',
       route: ['arrival', 'delivery'],
     },
   ],
