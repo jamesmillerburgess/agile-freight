@@ -37,15 +37,21 @@ All business is undertaken subject to the current editions of our standard tradi
       chargeCode: 'FSC',
       route: ['receipt', 'departure'],
     },
-    {
-      name: 'Carrier Security',
-      group: 'Origin',
-      chargeCode: 'CSC',
-      route: ['departure'],
-    },
   ],
 
   defaultInternationalFreightCharges: [
+    {
+      name: 'Carrier Security',
+      group: 'Origin',
+      chargeCode: 'CSY',
+      route: ['departure'],
+    },
+    {
+      name: 'Documentation',
+      group: 'Origin',
+      chargeCode: 'DOC',
+      route: ['departure'],
+    },
     {
       name: 'Terminal Handling Charge',
       group: 'Origin',
@@ -78,6 +84,15 @@ All business is undertaken subject to the current editions of our standard tradi
       group: 'Destination',
       chargeCode: 'FSC',
       route: ['arrival', 'delivery'],
+    },
+  ],
+
+  defaultImportClearanceCharges: [
+    {
+      name: 'Import Customs Clearance',
+      group: 'Destination',
+      chargeCode: 'ICC',
+      route: ['arrival'],
     },
   ],
 
@@ -300,6 +315,7 @@ All business is undertaken subject to the current editions of our standard tradi
     { value: 'HAWB', label: 'HAWB' },
     { value: 'KM', label: 'KM' },
     { value: 'Mile', label: 'Mile' },
+    { value: 'Bill of Lading', label: 'Bill of Lading' },
   ],
 
   // Quotes

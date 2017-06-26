@@ -140,7 +140,7 @@ if (Meteor.isClient) {
         const movement = {
           commercialParty: 'Buyer',
           termsOfSale: 'DAP',
-          delivery: { _id: 'a' },
+          delivery: { _2id: 'a' },
         };
         hasDelivery(movement).should.equal(false);
       });
@@ -288,6 +288,17 @@ if (Meteor.isClient) {
             ...APIGlobals.defaultInternationalFreightCharges,
             ...APIGlobals.defaultDeliveryCharges,
           ]);
+      });
+    });
+
+    describe('getDefaultOtherServicesCharges function', () => {
+      const { getDefaultOtherServicesCharges } = chargeDefaultUtils;
+      it('returns import customs clearance charges if import customs ' +
+         'clearance is true', () => {
+        const otherServices = { importCustomsClearance: true };
+        getDefaultOtherServicesCharges(otherServices)
+          .should
+          .eql(APIGlobals.defaultImportClearanceCharges);
       });
     });
 
