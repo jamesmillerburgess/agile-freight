@@ -267,53 +267,49 @@ if (Meteor.isClient) {
         chargeLines(stateBefore, action)[1].units.should.equal(3);
       });
 
-      it(
-        'changes the unit price at the charge line with the specified id',
-        () => {
-          const stateBefore = [
-            { id: 'a', unitPrice: 1 }, {
-              id: 'b',
-              unitPrice: 3,
-            },
-          ];
-          const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE,
-            id: 'a',
-            unitPrice: 2,
-          };
-          deepFreeze(stateBefore);
+      it('changes the unit price at the charge line with the specified ' +
+         'id', () => {
+        const stateBefore = [
+          { id: 'a', unitPrice: 1 }, {
+            id: 'b',
+            unitPrice: 3,
+          },
+        ];
+        const action = {
+          type: ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE,
+          id: 'a',
+          unitPrice: 2,
+        };
+        deepFreeze(stateBefore);
 
-          chargeLines(stateBefore, action)[0].unitPrice.should.equal(2);
-          chargeLines(stateBefore, action)[1].unitPrice.should.equal(3);
-        },
-      );
+        chargeLines(stateBefore, action)[0].unitPrice.should.equal(2);
+        chargeLines(stateBefore, action)[1].unitPrice.should.equal(3);
+      });
 
-      it(
-        'changes the unit price currency at the charge line with the specified id',
-        () => {
-          const stateBefore = [
-            { id: 'a', unitPriceCrrency: 'a' }, {
-              id: 'b',
-              currency: 'c',
-            },
-          ];
-          const action = {
-            type: ACTION_TYPES.SET_CHARGE_LINE_CURRENCY,
-            id: 'a',
-            currency: 'b',
-          };
-          deepFreeze(stateBefore);
+      it('changes the currency at the charge line with the specified ' +
+         'id', () => {
+        const stateBefore = [
+          { id: 'a', unitPriceCrrency: 'a' }, {
+            id: 'b',
+            currency: 'c',
+          },
+        ];
+        const action = {
+          type: ACTION_TYPES.SET_CHARGE_LINE_CURRENCY,
+          id: 'a',
+          currency: 'b',
+        };
+        deepFreeze(stateBefore);
 
-          chargeLines(
-            stateBefore,
-            action,
-          )[0].currency.should.equal('b');
-          chargeLines(
-            stateBefore,
-            action,
-          )[1].currency.should.equal('c');
-        },
-      );
+        chargeLines(
+          stateBefore,
+          action,
+        )[0].currency.should.equal('b');
+        chargeLines(
+          stateBefore,
+          action,
+        )[1].currency.should.equal('c');
+      });
 
       it('auto-calculates the amount', () => {
         const stateBefore = [{ units: 1, unitPrice: 2 }];
@@ -340,23 +336,21 @@ if (Meteor.isClient) {
         stateAfter[0].finalAmount.should.equal(4);
       });
 
-      it(
-        'uses 1 as the fx rate when the unit price currency equals the quote currency',
-        () => {
-          const stateBefore = [
-            {
-              units: 1,
-              unitPrice: 2,
-              currency: 'a',
-            },
-          ];
-          const parentState = { currency: 'a' };
-          deepFreeze(stateBefore);
-          const stateAfter = chargeLines(stateBefore, {}, parentState);
+      it('uses 1 as the fx rate when the unit price currency equals the ' +
+         'quote currency', () => {
+        const stateBefore = [
+          {
+            units: 1,
+            unitPrice: 2,
+            currency: 'a',
+          },
+        ];
+        const parentState = { currency: 'a' };
+        deepFreeze(stateBefore);
+        const stateAfter = chargeLines(stateBefore, {}, parentState);
 
-          stateAfter[0].finalAmount.should.equal(2);
-        },
-      );
+        stateAfter[0].finalAmount.should.equal(2);
+      });
     });
 
     describe('FX Conversions Reducer', () => {
@@ -380,81 +374,29 @@ if (Meteor.isClient) {
         fxConversions(stateBefore, action).b.rate.should.equal(3);
       });
 
-      it(
-        'adds an active conversion when a new currency is added to the charge lines',
-        () => {
-          const stateBefore = {
-            currency: 'a',
-            fxConversions: { b: {} },
-            chargeLines: [
-              { currency: 'b' },
-              { currency: 'c' },
-            ],
-          };
-          let action = { type: ACTION_TYPES.SET_CHARGE_LINE_CURRENCY };
-          deepFreeze(stateBefore);
-          let stateAfter = fxConversions(stateBefore, action);
+      it('activates any preexisting currencies which are now being used ' +
+         'again and keep the same rate', () => {
+        const stateBefore = {
+          currency: 'a',
+          fxConversions: { b: { active: false, rate: 1 } },
+          chargeLines: [{ currency: 'b' }],
+        };
+        let action = { type: ACTION_TYPES.SET_CHARGE_LINE_CURRENCY };
+        deepFreeze(stateBefore);
 
-          stateAfter.should.have.property('c');
-          stateAfter.c.active.should.equal(true);
+        let stateAfter = fxConversions(stateBefore, action);
+        console.log(stateAfter);
+        stateAfter.should.have.property('b');
+        stateAfter.b.active.should.equal(true);
+        stateAfter.b.rate.should.equal(1);
 
-          action = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
-          stateAfter = fxConversions(stateBefore, action);
+        action = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
 
-          stateAfter.should.have.property('c');
-          stateAfter.c.active.should.equal(true);
-        },
-      );
-
-      it(
-        'deactivates any conversions which are no longer used, but maintain the rate',
-        () => {
-          const stateBefore = {
-            currency: 'a',
-            fxConversions: { b: { rate: 1 } },
-            chargeLines: [{ currency: 'c' }],
-          };
-          let action = { type: ACTION_TYPES.SET_CHARGE_LINE_CURRENCY };
-          deepFreeze(stateBefore);
-
-          let stateAfter = fxConversions(stateBefore, action);
-          stateAfter.should.have.property('b');
-          stateAfter.b.active.should.equal(false);
-
-          action = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
-          deepFreeze(stateBefore);
-
-          stateAfter = fxConversions(stateBefore, action);
-          stateAfter.should.have.property('b');
-          stateAfter.b.active.should.equal(false);
-          stateAfter.b.rate.should.equal(1);
-        },
-      );
-
-      it(
-        'activates any preexisting currencies which are now being used again and keep the same rate',
-        () => {
-          const stateBefore = {
-            currency: 'a',
-            fxConversions: { b: { active: false, rate: 1 } },
-            chargeLines: [{ currency: 'b' }],
-          };
-          let action = { type: ACTION_TYPES.SET_CHARGE_LINE_CURRENCY };
-          deepFreeze(stateBefore);
-
-          let stateAfter = fxConversions(stateBefore, action);
-          stateAfter.should.have.property('b');
-          stateAfter.b.active.should.equal(true);
-          stateAfter.b.rate.should.equal(1);
-
-          action = { type: ACTION_TYPES.REMOVE_CHARGE_LINE };
-
-          stateAfter = fxConversions(stateBefore, action);
-          stateAfter.should.have.property('b');
-          stateAfter.b.active.should.equal(true);
-          stateAfter.b.rate.should.equal(1);
-        },
-      );
+        stateAfter = fxConversions(stateBefore, action);
+        stateAfter.should.have.property('b');
+        stateAfter.b.active.should.equal(true);
+        stateAfter.b.rate.should.equal(1);
+      });
 
       it('ignores any currencies equal to the quote currency', () => {
         const stateBefore = {
