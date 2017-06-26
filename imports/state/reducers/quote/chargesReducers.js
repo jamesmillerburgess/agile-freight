@@ -6,6 +6,7 @@ import {
   addToEnd,
 } from '../reducer-utils';
 import { uniqueValues } from '../../../ui/statsUtils';
+import { APIGlobals } from '../../../api/api-globals';
 
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
@@ -112,6 +113,39 @@ export const chargeLines = (
     }
     return res;
   });
+};
+
+export const getUpdatedFXConversions = (charges) => {
+  let result = charges.fxConversions;
+  const currencies = uniqueValues(charges.chargeLines, 'currency');
+  currencies.forEach((currency) => {
+    if (currency === charges.currency) {
+      if (result[currency]) {
+        result = changeProp(
+          result,
+          currency,
+          changeProp(result[currency], 'active', false),
+        );
+      }
+    } else if (!result[currency]) {
+      result = changeProp(result, currency, { active: true });
+    } else if (!result[currency].active) {
+      result = changeProp(
+        result,
+        currency,
+        changeProp(result[currency], 'active', true),
+      );
+    }
+  });
+  Object.keys(result).forEach((currency) => {
+    if (currencies.indexOf(currency) === -1) {
+      result[currency] = changeProp(result[currency], 'active', false);
+    }
+    if (result[currency].active && !result[currency].rate) {
+      result[currency].rate = APIGlobals.fxRates[charges.currency][currency];
+    }
+  });
+  return result;
 };
 
 export const fxConversions = (state = {}, action = { type: '' }) => {

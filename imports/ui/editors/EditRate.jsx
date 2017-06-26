@@ -149,13 +149,13 @@ const EditRate = props => (
               );
             }
           }}
-            >
-            SAVE RATE
-            </button>
-            </div>
-            </div>
-            <div className="content-footer-accent rate-footer-accent" />
-            </div>
-            );
+        >
+          SAVE RATE
+        </button>
+      </div>
+    </div>
+    <div className="content-footer-accent rate-footer-accent" />
+  </div>
+);
 
-            export default EditRate;
+export default EditRate;

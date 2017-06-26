@@ -16,7 +16,10 @@ import {
   getDefaultMovementCharges,
   getDefaultOtherServicesCharges,
 } from '../../api/rates/chargeDefaultUtils';
-import { defaultUnits } from '../../state/reducers/quote/chargesReducers';
+import {
+  defaultUnits,
+  getUpdatedFXConversions,
+} from '../../state/reducers/quote/chargesReducers';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 
@@ -35,7 +38,7 @@ class EditQuoteHeader extends React.Component {
   }
 
   getRates() {
-    const charges = [
+    let charges = [
       ...getDefaultMovementCharges(this.props.quote.movement),
       ...getDefaultOtherServicesCharges({
         importCustomsClearance: this.props.quote.otherServices.customsClearance,
@@ -78,16 +81,18 @@ class EditQuoteHeader extends React.Component {
             units: defaultUnits(sellRate.basis, this.props.quote.cargo),
           };
         });
+        charges = {
+          ...this.props.quote.charges,
+          chargeLines,
+          notes: APIGlobals.notes,
+        };
+        charges.fxConversions = getUpdatedFXConversions(charges);
         Meteor.call(
           'quote.save',
           {
             ...this.props.quote,
             _id: this.props.match.params.quoteId,
-            charges: {
-              ...this.props.quote.charges,
-              chargeLines,
-              notes: APIGlobals.notes,
-            },
+            charges,
           },
           () => this.props.history.push(
             `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
