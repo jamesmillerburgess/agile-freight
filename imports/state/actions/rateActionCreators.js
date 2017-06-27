@@ -9,10 +9,8 @@ export const setRateChargeCode = makeActionCreator(
 );
 export const setRateLevel = makeActionCreator(TYPES.SET_RATE_LEVEL, 'level');
 export const setRateRoute = makeActionCreator(TYPES.SET_RATE_ROUTE, 'route');
-export const setRateCarrier = makeActionCreator(
-  TYPES.SET_RATE_CARRIER,
-  'carrier',
-);
+export const setRateCargoType =
+  makeActionCreator(TYPES.SET_RATE_CARGO_TYPE, 'cargoType');
 export const setRateBasis = makeActionCreator(TYPES.SET_RATE_BASIS, 'basis');
 export const setRateUnitPrice = makeActionCreator(
   TYPES.SET_RATE_UNIT_PRICE,

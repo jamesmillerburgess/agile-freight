@@ -88,6 +88,24 @@ const EditRate = props => (
               />
             </div>
             <div className="vertical-input-group">
+              <span className="label">CARGO TYPE</span>
+              <Select
+                value={props.rate.cargoType}
+                options={[
+                  { value: 'Any', label: 'Any' },
+                  { value: 'Loose', label: 'Loose' },
+                  { value: 'Containerized', label: 'Containerized' },
+                ]}
+                onChange={
+                  selected => props.dispatchers.onChangeRateCargoType(selected.value)
+                }
+                clearRenderer={() => null}
+                arrowRenderer={() => null}
+                placeholder=""
+                clearable={false}
+              />
+            </div>
+            <div className="vertical-input-group">
               <span className="label">BASIS</span>
               <Select
                 value={props.rate.basis}

@@ -2,6 +2,23 @@ const SELL_RATES = [
   {
     type: 'sell',
     chargeCode: 'ITP',
+    level: 'country',
+    cargoType: 'Loose',
+    mode: 'Any',
+    carriers: ['Any'],
+    route: ['GB', 'GB'],
+    basis: 'Weight Measure',
+    ranges: [
+      { max: 50, unitPrice: 7 },
+      { max: 200, unitPrice: 5 },
+      { max: 500, unitPrice: 4.5 },
+      { unitPrice: 4 },
+    ],
+    currency: 'GBP',
+  },
+  {
+    type: 'sell',
+    chargeCode: 'ITP',
     level: 'global',
     basis: 'Mile',
     unitPrice: 0.5,
@@ -11,7 +28,7 @@ const SELL_RATES = [
     type: 'sell',
     chargeCode: 'ITP',
     level: 'country',
-    route: 'USUS',
+    route: ['US', 'US'],
     basis: 'Mile',
     unitPrice: 0.25,
     currency: 'USD',
@@ -42,7 +59,7 @@ db.Rates.remove({});
 
 db.Rates.createIndex(
   { type: 1, chargeCode: 1, level: 1, route: 1 },
-  { unique: true }
+  { unique: true },
 );
 
 SELL_RATES.forEach(function (sellRate) {

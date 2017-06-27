@@ -23,6 +23,8 @@ export const rate = (state = defaultRateState, action = { type: '' }) => {
       return setProp(state, 'level', action.level);
     case ACTION_TYPES.SET_RATE_ROUTE:
       return setProp(state, 'route', action.route);
+    case ACTION_TYPES.SET_RATE_CARGO_TYPE:
+      return setProp(state, 'cargoType', action.cargoType);
     case ACTION_TYPES.SET_RATE_CARRIER:
       return setProp(state, 'carrier', action.carrier);
     case ACTION_TYPES.SET_RATE_BASIS:

@@ -50,6 +50,7 @@ class EditQuoteHeader extends React.Component {
       'rates.getApplicableSellRates',
       charges,
       movement,
+      this.props.quote.cargo,
       (err, res) => {
         const chargeLines = res.map((applicableSellRates, index) => {
           let sellRate = {};

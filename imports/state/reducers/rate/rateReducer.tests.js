@@ -51,6 +51,15 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       rate(stateBefore, action).route.should.equal('b');
     });
+    it('sets the cargo type', () => {
+      const stateBefore = { cargoType: 'Loose' };
+      const action = {
+        type: ACTION_TYPES.SET_RATE_CARGO_TYPE,
+        cargoType: 'Containerized',
+      };
+      deepFreeze(stateBefore);
+      rate(stateBefore, action).cargoType.should.equal('Containerized');
+    });
     it('sets the carrier', () => {
       const stateBefore = { carrier: 'a' };
       const action = {

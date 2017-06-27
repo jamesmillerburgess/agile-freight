@@ -30,6 +30,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(actions.setRateChargeCode(chargeCode)),
       onChangeRateLevel: level => dispatch(actions.setRateLevel(level)),
       onChangeRateRoute: route => dispatch(actions.setRateRoute(route)),
+      onChangeRateCargoType: cargoType =>
+        dispatch(actions.setRateCargoType(cargoType)),
       onChangeRateBasis: basis => dispatch(actions.setRateBasis(basis)),
       onChangeRateUnitPrice: unitPrice =>
         dispatch(actions.setRateUnitPrice(unitPrice)),
