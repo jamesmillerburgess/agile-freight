@@ -40,6 +40,8 @@ export const defaultUnits = (basis, cargo) => {
       return cargo.totalTEU;
     case 'Package':
       return cargo.totalPackages;
+    case 'Weight Measure':
+      return cargo.chargeableWeight;
     default:
       return 1;
   }

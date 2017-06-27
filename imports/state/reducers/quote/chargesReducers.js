@@ -8,25 +8,6 @@ import { getUpdatedFXConversions } from '../../../ui/quoteUtils';
 
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
-export const defaultUnits = (rate, cargo) => {
-  switch (rate) {
-    case 'Shipment':
-      return 1;
-    case 'KG':
-      return cargo.totalWeight;
-    case 'CBM':
-      return cargo.totalVolume;
-    case 'Container':
-      return cargo.totalContainers;
-    case 'TEU':
-      return cargo.totalTEU;
-    case 'Package':
-      return cargo.totalPackages;
-    default:
-      return 1;
-  }
-};
-
 export const chargeLines = (
   state = [],
   action = { type: '' },
