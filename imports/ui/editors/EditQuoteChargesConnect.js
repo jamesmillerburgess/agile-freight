@@ -45,4 +45,3 @@ const EditQuoteChargesConnect = connect(
   EditQuoteCharges);
 
 export default EditQuoteChargesConnect;
-;;
