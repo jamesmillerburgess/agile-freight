@@ -198,6 +198,7 @@ class EditQuoteCharges extends React.Component {
                   </tr>
                 </tbody>
                 <EditQuoteChargeGroupConnect group="Destination" quote={this.props.quote} />
+                {this.getFXRates()}
                 <tbody>
                   <tr className="column-title-row">
                     <td />
@@ -217,7 +218,6 @@ class EditQuoteCharges extends React.Component {
                     </td>
                   </tr>
                 </tbody>
-                {this.getFXRates()}
                 <tfoot>
                   <tr>
                     <td colSpan="5" />
