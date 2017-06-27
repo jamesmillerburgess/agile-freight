@@ -76,6 +76,10 @@ export const toggleContainerLineTemperatureControlled = makeActionCreator(
   ACTION_TYPES.TOGGLE_CONTAINER_LINE_TEMPERATURE_CONTROLLED,
   'index',
 );
+export const setDensityRatio = makeActionCreator(
+  ACTION_TYPES.SET_DENSITY_RATIO,
+  'densityRatio',
+);
 export const toggleHazardous = makeActionCreator(
   ACTION_TYPES.TOGGLE_HAZARDOUS);
 export const toggleTemperatureControlled = makeActionCreator(

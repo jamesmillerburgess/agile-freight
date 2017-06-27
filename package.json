@@ -1,6 +1,6 @@
 {
   "name": "agility-freight",
-  "version": "0.4.0",
+  "version": "0.12.0",
   "private": true,
   "scripts": {
     "start": "meteor run",
@@ -22,7 +22,8 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-select": "^1.0.0-rc.5",
-    "redux": "^3.7.0"
+    "redux": "^3.7.0",
+    "reselect": "^3.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",

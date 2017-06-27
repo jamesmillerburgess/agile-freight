@@ -3,7 +3,13 @@ import { connect } from 'react-redux';
 import * as actions from '../../state/actions/quoteActions';
 import EditQuoteHeader from './EditQuoteHeader.jsx';
 
-const mapStateToProps = state => ({ quote: state.quote });
+import { getChargeableWeight } from '../quoteUtils';
+
+const mapStateToProps = (state) => {
+  const quote = state.quote;
+  quote.cargo.chargeableWeight = getChargeableWeight(state);
+  return { quote };
+};
 const mapDispatchToProps = dispatch => ({
   dispatchers: {
     onLoad: quote => dispatch(actions.loadQuote(quote)),
@@ -47,7 +53,8 @@ const mapDispatchToProps = dispatch => ({
       )),
     onClickContainerLineTemperatureControlled: index =>
       dispatch(actions.toggleContainerLineTemperatureControlled(index)),
-
+    onChangeDensityRatio: densityRatio =>
+      dispatch(actions.setDensityRatio(densityRatio)),
     onClickHazardous: () => dispatch(actions.toggleHazardous()),
     onClickTemperatureControlled: () => dispatch(actions.toggleTemperatureControlled()),
 

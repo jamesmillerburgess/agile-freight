@@ -1,8 +1,24 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import { createSelector } from 'reselect';
 import { uniqueValues } from '../ui/statsUtils';
 import { setProp } from '../state/reducers/reducer-utils';
 import { APIGlobals } from '../api/api-globals';
+
+const getTotalVolume = state => state.quote.cargo.totalVolume;
+const getTotalWeight = state => state.quote.cargo.totalWeight;
+const getDensityRatio = state => state.quote.cargo.densityRatio;
+export const getChargeableWeight = createSelector(
+  getTotalVolume,
+  getTotalWeight,
+  getDensityRatio,
+  (totalVolume, totalWeight, densityRatio) => {
+    if (totalVolume * densityRatio > totalWeight) {
+      return totalVolume * densityRatio;
+    }
+    return totalWeight;
+  },
+);
 
 /**
  * Defaults the units of a charge line based on the cargo properties.
@@ -69,7 +85,11 @@ export const getUpdatedFXConversions = (charges) => {
       result[currency] = setProp(result[currency], 'active', false);
     }
     if (result[currency].active && !result[currency].rate) {
-      result[currency] = setProp(result[currency], 'rate', APIGlobals.fxRates[charges.currency][currency]);
+      result[currency] = setProp(
+        result[currency],
+        'rate',
+        APIGlobals.fxRates[charges.currency][currency],
+      );
     }
   });
   return result;

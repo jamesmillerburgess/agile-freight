@@ -182,6 +182,15 @@ export const containerLines = (state = defaultContainerLinesState, action = { ty
   }
 };
 
+export const densityRatio = (state = 1000, action = { type: '' }) => {
+  switch (action.type) {
+    case ACTION_TYPES.SET_DENSITY_RATIO:
+      return action.densityRatio;
+    default:
+      return state;
+  }
+};
+
 export const hazardous = (state = false, action = { type: '' }) => {
   switch (action.type) {
     case ACTION_TYPES.TOGGLE_HAZARDOUS:
@@ -221,6 +230,7 @@ export const cargo = (state = {}, action = { type: '' }) => {
         ratedQuote: ratedQuote(state.ratedQuote, action),
         packageLines: packageLines(state.packageLines, action),
         containerLines: containerLines(state.containerLines, action),
+        densityRatio: densityRatio(state.densityRatio, action),
         hazardous: hazardous(state.hazardous, action),
         temperatureControlled: temperatureControlled(state.temperatureControlled, action),
       };

@@ -295,7 +295,10 @@ class EditQuoteHeader extends React.Component {
               DENSITY RATIO
             </div>
             <input
-              value={1000}
+              value={this.props.quote.cargo.densityRatio}
+              onChange={
+                e => this.props.dispatchers.onChangeDensityRatio(e.target.value)
+              }
             />
           </div>
           <div className="field select-country">
@@ -303,7 +306,7 @@ class EditQuoteHeader extends React.Component {
               CHARGEABLE WEIGHT
             </div>
             <div className="label">
-              2395.29 kg
+              {weightFormat(this.props.quote.cargo.chargeableWeight)}
             </div>
           </div>
           <div className="edit-group-totals">
