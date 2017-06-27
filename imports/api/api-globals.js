@@ -297,6 +297,7 @@ All business is undertaken subject to the current editions of our standard tradi
     { value: 'Boxes', label: 'Boxes' },
     { value: 'Pallets', label: 'Pallets' },
     { value: 'Cases', label: 'Cases' },
+    { value: 'Cartons', label: 'Cartons' },
   ],
 
   rateBasisOptions: [
