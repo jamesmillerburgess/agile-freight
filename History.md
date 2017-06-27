@@ -23,6 +23,8 @@
 
 ## v.NEXT
 
+## v0.12.0 – 
+
 ## v0.11.0 – FCL Quote Scenario
 
 __User Story:__ _Get a real FCL quote scenario working with as much automation as possible._
