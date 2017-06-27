@@ -20,9 +20,14 @@ export const getChargeableWeight = createSelector(
   },
 );
 
-const getUnitPrice = state => state.unitPrice;
-const getUnits = state => state.units;
-const getMinimumAmount = state => state.minimumAmount;
+const getUnitPrice = state => state.unitPrice || 0;
+const getUnits = state => state.units || 0;
+const getMinimumAmount = (state) => {
+  if (state.selectedRate !== 'custom') {
+    return state.applicableSellRates[state.selectedRate].minimumAmount || 0;
+  }
+  return 0;
+};
 export const getAmount = createSelector(
   getUnitPrice,
   getUnits,
