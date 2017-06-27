@@ -306,7 +306,8 @@ class EditQuoteHeader extends React.Component {
               CHARGEABLE WEIGHT
             </div>
             <div className="label">
-              {weightFormat(this.props.quote.cargo.chargeableWeight)}
+              {weightFormat(this.props.quote.cargo.chargeableWeight)}&nbsp;
+              {this.props.quote.cargo.weightUOM}
             </div>
           </div>
           <div className="edit-group-totals">
