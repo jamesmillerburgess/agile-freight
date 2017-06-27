@@ -290,18 +290,22 @@ class EditQuoteHeader extends React.Component {
         </div>
         <div className="edit-group-footer">
           <div className="cargo-row-icon" />
-          <CheckboxField
-            className="checkbox-hazardous"
-            onClick={this.props.dispatchers.onClickHazardous}
-            value={this.props.quote.cargo.hazardous}
-            label="HAZARDOUS"
-          />
-          <CheckboxField
-            className="checkbox-temperature-controlled"
-            onClick={this.props.dispatchers.onClickTemperatureControlled}
-            value={this.props.quote.cargo.temperatureControlled}
-            label="TEMPERATURE CONTROLLED"
-          />
+          <div className="field select-country">
+            <div className="label">
+              DENSITY RATIO
+            </div>
+            <input
+              value={1000}
+            />
+          </div>
+          <div className="field select-country">
+            <div className="label">
+              CHARGEABLE WEIGHT
+            </div>
+            <div className="label">
+              2395.29 kg
+            </div>
+          </div>
           <div className="edit-group-totals">
             <span className="total-shipment-label">
               TOTAL
@@ -318,6 +322,21 @@ class EditQuoteHeader extends React.Component {
               {weightFormat(this.props.quote.cargo.totalWeight)}
             </span> {this.props.quote.cargo.weightUOM}
           </div>
+        </div>
+        <div className="edit-group-footer">
+          <div className="cargo-row-icon" />
+          <CheckboxField
+            className="checkbox-hazardous"
+            onClick={this.props.dispatchers.onClickHazardous}
+            value={this.props.quote.cargo.hazardous}
+            label="HAZARDOUS"
+          />
+          <CheckboxField
+            className="checkbox-temperature-controlled"
+            onClick={this.props.dispatchers.onClickTemperatureControlled}
+            value={this.props.quote.cargo.temperatureControlled}
+            label="TEMPERATURE CONTROLLED"
+          />
         </div>
       </div>
     );
