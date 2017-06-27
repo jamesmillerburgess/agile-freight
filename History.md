@@ -29,7 +29,7 @@ __User Story:__ _As an operator and rate manager, I can create rates and and an 
 
 * Density ratio is available in loose cargo
 * Chargeable weight is automatically calculated in loose cargo
-* TODO: Minimum charge amount
+* Minimum charge amount
 * TODO: Weight ranges
 * TODO: Begin implementation of reselect
 

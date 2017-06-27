@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import EditQuoteChargeGroup from './EditQuoteChargeGroup.jsx';
 import * as actionCreators from '../../state/actions/quoteActions';
-import { defaultUnits, getAmount } from '../quoteUtils';
+import { defaultUnits } from '../quoteUtils';
 
 const mapStateToProps = (state, ownProps) => ({
   currency: state.quote.charges.currency,
@@ -12,10 +12,6 @@ const mapStateToProps = (state, ownProps) => ({
                     .chargeLines
                     .filter(
                       chargeLine => chargeLine.group === ownProps.group,
-                    )
-                    .map(
-                      chargeLine =>
-                        ({ ...chargeLine, amount: getAmount(chargeLine) }),
                     ),
 });
 
