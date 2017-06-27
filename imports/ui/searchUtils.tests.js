@@ -45,9 +45,9 @@ if (Meteor.isClient) {
           .should.equal(true);
       });
 
+      // TODO: Complete test
       it('handles special characters', () => {
         const regexp = buildSearchRegExp('/[');
-        console.log(regexp);
       });
     });
   });
