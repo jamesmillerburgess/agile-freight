@@ -20,6 +20,22 @@ export const getChargeableWeight = createSelector(
   },
 );
 
+const getUnitPrice = state => state.unitPrice;
+const getUnits = state => state.units;
+const getMinimumAmount = state => state.minimumAmount;
+export const getAmount = createSelector(
+  getUnitPrice,
+  getUnits,
+  getMinimumAmount,
+  (unitPrice, units, minimumAmount) => {
+    const amount = unitPrice * units;
+    if (amount < minimumAmount) {
+      return minimumAmount;
+    }
+    return amount;
+  },
+);
+
 /**
  * Defaults the units of a charge line based on the cargo properties.
  * @param basis
