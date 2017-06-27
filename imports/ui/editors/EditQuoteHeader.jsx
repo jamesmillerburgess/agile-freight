@@ -37,9 +37,7 @@ class EditQuoteHeader extends React.Component {
   getRates() {
     let charges = [
       ...getDefaultMovementCharges(this.props.quote.movement),
-      ...getDefaultOtherServicesCharges({
-        importCustomsClearance: this.props.quote.otherServices.customsClearance,
-      }),
+      ...getDefaultOtherServicesCharges(this.props.quote.otherServices),
     ];
     const movement = {
       carrier: this.props.quote.movement.carrier,
@@ -697,16 +695,22 @@ class EditQuoteHeader extends React.Component {
                 </div>
                 <div className="cargo-row-icon" />
                 <CheckboxField
+                  className="checkbox-temperature-controlled"
+                  onClick={this.props.dispatchers.onClickExportCustomsClearance}
+                  value={this.props.quote.otherServices.exportCustomsClearance}
+                  label="EXPORT CUSTOMS CLEARANCE"
+                />
+                <CheckboxField
+                  className="checkbox-temperature-controlled"
+                  onClick={this.props.dispatchers.onClickImportCustomsClearance}
+                  value={this.props.quote.otherServices.importCustomsClearance}
+                  label="IMPORT CUSTOMS CLEARANCE"
+                />
+                <CheckboxField
                   className="checkbox-hazardous"
                   onClick={this.props.dispatchers.onClickInsurance}
                   value={this.props.quote.otherServices.insurance}
                   label="INSURANCE"
-                />
-                <CheckboxField
-                  className="checkbox-temperature-controlled"
-                  onClick={this.props.dispatchers.onClickCustomsClearance}
-                  value={this.props.quote.otherServices.customsClearance}
-                  label="CUSTOMS CLEARANCE"
                 />
               </div>
               <div className="form-button-group">

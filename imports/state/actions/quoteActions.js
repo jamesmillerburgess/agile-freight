@@ -118,42 +118,13 @@ export const setDelivery = makeActionCreator(
   ACTION_TYPES.SET_DELIVERY,
   'delivery',
 );
-export const setPickupLocationType = makeActionCreator(
-  ACTION_TYPES.SET_PICKUP_LOCATION_TYPE,
-  'locationType',
-);
-export const setPickupLocationName = makeActionCreator(
-  ACTION_TYPES.SET_PICKUP_LOCATION_NAME,
-  'locationName',
-);
-export const setPickupCountry = makeActionCreator(
-  ACTION_TYPES.SET_PICKUP_COUNTRY,
-  'country',
-);
-export const setPickupLocation = makeActionCreator(
-  ACTION_TYPES.SET_PICKUP_LOCATION,
-  'location',
-);
-export const setDeliveryLocationType = makeActionCreator(
-  ACTION_TYPES.SET_DELIVERY_LOCATION_TYPE,
-  'locationType',
-);
-export const setDeliveryLocationName = makeActionCreator(
-  ACTION_TYPES.SET_DELIVERY_LOCATION_NAME,
-  'locationName',
-);
-export const setDeliveryCountry = makeActionCreator(
-  ACTION_TYPES.SET_DELIVERY_COUNTRY,
-  'country',
-);
-export const setDeliveryLocation = makeActionCreator(
-  ACTION_TYPES.SET_DELIVERY_LOCATION,
-  'location',
-);
 
 // OTHER SERVICES
+export const toggleExportCustomsClearance =
+  makeActionCreator(ACTION_TYPES.TOGGLE_EXPORT_CUSTOMS_CLEARANCE);
+export const toggleImportCustomsClearance =
+  makeActionCreator(ACTION_TYPES.TOGGLE_IMPORT_CUSTOMS_CLEARANCE);
 export const toggleInsurance = makeActionCreator(ACTION_TYPES.TOGGLE_INSURANCE);
-export const toggleCustomsClearance = makeActionCreator(ACTION_TYPES.TOGGLE_CUSTOMS_CLEARANCE);
 
 // CHARGES
 export const addChargeLine = makeActionCreator(

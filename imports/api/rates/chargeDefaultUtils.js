@@ -132,6 +132,9 @@ export const getDefaultMovementCharges = (movement) => {
 
 export const getDefaultOtherServicesCharges = (otherServices) => {
   const charges = [];
+  if (otherServices.exportCustomsClearance) {
+    charges.push(...APIGlobals.defaultExportClearanceCharges);
+  }
   if (otherServices.importCustomsClearance) {
     charges.push(...APIGlobals.defaultImportClearanceCharges);
   }

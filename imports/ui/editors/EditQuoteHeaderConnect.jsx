@@ -71,31 +71,10 @@ const mapDispatchToProps = dispatch => ({
     onChangeArrival: arrival => dispatch(actions.setArrival(arrival)),
     onChangeDelivery: delivery => dispatch(actions.setDelivery(delivery)),
 
-
-    onChangePickupLocationType: locationType =>
-      dispatch(actions.setPickupLocationType(locationType)),
-    onChangePickupLocationName: locationName =>
-      dispatch(actions.setPickupLocationName(locationName)),
-    onChangePickupCountry: country => dispatch(actions.setPickupCountry(
-      country)),
-    onChangePickupLocation: location => dispatch(actions.setPickupLocation(
-      location)),
-    onChangeDeliveryLocationType: locationType =>
-      dispatch(actions.setDeliveryLocationType(locationType)),
-    onChangeDeliveryLocationName: locationName =>
-      dispatch(actions.setDeliveryLocationName(locationName)),
-    onChangeDeliveryCountry: country => dispatch(actions.setDeliveryCountry(
-      country)),
-    onChangeDeliveryLocation: location => dispatch(actions.setDeliveryLocation(
-      location)),
-
     // OTHER SERVICES
+    onClickExportCustomsClearance: () => dispatch(actions.toggleExportCustomsClearance()),
+    onClickImportCustomsClearance: () => dispatch(actions.toggleImportCustomsClearance()),
     onClickInsurance: () => dispatch(actions.toggleInsurance()),
-    onClickCustomsClearance: () =>
-      dispatch(actions.toggleCustomsClearance()),
-
-    // CHARGES
-    onAddChargeLine: chargeLine => dispatch(actions.addChargeLine(chargeLine)),
   },
 });
 

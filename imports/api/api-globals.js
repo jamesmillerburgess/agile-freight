@@ -88,6 +88,15 @@ All business is undertaken subject to the current editions of our standard tradi
     },
   ],
 
+  defaultExportClearanceCharges: [
+    {
+      name: 'Export Customs Clearance',
+      group: 'Origin',
+      chargeCode: 'ECC',
+      route: ['departure'],
+    },
+  ],
+
   defaultImportClearanceCharges: [
     {
       name: 'Import Customs Clearance',

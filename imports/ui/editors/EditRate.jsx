@@ -48,7 +48,8 @@ const EditRate = props => (
                   { value: 'IFR', label: 'International Freight – IFR' },
                   { value: 'CSY', label: 'Carrier Security – CSY' },
                   { value: 'DOC', label: 'Documentation – DOC' },
-                  { value: 'ICC', label: 'Import Customs Clearance – DOC' },
+                  { value: 'ICC', label: 'Import Customs Clearance – ICC' },
+                  { value: 'ECC', label: 'Export Customs Clearance – ECC' },
                   { value: 'VGM', label: 'Verified Gross Mass' },
                 ]}
                 onChange={selected => props.dispatchers.onChangeRateChargeCode(
