@@ -1,65 +1,34 @@
 export const APIGlobals = {
+  // EXCHANGE RATES
+  fxRates: {
+    GBP: {
+      USD: 0.80590896,
+    },
+  },
+
+  // NOTES
+  notes: `Current Rates are based on shipment of cargo that is suitably packed for international shipment by Ocean shipment.
+Special attention is drawn to any Wood Packing Regulations applicable, failure to comply with these conditions: which can vary from Country to Country, could result in cargo being returned to origin at your expense.
+All quotations are subject to carrier available capacity.
+Any Transit Times quoted are for indicative purposes only, and are as per Shipping Lines advertised schedules. Agility cannot be held liable for any deviations from the Transit Times listed.
+Unless otherwise agreed in writing, the Company shall be, after acceptance, at liberty to revise quotations or charges with or without notice in the event of changes outside the Company's control occurring in currency exchange rates, rates of freight, insurance premiums or any charges applicable to the goods.
+Rates of Exchange are for indicative purposes only and do not represent actual rate of exchange which is variable.
+Surcharges shown as zero are either included or not currently applicable, however, all Surcharges are Valid At Time Of Shipment (VATOS) and subject to change.
+Rates quoted are current and carry validity as per quote, however are subject to change with / without notice.
+Our pricing proposal does not include insurance, we are happy to offer this cover on receipt of further specific details of commodity and values.
+Out of gauge, hazardous, perishable cargo may be subject to additional charges.
+Heavyweight Cargo may be subject to a surcharge.
+All shipments consigned to a bank shall be released against original bank endorsed bills of lading.
+Charge for the use of Agility Deferment on Import Entries will be quoted upon application.
+Estimates and quotations are given on the basis of immediate acceptance and are subject to withdrawl or revision.
+All business is undertaken subject to the current editions of our standard trading conditions which are UKWA (warehousing) and BIFA (all other business).`,
+
   // CARRIERS
   carrierOptions: [
     { value: '', label: 'Agility Choice' },
     { value: 'MAEU', label: 'Maersk – MAEU' },
     { value: 'SUDU', label: 'Hamburg Sud – SUDU' },
   ],
-
-  // SIMPLE SELL RATES
-  sellRates: {
-    ITP: {
-      global: {
-        rate: 'Mile',
-        unitPrice: 0.5,
-        currency: 'USD',
-      },
-      country: {
-        USUS: {
-          rate: 'Mile',
-          unitPrice: 0.25,
-          currency: 'USD',
-        },
-        CNCN: {
-          rate: 'KM',
-          unitPrice: 7.2,
-          currency: 'CNY',
-        },
-      },
-    },
-    THC: {
-      location: {
-        USTPA: {
-          rate: 'TEU',
-          unitPrice: 250,
-          currency: 'USD',
-        },
-        CNSHA: {
-          rate: 'TEU',
-          unitPrice: 1230,
-          currency: 'CNY',
-        },
-      },
-    },
-    FSC: {
-      country: {
-        USUS: {
-          rate: 'Mile',
-          unitPrice: 0.75,
-          currency: 'USD',
-        },
-      },
-    },
-    IFR: {
-      location: {
-        USTPACNSHA: {
-          rate: 'TEU',
-          unitPrice: 550,
-          currency: 'USD',
-        },
-      },
-    },
-  },
 
   // DEFAULT CHARGES
   defaultCollectionCharges: [
@@ -70,18 +39,24 @@ export const APIGlobals = {
       route: ['receipt', 'departure'],
     },
     {
-      name: 'Fuel Surcharge',
+      name: 'Terminal Handling Charge',
       group: 'Origin',
-      chargeCode: 'FSC',
-      route: ['receipt', 'departure'],
+      chargeCode: 'THC',
+      route: ['departure'],
     },
   ],
 
   defaultInternationalFreightCharges: [
     {
-      name: 'Terminal Handling Charge',
+      name: 'Carrier Security',
       group: 'Origin',
-      chargeCode: 'THC',
+      chargeCode: 'CSY',
+      route: ['departure'],
+    },
+    {
+      name: 'Documentation',
+      group: 'Origin',
+      chargeCode: 'DOC',
       route: ['departure'],
     },
     {
@@ -90,26 +65,29 @@ export const APIGlobals = {
       chargeCode: 'IFR',
       route: ['departure', 'arrival'],
     },
+  ],
+
+  defaultDeliveryCharges: [
     {
       name: 'Terminal Handling Charge',
       group: 'Destination',
       chargeCode: 'THC',
       route: ['arrival'],
     },
-  ],
-
-  defaultDeliveryCharges: [
     {
       name: 'Inland Transport',
       group: 'Destination',
       chargeCode: 'ITP',
       route: ['arrival', 'delivery'],
     },
+  ],
+
+  defaultImportClearanceCharges: [
     {
-      name: 'Fuel Surcharge',
+      name: 'Import Customs Clearance',
       group: 'Destination',
-      chargeCode: 'FSC',
-      route: ['arrival', 'delivery'],
+      chargeCode: 'ICC',
+      route: ['arrival'],
     },
   ],
 
@@ -332,6 +310,8 @@ export const APIGlobals = {
     { value: 'HAWB', label: 'HAWB' },
     { value: 'KM', label: 'KM' },
     { value: 'Mile', label: 'Mile' },
+    { value: 'Bill of Lading', label: 'Bill of Lading' },
+    { value: 'Line', label: 'Line' },
   ],
 
   // Quotes

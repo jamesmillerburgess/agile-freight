@@ -1,11 +1,10 @@
 import {
-  itemAtId,
-  changeProp,
-  changePropAtId,
+  setProp,
+  setPropAtId,
   removeAtId,
   addToEnd,
 } from '../reducer-utils';
-import { uniqueValues } from '../../../ui/statsUtils';
+import { getUpdatedFXConversions } from '../../../ui/quoteUtils';
 
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
@@ -32,59 +31,37 @@ export const chargeLines = (
   state = [],
   action = { type: '' },
   parentState = {},
-  quoteState = {},
 ) => {
   let newState = [];
   switch (action.type) {
     case ACTION_TYPES.ADD_CHARGE_LINE:
-      newState = addToEnd(
-        state,
-        {
-          ...action.chargeLine,
-          rate: 'Shipment',
-          units: defaultUnits('Shipment'),
-        },
-      );
-      if (!newState[newState.length - 1].currency) {
-        newState = changePropAtId(
-          newState,
-          'currency',
-          newState[newState.length - 1].id,
-          parentState.currency,
-        );
-      }
+      newState = addToEnd(state, action.chargeLine);
       break;
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
       newState = removeAtId(state, action.id);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_CODE:
-      newState = changePropAtId(state, 'code', action.id, action.code);
+      newState = setPropAtId(state, 'code', action.id, action.code);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_NAME:
-      newState = changePropAtId(state, 'name', action.id, action.name);
+      newState = setPropAtId(state, 'name', action.id, action.name);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_SELECTED_RATE:
       newState =
-        changePropAtId(state, 'selectedRate', action.id, action.selectedRate);
+        setPropAtId(state, 'selectedRate', action.id, action.selectedRate);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_BASIS:
-      newState = changePropAtId(state, 'basis', action.id, action.basis);
-      newState = changePropAtId(
-        newState,
-        'units',
-        action.id,
-        defaultUnits(itemAtId(newState, action.id).basis, quoteState.cargo),
-      );
+      newState = setPropAtId(state, 'basis', action.id, action.basis);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNITS:
-      newState = changePropAtId(state, 'units', action.id, action.units);
+      newState = setPropAtId(state, 'units', action.id, action.units);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE:
       newState =
-        changePropAtId(state, 'unitPrice', action.id, action.unitPrice);
+        setPropAtId(state, 'unitPrice', action.id, action.unitPrice);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_CURRENCY:
-      newState = changePropAtId(
+      newState = setPropAtId(
         state,
         'currency',
         action.id,
@@ -118,40 +95,17 @@ export const fxConversions = (state = {}, action = { type: '' }) => {
   let newState = Object.assign(state.fxConversions || {}, {});
   switch (action.type) {
     case ACTION_TYPES.SET_FX_CONVERSION_RATE:
-      newState = changeProp(
+      newState = setProp(
         newState,
         action.currency,
-        changeProp(newState[action.currency], 'rate', action.rate),
+        setProp(newState[action.currency], 'rate', action.rate),
       );
       break;
+    case ACTION_TYPES.LOAD_QUOTE:
     case ACTION_TYPES.SET_CHARGE_LINE_CURRENCY:
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
     case ACTION_TYPES.SET_QUOTE_CURRENCY:
-      const currencies = uniqueValues(state.chargeLines, 'currency');
-      currencies.forEach((currency) => {
-        if (currency === state.currency) {
-          if (newState[currency]) {
-            newState = changeProp(
-              newState,
-              currency,
-              changeProp(newState[currency], 'active', false),
-            );
-          }
-        } else if (!newState[currency]) {
-          newState = changeProp(newState, currency, { active: true });
-        } else if (!newState[currency].active) {
-          newState = changeProp(
-            newState,
-            currency,
-            changeProp(newState[currency], 'active', true),
-          );
-        }
-      });
-      Object.keys(newState).forEach((currency) => {
-        if (currencies.indexOf(currency) === -1) {
-          newState[currency] = changeProp(newState[currency], 'active', false);
-        }
-      });
+      newState = getUpdatedFXConversions(state);
       break;
     default:
       break;
@@ -193,31 +147,27 @@ const defaultChargesState = {
   currency: '',
 };
 
-export const charges = (
-  state = defaultChargesState,
-  action = { type: '' },
-  quoteState,
-) => {
+export const charges = (state = defaultChargesState, action = { type: '' }) => {
   let newState = Object.assign(state, {});
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
       newState = action.quote.charges || defaultChargesState;
       break;
     case ACTION_TYPES.SET_CHARGE_NOTES:
-      newState = changeProp(state, 'notes', action.notes);
+      newState = setProp(state, 'notes', action.notes);
       break;
     case ACTION_TYPES.SET_QUOTE_CURRENCY:
-      newState = changeProp(state, 'currency', action.currency);
+      newState = setProp(state, 'currency', action.currency);
       break;
     case ACTION_TYPES.SET_FX_CONVERSION_RATE:
       newState =
-        changeProp(
+        setProp(
           state,
           'fxConversions',
-          changeProp(
+          setProp(
             state.fxConversions,
             action.currency,
-            changeProp(
+            setProp(
               state.fxConversions[action.currency],
               'rate',
               action.rate,
@@ -229,7 +179,7 @@ export const charges = (
       newState = state;
   }
   newState.chargeLines =
-    chargeLines(newState.chargeLines, action, newState, quoteState);
+    chargeLines(newState.chargeLines, action, newState);
   newState.fxConversions = fxConversions(newState, action);
   const totals = chargeTotals(newState.chargeLines);
   return {

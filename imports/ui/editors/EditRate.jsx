@@ -46,6 +46,9 @@ const EditRate = props => (
                   { value: 'FSC', label: 'Fuel Surcharge – FSC' },
                   { value: 'THC', label: 'Terminal Handling Charge – THC' },
                   { value: 'IFR', label: 'International Freight – IFR' },
+                  { value: 'CSY', label: 'Carrier Security – CSY' },
+                  { value: 'DOC', label: 'Documentation – DOC' },
+                  { value: 'ICC', label: 'Import Customs Clearance – DOC' },
                 ]}
                 onChange={selected => props.dispatchers.onChangeRateChargeCode(
                   selected.value)}
@@ -100,7 +103,7 @@ const EditRate = props => (
               <input
                 value={props.rate.unitPrice}
                 onChange={e => props.dispatchers.onChangeRateUnitPrice(
-                  +e.target.value)}
+                  e.target.value)}
               />
             </div>
             <div className="vertical-input-group">
@@ -125,15 +128,25 @@ const EditRate = props => (
               Meteor.call(
                 'rates.save',
                 props.match.params.rateId,
-                props.rate,
+                {
+                  ...props.rate,
+                  unitprice: +props.rate.unitPrice,
+                },
                 () => {
                   props.history.push('/rates');
                 },
               );
             } else {
-              Meteor.call('rates.new', props.rate, (err, res) => {
-                props.history.push('/rates');
-              });
+              Meteor.call(
+                'rates.new',
+                {
+                  ...props.rate,
+                  unitPrice: +props.rate.unitPrice,
+                },
+                (err, res) => {
+                  props.history.push('/rates');
+                },
+              );
             }
           }}
         >

@@ -1,5 +1,5 @@
 import * as ACTION_TYPES from '../../actions/actionTypes';
-import { changeProp } from '../reducer-utils';
+import { setProp } from '../reducer-utils';
 
 export const defaultBranchState = {
   name: '',
@@ -12,7 +12,7 @@ export const branch = (state = defaultBranchState, action = { type: '' }) => {
       newState = action.branch;
       break;
     case ACTION_TYPES.SET_BRANCH_NAME:
-      newState = changeProp(state, 'name', action.name);
+      newState = setProp(state, 'name', action.name);
       break;
     default:
       newState = state;

@@ -130,6 +130,14 @@ export const getDefaultMovementCharges = (movement) => {
   return charges;
 };
 
+export const getDefaultOtherServicesCharges = (otherServices) => {
+  const charges = [];
+  if (otherServices.importCustomsClearance) {
+    charges.push(...APIGlobals.defaultImportClearanceCharges);
+  }
+  return charges;
+};
+
 /**
  * Checks that all route components are present in the movement object.
  * @param route

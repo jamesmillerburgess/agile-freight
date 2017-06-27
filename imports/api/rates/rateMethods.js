@@ -96,6 +96,7 @@ export const getAllApplicableSellRates = (charges = [], movement) => {
 };
 
 export const rateSchema = {
+  _id: Match.Maybe(String),
   type: String,
   chargeCode: String,
   level: String,

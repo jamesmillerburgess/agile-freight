@@ -7,7 +7,6 @@ import { Mongo } from 'meteor/mongo';
 import { integerFormat, weightFormat } from '../formatters/numberFormatters';
 
 import CheckboxField from '../fields/CheckboxField.jsx';
-import CountryField from '../fields/CountryField.jsx';
 import UNLocationField from '../fields/UNLocationField.jsx';
 import QuoteContainer from '../objects/QuoteContainer';
 
@@ -15,11 +14,11 @@ import { quotePropTypes } from '../objects/quotePropTypes';
 import { APIGlobals } from '../../api/api-globals';
 import {
   getDefaultMovementCharges,
-  getApplicableSellRates,
-}
-  from '../../api/rates/chargeDefaultUtils';
+  getDefaultOtherServicesCharges,
+} from '../../api/rates/chargeDefaultUtils';
+import { defaultUnits } from '../../state/reducers/quote/chargesReducers';
+import { getUpdatedFXConversions } from '../quoteUtils';
 
-import { Countries } from '../../api/countries/countriesCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
 class EditQuoteHeader extends React.Component {
@@ -37,7 +36,12 @@ class EditQuoteHeader extends React.Component {
   }
 
   getRates() {
-    const charges = getDefaultMovementCharges(this.props.quote.movement);
+    let charges = [
+      ...getDefaultMovementCharges(this.props.quote.movement),
+      ...getDefaultOtherServicesCharges({
+        importCustomsClearance: this.props.quote.otherServices.customsClearance,
+      }),
+    ];
     const movement = {
       carrier: this.props.quote.movement.carrier,
       receipt: this.props.quote.movement.receipt.code,
@@ -72,17 +76,21 @@ class EditQuoteHeader extends React.Component {
             ...sellRate,
             applicableSellRates,
             selectedRate,
+            units: defaultUnits(sellRate.basis, this.props.quote.cargo),
           };
         });
+        charges = {
+          ...this.props.quote.charges,
+          chargeLines,
+          notes: APIGlobals.notes,
+        };
+        charges.fxConversions = getUpdatedFXConversions(charges);
         Meteor.call(
           'quote.save',
           {
             ...this.props.quote,
             _id: this.props.match.params.quoteId,
-            charges: {
-              ...this.props.quote.charges,
-              chargeLines,
-            },
+            charges,
           },
           () => this.props.history.push(
             `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,

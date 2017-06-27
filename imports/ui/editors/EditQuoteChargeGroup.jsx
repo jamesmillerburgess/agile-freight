@@ -62,6 +62,7 @@ const EditQuoteChargeGroup = (props) => {
                 value={chargeLine.basis || ''}
                 options={APIGlobals.rateBasisOptions}
                 onChange={selectedValue => setChargeLineBasis(
+                  props.quote,
                   chargeLine,
                   selectedValue.value,
                 )}
