@@ -54,6 +54,12 @@ All business is undertaken subject to the current editions of our standard tradi
       route: ['departure'],
     },
     {
+      name: 'Verfied Gross Mass',
+      group: 'Origin',
+      chargeCode: 'VGM',
+      route: ['departure'],
+    },
+    {
       name: 'Documentation',
       group: 'Origin',
       chargeCode: 'DOC',

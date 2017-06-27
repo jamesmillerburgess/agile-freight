@@ -18,7 +18,7 @@ const EditRate = props => (
           }
         </div>
         <Link to="/branches">
-          <button className="button-primary">BACK TO BRANCH LIST</button>
+          <button className="button-primary">BACK TO RATE LIST</button>
         </Link>
       </div>
       <div className="panel container">
@@ -49,6 +49,7 @@ const EditRate = props => (
                   { value: 'CSY', label: 'Carrier Security – CSY' },
                   { value: 'DOC', label: 'Documentation – DOC' },
                   { value: 'ICC', label: 'Import Customs Clearance – DOC' },
+                  { value: 'VGM', label: 'Verified Gross Mass' },
                 ]}
                 onChange={selected => props.dispatchers.onChangeRateChargeCode(
                   selected.value)}
