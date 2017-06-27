@@ -1,18 +1,28 @@
 import { connect } from 'react-redux';
 
 import EditQuoteCharges from './EditQuoteCharges.jsx';
-import { loadQuote, addChargeLine, setChargeNotes, setFXConversionRate, setQuoteCurrency } from '../../state/actions/quoteActions';
+import {
+  loadQuote,
+  addChargeLine,
+  setChargeNotes,
+  setFXConversionRate,
+  setQuoteCurrency,
+} from '../../state/actions/quoteActions';
 import { loadEmail } from '../../state/actions/emailActions';
+import { getAmount } from '../quoteUtils';
 
 const mapStateToProps = (state) => {
-  const
-    {
-      totalCharges,
-    } = state.quote.charges;
   const quote = state.quote;
   return {
-    totalCharges,
-    quote,
+    quote: {
+      ...quote,
+      charges: {
+        ...quote.charges,
+        chargeLines: quote.charges.chargeLines.map(
+          chargeLine => ({ ...chargeLine, amount: getAmount(chargeLine) }),
+        ),
+      },
+    },
   };
 };
 
@@ -21,10 +31,18 @@ const mapDispatchToProps = dispatch => ({
   addChargeLine: chargeLine => dispatch(addChargeLine(chargeLine)),
   setChargeNotes: notes => dispatch(setChargeNotes(notes)),
   loadEmail: email => dispatch(loadEmail(email)),
-  setFXConversionRate: (currency, rate) => dispatch(setFXConversionRate(currency, rate)),
+  setFXConversionRate: (
+    currency,
+    rate,
+  ) => dispatch(setFXConversionRate(currency, rate)),
   setQuoteCurrency: currency => dispatch(setQuoteCurrency(currency)),
 });
 
-const EditQuoteChargesConnect = connect(mapStateToProps, mapDispatchToProps)(EditQuoteCharges);
+const EditQuoteChargesConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(
+  EditQuoteCharges);
 
 export default EditQuoteChargesConnect;
+;;
