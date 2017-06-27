@@ -119,6 +119,14 @@ const EditRate = props => (
                 clearable={false}
               />
             </div>
+            <div className="vertical-input-group">
+              <span className="label">MINIMUM AMOUNT</span>
+              <input
+                value={props.rate.minimumAmount}
+                onChange={e => props.dispatchers.onChangeRateMinimumAmount(
+                  e.target.value)}
+              />
+            </div>
           </div>
         </div>
         <button
@@ -130,7 +138,8 @@ const EditRate = props => (
                 props.match.params.rateId,
                 {
                   ...props.rate,
-                  unitprice: +props.rate.unitPrice,
+                  unitPrice: +props.rate.unitPrice,
+                  minimumAmount: +props.rate.minimumAmount,
                 },
                 () => {
                   props.history.push('/rates');
@@ -142,6 +151,7 @@ const EditRate = props => (
                 {
                   ...props.rate,
                   unitPrice: +props.rate.unitPrice,
+                  minimumAmount: +props.rate.minimumAmount,
                 },
                 (err, res) => {
                   props.history.push('/rates');

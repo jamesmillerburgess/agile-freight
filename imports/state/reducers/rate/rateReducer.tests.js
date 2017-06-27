@@ -87,5 +87,14 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       rate(stateBefore, action).currency.should.equal('b');
     });
+    it('sets the minumum amount', () => {
+      const stateBefore = { minumumAmount: 1 };
+      const action = {
+        type: ACTION_TYPES.SET_RATE_MINIMUM_AMOUNT,
+        minimumAmount: 2,
+      };
+      deepFreeze(stateBefore);
+      rate(stateBefore, action).minimumAmount.should.equal(2);
+    });
   });
 }

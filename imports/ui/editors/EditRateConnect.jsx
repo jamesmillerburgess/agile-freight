@@ -30,12 +30,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(actions.setRateChargeCode(chargeCode)),
       onChangeRateLevel: level => dispatch(actions.setRateLevel(level)),
       onChangeRateRoute: route => dispatch(actions.setRateRoute(route)),
-      onChangeRateCarrier: carrier => dispatch(actions.setRateCarrier(carrier)),
       onChangeRateBasis: basis => dispatch(actions.setRateBasis(basis)),
       onChangeRateUnitPrice: unitPrice =>
         dispatch(actions.setRateUnitPrice(unitPrice)),
       onChangeRateCurrency: currency =>
         dispatch(actions.setRateCurrency(currency)),
+      onChangeRateMinimumAmount: minimumAmount =>
+        dispatch(actions.setRateMinumumAmount(minimumAmount)),
     },
   };
 };

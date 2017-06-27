@@ -22,3 +22,7 @@ export const setRateCurrency = makeActionCreator(
   TYPES.SET_RATE_CURRENCY,
   'currency',
 );
+export const setRateMinumumAmount = makeActionCreator(
+  TYPES.SET_RATE_MINIMUM_AMOUNT,
+  'minimumAmount',
+);

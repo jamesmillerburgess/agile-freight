@@ -31,6 +31,8 @@ export const rate = (state = defaultRateState, action = { type: '' }) => {
       return setProp(state, 'unitPrice', action.unitPrice);
     case ACTION_TYPES.SET_RATE_CURRENCY:
       return setProp(state, 'currency', action.currency);
+    case ACTION_TYPES.SET_RATE_MINIMUM_AMOUNT:
+      return setProp(state, 'minimumAmount', action.minimumAmount);
     default:
       return state;
   }

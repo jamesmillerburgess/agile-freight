@@ -104,6 +104,7 @@ export const rateSchema = {
   basis: String,
   unitPrice: Number,
   currency: String,
+  minimumAmount: Match.Maybe(Number),
 };
 
 /**
