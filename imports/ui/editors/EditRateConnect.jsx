@@ -32,8 +32,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       onChangeRateRoute: route => dispatch(actions.setRateRoute(route)),
       onChangeIsSplitByCargoType:
         () => dispatch(actions.toggleRateIsSplitByCargoType()),
-      onChangeRateCargoType: cargoType =>
-        dispatch(actions.setRateCargoType(cargoType)),
       onChangeRateBasis: basis => dispatch(actions.setRateBasis(basis)),
       onChangeRateUnitPrice: unitPrice =>
         dispatch(actions.setRateUnitPrice(unitPrice)),
