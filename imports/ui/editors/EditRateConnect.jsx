@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { Mongo } from 'meteor/mongo';
 
 import EditRate from './EditRate.jsx';
 import * as actions from '../../state/actions/rateActionCreators';
@@ -30,15 +31,36 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(actions.setRateChargeCode(chargeCode)),
       onChangeRateLevel: level => dispatch(actions.setRateLevel(level)),
       onChangeRateRoute: route => dispatch(actions.setRateRoute(route)),
-      onChangeIsSplitByCargoType:
-        () => dispatch(actions.toggleRateIsSplitByCargoType()),
-      onChangeRateBasis: basis => dispatch(actions.setRateBasis(basis)),
-      onChangeRateUnitPrice: unitPrice =>
-        dispatch(actions.setRateUnitPrice(unitPrice)),
+      onChangeIsSplitByCargoType: () => dispatch(actions.toggleRateIsSplitByCargoType()),
+      onChangeAnyBasis: basis =>
+        dispatch(actions.setRateBasis(basis, 'any')),
+      onChangeLooseBasis: basis =>
+        dispatch(actions.setRateBasis(basis, 'loose')),
+      onChangeContainerizedBasis: basis =>
+        dispatch(actions.setRateBasis(basis, 'containerized')),
+      onChangeAnyMinimumAmount: minimumAmount =>
+        dispatch(actions.setRateMinimumAmount(minimumAmount, 'any')),
+      onChangeLooseMinimumAmount: minimumAmount =>
+        dispatch(actions.setRateMinimumAmount(minimumAmount, 'loose')),
+      onChangeContainerizedMinimumAmount: minimumAmount =>
+        dispatch(actions.setRateMinimumAmount(minimumAmount, 'containerized')),
+      onAddAnyRateRange: () =>
+        dispatch(actions.addRateRange(new Mongo.ObjectID()._str, {}, 'any')),
+      onAddLooseRateRange: () =>
+        dispatch(actions.addRateRange(new Mongo.ObjectID()._str, {}, 'loose')),
+      onAddContainerizedRateRange: () =>
+        dispatch(actions.addRateRange(
+          new Mongo.ObjectID()._str,
+          {},
+          'containerized',
+        )),
+      onChangeRateRangeUnitPrice: (id, unitPrice) =>
+        dispatch(actions.setRateRangeUnitPrice(id, unitPrice)),
+      onChangeRateRangeMaximumUnits: (id, maximumUnits) =>
+        dispatch(actions.setRateRangeMaximumUnits(id, maximumUnits)),
+      onRemoveRateRange: id => dispatch(actions.removeRateRange(id)),
       onChangeRateCurrency: currency =>
         dispatch(actions.setRateCurrency(currency)),
-      onChangeRateMinimumAmount: minimumAmount =>
-        dispatch(actions.setRateMinumumAmount(minimumAmount)),
     },
   };
 };
