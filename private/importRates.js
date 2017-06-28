@@ -4,6 +4,7 @@ const SELL_RATES = [
     chargeCode: 'ITP',
     level: 'country',
     route: 'GBGB',
+    isSplitByCargoType: true,
     anyBasis: 'Shipment',
     anyRanges: [],
     anyMinimumAmount: 0,

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 
@@ -8,7 +9,7 @@ import CheckboxField from '../fields/CheckboxField.jsx';
 
 import { APIGlobals } from '../../api/api-globals';
 
-const EditRate = props => {
+const EditRate = (props) => {
   const splitRateEditor = () => (
     <div>
       <div className="title">LOOSE CARGO</div>
@@ -16,30 +17,9 @@ const EditRate = props => {
         <div className="vertical-input-group">
           <span className="label">BASIS</span>
           <Select
-            value={props.rate.basis}
+            value={props.rate.looseBasis}
             options={APIGlobals.rateBasisOptions}
-            onChange={selected => props.dispatchers.onChangeRateBasis(
-              selected.value)}
-            clearRenderer={() => null}
-            arrowRenderer={() => null}
-            placeholder=""
-            clearable={false}
-          />
-        </div>
-        <div className="vertical-input-group">
-          <span className="label">UNIT PRICE</span>
-          <input
-            value={props.rate.unitPrice}
-            onChange={e => props.dispatchers.onChangeRateUnitPrice(
-              e.target.value)}
-          />
-        </div>
-        <div className="vertical-input-group">
-          <span className="label">CURRENCY</span>
-          <Select
-            value={props.rate.currency}
-            options={APIGlobals.currencyOptions}
-            onChange={selected => props.dispatchers.onChangeRateCurrency(
+            onChange={selected => props.dispatchers.onChangeLooseBasis(
               selected.value)}
             clearRenderer={() => null}
             arrowRenderer={() => null}
@@ -50,8 +30,8 @@ const EditRate = props => {
         <div className="vertical-input-group">
           <span className="label">MINIMUM AMOUNT</span>
           <input
-            value={props.rate.minimumAmount}
-            onChange={e => props.dispatchers.onChangeRateMinimumAmount(
+            value={props.rate.looseMinimumAmount}
+            onChange={e => props.dispatchers.onChangeLooseMinimumAmount(
               e.target.value)}
           />
         </div>
@@ -61,30 +41,9 @@ const EditRate = props => {
         <div className="vertical-input-group">
           <span className="label">BASIS</span>
           <Select
-            value={props.rate.basis}
+            value={props.rate.containerizedBasis}
             options={APIGlobals.rateBasisOptions}
-            onChange={selected => props.dispatchers.onChangeRateBasis(
-              selected.value)}
-            clearRenderer={() => null}
-            arrowRenderer={() => null}
-            placeholder=""
-            clearable={false}
-          />
-        </div>
-        <div className="vertical-input-group">
-          <span className="label">UNIT PRICE</span>
-          <input
-            value={props.rate.unitPrice}
-            onChange={e => props.dispatchers.onChangeRateUnitPrice(
-              e.target.value)}
-          />
-        </div>
-        <div className="vertical-input-group">
-          <span className="label">CURRENCY</span>
-          <Select
-            value={props.rate.currency}
-            options={APIGlobals.currencyOptions}
-            onChange={selected => props.dispatchers.onChangeRateCurrency(
+            onChange={selected => props.dispatchers.onChangeContainerizedBasis(
               selected.value)}
             clearRenderer={() => null}
             arrowRenderer={() => null}
@@ -95,8 +54,8 @@ const EditRate = props => {
         <div className="vertical-input-group">
           <span className="label">MINIMUM AMOUNT</span>
           <input
-            value={props.rate.minimumAmount}
-            onChange={e => props.dispatchers.onChangeRateMinimumAmount(
+            value={props.rate.containerizedMinimumAmount}
+            onChange={e => props.dispatchers.onChangeContainerizedMinimumAmount(
               e.target.value)}
           />
         </div>
@@ -109,30 +68,9 @@ const EditRate = props => {
       <div className="vertical-input-group">
         <span className="label">BASIS</span>
         <Select
-          value={props.rate.basis}
+          value={props.rate.anyBasis}
           options={APIGlobals.rateBasisOptions}
-          onChange={selected => props.dispatchers.onChangeRateBasis(
-            selected.value)}
-          clearRenderer={() => null}
-          arrowRenderer={() => null}
-          placeholder=""
-          clearable={false}
-        />
-      </div>
-      <div className="vertical-input-group">
-        <span className="label">UNIT PRICE</span>
-        <input
-          value={props.rate.unitPrice}
-          onChange={e => props.dispatchers.onChangeRateUnitPrice(
-            e.target.value)}
-        />
-      </div>
-      <div className="vertical-input-group">
-        <span className="label">CURRENCY</span>
-        <Select
-          value={props.rate.currency}
-          options={APIGlobals.currencyOptions}
-          onChange={selected => props.dispatchers.onChangeRateCurrency(
+          onChange={selected => props.dispatchers.onChangeAnyBasis(
             selected.value)}
           clearRenderer={() => null}
           arrowRenderer={() => null}
@@ -143,8 +81,8 @@ const EditRate = props => {
       <div className="vertical-input-group">
         <span className="label">MINIMUM AMOUNT</span>
         <input
-          value={props.rate.minimumAmount}
-          onChange={e => props.dispatchers.onChangeRateMinimumAmount(
+          value={props.rate.anyMinimumAmount}
+          onChange={e => props.dispatchers.onChangeAnyMinimumAmount(
             e.target.value)}
         />
       </div>
@@ -242,6 +180,19 @@ const EditRate = props => {
                 />
               </div>
               <div className="title">RATE VALUE</div>
+              <div className="vertical-input-group">
+                <span className="label">CURRENCY</span>
+                <Select
+                  value={props.rate.currency}
+                  options={APIGlobals.currencyOptions}
+                  onChange={selected => props.dispatchers.onChangeRateCurrency(
+                    selected.value)}
+                  clearRenderer={() => null}
+                  arrowRenderer={() => null}
+                  placeholder=""
+                  clearable={false}
+                />
+              </div>
               {
                 props.rate.isSplitByCargoType ?
                 splitRateEditor() :
@@ -287,6 +238,32 @@ const EditRate = props => {
       <div className="content-footer-accent rate-footer-accent" />
     </div>
   );
+};
+
+EditRate.propTypes = {
+  rate: PropTypes.shape({
+    type: PropTypes.string,
+    chargeCode: PropTypes.string,
+    level: PropTypes.string,
+    route: PropTypes.string,
+    isSplitByCargoType: PropTypes.bool,
+    anyBasis: PropTypes.string,
+    anyRanges: PropTypes.arrayOf(PropTypes.string),
+    anyMinimumAmount: PropTypes.number,
+    looseBasis: PropTypes.string,
+    looseRanges: PropTypes.arrayOf(PropTypes.string),
+    looseMinimumAmount: PropTypes.number,
+    containerizedBasis: PropTypes.string,
+    containerizedRanges: PropTypes.arrayOf(PropTypes.string),
+    containerizedMinimumAmount: PropTypes.number,
+    ranges: PropTypes.objectOf(PropTypes.shape({
+      maximumUnits: PropTypes.number,
+      unitPrice: PropTypes.number,
+    })),
+    currency: PropTypes.string,
+  }).isRequired,
+  dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
+  editMode: PropTypes.bool.isRequired,
 };
 
 export default EditRate;
