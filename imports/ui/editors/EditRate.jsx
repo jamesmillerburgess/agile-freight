@@ -263,7 +263,9 @@ EditRate.propTypes = {
     currency: PropTypes.string,
   }).isRequired,
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
-  editMode: PropTypes.bool.isRequired,
+  editMode: PropTypes.bool,
 };
+
+EditRate.defaultProps = { editMode: false };
 
 export default EditRate;
