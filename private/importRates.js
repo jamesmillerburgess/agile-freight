@@ -3,26 +3,23 @@ const SELL_RATES = [
     type: 'sell',
     chargeCode: 'ITP',
     level: 'country',
-    cargoType: 'Loose',
-    mode: 'Any',
-    carriers: ['Any'],
-    route: ['GB', 'GB'],
-    basis: 'Weight Measure',
-    ranges: [
-      { max: 50, unitPrice: 7 },
-      { max: 200, unitPrice: 5 },
-      { max: 500, unitPrice: 4.5 },
-      { unitPrice: 4 },
-    ],
+    route: 'GBGB',
+    rates: {
+      loose: {
+        basis: 'Weight Measure',
+        ranges: [
+          { max: 50, unitPrice: 7 },
+          { max: 200, unitPrice: 5 },
+          { max: 500, unitPrice: 4.5 },
+          { unitPrice: 4 },
+        ],
+      },
+      containerized: {
+        basis: 'Mile',
+        unitPrice: 0.5,
+      },
+    },
     currency: 'GBP',
-  },
-  {
-    type: 'sell',
-    chargeCode: 'ITP',
-    level: 'global',
-    basis: 'Mile',
-    unitPrice: 0.5,
-    currency: 'USD',
   },
   {
     type: 'sell',

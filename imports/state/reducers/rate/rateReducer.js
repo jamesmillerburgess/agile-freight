@@ -23,6 +23,8 @@ export const rate = (state = defaultRateState, action = { type: '' }) => {
       return setProp(state, 'level', action.level);
     case ACTION_TYPES.SET_RATE_ROUTE:
       return setProp(state, 'route', action.route);
+    case ACTION_TYPES.TOGGLE_RATE_IS_SPLIT_BY_CARGO_TYPE:
+      return setProp(state, 'isSplitByCargoType', !state.isSplitByCargoType);
     case ACTION_TYPES.SET_RATE_CARGO_TYPE:
       return setProp(state, 'cargoType', action.cargoType);
     case ACTION_TYPES.SET_RATE_CARRIER:

@@ -4,6 +4,8 @@ import { Meteor } from 'meteor/meteor';
 
 import Select from 'react-select';
 
+import CheckboxField from '../fields/CheckboxField.jsx';
+
 import { APIGlobals } from '../../api/api-globals';
 
 const EditRate = props => (
@@ -85,6 +87,13 @@ const EditRate = props => (
                 onChange={
                   e => props.dispatchers.onChangeRateRoute(e.target.value)
                 }
+              />
+            </div>
+            <div className="vertical-input-group">
+              <CheckboxField
+                label="SEPARATE RATES FOR LOOSE AND CONTAINERIZED CARGO"
+                value={props.rate.isSplitByCargoType}
+                onClick={() => props.dispatchers.onChangeIsSplitByCargoType()}
               />
             </div>
             <div className="vertical-input-group">

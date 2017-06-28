@@ -51,6 +51,11 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       rate(stateBefore, action).route.should.equal('b');
     });
+    it('toggles split by cargo type', () => {
+      const stateBefore = { isSplitByCargoType: false };
+      const action = { type: ACTION_TYPES.TOGGLE_RATE_IS_SPLIT_BY_CARGO_TYPE };
+      rate(stateBefore, action).isSplitByCargoType.should.equal(true);
+    });
     it('sets the cargo type', () => {
       const stateBefore = { cargoType: 'Loose' };
       const action = {
