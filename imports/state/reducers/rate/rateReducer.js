@@ -25,7 +25,7 @@ export const rate = (state = defaultRateState, action = { type: '' }) => {
   let newState;
   switch (action.type) {
     case ACTION_TYPES.LOAD_RATE:
-      return action.rate;
+      return action.rate || defaultRateState;
     case ACTION_TYPES.SET_RATE_TYPE:
       return setProp(state, 'type', action.rateType);
     case ACTION_TYPES.SET_RATE_CHARGE_CODE:

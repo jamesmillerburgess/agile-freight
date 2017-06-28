@@ -1,0 +1,42 @@
+@import 'styleGlobals';
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .title {
+    font-size: $extra-large-font-size;
+  }
+  .subtitle {
+    font-size: $large-font-size;
+  }
+  .input-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .input-col-4 {
+    width: 22.5%;
+  }
+  .input-table {
+    display: flex;
+    flex-direction: column;
+  }
+  .add-row-button {
+    color: $add-icon-color;
+    font-size: $extra-large-font-size;
+  }
+  .remove-row-button {
+    color: $remove-icon-color;
+    font-size: $extra-large-font-size;
+  }
+  .input-group,
+  .vertical-input-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .horizontal-input-group {
+    display: flex;
+    flex-direction: row;
+  }
+}

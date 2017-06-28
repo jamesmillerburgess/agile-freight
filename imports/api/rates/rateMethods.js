@@ -127,11 +127,19 @@ export const rateSchema = {
   type: String,
   chargeCode: String,
   level: String,
-  route: Match.Maybe(String),
-  basis: String,
-  unitPrice: Number,
+  route: String,
+  isSplitByCargoType: Boolean,
+  anyBasis: String,
+  anyRanges: [String],
+  anyMinimumAmount: Number,
+  looseBasis: String,
+  looseRanges: [String],
+  looseMinimumAmount: Number,
+  containerizedBasis: String,
+  containerizedRanges: [String],
+  containerizedMinumumAmount: Number,
+  ranges: Object,
   currency: String,
-  minimumAmount: Match.Maybe(Number),
 };
 
 /**

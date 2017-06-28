@@ -13,13 +13,29 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     const rate = Rates.findOne(ownProps.match.params.rateId);
     dispatch(actions.loadRate(rate));
   } else {
+    const id1 = new Mongo.ObjectID()._str;
+    const id2 = new Mongo.ObjectID()._str;
+    const id3 = new Mongo.ObjectID()._str;
     dispatch(actions.loadRate({
       type: 'sell',
       chargeCode: '',
       level: '',
       route: '',
-      basis: '',
-      unitPrice: 0,
+      isSplitByCargoType: false,
+      anyBasis: 'Shipment',
+      anyRanges: [id1],
+      anyMinimumAmount: '',
+      looseBasis: '',
+      looseRanges: [id2],
+      looseMinimumAmount: '',
+      containerizedBasis: '',
+      containerizedRanges: [id3],
+      containerizedMinumumAmount: '',
+      ranges: {
+        [id1]: { unitPrice: '', maximumUnits: '' },
+        [id2]: { unitPrice: '', maximumUnits: '' },
+        [id3]: { unitPrice: '', maximumUnits: '' },
+      },
       currency: '',
     }));
   }
@@ -45,9 +61,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       onChangeContainerizedMinimumAmount: minimumAmount =>
         dispatch(actions.setRateMinimumAmount(minimumAmount, 'containerized')),
       onAddAnyRateRange: () =>
-        dispatch(actions.addRateRange(new Mongo.ObjectID()._str, {}, 'any')),
+        dispatch(actions.addRateRange(
+          new Mongo.ObjectID()._str,
+          { unitPrice: '', maximumUnits: '' },
+          'any',
+        )),
       onAddLooseRateRange: () =>
-        dispatch(actions.addRateRange(new Mongo.ObjectID()._str, {}, 'loose')),
+        dispatch(actions.addRateRange(
+          new Mongo.ObjectID()._str,
+          { unitPrice: '', maximumUnits: '' },
+          'loose',
+        )),
       onAddContainerizedRateRange: () =>
         dispatch(actions.addRateRange(
           new Mongo.ObjectID()._str,
