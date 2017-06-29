@@ -9,20 +9,20 @@ const SELL_RATES = [
     anyRanges: [],
     anyMinimumAmount: 0,
     isAnyPriceFixed: false,
-    looseBasis: 'Weight Measure',
+    looseBasis: 'KG',
     looseRanges: ['a', 'b', 'c', 'd'],
-    looseMinimumAmount: 0,
-    isLoosePriceFixed: false,
-    containerizedBasis: 'Mile',
+    looseMinimumAmount: NaN,
+    isLoosePriceFixed: true,
+    containerizedBasis: 'Container',
     containerizedRanges: ['e'],
-    containerizedMinumumAmount: 0,
+    containerizedMinimumAmount: undefined,
     isContainerizedPriceFixed: false,
     ranges: {
-      a: { maximumUnits: 50, unitPrice: 7 },
-      b: { maximumUnits: 200, unitPrice: 5 },
-      c: { maximumUnits: 500, unitPrice: 4.5 },
-      d: { unitPrice: 4 },
-      e: { unitPrice: 0.5 },
+      a: { maximumUnits: 50, unitPrice: 35 },
+      b: { maximumUnits: 500, unitPrice: 45 },
+      c: { maximumUnits: 1000, unitPrice: 65 },
+      d: { maximumUnits: NaN, unitPrice: 100 },
+      e: { maximumUnits: NaN, unitPrice: 450 },
     },
     currency: 'GBP',
   },
@@ -34,7 +34,7 @@ db.Rates.remove({});
 
 db.Rates.createIndex(
   { type: 1, chargeCode: 1, level: 1, route: 1 },
-  { unique: true },
+  { unique: true }
 );
 
 SELL_RATES.forEach(function (sellRate) {

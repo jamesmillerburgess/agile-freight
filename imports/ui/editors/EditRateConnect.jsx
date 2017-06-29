@@ -25,12 +25,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       anyBasis: 'Shipment',
       anyRanges: [id1],
       anyMinimumAmount: '',
+      isAnyPriceFixed: false,
       looseBasis: '',
       looseRanges: [id2],
       looseMinimumAmount: '',
+      isLoosePriceFixed: false,
       containerizedBasis: '',
       containerizedRanges: [id3],
-      containerizedMinumumAmount: '',
+      containerizedMinimumAmount: '',
+      isContainerizedPriceFixed: false,
       ranges: {
         [id1]: { unitPrice: '', maximumUnits: '' },
         [id2]: { unitPrice: '', maximumUnits: '' },
@@ -60,6 +63,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(actions.setRateMinimumAmount(minimumAmount, 'loose')),
       onChangeContainerizedMinimumAmount: minimumAmount =>
         dispatch(actions.setRateMinimumAmount(minimumAmount, 'containerized')),
+      onChangeIsAnyPriceFixed: () =>
+        dispatch(actions.toggleRateIsAnyPriceFixed()),
+      onChangeIsLoosePriceFixed: () =>
+        dispatch(actions.toggleRateIsLoosePriceFixed()),
+      onChangeIsContainerizedPriceFixed: () =>
+        dispatch(actions.toggleRateIsContainerizedPriceFixed()),
       onAddAnyRateRange: () =>
         dispatch(actions.addRateRange(
           new Mongo.ObjectID()._str,

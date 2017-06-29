@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
 import { Rates } from './rateCollection';
+import Rate from './rateUtils';
 
 /**
  * Build the country route out of the first two characters of the respective
@@ -122,32 +123,12 @@ export const getAllApplicableSellRates = (charges = [], movement, cargo) => {
   return charges.map(charge => getApplicableSellRates(charge, movement, cargo));
 };
 
-export const rateSchema = {
-  _id: Match.Maybe(String),
-  type: String,
-  chargeCode: String,
-  level: String,
-  route: String,
-  isSplitByCargoType: Boolean,
-  anyBasis: String,
-  anyRanges: [String],
-  anyMinimumAmount: Number,
-  looseBasis: String,
-  looseRanges: [String],
-  looseMinimumAmount: Number,
-  containerizedBasis: String,
-  containerizedRanges: [String],
-  containerizedMinumumAmount: Number,
-  ranges: Object,
-  currency: String,
-};
-
 /**
  * Inserts a new rate into the collection.
  * @param rate
  */
 export const newRate = (rate) => {
-  check(rate, rateSchema);
+  check(rate, Rate.schema);
   return Rates.insert(rate);
 };
 
@@ -158,7 +139,7 @@ export const newRate = (rate) => {
  */
 export const saveRate = (rateId, rate) => {
   check(rateId, String);
-  check(rate, rateSchema);
+  check(rate, Rate.schema);
   Rates.update({ _id: rateId }, rate);
 };
 

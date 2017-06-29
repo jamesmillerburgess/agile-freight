@@ -16,7 +16,7 @@ export const defaultRateState = {
   looseMinimumAmount: 0,
   containerizedBasis: '',
   containerizedRanges: [],
-  containerizedMinumumAmount: 0,
+  containerizedMinimumAmount: 0,
   ranges: {},
   currency: '',
 };
@@ -58,6 +58,12 @@ export const rate = (state = defaultRateState, action = { type: '' }) => {
         default:
           return state;
       }
+    case ACTION_TYPES.TOGGLE_RATE_IS_ANY_PRICE_FIXED:
+      return set('isAnyPriceFixed', !state.isAnyPriceFixed, state);
+    case ACTION_TYPES.TOGGLE_RATE_IS_LOOSE_PRICE_FIXED:
+      return set('isLoosePriceFixed', !state.isLoosePriceFixed, state);
+    case ACTION_TYPES.TOGGLE_RATE_IS_CONTAINERIZED_PRICE_FIXED:
+      return set('isContainerizedPriceFixed', !state.isContainerizedPriceFixed, state);
     case ACTION_TYPES.ADD_RATE_RANGE:
       newState = set(['ranges', action.id], action.range, state);
       switch (action.cargoType) {

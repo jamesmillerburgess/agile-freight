@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import Select from 'react-select';
 
 import CheckboxField from '../fields/CheckboxField.jsx';
-
+import Rate from '../../api/rates/rateUtils';
 import { APIGlobals } from '../../api/api-globals';
 
 const EditRate = (props) => {
@@ -22,7 +22,7 @@ const EditRate = (props) => {
         </button>
         <div className="input-col-4">
           <input
-            value={range.unitPrice}
+            value={isNaN(range.unitPrice) ? '' : range.unitPrice}
             onChange={e =>
               props.dispatchers
                    .onChangeRateRangeUnitPrice(id, e.target.value)}
@@ -30,7 +30,7 @@ const EditRate = (props) => {
         </div>
         <div className="input-col-4">
           <input
-            value={range.maximumUnits}
+            value={isNaN(range.maximumUnits) ? '' : range.maximumUnits}
             onChange={e =>
               props.dispatchers
                    .onChangeRateRangeMaximumUnits(id, e.target.value)}
@@ -62,12 +62,19 @@ const EditRate = (props) => {
         <div className="input-col-4 vertical-input-group">
           <span className="label">MINIMUM AMOUNT</span>
           <input
-            value={props.rate.looseMinimumAmount}
+            value={isNaN(props.rate.looseMinimumAmount) ?
+                   '' : props.rate.looseMinimumAmount}
             onChange={e => props.dispatchers.onChangeLooseMinimumAmount(
               e.target.value)}
           />
         </div>
-        <div className="input-col-4 vertical-input-group" />
+        <div className="input-col-4">
+          <CheckboxField
+            label="FIXED PRICES"
+            value={props.rate.isLoosePriceFixed}
+            onClick={props.dispatchers.onChangeIsLoosePriceFixed}
+          />
+        </div>
         <div className="input-col-4 vertical-input-group" />
       </div>
       <div className="input-table">
@@ -79,7 +86,7 @@ const EditRate = (props) => {
             <span className="fa fa-fw fa-plus-square" />
           </button>
           <div className="input-col-4 subtitle">
-            UNIT PRICE
+            {props.rate.isLoosePriceFixed ? 'FIXED PRICE' : 'PER UNIT PRICE'}
           </div>
           <div className="input-col-4 subtitle">RANGE MAXIMUM</div>
           <div className="input-col-4 vertical-input-group" />
@@ -105,12 +112,19 @@ const EditRate = (props) => {
         <div className="input-col-4 vertical-input-group">
           <span className="label">MINIMUM AMOUNT</span>
           <input
-            value={props.rate.containerizedMinimumAmount}
+            value={isNaN(props.rate.containerizedMinimumAmount) ?
+                   '' : props.rate.containerizedMinimumAmount}
             onChange={e => props.dispatchers.onChangeContainerizedMinimumAmount(
               e.target.value)}
           />
         </div>
-        <div className="input-col-4 vertical-input-group" />
+        <div className="input-col-4">
+          <CheckboxField
+            label="FIXED PRICES"
+            value={props.rate.isContainerizedPriceFixed}
+            onClick={props.dispatchers.onChangeIsContainerizedPriceFixed}
+          />
+        </div>
         <div className="input-col-4 vertical-input-group" />
       </div>
       <div className="input-table">
@@ -122,7 +136,9 @@ const EditRate = (props) => {
             <span className="fa fa-fw fa-plus-square" />
           </button>
           <div className="input-col-4 subtitle">
-            UNIT PRICE
+            {props.rate.isContainerizedPriceFixed ?
+             'FIXED PRICE' :
+             'PER UNIT PRICE'}
           </div>
           <div className="input-col-4 subtitle">RANGE MAXIMUM</div>
           <div className="input-col-4 vertical-input-group" />
@@ -152,12 +168,19 @@ const EditRate = (props) => {
         <div className="input-col-4 vertical-input-group">
           <span className="label">MINIMUM AMOUNT</span>
           <input
-            value={props.rate.anyMinimumAmount}
+            value={isNaN(props.rate.anyMinimumAmount) ?
+                   '' : props.rate.anyMinimumAmount}
             onChange={e => props.dispatchers.onChangeAnyMinimumAmount(
               e.target.value)}
           />
         </div>
-        <div className="input-col-4 vertical-input-group" />
+        <div className="input-col-4">
+          <CheckboxField
+            label="FIXED PRICES"
+            value={props.rate.isAnyPriceFixed}
+            onClick={props.dispatchers.onChangeIsAnyPriceFixed}
+          />
+        </div>
         <div className="input-col-4 vertical-input-group" />
       </div>
       <div className="input-table">
@@ -169,7 +192,7 @@ const EditRate = (props) => {
             <span className="fa fa-fw fa-plus-square" />
           </button>
           <div className="input-col-4 subtitle">
-            UNIT PRICE
+            {props.rate.isAnyPriceFixed ? 'FIXED PRICE' : 'PER UNIT PRICE'}
           </div>
           <div className="input-col-4 subtitle">RANGE MAXIMUM</div>
           <div className="input-col-4 vertical-input-group" />
@@ -297,11 +320,7 @@ const EditRate = (props) => {
                   Meteor.call(
                     'rates.save',
                     props.match.params.rateId,
-                    {
-                      ...props.rate,
-                      unitPrice: +props.rate.unitPrice,
-                      minimumAmount: +props.rate.minimumAmount,
-                    },
+                    Rate.castTypes(props.rate),
                     () => {
                       props.history.push('/rates');
                     },
@@ -309,11 +328,7 @@ const EditRate = (props) => {
                 } else {
                   Meteor.call(
                     'rates.new',
-                    {
-                      ...props.rate,
-                      unitPrice: +props.rate.unitPrice,
-                      minimumAmount: +props.rate.minimumAmount,
-                    },
+                    Rate.castTypes(props.rate),
                     (err, res) => {
                       props.history.push('/rates');
                     },
@@ -332,42 +347,7 @@ const EditRate = (props) => {
 };
 
 EditRate.propTypes = {
-  rate: PropTypes.shape({
-    type: PropTypes.string,
-    chargeCode: PropTypes.string,
-    level: PropTypes.string,
-    route: PropTypes.string,
-    isSplitByCargoType: PropTypes.bool,
-    anyBasis: PropTypes.string,
-    anyRanges: PropTypes.arrayOf(PropTypes.string),
-    anyMinimumAmount: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    looseBasis: PropTypes.string,
-    looseRanges: PropTypes.arrayOf(PropTypes.string),
-    looseMinimumAmount: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    containerizedBasis: PropTypes.string,
-    containerizedRanges: PropTypes.arrayOf(PropTypes.string),
-    containerizedMinimumAmount: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    ranges: PropTypes.objectOf(PropTypes.shape({
-      maximumUnits: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string,
-      ]),
-      unitPrice: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string,
-      ]),
-    })),
-    currency: PropTypes.string,
-  }).isRequired,
+  rate: Rate.propTypes.isRequired,
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
   editMode: PropTypes.bool,
 };

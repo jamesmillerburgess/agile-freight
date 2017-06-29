@@ -44,3 +44,12 @@ export const setRateMinimumAmount = makeActionCreator(
   'minimumAmount',
   'cargoType',
 );
+export const toggleRateIsAnyPriceFixed = makeActionCreator(
+  TYPES.TOGGLE_RATE_IS_ANY_PRICE_FIXED,
+);
+export const toggleRateIsLoosePriceFixed = makeActionCreator(
+  TYPES.TOGGLE_RATE_IS_LOOSE_PRICE_FIXED,
+);
+export const toggleRateIsContainerizedPriceFixed = makeActionCreator(
+  TYPES.TOGGLE_RATE_IS_CONTAINERIZED_PRICE_FIXED,
+);

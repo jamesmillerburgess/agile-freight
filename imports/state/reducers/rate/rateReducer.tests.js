@@ -117,6 +117,21 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       rate(stateBefore, action).containerizedMinimumAmount.should.equal(2);
     });
+    it('toggles fixed prices for any cargo type', () => {
+      const stateBefore = { isAnyPriceFixed: false };
+      const action = { type: ACTION_TYPES.TOGGLE_RATE_IS_ANY_PRICE_FIXED };
+      rate(stateBefore, action).isAnyPriceFixed.should.equal(true);
+    });
+    it('toggles fixed prices for loose cargo', () => {
+      const stateBefore = { isLoosePriceFixed: false };
+      const action = { type: ACTION_TYPES.TOGGLE_RATE_IS_LOOSE_PRICE_FIXED };
+      rate(stateBefore, action).isLoosePriceFixed.should.equal(true);
+    });
+    it('toggles fixed prices for containerized cargo', () => {
+      const stateBefore = { isContainerizedPriceFixed: false };
+      const action = { type: ACTION_TYPES.TOGGLE_RATE_IS_CONTAINERIZED_PRICE_FIXED };
+      rate(stateBefore, action).isContainerizedPriceFixed.should.equal(true);
+    });
     it('adds a range for any cargo type', () => {
       const stateBefore = { anyRanges: [], ranges: {} };
       const range = { maximumUnits: 50, unitPrice: 10 };
