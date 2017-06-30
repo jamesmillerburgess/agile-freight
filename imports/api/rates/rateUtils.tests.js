@@ -147,39 +147,111 @@ if (Meteor.isClient) {
         (Rate.getMinimumAmount(rate, cargo) === null).should.equal(true);
       });
     });
+    describe('Rate.getIsPriceFixed', () => {
+      it('returns the any cargo type is price fixed when the rate is not ' +
+         'split by cargo type', () => {
+        const rate = { isSplitByCargoType: false, isAnyPriceFixed: true };
+        Rate.getIsPriceFixed(rate).should.equal(true);
+      });
+      it('returns the loose is price fixed when the rate is split by cargo ' +
+         'type and the cargo type is loose', () => {
+        const rate = { isSplitByCargoType: true, isLoosePriceFixed: true };
+        const cargo = { cargoType: 'Loose' };
+        Rate.getIsPriceFixed(rate, cargo).should.equal(true);
+      });
+      it('returns the containerized is price fixed when the rate is split by ' +
+         'cargo type and the cargo type is containerized', () => {
+        const rate = {
+          isSplitByCargoType: true,
+          isContainerizedPriceFixed: true,
+        };
+        const cargo = { cargoType: 'Containerized' };
+        Rate.getIsPriceFixed(rate, cargo).should.equal(true);
+      });
+      it('returns null when the rate is not split by cargo type and the ' +
+         'cargo type is invalid', () => {
+        const rate = { isSplitByCargoType: true };
+        const cargo = { cargoType: 'xxx' };
+        (Rate.getIsPriceFixed(rate, cargo) === null).should.equal(true);
+      });
+    });
     describe('Rate.getAmount', () => {
       it('returns the calculated amount when there is no minimum ' +
-         'amount', () => {
+         'amount and the price is not fixed', () => {
         const rate = {
           isSplitByCargoType: false,
-          anyBasis: 'Shipment',
+          anyBasis: 'Container',
           anyRanges: ['a'],
           anyMinimumAmount: NaN,
           ranges: { a: { maximumUnits: NaN, unitPrice: 5 } },
         };
-        Rate.getAmount(rate).should.equal(5);
+        const cargo = { totalContainers: 2 };
+        Rate.getAmount(rate, cargo).should.equal(10);
+      });
+      it('returns the calculated amount when there is no minimum ' +
+         'amount and the price is is fixed', () => {
+        const rate = {
+          isSplitByCargoType: false,
+          anyBasis: 'Container',
+          anyRanges: ['a'],
+          anyMinimumAmount: NaN,
+          isAnyPriceFixed: true,
+          ranges: { a: { maximumUnits: NaN, unitPrice: 5 } },
+        };
+        const cargo = { totalContainers: 2 };
+        Rate.getAmount(rate, cargo).should.equal(5);
       });
       it('returns the minimum amount when the minimum amount is higher than ' +
-         'the calculated amount', () => {
+         'the calculated amount and the price is not fixed', () => {
         const rate = {
           isSplitByCargoType: false,
-          anyBasis: 'Shipment',
+          anyBasis: 'Container',
           anyRanges: ['a'],
-          anyMinimumAmount: 10,
+          anyMinimumAmount: 20,
+          isAnyPriceFixed: false,
           ranges: { a: { maximumUnits: NaN, unitPrice: 5 } },
         };
-        Rate.getAmount(rate).should.equal(10);
+        const cargo = { totalContainers: 2 };
+        Rate.getAmount(rate, cargo).should.equal(20);
+      });
+      it('returns the minimum amount when the minimum amount is higher than ' +
+         'the calculated amount and the price is fixed', () => {
+        const rate = {
+          isSplitByCargoType: false,
+          anyBasis: 'Container',
+          anyRanges: ['a'],
+          anyMinimumAmount: 20,
+          isAnyPriceFixed: true,
+          ranges: { a: { maximumUnits: NaN, unitPrice: 5 } },
+        };
+        const cargo = { totalContainers: 2 };
+        Rate.getAmount(rate, cargo).should.equal(20);
       });
       it('returns the calculated amount when the calculated amount is higher ' +
-         'than the minimum amount', () => {
+         'than the minimum amount and the price is not fixed', () => {
         const rate = {
           isSplitByCargoType: false,
-          anyBasis: 'Shipment',
+          anyBasis: 'Container',
           anyRanges: ['a'],
           anyMinimumAmount: 1,
+          isAnyPriceFixed: false,
           ranges: { a: { maximumUnits: NaN, unitPrice: 5 } },
         };
-        Rate.getAmount(rate).should.equal(5);
+        const cargo = { totalContainers: 2 };
+        Rate.getAmount(rate, cargo).should.equal(10);
+      });
+      it('returns the calculated amount when the calculated amount is higher ' +
+         'than the minimum amount and the price is fixed', () => {
+        const rate = {
+          isSplitByCargoType: false,
+          anyBasis: 'Container',
+          anyRanges: ['a'],
+          anyMinimumAmount: 1,
+          isAnyPriceFixed: true,
+          ranges: { a: { maximumUnits: NaN, unitPrice: 5 } },
+        };
+        const cargo = { totalContainers: 2 };
+        Rate.getAmount(rate, cargo).should.equal(5);
       });
     });
   });

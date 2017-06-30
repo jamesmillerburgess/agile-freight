@@ -164,14 +164,31 @@ export const getMinimumAmount = (rate, cargo) => {
   }
 };
 
+export const getIsPriceFixed = (rate, cargo) => {
+  if (rate.isSplitByCargoType) {
+    switch (cargo.cargoType) {
+      case 'Containerized':
+        return rate.isContainerizedPriceFixed;
+      case 'Loose':
+        return rate.isLoosePriceFixed;
+      default:
+        return null;
+    }
+  } else {
+    return rate.isAnyPriceFixed;
+  }
+};
+
 export const getAmount = (rate, cargo) => {
   const units = defaultUnits(getRateBasis(rate, cargo), cargo);
   const unitPrice = getUnitPrice(rate, cargo);
   const minimumAmount = getMinimumAmount(rate, cargo);
+  const isPriceFixed = getIsPriceFixed(rate, cargo);
+  const calculatedAmount = isPriceFixed ? unitPrice : units * unitPrice;
   if (!isNaN(minimumAmount)) {
-    return Math.max(minimumAmount, units * unitPrice);
+    return Math.max(minimumAmount, calculatedAmount);
   }
-  return units * unitPrice;
+  return calculatedAmount;
 };
 
 const Rate = {
@@ -183,6 +200,7 @@ const Rate = {
   getRanges,
   getUnitPrice,
   getMinimumAmount,
+  getIsPriceFixed,
   getAmount,
 };
 
