@@ -97,7 +97,89 @@ if (Meteor.isClient) {
       });
       it('returns null if the rate is split by cargo type and the cargo type ' +
          'is neither loose nor containerized', () => {
-        
+        const rate = {
+          isSplitByCargoType: true,
+          containerizedRanges: ['a'],
+          ranges: { a: {}, b: {} },
+        };
+        const cargo = { cargoType: 'xxx' };
+        (Rate.getRanges(rate, cargo) === null).should.equal(true);
+      });
+    });
+    describe('Rate.getUnitPrice', () => {
+      it('returns the unit price that applies when the basis is ' +
+         'Shipment', () => {
+        const rate = {
+          isSplitByCargoType: false,
+          anyBasis: 'Shipment',
+          anyRanges: ['a'],
+          ranges: { a: { maximumUnits: NaN, unitPrice: 5 } },
+        };
+        const cargo = {};
+        Rate.getUnitPrice(rate, cargo).should.equal(5);
+      });
+    });
+    describe('Rate.getMinimumAmount', () => {
+      it('returns the any cargo type minimum amount when the rate is not ' +
+         'split by cargo type', () => {
+        const rate = { isSplitByCargoType: false, anyMinimumAmount: 1 };
+        Rate.getMinimumAmount(rate).should.equal(1);
+      });
+      it('returns the loose minimum amount when the rate is split by cargo ' +
+         'type and the cargo type is loose', () => {
+        const rate = { isSplitByCargoType: true, looseMinimumAmount: 1 };
+        const cargo = { cargoType: 'Loose' };
+        Rate.getMinimumAmount(rate, cargo).should.equal(1);
+      });
+      it('returns the containerized minimum amount when the rate is split by ' +
+         'cargo type and the cargo type is containerized', () => {
+        const rate = {
+          isSplitByCargoType: true,
+          containerizedMinimumAmount: 1,
+        };
+        const cargo = { cargoType: 'Containerized' };
+        Rate.getMinimumAmount(rate, cargo).should.equal(1);
+      });
+      it('returns null when the rate is not split by cargo type and the ' +
+         'cargo type is invalid', () => {
+        const rate = { isSplitByCargoType: true };
+        const cargo = { cargoType: 'xxx' };
+        (Rate.getMinimumAmount(rate, cargo) === null).should.equal(true);
+      });
+    });
+    describe('Rate.getAmount', () => {
+      it('returns the calculated amount when there is no minimum ' +
+         'amount', () => {
+        const rate = {
+          isSplitByCargoType: false,
+          anyBasis: 'Shipment',
+          anyRanges: ['a'],
+          anyMinimumAmount: NaN,
+          ranges: { a: { maximumUnits: NaN, unitPrice: 5 } },
+        };
+        Rate.getAmount(rate).should.equal(5);
+      });
+      it('returns the minimum amount when the minimum amount is higher than ' +
+         'the calculated amount', () => {
+        const rate = {
+          isSplitByCargoType: false,
+          anyBasis: 'Shipment',
+          anyRanges: ['a'],
+          anyMinimumAmount: 10,
+          ranges: { a: { maximumUnits: NaN, unitPrice: 5 } },
+        };
+        Rate.getAmount(rate).should.equal(10);
+      });
+      it('returns the calculated amount when the calculated amount is higher ' +
+         'than the minimum amount', () => {
+        const rate = {
+          isSplitByCargoType: false,
+          anyBasis: 'Shipment',
+          anyRanges: ['a'],
+          anyMinimumAmount: 1,
+          ranges: { a: { maximumUnits: NaN, unitPrice: 5 } },
+        };
+        Rate.getAmount(rate).should.equal(5);
       });
     });
   });

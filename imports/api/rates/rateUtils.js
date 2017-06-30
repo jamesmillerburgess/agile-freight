@@ -2,6 +2,8 @@ import { Match } from 'meteor/check';
 import PropTypes from 'prop-types';
 import { pick } from 'lodash/fp';
 
+import { defaultUnits } from '../../ui/quoteUtils';
+
 export const ratePropTypes = PropTypes.shape({
   type: PropTypes.string,
   chargeCode: PropTypes.string,
@@ -140,13 +142,37 @@ export const getRanges = (rate, cargo) => {
   }
 };
 
-// export const getUnitPrice = (rate, cargo) => {
-//   if (rate.isSplitByCargoType) {
-//
-//   } else {
-//
-//   }
-// };
+export const getUnitPrice = (rate, cargo) => {
+  const ranges = getRanges(rate, cargo);
+  const units = defaultUnits(getRateBasis(rate, cargo), cargo);
+  const applicableRange = getApplicableRange(ranges, units);
+  return applicableRange.unitPrice;
+};
+
+export const getMinimumAmount = (rate, cargo) => {
+  if (rate.isSplitByCargoType) {
+    switch (cargo.cargoType) {
+      case 'Containerized':
+        return rate.containerizedMinimumAmount;
+      case 'Loose':
+        return rate.looseMinimumAmount;
+      default:
+        return null;
+    }
+  } else {
+    return rate.anyMinimumAmount;
+  }
+};
+
+export const getAmount = (rate, cargo) => {
+  const units = defaultUnits(getRateBasis(rate, cargo), cargo);
+  const unitPrice = getUnitPrice(rate, cargo);
+  const minimumAmount = getMinimumAmount(rate, cargo);
+  if (!isNaN(minimumAmount)) {
+    return Math.max(minimumAmount, units * unitPrice);
+  }
+  return units * unitPrice;
+};
 
 const Rate = {
   propTypes: ratePropTypes,
@@ -155,6 +181,9 @@ const Rate = {
   getBasis: getRateBasis,
   getApplicableRange,
   getRanges,
+  getUnitPrice,
+  getMinimumAmount,
+  getAmount,
 };
 
 export default Rate;
