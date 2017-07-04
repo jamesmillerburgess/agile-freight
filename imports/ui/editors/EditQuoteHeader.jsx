@@ -17,6 +17,7 @@ import {
   getDefaultOtherServicesCharges,
 } from '../../api/rates/chargeDefaultUtils';
 import { defaultUnits, getUpdatedFXConversions } from '../quoteUtils';
+import { getAmount } from '../../api/rates/rateUtils';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 
@@ -52,6 +53,8 @@ class EditQuoteHeader extends React.Component {
       movement,
       this.props.quote.cargo,
       (err, res) => {
+        console.log(err);
+        console.log(res);
         const chargeLines = res.map((applicableSellRates, index) => {
           let sellRate = {};
           let selectedRate = '';
@@ -75,6 +78,7 @@ class EditQuoteHeader extends React.Component {
             applicableSellRates,
             selectedRate,
             units: defaultUnits(sellRate.basis, this.props.quote.cargo),
+            getAmount: getAmount(sellRate, this.props.quote.cargo),
           };
         });
         charges = {

@@ -191,6 +191,16 @@ export const getAmount = (rate, cargo) => {
   return calculatedAmount;
 };
 
+export const getChargeFromRate = (rate, cargo) => {
+  const charge = {};
+  charge.basis = getRateBasis(rate, cargo);
+  charge.units = defaultUnits(charge.basis, cargo);
+  charge.amount = getAmount(rate, cargo);
+  charge.minimumAmount = getMinimumAmount(rate, cargo);
+  charge.currency = rate.currency;
+  return charge;
+};
+
 const Rate = {
   propTypes: ratePropTypes,
   schema: rateSchema,
@@ -202,6 +212,7 @@ const Rate = {
   getMinimumAmount,
   getIsPriceFixed,
   getAmount,
+  getChargeFromRate,
 };
 
 export default Rate;

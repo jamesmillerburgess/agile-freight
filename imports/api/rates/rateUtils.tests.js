@@ -254,5 +254,56 @@ if (Meteor.isClient) {
         Rate.getAmount(rate, cargo).should.equal(5);
       });
     });
+    describe('Rate.getChargeFromRate', () => {
+      it('returns the relevant basis based on the rate and cargo', () => {
+        const rate = {
+          anyBasis: 'Shipment',
+          isSplitByCargoType: false,
+          anyRanges: ['a'],
+          ranges: { a: { maximumUnits: NaN, unitPrice: 10 } },
+        };
+        Rate.getChargeFromRate(rate).basis.should.equal('Shipment');
+      });
+      it('returns the relevant units based on the rate and cargo', () => {
+        const rate = {
+          anyBasis: 'Shipment',
+          isSplitByCargoType: false,
+          anyRanges: ['a'],
+          ranges: { a: { maximumUnits: NaN, unitPrice: 10 } },
+        };
+        Rate.getChargeFromRate(rate).units.should.equal(1);
+      });
+      it('returns the relevant amount based on the rate and cargo', () => {
+        const rate = {
+          anyBasis: 'Shipment',
+          isSplitByCargoType: false,
+          anyRanges: ['a'],
+          ranges: { a: { maximumUnits: NaN, unitPrice: 10 } },
+        };
+        Rate.getChargeFromRate(rate).amount.should.equal(10);
+      });
+      it('returns the relevant minimum amount based on the rate and ' +
+         'cargo', () => {
+        const rate = {
+          anyBasis: 'Shipment',
+          isSplitByCargoType: false,
+          anyRanges: ['a'],
+          anyMinimumAmount: NaN,
+          ranges: { a: { maximumUnits: NaN, unitPrice: 10 } },
+        };
+        isNaN(Rate.getChargeFromRate(rate).minimumAmount).should.equal(true);
+      });
+      it('returns the relevant currency based on the rate and cargo', () => {
+        const rate = {
+          anyBasis: 'Shipment',
+          isSplitByCargoType: false,
+          anyRanges: ['a'],
+          anyMinimumAmount: NaN,
+          ranges: { a: { maximumUnits: NaN, unitPrice: 10 } },
+          currency: 'GBP',
+        };
+        Rate.getChargeFromRate(rate).currency.should.equal('GBP');
+      });
+    });
   });
 }
