@@ -198,6 +198,8 @@ export const getChargeFromRate = (rate, cargo) => {
   charge.amount = getAmount(rate, cargo);
   charge.minimumAmount = getMinimumAmount(rate, cargo);
   charge.currency = rate.currency;
+  charge.unitPrice = getUnitPrice(rate, cargo);
+  charge.isPriceFixed = getIsPriceFixed(rate, cargo);
   return charge;
 };
 

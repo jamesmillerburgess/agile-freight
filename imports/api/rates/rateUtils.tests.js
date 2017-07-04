@@ -304,6 +304,30 @@ if (Meteor.isClient) {
         };
         Rate.getChargeFromRate(rate).currency.should.equal('GBP');
       });
+      it('returns the relevant unit price based on the rate and cargo', () => {
+        const rate = {
+          anyBasis: 'Shipment',
+          isSplitByCargoType: false,
+          anyRanges: ['a'],
+          anyMinimumAmount: NaN,
+          ranges: { a: { maximumUnits: NaN, unitPrice: 10 } },
+          currency: 'GBP',
+        };
+        Rate.getChargeFromRate(rate).unitPrice.should.equal(10);
+      });
+      it('returns the relevant isPriceFixed value based on the rate and ' +
+         'cargo', () => {
+        const rate = {
+          anyBasis: 'Shipment',
+          isSplitByCargoType: false,
+          anyRanges: ['a'],
+          anyMinimumAmount: NaN,
+          isAnyPriceFixed: false,
+          ranges: { a: { maximumUnits: NaN, unitPrice: 10 } },
+          currency: 'GBP',
+        };
+        Rate.getChargeFromRate(rate).isPriceFixed.should.equal(false);
+      });
     });
   });
 }
