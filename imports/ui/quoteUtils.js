@@ -4,6 +4,11 @@ import { createSelector } from 'reselect';
 import { uniqueValues } from '../ui/statsUtils';
 import { setProp } from '../state/reducers/reducer-utils';
 import { APIGlobals } from '../api/api-globals';
+import {
+  getDefaultMovementCharges,
+  getDefaultOtherServicesCharges,
+} from '../api/rates/chargeDefaultUtils';
+import Rate from '../api/rates/rateUtils';
 
 const getTotalVolume = state => state.quote.cargo.totalVolume;
 const getTotalWeight = state => state.quote.cargo.totalWeight;
@@ -100,3 +105,73 @@ export const getUpdatedFXConversions = (charges) => {
 export const copyQuote = (quoteId, cb) => {
   Meteor.call('quote.copy', quoteId, cb);
 };
+
+export const extractRateMovement = quote => ({
+  carrier: quote.movement.carrier,
+  receipt: quote.movement.receipt.code,
+  departure: quote.movement.departure.code,
+  arrival: quote.movement.arrival.code,
+  delivery: quote.movement.delivery.code,
+});
+
+export const getCharges = quote => ([
+  ...getDefaultMovementCharges(quote.movement),
+  ...getDefaultOtherServicesCharges(quote.otherServices),
+]);
+
+export const getRates = (quote, cb) => {
+  const movement = extractRateMovement(quote);
+  const charges = getCharges(quote);
+  const cargo = quote.cargo;
+  Meteor.call('rates.getApplicableSellRates', charges, movement, cargo, cb);
+};
+
+export const applyRates = (quote, rates) => {
+  const chargeLines = rates.map((applicableSellRates, index) => {
+    let sellRate = {};
+    let selectedRate = '';
+    if (applicableSellRates.suggested) {
+      sellRate = Rate.getChargeFromRate(
+        applicableSellRates[applicableSellRates.suggested],
+        quote.cargo,
+      );
+      selectedRate = applicableSellRates.suggested;
+    } else {
+      sellRate.basis = 'Shipment';
+      sellRate.units = 1;
+      sellRate.currency = quote.charges.currency;
+      selectedRate = 'custom';
+    }
+    return {
+      id: new Mongo.ObjectID()._str,
+      ...quote.charges[index],
+      ...sellRate,
+      applicableSellRates,
+      selectedRate,
+    };
+  });
+  const charges = {
+    ...quote.charges,
+    chargeLines,
+    notes: APIGlobals.notes,
+  };
+  charges.fxConversions = getUpdatedFXConversions(charges);
+  return {
+    ...quote,
+    charges,
+  };
+};
+
+const getAndApplyRates = (quote, cb) => {
+  getRates(quote, (err, rates) => {
+    const newQuote = applyRates(quote, rates);
+    cb(newQuote);
+  });
+};
+
+const Quote = {
+  getRates,
+  getAndApplyRates,
+};
+
+export default Quote;

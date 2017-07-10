@@ -12,12 +12,8 @@ import QuoteContainer from '../objects/QuoteContainer';
 
 import { quotePropTypes } from '../objects/quotePropTypes';
 import { APIGlobals } from '../../api/api-globals';
-import {
-  getDefaultMovementCharges,
-  getDefaultOtherServicesCharges,
-} from '../../api/rates/chargeDefaultUtils';
-import { defaultUnits, getUpdatedFXConversions } from '../quoteUtils';
-import Rate from '../../api/rates/rateUtils';
+
+import Quote from '../quoteUtils';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 
@@ -26,6 +22,8 @@ class EditQuoteHeader extends React.Component {
     super(props);
     this.archive = this.archive.bind(this);
     this.save = this.save.bind(this);
+    this.goToEditCharges = this.goToEditCharges.bind(this);
+    this.saveQuote = this.saveQuote.bind(this);
     this.getRates = this.getRates.bind(this);
     this.PackageLines = this.PackageLines.bind(this);
     this.Containers = this.Containers.bind(this);
@@ -35,67 +33,19 @@ class EditQuoteHeader extends React.Component {
     this.props.dispatchers.onLoad(Quotes.findOne(this.props.match.params.quoteId));
   }
 
-  getRates() {
-    let charges = [
-      ...getDefaultMovementCharges(this.props.quote.movement),
-      ...getDefaultOtherServicesCharges(this.props.quote.otherServices),
-    ];
-    const movement = {
-      carrier: this.props.quote.movement.carrier,
-      receipt: this.props.quote.movement.receipt.code,
-      departure: this.props.quote.movement.departure.code,
-      arrival: this.props.quote.movement.arrival.code,
-      delivery: this.props.quote.movement.delivery.code,
-    };
-    Meteor.call(
-      'rates.getApplicableSellRates',
-      charges,
-      movement,
-      this.props.quote.cargo,
-      (err, res) => {
-        const chargeLines = res.map((applicableSellRates, index) => {
-          let sellRate = {};
-          let selectedRate = '';
-          if (applicableSellRates.suggested) {
-            sellRate = Rate.getChargeFromRate(
-              applicableSellRates[applicableSellRates.suggested],
-              this.props.quote.cargo,
-            );
-            console.log(sellRate);
-            selectedRate = applicableSellRates.suggested;
-          } else {
-            sellRate.basis = 'Shipment';
-            sellRate.units = 1;
-            sellRate.currency = this.props.quote.charges.currency;
-            selectedRate = 'custom';
-          }
-          return {
-            id: new Mongo.ObjectID()._str,
-            ...charges[index],
-            ...sellRate,
-            applicableSellRates,
-            selectedRate,
-          };
-        });
-        charges = {
-          ...this.props.quote.charges,
-          chargeLines,
-          notes: APIGlobals.notes,
-        };
-        charges.fxConversions = getUpdatedFXConversions(charges);
-        Meteor.call(
-          'quote.save',
-          {
-            ...this.props.quote,
-            _id: this.props.match.params.quoteId,
-            charges,
-          },
-          () => this.props.history.push(
-            `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
-          ),
-        );
-      },
+  goToEditCharges() {
+    this.props.history.push(
+      `/customers/view/${this.props.match.params.customerId}/quotes/` +
+      `${this.props.match.params.quoteId}/charges`,
     );
+  }
+
+  saveQuote(quote) {
+    Meteor.call('quote.save', quote, this.goToEditCharges);
+  }
+
+  getRates() {
+    Quote.getAndApplyRates(this.props.quote, this.saveQuote);
   }
 
   save() {
