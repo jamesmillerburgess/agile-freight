@@ -114,28 +114,36 @@ export const extractRateMovement = quote => ({
   delivery: quote.movement.delivery.code,
 });
 
-export const getCharges = quote => ([
+export const getChargeLines = quote => ([
   ...getDefaultMovementCharges(quote.movement),
   ...getDefaultOtherServicesCharges(quote.otherServices),
 ]);
 
 export const getRates = (quote, cb) => {
   const movement = extractRateMovement(quote);
-  const charges = getCharges(quote);
-  const cargo = quote.cargo;
-  Meteor.call('rates.getApplicableSellRates', charges, movement, cargo, cb);
+  const { cargo } = quote;
+  const chargeLines = quote.charges.chargeLines;
+  Meteor.call('rates.getApplicableSellRates', chargeLines, movement, cargo, cb);
 };
 
 export const applyRates = (quote, rates) => {
-  const chargeLines = rates.map((applicableSellRates, index) => {
+  const chargeLines = rates.map((rateGroups, index) => {
     let sellRate = {};
-    let selectedRate = '';
-    if (applicableSellRates.suggested) {
+    let selectedRate = rateGroups.suggested;
+    const applicableSellRates = { ...rateGroups };
+    Object.keys(applicableSellRates).forEach((key) => {
+      if (key !== 'suggested') {
+        applicableSellRates[key] = {
+          ...applicableSellRates[key],
+          ...Rate.getChargeFromRate(applicableSellRates[key], quote.cargo),
+        };
+      }
+    });
+    if (selectedRate) {
       sellRate = Rate.getChargeFromRate(
-        applicableSellRates[applicableSellRates.suggested],
+        rateGroups[selectedRate],
         quote.cargo,
       );
-      selectedRate = applicableSellRates.suggested;
     } else {
       sellRate.basis = 'Shipment';
       sellRate.units = 1;
@@ -144,7 +152,7 @@ export const applyRates = (quote, rates) => {
     }
     return {
       id: new Mongo.ObjectID()._str,
-      ...quote.charges[index],
+      ...quote.charges.chargeLines[index],
       ...sellRate,
       applicableSellRates,
       selectedRate,
@@ -163,9 +171,12 @@ export const applyRates = (quote, rates) => {
 };
 
 const getAndApplyRates = (quote, cb) => {
-  getRates(quote, (err, rates) => {
-    const newQuote = applyRates(quote, rates);
-    cb(newQuote);
+  const chargeLines = getChargeLines(quote);
+  let updatedQuote = { ...quote };
+  updatedQuote.charges.chargeLines = chargeLines;
+  getRates(updatedQuote, (err, rates) => {
+    updatedQuote = applyRates(updatedQuote, rates);
+    cb(updatedQuote);
   });
 };
 

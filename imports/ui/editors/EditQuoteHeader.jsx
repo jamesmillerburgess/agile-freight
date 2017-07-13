@@ -41,7 +41,11 @@ class EditQuoteHeader extends React.Component {
   }
 
   saveQuote(quote) {
-    Meteor.call('quote.save', quote, this.goToEditCharges);
+    const quoteUpdate = {
+      _id: this.props.match.params.quoteId,
+      ...quote,
+    };
+    Meteor.call('quote.save', quoteUpdate, this.goToEditCharges);
   }
 
   getRates() {
