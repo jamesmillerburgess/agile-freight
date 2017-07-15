@@ -41,7 +41,10 @@ const UNLocationField = (props) => {
         option.isAirport ?
         (<span><span className="fa fa-fw fa-plane" />&nbsp;</span>) : ''
       }
-      {option.name} – {option.code}
+      {
+        option.name ?
+        `${option.name} – ${option.code}` : ''
+      }
     </div>
   );
 

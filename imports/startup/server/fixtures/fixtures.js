@@ -5,6 +5,7 @@ import { Branches } from '../../../api/branch/branchCollection';
 import { Offices } from '../../../api/offices/offices';
 import { Customers } from '../../../api/customers/customersCollection';
 import { Quotes } from '../../../api/quotes/quotesCollection';
+import { Rates } from '../../../api/rates/rateCollection';
 
 import customerFixtures from './customer-fixtures';
 

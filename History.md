@@ -23,6 +23,17 @@
 
 ## v.NEXT
 
+## v0.12.0 – LCL Quote Scenario
+
+__User Story:__ _As an operator and rate manager, I can create rates and and an LCL quote that defaults all charges as per an existing quote so I don't have to look up rates and manually enter them._
+
+* Density ratio is available in loose cargo
+* Chargeable weight is automatically calculated in loose cargo
+* Minimum charge amount
+* Split export and import customs clearance charges and rates
+* Rates can be split by cargo type (loose and containerized)
+* Weight ranges can be added to rates and get applied in quotes
+
 ## v0.11.0 – FCL Quote Scenario
 
 __User Story:__ _Get a real FCL quote scenario working with as much automation as possible._

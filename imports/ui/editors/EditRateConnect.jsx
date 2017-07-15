@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { Mongo } from 'meteor/mongo';
 
 import EditRate from './EditRate.jsx';
 import * as actions from '../../state/actions/rateActionCreators';
@@ -12,13 +13,32 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     const rate = Rates.findOne(ownProps.match.params.rateId);
     dispatch(actions.loadRate(rate));
   } else {
+    const id1 = new Mongo.ObjectID()._str;
+    const id2 = new Mongo.ObjectID()._str;
+    const id3 = new Mongo.ObjectID()._str;
     dispatch(actions.loadRate({
       type: 'sell',
       chargeCode: '',
       level: '',
       route: '',
-      basis: '',
-      unitPrice: 0,
+      isSplitByCargoType: false,
+      anyBasis: 'Shipment',
+      anyRanges: [id1],
+      anyMinimumAmount: '',
+      isAnyPriceFixed: false,
+      looseBasis: '',
+      looseRanges: [id2],
+      looseMinimumAmount: '',
+      isLoosePriceFixed: false,
+      containerizedBasis: '',
+      containerizedRanges: [id3],
+      containerizedMinimumAmount: '',
+      isContainerizedPriceFixed: false,
+      ranges: {
+        [id1]: { unitPrice: '', maximumUnits: '' },
+        [id2]: { unitPrice: '', maximumUnits: '' },
+        [id3]: { unitPrice: '', maximumUnits: '' },
+      },
       currency: '',
     }));
   }
@@ -30,10 +50,48 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(actions.setRateChargeCode(chargeCode)),
       onChangeRateLevel: level => dispatch(actions.setRateLevel(level)),
       onChangeRateRoute: route => dispatch(actions.setRateRoute(route)),
-      onChangeRateCarrier: carrier => dispatch(actions.setRateCarrier(carrier)),
-      onChangeRateBasis: basis => dispatch(actions.setRateBasis(basis)),
-      onChangeRateUnitPrice: unitPrice =>
-        dispatch(actions.setRateUnitPrice(unitPrice)),
+      onChangeIsSplitByCargoType: () => dispatch(actions.toggleRateIsSplitByCargoType()),
+      onChangeAnyBasis: basis =>
+        dispatch(actions.setRateBasis(basis, 'any')),
+      onChangeLooseBasis: basis =>
+        dispatch(actions.setRateBasis(basis, 'loose')),
+      onChangeContainerizedBasis: basis =>
+        dispatch(actions.setRateBasis(basis, 'containerized')),
+      onChangeAnyMinimumAmount: minimumAmount =>
+        dispatch(actions.setRateMinimumAmount(minimumAmount, 'any')),
+      onChangeLooseMinimumAmount: minimumAmount =>
+        dispatch(actions.setRateMinimumAmount(minimumAmount, 'loose')),
+      onChangeContainerizedMinimumAmount: minimumAmount =>
+        dispatch(actions.setRateMinimumAmount(minimumAmount, 'containerized')),
+      onChangeIsAnyPriceFixed: () =>
+        dispatch(actions.toggleRateIsAnyPriceFixed()),
+      onChangeIsLoosePriceFixed: () =>
+        dispatch(actions.toggleRateIsLoosePriceFixed()),
+      onChangeIsContainerizedPriceFixed: () =>
+        dispatch(actions.toggleRateIsContainerizedPriceFixed()),
+      onAddAnyRateRange: () =>
+        dispatch(actions.addRateRange(
+          new Mongo.ObjectID()._str,
+          { unitPrice: '', maximumUnits: '' },
+          'any',
+        )),
+      onAddLooseRateRange: () =>
+        dispatch(actions.addRateRange(
+          new Mongo.ObjectID()._str,
+          { unitPrice: '', maximumUnits: '' },
+          'loose',
+        )),
+      onAddContainerizedRateRange: () =>
+        dispatch(actions.addRateRange(
+          new Mongo.ObjectID()._str,
+          {},
+          'containerized',
+        )),
+      onChangeRateRangeUnitPrice: (id, unitPrice) =>
+        dispatch(actions.setRateRangeUnitPrice(id, unitPrice)),
+      onChangeRateRangeMaximumUnits: (id, maximumUnits) =>
+        dispatch(actions.setRateRangeMaximumUnits(id, maximumUnits)),
+      onRemoveRateRange: id => dispatch(actions.removeRateRange(id)),
       onChangeRateCurrency: currency =>
         dispatch(actions.setRateCurrency(currency)),
     },

@@ -25,12 +25,12 @@ Meteor.methods({
     check(quoteId, String);
 
     const {
-            customerId,
-            cargo,
-            movement,
-            charges,
-            otherServices,
-          } = Quotes.findOne(quoteId);
+      customerId,
+      cargo,
+      movement,
+      charges,
+      otherServices,
+    } = Quotes.findOne(quoteId);
 
     const newQuoteId = Quotes.insert({
       customerId,

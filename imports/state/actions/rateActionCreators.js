@@ -9,16 +9,47 @@ export const setRateChargeCode = makeActionCreator(
 );
 export const setRateLevel = makeActionCreator(TYPES.SET_RATE_LEVEL, 'level');
 export const setRateRoute = makeActionCreator(TYPES.SET_RATE_ROUTE, 'route');
-export const setRateCarrier = makeActionCreator(
-  TYPES.SET_RATE_CARRIER,
-  'carrier',
+export const toggleRateIsSplitByCargoType = makeActionCreator(
+  TYPES.TOGGLE_RATE_IS_SPLIT_BY_CARGO_TYPE,
 );
-export const setRateBasis = makeActionCreator(TYPES.SET_RATE_BASIS, 'basis');
-export const setRateUnitPrice = makeActionCreator(
-  TYPES.SET_RATE_UNIT_PRICE,
+export const setRateBasis = makeActionCreator(
+  TYPES.SET_RATE_BASIS, 'basis', 'cargoType',
+);
+export const addRateRange = makeActionCreator(
+  TYPES.ADD_RATE_RANGE,
+  'id',
+  'range',
+  'cargoType',
+);
+export const setRateRangeUnitPrice = makeActionCreator(
+  TYPES.SET_RATE_RANGE_UNIT_PRICE,
+  'id',
   'unitPrice',
+);
+export const setRateRangeMaximumUnits = makeActionCreator(
+  TYPES.SET_RATE_RANGE_MAXIMUM_UNITS,
+  'id',
+  'maximumUnits',
+);
+export const removeRateRange = makeActionCreator(
+  TYPES.REMOVE_RATE_RANGE,
+  'id',
 );
 export const setRateCurrency = makeActionCreator(
   TYPES.SET_RATE_CURRENCY,
   'currency',
+);
+export const setRateMinimumAmount = makeActionCreator(
+  TYPES.SET_RATE_MINIMUM_AMOUNT,
+  'minimumAmount',
+  'cargoType',
+);
+export const toggleRateIsAnyPriceFixed = makeActionCreator(
+  TYPES.TOGGLE_RATE_IS_ANY_PRICE_FIXED,
+);
+export const toggleRateIsLoosePriceFixed = makeActionCreator(
+  TYPES.TOGGLE_RATE_IS_LOOSE_PRICE_FIXED,
+);
+export const toggleRateIsContainerizedPriceFixed = makeActionCreator(
+  TYPES.TOGGLE_RATE_IS_CONTAINERIZED_PRICE_FIXED,
 );

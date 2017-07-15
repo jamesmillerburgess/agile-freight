@@ -8,25 +8,6 @@ import { getUpdatedFXConversions } from '../../../ui/quoteUtils';
 
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
-export const defaultUnits = (rate, cargo) => {
-  switch (rate) {
-    case 'Shipment':
-      return 1;
-    case 'KG':
-      return cargo.totalWeight;
-    case 'CBM':
-      return cargo.totalVolume;
-    case 'Container':
-      return cargo.totalContainers;
-    case 'TEU':
-      return cargo.totalTEU;
-    case 'Package':
-      return cargo.totalPackages;
-    default:
-      return 1;
-  }
-};
-
 export const chargeLines = (
   state = [],
   action = { type: '' },
@@ -73,7 +54,15 @@ export const chargeLines = (
   }
   return newState.map((chargeLine) => {
     const res = { ...chargeLine };
-    res.amount = (chargeLine.units || 0) * (chargeLine.unitPrice || 0);
+    let minimumAmount = 0;
+    if (chargeLine.selectedRate && chargeLine.selectedRate !== 'custom') {
+      minimumAmount = chargeLine.applicableSellRates[chargeLine.selectedRate].minimumAmount || 0;
+    }
+    let amount = (chargeLine.units || 0) * (chargeLine.unitPrice || 0);
+    if (amount < minimumAmount) {
+      amount = minimumAmount;
+    }
+    res.amount = amount;
     if (chargeLine.currency === parentState.currency) {
       res.finalAmount = res.amount;
     } else if (

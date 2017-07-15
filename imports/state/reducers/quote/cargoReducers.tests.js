@@ -19,24 +19,28 @@ if (Meteor.isClient) {
         const stateAfter = {
           cargoType: 'loose',
           ratedQuote: false,
-          packageLines: [{
-            packageType: 'Packages',
-            numPackages: 1,
-            length: '',
-            width: '',
-            height: '',
-            unitVolumeUOM: 'cm',
-            volume: 0,
-            volumeUOM: 'cbm',
-            weight: '',
-            weightUOM: 'kg',
-            totalWeight: 0,
-          }],
-          containerLines: [{
-            numContainers: 1,
-            containerType: '20\'',
-            temperatureControlled: false,
-          }],
+          packageLines: [
+            {
+              packageType: 'Packages',
+              numPackages: 1,
+              length: '',
+              width: '',
+              height: '',
+              unitVolumeUOM: 'cm',
+              volume: 0,
+              volumeUOM: 'cbm',
+              weight: '',
+              weightUOM: 'kg',
+              totalWeight: 0,
+            },
+          ],
+          containerLines: [
+            {
+              numContainers: 1,
+              containerType: '20\'',
+              temperatureControlled: false,
+            },
+          ],
           totalWeight: 0,
           totalPackages: 1,
           packageType: 'Packages',
@@ -45,10 +49,11 @@ if (Meteor.isClient) {
           volumeUOM: 'cbm',
           totalContainers: 1,
           totalTEU: 1,
+          densityRatio: 1000,
           hazardous: false,
           temperatureControlled: false,
         };
-        const newCargo   = cargo();
+        const newCargo = cargo();
 
         newCargo.should.eql(stateAfter);
       });
@@ -57,24 +62,28 @@ if (Meteor.isClient) {
         const cargoToLoad = {
           cargoType: 'containerized',
           ratedQuote: true,
-          packageLines: [{
-            packageType: 'Boxes',
-            numPackages: 2,
-            length: 12,
-            width: 12,
-            height: 12,
-            unitVolumeUOM: 'in',
-            volume: 2,
-            volumeUOM: 'cft',
-            weight: 1,
-            weightUOM: 'lb',
-            totalWeight: 2,
-          }],
-          containerLines: [{
-            numContainers: 2,
-            containerType: '40\'',
-            temperatureControlled: false,
-          }],
+          packageLines: [
+            {
+              packageType: 'Boxes',
+              numPackages: 2,
+              length: 12,
+              width: 12,
+              height: 12,
+              unitVolumeUOM: 'in',
+              volume: 2,
+              volumeUOM: 'cft',
+              weight: 1,
+              weightUOM: 'lb',
+              totalWeight: 2,
+            },
+          ],
+          containerLines: [
+            {
+              numContainers: 2,
+              containerType: '40\'',
+              temperatureControlled: false,
+            },
+          ],
           totalWeight: 2,
           totalPackages: 2,
           packageType: 'Boxes',
@@ -86,7 +95,10 @@ if (Meteor.isClient) {
           hazardous: true,
           temperatureControlled: true,
         };
-        const newCargo    = cargo({}, { type: ACTION_TYPES.LOAD_QUOTE, quote: { cargo: cargoToLoad } });
+        const newCargo = cargo(
+          {},
+          { type: ACTION_TYPES.LOAD_QUOTE, quote: { cargo: cargoToLoad } },
+        );
 
         newCargo.should.eql(cargoToLoad);
       });
@@ -102,7 +114,10 @@ if (Meteor.isClient) {
 
       it('changes its value', () => {
         const stateBefore = 'loose';
-        const action      = { type: ACTION_TYPES.SET_CARGO_TYPE, cargoType: 'containerized' };
+        const action = {
+          type: ACTION_TYPES.SET_CARGO_TYPE,
+          cargoType: 'containerized',
+        };
         deepFreeze(stateBefore);
         const newCargoType = cargoType(stateBefore, action);
 
@@ -120,7 +135,7 @@ if (Meteor.isClient) {
 
       it('toggles on', () => {
         const stateBefore = false;
-        const action      = { type: ACTION_TYPES.TOGGLE_RATED_QUOTE };
+        const action = { type: ACTION_TYPES.TOGGLE_RATED_QUOTE };
         deepFreeze(stateBefore);
         const newRatedQuote = ratedQuote(stateBefore, action);
 
@@ -129,7 +144,7 @@ if (Meteor.isClient) {
 
       it('toggles off', () => {
         const stateBefore = true;
-        const action      = { type: ACTION_TYPES.TOGGLE_RATED_QUOTE };
+        const action = { type: ACTION_TYPES.TOGGLE_RATED_QUOTE };
         deepFreeze(stateBefore);
         const newRatedQuote = ratedQuote(stateBefore, action);
 
@@ -141,26 +156,28 @@ if (Meteor.isClient) {
       const { packageLines } = cargoReducers;
 
       it('defaults a single package line', () => {
-        const stateAfter = [{
-          packageType: 'Packages',
-          numPackages: 1,
-          length: '',
-          width: '',
-          height: '',
-          unitVolumeUOM: 'cm',
-          volume: 0,
-          volumeUOM: 'cbm',
-          weight: '',
-          weightUOM: 'kg',
-          totalWeight: 0,
-        }];
+        const stateAfter = [
+          {
+            packageType: 'Packages',
+            numPackages: 1,
+            length: '',
+            width: '',
+            height: '',
+            unitVolumeUOM: 'cm',
+            volume: 0,
+            volumeUOM: 'cbm',
+            weight: '',
+            weightUOM: 'kg',
+            totalWeight: 0,
+          },
+        ];
 
         packageLines().should.eql(stateAfter);
       });
 
       it('adds a package line to the end', () => {
         const stateBefore = [{ num: 1 }];
-        const action      = { type: ACTION_TYPES.ADD_PACKAGE_LINE };
+        const action = { type: ACTION_TYPES.ADD_PACKAGE_LINE };
         const lengthAfter = 2;
         deepFreeze(stateBefore);
 
@@ -169,7 +186,7 @@ if (Meteor.isClient) {
 
       it('removes a package line from the specified index', () => {
         const stateBefore = [{ num: 1 }, { num: 2 }, { num: 3 }];
-        const action      = { type: ACTION_TYPES.REMOVE_PACKAGE_LINE, index: 1 };
+        const action = { type: ACTION_TYPES.REMOVE_PACKAGE_LINE, index: 1 };
         const lengthAfter = 2;
         deepFreeze(stateBefore);
 
@@ -177,8 +194,8 @@ if (Meteor.isClient) {
       });
 
       it('changes the package type at the specified index', () => {
-        const stateBefore      = [{}, { packageType: 'old' }];
-        const action           = {
+        const stateBefore = [{}, { packageType: 'old' }];
+        const action = {
           type: ACTION_TYPES.SET_PACKAGE_LINE_PACKAGE_TYPE,
           index: 1,
           packageType: 'new',
@@ -186,25 +203,31 @@ if (Meteor.isClient) {
         const packageTypeAfter = 'new';
         deepFreeze(stateBefore);
 
-        packageLines(stateBefore, action)[1].packageType.should.eql(packageTypeAfter);
+        packageLines(stateBefore, action)[1].packageType.should.eql(
+          packageTypeAfter);
       });
 
       it('changes the number of packages at the specified index', () => {
-        const stateBefore      = [{}, { numPackages: 1, anotherProperty: true }];
-        const action           = {
+        const stateBefore = [{}, { numPackages: 1, anotherProperty: true }];
+        const action = {
           type: ACTION_TYPES.SET_PACKAGE_LINE_NUM_PACKAGES,
           index: 1,
-          numPackages: 2
+          numPackages: 2,
         };
         const numPackagesAfter = 2;
         deepFreeze(stateBefore);
 
-        packageLines(stateBefore, action)[1].numPackages.should.eql(numPackagesAfter);
+        packageLines(stateBefore, action)[1].numPackages.should.eql(
+          numPackagesAfter);
       });
 
       it('changes the length at the specified index', () => {
         const stateBefore = [{}, { length: 1, anotherProperty: true }];
-        const action      = { type: ACTION_TYPES.SET_PACKAGE_LINE_LENGTH, index: 1, length: 2 };
+        const action = {
+          type: ACTION_TYPES.SET_PACKAGE_LINE_LENGTH,
+          index: 1,
+          length: 2,
+        };
         const lengthAfter = 2;
         deepFreeze(stateBefore);
 
@@ -213,8 +236,12 @@ if (Meteor.isClient) {
 
       it('changes the width at the specified index', () => {
         const stateBefore = [{}, { width: 1, anotherProperty: true }];
-        const action      = { type: ACTION_TYPES.SET_PACKAGE_LINE_WIDTH, index: 1, width: 2 };
-        const widthAfter  = 2;
+        const action = {
+          type: ACTION_TYPES.SET_PACKAGE_LINE_WIDTH,
+          index: 1,
+          width: 2,
+        };
+        const widthAfter = 2;
         deepFreeze(stateBefore);
 
         packageLines(stateBefore, action)[1].width.should.eql(widthAfter);
@@ -222,7 +249,11 @@ if (Meteor.isClient) {
 
       it('changes the height at the specified index', () => {
         const stateBefore = [{}, { height: 1, anotherProperty: true }];
-        const action      = { type: ACTION_TYPES.SET_PACKAGE_LINE_HEIGHT, index: 1, height: 2 };
+        const action = {
+          type: ACTION_TYPES.SET_PACKAGE_LINE_HEIGHT,
+          index: 1,
+          height: 2,
+        };
         const heightAfter = 2;
         deepFreeze(stateBefore);
 
@@ -230,21 +261,26 @@ if (Meteor.isClient) {
       });
 
       it('changes the unit volume UOM at the specified index', () => {
-        const stateBefore        = [{}, { unitVolumeUOM: 'in' }];
-        const action             = {
+        const stateBefore = [{}, { unitVolumeUOM: 'in' }];
+        const action = {
           type: ACTION_TYPES.SET_PACKAGE_LINE_UNIT_VOLUME_UOM,
           index: 1,
-          unitVolumeUOM: 'cm'
+          unitVolumeUOM: 'cm',
         };
         const unitVolumeUOMAfter = 'cm';
         deepFreeze(stateBefore);
 
-        packageLines(stateBefore, action)[1].unitVolumeUOM.should.eql(unitVolumeUOMAfter);
+        packageLines(stateBefore, action)[1].unitVolumeUOM.should.eql(
+          unitVolumeUOMAfter);
       });
 
       it('changes the weight at the specified index', () => {
         const stateBefore = [{}, { weight: 1, anotherProperty: true }];
-        const action      = { type: ACTION_TYPES.SET_PACKAGE_LINE_WEIGHT, index: 1, weight: 2 };
+        const action = {
+          type: ACTION_TYPES.SET_PACKAGE_LINE_WEIGHT,
+          index: 1,
+          weight: 2,
+        };
         const weightAfter = 2;
         deepFreeze(stateBefore);
 
@@ -252,65 +288,88 @@ if (Meteor.isClient) {
       });
 
       it('changes the weight UOM at the specified index', () => {
-        const stateBefore    = [{}, { weightUOM: 'lb', anotherProperty: true }];
-        const action         = {
+        const stateBefore = [{}, { weightUOM: 'lb', anotherProperty: true }];
+        const action = {
           type: ACTION_TYPES.SET_PACKAGE_LINE_WEIGHT_UOM,
           index: 1,
-          weightUOM: 'kg'
+          weightUOM: 'kg',
         };
         const weightUOMAfter = 'kg';
         deepFreeze(stateBefore);
 
-        packageLines(stateBefore, action)[1].weightUOM.should.eql(weightUOMAfter);
+        packageLines(
+          stateBefore,
+          action,
+        )[1].weightUOM.should.eql(weightUOMAfter);
       });
 
       it('updates the total weight', () => {
-        const stateBefore      = [{ numPackages: 2 }];
-        const action           = {
+        const stateBefore = [{ numPackages: 2 }];
+        const action = {
           type: ACTION_TYPES.SET_PACKAGE_LINE_WEIGHT,
           index: 0,
-          weight: 2
+          weight: 2,
         };
         const totalWeightAfter = 4;
         deepFreeze(stateBefore);
 
-        packageLines(stateBefore, action)[0].totalWeight.should.equal(totalWeightAfter);
+        packageLines(stateBefore, action)[0].totalWeight.should.equal(
+          totalWeightAfter);
       });
 
       it('updates the total volume', () => {
-        const stateBefore = [{ numPackages: 2, length: 100, width: 100, unitVolumeUOM: 'cm' }];
-        const action      = { type: ACTION_TYPES.SET_PACKAGE_LINE_HEIGHT, index: 0, height: 100 };
+        const stateBefore = [
+          {
+            numPackages: 2,
+            length: 100,
+            width: 100,
+            unitVolumeUOM: 'cm',
+          },
+        ];
+        const action = {
+          type: ACTION_TYPES.SET_PACKAGE_LINE_HEIGHT,
+          index: 0,
+          height: 100,
+        };
         const volumeAfter = 2;
         deepFreeze(stateBefore);
 
         packageLines(stateBefore, action)[0].volume.should.equal(volumeAfter);
       });
 
-      it('sets the volume UOM to \'cft\' when unit volume UOM is \'in\'', () => {
-        const stateBefore    = [{ unitVolumeUOM: 'cm' }];
-        const action         = {
-          type: ACTION_TYPES.SET_PACKAGE_LINE_UNIT_VOLUME_UOM,
-          index: 0,
-          unitVolumeUOM: 'in'
-        };
-        const volumeUOMAfter = 'cft';
-        deepFreeze(stateBefore);
+      it(
+        'sets the volume UOM to \'cft\' when unit volume UOM is \'in\'',
+        () => {
+          const stateBefore = [{ unitVolumeUOM: 'cm' }];
+          const action = {
+            type: ACTION_TYPES.SET_PACKAGE_LINE_UNIT_VOLUME_UOM,
+            index: 0,
+            unitVolumeUOM: 'in',
+          };
+          const volumeUOMAfter = 'cft';
+          deepFreeze(stateBefore);
 
-        packageLines(stateBefore, action)[0].volumeUOM.should.equal(volumeUOMAfter);
-      });
+          packageLines(stateBefore, action)[0].volumeUOM.should.equal(
+            volumeUOMAfter);
+        },
+      );
 
-      it('sets the volume UOM to \'cbm\' when unit volume UOM is \'cm\'', () => {
-        const stateBefore    = [{ unitVolumeUOM: 'in' }];
-        const action         = {
-          type: ACTION_TYPES.SET_PACKAGE_LINE_UNIT_VOLUME_UOM,
-          index: 0,
-          unitVolumeUOM: 'cm'
-        };
-        const volumeUOMAfter = 'cbm';
-        deepFreeze(stateBefore);
+      it(
+        'sets the volume UOM to \'cbm\' when unit volume UOM is \'cm\'',
+        () => {
+          const stateBefore = [{ unitVolumeUOM: 'in' }];
+          const action = {
+            type: ACTION_TYPES.SET_PACKAGE_LINE_UNIT_VOLUME_UOM,
+            index: 0,
+            unitVolumeUOM: 'cm',
+          };
+          const volumeUOMAfter = 'cbm';
+          deepFreeze(stateBefore);
 
-        packageLines(stateBefore, action)[0].volumeUOM.should.equal(volumeUOMAfter);
-      });
+          packageLines(stateBefore, action)[0].volumeUOM.should.equal(
+            volumeUOMAfter);
+        },
+      );
     });
 
     describe('Container Lines Reducer', () => {
@@ -322,7 +381,7 @@ if (Meteor.isClient) {
 
       it('adds a container line to the end', () => {
         const stateBefore = [{}];
-        const action      = { type: ACTION_TYPES.ADD_CONTAINER_LINE };
+        const action = { type: ACTION_TYPES.ADD_CONTAINER_LINE };
         deepFreeze(stateBefore);
 
         containerLines(stateBefore, action).length.should.equal(2);
@@ -330,7 +389,7 @@ if (Meteor.isClient) {
 
       it('removes a container line from the specified index', () => {
         const stateBefore = [{}, {}];
-        const action      = { type: ACTION_TYPES.REMOVE_CONTAINER_LINE, index: 1 };
+        const action = { type: ACTION_TYPES.REMOVE_CONTAINER_LINE, index: 1 };
         deepFreeze(stateBefore);
 
         containerLines(stateBefore, action).length.should.equal(1);
@@ -341,7 +400,7 @@ if (Meteor.isClient) {
           { numContainers: 1 },
           { numContainers: 2 },
         ];
-        const action      = {
+        const action = {
           type: ACTION_TYPES.SET_CONTAINER_LINE_NUM_CONTAINERS,
           index: 1,
           numContainers: 3,
@@ -355,27 +414,36 @@ if (Meteor.isClient) {
           { containerType: '20\'' },
           { containerType: '40\'' },
         ];
-        const action      = {
+        const action = {
           type: ACTION_TYPES.SET_CONTAINER_LINE_CONTAINER_TYPE,
           index: 1,
           containerType: '45\'',
         };
 
-        containerLines(stateBefore, action)[1].containerType.should.equal('45\'');
+        containerLines(
+          stateBefore,
+          action,
+        )[1].containerType.should.equal('45\'');
       });
 
       it('toggles temperature controlled at the specified index', () => {
         const stateBefore1 = [{ temperatureControlled: false }];
-        const action       = {
+        const action = {
           type: ACTION_TYPES.TOGGLE_CONTAINER_LINE_TEMPERATURE_CONTROLLED,
           index: 0,
         };
 
-        containerLines(stateBefore1, action)[0].temperatureControlled.should.equal(true);
+        containerLines(
+          stateBefore1,
+          action,
+        )[0].temperatureControlled.should.equal(true);
 
         const stateBefore2 = [{ temperatureControlled: true }];
 
-        containerLines(stateBefore2, action)[0].temperatureControlled.should.equal(false);
+        containerLines(
+          stateBefore2,
+          action,
+        )[0].temperatureControlled.should.equal(false);
       });
     });
 
@@ -424,18 +492,21 @@ if (Meteor.isClient) {
         newCargoTotals.totalVolume.should.equal(6);
       });
 
-      it('returns the same package type when the types from all package lines are the same', () => {
-        const baseState = {
-          packageLines: [
-            { packageType: 'Pallets' },
-            { packageType: 'Pallets' },
-          ],
-        };
-        deepFreeze(baseState);
-        const newCargoTotals = cargoTotals(baseState);
+      it(
+        'returns the same package type when the types from all package lines are the same',
+        () => {
+          const baseState = {
+            packageLines: [
+              { packageType: 'Pallets' },
+              { packageType: 'Pallets' },
+            ],
+          };
+          deepFreeze(baseState);
+          const newCargoTotals = cargoTotals(baseState);
 
-        newCargoTotals.packageType.should.equal('Pallets');
-      });
+          newCargoTotals.packageType.should.equal('Pallets');
+        },
+      );
 
       it('deals with multiple package types correctly', () => {
         const baseState = {
@@ -494,49 +565,58 @@ if (Meteor.isClient) {
         cargoTotals(baseState2).weightUOM.should.equal('lb');
       });
 
-      it('totals the volume correctly when units are mixed on the package lines', () => {
-        const baseState1 = {
-          packageLines: [
-            { volume: 1, volumeUOM: 'cbm' },
-            { volume: 1, volumeUOM: 'cft' },
-          ],
-        };
-        deepFreeze(baseState1);
+      it(
+        'totals the volume correctly when units are mixed on the package lines',
+        () => {
+          const baseState1 = {
+            packageLines: [
+              { volume: 1, volumeUOM: 'cbm' },
+              { volume: 1, volumeUOM: 'cft' },
+            ],
+          };
+          deepFreeze(baseState1);
 
-        cargoTotals(baseState1).totalVolume.should.equal(1.028316846711706135);
+          cargoTotals(baseState1)
+            .totalVolume
+            .should
+            .equal(1.028316846711706135);
 
-        const baseState2 = {
-          packageLines: [
-            { volume: 1, volumeUOM: 'cft' },
-            { volume: 1, volumeUOM: 'cbm' },
-          ],
-        };
-        deepFreeze(baseState2);
+          const baseState2 = {
+            packageLines: [
+              { volume: 1, volumeUOM: 'cft' },
+              { volume: 1, volumeUOM: 'cbm' },
+            ],
+          };
+          deepFreeze(baseState2);
 
-        cargoTotals(baseState2).totalVolume.should.equal(36.3146665722);
-      });
+          cargoTotals(baseState2).totalVolume.should.equal(36.3146665722);
+        },
+      );
 
-      it('totals the weight correctly when units are mixed on the package lines', () => {
-        const baseState1 = {
-          packageLines: [
-            { totalWeight: 1, weightUOM: 'kg' },
-            { totalWeight: 1, weightUOM: 'lb' },
-          ],
-        };
-        deepFreeze(baseState1);
+      it(
+        'totals the weight correctly when units are mixed on the package lines',
+        () => {
+          const baseState1 = {
+            packageLines: [
+              { totalWeight: 1, weightUOM: 'kg' },
+              { totalWeight: 1, weightUOM: 'lb' },
+            ],
+          };
+          deepFreeze(baseState1);
 
-        cargoTotals(baseState1).totalWeight.should.equal(1.45359237);
+          cargoTotals(baseState1).totalWeight.should.equal(1.45359237);
 
-        const baseState2 = {
-          packageLines: [
-            { totalWeight: 1, weightUOM: 'lb' },
-            { totalWeight: 1, weightUOM: 'kg' },
-          ],
-        };
-        deepFreeze(baseState2);
+          const baseState2 = {
+            packageLines: [
+              { totalWeight: 1, weightUOM: 'lb' },
+              { totalWeight: 1, weightUOM: 'kg' },
+            ],
+          };
+          deepFreeze(baseState2);
 
-        cargoTotals(baseState2).totalWeight.should.equal(3.2046226218487757);
-      });
+          cargoTotals(baseState2).totalWeight.should.equal(3.2046226218487757);
+        },
+      );
 
       it('totals containers correctly', () => {
         const baseState = {
@@ -565,6 +645,17 @@ if (Meteor.isClient) {
       });
     });
 
+    describe('Density Ratio Reducer', () => {
+      const { densityRatio } = cargoReducers;
+      it('sets the density ratio', () => {
+        const action = {
+          type: ACTION_TYPES.SET_DENSITY_RATIO,
+          densityRatio: 2,
+        };
+        densityRatio(1, action).should.equal(2);
+      });
+    });
+
     describe('Hazardous Reducer', () => {
       const { hazardous } = cargoReducers;
 
@@ -574,7 +665,7 @@ if (Meteor.isClient) {
 
       it('toggles on', () => {
         const stateBefore = false;
-        const action      = { type: ACTION_TYPES.TOGGLE_HAZARDOUS };
+        const action = { type: ACTION_TYPES.TOGGLE_HAZARDOUS };
         deepFreeze(stateBefore);
 
         hazardous(stateBefore, action).should.equal(true);
@@ -582,7 +673,7 @@ if (Meteor.isClient) {
 
       it('toggles off', () => {
         const stateBefore = true;
-        const action      = { type: ACTION_TYPES.TOGGLE_HAZARDOUS };
+        const action = { type: ACTION_TYPES.TOGGLE_HAZARDOUS };
         deepFreeze(stateBefore);
 
         hazardous(stateBefore, action).should.equal(false);
@@ -598,7 +689,7 @@ if (Meteor.isClient) {
 
       it('toggles on', () => {
         const stateBefore = false;
-        const action      = { type: ACTION_TYPES.TOGGLE_TEMPERATURE_CONTROLLED };
+        const action = { type: ACTION_TYPES.TOGGLE_TEMPERATURE_CONTROLLED };
         deepFreeze(stateBefore);
 
         temperatureControlled(stateBefore, action).should.equal(true);
@@ -606,7 +697,7 @@ if (Meteor.isClient) {
 
       it('toggles off', () => {
         const stateBefore = true;
-        const action      = { type: ACTION_TYPES.TOGGLE_TEMPERATURE_CONTROLLED };
+        const action = { type: ACTION_TYPES.TOGGLE_TEMPERATURE_CONTROLLED };
         deepFreeze(stateBefore);
 
         temperatureControlled(stateBefore, action).should.equal(false);

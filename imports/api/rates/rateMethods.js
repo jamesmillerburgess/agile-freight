@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
 import { Rates } from './rateCollection';
+import Rate from './rateUtils';
 
 /**
  * Build the country route out of the first two characters of the respective
@@ -33,6 +34,15 @@ export const getcarrierRoute = (route = [], movement = {}) => (
   )
 );
 
+export const getCargoTypes = (cargo) => {
+  const result = ['Any'];
+  if (cargo &&
+      (cargo.cargoType === 'Loose' || cargo.cargoType === 'Containerized')) {
+    result.push(cargo.cargoType);
+  }
+  return result;
+};
+
 /**
  * Gets the applicable sell rate from each level and returns it as an object
  * together with the suggested rate. The suggested rate is always the most
@@ -42,34 +52,51 @@ export const getcarrierRoute = (route = [], movement = {}) => (
  * @returns {{global: (Promise|any), country: (Promise|any), location:
  *   (Promise|any), carrier: (Promise|any)}}
  */
-const getApplicableSellRates = (charge, movement) => {
+const getApplicableSellRates = (charge, movement, cargo) => {
   const { chargeCode, route } = charge;
   const countryRoute = getCountryRoute(route, movement);
   const locationRoute = getLocationRoute(route, movement);
   const carrierRoute = getcarrierRoute(route, movement);
+  const cargoTypes = getCargoTypes(cargo);
   const rates = {
     global: Rates.findOne({
       type: 'sell',
       chargeCode,
       level: 'global',
+      $or: [
+        { cargoType: { $exists: false } },
+        { cargoType: { $in: cargoTypes } },
+      ],
     }),
     country: Rates.findOne({
       type: 'sell',
       chargeCode,
       level: 'country',
       route: countryRoute,
+      $or: [
+        { cargoType: { $exists: false } },
+        { cargoType: { $in: cargoTypes } },
+      ],
     }),
     location: Rates.findOne({
       type: 'sell',
       chargeCode,
       level: 'location',
       route: locationRoute,
+      $or: [
+        { cargoType: { $exists: false } },
+        { cargoType: { $in: cargoTypes } },
+      ],
     }),
     carrier: Rates.findOne({
       type: 'sell',
       chargeCode,
       level: 'carrier',
       route: carrierRoute,
+      $or: [
+        { cargoType: { $exists: false } },
+        { cargoType: { $in: cargoTypes } },
+      ],
     }),
   };
   if (rates.carrier) {
@@ -89,21 +116,11 @@ const getApplicableSellRates = (charge, movement) => {
  * @param charges
  * @param movement
  */
-export const getAllApplicableSellRates = (charges = [], movement) => {
+export const getAllApplicableSellRates = (charges = [], movement, cargo) => {
   check(charges, Array);
   check(movement, Match.Maybe(Object));
-  return charges.map(charge => getApplicableSellRates(charge, movement));
-};
-
-export const rateSchema = {
-  _id: Match.Maybe(String),
-  type: String,
-  chargeCode: String,
-  level: String,
-  route: Match.Maybe(String),
-  basis: String,
-  unitPrice: Number,
-  currency: String,
+  check(cargo, Match.Maybe(Object));
+  return charges.map(charge => getApplicableSellRates(charge, movement, cargo));
 };
 
 /**
@@ -111,7 +128,7 @@ export const rateSchema = {
  * @param rate
  */
 export const newRate = (rate) => {
-  check(rate, rateSchema);
+  check(rate, Rate.schema);
   return Rates.insert(rate);
 };
 
@@ -122,7 +139,7 @@ export const newRate = (rate) => {
  */
 export const saveRate = (rateId, rate) => {
   check(rateId, String);
-  check(rate, rateSchema);
+  check(rate, Rate.schema);
   Rates.update({ _id: rateId }, rate);
 };
 

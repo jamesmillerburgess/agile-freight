@@ -3,7 +3,13 @@ import { connect } from 'react-redux';
 import * as actions from '../../state/actions/quoteActions';
 import EditQuoteHeader from './EditQuoteHeader.jsx';
 
-const mapStateToProps = state => ({ quote: state.quote });
+import { getChargeableWeight } from '../quoteUtils';
+
+const mapStateToProps = (state) => {
+  const quote = state.quote;
+  quote.cargo.chargeableWeight = getChargeableWeight(state);
+  return { quote };
+};
 const mapDispatchToProps = dispatch => ({
   dispatchers: {
     onLoad: quote => dispatch(actions.loadQuote(quote)),
@@ -47,7 +53,8 @@ const mapDispatchToProps = dispatch => ({
       )),
     onClickContainerLineTemperatureControlled: index =>
       dispatch(actions.toggleContainerLineTemperatureControlled(index)),
-
+    onChangeDensityRatio: densityRatio =>
+      dispatch(actions.setDensityRatio(densityRatio)),
     onClickHazardous: () => dispatch(actions.toggleHazardous()),
     onClickTemperatureControlled: () => dispatch(actions.toggleTemperatureControlled()),
 
@@ -64,31 +71,10 @@ const mapDispatchToProps = dispatch => ({
     onChangeArrival: arrival => dispatch(actions.setArrival(arrival)),
     onChangeDelivery: delivery => dispatch(actions.setDelivery(delivery)),
 
-
-    onChangePickupLocationType: locationType =>
-      dispatch(actions.setPickupLocationType(locationType)),
-    onChangePickupLocationName: locationName =>
-      dispatch(actions.setPickupLocationName(locationName)),
-    onChangePickupCountry: country => dispatch(actions.setPickupCountry(
-      country)),
-    onChangePickupLocation: location => dispatch(actions.setPickupLocation(
-      location)),
-    onChangeDeliveryLocationType: locationType =>
-      dispatch(actions.setDeliveryLocationType(locationType)),
-    onChangeDeliveryLocationName: locationName =>
-      dispatch(actions.setDeliveryLocationName(locationName)),
-    onChangeDeliveryCountry: country => dispatch(actions.setDeliveryCountry(
-      country)),
-    onChangeDeliveryLocation: location => dispatch(actions.setDeliveryLocation(
-      location)),
-
     // OTHER SERVICES
+    onClickExportCustomsClearance: () => dispatch(actions.toggleExportCustomsClearance()),
+    onClickImportCustomsClearance: () => dispatch(actions.toggleImportCustomsClearance()),
     onClickInsurance: () => dispatch(actions.toggleInsurance()),
-    onClickCustomsClearance: () =>
-      dispatch(actions.toggleCustomsClearance()),
-
-    // CHARGES
-    onAddChargeLine: chargeLine => dispatch(actions.addChargeLine(chargeLine)),
   },
 });
 

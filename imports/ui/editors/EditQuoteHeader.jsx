@@ -12,12 +12,8 @@ import QuoteContainer from '../objects/QuoteContainer';
 
 import { quotePropTypes } from '../objects/quotePropTypes';
 import { APIGlobals } from '../../api/api-globals';
-import {
-  getDefaultMovementCharges,
-  getDefaultOtherServicesCharges,
-} from '../../api/rates/chargeDefaultUtils';
-import { defaultUnits } from '../../state/reducers/quote/chargesReducers';
-import { getUpdatedFXConversions } from '../quoteUtils';
+
+import Quote from '../quoteUtils';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 
@@ -26,6 +22,8 @@ class EditQuoteHeader extends React.Component {
     super(props);
     this.archive = this.archive.bind(this);
     this.save = this.save.bind(this);
+    this.goToEditCharges = this.goToEditCharges.bind(this);
+    this.saveQuote = this.saveQuote.bind(this);
     this.getRates = this.getRates.bind(this);
     this.PackageLines = this.PackageLines.bind(this);
     this.Containers = this.Containers.bind(this);
@@ -35,69 +33,23 @@ class EditQuoteHeader extends React.Component {
     this.props.dispatchers.onLoad(Quotes.findOne(this.props.match.params.quoteId));
   }
 
-  getRates() {
-    let charges = [
-      ...getDefaultMovementCharges(this.props.quote.movement),
-      ...getDefaultOtherServicesCharges({
-        importCustomsClearance: this.props.quote.otherServices.customsClearance,
-      }),
-    ];
-    const movement = {
-      carrier: this.props.quote.movement.carrier,
-      receipt: this.props.quote.movement.receipt.code,
-      departure: this.props.quote.movement.departure.code,
-      arrival: this.props.quote.movement.arrival.code,
-      delivery: this.props.quote.movement.delivery.code,
-    };
-    Meteor.call(
-      'rates.getApplicableSellRates',
-      charges,
-      movement,
-      (err, res) => {
-        const chargeLines = res.map((applicableSellRates, index) => {
-          let sellRate = {};
-          let selectedRate = '';
-          if (applicableSellRates.suggested) {
-            sellRate = {
-              basis: applicableSellRates[applicableSellRates.suggested].basis,
-              unitPrice: applicableSellRates[applicableSellRates.suggested].unitPrice,
-              currency: applicableSellRates[applicableSellRates.suggested].currency,
-            };
-            selectedRate = applicableSellRates.suggested;
-          } else {
-            sellRate.basis = 'Shipment';
-            sellRate.units = 1;
-            sellRate.currency = this.props.quote.charges.currency;
-            selectedRate = 'custom';
-          }
-          return {
-            id: new Mongo.ObjectID()._str,
-            ...charges[index],
-            ...sellRate,
-            applicableSellRates,
-            selectedRate,
-            units: defaultUnits(sellRate.basis, this.props.quote.cargo),
-          };
-        });
-        charges = {
-          ...this.props.quote.charges,
-          chargeLines,
-          notes: APIGlobals.notes,
-        };
-        charges.fxConversions = getUpdatedFXConversions(charges);
-        Meteor.call(
-          'quote.save',
-          {
-            ...this.props.quote,
-            _id: this.props.match.params.quoteId,
-            charges,
-          },
-          () => this.props.history.push(
-            `/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`,
-          ),
-        );
-      },
+  goToEditCharges() {
+    this.props.history.push(
+      `/customers/view/${this.props.match.params.customerId}/quotes/` +
+      `${this.props.match.params.quoteId}/charges`,
     );
+  }
+
+  saveQuote(quote) {
+    const quoteUpdate = {
+      _id: this.props.match.params.quoteId,
+      ...quote,
+    };
+    Meteor.call('quote.save', quoteUpdate, this.goToEditCharges);
+  }
+
+  getRates() {
+    Quote.getAndApplyRates(this.props.quote, this.saveQuote);
   }
 
   save() {
@@ -290,18 +242,26 @@ class EditQuoteHeader extends React.Component {
         </div>
         <div className="edit-group-footer">
           <div className="cargo-row-icon" />
-          <CheckboxField
-            className="checkbox-hazardous"
-            onClick={this.props.dispatchers.onClickHazardous}
-            value={this.props.quote.cargo.hazardous}
-            label="HAZARDOUS"
-          />
-          <CheckboxField
-            className="checkbox-temperature-controlled"
-            onClick={this.props.dispatchers.onClickTemperatureControlled}
-            value={this.props.quote.cargo.temperatureControlled}
-            label="TEMPERATURE CONTROLLED"
-          />
+          <div className="field select-country">
+            <div className="label">
+              DENSITY RATIO
+            </div>
+            <input
+              value={this.props.quote.cargo.densityRatio}
+              onChange={
+                e => this.props.dispatchers.onChangeDensityRatio(e.target.value)
+              }
+            />
+          </div>
+          <div className="field select-country">
+            <div className="label">
+              CHARGEABLE WEIGHT
+            </div>
+            <div className="label">
+              {weightFormat(this.props.quote.cargo.chargeableWeight)}&nbsp;
+              {this.props.quote.cargo.weightUOM}
+            </div>
+          </div>
           <div className="edit-group-totals">
             <span className="total-shipment-label">
               TOTAL
@@ -318,6 +278,21 @@ class EditQuoteHeader extends React.Component {
               {weightFormat(this.props.quote.cargo.totalWeight)}
             </span> {this.props.quote.cargo.weightUOM}
           </div>
+        </div>
+        <div className="edit-group-footer">
+          <div className="cargo-row-icon" />
+          <CheckboxField
+            className="checkbox-hazardous"
+            onClick={this.props.dispatchers.onClickHazardous}
+            value={this.props.quote.cargo.hazardous}
+            label="HAZARDOUS"
+          />
+          <CheckboxField
+            className="checkbox-temperature-controlled"
+            onClick={this.props.dispatchers.onClickTemperatureControlled}
+            value={this.props.quote.cargo.temperatureControlled}
+            label="TEMPERATURE CONTROLLED"
+          />
         </div>
       </div>
     );
@@ -675,16 +650,22 @@ class EditQuoteHeader extends React.Component {
                 </div>
                 <div className="cargo-row-icon" />
                 <CheckboxField
+                  className="checkbox-temperature-controlled"
+                  onClick={this.props.dispatchers.onClickExportCustomsClearance}
+                  value={this.props.quote.otherServices.exportCustomsClearance}
+                  label="EXPORT CUSTOMS CLEARANCE"
+                />
+                <CheckboxField
+                  className="checkbox-temperature-controlled"
+                  onClick={this.props.dispatchers.onClickImportCustomsClearance}
+                  value={this.props.quote.otherServices.importCustomsClearance}
+                  label="IMPORT CUSTOMS CLEARANCE"
+                />
+                <CheckboxField
                   className="checkbox-hazardous"
                   onClick={this.props.dispatchers.onClickInsurance}
                   value={this.props.quote.otherServices.insurance}
                   label="INSURANCE"
-                />
-                <CheckboxField
-                  className="checkbox-temperature-controlled"
-                  onClick={this.props.dispatchers.onClickCustomsClearance}
-                  value={this.props.quote.otherServices.customsClearance}
-                  label="CUSTOMS CLEARANCE"
                 />
               </div>
               <div className="form-button-group">

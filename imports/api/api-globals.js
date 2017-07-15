@@ -54,6 +54,12 @@ All business is undertaken subject to the current editions of our standard tradi
       route: ['departure'],
     },
     {
+      name: 'Verfied Gross Mass',
+      group: 'Origin',
+      chargeCode: 'VGM',
+      route: ['departure'],
+    },
+    {
       name: 'Documentation',
       group: 'Origin',
       chargeCode: 'DOC',
@@ -79,6 +85,15 @@ All business is undertaken subject to the current editions of our standard tradi
       group: 'Destination',
       chargeCode: 'ITP',
       route: ['arrival', 'delivery'],
+    },
+  ],
+
+  defaultExportClearanceCharges: [
+    {
+      name: 'Export Customs Clearance',
+      group: 'Origin',
+      chargeCode: 'ECC',
+      route: ['departure'],
     },
   ],
 
@@ -297,6 +312,7 @@ All business is undertaken subject to the current editions of our standard tradi
     { value: 'Boxes', label: 'Boxes' },
     { value: 'Pallets', label: 'Pallets' },
     { value: 'Cases', label: 'Cases' },
+    { value: 'Cartons', label: 'Cartons' },
   ],
 
   rateBasisOptions: [
@@ -312,6 +328,7 @@ All business is undertaken subject to the current editions of our standard tradi
     { value: 'Mile', label: 'Mile' },
     { value: 'Bill of Lading', label: 'Bill of Lading' },
     { value: 'Line', label: 'Line' },
+    { value: 'Weight Measure', label: 'Weight Measure' },
   ],
 
   // Quotes

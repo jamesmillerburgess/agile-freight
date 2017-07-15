@@ -15,7 +15,6 @@ if (Meteor.isServer) {
     beforeEach(() => {
       Rates.remove({});
     });
-
     describe('rates.getApplicableSellRates', () => {
       it('returns rates matching the specified options', () => {
         const rate = {
@@ -49,7 +48,6 @@ if (Meteor.isServer) {
                  .should
                  .equal('global');
       });
-
       it('does not return rates that do not match the specified ' +
          'options', () => {
         const rate = {
@@ -77,7 +75,6 @@ if (Meteor.isServer) {
           .should
           .equal('undefined');
       });
-
       it('returns global results regardless of specified route or ' +
          'carrier', () => {
         const rate = {
@@ -118,7 +115,6 @@ if (Meteor.isServer) {
                  .should
                  .equal('global');
       });
-
       it('returns country rates when the country route matches', () => {
         const rate = {
           _id: 'a',
@@ -159,7 +155,6 @@ if (Meteor.isServer) {
                  .should
                  .equal('country');
       });
-
       it('returns location rates when the location route matches', () => {
         const rate = {
           _id: 'a',
@@ -200,7 +195,6 @@ if (Meteor.isServer) {
                  .should
                  .equal('location');
       });
-
       it('returns carrier rates when the carrier route matches', () => {
         const rate = {
           _id: 'a',
@@ -246,20 +240,32 @@ if (Meteor.isServer) {
 
     describe('rates.new', () => {
       const rate = {
-        type: 'sell',
-        chargeCode: 'ITP',
-        level: 'country',
-        route: 'USUS',
-        basis: 'Mile',
-        unitPrice: 1,
-        currency: 'USD',
+        _id: 'a',
+        type: 'a',
+        chargeCode: 'a',
+        level: 'a',
+        route: 'a',
+        isSplitByCargoType: false,
+        anyBasis: 'a',
+        anyRanges: ['a'],
+        anyMinimumAmount: 0,
+        isAnyPriceFixed: false,
+        looseBasis: 'a',
+        looseRanges: ['a'],
+        looseMinimumAmount: 0,
+        isLoosePriceFixed: false,
+        containerizedBasis: 'a',
+        containerizedRanges: ['a'],
+        containerizedMinimumAmount: 0,
+        isContainerizedPriceFixed: false,
+        ranges: {},
+        currency: 'a',
       };
       it('inserts a rate into the collection', () => {
         Rates.find().count().should.equal(0);
         Meteor.call('rates.new', rate);
         Rates.find().count().should.equal(1);
       });
-
       it('returns the id of the new rate', () => {
         const id = Meteor.call('rates.new', rate);
         Rates.findOne(id)._id.should.equal(id);

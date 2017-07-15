@@ -7,8 +7,12 @@ import { defaultUnits } from '../quoteUtils';
 const mapStateToProps = (state, ownProps) => ({
   currency: state.quote.charges.currency,
   fxConversions: state.quote.charges.fxConversions,
-  chargeLines: state.quote.charges.chargeLines
-                    .filter(chargeLine => chargeLine.group === ownProps.group),
+  chargeLines: state.quote
+                    .charges
+                    .chargeLines
+                    .filter(
+                      chargeLine => chargeLine.group === ownProps.group,
+                    ),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -43,7 +47,10 @@ const mapDispatchToProps = dispatch => ({
       dispatch(actionCreators.setChargeLineSelectedRate(id, 'custom'));
     }
     dispatch(actionCreators.setChargeLineBasis(id, basis));
-    dispatch(actionCreators.setChargeLineUnits(id, defaultUnits(basis, quote.cargo)));
+    dispatch(actionCreators.setChargeLineUnits(
+      id,
+      defaultUnits(basis, quote.cargo),
+    ));
   },
   setChargeLineUnits: (id, units) => dispatch(actionCreators.setChargeLineUnits(
     id,
