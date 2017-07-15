@@ -240,13 +240,26 @@ if (Meteor.isServer) {
 
     describe('rates.new', () => {
       const rate = {
-        type: 'sell',
-        chargeCode: 'ITP',
-        level: 'country',
-        route: 'USUS',
-        basis: 'Mile',
-        unitPrice: 1,
-        currency: 'USD',
+        _id: 'a',
+        type: 'a',
+        chargeCode: 'a',
+        level: 'a',
+        route: 'a',
+        isSplitByCargoType: false,
+        anyBasis: 'a',
+        anyRanges: ['a'],
+        anyMinimumAmount: 0,
+        isAnyPriceFixed: false,
+        looseBasis: 'a',
+        looseRanges: ['a'],
+        looseMinimumAmount: 0,
+        isLoosePriceFixed: false,
+        containerizedBasis: 'a',
+        containerizedRanges: ['a'],
+        containerizedMinimumAmount: 0,
+        isContainerizedPriceFixed: false,
+        ranges: {},
+        currency: 'a',
       };
       it('inserts a rate into the collection', () => {
         Rates.find().count().should.equal(0);
