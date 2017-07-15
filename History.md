@@ -31,11 +31,8 @@ __User Story:__ _As an operator and rate manager, I can create rates and and an 
 * Chargeable weight is automatically calculated in loose cargo
 * Minimum charge amount
 * Split export and import customs clearance charges and rates
-* TODO: Numeric input field
-* TODO: Loose/Containerized rates
-* TODO: Weight ranges
-* TODO: Show subtotals only
-* TODO: Begin implementation of reselect
+* Rates can be split by cargo type (loose and containerized)
+* Weight ranges can be added to rates and get applied in quotes
 
 ## v0.11.0 – FCL Quote Scenario
 
