@@ -55,7 +55,7 @@ export const chargeLines = (
   return newState.map((chargeLine) => {
     const res = { ...chargeLine };
     let minimumAmount = 0;
-    if (chargeLine.selectedRate !== 'custom') {
+    if (chargeLine.selectedRate && chargeLine.selectedRate !== 'custom') {
       minimumAmount = chargeLine.applicableSellRates[chargeLine.selectedRate].minimumAmount || 0;
     }
     let amount = (chargeLine.units || 0) * (chargeLine.unitPrice || 0);

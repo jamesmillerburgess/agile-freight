@@ -24,14 +24,6 @@ if (Meteor.isClient) {
 
       otherServices().should.eql(stateAfter);
     });
-    it('toggles customs clearance', () => {
-      const stateBefore = { insurance: false, customsClearance: false };
-      const action = { type: ACTION_TYPES.TOGGLE_CUSTOMS_CLEARANCE };
-      const stateAfter = { insurance: false, customsClearance: true };
-      deepFreeze(stateBefore);
-
-      otherServices(stateBefore, action).should.eql(stateAfter);
-    });
     it('toggles export customs clearance', () => {
       const stateBefore = { insurance: false, exportCustomsClearance: false };
       const action = { type: ACTION_TYPES.TOGGLE_EXPORT_CUSTOMS_CLEARANCE };

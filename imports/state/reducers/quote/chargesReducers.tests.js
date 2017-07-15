@@ -11,10 +11,8 @@ import * as ACTION_TYPES from '../../actions/actionTypes';
 if (Meteor.isClient) {
   describe('Charges Reducers', () => {
     chai.should();
-
     describe('Combined Charges Reducer', () => {
       const { charges } = chargesReducers;
-
       it('defaults initial values', () => {
         const stateAfter = {
           chargeLines: [],
@@ -28,7 +26,6 @@ if (Meteor.isClient) {
 
         charges().should.eql(stateAfter);
       });
-
       it('loads the charges section of a quote', () => {
         const chargesToLoad = {
           chargeLines: [
@@ -59,7 +56,6 @@ if (Meteor.isClient) {
 
         charges({}, action).should.eql(chargesToLoad);
       });
-
       it('fills in the missing totals when loading a quote', () => {
         const chargesToLoad = {
           chargeLines: [
@@ -114,14 +110,12 @@ if (Meteor.isClient) {
         stateAfter.totalDestinationCharges.should.equal(4);
         stateAfter.totalCharges.should.equal(9);
       });
-
       it('changes the notes', () => {
         const stateBefore = { notes: 'a' };
         const action = { type: ACTION_TYPES.SET_CHARGE_NOTES, notes: 'b' };
 
         charges(stateBefore, action).notes.should.equal('b');
       });
-
       it('changes the quote currency', () => {
         const stateBefore = { currency: 'a' };
         const action = {
@@ -130,7 +124,6 @@ if (Meteor.isClient) {
         };
         charges(stateBefore, action).currency.should.equal('b');
       });
-
       it('calculates amounts only after updating individual components of ' +
          'the calculation', () => {
         const stateBefore = {
@@ -163,10 +156,8 @@ if (Meteor.isClient) {
         stateAfter.totalCharges.should.equal(2);
       });
     });
-
     describe('Charge Lines Reducer', () => {
       const { chargeLines } = chargesReducers;
-
       it('adds a charge line', () => {
         const stateBefore = [];
         const chargeLine = { group: 'Origin' };
@@ -177,7 +168,6 @@ if (Meteor.isClient) {
         stateAfter.length.should.equal(1);
         stateAfter[0].group.should.equal('Origin');
       });
-
       it('keeps the specified unit price currency if one is provided', () => {
         const stateBefore = [];
         const parentState = { currency: 'a' };
@@ -188,7 +178,6 @@ if (Meteor.isClient) {
 
         stateAfter[0].currency.should.equal('b');
       });
-
       it('removes a charge line with the specified id', () => {
         const stateBefore = [
           { id: 'a', group: 'Origin' },
@@ -201,7 +190,6 @@ if (Meteor.isClient) {
         stateAfter.length.should.equal(1);
         stateAfter[0].group.should.equal('Destination');
       });
-
       it('changes the code at the charge line with the specified id', () => {
         const stateBefore = [{ id: 0, code: 'a' }, { id: 1, code: 'c' }];
         const action = {
@@ -214,7 +202,6 @@ if (Meteor.isClient) {
         chargeLines(stateBefore, action)[0].code.should.equal('b');
         chargeLines(stateBefore, action)[1].code.should.equal('c');
       });
-
       it('changes the name at the charge line with the specified id', () => {
         const stateBefore = [{ id: 0, name: 'a' }, { id: 2, name: 'c' }];
         const action = {
@@ -227,7 +214,6 @@ if (Meteor.isClient) {
         chargeLines(stateBefore, action)[0].name.should.equal('b');
         chargeLines(stateBefore, action)[1].name.should.equal('c');
       });
-
       it('changes the selected rate at the charge line with the specified ' +
          'id', () => {
         const stateBefore = [{ id: 0, selectedRate: 'a' }];
@@ -239,7 +225,6 @@ if (Meteor.isClient) {
         deepFreeze(stateBefore);
         chargeLines(stateBefore, action)[0].selectedRate.should.equal('custom');
       });
-
       it('changes the basis at at the charge line with the specified ' +
          'id', () => {
         const stateBefore = [{ id: 0, basis: 'a' }, { id: 1, basis: 'c' }];
@@ -253,7 +238,6 @@ if (Meteor.isClient) {
         chargeLines(stateBefore, action)[0].basis.should.equal('b');
         chargeLines(stateBefore, action)[1].basis.should.equal('c');
       });
-
       it('changes the units at the charge line with the specified id', () => {
         const stateBefore = [{ id: 'a', units: 1 }, { id: 'b', units: 3 }];
         const action = {
@@ -266,7 +250,6 @@ if (Meteor.isClient) {
         chargeLines(stateBefore, action)[0].units.should.equal(2);
         chargeLines(stateBefore, action)[1].units.should.equal(3);
       });
-
       it('changes the unit price at the charge line with the specified ' +
          'id', () => {
         const stateBefore = [
@@ -285,7 +268,6 @@ if (Meteor.isClient) {
         chargeLines(stateBefore, action)[0].unitPrice.should.equal(2);
         chargeLines(stateBefore, action)[1].unitPrice.should.equal(3);
       });
-
       it('changes the currency at the charge line with the specified ' +
          'id', () => {
         const stateBefore = [
@@ -310,14 +292,12 @@ if (Meteor.isClient) {
           action,
         )[1].currency.should.equal('c');
       });
-
       it('auto-calculates the amount', () => {
         const stateBefore = [{ units: 1, unitPrice: 2 }];
         deepFreeze(stateBefore);
 
         chargeLines(stateBefore)[0].amount.should.equal(2);
       });
-
       it('auto-calculates the final amount', () => {
         const stateBefore = [
           {
@@ -335,7 +315,6 @@ if (Meteor.isClient) {
 
         stateAfter[0].finalAmount.should.equal(4);
       });
-
       it('uses 1 as the fx rate when the unit price currency equals the ' +
          'quote currency', () => {
         const stateBefore = [
@@ -352,10 +331,8 @@ if (Meteor.isClient) {
         stateAfter[0].finalAmount.should.equal(2);
       });
     });
-
     describe('FX Conversions Reducer', () => {
       const { fxConversions } = chargesReducers;
-
       it('changes the rate with the specified currency', () => {
         const stateBefore = {
           fxConversions: {
@@ -373,7 +350,6 @@ if (Meteor.isClient) {
         fxConversions(stateBefore, action).a.rate.should.equal(2);
         fxConversions(stateBefore, action).b.rate.should.equal(3);
       });
-
       it('activates any preexisting currencies which are now being used ' +
          'again and keep the same rate', () => {
         const stateBefore = {
@@ -396,7 +372,6 @@ if (Meteor.isClient) {
         stateAfter.b.active.should.equal(true);
         stateAfter.b.rate.should.equal(1);
       });
-
       it('ignores any currencies equal to the quote currency', () => {
         const stateBefore = {
           currency: 'a',
@@ -414,7 +389,6 @@ if (Meteor.isClient) {
 
         stateAfter.should.not.have.property('a');
       });
-
       it('updates when the quote currency changes', () => {
         const stateBefore = {
           currency: 'b',
@@ -430,12 +404,10 @@ if (Meteor.isClient) {
 
         stateAfter.b.active.should.equal(false);
       });
-
       it('defaults an empty object', () => {
         fxConversions().should.eql({});
       });
     });
-
     describe('Charges Totals Function', () => {
       const { chargeTotals } = chargesReducers;
       it('calculates the total charges by group', () => {
@@ -454,7 +426,6 @@ if (Meteor.isClient) {
         stateAfter.totalInternationalCharges.should.equal(4);
         stateAfter.totalDestinationCharges.should.equal(6);
       });
-
       it('calculates the total charges overall', () => {
         const stateBefore = [
           { group: 'Origin', finalAmount: 1 },
