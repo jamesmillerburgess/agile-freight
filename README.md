@@ -3,4 +3,4 @@
 
 # Agility Freight
 
-Agility Freight is a freight forwarding tool created for Agility, a global leader in logistics.
+Agile Freight is a freight forwarding tool created to demonstrate best practices in agile development. It is the case study used in my video series on YouTube.
