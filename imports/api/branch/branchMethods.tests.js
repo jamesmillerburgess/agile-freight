@@ -27,20 +27,17 @@ if (Meteor.isServer) {
         const id = Meteor.call('branch.new', { name: 'newBranch' });
         Branches.findOne()._id.should.equal(id);
       });
-
       it('accepts a name property', () => {
         (() => Meteor.call('branch.new', { name: 'newBranch' }))
           .should
           .not
           .throw();
       });
-
-      // TODO: Fix timeout issue
-      // it('strips out extraneous properties', () => {
-      //   (() => Meteor.call('branch.new', { name: 'newBranch', prop: 'prop' }))
-      //     .should
-      //     .throw();
-      // });
+      it('strips out extraneous properties', () => {
+        (() => Meteor.call('branch.new', { name: 'newBranch', prop: 'prop' }))
+          .should
+          .throw();
+      });
     });
 
     describe('branch.save', () => {
