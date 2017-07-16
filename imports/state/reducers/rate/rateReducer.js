@@ -1,6 +1,5 @@
-import { omit, set } from 'lodash/fp';
+import { omit, set, flow } from 'lodash/fp';
 import * as ACTION_TYPES from '../../actions/actionTypes';
-import { setProp } from '../reducer-utils';
 
 export const defaultRateState = {
   type: '',
@@ -27,15 +26,15 @@ export const rate = (state = defaultRateState, action = { type: '' }) => {
     case ACTION_TYPES.LOAD_RATE:
       return action.rate || defaultRateState;
     case ACTION_TYPES.SET_RATE_TYPE:
-      return setProp(state, 'type', action.rateType);
+      return set('type', action.rateType, state);
     case ACTION_TYPES.SET_RATE_CHARGE_CODE:
-      return setProp(state, 'chargeCode', action.chargeCode);
+      return set('chargeCode', action.chargeCode, state);
     case ACTION_TYPES.SET_RATE_LEVEL:
-      return setProp(state, 'level', action.level);
+      return set('level', action.level, state);
     case ACTION_TYPES.SET_RATE_ROUTE:
-      return setProp(state, 'route', action.route);
+      return set('route', action.route, state);
     case ACTION_TYPES.TOGGLE_RATE_IS_SPLIT_BY_CARGO_TYPE:
-      return setProp(state, 'isSplitByCargoType', !state.isSplitByCargoType);
+      return set('isSplitByCargoType', !state.isSplitByCargoType, state);
     case ACTION_TYPES.SET_RATE_BASIS:
       switch (action.cargoType) {
         case 'any':
@@ -93,29 +92,20 @@ export const rate = (state = defaultRateState, action = { type: '' }) => {
         state,
       );
     case ACTION_TYPES.REMOVE_RATE_RANGE:
-      newState = set(
-        'ranges',
-        omit(action.id, state.ranges),
-        state,
-      );
-      newState = set(
-        'anyRanges',
-        (state.anyRanges || []).filter(a => a !== action.id),
-        newState,
-      );
-      newState = set(
-        'looseRanges',
-        (state.looseRanges || []).filter(a => a !== action.id),
-        newState,
-      );
-      newState = set(
-        'containerizedRanges',
-        (state.containerizedRanges || []).filter(a => a !== action.id),
-        newState,
-      );
-      return newState;
+      const ranges = state.ranges || [];
+      const anyRanges = state.anyRanges || [];
+      const looseRanges = state.looseRanges || [];
+      const containerizedRanges = state.containerizedRanges || [];
+      const idFilter = a => a !== action.id;
+
+      return flow(
+        set('ranges', omit(action.id, ranges)),
+        set('anyRanges', anyRanges.filter(idFilter)),
+        set('looseRanges', looseRanges.filter(idFilter)),
+        set('containerizedRanges', containerizedRanges.filter(idFilter)),
+      )(state);
     case ACTION_TYPES.SET_RATE_CURRENCY:
-      return setProp(state, 'currency', action.currency);
+      return set('currency', action.currency, state);
     default:
       return state;
   }
