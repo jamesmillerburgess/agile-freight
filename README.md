@@ -1,5 +1,5 @@
-[![CircleCI](https://circleci.com/gh/jamesmillerburgess/Agility-Freight.svg?style=svg)](https://circleci.com/gh/jamesmillerburgess/agile-freight)
-[![Build Status](https://travis-ci.org/jamesmillerburgess/Agility-Freight.svg?branch=master)](https://travis-ci.org/jamesmillerburgess/agile-freight)
+[![CircleCI](https://circleci.com/gh/jamesmillerburgess/agile-freight.svg?style=svg)](https://circleci.com/gh/jamesmillerburgess/agile-freight)
+[![Build Status](https://travis-ci.org/jamesmillerburgess/agile-freight.svg?branch=master)](https://travis-ci.org/jamesmillerburgess/agile-freight)
 
 # Agile Freight
 
