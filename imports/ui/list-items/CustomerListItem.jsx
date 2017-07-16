@@ -66,16 +66,6 @@ const CustomerListItem = ({ customer, header, history }) => {
               <br />
               <span className="label">{customer.shipments.length} SHIPMENTS</span>
             </div>
-            <div className="col-3">
-              <span className="list-item-header">LOCAL ACCOUNT</span><br />
-              Heavy Machinery<br />
-              2.1 TEU/MO
-            </div>
-            <div className="col-3">
-              <span className="label">13 k NR/MO</span><br />
-              <span className="label">2 k UNBILLED</span><br />
-              <span className="label">58 % CREDIT USAGE</span>
-            </div>
           </div>
         </div>
         <div className="icon-column">

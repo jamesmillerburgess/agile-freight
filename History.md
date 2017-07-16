@@ -24,6 +24,8 @@
 ## v0.13.0 – Video Series Preparation
 
 * Replace reducer utilities with lodash where possible
+* Make notes full width in read-only quote
+* Remove placeholders from customer list items
 
 ## v0.12.0 – LCL Quote Scenario
 
