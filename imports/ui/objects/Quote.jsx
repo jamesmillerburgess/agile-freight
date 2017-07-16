@@ -421,13 +421,13 @@ class Quote extends React.Component {
                   {this.ChargeGroup('International')}
                   {this.ChargeGroup('Destination')}
                   <div className="notes-and-fx-rates">
+                    {this.FXRates()}
                     <div className="notes">
                       <span className="title">NOTES</span>
                       <pre>
-                    {this.props.quote.charges.notes}
-                  </pre>
+                        {this.props.quote.charges.notes}
+                      </pre>
                     </div>
-                    {this.FXRates()}
                   </div>
                   <div className="total-row">
                     <span className="title">TOTAL PRICE</span>
