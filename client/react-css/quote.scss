@@ -103,12 +103,12 @@
   }
   .notes-and-fx-rates {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
   }
   .notes,
   .fx-rates {
-    width: 45%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     .title {

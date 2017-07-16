@@ -1,6 +1,6 @@
-[![CircleCI](https://circleci.com/gh/jamesmillerburgess/Agility-Freight.svg?style=svg)](https://circleci.com/gh/jamesmillerburgess/Agility-Freight)
-[![Build Status](https://travis-ci.org/jamesmillerburgess/Agility-Freight.svg?branch=master)](https://travis-ci.org/jamesmillerburgess/Agility-Freight)
+[![CircleCI](https://circleci.com/gh/jamesmillerburgess/agile-freight.svg?style=svg)](https://circleci.com/gh/jamesmillerburgess/agile-freight)
+[![Build Status](https://travis-ci.org/jamesmillerburgess/agile-freight.svg?branch=master)](https://travis-ci.org/jamesmillerburgess/agile-freight)
 
-# Agility Freight
+# Agile Freight
 
-Agility Freight is a freight forwarding tool created for Agility, a global leader in logistics.
+Agile Freight is a freight forwarding tool created to demonstrate best practices in agile development. It is the case study used in my video series on YouTube.

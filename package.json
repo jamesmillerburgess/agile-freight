@@ -1,6 +1,6 @@
 {
-  "name": "agility-freight",
-  "version": "0.12.0",
+  "name": "agile-freight",
+  "version": "0.13.0",
   "private": true,
   "scripts": {
     "start": "meteor run",

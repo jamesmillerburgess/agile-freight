@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { createSelector } from 'reselect';
+import { set } from 'lodash/fp';
+
 import { uniqueValues } from '../ui/statsUtils';
-import { setProp } from '../state/reducers/reducer-utils';
 import { APIGlobals } from '../api/api-globals';
 import {
   getDefaultMovementCharges,
@@ -79,23 +80,23 @@ export const getUpdatedFXConversions = (charges) => {
   currencies.forEach((currency) => {
     if (currency === charges.currency) {
       if (result[currency]) {
-        result[currency] = setProp(result[currency], 'active', false);
+        result[currency] = set('active', false, result[currency]);
       }
     } else if (!result[currency]) {
-      result = setProp(result, currency, { active: true });
+      result = set(currency, { active: true }, result);
     } else if (!result[currency].active) {
-      result[currency] = setProp(result[currency], 'active', true);
+      result[currency] = set('active', true, result[currency]);
     }
   });
   Object.keys(result).forEach((currency) => {
     if (currencies.indexOf(currency) === -1) {
-      result[currency] = setProp(result[currency], 'active', false);
+      result[currency] = set('active', false, result[currency]);
     }
     if (result[currency].active && !result[currency].rate) {
-      result[currency] = setProp(
-        result[currency],
+      result[currency] = set(
         'rate',
         APIGlobals.fxRates[charges.currency][currency],
+        result[currency]
       );
     }
   });

@@ -40,11 +40,11 @@ if (Meteor.isClient) {
     });
 
     describe('Header and Status', () => {
-      it('renders the header \'AGILITY FREIGHT QUOTATION\'', () => {
+      it('renders the header \'FREIGHT QUOTATION\'', () => {
         wrapper.contains((
           <span className="header">
-          AGILITY FREIGHT QUOTATION
-        </span>
+          FREIGHT QUOTATION
+          </span>
         )).should.equal(true);
       });
 

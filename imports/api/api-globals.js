@@ -25,7 +25,7 @@ All business is undertaken subject to the current editions of our standard tradi
 
   // CARRIERS
   carrierOptions: [
-    { value: '', label: 'Agility Choice' },
+    { value: '', label: 'Forwarder\'s Choice' },
     { value: 'MAEU', label: 'Maersk – MAEU' },
     { value: 'SUDU', label: 'Hamburg Sud – SUDU' },
   ],

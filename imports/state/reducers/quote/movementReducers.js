@@ -1,5 +1,5 @@
+import { set } from 'lodash/fp';
 import * as ACTION_TYPES from '../../actions/actionTypes';
-import { setProp } from '../reducer-utils';
 
 const defaultMovementState = {
   pickup: {
@@ -17,40 +17,31 @@ const defaultMovementState = {
 };
 
 export const movement = (state = defaultMovementState, action = { type: '' }) => {
-  let newState = {};
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
-      newState = action.quote.movement || defaultMovementState;
-      break;
+      return action.quote.movement || defaultMovementState;
     case ACTION_TYPES.SET_MOVEMENT_MODE:
-      newState = setProp(state, 'mode', action.mode);
+      let newState = {};
+      newState = set('mode', action.mode, state);
       if (newState.mode === 'Brokerage') {
-        newState = setProp(newState, 'termsOfSale', '');
+        newState = set('termsOfSale', '', newState);
       }
-      break;
+      return newState;
     case ACTION_TYPES.SET_MOVEMENT_COMMERCIAL_PARTY:
-      newState = setProp(state, 'commercialParty', action.commercialParty);
-      break;
+      return set('commercialParty', action.commercialParty, state);
     case ACTION_TYPES.SET_MOVEMENT_TERMS_OF_SALE:
-      newState = setProp(state, 'termsOfSale', action.termsOfSale);
-      break;
+      return set('termsOfSale', action.termsOfSale, state);
     case ACTION_TYPES.SET_CARRIER:
-      newState = setProp(state, 'carrier', action.carrier);
-      break;
+      return set('carrier', action.carrier, state);
     case ACTION_TYPES.SET_RECEIPT:
-      newState = setProp(state, 'receipt', action.receipt);
-      break;
+      return set('receipt', action.receipt, state);
     case ACTION_TYPES.SET_DEPARTURE:
-      newState = setProp(state, 'departure', action.departure);
-      break;
+      return set('departure', action.departure, state);
     case ACTION_TYPES.SET_ARRIVAL:
-      newState = setProp(state, 'arrival', action.arrival);
-      break;
+      return set('arrival', action.arrival, state);
     case ACTION_TYPES.SET_DELIVERY:
-      newState = setProp(state, 'delivery', action.delivery);
-      break;
+      return set('delivery', action.delivery, state);
     default:
-      newState = state;
+      return state;
   }
-  return newState;
 };

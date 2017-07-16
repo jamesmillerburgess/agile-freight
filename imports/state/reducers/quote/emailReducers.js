@@ -1,5 +1,5 @@
+import { set } from 'lodash/fp';
 import * as ACTION_TYPES from '../../actions/actionTypes';
-import { setProp } from '../reducer-utils';
 
 const emailDefaultState = {
   isOpen: false,
@@ -10,31 +10,22 @@ const emailDefaultState = {
 };
 
 export const email = (state = emailDefaultState, action = { type: '' }) => {
-  let newState = {};
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
-      newState = action.quote.email || emailDefaultState;
-      break;
+      return action.quote.email || emailDefaultState;
     case ACTION_TYPES.LOAD_EMAIL:
-      newState = action.email;
-      break;
+      return action.email;
     case ACTION_TYPES.SET_EMAIL_IS_OPEN:
-      newState = setProp(state, 'isOpen', action.isOpen);
-      break;
+      return set('isOpen', action.isOpen, state);
     case ACTION_TYPES.SET_EMAIL_TO:
-      newState = setProp(state, 'to', action.to);
-      break;
+      return set('to', action.to, state);
     case ACTION_TYPES.SET_EMAIL_CC:
-      newState = setProp(state, 'cc', action.cc);
-      break;
+      return set('cc', action.cc, state);
     case ACTION_TYPES.SET_EMAIL_SUBJECT:
-      newState = setProp(state, 'subject', action.subject);
-      break;
+      return set('subject', action.subject, state);
     case ACTION_TYPES.SET_EMAIL_MESSAGE:
-      newState = setProp(state, 'message', action.message);
-      break;
+      return set('message', action.message, state);
     default:
-      newState = state;
+      return state;
   }
-  return newState;
 };

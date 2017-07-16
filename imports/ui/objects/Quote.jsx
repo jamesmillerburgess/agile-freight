@@ -357,7 +357,7 @@ class Quote extends React.Component {
         <div className="panel transition">
           <div className="quote">
             <div className="header-row">
-              <span className="header">AGILITY FREIGHT QUOTATION</span>
+              <span className="header">FREIGHT QUOTATION</span>
               <span className="title">{this.getStatus()}</span>
             </div>
             {
@@ -421,13 +421,13 @@ class Quote extends React.Component {
                   {this.ChargeGroup('International')}
                   {this.ChargeGroup('Destination')}
                   <div className="notes-and-fx-rates">
+                    {this.FXRates()}
                     <div className="notes">
                       <span className="title">NOTES</span>
                       <pre>
-                    {this.props.quote.charges.notes}
-                  </pre>
+                        {this.props.quote.charges.notes}
+                      </pre>
                     </div>
-                    {this.FXRates()}
                   </div>
                   <div className="total-row">
                     <span className="title">TOTAL PRICE</span>

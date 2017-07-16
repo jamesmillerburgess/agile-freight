@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo ""
-echo "[[[[[ Building reference data for agility-freight ]]]]]"
+echo "[[[[[ Building reference data for agile-freight ]]]]]"
 
 echo ""
 echo "[[[[[ Dropping collections ]]]]]"

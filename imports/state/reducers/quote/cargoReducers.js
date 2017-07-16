@@ -1,4 +1,5 @@
-import { setPropAtIndex, removeAtIndex, addToEnd } from '../reducer-utils';
+import { concat } from 'lodash/fp';
+import { setPropAtIndex, removeAtIndex } from '../reducer-utils';
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
 export const cargoType = (state = 'loose', action = { type: '' }) => {
@@ -38,7 +39,7 @@ const defaultPackageLinesState = [
 const updateBasePackageLines = (state, action) => {
   switch (action.type) {
     case ACTION_TYPES.ADD_PACKAGE_LINE:
-      return addToEnd(state, defaultPackageLinesState[0]);
+      return concat(defaultPackageLinesState[0], state);
     case ACTION_TYPES.REMOVE_PACKAGE_LINE:
       return removeAtIndex(state, action.index);
     case ACTION_TYPES.SET_PACKAGE_LINE_PACKAGE_TYPE:
@@ -168,7 +169,7 @@ const defaultContainerLinesState = [{
 export const containerLines = (state = defaultContainerLinesState, action = { type: '' }) => {
   switch (action.type) {
     case ACTION_TYPES.ADD_CONTAINER_LINE:
-      return addToEnd(state, defaultContainerLinesState[0]);
+      return concat(defaultContainerLinesState[0], state);
     case ACTION_TYPES.REMOVE_CONTAINER_LINE:
       return removeAtIndex(state, action.index);
     case ACTION_TYPES.SET_CONTAINER_LINE_NUM_CONTAINERS:
