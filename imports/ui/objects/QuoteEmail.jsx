@@ -219,7 +219,7 @@ const QuoteEmail = (props) => {
         <table style={{ ...STYLES.TABLE, ...STYLES.SECTION }}>
           <tbody>
             <tr>
-              <td style={{ ...STYLES.CELL, ...STYLES.HEADER }}>AGILITY FREIGHT QUOTATION</td>
+              <td style={{ ...STYLES.CELL, ...STYLES.HEADER }}>FREIGHT QUOTATION</td>
               <td style={{ ...STYLES.CELL, ...STYLES.TITLE, ...STYLES.ALIGN_RIGHT }}>
                 EXPIRES {moment(props.quote.expiryDate).format('DD MMM YYYY').toUpperCase()}
               </td>

@@ -357,7 +357,7 @@ class Quote extends React.Component {
         <div className="panel transition">
           <div className="quote">
             <div className="header-row">
-              <span className="header">AGILITY FREIGHT QUOTATION</span>
+              <span className="header">FREIGHT QUOTATION</span>
               <span className="title">{this.getStatus()}</span>
             </div>
             {
