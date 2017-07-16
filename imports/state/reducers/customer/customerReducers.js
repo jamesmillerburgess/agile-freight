@@ -1,5 +1,5 @@
+import { set } from 'lodash/fp';
 import * as ACTION_TYPES from '../../actions/actionTypes';
-import { setProp } from '../reducer-utils';
 
 export const defaultCustomerState = {
   name: '',
@@ -26,19 +26,19 @@ export const customer = (state = defaultCustomerState, action = { type: '' }) =>
       }
       break;
     case ACTION_TYPES.SET_CUSTOMER_NAME:
-      newState = setProp(state, 'name', action.name);
+      newState = set('name', action.name, state);
       break;
     case ACTION_TYPES.SET_CUSTOMER_ADDRESS:
-      newState = setProp(state, 'address', action.address);
+      newState = set('address', action.address, state);
       break;
     case ACTION_TYPES.SET_CUSTOMER_EMAIL_ADDRESS:
-      newState = setProp(state, 'emailAddress', action.emailAddress);
+      newState = set('emailAddress', action.emailAddress, state);
       break;
     case ACTION_TYPES.SET_CUSTOMER_CURRENCY:
-      newState = setProp(state, 'currency', action.currency);
+      newState = set('currency', action.currency, state);
       break;
     case ACTION_TYPES.SET_CUSTOMER_BRANCH:
-      newState = setProp(state, 'branch', action.branch);
+      newState = set('branch', action.branch, state);
       break;
     default:
       newState = state;
