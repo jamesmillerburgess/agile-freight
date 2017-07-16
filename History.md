@@ -2,10 +2,8 @@
 
 ### Rates
 
-* More complex rates
 * Improved rate management
 * Rate usage statistics
-* Scrape FOCiS rates
 * Calculate distance units
 
 ### Customers
@@ -22,6 +20,10 @@
 * Notifications
 
 ## v.NEXT
+
+## v0.13.0 – Video Series Preparation
+
+* Replace reducer utilities with lodash where possible
 
 ## v0.12.0 – LCL Quote Scenario
 
