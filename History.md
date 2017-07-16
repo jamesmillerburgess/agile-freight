@@ -1,24 +1,3 @@
-## v.TBD
-
-### Rates
-
-* Improved rate management
-* Rate usage statistics
-* Calculate distance units
-
-### Customers
-
-* Export quote to PDF 
-* More rate context in quote
-* Last quote rates visible in quote
-* Improved form validations
-* Revise CustomerListItem with relevant information
-* Ability to summarize quote information (e.g. hide conversions, group charges)
-
-### Misc
-
-* Notifications
-
 ## v.NEXT
 
 ## v0.13.0 – Video Series Preparation
