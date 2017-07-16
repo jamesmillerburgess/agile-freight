@@ -1,9 +1,5 @@
-import {
-  setProp,
-  setPropAtId,
-  removeAtId,
-  addToEnd,
-} from '../reducer-utils';
+import { concat, set } from 'lodash/fp';
+import { setPropAtId } from '../reducer-utils';
 import { getUpdatedFXConversions } from '../../../ui/quoteUtils';
 
 import * as ACTION_TYPES from '../../actions/actionTypes';
@@ -16,10 +12,10 @@ export const chargeLines = (
   let newState = [];
   switch (action.type) {
     case ACTION_TYPES.ADD_CHARGE_LINE:
-      newState = addToEnd(state, action.chargeLine);
+      newState = concat(action.chargeLine, state);
       break;
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
-      newState = removeAtId(state, action.id);
+      newState = state.filter(a => a.id !== action.id);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_CODE:
       newState = setPropAtId(state, 'code', action.id, action.code);
@@ -56,7 +52,9 @@ export const chargeLines = (
     const res = { ...chargeLine };
     let minimumAmount = 0;
     if (chargeLine.selectedRate && chargeLine.selectedRate !== 'custom') {
-      minimumAmount = chargeLine.applicableSellRates[chargeLine.selectedRate].minimumAmount || 0;
+      minimumAmount =
+        chargeLine.applicableSellRates[chargeLine.selectedRate].minimumAmount ||
+        0;
     }
     let amount = (chargeLine.units || 0) * (chargeLine.unitPrice || 0);
     if (amount < minimumAmount) {
@@ -84,10 +82,10 @@ export const fxConversions = (state = {}, action = { type: '' }) => {
   let newState = Object.assign(state.fxConversions || {}, {});
   switch (action.type) {
     case ACTION_TYPES.SET_FX_CONVERSION_RATE:
-      newState = setProp(
-        newState,
+      newState = set(
         action.currency,
-        setProp(newState[action.currency], 'rate', action.rate),
+        set('rate', action.rate, newState[action.currency]),
+        newState,
       );
       break;
     case ACTION_TYPES.LOAD_QUOTE:
@@ -143,26 +141,21 @@ export const charges = (state = defaultChargesState, action = { type: '' }) => {
       newState = action.quote.charges || defaultChargesState;
       break;
     case ACTION_TYPES.SET_CHARGE_NOTES:
-      newState = setProp(state, 'notes', action.notes);
+      newState = set('notes', action.notes, state);
       break;
     case ACTION_TYPES.SET_QUOTE_CURRENCY:
-      newState = setProp(state, 'currency', action.currency);
+      newState = set('currency', action.currency, state);
       break;
     case ACTION_TYPES.SET_FX_CONVERSION_RATE:
-      newState =
-        setProp(
-          state,
-          'fxConversions',
-          setProp(
-            state.fxConversions,
-            action.currency,
-            setProp(
-              state.fxConversions[action.currency],
-              'rate',
-              action.rate,
-            ),
-          ),
-        );
+      newState = set(
+        'fxConversions',
+        set(
+          action.currency,
+          set('rate', action.rate, state.fxConversions[action.currency]),
+          state.fxConversions,
+        ),
+        state,
+      );
       break;
     default:
       newState = state;
