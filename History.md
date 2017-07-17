@@ -1,5 +1,11 @@
 ## v.NEXT
 
+## v1.0.0 – Quotation
+
+* Ability to quote customers for a variety of freight shipments
+* Ability to manage rates which can automatically populate charges in matching quotes
+* Ability to create and manage customers
+
 ## v0.13.0 – Video Series Preparation
 
 * Replace reducer utilities with lodash where possible
