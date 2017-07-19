@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import moment from 'moment';
-import { Mongo } from 'meteor/mongo';
 
+import { Shipments } from '../../api/shipments/shipmentsCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
-import { UNLocations } from '../../api/unlocations/unlocationsCollection';
 
+import ShipmentListItem from './ShipmentListItem.jsx';
 import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
 import { copyQuote } from '../quoteUtils';
 
@@ -126,6 +126,7 @@ export const QuoteListItemInner = ({ quote, history }) => {
           </div>
         </div>
       </div>
+      {quote.shipment ? <ShipmentListItem shipment={Shipments.findOne(quote.shipment)} /> : null}
     </Link>
   );
 };
