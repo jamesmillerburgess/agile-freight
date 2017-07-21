@@ -1,5 +1,9 @@
 ## v.NEXT
 
+## v1.1.0 – Shipment List Item
+
+* Shipment list items appear below quote list items in the customer view
+
 ## v1.0.0 – Quotation
 
 * Ability to quote customers for a variety of freight shipments

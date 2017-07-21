@@ -1,0 +1,10 @@
+@import 'styleGlobals';
+
+.shipment-list-item {
+  margin-left: 15px;
+  margin-top: -7px;
+}
+
+.shipment-list-item.inactive {
+  background-color: $disabled-panel-color;
+}

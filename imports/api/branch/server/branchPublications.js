@@ -6,6 +6,7 @@ import { Countries } from '../../countries/countriesCollection';
 import { Quotes } from '../../quotes/quotesCollection';
 import { UNLocations } from '../../unlocations/unlocationsCollection';
 import { Rates } from '../../rates/rateCollection';
+import { Shipments } from '../../shipments/shipmentsCollection';
 
 const publishBranchAll = () => Branches.find({});
 
@@ -19,6 +20,7 @@ Meteor.publish('branch.active', function publishBranchActive() {
     cursors.push(Countries.find());
     cursors.push(Quotes.find());
     cursors.push(Rates.find());
+    cursors.push(Shipments.find());
     const quotes = Quotes.find().fetch();
     const locationIds = [];
     quotes.forEach((quote) => {
