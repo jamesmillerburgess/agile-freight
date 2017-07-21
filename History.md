@@ -1,5 +1,9 @@
 ## v.NEXT
 
+## v1.2.0 – Initial Shipment Editor
+
+* Link to shipment from shipment list item
+
 ## v1.1.0 – Shipment List Item
 
 * Shipment list items appear below quote list items in the customer view

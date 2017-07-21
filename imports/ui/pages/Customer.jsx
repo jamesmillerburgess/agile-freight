@@ -75,6 +75,10 @@ const CustomerInner = ({ customer, loading, history }) => {
           path="/customers/view/:customerId/quotes/:quoteId/view"
           render={props => <ViewQuote {...props} />}
         />
+        <Route
+          path="/customers/view/:customerId/shipments/:shipmentId"
+          render={props => <div {...props}>SHIPMENT STUB</div>}
+        />
       </div>
       <div className="content-footer-accent customers-footer-accent" />
     </div>
