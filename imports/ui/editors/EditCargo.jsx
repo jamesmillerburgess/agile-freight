@@ -372,46 +372,34 @@ const EditCargo = ({ cargo, dispatchers, useContainers, splitCargoTypes }) => {
     </div>
   );
 
+  const CargoType = () => (
+    <div className="button-group col-6">
+      <button
+        className={`radio-button ${cargo.cargoType ===
+                                   'Loose' ? 'active' : 'inactive'}`}
+        onClick={() => dispatchers.onChangeCargoType(
+          'Loose')}
+      >
+        LOOSE
+      </button>
+      <button
+        className={`radio-button ${cargo.cargoType ===
+                                   'Containerized' ? 'active' :
+                                   'inactive'}`}
+        onClick={() => dispatchers.onChangeCargoType(
+          'Containerized')}
+      >
+        CONTAINERIZED
+      </button>
+    </div>
+  );
+
   return (
     <div>
       <div className="input-row">
         <div className="cargo-row-icon" />
         <div className="input-group">
-          <div className="button-group col-6">
-            <button
-              className={`radio-button ${cargo.cargoType ===
-                                         'Loose' ? 'active' : 'inactive'}`}
-              onClick={() => dispatchers.onChangeCargoType(
-                'Loose')}
-            >
-              LOOSE
-            </button>
-            <button
-              className={`radio-button ${cargo.cargoType ===
-                                         'Containerized' ? 'active' :
-                                         'inactive'}`}
-              onClick={() => dispatchers.onChangeCargoType(
-                'Containerized')}
-            >
-              CONTAINERIZED
-            </button>
-          </div>
-          <div className="button-group col-6">
-            <button
-              className={`radio-button ${cargo.ratedQuote ?
-                                         'inactive' : 'active'}`}
-              onClick={() => dispatchers.onChangeRatedQuote()}
-            >
-              ITEMIZED
-            </button>
-            <button
-              className={`radio-button ${cargo.ratedQuote ?
-                                         'active' : 'inactive'}`}
-              onClick={() => dispatchers.onChangeRatedQuote()}
-            >
-              RATED
-            </button>
-          </div>
+          {splitCargoTypes ? CargoType() : null}
         </div>
       </div>
       {
