@@ -19,6 +19,7 @@ if (Meteor.isClient) {
         const stateAfter = {
           cargoType: 'loose',
           ratedQuote: false,
+          description: '',
           packageLines: [
             {
               packageType: 'Packages',
