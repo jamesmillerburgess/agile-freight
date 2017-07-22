@@ -16,7 +16,7 @@ if (Meteor.isServer) {
     });
 
     describe('branch.new', () => {
-      it('insert a new branch into the collection', function () {
+      it('insert a new branch into the collection', () => {
         Branches.find({}).count().should.equal(0);
         Meteor.call('branch.new', { name: 'newBranch' });
         Branches.find({}).count().should.equal(1);
@@ -33,7 +33,7 @@ if (Meteor.isServer) {
           .not
           .throw();
       });
-      it('strips out extraneous properties', () => {
+      it('strips out extraneous properties', function () {
         this.timeout(10000);
         (() => Meteor.call('branch.new', { name: 'newBranch', prop: 'prop' }))
           .should
