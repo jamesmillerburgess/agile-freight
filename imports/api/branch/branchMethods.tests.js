@@ -16,7 +16,8 @@ if (Meteor.isServer) {
     });
 
     describe('branch.new', () => {
-      it('insert a new branch into the collection', () => {
+      it('insert a new branch into the collection', function () {
+        this.timeout(10000);
         Branches.find({}).count().should.equal(0);
         Meteor.call('branch.new', { name: 'newBranch' });
         Branches.find({}).count().should.equal(1);
