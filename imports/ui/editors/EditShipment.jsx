@@ -28,6 +28,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
         dispatchers={dispatchers}
         useContainers
         splitCargoTypes={false}
+        useDescription
       />
     </div>
   </div>

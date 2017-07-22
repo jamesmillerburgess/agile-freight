@@ -19,6 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     dispatchers: {
       onChangeCargoType: cargoType => dispatch(actions.setCargoType(cargoType)),
       onChangeRatedQuote: () => dispatch(actions.toggleRatedQuote()),
+      onChangeCargoDescription: description => dispatch(actions.setCargoDescription(description)),
       onAddPackageLine: () => dispatch(actions.addPackageLine()),
       onRemovePackageLine: index => dispatch(actions.removePackageLine(index)),
       onChangePackageType: (index, packageType) =>

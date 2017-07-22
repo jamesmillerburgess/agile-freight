@@ -4,10 +4,18 @@ import Select from 'react-select';
 
 import { APIGlobals } from '../../api/api-globals';
 import { integerFormat, weightFormat } from '../formatters/numberFormatters';
+import { resizeHeight } from '../formatters/resizeHeight';
 
 import CheckboxField from '../fields/CheckboxField.jsx';
 
-const EditCargo = ({ cargo, dispatchers, useContainers, splitCargoTypes }) => {
+const EditCargo = (
+  {
+    cargo,
+    dispatchers,
+    useContainers,
+    splitCargoTypes,
+    useDescription,
+  }) => {
   const PackageLines = () => (
     <div className="">
       <div className="">
@@ -414,6 +422,33 @@ const EditCargo = ({ cargo, dispatchers, useContainers, splitCargoTypes }) => {
     return PackageLines();
   };
 
+  let descriptionNode = null;
+
+  const Description = () => {
+    if (useDescription) {
+      return (
+        <div>
+          <div className="cargo-row-icon" />
+          <div className="field">
+            <div className="label">
+              DESCRIPTION
+            </div>
+            <textarea
+              className="description"
+              ref={node => descriptionNode = node}
+              value={cargo.description}
+              onChange={e => {
+                resizeHeight(descriptionNode);
+                dispatchers.onChangeCargoDescription(e.target.value);
+              }}
+            />
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div>
       <div className="input-row">
@@ -423,6 +458,7 @@ const EditCargo = ({ cargo, dispatchers, useContainers, splitCargoTypes }) => {
         </div>
       </div>
       {Cargo()}
+      {Description()}
     </div>
   );
 };
@@ -432,11 +468,13 @@ EditCargo.propTypes = {
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
   useContainers: PropTypes.bool,
   splitCargoTypes: PropTypes.bool,
+  useDescription: PropTypes.bool,
 };
 
 EditCargo.defaultProps = {
   useContainers: false,
   splitCargoTypes: false,
+  useDescription: false,
 };
 
 export default EditCargo;

@@ -10,6 +10,10 @@ export const setCargoType = makeActionCreator(
 );
 export const toggleRatedQuote = makeActionCreator(
   ACTION_TYPES.TOGGLE_RATED_QUOTE);
+export const setCargoDescription = makeActionCreator(
+  ACTION_TYPES.SET_CARGO_DESCRIPTION,
+  'description',
+);
 export const addPackageLine = makeActionCreator(
   ACTION_TYPES.ADD_PACKAGE_LINE);
 export const removePackageLine = makeActionCreator(

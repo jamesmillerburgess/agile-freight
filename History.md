@@ -6,6 +6,7 @@
 * Abstracted out cargo component so it can be used in both quotes and shipments
 * Created modes for cargo component to account for use of containers
 * Added cargo editor in shipment editor
+* Added description field to cargo editor in shipment
 
 ## v1.1.0 – Shipment List Item
 

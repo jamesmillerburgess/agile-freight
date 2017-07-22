@@ -222,6 +222,7 @@ export const temperatureControlled = (state = false, action = { type: '' }) => {
 export const cargoDefaultState = {
   ratedQuote: false,
   cargoType: 'Loose',
+  description: '',
   packageLines: defaultPackageLinesState,
   containerLines: defaultContainerLinesState,
   hazardous: false,
@@ -242,6 +243,7 @@ export const cargo = (state = {}, action = { type: '' }) => {
       newBaseState = {
         cargoType: cargoType(state.cargoType, action),
         ratedQuote: ratedQuote(state.ratedQuote, action),
+        description: description(state.description, action),
         packageLines: packageLines(state.packageLines, action),
         containerLines: containerLines(state.containerLines, action),
         densityRatio: densityRatio(state.densityRatio, action),

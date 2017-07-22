@@ -7,6 +7,7 @@ textarea {
   border-radius: 0;
   color: $text-color;
   font-weight: 400;
+  font-size: $input-font-size;
   outline: none;
   height: 36px;
   resize: none;
@@ -21,4 +22,9 @@ textarea:focus {
 
 textarea.address {
   min-height: 100px;
+}
+
+textarea.description {
+  min-height: 100px;
+  width: 300px;
 }
