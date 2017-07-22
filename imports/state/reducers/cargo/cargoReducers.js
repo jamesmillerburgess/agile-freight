@@ -231,8 +231,13 @@ const cargoDefaultState = {
 export const cargo = (state = {}, action = { type: '' }) => {
   let newBaseState = {};
   switch (action.type) {
+    // TODO: Abstract away any reference to quote or shipment
     case ACTION_TYPES.LOAD_QUOTE:
       newBaseState = action.quote.cargo || cargoDefaultState;
+      break;
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      console.log(action.shipment);
+      newBaseState = action.shipment.cargo || cargoDefaultState;
       break;
     default:
       newBaseState = {

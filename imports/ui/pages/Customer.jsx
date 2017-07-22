@@ -11,6 +11,7 @@ import { Customers } from '../../api/customers/customersCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
 import EditCustomerConnect from '../editors/EditCustomerConnect';
+import EditShipmentConnect from '../editors/EditShipmentConnect.jsx';
 import EditQuoteHeaderConnect from '../editors/EditQuoteHeaderConnect.jsx';
 import EditQuoteChargesConnect from '../editors/EditQuoteChargesConnect';
 import EditQuoteEmailConnect from '../editors/EditQuoteEmailConnect';
@@ -77,7 +78,7 @@ const CustomerInner = ({ customer, loading, history }) => {
         />
         <Route
           path="/customers/view/:customerId/shipments/:shipmentId"
-          render={props => <div {...props}>SHIPMENT STUB</div>}
+          render={props => <EditShipmentConnect {...props} />}
         />
       </div>
       <div className="content-footer-accent customers-footer-accent" />

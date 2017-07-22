@@ -78,6 +78,9 @@ export const SET_QUOTE_CURRENCY = 'SET_QUOTE_CURRENCY';
 // LOAD QUOTE
 export const LOAD_QUOTE = 'LOAD_QUOTE';
 
+// LOAD SHIPMENT
+export const LOAD_SHIPMENT = 'LOAD_SHIPMENT';
+
 // EMAIL
 export const LOAD_EMAIL = 'LOAD_EMAIL';
 export const SET_EMAIL_IS_OPEN = 'SET_EMAIL_IS_OPEN';

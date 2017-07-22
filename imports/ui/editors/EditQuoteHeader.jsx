@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
 
 import { integerFormat, weightFormat } from '../formatters/numberFormatters';
 
@@ -14,6 +13,7 @@ import { quotePropTypes } from '../objects/quotePropTypes';
 import { APIGlobals } from '../../api/api-globals';
 
 import Quote from '../quoteUtils';
+import EditCargo from './EditCargo.jsx';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
 
@@ -458,50 +458,12 @@ class EditQuoteHeader extends React.Component {
             <div className="cargo-row-icon" />
             CARGO
           </div>
-          <div className="input-row">
-            <div className="cargo-row-icon" />
-            <div className="input-group">
-              <div className="button-group col-6">
-                <button
-                  className={`radio-button ${this.props.quote.cargo.cargoType ===
-                                             'Loose' ? 'active' : 'inactive'}`}
-                  onClick={() => this.props.dispatchers.onChangeCargoType(
-                    'Loose')}
-                >
-                  LOOSE
-                </button>
-                <button
-                  className={`radio-button ${this.props.quote.cargo.cargoType ===
-                                             'Containerized' ? 'active' :
-                                             'inactive'}`}
-                  onClick={() => this.props.dispatchers.onChangeCargoType(
-                    'Containerized')}
-                >
-                  CONTAINERIZED
-                </button>
-              </div>
-              <div className="button-group col-6">
-                <button
-                  className={`radio-button ${this.props.quote.cargo.ratedQuote ?
-                                             'inactive' : 'active'}`}
-                  onClick={() => this.props.dispatchers.onChangeRatedQuote()}
-                >
-                  ITEMIZED
-                </button>
-                <button
-                  className={`radio-button ${this.props.quote.cargo.ratedQuote ?
-                                             'active' : 'inactive'}`}
-                  onClick={() => this.props.dispatchers.onChangeRatedQuote()}
-                >
-                  RATED
-                </button>
-              </div>
-            </div>
-          </div>
-          {this.props.quote.cargo.cargoType === 'Loose' ? this.PackageLines() :
-           ''}
-          {this.props.quote.cargo.cargoType === 'Containerized' ?
-           this.Containers() : ''}
+          <EditCargo
+            cargo={this.props.quote.cargo}
+            dispatchers={this.props.dispatchers}
+            useContainers={true}
+            splitCargoTypes={true}
+          />
         </div>
         <div className="panel container form-section">
           <div className="">

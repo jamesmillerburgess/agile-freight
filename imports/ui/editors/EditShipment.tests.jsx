@@ -1,0 +1,28 @@
+/* eslint-env mocha */
+/* eslint-disable func-names, prefer-arrow-callback */
+
+import React from 'react';
+import { Meteor } from 'meteor/meteor';
+import { shallow } from 'enzyme';
+import { chai } from 'meteor/practicalmeteor:chai';
+
+import EditShipment from './EditShipment.jsx';
+
+if (Meteor.isClient) {
+  chai.should();
+  describe('EditShipment Component', () => {
+    let wrapper;
+    beforeEach(() => {
+      wrapper = shallow(<EditShipment shipment={{}} />);
+    });
+    afterEach(() => {
+      wrapper.unmount();
+    });
+
+    describe('Structure', () => {
+      it('renders a component', () => {
+        wrapper.exists().should.equal(true);
+      });
+    });
+  });
+}

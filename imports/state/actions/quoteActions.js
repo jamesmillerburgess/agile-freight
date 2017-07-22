@@ -186,3 +186,9 @@ export const setQuoteCurrency = makeActionCreator(
 
 // LOAD QUOTE
 export const loadQuote = makeActionCreator(ACTION_TYPES.LOAD_QUOTE, 'quote');
+
+// LOAD SHIPMENT
+export const loadShipment = makeActionCreator(
+  ACTION_TYPES.LOAD_SHIPMENT,
+  'shipment',
+);
