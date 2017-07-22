@@ -1,5 +1,7 @@
 ## v.NEXT
 
+## v1.3.0 – Shipment Cargo Component
+
 ## v1.2.0 – Initial Shipment Editor
 
 * Link to shipment from shipment list item

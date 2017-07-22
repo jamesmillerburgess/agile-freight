@@ -1,4 +1,4 @@
-import { cargo } from './cargoReducers';
+import { cargo } from '../cargo/cargoReducers';
 import { movement } from './movementReducers';
 import { otherServices } from './otherServicesReducers';
 import { charges } from './chargesReducers';
