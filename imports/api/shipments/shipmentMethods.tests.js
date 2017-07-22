@@ -53,6 +53,10 @@ if (Meteor.isServer) {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne(shipmentId).status.should.equal('Draft');
       });
+      it('sets active to true', () => {
+        const shipmentId = Meteor.call('shipment.new', 'a');
+        Shipments.findOne(shipmentId).active.should.equal(true);
+      });
     });
   });
 }

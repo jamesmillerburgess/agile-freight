@@ -16,8 +16,9 @@ Meteor.methods({
     const { customerId } = quote;
     const shipmentId = Shipments.insert({
       customerId,
-      quoteId,                    
+      quoteId,
       createdOn: new Date(),
+      active: true,
       status: 'Draft',
     });
 
