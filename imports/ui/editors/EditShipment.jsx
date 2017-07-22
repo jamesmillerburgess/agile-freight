@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import EditCargo from './EditCargo.jsx';
+import Shipment from '../shipmentUtils';
 
 const EditShipment = ({ shipment, dispatchers, history, match }) => (
   <div className="new-quote">
@@ -30,6 +31,10 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
         splitCargoTypes={false}
         useDescription
       />
+      <div className="form-button-group">
+        <button className="delete-button" onClick={() => Shipment.archive(match.params.shipmentId)}>ARCHIVE</button>
+        <button className="save-button" onClick={() => Shipment.save(match.params.shipmentId, shipment)}>SAVE</button>
+      </div>
     </div>
   </div>
 );
