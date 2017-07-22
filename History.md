@@ -7,6 +7,8 @@
 * Created modes for cargo component to account for use of containers
 * Added cargo editor in shipment editor
 * Added description field to cargo editor in shipment
+* Added new, save, and archive methods to shipment
+* Connected shipment methods to front-end buttons
 
 ## v1.1.0 – Shipment List Item
 
