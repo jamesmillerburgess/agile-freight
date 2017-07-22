@@ -7,13 +7,14 @@ import { shallow } from 'enzyme';
 import { chai } from 'meteor/practicalmeteor:chai';
 
 import EditCargo from './EditCargo.jsx';
+import { cargoDefaultState } from '../../state/reducers/cargo/cargoReducers';
 
 if (Meteor.isClient) {
   chai.should();
-  describe('EditCustomer Component', () => {
+  describe('EditCargo Component', () => {
     let wrapper;
     beforeEach(() => {
-      wrapper = shallow(<EditCargo cargo={{}} dispatchers={[]} />);
+      wrapper = shallow(<EditCargo cargo={cargoDefaultState} dispatchers={[]} />);
     });
     afterEach(() => {
       wrapper.unmount();

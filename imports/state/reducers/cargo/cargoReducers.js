@@ -219,7 +219,7 @@ export const temperatureControlled = (state = false, action = { type: '' }) => {
   }
 };
 
-const cargoDefaultState = {
+export const cargoDefaultState = {
   ratedQuote: false,
   cargoType: 'Loose',
   packageLines: defaultPackageLinesState,
@@ -236,7 +236,6 @@ export const cargo = (state = {}, action = { type: '' }) => {
       newBaseState = action.quote.cargo || cargoDefaultState;
       break;
     case ACTION_TYPES.LOAD_SHIPMENT:
-      console.log(action.shipment);
       newBaseState = action.shipment.cargo || cargoDefaultState;
       break;
     default:
