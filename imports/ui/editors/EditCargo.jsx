@@ -394,6 +394,26 @@ const EditCargo = ({ cargo, dispatchers, useContainers, splitCargoTypes }) => {
     </div>
   );
 
+  const Cargo = () => {
+    if (splitCargoTypes) {
+      return (
+        <div>
+          {cargo.cargoType === 'Loose' ? PackageLines() : ''}
+          {cargo.cargoType === 'Containerized' ? Containers() : ''}
+        </div>
+      );
+    }
+    if (useContainers) {
+      return (
+        <div>
+          {PackageLines()}
+          {Containers()}
+        </div>
+      );
+    }
+    return PackageLines();
+  };
+
   return (
     <div>
       <div className="input-row">
@@ -402,22 +422,7 @@ const EditCargo = ({ cargo, dispatchers, useContainers, splitCargoTypes }) => {
           {splitCargoTypes ? CargoType() : null}
         </div>
       </div>
-      {
-        useContainers && splitCargoTypes ? (
-          <div>
-            {cargo.cargoType === 'Loose' ? PackageLines() : ''}
-            {cargo.cargoType === 'Containerized' ? Containers() : ''}
-          </div>
-        ) :
-        useContainers ? (
-          <div>
-            {PackageLines()}
-            {Containers()}
-          </div>
-        ) :
-        PackageLines()
-      }
-
+      {Cargo()}
     </div>
   );
 };
