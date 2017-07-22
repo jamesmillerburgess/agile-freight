@@ -39,4 +39,12 @@ Meteor.methods({
       },
     );
   },
+  'shipment.archive': function shipmentArchive(shipmentId) {
+    check(shipmentId, String);
+
+    Shipments.update(
+      { _id: shipmentId },
+      { $set: { active: false, status: 'Archived' } },
+    );
+  },
 });

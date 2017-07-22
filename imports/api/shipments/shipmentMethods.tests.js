@@ -92,5 +92,17 @@ if (Meteor.isServer) {
         shipment.status.should.equal('Draft');
       });
     });
+    describe('shipment.archive', () => {
+      it('sets active to false', () => {
+        const shipmentId = Shipments.insert({ active: true });
+        Meteor.call('shipment.archive', shipmentId);
+        Shipments.findOne(shipmentId).active.should.equal(false);
+      });
+      it('sets status to \'Archived\'', () => {
+        const shipmentId = Shipments.insert({ status: 'Draft' });
+        Meteor.call('shipment.archive', shipmentId);
+        Shipments.findOne(shipmentId).status.should.equal('Archived');
+      });
+    });
   });
 }
