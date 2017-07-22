@@ -27,4 +27,16 @@ Meteor.methods({
 
     return shipmentId;
   },
+  'shipment.save': function shipmentSave(shipment) {
+    check(shipment, Object);
+
+    Shipments.update(
+      { _id: shipment._id },
+      {
+        $set: {
+          cargo: shipment.cargo,
+        },
+      },
+    );
+  },
 });

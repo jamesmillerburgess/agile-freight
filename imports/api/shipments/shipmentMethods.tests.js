@@ -58,5 +58,39 @@ if (Meteor.isServer) {
         Shipments.findOne(shipmentId).active.should.equal(true);
       });
     });
+    describe('shipment.save', () => {
+      it('saves changes to the shipment', () => {
+        const shipmentId = Shipments.insert({
+          cargo: {},
+        });
+        Meteor.call(
+          'shipment.save',
+          {
+            _id: shipmentId,
+            cargo: { a: 'a' },
+          },
+        );
+        const shipment = Shipments.findOne(shipmentId);
+
+        shipment.cargo.a.should.equal('a');
+      });
+
+      it('ignores changes to the status', () => {
+        const shipmentId = Shipments.insert({
+          status: 'Draft',
+        });
+        Meteor.call(
+          'shipment.save',
+          {
+            _id: shipmentId,
+            status: 'Different Status',
+            cargo: {},
+          },
+        );
+        const shipment = Shipments.findOne(shipmentId);
+
+        shipment.status.should.equal('Draft');
+      });
+    });
   });
 }
