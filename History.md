@@ -1,14 +1,11 @@
 ## v.NEXT
 
-## v1.3.0 – Shipment Cargo Component
-
-* Abstracted out cargo component so it can be used in both quotes and shipments
-* Created modes for cargo component to account for use of containers
-* Added cargo editor in shipment editor
-
 ## v1.2.0 – Initial Shipment Editor
 
 * Link to shipment from shipment list item
+* Abstracted out cargo component so it can be used in both quotes and shipments
+* Created modes for cargo component to account for use of containers
+* Added cargo editor in shipment editor
 
 ## v1.1.0 – Shipment List Item
 
