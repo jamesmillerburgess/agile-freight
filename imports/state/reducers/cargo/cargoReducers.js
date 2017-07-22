@@ -20,6 +20,15 @@ export const ratedQuote = (state = false, action = { type: '' }) => {
   }
 };
 
+export const description = (state = '', action = { type: '' } ) => {
+  switch (action.type) {
+    case ACTION_TYPES.SET_CARGO_DESCRIPTION:
+      return action.description;
+    default:
+      return state;
+  }
+};
+
 const defaultPackageLinesState = [
   {
     packageType: 'Packages',
