@@ -9,7 +9,7 @@ import { Quotes } from '../../api/quotes/quotesCollection';
 
 import ShipmentListItem from './ShipmentListItem.jsx';
 import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
-import { copyQuote } from '../quoteUtils';
+import { copyQuote, newShipment } from '../quoteUtils';
 
 export const QuoteListItemInner = ({ quote, history }) => {
   const
@@ -120,6 +120,17 @@ export const QuoteListItemInner = ({ quote, history }) => {
     );
   };
 
+  const onClickNewShipment = (e) => {
+    e.preventDefault();
+    newShipment(
+      quote._id,
+      (
+        err,
+        newShipmentId,
+      ) => history.push(`/customers/view/${quote.customerId}/shipments/${newShipmentId}`),
+    );
+  };
+
   const quoteLink = () => {
     if (quote.status === 'Submitted') {
       return `/customers/view/${quote.customerId}/quotes/${quote._id}/view`;
@@ -133,6 +144,7 @@ export const QuoteListItemInner = ({ quote, history }) => {
         <div className="panel">
           <div className="icon-column">
             <span className="fa fa-fw fa-clone" onClick={onClickCopy} />
+            <span className="fa fa-fw fa-plus" onClick={onClickNewShipment} />
           </div>
           <div className="container panel-body">
             <div className="row no-gutters">
@@ -152,11 +164,14 @@ export const QuoteListItemInner = ({ quote, history }) => {
         </div>
       </Link>
       {
-        quote.shipment ?
-        <ShipmentListItem
-          quote={quote}
-          shipment={Shipments.findOne(quote.shipment)}
-        /> : null
+        quote.shipments ?
+        quote.shipments.map(shipmentId => (
+          <ShipmentListItem
+            key={shipmentId}
+            quote={quote}
+            shipment={Shipments.findOne(shipmentId)}
+          />
+        )) : null
       }
     </div>
   );

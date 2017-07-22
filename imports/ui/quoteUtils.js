@@ -107,6 +107,10 @@ export const copyQuote = (quoteId, cb) => {
   Meteor.call('quote.copy', quoteId, cb);
 };
 
+export const newShipment = (quoteId, cb) => {
+  Meteor.call('shipment.new', quoteId, cb);
+};
+
 export const extractRateMovement = quote => ({
   carrier: quote.movement.carrier,
   receipt: quote.movement.receipt.code,
