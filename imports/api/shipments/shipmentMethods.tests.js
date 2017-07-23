@@ -71,17 +71,20 @@ if (Meteor.isServer) {
       it('saves changes to the shipment', () => {
         const shipmentId = Shipments.insert({
           cargo: {},
+          movement: {},
         });
         Meteor.call(
           'shipment.save',
           {
             _id: shipmentId,
             cargo: { a: 'a' },
+            movement: { b: 'b' },
           },
         );
         const shipment = Shipments.findOne(shipmentId);
 
         shipment.cargo.a.should.equal('a');
+        shipment.movement.b.should.equal('b');
       });
       it('ignores changes to the status', () => {
         const shipmentId = Shipments.insert({

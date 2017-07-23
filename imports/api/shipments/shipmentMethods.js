@@ -39,6 +39,7 @@ Meteor.methods({
       {
         $set: {
           cargo: shipment.cargo,
+          movement: shipment.movement,
         },
       },
     );
