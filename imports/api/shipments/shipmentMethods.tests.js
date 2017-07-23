@@ -24,6 +24,7 @@ if (Meteor.isServer) {
         cargo: 'c',
         movement: 'd',
         otherServices: 'e',
+        charges: 'f',
       });
       Customers.insert({ _id: 'b', quotes: 'a' });
     });
@@ -63,6 +64,7 @@ if (Meteor.isServer) {
         Shipments.findOne(shipmentId).cargo.should.equal('c');
         Shipments.findOne(shipmentId).movement.should.equal('d');
         Shipments.findOne(shipmentId).otherServices.should.equal('e');
+        Shipments.findOne(shipmentId).charges.should.equal('f');
       });
     });
     describe('shipment.save', () => {
