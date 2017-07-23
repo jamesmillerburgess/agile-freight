@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import { Meteor } from 'meteor/meteor';
 
-import { integerFormat, weightFormat } from '../formatters/numberFormatters';
-
 import CheckboxField from '../fields/CheckboxField.jsx';
 
 import QuoteContainer from '../objects/QuoteContainer';
@@ -26,8 +24,6 @@ class EditQuoteHeader extends React.Component {
     this.goToEditCharges = this.goToEditCharges.bind(this);
     this.saveQuote = this.saveQuote.bind(this);
     this.getRates = this.getRates.bind(this);
-    this.PackageLines = this.PackageLines.bind(this);
-    this.Containers = this.Containers.bind(this);
   }
 
   componentWillMount() {
