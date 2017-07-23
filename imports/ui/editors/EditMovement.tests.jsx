@@ -7,7 +7,7 @@ import { shallow } from 'enzyme';
 import { chai } from 'meteor/practicalmeteor:chai';
 
 import EditMovement, { Dates } from './EditMovement.jsx';
-import { movementDefaultState } from '../../state/reducers/movement/movementReducers';
+import { defaultMovementState } from '../../state/reducers/movement/movementReducers';
 
 if (Meteor.isClient) {
   chai.should();
@@ -16,7 +16,7 @@ if (Meteor.isClient) {
     beforeEach(() => {
       wrapper =
         shallow((
-          <EditMovement movement={movementDefaultState} dispatchers={{}} />
+          <EditMovement movement={defaultMovementState} dispatchers={{}} />
         ));
     });
     afterEach(() => {
