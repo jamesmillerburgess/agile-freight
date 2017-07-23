@@ -13,9 +13,12 @@ Meteor.methods({
     if (!quote || !quote.customerId) {
       throw new Error('Invalid quote id');
     }
-    const { customerId } = quote;
+    const { customerId, cargo, movement, otherServices } = quote;
     const shipmentId = Shipments.insert({
       customerId,
+      cargo,
+      movement,
+      otherServices,
       quoteId,
       createdOn: new Date(),
       active: true,

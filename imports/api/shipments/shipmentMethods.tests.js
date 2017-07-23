@@ -18,7 +18,13 @@ if (Meteor.isServer) {
       Shipments.remove({});
       Quotes.remove({});
       Customers.remove({});
-      Quotes.insert({ _id: 'a', customerId: 'b' });
+      Quotes.insert({
+        _id: 'a',
+        customerId: 'b',
+        cargo: 'c',
+        movement: 'd',
+        otherServices: 'e',
+      });
       Customers.insert({ _id: 'b', quotes: 'a' });
     });
     describe('shipment.new', () => {
@@ -28,27 +34,22 @@ if (Meteor.isServer) {
 
         Shipments.find({}).count().should.equal(1);
       });
-
       it('returns the id of the new shipment', () => {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne()._id.should.equal(shipmentId);
       });
-
       it('inserts a shipment with the given quoteId', () => {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne(shipmentId).quoteId.should.equal('a');
       });
-
       it('updates the given customer with the new shipment id', () => {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Customers.findOne('b').shipments[0].should.equal(shipmentId);
       });
-
       it('sets the created on date', () => {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne(shipmentId).createdOn.should.be.instanceof(Date);
       });
-
       it('sets the status to \'Draft\'', () => {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne(shipmentId).status.should.equal('Draft');
@@ -56,6 +57,12 @@ if (Meteor.isServer) {
       it('sets active to true', () => {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne(shipmentId).active.should.equal(true);
+      });
+      it('copies the quote data into the shipment', () => {
+        const shipmentId = Meteor.call('shipment.new', 'a');
+        Shipments.findOne(shipmentId).cargo.should.equal('c');
+        Shipments.findOne(shipmentId).movement.should.equal('d');
+        Shipments.findOne(shipmentId).otherServices.should.equal('e');
       });
     });
     describe('shipment.save', () => {
@@ -74,7 +81,6 @@ if (Meteor.isServer) {
 
         shipment.cargo.a.should.equal('a');
       });
-
       it('ignores changes to the status', () => {
         const shipmentId = Shipments.insert({
           status: 'Draft',
