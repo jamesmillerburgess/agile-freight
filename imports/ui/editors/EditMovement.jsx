@@ -7,7 +7,43 @@ import UNLocationField from '../fields/UNLocationField.jsx';
 
 import { APIGlobals } from '../../api/api-globals';
 
-const EditMovement = ({ movement, dispatchers }) => (
+export const Dates = ({ movement, dispatchers }) => (
+  <div className="pickup-delivery-wrapper">
+    <div className="pickup">
+      <div className="cargo-row-icon" />
+      <div className="field select-country">
+        <Datetime
+          value={movement.receiptDate}
+          onChange={
+            receiptDate => dispatchers.onChangeReceiptDate(receiptDate)}
+        />
+      </div>
+      <div className="field select-country">
+        <Datetime
+          value={movement.departureDate}
+          onChange={
+            departureDate => dispatchers.onChangeDepartureDate(departureDate)}
+        />
+      </div>
+      <div className="field select-country">
+        <Datetime
+          value={movement.arrivalDate}
+          onChange={
+            arrivalDate => dispatchers.onChangeArrivalDate(arrivalDate)}
+        />
+      </div>
+      <div className="field select-country">
+        <Datetime
+          value={movement.deliveryDate}
+          onChange={
+            deliveryDate => dispatchers.onChangeDeliveryDate(deliveryDate)}
+        />
+      </div>
+    </div>
+  </div>
+);
+
+const EditMovement = ({ movement, dispatchers, useDates }) => (
   <div>
     <div className="pickup-delivery-wrapper">
       <div className="cargo-row-icon" />
@@ -118,45 +154,18 @@ const EditMovement = ({ movement, dispatchers }) => (
         </div>
       </div>
     </div>
-    <div className="pickup-delivery-wrapper">
-      <div className="pickup">
-        <div className="cargo-row-icon" />
-        <div className="field select-country">
-          <Datetime
-            value={movement.receiptDate}
-            onChange={
-              receiptDate => dispatchers.onChangeReceiptDate(receiptDate)}
-          />
-        </div>
-        <div className="field select-country">
-          <Datetime
-            value={movement.departureDate}
-            onChange={
-              departureDate => dispatchers.onChangeDepartureDate(departureDate)}
-          />
-        </div>
-        <div className="field select-country">
-          <Datetime
-            value={movement.arrivalDate}
-            onChange={
-              arrivalDate => dispatchers.onChangeArrivalDate(arrivalDate)}
-          />
-        </div>
-        <div className="field select-country">
-          <Datetime
-            value={movement.deliveryDate}
-            onChange={
-              deliveryDate => dispatchers.onChangeDeliveryDate(deliveryDate)}
-          />
-        </div>
-      </div>
-    </div>
+    {useDates ? <Dates movement={movement} dispatchers={dispatchers} /> : null}
   </div>
 );
 
 EditMovement.propTypes = {
-  movement: PropTypes.object,
-  dispatchers: PropTypes.objectOf(PropTypes.func),
+  movement: PropTypes.object.isRequired,
+  dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
+  useDates: PropTypes.bool,
+};
+
+EditMovement.defaultProps = {
+  useDates: false,
 };
 
 export default EditMovement;

@@ -1,7 +1,7 @@
 import { set } from 'lodash/fp';
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
-const defaultMovementState = {
+export const defaultMovementState = {
   pickup: {
     locationType: '',
     country: '',

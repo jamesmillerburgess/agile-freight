@@ -103,6 +103,7 @@ class EditQuoteHeader extends React.Component {
             <EditMovement
               movement={this.props.quote.movement}
               dispatchers={this.props.dispatchers}
+              useDates={false}
             />
           </div>
         </div>

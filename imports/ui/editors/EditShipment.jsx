@@ -39,6 +39,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
       <EditMovement
         movement={shipment.movement}
         dispatchers={dispatchers}
+        useDates
       />
       <div className="form-button-group">
         <button
