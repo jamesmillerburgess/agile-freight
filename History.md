@@ -10,6 +10,8 @@
 * Added new, save, and archive methods to shipment
 * Connected shipment methods to front-end buttons
 * Quote data is copied into new shipments
+* Added movement editor in shipment editor
+* Added date fields to moevement editor in shipment
 
 ## v1.1.0 – Shipment List Item
 
