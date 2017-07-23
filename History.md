@@ -9,6 +9,7 @@
 * Added description field to cargo editor in shipment
 * Added new, save, and archive methods to shipment
 * Connected shipment methods to front-end buttons
+* Quote data is copied into new shipments
 
 ## v1.1.0 – Shipment List Item
 
