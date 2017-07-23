@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+import Datetime from 'react-datetime';
 
 import UNLocationField from '../fields/UNLocationField.jsx';
 
@@ -114,6 +115,23 @@ const EditMovement = ({ movement, dispatchers }) => (
               dispatchers.onChangeDelivery(selectedValue);
             }}
           />
+        </div>
+      </div>
+    </div>
+    <div className="pickup-delivery-wrapper">
+      <div className="pickup">
+        <div className="cargo-row-icon" />
+        <div className="field select-country">
+          <Datetime />
+        </div>
+        <div className="field select-country">
+          <Datetime />
+        </div>
+        <div className="field select-country">
+          <Datetime />
+        </div>
+        <div className="field select-country">
+          <Datetime />
         </div>
       </div>
     </div>
