@@ -122,7 +122,7 @@ const EditMovement = ({ movement, dispatchers }) => (
 
 EditMovement.propTypes = {
   movement: PropTypes.object,
-  dispatchers: PropTypes.objectOf(PropTypes.array),
+  dispatchers: PropTypes.objectOf(PropTypes.func),
 };
 
 export default EditMovement;
