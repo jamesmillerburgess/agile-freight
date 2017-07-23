@@ -96,7 +96,7 @@ export const getUpdatedFXConversions = (charges) => {
       result[currency] = set(
         'rate',
         APIGlobals.fxRates[charges.currency][currency],
-        result[currency]
+        result[currency],
       );
     }
   });
