@@ -18,11 +18,8 @@ if (Meteor.isClient) {
     afterEach(() => {
       wrapper.unmount();
     });
-
-    describe('Structure', () => {
-      it('renders a component', () => {
-        wrapper.exists().should.equal(true);
-      });
+    it('renders a component', () => {
+      wrapper.exists().should.equal(true);
     });
   });
 }
