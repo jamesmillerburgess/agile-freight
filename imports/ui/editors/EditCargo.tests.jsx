@@ -6,7 +6,11 @@ import { Meteor } from 'meteor/meteor';
 import { shallow } from 'enzyme';
 import { chai } from 'meteor/practicalmeteor:chai';
 
-import EditCargo from './EditCargo.jsx';
+import EditCargo, {
+  PackageLines,
+  Containers,
+  Description,
+} from './EditCargo.jsx';
 import { cargoDefaultState } from '../../state/reducers/cargo/cargoReducers';
 
 if (Meteor.isClient) {
@@ -14,16 +18,74 @@ if (Meteor.isClient) {
   describe('EditCargo Component', () => {
     let wrapper;
     beforeEach(() => {
-      wrapper = shallow(<EditCargo cargo={cargoDefaultState} dispatchers={[]} />);
+      wrapper =
+        shallow(<EditCargo cargo={cargoDefaultState} dispatchers={{}} />);
     });
     afterEach(() => {
       wrapper.unmount();
     });
-
-    describe('Structure', () => {
-      it('renders a component', () => {
-        wrapper.exists().should.equal(true);
+    it('renders a component', () => {
+      wrapper.exists().should.equal(true);
+    });
+    it('renders cargo type radio buttons if splitCargoTypes is true', () => {
+      wrapper.setProps({ ...wrapper.props, splitCargoTypes: true });
+      wrapper.containsMatchingElement((
+        <div>
+          <button>
+            LOOSE
+          </button>
+          <button>
+            CONTAINERIZED
+          </button>
+        </div>
+      )).should.equal(true);
+    });
+    it('does not render cargo type buttons if splitCargoTypes is false', () => {
+      wrapper.setProps({ ...wrapper.props, splitCargoTypes: false });
+      wrapper.containsMatchingElement((
+        <div>
+          <button>
+            LOOSE
+          </button>
+          <button>
+            CONTAINERIZED
+          </button>
+        </div>
+      )).should.equal(false);
+    });
+    it('renders both packages and containers if splitCargoTypes is false and ' +
+       'useContainers is true', () => {
+      wrapper.setProps({
+        ...wrapper.props,
+        splitCargoTypes: false,
+        useContainers: true,
       });
+      wrapper.containsMatchingElement(<PackageLines />).should.equal(true);
+      wrapper.containsMatchingElement(<Containers />).should.equal(true);
+    });
+    it('renders only packages if splitCargoTypes is false and useContainers ' +
+       'is false', () => {
+      wrapper.setProps({
+        ...wrapper.props,
+        splitCargoTypes: false,
+        useContainers: false,
+      });
+      wrapper.containsMatchingElement(<PackageLines />).should.equal(true);
+      wrapper.containsMatchingElement(<Containers />).should.equal(false);
+    });
+    it('renders description if useDescription is true', () => {
+      wrapper.setProps({
+        ...wrapper.props,
+        useDescription: true,
+      });
+      wrapper.containsMatchingElement(<Description />).should.equal(true);
+    });
+    it('does not render description if useDescription is false', () => {
+      wrapper.setProps({
+        ...wrapper.props,
+        useDescription: false,
+      });
+      wrapper.containsMatchingElement(<Description />).should.equal(false);
     });
   });
 }
