@@ -122,6 +122,22 @@ export const setDelivery = makeActionCreator(
   ACTION_TYPES.SET_DELIVERY,
   'delivery',
 );
+export const setReceiptDate = makeActionCreator(
+  ACTION_TYPES.SET_RECEIPT_DATE,
+  'receiptDate',
+);
+export const setDepartureDate = makeActionCreator(
+  ACTION_TYPES.SET_DEPARTURE_DATE,
+  'departureDate',
+);
+export const setArrivalDate = makeActionCreator(
+  ACTION_TYPES.SET_ARRIVAL_DATE,
+  'arrivalDate',
+);
+export const setDeliveryDate = makeActionCreator(
+  ACTION_TYPES.SET_DELIVERY_DATE,
+  'deliveryDate',
+);
 
 // OTHER SERVICES
 export const toggleExportCustomsClearance =

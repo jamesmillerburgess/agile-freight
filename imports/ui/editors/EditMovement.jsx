@@ -122,16 +122,32 @@ const EditMovement = ({ movement, dispatchers }) => (
       <div className="pickup">
         <div className="cargo-row-icon" />
         <div className="field select-country">
-          <Datetime />
+          <Datetime
+            value={movement.receiptDate}
+            onChange={
+              receiptDate => dispatchers.onChangeReceiptDate(receiptDate)}
+          />
         </div>
         <div className="field select-country">
-          <Datetime />
+          <Datetime
+            value={movement.departureDate}
+            onChange={
+              departureDate => dispatchers.onChangeDepartureDate(departureDate)}
+          />
         </div>
         <div className="field select-country">
-          <Datetime />
+          <Datetime
+            value={movement.arrivalDate}
+            onChange={
+              arrivalDate => dispatchers.onChangeArrivalDate(arrivalDate)}
+          />
         </div>
         <div className="field select-country">
-          <Datetime />
+          <Datetime
+            value={movement.deliveryDate}
+            onChange={
+              deliveryDate => dispatchers.onChangeDeliveryDate(deliveryDate)}
+          />
         </div>
       </div>
     </div>

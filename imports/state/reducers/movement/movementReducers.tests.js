@@ -11,7 +11,6 @@ import * as ACTION_TYPES from '../../actions/actionTypes';
 if (Meteor.isClient) {
   describe('Movement Reducer', () => {
     chai.should();
-
     it('loads the movement section of a quote', () => {
       const movementToLoad = {
         pickup: {
@@ -32,14 +31,12 @@ if (Meteor.isClient) {
 
       movement({}, action).should.eql(movementToLoad);
     });
-
     it('sets the mode', () => {
       const stateBefore = { mode: '' };
       const action = { type: ACTION_TYPES.SET_MOVEMENT_MODE, mode: 'a' };
       deepFreeze(stateBefore);
       movement(stateBefore, action).mode.should.equal('a');
     });
-
     it('sets the terms of sale', () => {
       const stateBefore = { termsOfSale: '' };
       const action = {
@@ -49,7 +46,6 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       movement(stateBefore, action).termsOfSale.should.equal('a');
     });
-
     it('clears the mode if terms of sale are set to \'Brokerage\'', () => {
       const stateBefore = { mode: '', termsOfSale: 'CFR' };
       const action = {
@@ -59,7 +55,6 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       movement(stateBefore, action).termsOfSale.should.equal('');
     });
-
     it('sets the commercial party', () => {
       const stateBefore = { commercialParty: '' };
       const action = {
@@ -69,7 +64,6 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       movement(stateBefore, action).commercialParty.should.equal('Buyer');
     });
-
     it('sets the carrier', () => {
       const stateBefore = { carrier: '' };
       const action = {
@@ -79,7 +73,6 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       movement(stateBefore, action).carrier.should.equal('MAEU');
     });
-
     it('sets the receipt', () => {
       const stateBefore = { receipt: {} };
       const action = {
@@ -89,7 +82,6 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       movement(stateBefore, action).receipt.code.should.equal('USMIA');
     });
-
     it('sets the departure', () => {
       const stateBefore = { departure: {} };
       const action = {
@@ -99,7 +91,6 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       movement(stateBefore, action).departure.code.should.equal('USMIA');
     });
-
     it('sets the arrival', () => {
       const stateBefore = { arrival: {} };
       const action = {
@@ -109,7 +100,6 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       movement(stateBefore, action).arrival.code.should.equal('USMIA');
     });
-
     it('sets the delivery', () => {
       const stateBefore = { delivery: {} };
       const action = {
@@ -118,6 +108,42 @@ if (Meteor.isClient) {
       };
       deepFreeze(stateBefore);
       movement(stateBefore, action).delivery.code.should.equal('USMIA');
+    });
+    it('sets the receipt date', () => {
+      const stateBefore = { receiptDate: 'a' };
+      const action = {
+        type: ACTION_TYPES.SET_RECEIPT_DATE,
+        receiptDate: 'b',
+      };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).receiptDate.should.equal('b');
+    });
+    it('sets the departure date', () => {
+      const stateBefore = { departureDate: 'a' };
+      const action = {
+        type: ACTION_TYPES.SET_DEPARTURE_DATE,
+        departureDate: 'b',
+      };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).departureDate.should.equal('b');
+    });
+    it('sets the arrival date', () => {
+      const stateBefore = { arrivalDate: 'a' };
+      const action = {
+        type: ACTION_TYPES.SET_ARRIVAL_DATE,
+        arrivalDate: 'b',
+      };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).arrivalDate.should.equal('b');
+    });
+    it('sets the delivery date', () => {
+      const stateBefore = { deliveryDate: 'a' };
+      const action = {
+        type: ACTION_TYPES.SET_DELIVERY_DATE,
+        deliveryDate: 'b',
+      };
+      deepFreeze(stateBefore);
+      movement(stateBefore, action).deliveryDate.should.equal('b');
     });
   });
 }
