@@ -1,5 +1,9 @@
 ## v.NEXT
 
+## v1.3.0 – Basic Shipping Documents
+
+
+
 ## v1.2.0 – Initial Shipment Editor
 
 * Link to shipment from shipment list item

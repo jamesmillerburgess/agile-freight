@@ -54,6 +54,9 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
         >
           SAVE
         </button>
+        <button className="button-submit">
+          SHIPPING DOCUMENT
+        </button>
       </div>
     </div>
   </div>
