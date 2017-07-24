@@ -1,5 +1,5 @@
-import { cargo } from './cargoReducers';
-import { movement } from './movementReducers';
+import { cargo } from '../cargo/cargoReducers';
+import { movement } from '../movement/movementReducers';
 import { otherServices } from './otherServicesReducers';
 import { charges } from './chargesReducers';
 import { email } from './emailReducers';

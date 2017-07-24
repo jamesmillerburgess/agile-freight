@@ -1,5 +1,18 @@
 ## v.NEXT
 
+## v1.2.0 – Initial Shipment Editor
+
+* Link to shipment from shipment list item
+* Abstracted out cargo component so it can be used in both quotes and shipments
+* Created modes for cargo component to account for use of containers
+* Added cargo editor in shipment editor
+* Added description field to cargo editor in shipment
+* Added new, save, and archive methods to shipment
+* Connected shipment methods to front-end buttons
+* Quote data is copied into new shipments
+* Added movement editor in shipment editor
+* Added date fields to moevement editor in shipment
+
 ## v1.1.0 – Shipment List Item
 
 * Shipment list items appear below quote list items in the customer view

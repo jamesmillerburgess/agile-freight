@@ -33,7 +33,8 @@ if (Meteor.isServer) {
           .not
           .throw();
       });
-      it('strips out extraneous properties', () => {
+      it('strips out extraneous properties', function () {
+        this.timeout(10000);
         (() => Meteor.call('branch.new', { name: 'newBranch', prop: 'prop' }))
           .should
           .throw();

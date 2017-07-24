@@ -10,6 +10,10 @@ export const setCargoType = makeActionCreator(
 );
 export const toggleRatedQuote = makeActionCreator(
   ACTION_TYPES.TOGGLE_RATED_QUOTE);
+export const setCargoDescription = makeActionCreator(
+  ACTION_TYPES.SET_CARGO_DESCRIPTION,
+  'description',
+);
 export const addPackageLine = makeActionCreator(
   ACTION_TYPES.ADD_PACKAGE_LINE);
 export const removePackageLine = makeActionCreator(
@@ -118,6 +122,22 @@ export const setDelivery = makeActionCreator(
   ACTION_TYPES.SET_DELIVERY,
   'delivery',
 );
+export const setReceiptDate = makeActionCreator(
+  ACTION_TYPES.SET_RECEIPT_DATE,
+  'receiptDate',
+);
+export const setDepartureDate = makeActionCreator(
+  ACTION_TYPES.SET_DEPARTURE_DATE,
+  'departureDate',
+);
+export const setArrivalDate = makeActionCreator(
+  ACTION_TYPES.SET_ARRIVAL_DATE,
+  'arrivalDate',
+);
+export const setDeliveryDate = makeActionCreator(
+  ACTION_TYPES.SET_DELIVERY_DATE,
+  'deliveryDate',
+);
 
 // OTHER SERVICES
 export const toggleExportCustomsClearance =
@@ -186,3 +206,9 @@ export const setQuoteCurrency = makeActionCreator(
 
 // LOAD QUOTE
 export const loadQuote = makeActionCreator(ACTION_TYPES.LOAD_QUOTE, 'quote');
+
+// LOAD SHIPMENT
+export const loadShipment = makeActionCreator(
+  ACTION_TYPES.LOAD_SHIPMENT,
+  'shipment',
+);

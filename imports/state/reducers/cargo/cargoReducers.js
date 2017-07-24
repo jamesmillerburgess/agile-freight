@@ -20,6 +20,15 @@ export const ratedQuote = (state = false, action = { type: '' }) => {
   }
 };
 
+export const description = (state = '', action = { type: '' } ) => {
+  switch (action.type) {
+    case ACTION_TYPES.SET_CARGO_DESCRIPTION:
+      return action.description;
+    default:
+      return state;
+  }
+};
+
 const defaultPackageLinesState = [
   {
     packageType: 'Packages',
@@ -210,9 +219,10 @@ export const temperatureControlled = (state = false, action = { type: '' }) => {
   }
 };
 
-const cargoDefaultState = {
+export const cargoDefaultState = {
   ratedQuote: false,
   cargoType: 'Loose',
+  description: '',
   packageLines: defaultPackageLinesState,
   containerLines: defaultContainerLinesState,
   hazardous: false,
@@ -222,13 +232,18 @@ const cargoDefaultState = {
 export const cargo = (state = {}, action = { type: '' }) => {
   let newBaseState = {};
   switch (action.type) {
+    // TODO: Abstract away any reference to quote or shipment
     case ACTION_TYPES.LOAD_QUOTE:
       newBaseState = action.quote.cargo || cargoDefaultState;
+      break;
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      newBaseState = action.shipment.cargo || cargoDefaultState;
       break;
     default:
       newBaseState = {
         cargoType: cargoType(state.cargoType, action),
         ratedQuote: ratedQuote(state.ratedQuote, action),
+        description: description(state.description, action),
         packageLines: packageLines(state.packageLines, action),
         containerLines: containerLines(state.containerLines, action),
         densityRatio: densityRatio(state.densityRatio, action),

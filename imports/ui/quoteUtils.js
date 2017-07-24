@@ -96,7 +96,7 @@ export const getUpdatedFXConversions = (charges) => {
       result[currency] = set(
         'rate',
         APIGlobals.fxRates[charges.currency][currency],
-        result[currency]
+        result[currency],
       );
     }
   });
@@ -105,6 +105,10 @@ export const getUpdatedFXConversions = (charges) => {
 
 export const copyQuote = (quoteId, cb) => {
   Meteor.call('quote.copy', quoteId, cb);
+};
+
+export const newShipment = (quoteId, cb) => {
+  Meteor.call('shipment.new', quoteId, cb);
 };
 
 export const extractRateMovement = quote => ({

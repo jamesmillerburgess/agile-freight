@@ -9,7 +9,7 @@ import { Quotes } from '../../api/quotes/quotesCollection';
 
 import ShipmentListItem from './ShipmentListItem.jsx';
 import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
-import { copyQuote } from '../quoteUtils';
+import { copyQuote, newShipment } from '../quoteUtils';
 
 export const QuoteListItemInner = ({ quote, history }) => {
   const
@@ -30,12 +30,19 @@ export const QuoteListItemInner = ({ quote, history }) => {
       if (ratedQuote === true) {
         return 'RATED, CONTAINERIZED';
       }
-      return `${totalContainers} UNIT${totalContainers !== 1 ? 'S' : ''}, ${totalTEU} TEU`;
+      return `${totalContainers} UNIT${totalContainers !==
+                                       1 ?
+                                       'S' :
+                                       ''}, ${totalTEU} TEU`;
     } else if (cargoType === 'Loose') {
       if (ratedQuote === true) {
         return 'RATED, LOOSE';
       }
-      return `${totalPackages} PKG${totalPackages !== 1 ? 'S' : ''}, ${weightFormat(totalVolume)} ${volumeUOM.toUpperCase()}, ${weightFormat(totalWeight)} ${weightUOM.toUpperCase()}`;
+      return `${totalPackages} PKG${totalPackages !==
+                                    1 ?
+                                    'S' :
+                                    ''}, ${weightFormat(totalVolume)} ${volumeUOM.toUpperCase()}, ${weightFormat(
+        totalWeight)} ${weightUOM.toUpperCase()}`;
     }
     return 'NO CARGO ENTERED';
   };
@@ -73,7 +80,10 @@ export const QuoteListItemInner = ({ quote, history }) => {
   };
 
   const getTotalPriceText = () => {
-    if (!quote || !quote.charges || !quote.charges.totalCharges || !quote.charges.currency) {
+    if (!quote ||
+        !quote.charges ||
+        !quote.charges.totalCharges ||
+        !quote.charges.currency) {
       return 'NO CHARGES ENTERED';
     }
     return `${quote.charges.currency} ${currencyFormat(quote.charges.totalCharges)}`;
@@ -83,18 +93,42 @@ export const QuoteListItemInner = ({ quote, history }) => {
     if (!quote || !quote.status) {
       return '';
     }
-    if (quote.status === 'Draft' || quote.status === 'Archived' || quote.status === 'Expired') {
+    if (quote.status ===
+        'Draft' ||
+        quote.status ===
+        'Archived' ||
+        quote.status ===
+        'Expired') {
       return quote.status.toUpperCase();
     }
     if (quote.status === 'Submitted' && quote.expiryDate) {
-      return `EXPIRES ${moment(quote.expiryDate).format('DD MMM YYYY').toUpperCase()}`;
+      return `EXPIRES ${moment(quote.expiryDate)
+        .format('DD MMM YYYY')
+        .toUpperCase()}`;
     }
     return '';
   };
 
   const onClickCopy = (e) => {
     e.preventDefault();
-    copyQuote(quote._id, (err, newQuoteId) => history.push(`/customers/view/${quote.customerId}/quotes/${newQuoteId}/header`));
+    copyQuote(
+      quote._id,
+      (
+        err,
+        newQuoteId,
+      ) => history.push(`/customers/view/${quote.customerId}/quotes/${newQuoteId}/header`),
+    );
+  };
+
+  const onClickNewShipment = (e) => {
+    e.preventDefault();
+    newShipment(
+      quote._id,
+      (
+        err,
+        newShipmentId,
+      ) => history.push(`/customers/view/${quote.customerId}/shipments/${newShipmentId}`),
+    );
   };
 
   const quoteLink = () => {
@@ -105,29 +139,41 @@ export const QuoteListItemInner = ({ quote, history }) => {
   };
 
   return (
-    <Link className="list-item" to={quoteLink()}>
-      <div className="panel">
-        <div className="icon-column">
-          <span className="fa fa-fw fa-clone" onClick={onClickCopy} />
-        </div>
-        <div className="container panel-body">
-          <div className="row no-gutters">
-            <div className="col-4">
-              <span className="label">{getCargoText()}</span><br />
-              <span className="label">{getMovementText()}</span>
-            </div>
-            <div className="col-4">
-              <span className="label">{getOtherServicesText()}</span><br />
-              <span className="label">{getTotalPriceText()}</span>
-            </div>
-            <div className="col-4">
-              <span className="label">{getStatusText()}</span>
+    <div>
+      <Link className="list-item" to={quoteLink()}>
+        <div className="panel">
+          <div className="icon-column">
+            <span className="fa fa-fw fa-clone" onClick={onClickCopy} />
+            <span className="fa fa-fw fa-plus" onClick={onClickNewShipment} />
+          </div>
+          <div className="container panel-body">
+            <div className="row no-gutters">
+              <div className="col-4">
+                <span className="label">{getCargoText()}</span><br />
+                <span className="label">{getMovementText()}</span>
+              </div>
+              <div className="col-4">
+                <span className="label">{getOtherServicesText()}</span><br />
+                <span className="label">{getTotalPriceText()}</span>
+              </div>
+              <div className="col-4">
+                <span className="label">{getStatusText()}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {quote.shipment ? <ShipmentListItem shipment={Shipments.findOne(quote.shipment)} /> : null}
-    </Link>
+      </Link>
+      {
+        quote.shipments ?
+        quote.shipments.map(shipmentId => (
+          <ShipmentListItem
+            key={shipmentId}
+            quote={quote}
+            shipment={Shipments.findOne(shipmentId)}
+          />
+        )) : null
+      }
+    </div>
   );
 };
 

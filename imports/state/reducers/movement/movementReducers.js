@@ -1,7 +1,7 @@
 import { set } from 'lodash/fp';
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
-const defaultMovementState = {
+export const defaultMovementState = {
   pickup: {
     locationType: '',
     country: '',
@@ -41,6 +41,14 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
       return set('arrival', action.arrival, state);
     case ACTION_TYPES.SET_DELIVERY:
       return set('delivery', action.delivery, state);
+    case ACTION_TYPES.SET_RECEIPT_DATE:
+      return set('receiptDate', action.receiptDate, state);
+    case ACTION_TYPES.SET_DEPARTURE_DATE:
+      return set('departureDate', action.departureDate, state);
+    case ACTION_TYPES.SET_ARRIVAL_DATE:
+      return set('arrivalDate', action.arrivalDate, state);
+    case ACTION_TYPES.SET_DELIVERY_DATE:
+      return set('deliveryDate', action.deliveryDate, state);
     default:
       return state;
   }

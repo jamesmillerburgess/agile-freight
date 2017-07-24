@@ -19,6 +19,7 @@ if (Meteor.isClient) {
         const stateAfter = {
           cargoType: 'loose',
           ratedQuote: false,
+          description: '',
           packageLines: [
             {
               packageType: 'Packages',
@@ -149,6 +150,23 @@ if (Meteor.isClient) {
         const newRatedQuote = ratedQuote(stateBefore, action);
 
         newRatedQuote.should.equal(false);
+      });
+    });
+
+    describe('Description Reducer', () => {
+      const { description } = cargoReducers;
+      it('does nothing by default', () => {
+        const state = 'a';
+        const action = { type: 'not an action' };
+        description(state, action).should.equal('a');
+      });
+      it('sets the description', () => {
+        const state = 'a';
+        const action = {
+          type: ACTION_TYPES.SET_CARGO_DESCRIPTION,
+          description: 'b',
+        };
+        description(state, action).should.equal('b');
       });
     });
 
