@@ -1,8 +1,9 @@
 ## v.NEXT
 
 ## v1.3.0 – Basic Shipping Documents
-
-
+ 
+* Bill of lading PDF can be generated from shipment editor
+* Long descriptions respect word wrap and continue on next page
 
 ## v1.2.0 – Initial Shipment Editor
 
@@ -15,7 +16,7 @@
 * Connected shipment methods to front-end buttons
 * Quote data is copied into new shipments
 * Added movement editor in shipment editor
-* Added date fields to moevement editor in shipment
+* Added date fields to movement editor in shipment
 
 ## v1.1.0 – Shipment List Item
 
