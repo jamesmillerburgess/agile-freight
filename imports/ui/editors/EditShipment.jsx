@@ -7,76 +7,68 @@ import Shipment from '../shipmentUtils';
 
 import { BillOfLading } from '../../documents/billOfLading';
 
-const Document = ({ x }) => {
-  return (
-    <embed className="print-preview" src={x} />
-  );
-};
-
-const EditShipment = ({ shipment, dispatchers, history, match }) => {
-  let shippingDocSrc = '';
-
-  return (
-    <div className="new-quote">
-      <div className="process-header">
-        <div className="title">NEW SHIPMENT</div>
-        <div className="breadcrumbs">
-          <div className="breadcrumb active customer">HEADER</div>
-          <div className="breadcrumb-end active customer" />
-        </div>
+const EditShipment = ({ shipment, dispatchers, history, match }) => (
+  <div className="new-quote">
+    <div className="process-header">
+      <div className="title">NEW SHIPMENT</div>
+      <div className="breadcrumbs">
+        <div className="breadcrumb active customer">HEADER</div>
+        <div className="breadcrumb-end active customer" />
+      </div>
+      <button
+        className="button-primary"
+        onClick={() => history.push(`/customers/view/${match.params.customerId}/overview`)}
+      >
+        BACK TO CUSTOMER
+      </button>
+    </div>
+    <div className="panel container form-section">
+      <div className="title">
+        <div className="cargo-row-icon" />
+        CARGO
+      </div>
+      <EditCargo
+        cargo={shipment.cargo}
+        dispatchers={dispatchers}
+        useContainers
+        splitCargoTypes={false}
+        useDescription
+      />
+      <div className="title">
+        <div className="cargo-row-icon" />
+        MOVEMENT
+      </div>
+      <EditMovement
+        movement={shipment.movement}
+        dispatchers={dispatchers}
+        useDates
+      />
+      <div className="form-button-group">
         <button
-          className="button-primary"
-          onClick={() => history.push(`/customers/view/${match.params.customerId}/overview`)}
+          className="delete-button"
+          onClick={() => Shipment.archive(match.params.shipmentId)}
         >
-          BACK TO CUSTOMER
+          ARCHIVE
+        </button>
+        <button
+          className="save-button"
+          onClick={() => Shipment.save(match.params.shipmentId, shipment)}
+        >
+          SAVE
+        </button>
+        <button
+          className="button-submit"
+          onClick={() => BillOfLading(
+            { description: shipment.cargo.description },
+            url => window.open(url),
+          )}
+        >
+          SHIPPING DOCUMENT
         </button>
       </div>
-      <div className="panel container form-section">
-        <div className="title">
-          <div className="cargo-row-icon" />
-          CARGO
-        </div>
-        <EditCargo
-          cargo={shipment.cargo}
-          dispatchers={dispatchers}
-          useContainers
-          splitCargoTypes={false}
-          useDescription
-        />
-        <div className="title">
-          <div className="cargo-row-icon" />
-          MOVEMENT
-        </div>
-        <EditMovement
-          movement={shipment.movement}
-          dispatchers={dispatchers}
-          useDates
-        />
-        <div className="form-button-group">
-          <button
-            className="delete-button"
-            onClick={() => Shipment.archive(match.params.shipmentId)}
-          >
-            ARCHIVE
-          </button>
-          <button
-            className="save-button"
-            onClick={() => Shipment.save(match.params.shipmentId, shipment)}
-          >
-            SAVE
-          </button>
-          <button
-            className="button-submit"
-            onClick={() => BillOfLading({ description: shipment.cargo.description }, url => { console.log(url); shippingDocSrc = url; })}
-          >
-            SHIPPING DOCUMENT
-          </button>
-        </div>
-        <Document x={shippingDocSrc} />
-      </div>
     </div>
-  );
-};
+  </div>
+);
 
 EditShipment.propTypes = {
   shipment: PropTypes.object.isRequired,

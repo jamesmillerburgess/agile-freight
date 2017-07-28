@@ -1,4 +1,7 @@
-import { pdfkitx } from 'meteor/pascoual:pdfkitx';
+import {} from 'meteor/pascoual:pdfkitx';
+
+const PDFDocument = global.PDFDocument;
+const blobStream = global.blobStream;
 
 export const calculateRealLineHeight = (font, fontSize) => {
   const doc = new PDFDocument({
@@ -41,15 +44,15 @@ export const calculateLines = (text, colWidth, font, fontSize) => {
     doc.fontSize(fontSize);
   }
   doc.text(text);
-  return doc.y / lineHeight;
+  return Math.round(doc.y / lineHeight);
 };
 
 export const removeLastWord = (text) => {
   const words = text.split(/[\s,]+/);
-  console.log('Words:');
-  console.log(words);
-  console.log('words[words.length - 1] * -1: ');
-  console.log(words[words.length - 1] * -1);
+  // console.log('Words:');
+  // console.log(words);
+  // console.log('words[words.length - 1] * -1: ');
+  // console.log(words[words.length - 1] * -1);
   return text.slice(0, (words[words.length - 1].length * -1) - 1);
 };
 
@@ -59,15 +62,15 @@ export const fitLines = (text, colWidth, numLines, font, fontHeight) => {
   }
   let fittedText = text;
   let linesTaken = calculateLines(fittedText, colWidth, font, fontHeight);
-  console.log('First');
-  console.log(fittedText);
-  console.log(linesTaken);
+  // console.log('First');
+  // console.log(fittedText);
+  // console.log(linesTaken);
   while (linesTaken > numLines) {
     fittedText = removeLastWord(fittedText);
     linesTaken = calculateLines(fittedText, colWidth, font, fontHeight);
-    console.log('Word removed!');
-    console.log(fittedText);
-    console.log(linesTaken);
+    // console.log('Word removed!');
+    // console.log(fittedText);
+    // console.log(linesTaken);
   }
   return fittedText;
 };
@@ -77,14 +80,8 @@ export const BillOfLading = (job, cb) => {
     return;
   }
 
-  // console.log(fitLines(job.description, 400, 1, 'Courier', 10));
-  // console.log(fitLines(job.description, 400, 2, 'Courier', 10));
-  // console.log(fitLines(job.description, 400, 3, 'Courier', 10));
-  let res = fitLines(job.description, 400, 4, 'Courier', 10);
-  console.log('Result');
-  console.log(res);
   // create a document and pipe to a blob
-  var doc = new PDFDocument({
+  const doc = new PDFDocument({
     size: [595.28, 841.89],
     margins: {
       top: 18,
@@ -93,17 +90,17 @@ export const BillOfLading = (job, cb) => {
       right: 18,
     },
   });
-  var stream = doc.pipe(blobStream());
+  const stream = doc.pipe(blobStream());
 
   const page = {
     width: 595.28,
     height: 841.89,
     contentWidth: 595.28 - (18 * 2),
     contentHeight: 841.89 - (18 * 2),
-    columnWidth: (595.28 - (18 * 2)) / 2 - (18 / 2),
+    columnWidth: ((595.28 - (18 * 2)) / 2) - (18 / 2),
     leftColumnStart: 18,
-    rightColumnStart: 595.28 / 2 + 18 / 2,
-    leftColumnEnd: 18 + (595.28 - (18 * 2)) / 2 - (18 / 2),
+    rightColumnStart: (595.28 / 2) + (18 / 2),
+    leftColumnEnd: (18 + ((595.28 - (18 * 2)) / 2)) - (18 / 2),
     rightColumnEnd: 595.28 - 18,
     margin: 18,
   };
@@ -115,54 +112,6 @@ export const BillOfLading = (job, cb) => {
     .registerFont('static', 'Helvetica');
 
   // *** Parties ***
-  if (!job.number) {
-    job.number = '';
-  }
-
-  if (!job.reference) {
-    job.reference = '';
-  }
-
-  if (!job.shipper) {
-    job.shipper = '';
-  }
-
-  if (!job.consignee) {
-    job.consignee = '';
-  }
-
-  if (!job.notifyParty) {
-    job.notifyParty = job.consignee;
-  }
-
-  if (!job.notifyPartyAddress) {
-    job.notifyPartyAddress = job.consigneeAddress;
-  }
-
-  if (!job.preCarriageBy) {
-    job.preCarriageBy = '';
-  }
-
-  if (!job.placeOfReceipt) {
-    job.placeOfReceipt = '';
-  }
-
-  if (!job.vessel) {
-    job.vessel = '';
-  }
-
-  if (!job.portOfLoading) {
-    job.portOfLoading = '';
-  }
-
-  if (!job.portOfDischarge) {
-    job.portOfDischarge = '';
-  }
-
-  if (!job.placeOfDelivery) {
-    job.placeOfDelivery = '';
-  }
-
   function drawParty(x, y, label, value) {
     doc
       .moveTo(x, y)
@@ -194,25 +143,25 @@ export const BillOfLading = (job, cb) => {
     page.margin,
     page.margin,
     'SHIPPER',
-    job.shipper + '\n' + job.shipperAddress
+    `${job.shipper}\n${job.shipperAddress}`,
   );
   drawParty(
     page.margin,
     page.margin + 70,
     'CONSIGNEE',
-    job.consignee + '\n' + job.consigneeAddress
+    `${job.consignee}\n${job.consigneeAddress}`,
   );
   drawParty(
     page.margin,
     page.margin + 140,
     'NOTIFY PARTY',
-    job.notifyParty + '\n' + job.notifyPartyAddress
+    `${job.notifyParty}\n${job.notifyPartyAddress}`,
   );
 
   function drawField(x, y, label, value) {
     doc
       .moveTo(x, y)
-      .lineTo(x + page.columnWidth / 2, y)
+      .lineTo(x + (page.columnWidth / 2), y)
       .stroke();
 
     doc
@@ -221,8 +170,8 @@ export const BillOfLading = (job, cb) => {
       .stroke();
 
     doc
-      .moveTo(x + page.columnWidth / 2, y - 0.5)
-      .lineTo(x + page.columnWidth / 2, y + 6.5)
+      .moveTo(x + (page.columnWidth / 2), y - 0.5)
+      .lineTo(x + (page.columnWidth / 2), y + 6.5)
       .stroke();
 
     doc
@@ -240,40 +189,51 @@ export const BillOfLading = (job, cb) => {
     page.margin,
     page.margin + 210,
     'PRE-CARRIAGE BY',
-    job.preCarriageBy);
+    job.preCarriageBy,
+  );
   drawField(
-    page.margin + page.columnWidth / 2,
+    page.margin + (page.columnWidth / 2),
     page.margin + 210,
     'PLACE OF RECEIPT',
-    job.placeOfReceipt);
+    job.placeOfReceipt,
+  );
   drawField(
     page.margin,
     page.margin + 240,
     'VESSEL',
-    job.vessel);
+    job.vessel,
+  );
   drawField(
-    page.margin + page.columnWidth / 2,
+    page.margin + (page.columnWidth / 2),
     page.margin + 240,
     'PORT OF LOADING',
-    job.portOfLoading);
+    job.portOfLoading,
+  );
   drawField(
     page.margin,
     page.margin + 270,
     'PORT OF DISCHARGE',
-    job.portOfDischarge);
-  drawField(page.margin + page.columnWidth / 2,
+    job.portOfDischarge,
+  );
+  drawField(
+    page.margin + (page.columnWidth / 2),
     page.margin + 270,
     'PLACE OF DELIVERY',
-    job.placeOfDelivery);
+    job.placeOfDelivery,
+  );
 
-  drawField(page.rightColumnStart,
+  drawField(
+    page.rightColumnStart,
     page.margin,
     'CUSTOMER REFERENCE',
-    job.customerReference || '');
-  drawField(page.rightColumnStart + page.columnWidth / 2,
+    job.customerReference || '',
+  );
+  drawField(
+    page.rightColumnStart + (page.columnWidth / 2),
     page.margin,
     'BILL OF LADING NUMBER',
-    job.billOfLadingNumber || '');
+    job.billOfLadingNumber || '',
+  );
 
   doc
     .font('title')
@@ -282,10 +242,8 @@ export const BillOfLading = (job, cb) => {
       job.carrier,
       page.rightColumnStart,
       page.margin + 30,
-      {
-        width: page.columnWidth,
-        align: 'center',
-      });
+      { width: page.columnWidth, align: 'center' },
+    );
 
   doc
     .font('title')
@@ -294,10 +252,8 @@ export const BillOfLading = (job, cb) => {
       job.blType,
       page.rightColumnStart,
       page.margin + 60,
-      {
-        width: page.columnWidth,
-        align: 'center',
-      });
+      { width: page.columnWidth, align: 'center' },
+    );
   if (job.blType === 'WAYBILL') {
     doc.text(
       'NON-NEGOTIABLE',
@@ -306,24 +262,35 @@ export const BillOfLading = (job, cb) => {
       {
         width: page.columnWidth,
         align: 'center',
-      });
+      },
+    );
   }
 
-  let legalText = `Received by the Carrier from the Shipper on the terms hereof the total number \
-of Containers or packages said to contain Goods enumerated below in the box marked "Total \
-No. of Containers or Packages (in words)" in apparent good order and condition (unless \
-otherwise indicated herein) for Carriage from the Place of Receipt or the Port of Loading \
-to the Port of Discharge or the Place of Delivery. \n \
-In consideration of Carrier's acceptance of the Containers or packages, the Shipper (on its \
-own behalf and on behalf of all persons included in the definition of "Merchant" contained \
-in the applicable Freight For All standard from bill of lading) agrees that all terms on the \
-face and back hereof apply. THE MERCHANT SPECIFICALLY AGREES THAT ITS ATTENTION HAS BEEN \
-DRAWN TO AND THAT IT HAS ACCEPTED THE APPLICABLE FREIGHT FOR ALL STANDARD FORM BILL OF LADING \
-("THE CARRIER'S B/L"), THE CARRIER'S APPLICABLE TARIFF(S), AND THE CMI UNIFORM RULES FOR SEA \
-WAYBILLS AS REFERRED TO IN AND INCORPORATED HEREIN BY CLAUSE 1 ON THE REVERSE HEREOF. \n \
-This waybill supersedes any prior arrangements, agreements or representations by the Carrier, \
-its agent or any other person, save for service contracts between the parties, and where \
-applicable valid under the United States Shipping Act.`;
+  const legalText = 'Received by the Carrier from the Shipper on the terms ' +
+                    'hereof the total number of Containers or packages said to ' +
+                    'contain Goods enumerated below in the box marked "Total ' +
+                    'No. of Containers or Packages (in words)" in apparent ' +
+                    'good order and condition (unless otherwise indicated ' +
+                    'herein) for Carriage from the Place of Receipt or the ' +
+                    'Port of Loading to the Port of Discharge or the Place ' +
+                    'of Delivery.\n' +
+                    'In consideration of Carrier\'s acceptance of the ' +
+                    'Containers or packages, the Shipper (on its own behalf ' +
+                    'and on behalf of all persons included in the definition ' +
+                    'of "Merchant" contained in the applicable Freight For All ' +
+                    'standard from bill of lading) agrees that all terms on ' +
+                    'the face and back hereof apply. THE MERCHANT SPECIFICALLY ' +
+                    'AGREES THAT ITS ATTENTION HAS BEEN DRAWN TO AND THAT IT ' +
+                    'HAS ACCEPTED THE APPLICABLE FREIGHT FOR ALL STANDARD FORM ' +
+                    'BILL OF LADING ("THE CARRIER\'S B/L"), THE CARRIER\'S ' +
+                    'APPLICABLE TARIFF(S), AND THE CMI UNIFORM RULES FOR SEA ' +
+                    'WAYBILLS AS REFERRED TO IN AND INCORPORATED HEREIN BY ' +
+                    'CLAUSE 1 ON THE REVERSE HEREOF.\n' +
+                    'This waybill supersedes any prior arrangements, ' +
+                    'agreements or representations by the Carrier, its agent ' +
+                    'or any other person, save for service contracts between ' +
+                    'the parties, and where applicable valid under the United ' +
+                    'States Shipping Act.';
 
   doc
     .font('static')
@@ -332,11 +299,8 @@ applicable valid under the United States Shipping Act.`;
       legalText,
       page.rightColumnStart,
       page.margin + 110,
-      {
-        width: page.columnWidth,
-        align: 'justify',
-        indent: 10,
-      });
+      { width: page.columnWidth, align: 'justify', indent: 10 },
+    );
 
   doc
     .moveTo(page.margin, page.margin + 300)
@@ -351,13 +315,22 @@ applicable valid under the United States Shipping Act.`;
       page.margin + 1,
       page.margin + 301,
     )
+    .font('value')
+    .fontSize(10);
+  let description = fitLines(job.description, 300, 17, 'Courier', 10);
+  doc.text(description, page.margin + 1, page.margin + 320, { width: 300 });
+  description = job.description.slice(description.length);
+
+  doc
+    .fontSize(7)
+    .font('label')
     .text(
       'SEAL NUMBER\nMARKS & NUMBERS',
       page.margin + 60,
       page.margin + 301,
     )
     .text(
-      'NUMBER OF\nCONTAINERS\nOR PACKAGES',
+      'NUMBER OF\nPACKAGES',
       page.margin + 140,
       page.margin + 301,
     )
@@ -383,8 +356,8 @@ applicable valid under the United States Shipping Act.`;
     )
     .fontSize(6)
     .text(
-      `IF SHIPPER ENTERS A VALUE, THE AD VALOREM RATE WILL BE CHARGED (SEE CLAUSE 24 OF CARRIERS \
-STANDARD BILL OF LADING)`,
+      'IF SHIPPER ENTERS A VALUE, THE AD VALOREM RATE WILL BE CHARGED (SEE ' +
+      'CLAUSE 24 OF CARRIERS STANDARD BILL OF LADING)',
       page.margin + 140,
       page.margin + 500,
     )
@@ -485,8 +458,17 @@ STANDARD BILL OF LADING)`,
       page.margin + 751,
     );
 
+  if (description.length > 0) {
+    doc
+      .addPage()
+      .font('value')
+      .fontSize(10)
+      .text(description);
+  }
+
   doc.end();
-  stream.on('finish', function () {
-    cb('document/' + stream.toBlobURL('application/pdf'));
-  });
+  stream.on(
+    'finish',
+    () => cb(stream.toBlobURL('application/pdf')),
+  );
 };
