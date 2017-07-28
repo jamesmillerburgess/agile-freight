@@ -64,9 +64,9 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
               (url) => {
                 const open = window.open(url);
                 if (open === null || typeof (open) === 'undefined') {
-                  window.alert('Turn off your pop-up blocker!\n\nThe ' +
-                               'following URL has been blocked:\n' +
-                               url);
+                  window.alert(
+                    `This URL has been blocked by your browser:\n${url}`
+                  );
                 }
               },
             )
