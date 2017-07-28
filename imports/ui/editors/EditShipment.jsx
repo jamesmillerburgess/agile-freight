@@ -58,10 +58,19 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
         </button>
         <button
           className="button-submit"
-          onClick={() => BillOfLading(
-            { description: shipment.cargo.description },
-            url => window.open(url),
-          )}
+          onClick={() =>
+            BillOfLading(
+              { description: shipment.cargo.description },
+              (url) => {
+                const open = window.open(url);
+                if (open === null || typeof (open) === 'undefined') {
+                  window.alert('Turn off your pop-up blocker!\n\nThe ' +
+                               'following URL has been blocked:\n' +
+                               url);
+                }
+              },
+            )
+          }
         >
           SHIPPING DOCUMENT
         </button>
