@@ -8,7 +8,6 @@ import Shipment from '../shipmentUtils';
 import { BillOfLading } from '../../documents/billOfLading';
 
 const Document = ({ x }) => {
-  console.log('hello');
   return (
     <embed className="print-preview" src={x} />
   );
@@ -68,7 +67,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => {
           </button>
           <button
             className="button-submit"
-            onClick={() => BillOfLading({}, url => { console.log(url); shippingDocSrc = url; })}
+            onClick={() => BillOfLading({ description: shipment.cargo.description }, url => { console.log(url); shippingDocSrc = url; })}
           >
             SHIPPING DOCUMENT
           </button>
