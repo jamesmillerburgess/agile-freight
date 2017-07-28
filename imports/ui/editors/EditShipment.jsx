@@ -65,7 +65,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
                 const open = window.open(url);
                 if (open === null || typeof (open) === 'undefined') {
                   window.alert(
-                    `This URL has been blocked by your browser:\n${url}`
+                    `This URL has been blocked by your browser:\n${url}`,
                   );
                 }
               },
