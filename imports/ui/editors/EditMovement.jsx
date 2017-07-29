@@ -45,23 +45,6 @@ export const Dates = ({ movement, dispatchers }) => (
 
 const EditMovement = ({ movement, dispatchers, useDates, useShipperConsignee }) => (
   <div>
-    {useShipperConsignee ? (
-      <div className="pickup-delivery-wrapper">
-        <div className="cargo-row-icon" />
-        <div className="field select-country">
-          <div className="label">
-            Shipper
-          </div>
-          <input />
-        </div>
-        <div className="field select-country">
-          <div className="label">
-            Consignee
-          </div>
-          <input />
-        </div>
-      </div>
-    ) : null}
     <div className="pickup-delivery-wrapper">
       <div className="cargo-row-icon" />
       <div className="field select-country">
@@ -82,31 +65,33 @@ const EditMovement = ({ movement, dispatchers, useDates, useShipperConsignee }) 
       </div>
       {useShipperConsignee ?
        null : (
-         <div className="field select-country">
-           <div className="label">
-             COMMERCIAL PARTY
+         <div>
+           <div className="field select-country">
+             <div className="label">
+               COMMERCIAL PARTY
+             </div>
+             <Select
+               value={movement.commercialParty}
+               options={APIGlobals.commercialPartyOptions}
+               onChange={selectedValue =>
+                 dispatchers.onChangeMovementCommercialParty(selectedValue.value)}
+             />
            </div>
-           <Select
-             value={movement.commercialParty}
-             options={APIGlobals.commercialPartyOptions}
-             onChange={selectedValue =>
-               dispatchers.onChangeMovementCommercialParty(selectedValue.value)}
-           />
+           <div className="field select-country">
+             <div className="label">
+               TERMS OF SALE
+             </div>
+             <Select
+               value={movement.termsOfSale}
+               options={APIGlobals.incotermOptions}
+               onChange={selectedValue =>
+                 dispatchers.onChangeMovementTermsOfSale(selectedValue.value)}
+               disabled={movement.mode === 'Brokerage'}
+             />
+           </div>
          </div>
        )
       }
-      <div className="field select-country">
-        <div className="label">
-          TERMS OF SALE
-        </div>
-        <Select
-          value={movement.termsOfSale}
-          options={APIGlobals.incotermOptions}
-          onChange={selectedValue =>
-            dispatchers.onChangeMovementTermsOfSale(selectedValue.value)}
-          disabled={movement.mode === 'Brokerage'}
-        />
-      </div>
       <div className="field select-country">
         <div className="label">
           CARRIER
@@ -119,6 +104,22 @@ const EditMovement = ({ movement, dispatchers, useDates, useShipperConsignee }) 
           disabled={movement.mode === 'Brokerage'}
         />
       </div>
+      {useShipperConsignee ? (
+        <div className="field select-country">
+          <div className="label">
+            PRE-CARRIAGE BY
+          </div>
+          <input />
+        </div>
+      ) : null}
+      {useShipperConsignee ? (
+        <div className="field select-country">
+          <div className="label">
+            VESSEL
+          </div>
+          <input />
+        </div>
+      ) : null}
     </div>
     <div className="pickup-delivery-wrapper">
       <div className="pickup">

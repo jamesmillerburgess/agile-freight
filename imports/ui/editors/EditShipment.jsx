@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
 
 import EditCargo from './EditCargo.jsx';
 import EditMovement from './EditMovement.jsx';
 import Shipment from '../shipmentUtils';
 
 import { BillOfLading } from '../../documents/billOfLading';
+import { APIGlobals } from '../../api/api-globals';
 
 const EditShipment = ({ shipment, dispatchers, history, match }) => (
   <div className="new-quote">
@@ -23,6 +25,70 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
       </button>
     </div>
     <div className="panel container form-section">
+      <div className="title">
+        <div className="cargo-row-icon" />
+        PARTIES
+      </div>
+      <div className="pickup-delivery-wrapper">
+        <div className="cargo-row-icon" />
+        <div className="field select-country">
+          <div className="label">
+            SHIPPER
+          </div>
+          <input />
+        </div>
+        <div className="field select-country">
+          <div className="label">
+            CONSIGNEE
+          </div>
+          <input />
+        </div>
+        <div className="field select-country">
+          <div className="label">
+            NOTIFY PARTY
+          </div>
+          <input />
+        </div>
+        <div className="field select-country">
+          <div className="label">
+            TERMS OF SALE
+          </div>
+          <Select
+            value={shipment.movement.termsOfSale}
+            options={APIGlobals.incotermOptions}
+            onChange={selectedValue =>
+              dispatchers.onChangeMovementTermsOfSale(selectedValue.value)}
+            disabled={shipment.movement.mode === 'Brokerage'}
+          />
+        </div>
+      </div>
+      <div className="pickup-delivery-wrapper">
+        <div className="cargo-row-icon" />
+        <div className="field select-country">
+          <textarea className="address" />
+        </div>
+        <div className="field select-country">
+          <textarea className="address" />
+        </div>
+        <div className="field select-country">
+          <textarea className="address" />
+        </div>
+      </div>
+      <div className="pickup-delivery-wrapper">
+        <div className="cargo-row-icon" />
+        <div className="field select-country">
+          <div className="label">
+            CUSTOMER REFERENCE
+          </div>
+          <input />
+        </div>
+        <div className="field select-country">
+          <div className="label">
+            B/L TYPE
+          </div>
+          <input />
+        </div>
+      </div>
       <div className="title">
         <div className="cargo-row-icon" />
         CARGO
