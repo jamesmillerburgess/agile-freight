@@ -42,6 +42,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
         movement={shipment.movement}
         dispatchers={dispatchers}
         useDates
+        useShipperConsignee
       />
       <div className="form-button-group">
         <button
@@ -64,6 +65,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
               (url) => {
                 const open = window.open(url);
                 if (open === null || typeof (open) === 'undefined') {
+                  // TODO: Create themed alert
                   window.alert(
                     `This URL has been blocked by your browser:\n${url}`,
                   );

@@ -43,8 +43,25 @@ export const Dates = ({ movement, dispatchers }) => (
   </div>
 );
 
-const EditMovement = ({ movement, dispatchers, useDates }) => (
+const EditMovement = ({ movement, dispatchers, useDates, useShipperConsignee }) => (
   <div>
+    {useShipperConsignee ? (
+      <div className="pickup-delivery-wrapper">
+        <div className="cargo-row-icon" />
+        <div className="field select-country">
+          <div className="label">
+            Shipper
+          </div>
+          <input />
+        </div>
+        <div className="field select-country">
+          <div className="label">
+            Consignee
+          </div>
+          <input />
+        </div>
+      </div>
+    ) : null}
     <div className="pickup-delivery-wrapper">
       <div className="cargo-row-icon" />
       <div className="field select-country">
@@ -63,17 +80,21 @@ const EditMovement = ({ movement, dispatchers, useDates }) => (
             dispatchers.onChangeMovementMode(selectedValue.value)}
         />
       </div>
-      <div className="field select-country">
-        <div className="label">
-          COMMERCIAL PARTY
-        </div>
-        <Select
-          value={movement.commercialParty}
-          options={APIGlobals.commercialPartyOptions}
-          onChange={selectedValue =>
-            dispatchers.onChangeMovementCommercialParty(selectedValue.value)}
-        />
-      </div>
+      {useShipperConsignee ?
+       null : (
+         <div className="field select-country">
+           <div className="label">
+             COMMERCIAL PARTY
+           </div>
+           <Select
+             value={movement.commercialParty}
+             options={APIGlobals.commercialPartyOptions}
+             onChange={selectedValue =>
+               dispatchers.onChangeMovementCommercialParty(selectedValue.value)}
+           />
+         </div>
+       )
+      }
       <div className="field select-country">
         <div className="label">
           TERMS OF SALE
@@ -162,10 +183,12 @@ EditMovement.propTypes = {
   movement: PropTypes.object.isRequired,
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
   useDates: PropTypes.bool,
+  useShipperConsignee: PropTypes.bool,
 };
 
 EditMovement.defaultProps = {
   useDates: false,
+  useShipperConsignee: false,
 };
 
 export default EditMovement;
