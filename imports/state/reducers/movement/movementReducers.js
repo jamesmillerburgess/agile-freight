@@ -20,6 +20,8 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
       return action.quote.movement || defaultMovementState;
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.shipment.movement;
     case ACTION_TYPES.SET_MOVEMENT_MODE:
       let newState = {};
       newState = set('mode', action.mode, state);

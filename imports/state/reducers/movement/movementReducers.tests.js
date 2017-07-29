@@ -28,7 +28,25 @@ if (Meteor.isClient) {
         type: ACTION_TYPES.LOAD_QUOTE,
         quote: { movement: movementToLoad },
       };
-
+      movement({}, action).should.eql(movementToLoad);
+    });
+    it('loads the movement section of a shipment', () => {
+      const movementToLoad = {
+        pickup: {
+          locationType: 'a',
+          country: 'b',
+          location: 'c',
+        },
+        delivery: {
+          locationType: 'd',
+          country: 'e',
+          location: 'f',
+        },
+      };
+      const action = {
+        type: ACTION_TYPES.LOAD_SHIPMENT,
+        shipment: { movement: movementToLoad },
+      };
       movement({}, action).should.eql(movementToLoad);
     });
     it('sets the mode', () => {

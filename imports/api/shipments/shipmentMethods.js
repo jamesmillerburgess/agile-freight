@@ -34,12 +34,36 @@ Meteor.methods({
   'shipment.save': function shipmentSave(shipment) {
     check(shipment, Object);
 
+    if (!Shipments.findOne(shipment._id)) {
+      return;
+    }
+
+    const {
+      shipper,
+      shipperAddress,
+      consignee,
+      consigneeAddress,
+      notifyParty,
+      notifyPartyAddress,
+      customerReference,
+      blType,
+      cargo,
+      movement,
+    } = shipment;
     Shipments.update(
       { _id: shipment._id },
       {
         $set: {
-          cargo: shipment.cargo,
-          movement: shipment.movement,
+          shipper,
+          shipperAddress,
+          consignee,
+          consigneeAddress,
+          notifyParty,
+          notifyPartyAddress,
+          customerReference,
+          blType,
+          cargo,
+          movement,
         },
       },
     );

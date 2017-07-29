@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import Datetime from 'react-datetime';
+import moment from 'moment';
 
 import UNLocationField from '../fields/UNLocationField.jsx';
 
@@ -13,30 +14,30 @@ export const Dates = ({ movement, dispatchers }) => (
       <div className="cargo-row-icon" />
       <div className="field select-country">
         <Datetime
-          value={movement.receiptDate}
-          onChange={
-            receiptDate => dispatchers.onChangeReceiptDate(receiptDate)}
+          value={movement.receiptDate ? moment(movement.receiptDate) : ''}
+          onChange={receiptDate =>
+            dispatchers.onChangeReceiptDate(receiptDate.format())}
         />
       </div>
       <div className="field select-country">
         <Datetime
-          value={movement.departureDate}
-          onChange={
-            departureDate => dispatchers.onChangeDepartureDate(departureDate)}
+          value={movement.departureDate ? moment(movement.departureDate) : ''}
+          onChange={departureDate =>
+            dispatchers.onChangeDepartureDate(departureDate.format())}
         />
       </div>
       <div className="field select-country">
         <Datetime
-          value={movement.arrivalDate}
-          onChange={
-            arrivalDate => dispatchers.onChangeArrivalDate(arrivalDate)}
+          value={movement.arrivalDate ? moment(movement.arrivalDate) : ''}
+          onChange={arrivalDate =>
+            dispatchers.onChangeArrivalDate(arrivalDate.format())}
         />
       </div>
       <div className="field select-country">
         <Datetime
-          value={movement.deliveryDate}
-          onChange={
-            deliveryDate => dispatchers.onChangeDeliveryDate(deliveryDate)}
+          value={movement.deliveryDate ? moment(movement.deliveryDate) : ''}
+          onChange={deliveryDate =>
+            dispatchers.onChangeDeliveryDate(deliveryDate.format())}
         />
       </div>
     </div>
@@ -110,7 +111,7 @@ const EditMovement = ({ movement, dispatchers, useDates, useShipperConsignee }) 
             PRE-CARRIAGE BY
           </div>
           <input
-            value={movement.vessel}
+            value={movement.preCarriageBy}
             onChange={e => dispatchers.onChangePreCarriageBy(e.target.value)}
           />
         </div>

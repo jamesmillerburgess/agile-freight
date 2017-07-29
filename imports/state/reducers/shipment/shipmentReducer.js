@@ -5,6 +5,8 @@ import * as ACTION_TYPES from '../../actions/actionTypes';
 
 export const shipper = (state = '', action = { type: '' }) => {
   switch (action.type) {
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.shipment.shipper;
     case ACTION_TYPES.SET_SHIPPER:
       return action.shipper;
     default:
@@ -14,6 +16,8 @@ export const shipper = (state = '', action = { type: '' }) => {
 
 export const consignee = (state = '', action = { type: '' }) => {
   switch (action.type) {
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.shipment.consignee;
     case ACTION_TYPES.SET_CONSIGNEE:
       return action.consignee;
     default:
@@ -23,6 +27,8 @@ export const consignee = (state = '', action = { type: '' }) => {
 
 export const notifyParty = (state = '', action = { type: '' }) => {
   switch (action.type) {
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.shipment.notifyParty;
     case ACTION_TYPES.SET_NOTIFY_PARTY:
       return action.notifyParty;
     default:
@@ -32,6 +38,8 @@ export const notifyParty = (state = '', action = { type: '' }) => {
 
 export const shipperAddress = (state = '', action = { type: '' }) => {
   switch (action.type) {
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.shipment.shipperAddress;
     case ACTION_TYPES.SET_SHIPPER_ADDRESS:
       return action.shipperAddress;
     default:
@@ -41,6 +49,8 @@ export const shipperAddress = (state = '', action = { type: '' }) => {
 
 export const consigneeAddress = (state = '', action = { type: '' }) => {
   switch (action.type) {
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.shipment.consigneeAddress;
     case ACTION_TYPES.SET_CONSIGNEE_ADDRESS:
       return action.consigneeAddress;
     default:
@@ -50,6 +60,8 @@ export const consigneeAddress = (state = '', action = { type: '' }) => {
 
 export const notifyPartyAddress = (state = '', action = { type: '' }) => {
   switch (action.type) {
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.shipment.notifyPartyAddress;
     case ACTION_TYPES.SET_NOTIFY_PARTY_ADDRESS:
       return action.notifyPartyAddress;
     default:
@@ -59,6 +71,8 @@ export const notifyPartyAddress = (state = '', action = { type: '' }) => {
 
 export const customerReference = (state = '', action = { type: '' }) => {
   switch (action.type) {
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.shipment.customerReference;
     case ACTION_TYPES.SET_CUSTOMER_REFERENCE:
       return action.customerReference;
     default:
@@ -68,6 +82,8 @@ export const customerReference = (state = '', action = { type: '' }) => {
 
 export const blType = (state = '', action = { type: '' }) => {
   switch (action.type) {
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.shipment.blType;
     case ACTION_TYPES.SET_BL_TYPE:
       return action.blType;
     default:

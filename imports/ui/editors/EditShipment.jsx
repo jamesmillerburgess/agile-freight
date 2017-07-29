@@ -112,9 +112,13 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
           <div className="label">
             B/L TYPE
           </div>
-          <input
+          <Select
             value={shipment.blType}
-            onChange={e => dispatchers.onChangeBLType(e.target.value)}
+            options={[
+              { value: 'Waybill', label: 'Waybill' },
+              { value: 'Original', label: 'Original' },
+            ]}
+            onChange={opt => dispatchers.onChangeBLType(opt.value)}
           />
         </div>
       </div>
@@ -156,7 +160,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
           className="button-submit"
           onClick={() =>
             BillOfLading(
-              { description: shipment.cargo.description },
+              shipment,
               (url) => {
                 const open = window.open(url);
                 if (open === null || typeof (open) === 'undefined') {

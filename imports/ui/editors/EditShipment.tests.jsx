@@ -13,7 +13,7 @@ if (Meteor.isClient) {
   describe('EditShipment Component', () => {
     let wrapper;
     beforeEach(() => {
-      wrapper = shallow(<EditShipment shipment={{}} />);
+      wrapper = shallow(<EditShipment shipment={{ movement: {} }} />);
     });
     afterEach(() => {
       wrapper.unmount();

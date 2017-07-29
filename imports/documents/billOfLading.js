@@ -1,5 +1,7 @@
 import {} from 'meteor/pascoual:pdfkitx';
 
+import { integerFormat, weightFormat } from '../ui/formatters/numberFormatters';
+
 const PDFDocument = global.PDFDocument;
 const blobStream = global.blobStream;
 
@@ -75,8 +77,8 @@ export const fitLines = (text, colWidth, numLines, font, fontHeight) => {
   return fittedText;
 };
 
-export const BillOfLading = (job, cb) => {
-  if (!job) {
+export const BillOfLading = (shipment, cb) => {
+  if (!shipment) {
     return;
   }
 
@@ -143,19 +145,19 @@ export const BillOfLading = (job, cb) => {
     page.margin,
     page.margin,
     'SHIPPER',
-    `${job.shipper}\n${job.shipperAddress}`,
+    `${shipment.shipper}\n${shipment.shipperAddress}`,
   );
   drawParty(
     page.margin,
     page.margin + 70,
     'CONSIGNEE',
-    `${job.consignee}\n${job.consigneeAddress}`,
+    `${shipment.consignee}\n${shipment.consigneeAddress}`,
   );
   drawParty(
     page.margin,
     page.margin + 140,
     'NOTIFY PARTY',
-    `${job.notifyParty}\n${job.notifyPartyAddress}`,
+    `${shipment.notifyParty}\n${shipment.notifyPartyAddress}`,
   );
 
   function drawField(x, y, label, value) {
@@ -182,64 +184,81 @@ export const BillOfLading = (job, cb) => {
     doc
       .font('value')
       .fontSize(10)
-      .text(value, x + 1, y + 9);
+      .text(value, x + 1, y + 9, { width: page.columnWidth / 2 });
   }
 
   drawField(
     page.margin,
     page.margin + 210,
     'PRE-CARRIAGE BY',
-    job.preCarriageBy,
+    shipment.movement.preCarriageBy,
   );
+  let receipt = '';
+  if (shipment.movement.receipt && shipment.movement.receipt.name) {
+    receipt = shipment.movement.receipt.name;
+  }
   drawField(
     page.margin + (page.columnWidth / 2),
     page.margin + 210,
     'PLACE OF RECEIPT',
-    job.placeOfReceipt,
+    receipt,
   );
+
   drawField(
     page.margin,
     page.margin + 240,
     'VESSEL',
-    job.vessel,
+    shipment.movement.vessel,
   );
+  let departure = '';
+  if (shipment.movement.departure && shipment.movement.departure.name) {
+    departure = shipment.movement.departure.name;
+  }
   drawField(
     page.margin + (page.columnWidth / 2),
     page.margin + 240,
     'PORT OF LOADING',
-    job.portOfLoading,
+    departure,
   );
+  let arrival = '';
+  if (shipment.movement.arrival && shipment.movement.arrival.name) {
+    arrival = shipment.movement.arrival.name;
+  }
   drawField(
     page.margin,
     page.margin + 270,
     'PORT OF DISCHARGE',
-    job.portOfDischarge,
+    arrival,
   );
+  let delivery = '';
+  if (shipment.movement.delivery && shipment.movement.delivery.name) {
+    delivery = shipment.movement.delivery.name;
+  }
   drawField(
     page.margin + (page.columnWidth / 2),
     page.margin + 270,
     'PLACE OF DELIVERY',
-    job.placeOfDelivery,
+    delivery,
   );
 
   drawField(
     page.rightColumnStart,
     page.margin,
     'CUSTOMER REFERENCE',
-    job.customerReference || '',
+    shipment.customerReference || '',
   );
   drawField(
     page.rightColumnStart + (page.columnWidth / 2),
     page.margin,
     'BILL OF LADING NUMBER',
-    job.billOfLadingNumber || '',
+    shipment.billOfLadingNumber || '',
   );
 
   doc
     .font('title')
     .fontSize(26)
     .text(
-      job.carrier,
+      'Agile Freight',
       page.rightColumnStart,
       page.margin + 30,
       { width: page.columnWidth, align: 'center' },
@@ -249,12 +268,12 @@ export const BillOfLading = (job, cb) => {
     .font('title')
     .fontSize(18)
     .text(
-      job.blType,
+      shipment.blType,
       page.rightColumnStart,
       page.margin + 60,
       { width: page.columnWidth, align: 'center' },
     );
-  if (job.blType === 'WAYBILL') {
+  if (shipment.blType === 'Waybill') {
     doc.text(
       'NON-NEGOTIABLE',
       page.rightColumnStart,
@@ -311,44 +330,73 @@ export const BillOfLading = (job, cb) => {
     .font('label')
     .fontSize(7)
     .text(
-      'CONTAINER\nNUMBER',
+      'DESCRIPTION OF GOODS, MARKS AND NUMBERS, CONTAINER NUMBERS, NUMBER ' +
+      'AND KIND OF PACKAGES',
       page.margin + 1,
       page.margin + 301,
     )
     .font('value')
     .fontSize(10);
-  let description = fitLines(job.description, 300, 17, 'Courier', 10);
-  doc.text(description, page.margin + 1, page.margin + 320, { width: 300 });
-  description = job.description.slice(description.length);
+
+  let description = '';
+  if (shipment.cargo.totalContainers) {
+    shipment.cargo.containerLines.forEach((line) => {
+      description += `${line.numContainers} ${line.containerType}\n`;
+    });
+  }
+  description += shipment.cargo.description;
+
+  let remainingDesc = fitLines(
+    description,
+    300,
+    17,
+    'Courier',
+    10,
+  );
+  doc.text(remainingDesc, page.margin + 1, page.margin + 320, { width: 300 });
+  remainingDesc = description.slice(remainingDesc.length);
 
   doc
     .fontSize(7)
     .font('label')
     .text(
-      'SEAL NUMBER\nMARKS & NUMBERS',
-      page.margin + 60,
-      page.margin + 301,
-    )
-    .text(
-      'NUMBER OF\nPACKAGES',
-      page.margin + 140,
-      page.margin + 301,
-    )
-    .text(
-      'KIND OF PACKAGES, DESCRIPTION OF GOODS',
-      page.margin + 200,
-      page.margin + 301,
-    )
-    .text(
       'GROSS WEIGHT',
-      page.margin + 430,
+      page.margin + 410,
       page.margin + 301,
     )
     .text(
       'MEASUREMENT',
       page.margin + 500,
       page.margin + 301,
-    )
+    );
+
+  doc
+    .fontSize(10)
+    .font('value');
+
+  let totalWeight = '';
+  let measurement = '';
+  shipment.cargo.packageLines.forEach((line) => {
+    totalWeight += `${weightFormat(line.totalWeight)} ${line.weightUOM}\n`;
+    measurement += `${weightFormat(line.volume)} ${line.volumeUOM}\n`;
+  });
+
+  doc.text(
+    totalWeight,
+    page.margin + 395,
+    page.margin + 320,
+    { width: 70, align: 'right' },
+  );
+  doc.text(
+    measurement,
+    page.margin + 485,
+    page.margin + 320,
+    { width: 70, align: 'right' },
+  );
+
+  doc
+    .fontSize(7)
+    .font('label')
     .text(
       'DECLARED VALUE US$',
       page.margin + 1,
@@ -458,12 +506,13 @@ export const BillOfLading = (job, cb) => {
       page.margin + 751,
     );
 
-  if (description.length > 0) {
+  if (remainingDesc.length > 0) {
     doc
       .addPage()
       .font('value')
       .fontSize(10)
-      .text(description);
+      .text('-----CONTINUATION PAGE-----', { align: 'center' })
+      .text(remainingDesc);
   }
 
   doc.end();
