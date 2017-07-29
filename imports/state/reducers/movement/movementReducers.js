@@ -49,6 +49,10 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
       return set('arrivalDate', action.arrivalDate, state);
     case ACTION_TYPES.SET_DELIVERY_DATE:
       return set('deliveryDate', action.deliveryDate, state);
+    case ACTION_TYPES.SET_PRE_CARRIAGE_BY:
+      return set('preCarriageBy', action.preCarriageBy, state);
+    case ACTION_TYPES.SET_VESSEL:
+      return set('vessel', action.vessel, state);
     default:
       return state;
   }

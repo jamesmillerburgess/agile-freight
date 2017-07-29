@@ -212,3 +212,13 @@ export const loadShipment = makeActionCreator(
   ACTION_TYPES.LOAD_SHIPMENT,
   'shipment',
 );
+export const setShipper = makeActionCreator(ACTION_TYPES.SET_SHIPPER, 'shipper');
+export const setConsignee = makeActionCreator(ACTION_TYPES.SET_CONSIGNEE, 'consignee');
+export const setNotifyParty = makeActionCreator(ACTION_TYPES.SET_NOTIFY_PARTY, 'notifyParty');
+export const setShipperAddress = makeActionCreator(ACTION_TYPES.SET_SHIPPER_ADDRESS, 'shipperAddress');
+export const setConsigneeAddress = makeActionCreator(ACTION_TYPES.SET_CONSIGNEE_ADDRESS, 'consigneeAddress');
+export const setNotifyPartyAddress = makeActionCreator(ACTION_TYPES.SET_NOTIFY_PARTY_ADDRESS, 'notifyPartyAddress');
+export const setPreCarriageBy = makeActionCreator(ACTION_TYPES.SET_PRE_CARRIAGE_BY, 'preCarriageBy');
+export const setVessel = makeActionCreator(ACTION_TYPES.SET_VESSEL, 'vessel');
+export const setCustomerReference = makeActionCreator(ACTION_TYPES.SET_CUSTOMER_REFERENCE, 'customerReference');
+export const setBLType = makeActionCreator(ACTION_TYPES.SET_BL_TYPE, 'blType');

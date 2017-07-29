@@ -109,7 +109,10 @@ const EditMovement = ({ movement, dispatchers, useDates, useShipperConsignee }) 
           <div className="label">
             PRE-CARRIAGE BY
           </div>
-          <input />
+          <input
+            value={movement.vessel}
+            onChange={e => dispatchers.onChangePreCarriageBy(e.target.value)}
+          />
         </div>
       ) : null}
       {useShipperConsignee ? (
@@ -117,7 +120,10 @@ const EditMovement = ({ movement, dispatchers, useDates, useShipperConsignee }) 
           <div className="label">
             VESSEL
           </div>
-          <input />
+          <input
+            value={movement.vessel}
+            onChange={e => dispatchers.onChangeVessel(e.target.value)}
+          />
         </div>
       ) : null}
     </div>

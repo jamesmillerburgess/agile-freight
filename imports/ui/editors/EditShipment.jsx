@@ -35,19 +35,28 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
           <div className="label">
             SHIPPER
           </div>
-          <input />
+          <input
+            value={shipment.shipper}
+            onChange={e => dispatchers.onChangeShipper(e.target.value)}
+          />
         </div>
         <div className="field select-country">
           <div className="label">
             CONSIGNEE
           </div>
-          <input />
+          <input
+            value={shipment.consignee}
+            onChange={e => dispatchers.onChangeConsignee(e.target.value)}
+          />
         </div>
         <div className="field select-country">
           <div className="label">
             NOTIFY PARTY
           </div>
-          <input />
+          <input
+            value={shipment.notifyParty}
+            onChange={e => dispatchers.onChangeNotifyParty(e.target.value)}
+          />
         </div>
         <div className="field select-country">
           <div className="label">
@@ -65,13 +74,26 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
       <div className="pickup-delivery-wrapper">
         <div className="cargo-row-icon" />
         <div className="field select-country">
-          <textarea className="address" />
+          <textarea
+            className="address"
+            value={shipment.shipperAddress}
+            onChange={e => dispatchers.onChangeShipperAddress(e.target.value)}
+          />
         </div>
         <div className="field select-country">
-          <textarea className="address" />
+          <textarea
+            className="address"
+            value={shipment.consigneeAddress}
+            onChange={e => dispatchers.onChangeConsigneeAddress(e.target.value)}
+          />
         </div>
         <div className="field select-country">
-          <textarea className="address" />
+          <textarea
+            className="address"
+            value={shipment.notifyPartyAddress}
+            onChange={
+              e => dispatchers.onChangeNotifyPartyAddress(e.target.value)}
+          />
         </div>
       </div>
       <div className="pickup-delivery-wrapper">
@@ -80,13 +102,20 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
           <div className="label">
             CUSTOMER REFERENCE
           </div>
-          <input />
+          <input
+            value={shipment.customerReference}
+            onChange={
+              e => dispatchers.onChangeCustomerReference(e.target.value)}
+          />
         </div>
         <div className="field select-country">
           <div className="label">
             B/L TYPE
           </div>
-          <input />
+          <input
+            value={shipment.blType}
+            onChange={e => dispatchers.onChangeBLType(e.target.value)}
+          />
         </div>
       </div>
       <div className="title">
