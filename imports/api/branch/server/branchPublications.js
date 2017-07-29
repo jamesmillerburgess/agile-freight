@@ -15,7 +15,7 @@ Meteor.publish('branch.all', publishBranchAll);
 Meteor.publish('branch.active', function publishBranchActive() {
   const cursors = [];
   if (this.userId) {
-    cursors.push(Customers.find({}, { limit: 10 }));
+    cursors.push(Customers.find({}));
     cursors.push(Meteor.users.find({}, { fields: { profile: 1, emails: 1 } }));
     cursors.push(Countries.find());
     cursors.push(Quotes.find());

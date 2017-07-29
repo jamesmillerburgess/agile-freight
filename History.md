@@ -4,6 +4,7 @@
  
 * Bill of lading PDF can be generated from shipment editor
 * Long descriptions respect word wrap and continue on next page
+* Additional fields added to shipment and printed on bill of lading
 
 ## v1.2.0 – Initial Shipment Editor
 
