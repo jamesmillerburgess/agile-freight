@@ -1,6 +1,6 @@
 ## v.NEXT
 
-## v1.3.0 – Basic Shipping Documents
+## v1.3.0 – Basic Bill of Lading
  
 * Bill of lading PDF can be generated from shipment editor
 * Long descriptions respect word wrap and continue on next page
