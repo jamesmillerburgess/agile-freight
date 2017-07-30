@@ -28,7 +28,25 @@ if (Meteor.isClient) {
         type: ACTION_TYPES.LOAD_QUOTE,
         quote: { movement: movementToLoad },
       };
-
+      movement({}, action).should.eql(movementToLoad);
+    });
+    it('loads the movement section of a shipment', () => {
+      const movementToLoad = {
+        pickup: {
+          locationType: 'a',
+          country: 'b',
+          location: 'c',
+        },
+        delivery: {
+          locationType: 'd',
+          country: 'e',
+          location: 'f',
+        },
+      };
+      const action = {
+        type: ACTION_TYPES.LOAD_SHIPMENT,
+        shipment: { movement: movementToLoad },
+      };
       movement({}, action).should.eql(movementToLoad);
     });
     it('sets the mode', () => {
@@ -144,6 +162,22 @@ if (Meteor.isClient) {
       };
       deepFreeze(stateBefore);
       movement(stateBefore, action).deliveryDate.should.equal('b');
+    });
+    it('sets pre-carriage by', () => {
+      const state = { preCarriageBy: 'a' };
+      const action = {
+        type: ACTION_TYPES.SET_PRE_CARRIAGE_BY,
+        preCarriageBy: 'b',
+      };
+      movement(state, action).preCarriageBy.should.equal('b');
+    });
+    it('sets vessel', () => {
+      const state = { vessel: 'a' };
+      const action = {
+        type: ACTION_TYPES.SET_VESSEL,
+        vessel: 'b',
+      };
+      movement(state, action).vessel.should.equal('b');
     });
   });
 }

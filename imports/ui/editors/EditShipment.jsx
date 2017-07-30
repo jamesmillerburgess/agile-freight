@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
 
 import EditCargo from './EditCargo.jsx';
 import EditMovement from './EditMovement.jsx';
 import Shipment from '../shipmentUtils';
+
+import { BillOfLading } from '../../documents/billOfLading';
+import { APIGlobals } from '../../api/api-globals';
 
 const EditShipment = ({ shipment, dispatchers, history, match }) => (
   <div className="new-quote">
@@ -23,6 +27,103 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
     <div className="panel container form-section">
       <div className="title">
         <div className="cargo-row-icon" />
+        PARTIES
+      </div>
+      <div className="pickup-delivery-wrapper">
+        <div className="cargo-row-icon" />
+        <div className="field select-country">
+          <div className="label">
+            SHIPPER
+          </div>
+          <input
+            value={shipment.shipper}
+            onChange={e => dispatchers.onChangeShipper(e.target.value)}
+          />
+        </div>
+        <div className="field select-country">
+          <div className="label">
+            CONSIGNEE
+          </div>
+          <input
+            value={shipment.consignee}
+            onChange={e => dispatchers.onChangeConsignee(e.target.value)}
+          />
+        </div>
+        <div className="field select-country">
+          <div className="label">
+            NOTIFY PARTY
+          </div>
+          <input
+            value={shipment.notifyParty}
+            onChange={e => dispatchers.onChangeNotifyParty(e.target.value)}
+          />
+        </div>
+        <div className="field select-country">
+          <div className="label">
+            TERMS OF SALE
+          </div>
+          <Select
+            value={shipment.movement.termsOfSale}
+            options={APIGlobals.incotermOptions}
+            onChange={selectedValue =>
+              dispatchers.onChangeMovementTermsOfSale(selectedValue.value)}
+            disabled={shipment.movement.mode === 'Brokerage'}
+          />
+        </div>
+      </div>
+      <div className="pickup-delivery-wrapper">
+        <div className="cargo-row-icon" />
+        <div className="field select-country">
+          <textarea
+            className="address"
+            value={shipment.shipperAddress}
+            onChange={e => dispatchers.onChangeShipperAddress(e.target.value)}
+          />
+        </div>
+        <div className="field select-country">
+          <textarea
+            className="address"
+            value={shipment.consigneeAddress}
+            onChange={e => dispatchers.onChangeConsigneeAddress(e.target.value)}
+          />
+        </div>
+        <div className="field select-country">
+          <textarea
+            className="address"
+            value={shipment.notifyPartyAddress}
+            onChange={
+              e => dispatchers.onChangeNotifyPartyAddress(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className="pickup-delivery-wrapper">
+        <div className="cargo-row-icon" />
+        <div className="field select-country">
+          <div className="label">
+            CUSTOMER REFERENCE
+          </div>
+          <input
+            value={shipment.customerReference}
+            onChange={
+              e => dispatchers.onChangeCustomerReference(e.target.value)}
+          />
+        </div>
+        <div className="field select-country">
+          <div className="label">
+            B/L TYPE
+          </div>
+          <Select
+            value={shipment.blType}
+            options={[
+              { value: 'Waybill', label: 'Waybill' },
+              { value: 'Original', label: 'Original' },
+            ]}
+            onChange={opt => dispatchers.onChangeBLType(opt.value)}
+          />
+        </div>
+      </div>
+      <div className="title">
+        <div className="cargo-row-icon" />
         CARGO
       </div>
       <EditCargo
@@ -40,6 +141,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
         movement={shipment.movement}
         dispatchers={dispatchers}
         useDates
+        useShipperConsignee
       />
       <div className="form-button-group">
         <button
@@ -53,6 +155,25 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
           onClick={() => Shipment.save(match.params.shipmentId, shipment)}
         >
           SAVE
+        </button>
+        <button
+          className="button-submit"
+          onClick={() =>
+            BillOfLading(
+              shipment,
+              (url) => {
+                const open = window.open(url);
+                if (open === null || typeof (open) === 'undefined') {
+                  // TODO: Create themed alert
+                  window.alert(
+                    `This URL has been blocked by your browser:\n${url}`,
+                  );
+                }
+              },
+            )
+          }
+        >
+          SHIPPING DOCUMENT
         </button>
       </div>
     </div>

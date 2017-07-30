@@ -20,6 +20,8 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
       return action.quote.movement || defaultMovementState;
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.shipment.movement;
     case ACTION_TYPES.SET_MOVEMENT_MODE:
       let newState = {};
       newState = set('mode', action.mode, state);
@@ -49,6 +51,10 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
       return set('arrivalDate', action.arrivalDate, state);
     case ACTION_TYPES.SET_DELIVERY_DATE:
       return set('deliveryDate', action.deliveryDate, state);
+    case ACTION_TYPES.SET_PRE_CARRIAGE_BY:
+      return set('preCarriageBy', action.preCarriageBy, state);
+    case ACTION_TYPES.SET_VESSEL:
+      return set('vessel', action.vessel, state);
     default:
       return state;
   }
