@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import Datetime from 'react-datetime';
+import moment from 'moment';
 
 import UNLocationField from '../fields/UNLocationField.jsx';
 
@@ -13,37 +14,37 @@ export const Dates = ({ movement, dispatchers }) => (
       <div className="cargo-row-icon" />
       <div className="field select-country">
         <Datetime
-          value={movement.receiptDate}
-          onChange={
-            receiptDate => dispatchers.onChangeReceiptDate(receiptDate)}
+          value={movement.receiptDate ? moment(movement.receiptDate) : ''}
+          onChange={receiptDate =>
+            dispatchers.onChangeReceiptDate(receiptDate.format())}
         />
       </div>
       <div className="field select-country">
         <Datetime
-          value={movement.departureDate}
-          onChange={
-            departureDate => dispatchers.onChangeDepartureDate(departureDate)}
+          value={movement.departureDate ? moment(movement.departureDate) : ''}
+          onChange={departureDate =>
+            dispatchers.onChangeDepartureDate(departureDate.format())}
         />
       </div>
       <div className="field select-country">
         <Datetime
-          value={movement.arrivalDate}
-          onChange={
-            arrivalDate => dispatchers.onChangeArrivalDate(arrivalDate)}
+          value={movement.arrivalDate ? moment(movement.arrivalDate) : ''}
+          onChange={arrivalDate =>
+            dispatchers.onChangeArrivalDate(arrivalDate.format())}
         />
       </div>
       <div className="field select-country">
         <Datetime
-          value={movement.deliveryDate}
-          onChange={
-            deliveryDate => dispatchers.onChangeDeliveryDate(deliveryDate)}
+          value={movement.deliveryDate ? moment(movement.deliveryDate) : ''}
+          onChange={deliveryDate =>
+            dispatchers.onChangeDeliveryDate(deliveryDate.format())}
         />
       </div>
     </div>
   </div>
 );
 
-const EditMovement = ({ movement, dispatchers, useDates }) => (
+const EditMovement = ({ movement, dispatchers, useDates, useShipperConsignee }) => (
   <div>
     <div className="pickup-delivery-wrapper">
       <div className="cargo-row-icon" />
@@ -63,29 +64,35 @@ const EditMovement = ({ movement, dispatchers, useDates }) => (
             dispatchers.onChangeMovementMode(selectedValue.value)}
         />
       </div>
-      <div className="field select-country">
-        <div className="label">
-          COMMERCIAL PARTY
-        </div>
-        <Select
-          value={movement.commercialParty}
-          options={APIGlobals.commercialPartyOptions}
-          onChange={selectedValue =>
-            dispatchers.onChangeMovementCommercialParty(selectedValue.value)}
-        />
-      </div>
-      <div className="field select-country">
-        <div className="label">
-          TERMS OF SALE
-        </div>
-        <Select
-          value={movement.termsOfSale}
-          options={APIGlobals.incotermOptions}
-          onChange={selectedValue =>
-            dispatchers.onChangeMovementTermsOfSale(selectedValue.value)}
-          disabled={movement.mode === 'Brokerage'}
-        />
-      </div>
+      {useShipperConsignee ?
+       null : (
+         <div>
+           <div className="field select-country">
+             <div className="label">
+               COMMERCIAL PARTY
+             </div>
+             <Select
+               value={movement.commercialParty}
+               options={APIGlobals.commercialPartyOptions}
+               onChange={selectedValue =>
+                 dispatchers.onChangeMovementCommercialParty(selectedValue.value)}
+             />
+           </div>
+           <div className="field select-country">
+             <div className="label">
+               TERMS OF SALE
+             </div>
+             <Select
+               value={movement.termsOfSale}
+               options={APIGlobals.incotermOptions}
+               onChange={selectedValue =>
+                 dispatchers.onChangeMovementTermsOfSale(selectedValue.value)}
+               disabled={movement.mode === 'Brokerage'}
+             />
+           </div>
+         </div>
+       )
+      }
       <div className="field select-country">
         <div className="label">
           CARRIER
@@ -98,6 +105,28 @@ const EditMovement = ({ movement, dispatchers, useDates }) => (
           disabled={movement.mode === 'Brokerage'}
         />
       </div>
+      {useShipperConsignee ? (
+        <div className="field select-country">
+          <div className="label">
+            PRE-CARRIAGE BY
+          </div>
+          <input
+            value={movement.preCarriageBy}
+            onChange={e => dispatchers.onChangePreCarriageBy(e.target.value)}
+          />
+        </div>
+      ) : null}
+      {useShipperConsignee ? (
+        <div className="field select-country">
+          <div className="label">
+            VESSEL
+          </div>
+          <input
+            value={movement.vessel}
+            onChange={e => dispatchers.onChangeVessel(e.target.value)}
+          />
+        </div>
+      ) : null}
     </div>
     <div className="pickup-delivery-wrapper">
       <div className="pickup">
@@ -162,10 +191,12 @@ EditMovement.propTypes = {
   movement: PropTypes.object.isRequired,
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
   useDates: PropTypes.bool,
+  useShipperConsignee: PropTypes.bool,
 };
 
 EditMovement.defaultProps = {
   useDates: false,
+  useShipperConsignee: false,
 };
 
 export default EditMovement;

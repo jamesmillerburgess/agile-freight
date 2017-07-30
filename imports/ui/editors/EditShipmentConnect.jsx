@@ -17,9 +17,31 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   dispatch(actions.loadShipment(shipment));
   return {
     dispatchers: {
+      onChangeShipper: shipper =>
+        dispatch(actions.setShipper(shipper)),
+      onChangeConsignee: consignee =>
+        dispatch(actions.setConsignee(consignee)),
+      onChangeNotifyParty: notifyParty =>
+        dispatch(actions.setNotifyParty(notifyParty)),
+      onChangeShipperAddress: shipperAddress =>
+        dispatch(actions.setShipperAddress(shipperAddress)),
+      onChangeConsigneeAddress: consigneeAddress =>
+        dispatch(actions.setConsigneeAddress(consigneeAddress)),
+      onChangeNotifyPartyAddress: notifyPartyAddress =>
+        dispatch(actions.setNotifyPartyAddress(notifyPartyAddress)),
+      onChangePreCarriageBy: preCarriageBy =>
+        dispatch(actions.setPreCarriageBy(preCarriageBy)),
+      onChangeVessel: vessel =>
+        dispatch(actions.setVessel(vessel)),
+      onChangeCustomerReference: customerReference =>
+        dispatch(actions.setCustomerReference(customerReference)),
+      onChangeBLType: blType =>
+        dispatch(actions.setBLType(blType)),
+
       onChangeCargoType: cargoType => dispatch(actions.setCargoType(cargoType)),
       onChangeRatedQuote: () => dispatch(actions.toggleRatedQuote()),
-      onChangeCargoDescription: description => dispatch(actions.setCargoDescription(description)),
+      onChangeCargoDescription:
+        description => dispatch(actions.setCargoDescription(description)),
       onAddPackageLine: () => dispatch(actions.addPackageLine()),
       onRemovePackageLine: index => dispatch(actions.removePackageLine(index)),
       onChangePackageType: (index, packageType) =>
@@ -74,10 +96,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       onChangeDeparture: departure => dispatch(actions.setDeparture(departure)),
       onChangeArrival: arrival => dispatch(actions.setArrival(arrival)),
       onChangeDelivery: delivery => dispatch(actions.setDelivery(delivery)),
-      onChangeReceiptDate: receiptDate => dispatch(actions.setReceiptDate(receiptDate)),
-      onChangeDepartureDate: departureDate => dispatch(actions.setDepartureDate(departureDate)),
-      onChangeArrivalDate: arrivalDate => dispatch(actions.setArrivalDate(arrivalDate)),
-      onChangeDeliveryDate: deliveryDate => dispatch(actions.setDeliveryDate(deliveryDate)),
+      onChangeReceiptDate: receiptDate => dispatch(actions.setReceiptDate(
+        receiptDate)),
+      onChangeDepartureDate: departureDate => dispatch(actions.setDepartureDate(
+        departureDate)),
+      onChangeArrivalDate: arrivalDate => dispatch(actions.setArrivalDate(
+        arrivalDate)),
+      onChangeDeliveryDate: deliveryDate => dispatch(actions.setDeliveryDate(
+        deliveryDate)),
 
       // OTHER SERVICES
       onClickExportCustomsClearance: () => dispatch(actions.toggleExportCustomsClearance()),
