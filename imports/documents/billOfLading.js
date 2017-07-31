@@ -1,6 +1,6 @@
 import {} from 'meteor/pascoual:pdfkitx';
 
-import { integerFormat, weightFormat } from '../ui/formatters/numberFormatters';
+import { weightFormat } from '../ui/formatters/numberFormatters';
 
 const PDFDocument = global.PDFDocument;
 const blobStream = global.blobStream;

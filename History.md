@@ -1,5 +1,9 @@
 ## v.NEXT
 
+## v1.4.0 – Basic Air Waybill
+
+
+
 ## v1.3.0 – Basic Bill of Lading
  
 * Bill of lading PDF can be generated from shipment editor
