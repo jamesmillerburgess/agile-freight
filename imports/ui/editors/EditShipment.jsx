@@ -74,7 +74,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
       <div className="title">SHIPMENT</div>
       <div className="breadcrumbs">
         <div className="breadcrumb active customer">
-          {shipment.status.toUpperCase()}
+          {shipment.status ? shipment.status.toUpperCase() : ''}
         </div>
         <div className="breadcrumb-end active customer" />
       </div>
