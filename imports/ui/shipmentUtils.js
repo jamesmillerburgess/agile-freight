@@ -13,10 +13,30 @@ const confirm = (shipmentId, shipment, cb) =>
     (err, res) => cb(res),
   );
 
+const movementStatus = (shipment) => {
+  if (!shipment || !shipment.movement) {
+    return 'Not Received';
+  }
+  if (shipment.movement.deliveryStatus === 'Actual') {
+    return 'Delivered';
+  }
+  if (shipment.movement.arrivalStatus === 'Actual') {
+    return 'Arrived';
+  }
+  if (shipment.movement.departureStatus === 'Actual') {
+    return 'Departed';
+  }
+  if (shipment.movement.receiptStatus === 'Actual') {
+    return 'Received';
+  }
+  return 'Not Received';
+};
+
 const Shipment = {
   save,
   archive,
   confirm,
+  movementStatus,
 };
 
 export default Shipment;
