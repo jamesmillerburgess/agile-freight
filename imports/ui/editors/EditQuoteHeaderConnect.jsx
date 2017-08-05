@@ -81,7 +81,6 @@ const mapDispatchToProps = dispatch => ({
 const EditQuoteHeaderConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(
-  EditQuoteHeader);
+)(EditQuoteHeader);
 
 export default EditQuoteHeaderConnect;

@@ -10,7 +10,6 @@ import QuoteListItem from '../list-items/QuoteListItem.jsx';
 import { Customers } from '../../api/customers/customersCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
-import EditCustomerConnect from '../editors/EditCustomerConnect';
 import EditShipmentConnect from '../editors/EditShipmentConnect.jsx';
 import EditQuoteHeaderConnect from '../editors/EditQuoteHeaderConnect.jsx';
 import EditQuoteChargesConnect from '../editors/EditQuoteChargesConnect';
