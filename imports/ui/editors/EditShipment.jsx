@@ -71,9 +71,11 @@ export const AirWaybillButton = ({ shipment }) => (
 const EditShipment = ({ shipment, dispatchers, history, match }) => (
   <div className="new-quote">
     <div className="process-header">
-      <div className="title">NEW SHIPMENT</div>
+      <div className="title">SHIPMENT</div>
       <div className="breadcrumbs">
-        <div className="breadcrumb active customer">HEADER</div>
+        <div className="breadcrumb active customer">
+          {shipment.status.toUpperCase()}
+        </div>
         <div className="breadcrumb-end active customer" />
       </div>
       <button
