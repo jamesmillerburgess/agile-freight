@@ -21,5 +21,17 @@ if (Meteor.isClient) {
     it('renders a component', () => {
       wrapper.exists().should.equal(true);
     });
+    it('renders bill of lading button if mode is sea', () => {
+      wrapper.setProps({ shipment: { movement: { mode: 'Sea' } } });
+      wrapper.containsMatchingElement(<button>BILL OF LADING</button>)
+             .should
+             .equal(true);
+    });
+    it('renders air waybill button if mode is air', () => {
+      wrapper.setProps({ shipment: { movement: { mode: 'Air' } } });
+      wrapper.containsMatchingElement(<button>AIR WAYBILL</button>)
+             .should
+             .equal(true);
+    });
   });
 }

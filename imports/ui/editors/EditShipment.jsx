@@ -130,7 +130,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
       <EditCargo
         cargo={shipment.cargo}
         dispatchers={dispatchers}
-        useContainers
+        useContainers={shipment.movement.mode === 'Sea'}
         splitCargoTypes={false}
         useDescription
       />
@@ -157,44 +157,48 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
         >
           SAVE
         </button>
-        <button
-          className="button-submit"
-          onClick={() =>
-            BillOfLading(
-              shipment,
-              (url) => {
-                const open = window.open(url);
-                if (open === null || typeof (open) === 'undefined') {
-                  // TODO: Create themed alert
-                  window.alert(
-                    `This URL has been blocked by your browser:\n${url}`,
-                  );
-                }
-              },
-            )
-          }
-        >
-          BILL OF LADING
-        </button>
-        <button
-          className="button-submit"
-          onClick={() =>
-            AirWaybill(
-              shipment,
-              (url) => {
-                const open = window.open(url);
-                if (open === null || typeof (open) === 'undefined') {
-                  // TODO: Create themed alert
-                  window.alert(
-                    `This URL has been blocked by your browser:\n${url}`,
-                  );
-                }
-              },
-            )
-          }
-        >
-          AIR WAYBILL
-        </button>
+        {shipment.movement.mode === 'Sea' ? (
+          <button
+            className="button-submit"
+            onClick={() =>
+              BillOfLading(
+                shipment,
+                (url) => {
+                  const open = window.open(url);
+                  if (open === null || typeof (open) === 'undefined') {
+                    // TODO: Create themed alert
+                    window.alert(
+                      `This URL has been blocked by your browser:\n${url}`,
+                    );
+                  }
+                },
+              )
+            }
+          >
+            BILL OF LADING
+          </button>
+        ) : null}
+        {shipment.movement.mode === 'Air' ? (
+          <button
+            className="button-submit"
+            onClick={() =>
+              AirWaybill(
+                shipment,
+                (url) => {
+                  const open = window.open(url);
+                  if (open === null || typeof (open) === 'undefined') {
+                    // TODO: Create themed javascript alert
+                    window.alert(
+                      `This URL has been blocked by your browser:\n${url}`,
+                    );
+                  }
+                },
+              )
+            }
+          >
+            AIR WAYBILL
+          </button>
+        ) : null}
       </div>
     </div>
   </div>
