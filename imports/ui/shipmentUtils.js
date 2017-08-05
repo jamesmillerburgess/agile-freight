@@ -32,11 +32,33 @@ const movementStatus = (shipment) => {
   return 'Not Received';
 };
 
+const route = (shipment) => {
+  if (!shipment || !shipment.movement) {
+    return 'No Route';
+  }
+  let res = '';
+  if (shipment.movement.receipt) {
+    res += shipment.movement.receipt.code;
+  }
+  if (shipment.movement.departure) {
+    res += (res ? '-' : '') + shipment.movement.departure.code;
+  }
+  if (shipment.movement.arrival) {
+    res += (res ? '-' : '') + shipment.movement.arrival.code;
+  }
+  if (shipment.movement.delivery) {
+    res += (res ? '-' : '') + shipment.movement.delivery.code;
+  }
+
+  return res || 'No Route';
+};
+
 const Shipment = {
   save,
   archive,
   confirm,
   movementStatus,
+  route,
 };
 
 export default Shipment;
