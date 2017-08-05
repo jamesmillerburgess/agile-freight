@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 
 import { Shipments } from './shipmentsCollection';
 import { Quotes } from '../quotes/quotesCollection';
@@ -81,10 +81,11 @@ Meteor.methods({
     check(shipment._id, String);
 
     if (!Shipments.findOne(shipment._id)) {
-      return;
+      return null;
     }
 
     Shipments.update(shipment._id, { $set: { status: 'Confirmed' } });
     Meteor.call('shipment.save', shipment);
+    return Shipments.findOne(shipment._id);
   },
 });

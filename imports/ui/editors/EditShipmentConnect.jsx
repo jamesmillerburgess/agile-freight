@@ -13,10 +13,14 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const shipment = Shipments.findOne(ownProps.match.params.shipmentId);
-  dispatch(actions.loadShipment(shipment));
+  dispatch(
+    actions.loadShipment(
+      Shipments.findOne(ownProps.match.params.shipmentId),
+    ),
+  );
   return {
     dispatchers: {
+      loadShipment: shipment => dispatch(actions.loadShipment(shipment)),
       onChangeShipper: shipper =>
         dispatch(actions.setShipper(shipper)),
       onChangeConsignee: consignee =>

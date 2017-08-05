@@ -10,10 +10,15 @@ import { BillOfLading } from '../../documents/billOfLading';
 import { AirWaybill } from '../../documents/airWaybill';
 import { APIGlobals } from '../../api/api-globals';
 
-export const ConfirmBookingButton = ({ match, shipment }) => (
+export const ConfirmBookingButton = ({ match, shipment, dispatchers }) => (
   <button
     className="button-submit"
-    onClick={() => Shipment.confirm(match.params.shipmentId, shipment)}
+    onClick={() =>
+      Shipment.confirm(
+        match.params.shipmentId,
+        shipment,
+        confirmedShipment => dispatchers.loadShipment(confirmedShipment),
+      )}
   >
     CONFIRM BOOKING
   </button>
@@ -200,7 +205,10 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
       <div className="form-button-group">
         <button
           className="delete-button"
-          onClick={() => Shipment.archive(match.params.shipmentId)}
+          onClick={() => Shipment.archive(
+            match.params.shipmentId,
+            (archivedShipment => dispatchers.loadShipment(archivedShipment)),
+          )}
         >
           ARCHIVE
         </button>
@@ -211,7 +219,11 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
           SAVE
         </button>
         {shipment.status === 'Draft' ? (
-          <ConfirmBookingButton shipment={shipment} match={match} />
+          <ConfirmBookingButton
+            shipment={shipment}
+            match={match}
+            dispatchers={dispatchers}
+          />
         ) : null}
         {shipment.status === 'Confirmed' && shipment.movement.mode === 'Sea' ? (
           <BillOfLadingButton shipment={shipment} />
