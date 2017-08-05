@@ -115,5 +115,27 @@ if (Meteor.isServer) {
         Shipments.findOne(shipmentId).status.should.equal('Archived');
       });
     });
+    describe('shipment.confirm', () => {
+      it('sets status to \'Confirmed\'', () => {
+        const shipmentId = Shipments.insert({ status: 'Draft' });
+        Meteor.call('shipment.confirm', { _id: shipmentId });
+        Shipments.findOne(shipmentId).status.should.equal('Confirmed');
+      });
+      it('saves changes to the shipment', () => {
+        const shipmentId = Shipments.insert({ status: 'Draft' });
+        Meteor.call(
+          'shipment.confirm',
+          {
+            _id: shipmentId,
+            cargo: { a: 'a' },
+            movement: { b: 'b' },
+          },
+        );
+        const shipment = Shipments.findOne(shipmentId);
+
+        shipment.cargo.a.should.equal('a');
+        shipment.movement.b.should.equal('b');
+      });
+    });
   });
 }

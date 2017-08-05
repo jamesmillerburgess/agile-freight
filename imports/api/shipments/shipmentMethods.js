@@ -76,4 +76,15 @@ Meteor.methods({
       { $set: { active: false, status: 'Archived' } },
     );
   },
+  'shipment.confirm': function shipmentConfirm(shipment) {
+    check(shipment, Object);
+    check(shipment._id, String);
+
+    if (!Shipments.findOne(shipment._id)) {
+      return;
+    }
+
+    Shipments.update(shipment._id, { $set: { status: 'Confirmed' } });
+    Meteor.call('shipment.save', shipment);
+  },
 });
