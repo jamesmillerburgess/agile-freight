@@ -1,81 +1,10 @@
 import {} from 'meteor/pascoual:pdfkitx';
 
-import { integerFormat, weightFormat } from '../ui/formatters/numberFormatters';
+import { weightFormat } from '../ui/formatters/numberFormatters';
+import { fitLines } from './documentUtils';
 
 const PDFDocument = global.PDFDocument;
 const blobStream = global.blobStream;
-
-export const calculateRealLineHeight = (font, fontSize) => {
-  const doc = new PDFDocument({
-    size: [500, 841.89],
-    margins: {
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-    },
-  });
-  if (font) {
-    doc
-      .registerFont(font, font)
-      .font(font);
-  }
-  if (fontSize) {
-    doc.fontSize(fontSize);
-  }
-  return doc.text('.').y;
-};
-
-export const calculateLines = (text, colWidth, font, fontSize) => {
-  const lineHeight = calculateRealLineHeight(font, fontSize);
-  const doc = new PDFDocument({
-    size: [colWidth, 841.89],
-    margins: {
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-    },
-  });
-  if (font) {
-    doc
-      .registerFont(font, font)
-      .font(font);
-  }
-  if (fontSize) {
-    doc.fontSize(fontSize);
-  }
-  doc.text(text);
-  return Math.round(doc.y / lineHeight);
-};
-
-export const removeLastWord = (text) => {
-  const words = text.split(/[\s,]+/);
-  // console.log('Words:');
-  // console.log(words);
-  // console.log('words[words.length - 1] * -1: ');
-  // console.log(words[words.length - 1] * -1);
-  return text.slice(0, (words[words.length - 1].length * -1) - 1);
-};
-
-export const fitLines = (text, colWidth, numLines, font, fontHeight) => {
-  if (numLines < 1) {
-    return '';
-  }
-  let fittedText = text;
-  let linesTaken = calculateLines(fittedText, colWidth, font, fontHeight);
-  // console.log('First');
-  // console.log(fittedText);
-  // console.log(linesTaken);
-  while (linesTaken > numLines) {
-    fittedText = removeLastWord(fittedText);
-    linesTaken = calculateLines(fittedText, colWidth, font, fontHeight);
-    // console.log('Word removed!');
-    // console.log(fittedText);
-    // console.log(linesTaken);
-  }
-  return fittedText;
-};
 
 export const BillOfLading = (shipment, cb) => {
   if (!shipment) {

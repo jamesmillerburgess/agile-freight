@@ -7,6 +7,7 @@ import EditMovement from './EditMovement.jsx';
 import Shipment from '../shipmentUtils';
 
 import { BillOfLading } from '../../documents/billOfLading';
+import { AirWaybill } from '../../documents/airWaybill';
 import { APIGlobals } from '../../api/api-globals';
 
 const EditShipment = ({ shipment, dispatchers, history, match }) => (
@@ -173,7 +174,26 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
             )
           }
         >
-          SHIPPING DOCUMENT
+          BILL OF LADING
+        </button>
+        <button
+          className="button-submit"
+          onClick={() =>
+            AirWaybill(
+              shipment,
+              (url) => {
+                const open = window.open(url);
+                if (open === null || typeof (open) === 'undefined') {
+                  // TODO: Create themed alert
+                  window.alert(
+                    `This URL has been blocked by your browser:\n${url}`,
+                  );
+                }
+              },
+            )
+          }
+        >
+          AIR WAYBILL
         </button>
       </div>
     </div>
