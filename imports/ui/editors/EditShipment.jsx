@@ -95,7 +95,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
             SHIPPER
           </div>
           <input
-            value={shipment.shipper}
+            value={shipment.shipper || ''}
             onChange={e => dispatchers.onChangeShipper(e.target.value)}
           />
         </div>
@@ -104,7 +104,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
             CONSIGNEE
           </div>
           <input
-            value={shipment.consignee}
+            value={shipment.consignee || ''}
             onChange={e => dispatchers.onChangeConsignee(e.target.value)}
           />
         </div>
@@ -113,7 +113,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
             NOTIFY PARTY
           </div>
           <input
-            value={shipment.notifyParty}
+            value={shipment.notifyParty || ''}
             onChange={e => dispatchers.onChangeNotifyParty(e.target.value)}
           />
         </div>
@@ -135,21 +135,21 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
         <div className="field select-country">
           <textarea
             className="address"
-            value={shipment.shipperAddress}
+            value={shipment.shipperAddress || ''}
             onChange={e => dispatchers.onChangeShipperAddress(e.target.value)}
           />
         </div>
         <div className="field select-country">
           <textarea
             className="address"
-            value={shipment.consigneeAddress}
+            value={shipment.consigneeAddress || ''}
             onChange={e => dispatchers.onChangeConsigneeAddress(e.target.value)}
           />
         </div>
         <div className="field select-country">
           <textarea
             className="address"
-            value={shipment.notifyPartyAddress}
+            value={shipment.notifyPartyAddress || ''}
             onChange={
               e => dispatchers.onChangeNotifyPartyAddress(e.target.value)}
           />
@@ -162,7 +162,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
             CUSTOMER REFERENCE
           </div>
           <input
-            value={shipment.customerReference}
+            value={shipment.customerReference || ''}
             onChange={
               e => dispatchers.onChangeCustomerReference(e.target.value)}
           />
@@ -172,7 +172,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
             B/L TYPE
           </div>
           <Select
-            value={shipment.blType}
+            value={shipment.blType || ''}
             options={[
               { value: 'Waybill', label: 'Waybill' },
               { value: 'Original', label: 'Original' },
