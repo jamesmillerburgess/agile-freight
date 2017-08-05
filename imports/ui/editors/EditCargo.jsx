@@ -384,12 +384,12 @@ export const Description = ({ cargo, dispatchers }) => {
         </div>
         <textarea
           className="description"
-          ref={node => descriptionNode = node}
-          value={cargo.description}
-          onChange={(e) => {
-            resizeHeight(descriptionNode);
-            dispatchers.onChangeCargoDescription(e.target.value);
+          ref={(node) => {
+            descriptionNode = node;
+            setTimeout(() => resizeHeight(descriptionNode), 1);
           }}
+          value={cargo.description}
+          onChange={e => dispatchers.onChangeCargoDescription(e.target.value)}
         />
       </div>
     </div>
