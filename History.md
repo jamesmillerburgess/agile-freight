@@ -2,7 +2,8 @@
 
 ## v1.4.0 – Basic Air Waybill
 
-
+* Air Waybill PDF can be generated from shipment editor
+* Printing restricts fields based on word wrap and line limits
 
 ## v1.3.0 – Basic Bill of Lading
  
