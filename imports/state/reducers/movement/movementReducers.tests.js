@@ -163,6 +163,50 @@ if (Meteor.isClient) {
       deepFreeze(stateBefore);
       movement(stateBefore, action).deliveryDate.should.equal('b');
     });
+    it('toggles receipt status', () => {
+      const action = { type: ACTION_TYPES.TOGGLE_RECEIPT_STATUS };
+      movement({ receiptStatus: 'Expected' }, action)
+        .receiptStatus
+        .should
+        .equal('Actual');
+      movement({ receiptStatus: 'Actual' }, action)
+        .receiptStatus
+        .should
+        .equal('Expected');
+    });
+    it('toggles departure status', () => {
+      const action = { type: ACTION_TYPES.TOGGLE_DEPARTURE_STATUS };
+      movement({ departureStatus: 'Expected' }, action)
+        .departureStatus
+        .should
+        .equal('Actual');
+      movement({ departureStatus: 'Actual' }, action)
+        .departureStatus
+        .should
+        .equal('Expected');
+    });
+    it('toggles arrival status', () => {
+      const action = { type: ACTION_TYPES.TOGGLE_ARRIVAL_STATUS };
+      movement({ arrivalStatus: 'Expected' }, action)
+        .arrivalStatus
+        .should
+        .equal('Actual');
+      movement({ arrivalStatus: 'Actual' }, action)
+        .arrivalStatus
+        .should
+        .equal('Expected');
+    });
+    it('toggles delivery status', () => {
+      const action = { type: ACTION_TYPES.TOGGLE_DELIVERY_STATUS };
+      movement({ deliveryStatus: 'Expected' }, action)
+        .deliveryStatus
+        .should
+        .equal('Actual');
+      movement({ deliveryStatus: 'Actual' }, action)
+        .deliveryStatus
+        .should
+        .equal('Expected');
+    });
     it('sets pre-carriage by', () => {
       const state = { preCarriageBy: 'a' };
       const action = {

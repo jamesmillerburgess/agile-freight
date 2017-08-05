@@ -108,6 +108,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         arrivalDate)),
       onChangeDeliveryDate: deliveryDate => dispatch(actions.setDeliveryDate(
         deliveryDate)),
+      onChangeReceiptStatus: () => dispatch(actions.toggleReceiptStatus()),
+      onChangeDepartureStatus: () => dispatch(actions.toggleDepartureStatus()),
+      onChangeArrivalStatus: () => dispatch(actions.toggleArrivalStatus()),
+      onChangeDeliveryStatus: () => dispatch(actions.toggleDeliveryStatus()),
 
       // OTHER SERVICES
       onClickExportCustomsClearance: () => dispatch(actions.toggleExportCustomsClearance()),

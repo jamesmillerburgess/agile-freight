@@ -7,6 +7,7 @@ import moment from 'moment';
 import UNLocationField from '../fields/UNLocationField.jsx';
 
 import { APIGlobals } from '../../api/api-globals';
+import CheckboxField from "../fields/CheckboxField";
 
 export const Dates = ({ movement, dispatchers }) => (
   <div className="pickup-delivery-wrapper">
@@ -38,6 +39,37 @@ export const Dates = ({ movement, dispatchers }) => (
           value={movement.deliveryDate ? moment(movement.deliveryDate) : ''}
           onChange={deliveryDate =>
             dispatchers.onChangeDeliveryDate(deliveryDate.format())}
+        />
+      </div>
+    </div>
+    <div className="pickup">
+      <div className="cargo-row-icon" />
+      <div className="field select-country">
+        <CheckboxField
+          value={movement.receiptStatus === 'Actual'}
+          label="Received"
+          onClick={dispatchers.onChangeReceiptStatus}
+        />
+      </div>
+      <div className="field select-country">
+        <CheckboxField
+          value={movement.departureStatus === 'Actual'}
+          label="Departed"
+          onClick={dispatchers.onChangeDepartureStatus}
+        />
+      </div>
+      <div className="field select-country">
+        <CheckboxField
+          value={movement.arrivalStatus === 'Actual'}
+          label="Arrived"
+          onClick={dispatchers.onChangeArrivalStatus}
+        />
+      </div>
+      <div className="field select-country">
+        <CheckboxField
+          value={movement.deliveryStatus === 'Actual'}
+          label="Delivered"
+          onClick={dispatchers.onChangeDeliveryStatus}
         />
       </div>
     </div>
