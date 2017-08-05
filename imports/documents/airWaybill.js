@@ -14,7 +14,7 @@ export const AirWaybill = (shipment, cb) => {
   // create a document and pipe to a blob
   const doc = new PDFDocument({
     // size: [595.28, 841.89], // PDFunit
-    size: 'A4',
+    size: 'letter',
     dpi: 400,
     margins: {
       top: 0,
