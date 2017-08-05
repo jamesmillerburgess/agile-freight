@@ -1,5 +1,6 @@
 import {} from 'meteor/pascoual:pdfkitx';
 
+import { weightFormat } from '../ui/formatters/numberFormatters';
 import { fitLines } from './documentUtils';
 
 
@@ -381,6 +382,13 @@ export const AirWaybill = (shipment, cb) => {
   label(description, 60, 32.5, 82);
   label(shipment.cargo.totalPackages, 8, 45, 12, 'right');
   label(shipment.cargo.totalWeight, 12, 45, 19, 'right');
+  label(
+    Math.round(shipment.cargo.chargeableWeight * 10) / 10,
+    30,
+    45,
+    37,
+    'right',
+  );
   doc.end();
   stream.on(
     'finish',
