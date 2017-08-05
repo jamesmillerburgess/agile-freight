@@ -10,6 +10,59 @@ import { BillOfLading } from '../../documents/billOfLading';
 import { AirWaybill } from '../../documents/airWaybill';
 import { APIGlobals } from '../../api/api-globals';
 
+export const ConfirmBookingButton = ({ match, shipment }) => (
+  <button
+    className="button-submit"
+    onClick={() => Shipment.confirm(match.params.shipmentId, shipment)}
+  >
+    CONFIRM BOOKING
+  </button>
+);
+
+export const BillOfLadingButton = ({ shipment }) => (
+  <button
+    className="button-submit"
+    onClick={() =>
+      BillOfLading(
+        shipment,
+        (url) => {
+          const open = window.open(url);
+          if (open === null || typeof (open) === 'undefined') {
+            // TODO: Create themed alert
+            window.alert(
+              `This URL has been blocked by your browser:\n${url}`,
+            );
+          }
+        },
+      )
+    }
+  >
+    BILL OF LADING
+  </button>
+);
+
+export const AirWaybillButton = ({ shipment }) => (
+  <button
+    className="button-submit"
+    onClick={() =>
+      AirWaybill(
+        shipment,
+        (url) => {
+          const open = window.open(url);
+          if (open === null || typeof (open) === 'undefined') {
+            // TODO: Create themed javascript alert
+            window.alert(
+              `This URL has been blocked by your browser:\n${url}`,
+            );
+          }
+        },
+      )
+    }
+  >
+    AIR WAYBILL
+  </button>
+);
+
 const EditShipment = ({ shipment, dispatchers, history, match }) => (
   <div className="new-quote">
     <div className="process-header">
@@ -157,47 +210,14 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
         >
           SAVE
         </button>
-        {shipment.movement.mode === 'Sea' ? (
-          <button
-            className="button-submit"
-            onClick={() =>
-              BillOfLading(
-                shipment,
-                (url) => {
-                  const open = window.open(url);
-                  if (open === null || typeof (open) === 'undefined') {
-                    // TODO: Create themed alert
-                    window.alert(
-                      `This URL has been blocked by your browser:\n${url}`,
-                    );
-                  }
-                },
-              )
-            }
-          >
-            BILL OF LADING
-          </button>
+        {shipment.status === 'Draft' ? (
+          <ConfirmBookingButton shipment={shipment} match={match} />
         ) : null}
-        {shipment.movement.mode === 'Air' ? (
-          <button
-            className="button-submit"
-            onClick={() =>
-              AirWaybill(
-                shipment,
-                (url) => {
-                  const open = window.open(url);
-                  if (open === null || typeof (open) === 'undefined') {
-                    // TODO: Create themed javascript alert
-                    window.alert(
-                      `This URL has been blocked by your browser:\n${url}`,
-                    );
-                  }
-                },
-              )
-            }
-          >
-            AIR WAYBILL
-          </button>
+        {shipment.status === 'Confirmed' && shipment.movement.mode === 'Sea' ? (
+          <BillOfLadingButton shipment={shipment} />
+        ) : null}
+        {shipment.status === 'Confirmed' && shipment.movement.mode === 'Air' ? (
+          <AirWaybillButton shipment={shipment} />
         ) : null}
       </div>
     </div>
@@ -205,7 +225,8 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
 );
 
 EditShipment.propTypes = {
-  shipment: PropTypes.object.isRequired,
+  shipment: PropTypes.object.isRequired, // eslint-disable-line
+                                         // react/forbid-prop-types
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
   history: PropTypes.object.isRequired, // eslint-disable-line
   // react/forbid-prop-types
