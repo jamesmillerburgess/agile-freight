@@ -1,5 +1,10 @@
 ## v.NEXT
 
+## v1.5.0 – Shipment Lifecycle
+
+* Show/hide containers editor based on mode
+* Show/hide document buttons based on mode
+
 ## v1.4.0 – Basic Air Waybill
 
 * Air Waybill PDF can be generated from shipment editor
