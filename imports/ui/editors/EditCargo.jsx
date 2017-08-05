@@ -185,6 +185,7 @@ export const PackageLines = ({ cargo, dispatchers }) => (
           DENSITY RATIO
         </div>
         <input
+          className="small-numeric-input"
           value={cargo.densityRatio}
           onChange={
             e => dispatchers.onChangeDensityRatio(e.target.value)
