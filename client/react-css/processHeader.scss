@@ -8,8 +8,16 @@
   .title {
     font-size: $giant-font-size;
     line-height: 32px;
-    margin-left: 15px;
     margin-right: 15px;
+  }
+  .edit-icon {
+    font-size: $extra-large-font-size;
+    position: relative;
+    bottom: 10px;
+    left: 5px;
+  }
+  .edit-icon:hover {
+    color: $customers-accent-color;
   }
   .breadcrumbs {
     display: flex;

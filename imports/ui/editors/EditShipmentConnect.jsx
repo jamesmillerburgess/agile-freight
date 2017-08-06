@@ -8,6 +8,9 @@ import { getChargeableWeight } from '../quoteUtils';
 
 const mapStateToProps = (state) => {
   const { shipment } = state;
+  if (!shipment.cargo) {
+    shipment.cargo = {};
+  }
   shipment.cargo.chargeableWeight = getChargeableWeight(state);
   return { shipment };
 };

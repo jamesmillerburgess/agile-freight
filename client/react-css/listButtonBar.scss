@@ -1,0 +1,50 @@
+@import 'styleGlobals';
+
+.list-button-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.list-filters {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 7px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: row;
+  margin-left: 15px;
+}
+
+.list-button-bar .button-submit {
+  height: 30px;
+  width: 120px;
+}
+
+.filter-button {
+  width: 75px;
+  border: 1px solid $customers-accent-color;
+  border-right: 0;
+  text-align: center;
+  background-color: $editable-input-background-color;
+  padding: 2px 0;
+}
+
+.filter-button:first-child {
+  border-right: 0;
+}
+
+.filter-button:last-child {
+  border-right: 1px solid $customers-accent-color;
+}
+
+.filter-badge {
+  position: relative;
+  bottom: 2px;
+  font-size: 10px;
+  background-color: rgba(255,255,255,0.25);
+  padding: 3px;
+  border-radius: 5px;
+}

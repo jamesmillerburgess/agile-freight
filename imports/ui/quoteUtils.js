@@ -92,7 +92,9 @@ export const getUpdatedFXConversions = (charges) => {
     if (currencies.indexOf(currency) === -1) {
       result[currency] = set('active', false, result[currency]);
     }
-    if (result[currency].active && !result[currency].rate) {
+    if (result[currency].active &&
+        !result[currency].rate &&
+        APIGlobals.fxRates[charges.currency]) {
       result[currency] = set(
         'rate',
         APIGlobals.fxRates[charges.currency][currency],

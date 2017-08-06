@@ -3,12 +3,13 @@ import { check } from 'meteor/check';
 
 import { Quotes } from './quotesCollection';
 import { Customers } from '../customers/customersCollection';
+import { Branches } from '../branch/branchCollection';
 
 Meteor.methods({
   'quote.new': function quoteNew(customerId) {
     check(customerId, String);
 
-    const { currency } = Customers.findOne(customerId);
+    const { currency, branch } = Customers.findOne(customerId);
 
     const quoteId = Quotes.insert({
       customerId,

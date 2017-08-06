@@ -1,0 +1,41 @@
+@import 'styleGlobals';
+
+.panel.list-item {
+  padding: 5px;
+}
+
+.list-item {
+  .row {
+    align-items: center;
+  }
+  .panel {
+    padding: 5px;
+  }
+  .title {
+    font-weight: bold;
+  }
+  .title.inactive {
+    text-decoration: line-through;
+  }
+  .flag {
+    line-height: 0;
+  }
+}
+
+.list-item-header {
+  display: flex;
+  flex-direction: column;
+  width: 17%;
+  .movement-event {
+    padding: 0;
+  }
+}
+
+.list-item-body {
+  width: 83%;
+}
+
+.list-item-status {
+  font-weight: bold;
+  font-size: 15px;
+}
