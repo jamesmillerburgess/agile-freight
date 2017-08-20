@@ -4,7 +4,9 @@ import Shipment from '../shipmentUtils';
 
 const ShipmentListItemHeader = ({ shipment }) => (
   <div className="list-item-header">
-    <div className={`title ${Shipment.isInactive(shipment) ? 'inactive' : ''}`}>BSL400534</div>
+    <div className={`title ${Shipment.isInactive(shipment) ? 'inactive' : ''}`}>
+      {shipment.reference || ''}
+    </div>
     <div className="list-item-status">
       {Shipment.displayStatus(shipment)}
     </div>
