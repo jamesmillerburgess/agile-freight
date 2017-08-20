@@ -7,33 +7,10 @@ import { Shipments } from '../../api/shipments/shipmentsCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
 import ShipmentListItem from './ShipmentListItem.jsx';
-import { copyQuote, newShipment } from '../quoteUtils';
 import ShipmentListItemHeader from './ShipmentListItemHeader.jsx';
 import MovementChart from './MovementChart.jsx';
 
-export const QuoteListItemInner = ({ quote, history }) => {
-  const onClickCopy = (e) => {
-    e.preventDefault();
-    copyQuote(
-      quote._id,
-      (
-        err,
-        newQuoteId,
-      ) => history.push(`/customers/view/${quote.customerId}/quotes/${newQuoteId}/header`),
-    );
-  };
-
-  const onClickNewShipment = (e) => {
-    e.preventDefault();
-    newShipment(
-      quote._id,
-      (
-        err,
-        newShipmentId,
-      ) => history.push(`/customers/view/${quote.customerId}/shipments/${newShipmentId}`),
-    );
-  };
-
+export const QuoteListItemInner = ({ quote }) => {
   const quoteLink = () => {
     if (quote.status === 'Submitted') {
       return `/customers/view/${quote.customerId}/quotes/${quote._id}/view`;
@@ -77,7 +54,6 @@ QuoteListItemInner.propTypes = {
       totalTEU: PropTypes.number,
     }),
   }),
-  history: PropTypes.object.isRequired,
 };
 
 QuoteListItemInner.defaultProps = {
