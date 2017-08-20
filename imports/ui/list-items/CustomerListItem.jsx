@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor';
 
 import { isFavoriteCustomer } from '../../api/users/userUtils';
 
-const CustomerListItem = ({ customer, header, history }) => {
+const CustomerListItem = ({ customer, header }) => {
   const favoriteCustomer = (e) => {
     e.preventDefault();
     Meteor.call('users.favoriteCustomer', Meteor.user()._id, customer._id);
@@ -34,11 +34,6 @@ const CustomerListItem = ({ customer, header, history }) => {
            )
           }
         </div>
-        <div className="icon-column">
-          <button onClick={editCustomer}>
-            <span className="fa fa-fw fa-pencil" />
-          </button>
-        </div>
       </div>
     </Link>
   );
@@ -47,7 +42,6 @@ const CustomerListItem = ({ customer, header, history }) => {
 CustomerListItem.propTypes = {
   customer: PropTypes.object.isRequired,
   header: PropTypes.bool,
-  history: PropTypes.object.isRequired,
 };
 
 CustomerListItem.defaultProps = {
