@@ -3,27 +3,32 @@ import { check } from 'meteor/check';
 
 import { Quotes } from './quotesCollection';
 import { Customers } from '../customers/customersCollection';
+import { Branches } from '../branch/branchCollection';
 
 Meteor.methods({
   'quote.new': function quoteNew(customerId) {
     check(customerId, String);
 
-    const { currency } = Customers.findOne(customerId);
+    const { currency, branch } = Customers.findOne(customerId);
 
     const quoteId = Quotes.insert({
       customerId,
       createdOn: new Date(),
       charges: { currency },
       status: 'Draft',
+      reference: Meteor.call('branch.nextReference', branch),
     });
 
-    Customers.update({ _id: customerId }, { $push: { quotes: quoteId } });
+    Customers.update(customerId, { $push: { quotes: quoteId } });
+    Branches.update(
+      branch,
+      { $push: { references: { type: 'Quote', reference: quoteId } } },
+    );
 
     return quoteId;
   },
   'quote.copy': function quoteCopy(quoteId) {
     check(quoteId, String);
-
     const {
       customerId,
       cargo,
