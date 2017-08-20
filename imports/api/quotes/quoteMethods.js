@@ -17,6 +17,7 @@ Meteor.methods({
       charges: { currency },
       status: 'Draft',
       reference: Meteor.call('branch.nextReference', branch),
+      branch,
     });
 
     Customers.update(customerId, { $push: { quotes: quoteId } });

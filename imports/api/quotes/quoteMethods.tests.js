@@ -63,6 +63,10 @@ if (Meteor.isServer) {
         Branches.findOne('c').references[0].type.should.equal('Quote');
         Branches.findOne('c').references[0].reference.should.equal(quoteId);
       });
+      it('sets the branch to the same as that of the customer', () => {
+        const quoteId = Meteor.call('quote.new', 'a');
+        Quotes.findOne(quoteId).branch.should.equal('c');
+      });
     });
     describe('quote.copy', () => {
       it('inserts a new quote into the collection', () => {
