@@ -18,7 +18,20 @@ const branchSave = (branchId, options) => {
   Branches.update({ _id: branchId }, { $set: options });
 };
 
+export const branchNextReference = (branchId) => {
+  check(branchId, String);
+  const branch = Branches.findOne(branchId);
+  if (!branch) {
+    throw new Error(`${branchId} is not a valid branch id.`);
+  }
+  const code = branch.code || '';
+  const references = branch.references || [];
+  const num = references.length + 1;
+  return code + (`000000${num}`).slice(-6);
+};
+
 Meteor.methods({
   'branch.new': branchNew,
   'branch.save': branchSave,
+  'branch.nextReference': branchNextReference,
 });
