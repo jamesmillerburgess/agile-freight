@@ -7,7 +7,7 @@ import moment from 'moment';
 import UNLocationField from '../fields/UNLocationField.jsx';
 
 import { APIGlobals } from '../../api/api-globals';
-import CheckboxField from "../fields/CheckboxField";
+import CheckboxField from '../fields/CheckboxField';
 
 export const Dates = ({ movement, dispatchers }) => (
   <div className="pickup-delivery-wrapper">
@@ -98,30 +98,32 @@ const EditMovement = ({ movement, dispatchers, useDates, useShipperConsignee }) 
       </div>
       {useShipperConsignee ?
        null : (
-         <div>
-           <div className="field select-country">
-             <div className="label">
-               COMMERCIAL PARTY
-             </div>
-             <Select
-               value={movement.commercialParty}
-               options={APIGlobals.commercialPartyOptions}
-               onChange={selectedValue =>
-                 dispatchers.onChangeMovementCommercialParty(selectedValue.value)}
-             />
+         <div className="field select-country">
+           <div className="label">
+             COMMERCIAL PARTY
            </div>
-           <div className="field select-country">
-             <div className="label">
-               TERMS OF SALE
-             </div>
-             <Select
-               value={movement.termsOfSale}
-               options={APIGlobals.incotermOptions}
-               onChange={selectedValue =>
-                 dispatchers.onChangeMovementTermsOfSale(selectedValue.value)}
-               disabled={movement.mode === 'Brokerage'}
-             />
+           <Select
+             value={movement.commercialParty}
+             options={APIGlobals.commercialPartyOptions}
+             onChange={selectedValue =>
+               dispatchers.onChangeMovementCommercialParty(selectedValue.value)}
+           />
+         </div>
+       )
+      }
+      {useShipperConsignee ?
+       null : (
+         <div className="field select-country">
+           <div className="label">
+             TERMS OF SALE
            </div>
+           <Select
+             value={movement.termsOfSale}
+             options={APIGlobals.incotermOptions}
+             onChange={selectedValue =>
+               dispatchers.onChangeMovementTermsOfSale(selectedValue.value)}
+             disabled={movement.mode === 'Brokerage'}
+           />
          </div>
        )
       }
