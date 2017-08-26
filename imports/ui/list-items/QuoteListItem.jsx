@@ -28,13 +28,16 @@ export const QuoteListItemInner = ({ quote }) => {
       </Link>
       {
         quote.shipments ?
-        quote.shipments.map(shipmentId => (
-          <ShipmentListItem
-            key={shipmentId}
-            quote={quote}
-            shipment={Shipments.findOne(shipmentId)}
-          />
-        )) : null
+        quote.shipments
+             .slice()
+             .reverse()
+             .map(shipmentId => (
+               <ShipmentListItem
+                 key={shipmentId}
+                 quote={quote}
+                 shipment={Shipments.findOne(shipmentId)}
+               />
+             )) : null
       }
     </div>
   );

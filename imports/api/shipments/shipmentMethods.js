@@ -4,6 +4,7 @@ import { check } from 'meteor/check';
 import { Shipments } from './shipmentsCollection';
 import { Quotes } from '../quotes/quotesCollection';
 import { Customers } from '../customers/customersCollection';
+import { Branches } from '../branch/branchCollection';
 
 Meteor.methods({
   'shipment.new': function shipmentNew(quoteId) {
@@ -14,6 +15,7 @@ Meteor.methods({
       throw new Error('Invalid quote id');
     }
     const { customerId, cargo, movement, otherServices, charges } = quote;
+    const { branch } = Customers.findOne(customerId);
     const shipmentId = Shipments.insert({
       customerId,
       cargo,
@@ -24,10 +26,16 @@ Meteor.methods({
       createdOn: new Date(),
       active: true,
       status: 'Draft',
+      reference: Meteor.call('branch.nextReference', branch),
+      branch,
     });
 
     Quotes.update({ _id: quoteId }, { $push: { shipments: shipmentId } });
     Customers.update({ _id: customerId }, { $push: { shipments: shipmentId } });
+    Branches.update(
+      branch,
+      { $push: { references: { type: 'Shipment', reference: shipmentId } } },
+    );
 
     return shipmentId;
   },

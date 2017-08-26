@@ -53,7 +53,7 @@ if (Meteor.isServer) {
         const quoteId = Meteor.call('quote.new', 'a');
         Quotes.findOne(quoteId).status.should.equal('Draft');
       });
-      it('sets the reference to the branches next reference', () => {
+      it('sets the reference to the branch\'s next reference', () => {
         const reference = branchNextReference('c');
         const quoteId = Meteor.call('quote.new', 'a');
         Quotes.findOne(quoteId).reference.should.equal(reference);
@@ -157,7 +157,7 @@ if (Meteor.isServer) {
         const quoteId = Meteor.call('quote.copy', 'b');
         Quotes.findOne(quoteId).createdOn.should.be.instanceof(Date);
       });
-      it('sets the reference to the branches next reference', () => {
+      it('sets the reference to the branch\'s next reference', () => {
         Quotes.insert({ _id: 'b', customerId: 'a' });
         const reference = branchNextReference('c');
         const quoteId = Meteor.call('quote.copy', 'b');

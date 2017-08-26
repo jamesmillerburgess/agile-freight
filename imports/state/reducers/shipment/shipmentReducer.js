@@ -120,6 +120,7 @@ export const shipment = (state = {}, action = { type: '' }) => {
         ),
         customerReference: customerReference(state.customerReference, action),
         blType: blType(state.blType, action),
+        reference: state.reference || '',
       };
   }
 };
