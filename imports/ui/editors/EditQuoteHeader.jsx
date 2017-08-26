@@ -70,7 +70,7 @@ class EditQuoteHeader extends React.Component {
     return (
       <div className="new-quote">
         <div className="process-header">
-          <div className="title">NEW QUOTE</div>
+          <div className="title">QUOTE {this.props.quote.reference}</div>
           <div className="breadcrumbs">
             <div className="breadcrumb active customer">HEADER</div>
             <div className="breadcrumb-end active customer" />

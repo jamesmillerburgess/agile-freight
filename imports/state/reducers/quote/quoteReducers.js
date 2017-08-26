@@ -4,10 +4,18 @@ import { otherServices } from './otherServicesReducers';
 import { charges } from './chargesReducers';
 import { email } from './emailReducers';
 
-export const quote = (state = {}, action) => ({
-  cargo: cargo(state.cargo || {}, action),
-  movement: movement(state ? state.movement : null, action),
-  otherServices: otherServices(state.otherServices || {}, action),
-  charges: charges(state.charges || {}, action, state),
-  email: email(state ? state.email : null, action),
-});
+import * as ACTION_TYPES from '../../actions/actionTypes';
+
+export const quote = (state = {}, action) => {
+  if (action.type === ACTION_TYPES.LOAD_QUOTE) {
+    return action.quote;
+  }
+  return {
+    reference: state.reference || '',
+    cargo: cargo(state.cargo || {}, action),
+    movement: movement(state ? state.movement : null, action),
+    otherServices: otherServices(state.otherServices || {}, action),
+    charges: charges(state.charges || {}, action, state),
+    email: email(state ? state.email : null, action),
+  };
+};

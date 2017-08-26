@@ -125,7 +125,7 @@ class EditQuoteCharges extends React.Component {
     return (
       <div className="edit-quote">
         <div className="process-header">
-          <div className="title">NEW QUOTE</div>
+          <div className="title">QUOTE {this.props.quote.reference}</div>
           <div className="breadcrumbs">
             <div
               className="breadcrumb"
