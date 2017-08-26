@@ -17,8 +17,8 @@ import EditMovement from './EditMovement.jsx';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
 class EditQuoteHeader extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.archive = this.archive.bind(this);
     this.save = this.save.bind(this);
     this.goToEditCharges = this.goToEditCharges.bind(this);
@@ -28,6 +28,10 @@ class EditQuoteHeader extends React.Component {
 
   componentWillMount() {
     this.props.dispatchers.onLoad(Quotes.findOne(this.props.match.params.quoteId));
+  }
+
+  getRates() {
+    Quote.getAndApplyRates(this.props.quote, this.saveQuote);
   }
 
   goToEditCharges() {
@@ -43,10 +47,6 @@ class EditQuoteHeader extends React.Component {
       ...quote,
     };
     Meteor.call('quote.save', quoteUpdate, this.goToEditCharges);
-  }
-
-  getRates() {
-    Quote.getAndApplyRates(this.props.quote, this.saveQuote);
   }
 
   save() {
@@ -90,8 +90,8 @@ class EditQuoteHeader extends React.Component {
           <EditCargo
             cargo={this.props.quote.cargo}
             dispatchers={this.props.dispatchers}
-            useContainers={true}
-            splitCargoTypes={true}
+            useContainers
+            splitCargoTypes
           />
         </div>
         <div className="panel container form-section">
@@ -154,10 +154,8 @@ class EditQuoteHeader extends React.Component {
 EditQuoteHeader.propTypes = {
   quote: quotePropTypes.isRequired,
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
-  history: PropTypes.object.isRequired, // eslint-disable-line
-                                        // react/forbid-prop-types
-  match: PropTypes.object.isRequired, // eslint-disable-line
-                                      // react/forbid-prop-types
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default EditQuoteHeader;
