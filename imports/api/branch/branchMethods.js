@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
+import { pick } from 'lodash/fp';
 
 import { Branches } from './branchCollection';
 
@@ -13,9 +14,13 @@ const branchNew = (options) => {
 const branchSave = (branchId, options) => {
   check(branchId, String);
   check(options, {
+    _id: Match.Maybe(String),
     name: Match.Maybe(String),
+    code: Match.Maybe(String),
+    references: Match.Maybe(Array),
   });
-  Branches.update({ _id: branchId }, { $set: options });
+  const update = { $set: pick(['name', 'code'], options) };
+  Branches.update({ _id: branchId }, update);
 };
 
 export const branchNextReference = (branchId) => {

@@ -6,16 +6,18 @@ import { email } from './emailReducers';
 
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
-export const quote = (state = {}, action) => {
+export const reference = (state, action) => {
   if (action.type === ACTION_TYPES.LOAD_QUOTE) {
-    return action.quote;
+    return action.quote.reference;
   }
-  return {
-    reference: state.reference || '',
-    cargo: cargo(state.cargo || {}, action),
-    movement: movement(state ? state.movement : null, action),
-    otherServices: otherServices(state.otherServices || {}, action),
-    charges: charges(state.charges || {}, action, state),
-    email: email(state ? state.email : null, action),
-  };
+  return state;
 };
+
+export const quote = (state = {}, action = { type: '' }) => ({
+  reference: reference(state.reference || '', action),
+  cargo: cargo(state.cargo || {}, action),
+  movement: movement(state ? state.movement : null, action),
+  otherServices: otherServices(state.otherServices || {}, action),
+  charges: charges(state.charges || {}, action, state),
+  email: email(state ? state.email : null, action),
+});

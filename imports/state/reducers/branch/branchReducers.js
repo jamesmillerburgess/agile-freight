@@ -3,6 +3,7 @@ import * as ACTION_TYPES from '../../actions/actionTypes';
 
 export const defaultBranchState = {
   name: '',
+  code: '',
 };
 
 export const branch = (state = defaultBranchState, action = { type: '' }) => {
@@ -11,6 +12,8 @@ export const branch = (state = defaultBranchState, action = { type: '' }) => {
       return action.branch;
     case ACTION_TYPES.SET_BRANCH_NAME:
       return set('name', action.name, state);
+    case ACTION_TYPES.SET_BRANCH_CODE:
+      return set('code', action.code, state);
     default:
       return state;
   }

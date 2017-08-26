@@ -11,22 +11,24 @@ import * as ACTION_TYPES from '../../actions/actionTypes';
 if (Meteor.isClient) {
   describe('Branch Reducer', () => {
     chai.should();
-
-    it('defaults each field to blank', () => {
+    it('defaults to the default', () => {
       branch().should.eql(defaultBranchState);
-      defaultBranchState.name.should.equal('');
     });
-
     it('loads a branch', () => {
       const action = { type: ACTION_TYPES.LOAD_BRANCH, branch: { name: 'a' } };
       branch({}, action).name.should.equal('a');
     });
-
-    it('set the branch name', () => {
+    it('sets the branch name', () => {
       const stateBefore = { name: 'a' };
       const action = { type: ACTION_TYPES.SET_BRANCH_NAME, name: 'b' };
       deepFreeze(stateBefore);
       branch(stateBefore, action).name.should.equal('b');
+    });
+    it('sets the branch code', () => {
+      const stateBefore = { code: 'a' };
+      const action = { type: ACTION_TYPES.SET_BRANCH_CODE, code: 'b' };
+      deepFreeze(stateBefore);
+      branch(stateBefore, action).code.should.equal('b');
     });
   });
 }
