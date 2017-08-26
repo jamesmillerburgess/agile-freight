@@ -157,6 +157,23 @@ if (Meteor.isServer) {
         const quoteId = Meteor.call('quote.copy', 'b');
         Quotes.findOne(quoteId).createdOn.should.be.instanceof(Date);
       });
+      it('sets the reference to the branches next reference', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a' });
+        const reference = branchNextReference('c');
+        const quoteId = Meteor.call('quote.copy', 'b');
+        Quotes.findOne(quoteId).reference.should.equal(reference);
+      });
+      it('adds the quote id to the branch reference array', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a' });
+        const quoteId = Meteor.call('quote.copy', 'b');
+        Branches.findOne('c').references[0].type.should.equal('Quote');
+        Branches.findOne('c').references[0].reference.should.equal(quoteId);
+      });
+      it('sets the branch to the same as that of the customer', () => {
+        Quotes.insert({ _id: 'b', customerId: 'a' });
+        const quoteId = Meteor.call('quote.copy', 'b');
+        Quotes.findOne(quoteId).branch.should.equal('c');
+      });
     });
     describe('quote.submit', () => {
       let quoteId;
@@ -225,7 +242,6 @@ if (Meteor.isServer) {
       //   (() => Meteor.call('quote.submit', quoteId)).should.throw(Error);
       // });
     });
-
     describe('quote.save', () => {
       it('saves changes to the quote', () => {
         const quoteId = Quotes.insert({
@@ -279,7 +295,6 @@ if (Meteor.isServer) {
         quote.status.should.equal('Draft');
       });
     });
-
     describe('quote.archive', () => {
       it('changes the status to Archived', () => {
         const quoteId = Quotes.insert({

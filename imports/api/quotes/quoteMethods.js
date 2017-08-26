@@ -38,6 +38,8 @@ Meteor.methods({
       otherServices,
     } = Quotes.findOne(quoteId);
 
+    const { branch } = Customers.findOne(customerId);
+
     const newQuoteId = Quotes.insert({
       customerId,
       cargo,
@@ -46,10 +48,14 @@ Meteor.methods({
       charges,
       status: 'Draft',
       createdOn: new Date(),
+      reference: Meteor.call('branch.nextReference', branch),
     });
 
     Customers.update({ _id: customerId }, { $push: { quotes: newQuoteId } });
-
+    Branches.update(
+      branch,
+      { $push: { references: { type: 'Quote', reference: newQuoteId } } },
+    );
     return newQuoteId;
   },
   'quote.submit': function quoteSubmit(quoteId, email, expiryDate) {
