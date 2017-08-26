@@ -7,7 +7,7 @@ import moment from 'moment';
 import UNLocationField from '../fields/UNLocationField.jsx';
 
 import { APIGlobals } from '../../api/api-globals';
-import CheckboxField from '../fields/CheckboxField';
+import CheckboxField from '../fields/CheckboxField.jsx';
 
 export const Dates = ({ movement, dispatchers }) => (
   <div className="pickup-delivery-wrapper">
