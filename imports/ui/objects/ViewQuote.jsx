@@ -20,7 +20,16 @@ const ViewQuote = props => (
         >
           COPY QUOTE
         </button>
-        <button className="button-primary">
+        <button
+          className="button-primary"
+          onClick={() => newShipment(
+            props.match.params.quoteId,
+            (err, shipmentId) => props.history.push(
+              `/customers/view/${props.match.params.customerId}/shipments/` +
+              `${shipmentId}`,
+            ),
+          )}
+        >
           CREATE SHIPMENT
         </button>
         <button
