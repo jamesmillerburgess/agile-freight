@@ -49,6 +49,7 @@ Meteor.methods({
       status: 'Draft',
       createdOn: new Date(),
       reference: Meteor.call('branch.nextReference', branch),
+      branch,
     });
 
     Customers.update({ _id: customerId }, { $push: { quotes: newQuoteId } });
