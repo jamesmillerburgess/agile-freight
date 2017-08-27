@@ -66,6 +66,13 @@ const isInactive = (shipment) => {
           shipment.status === 'Closed');
 };
 
+const mode = shipment => {
+  if (!shipment || !shipment.movement) {
+    return '';
+  }
+  return shipment.movement.mode || '';
+};
+
 const originCountryCode = (shipment) => {
   if (!shipment || !shipment.movement) {
     return '';
@@ -408,6 +415,7 @@ const Shipment = {
   movementStatus,
   route,
   isInactive,
+  mode,
   originCountryCode,
   originCountry,
   destinationCountryCode,
