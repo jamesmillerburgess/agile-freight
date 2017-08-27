@@ -40,8 +40,10 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-meteor": "^4.0.1",
+    "eslint-plugin-prettier": "^2.2.0",
     "eslint-plugin-react": "^6.10.3",
     "nightmare": "^2.10.0",
+    "prettier": "^1.5.3",
     "react-addons-test-utils": "^15.5.1",
     "react-test-renderer": "^15.5.4",
     "redux-devtools": "^3.3.2"
@@ -52,7 +54,8 @@
       "allowImportExportEverywhere": true
     },
     "plugins": [
-      "meteor"
+      "meteor",
+      "prettier"
     ],
     "extends": [
       "airbnb",
@@ -62,6 +65,7 @@
       "import/resolver": "meteor"
     },
     "rules": {
+      "arrow-parens": "off",
       "import/no-extraneous-dependencies": "off",
       "import/extensions": [
         "off",
@@ -83,6 +87,10 @@
   },
   "stylelint": {
     "rules": {
+      "prettier/prettier": ["error", {
+        "singleQuote": true,
+        "trailingComma": "es5"
+      }],
       "at-rule-empty-line-before": "never",
       "block-opening-brace-space-before": "always",
       "comment-empty-line-before": [

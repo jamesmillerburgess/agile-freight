@@ -21,10 +21,9 @@ Meteor.methods({
     });
 
     Customers.update(customerId, { $push: { quotes: quoteId } });
-    Branches.update(
-      branch,
-      { $push: { references: { type: 'Quote', reference: quoteId } } },
-    );
+    Branches.update(branch, {
+      $push: { references: { type: 'Quote', reference: quoteId } },
+    });
 
     return quoteId;
   },
@@ -53,10 +52,9 @@ Meteor.methods({
     });
 
     Customers.update({ _id: customerId }, { $push: { quotes: newQuoteId } });
-    Branches.update(
-      branch,
-      { $push: { references: { type: 'Quote', reference: newQuoteId } } },
-    );
+    Branches.update(branch, {
+      $push: { references: { type: 'Quote', reference: newQuoteId } },
+    });
     return newQuoteId;
   },
   'quote.submit': function quoteSubmit(quoteId, email, expiryDate) {
@@ -106,7 +104,10 @@ Meteor.methods({
       throw new Error('Quote does not exist.');
     }
     if (quote.status !== 'Draft') {
-      throw new Error(`This quote's status is '${quote.status}'. Only quotes with status 'Draft' can be archived.`);
+      throw new Error(
+        `This quote's status is '${quote.status}'. Only quotes with status ` +
+          '\'Draft\' can be archived.',
+      );
     }
 
     Quotes.update(
