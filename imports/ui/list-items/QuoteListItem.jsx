@@ -26,19 +26,18 @@ export const QuoteListItemInner = ({ quote }) => {
           <MovementChart shipment={quote} />
         </div>
       </Link>
-      {
-        quote.shipments ?
-        quote.shipments
-             .slice()
-             .reverse()
-             .map(shipmentId => (
-               <ShipmentListItem
-                 key={shipmentId}
-                 quote={quote}
-                 shipment={Shipments.findOne(shipmentId)}
-               />
-             )) : null
-      }
+      {quote.shipments
+        ? quote.shipments
+            .slice()
+            .reverse()
+            .map(shipmentId =>
+              <ShipmentListItem
+                key={shipmentId}
+                quote={quote}
+                shipment={Shipments.findOne(shipmentId)}
+              />,
+            )
+        : null}
     </div>
   );
 };
@@ -75,7 +74,7 @@ QuoteListItemInner.defaultProps = {
   },
 };
 
-const QuoteListItem = createContainer((props) => {
+const QuoteListItem = createContainer(props => {
   const { quoteId } = props;
   const quote = Quotes.findOne(quoteId);
   return { quote };

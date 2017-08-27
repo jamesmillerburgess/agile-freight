@@ -54,7 +54,9 @@ export const AirWaybillButton = ({ shipment }) =>
 const EditShipment = ({ shipment, dispatchers, history, match }) =>
   <div className="new-quote">
     <div className="process-header">
-      <div className="title">SHIPMENT {shipment.reference}</div>
+      <div className="title">
+        SHIPMENT {shipment.reference}
+      </div>
       <div className="breadcrumbs">
         <div className="breadcrumb active customer">
           {shipment.status ? shipment.status.toUpperCase() : ''}

@@ -15,22 +15,12 @@ import EditQuoteChargesConnect from '../editors/EditQuoteChargesConnect';
 import EditQuoteEmailConnect from '../editors/EditQuoteEmailConnect';
 import ViewQuote from '../objects/ViewQuote.jsx';
 
-
 const CustomerInner = ({ customer, loading, history }) => {
-  const newQuote = (e) => {
+  const newQuote = e => {
     e.preventDefault();
-    Meteor.call(
-      'quote.new',
-      customer._id,
-      (err, quoteId) =>
-        history
-          .push(`/customers/view/${customer._id}/quotes/${quoteId}/header`),
+    Meteor.call('quote.new', customer._id, (err, quoteId) =>
+      history.push(`/customers/view/${customer._id}/quotes/${quoteId}/header`),
     );
-  };
-
-  const editCustomer = (e) => {
-    e.preventDefault();
-    history.push(`/customers/edit/${customer._id}`);
   };
 
   return (
@@ -49,35 +39,40 @@ const CustomerInner = ({ customer, loading, history }) => {
         </div>
         <Route
           path="/customers/view/:customerId/overview"
-          render={
-            props => (
-              <div>
-                <div className="list-button-bar">
-                  <button className="button-submit" onClick={newQuote}>
-                    NEW SHIPMENT
-                  </button>
-                  <div className="list-filters">
-                    <div className="filter-group">
-                      <button className="filter-button radio-button active">
-                        Active
-                      </button>
-                      <button className="filter-button radio-button active">
-                        Inactive
-                      </button>
-                    </div>
-                    <div className="filter-group">
-                      <button className="filter-button radio-button active">Air</button>
-                      <button className="filter-button radio-button active">Sea</button>
-                      <button className="filter-button radio-button active">Road</button>
-                      <button className="filter-button radio-button active">Brokerage</button>
-                    </div>
+          render={props =>
+            <div>
+              <div className="list-button-bar">
+                <button className="button-submit" onClick={newQuote}>
+                  NEW SHIPMENT
+                </button>
+                <div className="list-filters">
+                  <div className="filter-group">
+                    <button className="filter-button radio-button active">
+                      Active
+                    </button>
+                    <button className="filter-button radio-button active">
+                      Inactive
+                    </button>
+                  </div>
+                  <div className="filter-group">
+                    <button className="filter-button radio-button active">
+                      Air
+                    </button>
+                    <button className="filter-button radio-button active">
+                      Sea
+                    </button>
+                    <button className="filter-button radio-button active">
+                      Road
+                    </button>
+                    <button className="filter-button radio-button active">
+                      Brokerage
+                    </button>
                   </div>
                 </div>
-                {
-                  loading ?
-                  null :
-                  Quotes
-                    .find({ _id: { $in: customer.quotes } })
+              </div>
+              {loading
+                ? null
+                : Quotes.find({ _id: { $in: customer.quotes } })
                     .fetch()
                     .sort((a, b) => {
                       if (a.createdOn > b.createdOn) {
@@ -88,13 +83,14 @@ const CustomerInner = ({ customer, loading, history }) => {
                       }
                       return 0;
                     })
-                    .map(quote => (
-                      <QuoteListItem key={quote._id} {...props} quoteId={quote._id} />
-                    ))
-                }
-              </div>
-            )
-          }
+                    .map(quote =>
+                      <QuoteListItem
+                        key={quote._id}
+                        {...props}
+                        quoteId={quote._id}
+                      />,
+                    )}
+            </div>}
         />
         <Route
           path="/customers/view/:customerId/quotes/:quoteId/header"
@@ -123,18 +119,16 @@ const CustomerInner = ({ customer, loading, history }) => {
 };
 
 CustomerInner.propTypes = {
-  customer: PropTypes.object,           // eslint-disable-line
-                                        // react/forbid-prop-types
+  customer: PropTypes.object.isRequired,
   loading: PropTypes.bool,
-  history: PropTypes.object.isRequired, // eslint-disable-line
-                                        // react/forbid-prop-types
+  history: PropTypes.object.isRequired,
 };
 
 CustomerInner.defaultProps = {
   loading: false,
 };
 
-const Customer = createContainer((props) => {
+const Customer = createContainer(props => {
   const customerId = props.match.params.customerId;
   const customerHandler = Meteor.subscribe(
     'customers.deepCustomer',
@@ -147,6 +141,5 @@ const Customer = createContainer((props) => {
     loading,
   };
 }, CustomerInner);
-
 
 export default Customer;

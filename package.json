@@ -76,7 +76,9 @@
       "import/prefer-default-export": "off",
       "no-multi-spaces": "off",
       "react/prop-types": "off",
-      "react/forbid-prop-types": "off"
+      "react/forbid-prop-types": "off",
+      "react/jsx-indent-props": "off",
+      "react/jsx-closing-bracket-location": "off"
     },
     "globals": {
       "_": true,
