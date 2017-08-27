@@ -9,7 +9,7 @@ import Nav from '../../ui/app-core/Nav.jsx';
 import Home from '../pages/Home.jsx';
 import CustomerListConnect from '../lists/CustomerListConnect.jsx';
 import EditCustomerConnect from '../editors/EditCustomerConnect';
-import Customer from '../pages/Customer.jsx';
+import CustomerConnect from '../pages/CustomerConnect';
 import RateList from '../lists/RateList.jsx';
 import EditRateConnect from '../editors/EditRateConnect.jsx';
 import UserProfileConnect from '../editors/EditUserProfileConnect.jsx';
@@ -74,7 +74,7 @@ const MainInner = ({ loading }) => {
                />
                <Route
                  path="/customers/view/:customerId"
-                 render={routeProps => verifyAuth(Customer, routeProps)}
+                 render={routeProps => verifyAuth(CustomerConnect, routeProps)}
                />
                <Route
                  path="/customers/edit/:customerId"

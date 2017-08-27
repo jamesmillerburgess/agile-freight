@@ -6,11 +6,13 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Shipments } from '../../api/shipments/shipmentsCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
+import Shipment from '../shipmentUtils';
+
 import ShipmentListItem from './ShipmentListItem.jsx';
 import ShipmentListItemHeader from './ShipmentListItemHeader.jsx';
 import MovementChart from './MovementChart.jsx';
 
-export const QuoteListItemInner = ({ quote }) => {
+export const QuoteListItemInner = ({ quote, filters }) => {
   const quoteLink = () => {
     if (quote.status === 'Submitted') {
       return `/customers/view/${quote.customerId}/quotes/${quote._id}/view`;
@@ -30,6 +32,9 @@ export const QuoteListItemInner = ({ quote }) => {
         ? quote.shipments
             .slice()
             .reverse()
+            .filter(shipmentId =>
+              Shipment.filter(Shipments.findOne(shipmentId), filters),
+            )
             .map(shipmentId =>
               <ShipmentListItem
                 key={shipmentId}

@@ -5,3 +5,4 @@ export { customerList } from './customerList/customerListReducers';
 export { userProfile } from './userProfile/userProfileReducers';
 export { rate } from './rate/rateReducer';
 export { shipment } from './shipment/shipmentReducer';
+export { filters } from './filters/filtersReducer';

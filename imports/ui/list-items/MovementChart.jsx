@@ -8,6 +8,8 @@ const modeIcon = mode => {
       return 'fa-plane';
     case 'Sea':
       return 'fa-ship';
+    case 'Road':
+      return 'fa-flip-horizontal fa-truck';
     default:
       return 'fa-question';
   }
