@@ -194,7 +194,7 @@ const EditShipment = ({ shipment, dispatchers, history, match }) =>
         >
           SAVE
         </button>
-        {shipment.status === 'Draft'
+        {shipment.status === 'Unconfirmed'
           ? <ConfirmBookingButton
               shipment={shipment}
               match={match}
