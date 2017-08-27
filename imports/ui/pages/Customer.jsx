@@ -133,7 +133,10 @@ export const CustomerInner = ({
         />
         <Route
           path="/customers/view/:customerId/shipments/:shipmentId"
-          render={props => <EditShipmentConnect {...props} />}
+          render={props => {
+            dispatchers.loadShipment(props.match.params.shipmentId);
+            return <EditShipmentConnect {...props} />;
+          }}
         />
       </div>
       <div className="content-footer-accent customers-footer-accent" />
@@ -169,15 +172,10 @@ CustomerInner.defaultProps = {
 
 const Customer = createContainer(props => {
   const customerId = props.match.params.customerId;
-  const customerHandler = Meteor.subscribe(
-    'customers.deepCustomer',
-    customerId,
-  );
-  const customer = Customers.find({ _id: customerId }).fetch()[0];
-  const loading = !customerHandler.ready();
+  const customer = Customers.findOne(customerId);
   return {
     customer,
-    loading,
+    loading: false,
   };
 }, CustomerInner);
 

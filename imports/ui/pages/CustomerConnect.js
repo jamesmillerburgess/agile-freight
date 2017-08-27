@@ -1,18 +1,25 @@
 import { connect } from 'react-redux';
 
 import Customer from './Customer.jsx';
-import * as actionCreators from '../../state/actions/filterActions';
+import { toggleFilter } from '../../state/actions/filterActions';
+import { loadShipment } from '../../state/actions/quoteActions';
+
+import { Shipments } from '../../api/shipments/shipmentsCollection';
 
 const mapStateToProps = ({ filters }) => ({ filters });
 
 const mapDispatchToProps = dispatch => ({
   dispatchers: {
-    toggleActive: () => dispatch(actionCreators.toggleFilter('showActive')),
-    toggleInactive: () => dispatch(actionCreators.toggleFilter('showInactive')),
-    toggleAir: () => dispatch(actionCreators.toggleFilter('showAir')),
-    toggleSea: () => dispatch(actionCreators.toggleFilter('showSea')),
-    toggleRoad: () => dispatch(actionCreators.toggleFilter('showRoad')),
-    toggleBrokerage: () => dispatch(actionCreators.toggleFilter('showBrokerage')),
+    loadShipment: shipmentId => {
+      const shipment = Shipments.findOne(shipmentId);
+      dispatch(loadShipment(shipment));
+    },
+    toggleActive: () => dispatch(toggleFilter('showActive')),
+    toggleInactive: () => dispatch(toggleFilter('showInactive')),
+    toggleAir: () => dispatch(toggleFilter('showAir')),
+    toggleSea: () => dispatch(toggleFilter('showSea')),
+    toggleRoad: () => dispatch(toggleFilter('showRoad')),
+    toggleBrokerage: () => dispatch(toggleFilter('showBrokerage')),
   },
 });
 
