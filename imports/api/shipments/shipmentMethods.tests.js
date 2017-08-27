@@ -55,7 +55,7 @@ if (Meteor.isServer) {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne(shipmentId).createdOn.should.be.instanceof(Date);
       });
-      it('sets the status to \'Unconfirmed\'', () => {
+      it("sets the status to 'Unconfirmed'", () => {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne(shipmentId).status.should.equal('Unconfirmed');
       });
@@ -70,7 +70,7 @@ if (Meteor.isServer) {
         Shipments.findOne(shipmentId).otherServices.should.equal('e');
         Shipments.findOne(shipmentId).charges.should.equal('f');
       });
-      it('sets the reference to the branch\'s next reference', () => {
+      it("sets the reference to the branch's next reference", () => {
         const reference = branchNextReference('c');
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne(shipmentId).reference.should.equal(reference);
@@ -84,6 +84,42 @@ if (Meteor.isServer) {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne(shipmentId).branch.should.equal('c');
       });
+      it('sets the shipper to the customer if the commercial party is not the buyer', () => {
+        Customers.insert({
+          _id: 'x',
+          name: 'Name',
+          address: 'Address',
+          branch: 'c',
+        });
+        Quotes.insert({
+          _id: 'y',
+          customerId: 'x',
+          movement: { commercialParty: 'Seller' },
+        });
+        let shipmentId = Meteor.call('shipment.new', 'y');
+        Shipments.findOne(shipmentId).shipper.should.equal('Name');
+        Shipments.findOne(shipmentId).shipperAddress.should.equal('Address');
+        Quotes.update('y', { $set: { movement: { commercialParty: 'aaa' } } });
+        shipmentId = Meteor.call('shipment.new', 'y');
+        Shipments.findOne(shipmentId).shipper.should.equal('Name');
+        Shipments.findOne(shipmentId).shipperAddress.should.equal('Address');
+      });
+      it('sets the consignee to the customer if the commercial party is buyer', () => {
+        Customers.insert({
+          _id: 'x',
+          name: 'Name',
+          address: 'Address',
+          branch: 'c',
+        });
+        Quotes.insert({
+          _id: 'y',
+          customerId: 'x',
+          movement: { commercialParty: 'Buyer' },
+        });
+        const shipmentId = Meteor.call('shipment.new', 'y');
+        Shipments.findOne(shipmentId).consignee.should.equal('Name');
+        Shipments.findOne(shipmentId).consigneeAddress.should.equal('Address');
+      });
     });
     describe('shipment.save', () => {
       it('saves changes to the shipment', () => {
@@ -91,14 +127,11 @@ if (Meteor.isServer) {
           cargo: {},
           movement: {},
         });
-        Meteor.call(
-          'shipment.save',
-          {
-            _id: shipmentId,
-            cargo: { a: 'a' },
-            movement: { b: 'b' },
-          },
-        );
+        Meteor.call('shipment.save', {
+          _id: shipmentId,
+          cargo: { a: 'a' },
+          movement: { b: 'b' },
+        });
         const shipment = Shipments.findOne(shipmentId);
 
         shipment.cargo.a.should.equal('a');
@@ -108,14 +141,11 @@ if (Meteor.isServer) {
         const shipmentId = Shipments.insert({
           status: 'Draft',
         });
-        Meteor.call(
-          'shipment.save',
-          {
-            _id: shipmentId,
-            status: 'Different Status',
-            cargo: {},
-          },
-        );
+        Meteor.call('shipment.save', {
+          _id: shipmentId,
+          status: 'Different Status',
+          cargo: {},
+        });
         const shipment = Shipments.findOne(shipmentId);
 
         shipment.status.should.equal('Draft');
@@ -127,28 +157,25 @@ if (Meteor.isServer) {
         Meteor.call('shipment.archive', shipmentId);
         Shipments.findOne(shipmentId).active.should.equal(false);
       });
-      it('sets status to \'Archived\'', () => {
+      it("sets status to 'Archived'", () => {
         const shipmentId = Shipments.insert({ status: 'Draft' });
         Meteor.call('shipment.archive', shipmentId);
         Shipments.findOne(shipmentId).status.should.equal('Archived');
       });
     });
     describe('shipment.confirm', () => {
-      it('sets status to \'Confirmed\'', () => {
+      it("sets status to 'Confirmed'", () => {
         const shipmentId = Shipments.insert({ status: 'Draft' });
         Meteor.call('shipment.confirm', { _id: shipmentId });
         Shipments.findOne(shipmentId).status.should.equal('Confirmed');
       });
       it('saves changes to the shipment', () => {
         const shipmentId = Shipments.insert({ status: 'Draft' });
-        Meteor.call(
-          'shipment.confirm',
-          {
-            _id: shipmentId,
-            cargo: { a: 'a' },
-            movement: { b: 'b' },
-          },
-        );
+        Meteor.call('shipment.confirm', {
+          _id: shipmentId,
+          cargo: { a: 'a' },
+          movement: { b: 'b' },
+        });
         const shipment = Shipments.findOne(shipmentId);
 
         shipment.cargo.a.should.equal('a');

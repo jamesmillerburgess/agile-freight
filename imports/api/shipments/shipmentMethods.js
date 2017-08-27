@@ -14,7 +14,15 @@ const shipmentNew = quoteId => {
     throw new Error('Invalid quote id');
   }
   const { customerId, cargo, movement, otherServices, charges } = quote;
-  const { branch } = Customers.findOne(customerId);
+  const { branch, name, address } = Customers.findOne(customerId);
+  const parties = {};
+  if (quote.movement && quote.movement.commercialParty === 'Buyer') {
+    parties.consignee = name;
+    parties.consigneeAddress = address;
+  } else {
+    parties.shipper = name;
+    parties.shipperAddress = address;
+  }
   const shipmentId = Shipments.insert({
     customerId,
     cargo,
@@ -27,6 +35,7 @@ const shipmentNew = quoteId => {
     status: 'Unconfirmed',
     reference: Meteor.call('branch.nextReference', branch),
     branch,
+    ...parties,
   });
 
   Quotes.update({ _id: quoteId }, { $push: { shipments: shipmentId } });
