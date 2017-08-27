@@ -10,68 +10,51 @@ import { BillOfLading } from '../../documents/billOfLading';
 import { AirWaybill } from '../../documents/airWaybill';
 import { APIGlobals } from '../../api/api-globals';
 
-export const ConfirmBookingButton = ({ match, shipment, dispatchers }) => (
+export const ConfirmBookingButton = ({ match, shipment, dispatchers }) =>
   <button
     className="button-submit"
     onClick={() =>
-      Shipment.confirm(
-        match.params.shipmentId,
-        shipment,
-        confirmedShipment => dispatchers.loadShipment(confirmedShipment),
+      Shipment.confirm(match.params.shipmentId, shipment, confirmedShipment =>
+        dispatchers.loadShipment(confirmedShipment),
       )}
   >
     CONFIRM BOOKING
-  </button>
-);
+  </button>;
 
-export const BillOfLadingButton = ({ shipment }) => (
+export const BillOfLadingButton = ({ shipment }) =>
   <button
     className="button-submit"
     onClick={() =>
-      BillOfLading(
-        shipment,
-        (url) => {
-          const open = window.open(url);
-          if (open === null || typeof (open) === 'undefined') {
-            // TODO: Create themed alert
-            window.alert(
-              `This URL has been blocked by your browser:\n${url}`,
-            );
-          }
-        },
-      )
-    }
+      BillOfLading(shipment, url => {
+        const open = window.open(url);
+        if (open === null || typeof open === 'undefined') {
+          // TODO: Create themed alert
+          window.alert(`This URL has been blocked by your browser:\n${url}`);
+        }
+      })}
   >
     BILL OF LADING
-  </button>
-);
+  </button>;
 
-export const AirWaybillButton = ({ shipment }) => (
+export const AirWaybillButton = ({ shipment }) =>
   <button
     className="button-submit"
     onClick={() =>
-      AirWaybill(
-        shipment,
-        (url) => {
-          const open = window.open(url);
-          if (open === null || typeof (open) === 'undefined') {
-            // TODO: Create themed javascript alert
-            window.alert(
-              `This URL has been blocked by your browser:\n${url}`,
-            );
-          }
-        },
-      )
-    }
+      AirWaybill(shipment, url => {
+        const open = window.open(url);
+        if (open === null || typeof open === 'undefined') {
+          // TODO: Create themed javascript alert
+          window.alert(`This URL has been blocked by your browser:\n${url}`);
+        }
+      })}
   >
     AIR WAYBILL
-  </button>
-);
+  </button>;
 
-const EditShipment = ({ shipment, dispatchers, history, match }) => (
+const EditShipment = ({ shipment, dispatchers, history, match }) =>
   <div className="new-quote">
     <div className="process-header">
-      <div className="title">SHIPMENT</div>
+      <div className="title">SHIPMENT {shipment.reference}</div>
       <div className="breadcrumbs">
         <div className="breadcrumb active customer">
           {shipment.status ? shipment.status.toUpperCase() : ''}
@@ -80,7 +63,8 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
       </div>
       <button
         className="button-primary"
-        onClick={() => history.push(`/customers/view/${match.params.customerId}/overview`)}
+        onClick={() =>
+          history.push(`/customers/view/${match.params.customerId}/overview`)}
       >
         BACK TO CUSTOMER
       </button>
@@ -93,36 +77,28 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
       <div className="pickup-delivery-wrapper">
         <div className="cargo-row-icon" />
         <div className="field select-country">
-          <div className="label">
-            SHIPPER
-          </div>
+          <div className="label">SHIPPER</div>
           <input
             value={shipment.shipper || ''}
             onChange={e => dispatchers.onChangeShipper(e.target.value)}
           />
         </div>
         <div className="field select-country">
-          <div className="label">
-            CONSIGNEE
-          </div>
+          <div className="label">CONSIGNEE</div>
           <input
             value={shipment.consignee || ''}
             onChange={e => dispatchers.onChangeConsignee(e.target.value)}
           />
         </div>
         <div className="field select-country">
-          <div className="label">
-            NOTIFY PARTY
-          </div>
+          <div className="label">NOTIFY PARTY</div>
           <input
             value={shipment.notifyParty || ''}
             onChange={e => dispatchers.onChangeNotifyParty(e.target.value)}
           />
         </div>
         <div className="field select-country">
-          <div className="label">
-            TERMS OF SALE
-          </div>
+          <div className="label">TERMS OF SALE</div>
           <Select
             value={shipment.movement.termsOfSale}
             options={APIGlobals.incotermOptions}
@@ -152,27 +128,23 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
           <textarea
             className="address"
             value={shipment.notifyPartyAddress || ''}
-            onChange={
-              e => dispatchers.onChangeNotifyPartyAddress(e.target.value)}
+            onChange={e =>
+              dispatchers.onChangeNotifyPartyAddress(e.target.value)}
           />
         </div>
       </div>
       <div className="pickup-delivery-wrapper">
         <div className="cargo-row-icon" />
         <div className="field select-country">
-          <div className="label">
-            CUSTOMER REFERENCE
-          </div>
+          <div className="label">CUSTOMER REFERENCE</div>
           <input
             value={shipment.customerReference || ''}
-            onChange={
-              e => dispatchers.onChangeCustomerReference(e.target.value)}
+            onChange={e =>
+              dispatchers.onChangeCustomerReference(e.target.value)}
           />
         </div>
         <div className="field select-country">
-          <div className="label">
-            B/L TYPE
-          </div>
+          <div className="label">B/L TYPE</div>
           <Select
             value={shipment.blType || ''}
             options={[
@@ -207,10 +179,10 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
       <div className="form-button-group">
         <button
           className="delete-button"
-          onClick={() => Shipment.archive(
-            match.params.shipmentId,
-            (archivedShipment => dispatchers.loadShipment(archivedShipment)),
-          )}
+          onClick={() =>
+            Shipment.archive(match.params.shipmentId, archivedShipment =>
+              dispatchers.loadShipment(archivedShipment),
+            )}
         >
           ARCHIVE
         </button>
@@ -220,32 +192,28 @@ const EditShipment = ({ shipment, dispatchers, history, match }) => (
         >
           SAVE
         </button>
-        {shipment.status === 'Draft' ? (
-          <ConfirmBookingButton
-            shipment={shipment}
-            match={match}
-            dispatchers={dispatchers}
-          />
-        ) : null}
-        {shipment.status === 'Confirmed' && shipment.movement.mode === 'Sea' ? (
-          <BillOfLadingButton shipment={shipment} />
-        ) : null}
-        {shipment.status === 'Confirmed' && shipment.movement.mode === 'Air' ? (
-          <AirWaybillButton shipment={shipment} />
-        ) : null}
+        {shipment.status === 'Draft'
+          ? <ConfirmBookingButton
+              shipment={shipment}
+              match={match}
+              dispatchers={dispatchers}
+            />
+          : null}
+        {shipment.status === 'Confirmed' && shipment.movement.mode === 'Sea'
+          ? <BillOfLadingButton shipment={shipment} />
+          : null}
+        {shipment.status === 'Confirmed' && shipment.movement.mode === 'Air'
+          ? <AirWaybillButton shipment={shipment} />
+          : null}
       </div>
     </div>
-  </div>
-);
+  </div>;
 
 EditShipment.propTypes = {
-  shipment: PropTypes.object.isRequired, // eslint-disable-line
-                                         // react/forbid-prop-types
+  shipment: PropTypes.object.isRequired,
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
-  history: PropTypes.object.isRequired, // eslint-disable-line
-  // react/forbid-prop-types
-  match: PropTypes.object.isRequired, // eslint-disable-line
-                                      // react/forbid-prop-types
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default EditShipment;
