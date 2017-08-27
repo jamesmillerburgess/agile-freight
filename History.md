@@ -7,7 +7,10 @@
 * Shipment list item content is now dynamic and reflects shipment values
 * Ability to complete events and see the movement status in shipment list items
 * Display shipment status in the breadcrumbs
-* Ability to confirm job and basic status workflow before getting to shipping documents 
+* Ability to confirm job and basic status workflow before getting to shipping documents
+* Revised list item format for quotes and shipments
+* Added branch codes to branch object and editor
+* Automatic generation of quote and shipment references based on branch 
 
 ## v1.4.0 – Basic Air Waybill
 
