@@ -17,7 +17,14 @@ if (Meteor.isClient) {
   describe('EditShipment Component', () => {
     let wrapper;
     beforeEach(() => {
-      wrapper = shallow(<EditShipment shipment={{ movement: {} }} />);
+      wrapper = shallow(
+        <EditShipment
+          shipment={{ cargo: {}, movement: {} }}
+          dispatchers={{}}
+          history={{}}
+          match={{}}
+        />,
+      );
     });
     afterEach(() => {
       wrapper.unmount();
@@ -29,6 +36,7 @@ if (Meteor.isClient) {
       wrapper.setProps({
         shipment: {
           status: 'Unconfirmed',
+          cargo: {},
           movement: { mode: 'Sea' },
         },
       });
@@ -42,6 +50,7 @@ if (Meteor.isClient) {
       wrapper.setProps({
         shipment: {
           status: 'Unconfirmed',
+          cargo: {},
           movement: { mode: 'Air' },
         },
       });
@@ -60,6 +69,7 @@ if (Meteor.isClient) {
         wrapper.setProps({
           shipment: {
             status: 'Confirmed',
+            cargo: {},
             movement: { mode: 'Sea' },
           },
         });
@@ -81,6 +91,7 @@ if (Meteor.isClient) {
         wrapper.setProps({
           shipment: {
             status: 'Confirmed',
+            cargo: {},
             movement: { mode: 'Air' },
           },
         });
