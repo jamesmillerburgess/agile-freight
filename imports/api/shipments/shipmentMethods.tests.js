@@ -55,9 +55,9 @@ if (Meteor.isServer) {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne(shipmentId).createdOn.should.be.instanceof(Date);
       });
-      it('sets the status to \'Draft\'', () => {
+      it('sets the status to \'Unconfirmed\'', () => {
         const shipmentId = Meteor.call('shipment.new', 'a');
-        Shipments.findOne(shipmentId).status.should.equal('Draft');
+        Shipments.findOne(shipmentId).status.should.equal('Unconfirmed');
       });
       it('sets active to true', () => {
         const shipmentId = Meteor.call('shipment.new', 'a');

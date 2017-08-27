@@ -24,7 +24,7 @@ const shipmentNew = quoteId => {
     quoteId,
     createdOn: new Date(),
     active: true,
-    status: 'Draft',
+    status: 'Unconfirmed',
     reference: Meteor.call('branch.nextReference', branch),
     branch,
   });
