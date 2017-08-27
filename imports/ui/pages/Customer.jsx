@@ -43,7 +43,7 @@ const CustomerInner = ({ customer, loading, history }) => {
             <div>
               <div className="list-button-bar">
                 <button className="button-submit" onClick={newQuote}>
-                  NEW SHIPMENT
+                  NEW QUOTE
                 </button>
                 <div className="list-filters">
                   <div className="filter-group">
