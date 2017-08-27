@@ -1,5 +1,7 @@
 ## v.NEXT
 
+## v1.6.0 – Cleanup
+
 ## v1.5.0 – Shipment Lifecycle
 
 * Show/hide containers editor based on mode
