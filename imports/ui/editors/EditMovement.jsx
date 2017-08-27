@@ -7,6 +7,7 @@ import moment from 'moment';
 import UNLocationField from '../fields/UNLocationField.jsx';
 
 import { APIGlobals } from '../../api/api-globals';
+import CheckboxField from '../fields/CheckboxField.jsx';
 
 export const Dates = ({ movement, dispatchers }) => (
   <div className="pickup-delivery-wrapper">
@@ -41,6 +42,37 @@ export const Dates = ({ movement, dispatchers }) => (
         />
       </div>
     </div>
+    <div className="pickup">
+      <div className="cargo-row-icon" />
+      <div className="field select-country">
+        <CheckboxField
+          value={movement.receiptStatus === 'Actual'}
+          label="Received"
+          onClick={dispatchers.onChangeReceiptStatus}
+        />
+      </div>
+      <div className="field select-country">
+        <CheckboxField
+          value={movement.departureStatus === 'Actual'}
+          label="Departed"
+          onClick={dispatchers.onChangeDepartureStatus}
+        />
+      </div>
+      <div className="field select-country">
+        <CheckboxField
+          value={movement.arrivalStatus === 'Actual'}
+          label="Arrived"
+          onClick={dispatchers.onChangeArrivalStatus}
+        />
+      </div>
+      <div className="field select-country">
+        <CheckboxField
+          value={movement.deliveryStatus === 'Actual'}
+          label="Delivered"
+          onClick={dispatchers.onChangeDeliveryStatus}
+        />
+      </div>
+    </div>
   </div>
 );
 
@@ -66,30 +98,32 @@ const EditMovement = ({ movement, dispatchers, useDates, useShipperConsignee }) 
       </div>
       {useShipperConsignee ?
        null : (
-         <div>
-           <div className="field select-country">
-             <div className="label">
-               COMMERCIAL PARTY
-             </div>
-             <Select
-               value={movement.commercialParty}
-               options={APIGlobals.commercialPartyOptions}
-               onChange={selectedValue =>
-                 dispatchers.onChangeMovementCommercialParty(selectedValue.value)}
-             />
+         <div className="field select-country">
+           <div className="label">
+             COMMERCIAL PARTY
            </div>
-           <div className="field select-country">
-             <div className="label">
-               TERMS OF SALE
-             </div>
-             <Select
-               value={movement.termsOfSale}
-               options={APIGlobals.incotermOptions}
-               onChange={selectedValue =>
-                 dispatchers.onChangeMovementTermsOfSale(selectedValue.value)}
-               disabled={movement.mode === 'Brokerage'}
-             />
+           <Select
+             value={movement.commercialParty}
+             options={APIGlobals.commercialPartyOptions}
+             onChange={selectedValue =>
+               dispatchers.onChangeMovementCommercialParty(selectedValue.value)}
+           />
+         </div>
+       )
+      }
+      {useShipperConsignee ?
+       null : (
+         <div className="field select-country">
+           <div className="label">
+             TERMS OF SALE
            </div>
+           <Select
+             value={movement.termsOfSale}
+             options={APIGlobals.incotermOptions}
+             onChange={selectedValue =>
+               dispatchers.onChangeMovementTermsOfSale(selectedValue.value)}
+             disabled={movement.mode === 'Brokerage'}
+           />
          </div>
        )
       }

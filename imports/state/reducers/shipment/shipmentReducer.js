@@ -3,6 +3,15 @@ import { movement } from '../movement/movementReducers';
 
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
+export const status = (state = '', action = { type: '' }) => {
+  switch (action.type) {
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.status;
+    default:
+      return state;
+  }
+};
+
 export const shipper = (state = '', action = { type: '' }) => {
   switch (action.type) {
     case ACTION_TYPES.LOAD_SHIPMENT:
@@ -91,15 +100,27 @@ export const blType = (state = '', action = { type: '' }) => {
   }
 };
 
-export const shipment = (state = {}, action) => ({
-  cargo: cargo(state.cargo || {}, action),
-  movement: movement(state.movement || {}, action),
-  shipper: shipper(state.shipper, action),
-  consignee: consignee(state.consignee, action),
-  notifyParty: notifyParty(state.notifyParty, action),
-  shipperAddress: shipperAddress(state.shipperAddress, action),
-  consigneeAddress: consigneeAddress(state.consigneeAddress, action),
-  notifyPartyAddress: notifyPartyAddress(state.notifyPartyAddress, action),
-  customerReference: customerReference(state.customerReference, action),
-  blType: blType(state.blType, action),
-});
+export const shipment = (state = {}, action = { type: '' }) => {
+  switch (action.type) {
+    case ACTION_TYPES.LOAD_SHIPMENT:
+      return action.shipment;
+    default:
+      return {
+        status: status(state.status, action),
+        cargo: cargo(state.cargo || {}, action),
+        movement: movement(state.movement || {}, action),
+        shipper: shipper(state.shipper, action),
+        consignee: consignee(state.consignee, action),
+        notifyParty: notifyParty(state.notifyParty, action),
+        shipperAddress: shipperAddress(state.shipperAddress, action),
+        consigneeAddress: consigneeAddress(state.consigneeAddress, action),
+        notifyPartyAddress: notifyPartyAddress(
+          state.notifyPartyAddress,
+          action,
+        ),
+        customerReference: customerReference(state.customerReference, action),
+        blType: blType(state.blType, action),
+        reference: state.reference || '',
+      };
+  }
+};

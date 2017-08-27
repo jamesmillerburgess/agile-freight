@@ -15,6 +15,14 @@ if (Meteor.isClient) {
       newShipment.should.have.property('cargo');
       newShipment.should.have.property('movement');
     });
+    it('loads the state', () => {
+      const state = { status: 'a' };
+      const action = {
+        type: ACTION_TYPES.LOAD_SHIPMENT,
+        shipment: { status: 'b' },
+      };
+      shipment(state, action).status.should.equal('b');
+    });
     it('sets shipper', () => {
       const state = { shipper: 'a' };
       const action = { type: ACTION_TYPES.SET_SHIPPER, shipper: 'b' };

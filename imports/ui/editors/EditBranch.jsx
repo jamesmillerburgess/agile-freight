@@ -29,6 +29,15 @@ const EditBranch = props => (
               />
             </div>
           </div>
+          <div className="col">
+            <div className="vertical-input-group">
+              <span className="label">CODE</span>
+              <input
+                value={props.branch.code}
+                onChange={e => props.dispatchers.setBranchCode(e.target.value)}
+              />
+            </div>
+          </div>
         </div>
         <button
           className="button-submit"

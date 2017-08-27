@@ -92,7 +92,9 @@ export const getUpdatedFXConversions = (charges) => {
     if (currencies.indexOf(currency) === -1) {
       result[currency] = set('active', false, result[currency]);
     }
-    if (result[currency].active && !result[currency].rate) {
+    if (result[currency].active &&
+        !result[currency].rate &&
+        APIGlobals.fxRates[charges.currency]) {
       result[currency] = set(
         'rate',
         APIGlobals.fxRates[charges.currency][currency],
@@ -111,13 +113,19 @@ export const newShipment = (quoteId, cb) => {
   Meteor.call('shipment.new', quoteId, cb);
 };
 
-export const extractRateMovement = quote => ({
-  carrier: quote.movement.carrier,
-  receipt: quote.movement.receipt.code,
-  departure: quote.movement.departure.code,
-  arrival: quote.movement.arrival.code,
-  delivery: quote.movement.delivery.code,
-});
+export const extractRateMovement = (quote) => {
+  if (!quote || !quote.movement) {
+    return {};
+  }
+  const { movement } = quote;
+  return {
+    carrier: movement.carrier || '',
+    receipt: movement.receipt ? movement.receipt.code : '',
+    departure: movement.departure ? movement.departure.code : '',
+    arrival: movement.arrival ? movement.arrival.code : '',
+    delivery: movement.receipt ? movement.delivery.code : '',
+  };
+};
 
 export const getChargeLines = quote => ([
   ...getDefaultMovementCharges(quote.movement),

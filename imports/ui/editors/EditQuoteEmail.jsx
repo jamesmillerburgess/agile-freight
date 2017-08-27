@@ -59,7 +59,7 @@ class EditQuoteEmail extends React.Component {
     return (
       <div>
         <div className="process-header">
-          <div className="title">NEW QUOTE</div>
+          <div className="title">QUOTE {this.props.quote.reference}</div>
           <div className="breadcrumbs">
             <button
               className="breadcrumb"

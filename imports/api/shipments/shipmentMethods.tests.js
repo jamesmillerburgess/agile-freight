@@ -7,8 +7,10 @@ import { Meteor } from 'meteor/meteor';
 import { Shipments } from './shipmentsCollection';
 import { Quotes } from '../quotes/quotesCollection';
 import { Customers } from '../customers/customersCollection';
+import { Branches } from '../branch/branchCollection';
 
 import './shipmentMethods';
+import { branchNextReference } from '../branch/branchMethods';
 
 chai.should();
 
@@ -18,6 +20,7 @@ if (Meteor.isServer) {
       Shipments.remove({});
       Quotes.remove({});
       Customers.remove({});
+      Branches.remove({});
       Quotes.insert({
         _id: 'a',
         customerId: 'b',
@@ -26,7 +29,8 @@ if (Meteor.isServer) {
         otherServices: 'e',
         charges: 'f',
       });
-      Customers.insert({ _id: 'b', quotes: 'a' });
+      Customers.insert({ _id: 'b', quotes: 'a', branch: 'c' });
+      Branches.insert({ _id: 'c' });
     });
     describe('shipment.new', () => {
       it('inserts a shipment into the collection', () => {
@@ -51,9 +55,9 @@ if (Meteor.isServer) {
         const shipmentId = Meteor.call('shipment.new', 'a');
         Shipments.findOne(shipmentId).createdOn.should.be.instanceof(Date);
       });
-      it('sets the status to \'Draft\'', () => {
+      it('sets the status to \'Unconfirmed\'', () => {
         const shipmentId = Meteor.call('shipment.new', 'a');
-        Shipments.findOne(shipmentId).status.should.equal('Draft');
+        Shipments.findOne(shipmentId).status.should.equal('Unconfirmed');
       });
       it('sets active to true', () => {
         const shipmentId = Meteor.call('shipment.new', 'a');
@@ -65,6 +69,20 @@ if (Meteor.isServer) {
         Shipments.findOne(shipmentId).movement.should.equal('d');
         Shipments.findOne(shipmentId).otherServices.should.equal('e');
         Shipments.findOne(shipmentId).charges.should.equal('f');
+      });
+      it('sets the reference to the branch\'s next reference', () => {
+        const reference = branchNextReference('c');
+        const shipmentId = Meteor.call('shipment.new', 'a');
+        Shipments.findOne(shipmentId).reference.should.equal(reference);
+      });
+      it('adds the quote id to the branch reference array', () => {
+        const shipmentId = Meteor.call('shipment.new', 'a');
+        Branches.findOne('c').references[0].type.should.equal('Shipment');
+        Branches.findOne('c').references[0].reference.should.equal(shipmentId);
+      });
+      it('sets the branch to the same as that of the customer', () => {
+        const shipmentId = Meteor.call('shipment.new', 'a');
+        Shipments.findOne(shipmentId).branch.should.equal('c');
       });
     });
     describe('shipment.save', () => {
@@ -113,6 +131,28 @@ if (Meteor.isServer) {
         const shipmentId = Shipments.insert({ status: 'Draft' });
         Meteor.call('shipment.archive', shipmentId);
         Shipments.findOne(shipmentId).status.should.equal('Archived');
+      });
+    });
+    describe('shipment.confirm', () => {
+      it('sets status to \'Confirmed\'', () => {
+        const shipmentId = Shipments.insert({ status: 'Draft' });
+        Meteor.call('shipment.confirm', { _id: shipmentId });
+        Shipments.findOne(shipmentId).status.should.equal('Confirmed');
+      });
+      it('saves changes to the shipment', () => {
+        const shipmentId = Shipments.insert({ status: 'Draft' });
+        Meteor.call(
+          'shipment.confirm',
+          {
+            _id: shipmentId,
+            cargo: { a: 'a' },
+            movement: { b: 'b' },
+          },
+        );
+        const shipment = Shipments.findOne(shipmentId);
+
+        shipment.cargo.a.should.equal('a');
+        shipment.movement.b.should.equal('b');
       });
     });
   });

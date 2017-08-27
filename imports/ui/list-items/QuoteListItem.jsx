@@ -2,135 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
-import moment from 'moment';
 
 import { Shipments } from '../../api/shipments/shipmentsCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
 import ShipmentListItem from './ShipmentListItem.jsx';
-import { currencyFormat, weightFormat } from '../formatters/numberFormatters';
-import { copyQuote, newShipment } from '../quoteUtils';
+import ShipmentListItemHeader from './ShipmentListItemHeader.jsx';
+import MovementChart from './MovementChart.jsx';
 
-export const QuoteListItemInner = ({ quote, history }) => {
-  const
-    {
-      cargoType,
-      ratedQuote,
-      totalContainers,
-      totalTEU,
-      totalPackages,
-      totalVolume,
-      volumeUOM,
-      totalWeight,
-      weightUOM,
-    } = quote.cargo || {};
-
-  const getCargoText = () => {
-    if (cargoType === 'Containerized') {
-      if (ratedQuote === true) {
-        return 'RATED, CONTAINERIZED';
-      }
-      return `${totalContainers} UNIT${totalContainers !==
-                                       1 ?
-                                       'S' :
-                                       ''}, ${totalTEU} TEU`;
-    } else if (cargoType === 'Loose') {
-      if (ratedQuote === true) {
-        return 'RATED, LOOSE';
-      }
-      return `${totalPackages} PKG${totalPackages !==
-                                    1 ?
-                                    'S' :
-                                    ''}, ${weightFormat(totalVolume)} ${volumeUOM.toUpperCase()}, ${weightFormat(
-        totalWeight)} ${weightUOM.toUpperCase()}`;
-    }
-    return 'NO CARGO ENTERED';
-  };
-
-  const getMovementText = () => {
-    if (
-      quote &&
-      quote.movement &&
-      quote.movement.pickup &&
-      quote.movement.delivery &&
-      quote.movement.pickup.locationName &&
-      quote.movement.delivery.locationName
-    ) {
-      const pickupLocationName = quote.movement.pickup.locationName;
-      const deliveryLocationName = quote.movement.delivery.locationName;
-      return `${pickupLocationName} – ${deliveryLocationName}`.toUpperCase();
-    }
-    return 'NO ROUTING ENTERED';
-  };
-
-  const getOtherServicesText = () => {
-    if (!quote || !quote.otherServices) {
-      return 'NO OTHER SERVICES';
-    }
-    if (quote.otherServices.insurance && quote.otherServices.customsClearance) {
-      return 'INSURANCE, CUSTOMS CLEARANCE';
-    }
-    if (quote.otherServices.insurance) {
-      return 'INSURANCE';
-    }
-    if (quote.otherServices.customsClearance) {
-      return 'CUSTOMS CLEARANCE';
-    }
-    return 'NO OTHER SERVICES';
-  };
-
-  const getTotalPriceText = () => {
-    if (!quote ||
-        !quote.charges ||
-        !quote.charges.totalCharges ||
-        !quote.charges.currency) {
-      return 'NO CHARGES ENTERED';
-    }
-    return `${quote.charges.currency} ${currencyFormat(quote.charges.totalCharges)}`;
-  };
-
-  const getStatusText = () => {
-    if (!quote || !quote.status) {
-      return '';
-    }
-    if (quote.status ===
-        'Draft' ||
-        quote.status ===
-        'Archived' ||
-        quote.status ===
-        'Expired') {
-      return quote.status.toUpperCase();
-    }
-    if (quote.status === 'Submitted' && quote.expiryDate) {
-      return `EXPIRES ${moment(quote.expiryDate)
-        .format('DD MMM YYYY')
-        .toUpperCase()}`;
-    }
-    return '';
-  };
-
-  const onClickCopy = (e) => {
-    e.preventDefault();
-    copyQuote(
-      quote._id,
-      (
-        err,
-        newQuoteId,
-      ) => history.push(`/customers/view/${quote.customerId}/quotes/${newQuoteId}/header`),
-    );
-  };
-
-  const onClickNewShipment = (e) => {
-    e.preventDefault();
-    newShipment(
-      quote._id,
-      (
-        err,
-        newShipmentId,
-      ) => history.push(`/customers/view/${quote.customerId}/shipments/${newShipmentId}`),
-    );
-  };
-
+export const QuoteListItemInner = ({ quote }) => {
   const quoteLink = () => {
     if (quote.status === 'Submitted') {
       return `/customers/view/${quote.customerId}/quotes/${quote._id}/view`;
@@ -140,39 +20,24 @@ export const QuoteListItemInner = ({ quote, history }) => {
 
   return (
     <div>
-      <Link className="list-item" to={quoteLink()}>
-        <div className="panel">
-          <div className="icon-column">
-            <span className="fa fa-fw fa-clone" onClick={onClickCopy} />
-            <span className="fa fa-fw fa-plus" onClick={onClickNewShipment} />
-          </div>
-          <div className="container panel-body">
-            <div className="row no-gutters">
-              <div className="col-4">
-                <span className="label">{getCargoText()}</span><br />
-                <span className="label">{getMovementText()}</span>
-              </div>
-              <div className="col-4">
-                <span className="label">{getOtherServicesText()}</span><br />
-                <span className="label">{getTotalPriceText()}</span>
-              </div>
-              <div className="col-4">
-                <span className="label">{getStatusText()}</span>
-              </div>
-            </div>
-          </div>
+      <Link className="list-item panel" to={quoteLink()}>
+        <ShipmentListItemHeader shipment={quote} />
+        <div className="list-item-body">
+          <MovementChart shipment={quote} />
         </div>
       </Link>
-      {
-        quote.shipments ?
-        quote.shipments.map(shipmentId => (
-          <ShipmentListItem
-            key={shipmentId}
-            quote={quote}
-            shipment={Shipments.findOne(shipmentId)}
-          />
-        )) : null
-      }
+      {quote.shipments
+        ? quote.shipments
+            .slice()
+            .reverse()
+            .map(shipmentId =>
+              <ShipmentListItem
+                key={shipmentId}
+                quote={quote}
+                shipment={Shipments.findOne(shipmentId)}
+              />,
+            )
+        : null}
     </div>
   );
 };
@@ -191,7 +56,6 @@ QuoteListItemInner.propTypes = {
       totalTEU: PropTypes.number,
     }),
   }),
-  history: PropTypes.object,
 };
 
 QuoteListItemInner.defaultProps = {
@@ -210,7 +74,7 @@ QuoteListItemInner.defaultProps = {
   },
 };
 
-const QuoteListItem = createContainer((props) => {
+const QuoteListItem = createContainer(props => {
   const { quoteId } = props;
   const quote = Quotes.findOne(quoteId);
   return { quote };

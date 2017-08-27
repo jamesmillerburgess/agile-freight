@@ -8,15 +8,22 @@ import { getChargeableWeight } from '../quoteUtils';
 
 const mapStateToProps = (state) => {
   const { shipment } = state;
+  if (!shipment.cargo) {
+    shipment.cargo = {};
+  }
   shipment.cargo.chargeableWeight = getChargeableWeight(state);
   return { shipment };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const shipment = Shipments.findOne(ownProps.match.params.shipmentId);
-  dispatch(actions.loadShipment(shipment));
+  dispatch(
+    actions.loadShipment(
+      Shipments.findOne(ownProps.match.params.shipmentId),
+    ),
+  );
   return {
     dispatchers: {
+      loadShipment: shipment => dispatch(actions.loadShipment(shipment)),
       onChangeShipper: shipper =>
         dispatch(actions.setShipper(shipper)),
       onChangeConsignee: consignee =>
@@ -104,6 +111,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         arrivalDate)),
       onChangeDeliveryDate: deliveryDate => dispatch(actions.setDeliveryDate(
         deliveryDate)),
+      onChangeReceiptStatus: () => dispatch(actions.toggleReceiptStatus()),
+      onChangeDepartureStatus: () => dispatch(actions.toggleDepartureStatus()),
+      onChangeArrivalStatus: () => dispatch(actions.toggleArrivalStatus()),
+      onChangeDeliveryStatus: () => dispatch(actions.toggleDeliveryStatus()),
 
       // OTHER SERVICES
       onClickExportCustomsClearance: () => dispatch(actions.toggleExportCustomsClearance()),

@@ -16,7 +16,10 @@ export const defaultMovementState = {
   },
 };
 
-export const movement = (state = defaultMovementState, action = { type: '' }) => {
+export const movement = (
+  state = defaultMovementState,
+  action = { type: '' },
+) => {
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
       return action.quote.movement || defaultMovementState;
@@ -51,6 +54,30 @@ export const movement = (state = defaultMovementState, action = { type: '' }) =>
       return set('arrivalDate', action.arrivalDate, state);
     case ACTION_TYPES.SET_DELIVERY_DATE:
       return set('deliveryDate', action.deliveryDate, state);
+    case ACTION_TYPES.TOGGLE_RECEIPT_STATUS:
+      return set(
+        'receiptStatus',
+        state.receiptStatus === 'Actual' ? 'Expected' : 'Actual',
+        state,
+      );
+    case ACTION_TYPES.TOGGLE_DEPARTURE_STATUS:
+      return set(
+        'departureStatus',
+        state.departureStatus === 'Actual' ? 'Expected' : 'Actual',
+        state,
+      );
+    case ACTION_TYPES.TOGGLE_ARRIVAL_STATUS:
+      return set(
+        'arrivalStatus',
+        state.arrivalStatus === 'Actual' ? 'Expected' : 'Actual',
+        state,
+      );
+    case ACTION_TYPES.TOGGLE_DELIVERY_STATUS:
+      return set(
+        'deliveryStatus',
+        state.deliveryStatus === 'Actual' ? 'Expected' : 'Actual',
+        state,
+      );
     case ACTION_TYPES.SET_PRE_CARRIAGE_BY:
       return set('preCarriageBy', action.preCarriageBy, state);
     case ACTION_TYPES.SET_VESSEL:
