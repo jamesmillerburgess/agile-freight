@@ -8,14 +8,14 @@ import { APIGlobals } from '../api-globals';
 export const hasCollection = (movement) => {
   if (movement.mode !== 'Brokerage') {
     if (movement.commercialParty === 'Seller') {
-      if (movement.receipt._id) {
+      if (movement.receipt && movement.receipt._id) {
         if (movement.termsOfSale !== 'EXW') {
           return true;
         }
       }
     }
     if (movement.commercialParty === 'Buyer') {
-      if (movement.receipt._id) {
+      if (movement.receipt && movement.receipt._id) {
         if (movement.termsOfSale === 'EXW') {
           return true;
         }
