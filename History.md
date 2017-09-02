@@ -12,7 +12,8 @@
 * Ability to confirm job and basic status workflow before getting to shipping documents
 * Revised list item format for quotes and shipments
 * Added branch codes to branch object and editor
-* Automatic generation of quote and shipment references based on branch 
+* Automatic generation of quote and shipment references based on branch
+* Setup of continuous deployment via codeship 
 
 ## v1.4.0 – Basic Air Waybill
 
