@@ -1,10 +1,11 @@
 {
   "name": "agile-freight",
-  "version": "0.13.0",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "test": "TEST_BROWSER_DRIVER=nightmare SERVER_TEST_REPORTER=tap CLIENT_TEST_REPORTER=tap meteor test --once --driver-package dispatch:mocha"
+    "test": "TEST_BROWSER_DRIVER=nightmare SERVER_TEST_REPORTER=tap CLIENT_TEST_REPORTER=tap meteor test --once --driver-package dispatch:mocha",
+    "chimp": "chimp --ddp=http://localhost:5000 --watch --mocha --path=tests"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
+    "chimp": "^0.49.1",
     "deep-freeze": "0.0.1",
     "enzyme": "^2.8.2",
     "eslint": "^3.18.0",
@@ -42,6 +44,7 @@
     "eslint-plugin-meteor": "^4.0.1",
     "eslint-plugin-prettier": "^2.2.0",
     "eslint-plugin-react": "^6.10.3",
+    "fibers": "^2.0.0",
     "nightmare": "^2.10.0",
     "prettier": "^1.5.3",
     "react-addons-test-utils": "^15.5.1",
@@ -89,10 +92,13 @@
   },
   "stylelint": {
     "rules": {
-      "prettier/prettier": ["error", {
-        "singleQuote": true,
-        "trailingComma": "es5"
-      }],
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "trailingComma": "es5"
+        }
+      ],
       "at-rule-empty-line-before": "never",
       "block-opening-brace-space-before": "always",
       "comment-empty-line-before": [

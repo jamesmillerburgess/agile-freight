@@ -32,6 +32,9 @@ a.panel {
 
 a.panel:hover {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  .fa-heart-o {
+    color: $text-color;
+  }
 }
 
 
@@ -59,19 +62,6 @@ a.panel:hover {
   .radio-button {
     width: 150px;
     margin-right: 15px;
-  }
-}
-
-.customer .header-panel {
-  background-color: $customers-accent-color;
-  color: $inverted-text-color;
-  .icon-column {
-    .fa {
-      color: $inverted-text-color;
-    }
-  }
-  .favorite-icon {
-    color: $inverted-text-color;
   }
 }
 

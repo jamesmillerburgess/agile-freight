@@ -9,7 +9,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 import UNLocationField from './UNLocationField.jsx';
 
 if (Meteor.isClient) {
-  describe('UN Location Field', () => {
+  describe('UNLocationField Component', () => {
     chai.should();
     let wrapper;
     const onChange = () => null;
@@ -23,8 +23,8 @@ if (Meteor.isClient) {
     });
 
     it('passes the value to Async', () => {
-      wrapper.setProps({ location: 'b', onChange });
-      wrapper.props().value.should.equal('b');
+      wrapper.setProps({ location: {}, onChange });
+      wrapper.props().value.should.eql({});
     });
   });
 }

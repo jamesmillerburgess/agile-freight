@@ -1,5 +1,11 @@
 ## v.NEXT
 
+## v1.6.0 – Cleanup
+
+* Resolved all outstanding major and minor issues
+* Re-implemented all quote and shipment workflow
+* Setup of continuous deployment via codeship 
+
 ## v1.5.0 – Shipment Lifecycle
 
 * Show/hide containers editor based on mode
@@ -10,7 +16,7 @@
 * Ability to confirm job and basic status workflow before getting to shipping documents
 * Revised list item format for quotes and shipments
 * Added branch codes to branch object and editor
-* Automatic generation of quote and shipment references based on branch 
+* Automatic generation of quote and shipment references based on branch
 
 ## v1.4.0 – Basic Air Waybill
 

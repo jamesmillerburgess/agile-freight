@@ -28,7 +28,7 @@ const SELL_RATES = [
   },
 ];
 
-var db = connect('localhost:3001/meteor');
+// var db = connect('localhost:3001/meteor');
 
 db.Rates.remove({});
 
