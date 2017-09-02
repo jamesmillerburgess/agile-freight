@@ -1,5 +1,3 @@
-var db = connect('localhost:3001/meteor');
-
 var altNames = db.UNLocations.find({ ch: '=' });
 
 db.UNLocations.createIndex({ locationCode: 1 });
@@ -25,12 +23,19 @@ while (altNames.hasNext()) {
 
 printjson('Alternate names processed');
 
+var countriesArray = db.Countries.find({}).toArray();
+var countries = {};
+for (var i = 0; i < countriesArray.length; i++) {
+  countries[countriesArray[i].countryCode] = countriesArray[i].countryName;
+}
+
 var c = db.UNLocations.find({ props: { $exists: true } });
+var docs = c.toArray();
+var newDocs = [];
 var i = 1;
 
-while (c.hasNext()) {
-  var doc = c.next();
-  i += 1;
+for (var i = 0; i < docs.length; i++) {
+  var doc = docs[i];
   if (doc.name[0] !== '.' && typeof doc.props !== 'undefined') {
     if (!doc.props) {
       printjson(doc);
@@ -45,39 +50,33 @@ while (c.hasNext()) {
                   (+doc.coordinates.slice(9, 11) / 100 ) *
                   (doc.coordinates[11] === 'E' ? 1 : -1);
     }
-    var country = db.Countries.findOne({ countryCode: doc.countryCode });
     var countryName = '';
-    if (country) {
-      countryName = country.countryName;
+    if (countries[doc.countryCode]) {
+      countryName = countries[doc.countryCode];
     }
-    db.UNLocations.insert(
-      {
-        _id: ObjectId().str,
-        code: doc.countryCode + doc.locationCode,
-        countryCode: doc.countryCode,
-        locationCode: doc.locationCode,
-        name: doc.name,
-        altNames: doc.altNames || [],
-        nameWoDiacritics: doc.nameWoDiacritics,
-        altNamesWoDiacritics: doc.altNamesWoDiacritics || [],
-        subdivision: doc.subdivision,
-        isSeaport: false,
-        isAirport: doc.props[3] === '4',
-        iataCode: doc.iataCode,
-        longitude: longitude,
-        latitude: latitude,
-        search: doc.countryCode +
-                doc.locationCode + ' ' +
-                doc.name + ' ' +
-                doc.nameWoDiacritics + ' ' +
-                countryName +
-                (doc.subdivision ? ' ' + doc.subdivision : '') +
-                (doc.iataCode ? ' ' + doc.iataCode : ''),
-      }
-    );
-  }
-  if (typeof doc.props !== 'undefined') {
-    db.UNLocations.remove(doc);
+    newDocs.push({
+      _id: ObjectId().str,
+      code: doc.countryCode + doc.locationCode,
+      countryCode: doc.countryCode,
+      locationCode: doc.locationCode,
+      name: doc.name,
+      altNames: doc.altNames || [],
+      nameWoDiacritics: doc.nameWoDiacritics,
+      altNamesWoDiacritics: doc.altNamesWoDiacritics || [],
+      subdivision: doc.subdivision,
+      isSeaport: false,
+      isAirport: doc.props[3] === '4',
+      iataCode: doc.iataCode,
+      longitude: longitude,
+      latitude: latitude,
+      search: doc.countryCode +
+              doc.locationCode + ' ' +
+              doc.name + ' ' +
+              doc.nameWoDiacritics + ' ' +
+              countryName +
+              (doc.subdivision ? ' ' + doc.subdivision : '') +
+              (doc.iataCode ? ' ' + doc.iataCode : ''),
+    });
   }
   if (i % 10000 === 0) {
     printjson(i + ' locations processed');
@@ -85,3 +84,8 @@ while (c.hasNext()) {
 }
 
 printjson(i + ' locations processed');
+
+printjson('Uploading ' + newDocs.length + ' locations');
+
+db.UNLocations.remove({});
+db.UNLocations.insertMany(newDocs);

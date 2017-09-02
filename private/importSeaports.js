@@ -980,8 +980,6 @@ var SEAPORTS = [
   'ZARCB',
 ];
 
-var db = connect('localhost:3001/meteor');
-
 SEAPORTS.forEach(function (seaport) {
   var seaportLocation = db.UNLocations.findOne({
     countryCode: seaport.slice(0, 2),

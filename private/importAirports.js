@@ -1,11 +1,11 @@
-var db = connect('localhost:3001/meteor');
+var airports = db.UNLocations.find({ isAirport: true }).toArray();
+var newAirports = [];
 
-var airports = db.UNLocations.find({ isAirport: true });
-
-while (airports.hasNext()) {
-  var airport = airports.next();
-  var id = airport._id;
-  airport._id = ObjectId().str;
-  db.UNLocations.insert(airport);
-  db.UNLocations.update({ _id: id }, { $set: { isAirport: false } });
+for (var i = 0; i < airports.length; i++) {
+  newAirports.push(airports[i]);
+  newAirports[i]._id = ObjectId().str;
 }
+
+db.UNLocations.updateMany({ isAirport: true }, { $set: { isAirport: false } });
+db.UNLocations.insertMany(newAirports);
+
