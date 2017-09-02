@@ -1,5 +1,9 @@
 ## v.NEXT
 
+## v2.0.0 – Shipment
+
+* Basic quote-shipment workflow including documents, statuses, and movement visualization
+
 ## v1.6.0 – Cleanup
 
 * Resolved all outstanding major and minor issues
