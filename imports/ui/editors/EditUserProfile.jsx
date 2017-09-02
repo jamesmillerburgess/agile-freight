@@ -30,21 +30,21 @@ const EditUserProfile = (props) => {
                 <BranchField
                   value={props.userProfile.branch}
                   options={Branches.find().fetch()}
-                  onChange={value => props.dispatchers.setUserBranch(value._id)}
+                  onChange={value => props.dispatchers.setUserProfileBranch(value._id)}
                 />
               </div>
               <div className="vertical-input-group">
                 <span className="label">NAME</span>
                 <input
                   value={props.userProfile.name}
-                  onChange={e => props.dispatchers.setUserName(e.target.value)}
+                  onChange={e => props.dispatchers.setUserProfileName(e.target.value)}
                 />
               </div>
               <div className="vertical-input-group">
                 <span className="label">EMAIL ADDRESS</span>
                 <input
                   value={props.userProfile.emailAddress}
-                  onChange={e => props.dispatchers.setUserEmailAddress(e.target.value)}
+                  onChange={e => props.dispatchers.setUserProfileEmailAddress(e.target.value)}
                 />
               </div>
             </div>
