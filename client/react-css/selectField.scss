@@ -2,11 +2,53 @@
 
 .Select {
   width: 100%;
+  input:focus {
+    box-shadow: none;
+    border: none;
+  }
 }
 
 .Select-control {
   border-radius: 0 !important;
   border-color: $customers-accent-color !important;
+}
+
+.customer {
+  .Select-control {
+    border-color: $customers-accent-color !important;
+  }
+  .Select.is-focused .Select-control {
+    box-shadow: 0 0 3pt 2pt rgba($customers-accent-color, $high-alpha) !important;
+  }
+  .Select-menu-outer {
+    border-radius: 0 !important;
+    border: 1px solid $customers-accent-color !important;
+  }
+  .Select-option.is-selected {
+    background-color: rgba($customers-accent-color, $low-alpha) !important;
+  }
+  .Select-option.is-focused {
+    background-color: rgba($customers-accent-color, $mid-alpha) !important;
+  }
+}
+
+.rate {
+  .Select-control {
+    border-color: $rates-accent-color !important;
+  }
+  .Select.is-focused .Select-control {
+    box-shadow: 0 0 3pt 2pt rgba($rates-accent-color, $high-alpha) !important;
+  }
+  .Select-menu-outer {
+    border-radius: 0 !important;
+    border: 1px solid $rates-accent-color !important;
+  }
+  .Select-option.is-selected {
+    background-color: rgba($rates-accent-color, $low-alpha) !important;
+  }
+  .Select-option.is-focused {
+    background-color: rgba($rates-accent-color, $mid-alpha) !important;
+  }
 }
 
 .Select input,

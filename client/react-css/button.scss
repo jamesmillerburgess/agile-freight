@@ -116,6 +116,10 @@ button:focus {
   background-color: $customers-accent-color;
 }
 
+.rate .button-primary {
+  background-color: $rates-accent-color;
+}
+
 .admin .button-primary {
   background-color: $home-accent-color;
 }

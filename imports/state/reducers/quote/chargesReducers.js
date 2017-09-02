@@ -1,91 +1,76 @@
-import {
-  itemAtId,
-  changeProp,
-  changePropAtId,
-  removeAtId,
-  addToEnd,
-} from '../reducer-utils';
-import { uniqueValues } from '../../../ui/statsUtils';
+import { concat, set } from 'lodash/fp';
+import { setPropAtId } from '../reducer-utils';
+import { getUpdatedFXConversions } from '../../../ui/quoteUtils';
 
 import * as ACTION_TYPES from '../../actions/actionTypes';
 
-export const defaultUnits = (rate, cargo) => {
-  switch (rate) {
-    case 'Shipment':
-      return 1;
-    case 'KG':
-      return cargo.totalWeight;
-    case 'CBM':
-      return cargo.totalVolume;
-    case 'Container':
-      return cargo.totalContainers;
-    case 'TEU':
-      return cargo.totalTEU;
-    case 'Package':
-      return cargo.totalPackages;
-    default:
-      return 1;
-  }
-};
-
-export const chargeLines = (state = [], action = { type: '' }, parentState = {}, quoteState = {}) => {
+export const chargeLines = (
+  state = [],
+  action = { type: '' },
+  parentState = {},
+) => {
   let newState = [];
   switch (action.type) {
     case ACTION_TYPES.ADD_CHARGE_LINE:
-      newState = addToEnd(
-        state,
-        {
-          ...action.chargeLine,
-          rate: 'Shipment',
-          units: defaultUnits('Shipment'),
-        },
-      );
-      if (!newState[newState.length - 1].unitPriceCurrency) {
-        newState = changePropAtId(newState, 'unitPriceCurrency', newState[newState.length - 1].id, parentState.currency);
-      }
+      newState = concat(action.chargeLine, state);
       break;
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
-      newState = removeAtId(state, action.id);
+      newState = state.filter(a => a.id !== action.id);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_CODE:
-      newState = changePropAtId(state, 'code', action.id, action.code);
+      newState = setPropAtId(state, 'code', action.id, action.code);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_NAME:
-      newState = changePropAtId(state, 'name', action.id, action.name);
+      newState = setPropAtId(state, 'name', action.id, action.name);
       break;
-    case ACTION_TYPES.SET_CHARGE_LINE_RATE:
-      newState = changePropAtId(state, 'rate', action.id, action.rate);
-      newState = changePropAtId(
-        newState,
-        'units',
-        action.id,
-        defaultUnits(itemAtId(newState, action.id).rate, quoteState.cargo),
-      );
+    case ACTION_TYPES.SET_CHARGE_LINE_SELECTED_RATE:
+      newState =
+        setPropAtId(state, 'selectedRate', action.id, action.selectedRate);
+      break;
+    case ACTION_TYPES.SET_CHARGE_LINE_BASIS:
+      newState = setPropAtId(state, 'basis', action.id, action.basis);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNITS:
-      newState = changePropAtId(state, 'units', action.id, action.units);
+      newState = setPropAtId(state, 'units', action.id, action.units);
       break;
     case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE:
-      newState = changePropAtId(state, 'unitPrice', action.id, action.unitPrice);
+      newState =
+        setPropAtId(state, 'unitPrice', action.id, action.unitPrice);
       break;
-    case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY:
-      newState = changePropAtId(state, 'unitPriceCurrency', action.id, action.unitPriceCurrency);
+    case ACTION_TYPES.SET_CHARGE_LINE_CURRENCY:
+      newState = setPropAtId(
+        state,
+        'currency',
+        action.id,
+        action.currency,
+      );
       break;
     default:
       newState = state;
   }
   return newState.map((chargeLine) => {
-    const res  = { ...chargeLine };
-    res.amount = (chargeLine.units || 0) * (chargeLine.unitPrice || 0);
-    if (chargeLine.unitPriceCurrency === parentState.currency) {
+    const res = { ...chargeLine };
+    let minimumAmount = 0;
+    if (chargeLine.selectedRate && chargeLine.selectedRate !== 'custom') {
+      minimumAmount =
+        chargeLine.applicableSellRates[chargeLine.selectedRate].minimumAmount ||
+        0;
+    }
+    let amount = (chargeLine.units || 0) * (chargeLine.unitPrice || 0);
+    if (amount < minimumAmount) {
+      amount = minimumAmount;
+    }
+    res.amount = amount;
+    if (chargeLine.currency === parentState.currency) {
       res.finalAmount = res.amount;
     } else if (
       parentState.fxConversions &&
-      parentState.fxConversions[chargeLine.unitPriceCurrency] &&
-      parentState.fxConversions[chargeLine.unitPriceCurrency].rate
+      parentState.fxConversions[chargeLine.currency] &&
+      parentState.fxConversions[chargeLine.currency].rate
     ) {
       res.finalAmount =
-        res.amount * parentState.fxConversions[chargeLine.unitPriceCurrency].rate;
+        res.amount *
+        parentState.fxConversions[chargeLine.currency].rate;
     } else {
       res.finalAmount = 0;
     }
@@ -97,28 +82,17 @@ export const fxConversions = (state = {}, action = { type: '' }) => {
   let newState = Object.assign(state.fxConversions || {}, {});
   switch (action.type) {
     case ACTION_TYPES.SET_FX_CONVERSION_RATE:
-      newState = changeProp(newState, action.currency, changeProp(newState[action.currency], 'rate', action.rate));
+      newState = set(
+        action.currency,
+        set('rate', action.rate, newState[action.currency]),
+        newState,
+      );
       break;
-    case ACTION_TYPES.SET_CHARGE_LINE_UNIT_PRICE_CURRENCY:
+    case ACTION_TYPES.LOAD_QUOTE:
+    case ACTION_TYPES.SET_CHARGE_LINE_CURRENCY:
     case ACTION_TYPES.REMOVE_CHARGE_LINE:
     case ACTION_TYPES.SET_QUOTE_CURRENCY:
-      const currencies = uniqueValues(state.chargeLines, 'unitPriceCurrency');
-      currencies.forEach((currency) => {
-        if (currency === state.currency) {
-          if (newState[currency]) {
-            newState = changeProp(newState, currency, changeProp(newState[currency], 'active', false));
-          }
-        } else if (!newState[currency]) {
-          newState = changeProp(newState, currency, { active: true });
-        } else if (!newState[currency].active) {
-          newState = changeProp(newState, currency, changeProp(newState[currency], 'active', true));
-        }
-      });
-      Object.keys(newState).forEach((currency) => {
-        if (currencies.indexOf(currency) === -1) {
-          newState[currency] = changeProp(newState[currency], 'active', false);
-        }
-      });
+      newState = getUpdatedFXConversions(state);
       break;
     default:
       break;
@@ -160,40 +134,36 @@ const defaultChargesState = {
   currency: '',
 };
 
-export const charges = (state = defaultChargesState, action = { type: '' }, quoteState) => {
+export const charges = (state = defaultChargesState, action = { type: '' }) => {
   let newState = Object.assign(state, {});
   switch (action.type) {
     case ACTION_TYPES.LOAD_QUOTE:
       newState = action.quote.charges || defaultChargesState;
       break;
     case ACTION_TYPES.SET_CHARGE_NOTES:
-      newState = changeProp(state, 'notes', action.notes);
+      newState = set('notes', action.notes, state);
       break;
     case ACTION_TYPES.SET_QUOTE_CURRENCY:
-      newState = changeProp(state, 'currency', action.currency);
+      newState = set('currency', action.currency, state);
       break;
     case ACTION_TYPES.SET_FX_CONVERSION_RATE:
-      newState =
-        changeProp(
-          state,
-          'fxConversions',
-          changeProp(
-            state.fxConversions,
-            action.currency,
-            changeProp(
-              state.fxConversions[action.currency],
-              'rate',
-              action.rate,
-            ),
-          ),
-        );
+      newState = set(
+        'fxConversions',
+        set(
+          action.currency,
+          set('rate', action.rate, state.fxConversions[action.currency]),
+          state.fxConversions,
+        ),
+        state,
+      );
       break;
     default:
       newState = state;
   }
-  newState.chargeLines   = chargeLines(newState.chargeLines, action, newState, quoteState);
+  newState.chargeLines =
+    chargeLines(newState.chargeLines, action, newState);
   newState.fxConversions = fxConversions(newState, action);
-  const totals           = chargeTotals(newState.chargeLines);
+  const totals = chargeTotals(newState.chargeLines);
   return {
     ...newState,
     ...totals,

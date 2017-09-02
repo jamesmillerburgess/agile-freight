@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
+import { buildSearchRegExp } from '../searchUtils';
+
 class CountryField extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,7 @@ class CountryField extends React.Component {
             countries,
             topCountries,
           }       = this.props;
-    const query   = { countryName: { $regex: input, $options: 'i' } };
+    const query   = { countryName: { $regex: buildSearchRegExp(input), $options: 'i' } };
     const options = countries
       .find(query)
       .fetch()

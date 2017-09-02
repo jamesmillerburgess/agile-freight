@@ -9,9 +9,7 @@ const mapStateToProps = ({ branch }) => ({ branch });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   if (ownProps.editMode) {
-    const branch = {
-      name: Branches.findOne(ownProps.match.params.branchId).name,
-    };
+    const branch = Branches.findOne(ownProps.match.params.branchId);
     dispatch(actionCreators.loadBranch(branch));
   }
   return {
@@ -20,6 +18,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(actionCreators.loadBranch(customer)),
       setBranchName: name =>
         dispatch(actionCreators.setBranchName(name)),
+      setBranchCode: code =>
+        dispatch(actionCreators.setBranchCode(code)),
     },
   };
 };

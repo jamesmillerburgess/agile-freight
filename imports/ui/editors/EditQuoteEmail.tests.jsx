@@ -18,7 +18,6 @@ if (Meteor.isClient) {
   describe('EditQuoteEmail Component', () => {
     chai.should();
 
-
     let countOnLoad;
     let countSetEmailTo;
     let countSetEmailCC;
@@ -80,12 +79,12 @@ if (Meteor.isClient) {
     beforeEach(() => {
       StubCollections.stub(Quotes);
       Quotes.insert({ _id: 'a' });
-      countOnLoad          = 0;
-      countSetEmailTo      = 0;
-      countSetEmailCC      = 0;
+      countOnLoad = 0;
+      countSetEmailTo = 0;
+      countSetEmailCC = 0;
       countSetEmailSubject = 0;
       countSetEmailMessage = 0;
-      wrapper              = mount(<EditQuoteEmail {...props} />, options);
+      wrapper = mount(<EditQuoteEmail {...props} />, options);
     });
 
     afterEach(() => {
@@ -102,22 +101,26 @@ if (Meteor.isClient) {
     });
 
     it('defaults the to value into the to input', () => {
-      wrapper.setProps({ quote: { email: { to: 'a' } } });
+      wrapper.setProps({ quote: { email: { ...props.quote.email, to: 'a' } } });
       wrapper.find('#to').prop('value').should.equal('a');
     });
 
     it('defaults the cc value into the cc input', () => {
-      wrapper.setProps({ quote: { email: { cc: 'a' } } });
+      wrapper.setProps({ quote: { email: { ...props.quote.email, cc: 'a' } } });
       wrapper.find('#cc').prop('value').should.equal('a');
     });
 
     it('defaults the subject value into the subject input', () => {
-      wrapper.setProps({ quote: { email: { subject: 'a' } } });
+      wrapper.setProps({
+        quote: { email: { ...props.quote.email, subject: 'a' } },
+      });
       wrapper.find('#subject').prop('value').should.equal('a');
     });
 
     it('defaults the message value into the message input', () => {
-      wrapper.setProps({ quote: { email: { message: 'a' } } });
+      wrapper.setProps({
+        quote: { email: { ...props.quote.email, message: 'a' } },
+      });
       wrapper.find('#message').prop('value').should.equal('a');
     });
 

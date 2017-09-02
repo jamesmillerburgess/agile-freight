@@ -3,22 +3,28 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 
 import CurrencyField from '../fields/CurrencyField.jsx';
+import RateField from '../fields/RateField.jsx';
 
 import { currencyFormat } from '../formatters/numberFormatters';
+import { APIGlobals } from '../../api/api-globals';
 
 const EditQuoteChargeGroup = (props) => {
   const
     {
       removeChargeLine,
       setChargeLineName,
-      setChargeLineRate,
+      setChargeLineSelectedRate,
+      setChargeLineBasis,
       setChargeLineUnits,
       setChargeLineUnitPrice,
-      setChargeLineUnitPriceCurrency,
+      setChargeLineCurrency,
     } = props;
 
   const getSubtotalAmount = () =>
-    props.chargeLines.reduce((acc, chargeLine) => acc + chargeLine.finalAmount, 0);
+    props.chargeLines.reduce(
+      (acc, chargeLine) => acc + chargeLine.finalAmount,
+      0,
+    );
 
   return (
     <tbody className="striped-data">
@@ -41,24 +47,30 @@ const EditQuoteChargeGroup = (props) => {
             />
           </td>
           <td className="rate-basis-column">
-            <Select
-              className="input-group-last addon"
-              value={chargeLine.rate || ''}
-              options={[
-                { value: 'Shipment', label: 'Shipment' },
-                { value: 'KG', label: 'KG' },
-                { value: 'CBM', label: 'CBM' },
-                { value: 'Container', label: 'Container' },
-                { value: 'TEU', label: 'TEU' },
-                { value: 'Package', label: 'Package' },
-                { value: 'Declaration', label: 'Declaration' },
-                { value: 'HAWB', label: 'HAWB' },
-              ]}
-              onChange={selectedValue => setChargeLineRate(chargeLine.id, selectedValue.value)}
-              arrowRenderer={() => false}
-              searchable
-              clearable={false}
-            />
+            <div className="horizontal-input-group">
+              <RateField
+                value={chargeLine.selectedRate}
+                rates={chargeLine.applicableSellRates}
+                onChange={
+                  selectedValue => setChargeLineSelectedRate(
+                    chargeLine,
+                    selectedValue.value,
+                  )}
+              />
+              <Select
+                className="input-group-last addon rate-basis"
+                value={chargeLine.basis || ''}
+                options={APIGlobals.rateBasisOptions}
+                onChange={selectedValue => setChargeLineBasis(
+                  props.quote,
+                  chargeLine,
+                  selectedValue.value,
+                )}
+                arrowRenderer={() => false}
+                searchable
+                clearable={false}
+              />
+            </div>
           </td>
           <td className="units-column">
             <input
@@ -76,16 +88,23 @@ const EditQuoteChargeGroup = (props) => {
                 type="number"
                 placeholder=""
                 value={chargeLine.unitPrice || ''}
-                onChange={e => setChargeLineUnitPrice(chargeLine.id, +e.target.value)}
+                onChange={e => setChargeLineUnitPrice(
+                  chargeLine,
+                  +e.target.value,
+                )}
               />
               <CurrencyField
                 className="input-group-last addon"
-                value={chargeLine.unitPriceCurrency}
-                onChange={e => setChargeLineUnitPriceCurrency(chargeLine.id, e.value)}
+                value={chargeLine.currency}
+                onChange={e => setChargeLineCurrency(
+                  chargeLine,
+                  e.value,
+                )}
               />
             </div>
           </td>
-          <td className="numeric-label amount-local-column">{currencyFormat(chargeLine.amount)} {chargeLine.unitPriceCurrency}</td>
+          <td className="numeric-label amount-local-column">{currencyFormat(
+            chargeLine.amount)} {chargeLine.currency}</td>
           <td className="numeric-label amount-final-column">
             {currencyFormat(chargeLine.finalAmount)} {props.currency}
           </td>
@@ -93,16 +112,16 @@ const EditQuoteChargeGroup = (props) => {
       ))}
       {
         props.chargeLines.length > 0 ?
-          (
-            <tr>
-              <td colSpan="5" />
-              <td className="numeric-label">SUBTOTAL</td>
-              <td className="numeric-label">
-                {currencyFormat(getSubtotalAmount())} {props.currency}
-              </td>
-            </tr>
-          ) :
-          null
+        (
+          <tr>
+            <td colSpan="5" />
+            <td className="numeric-label">SUBTOTAL</td>
+            <td className="numeric-label">
+              {currencyFormat(getSubtotalAmount())} {props.currency}
+            </td>
+          </tr>
+        ) :
+        null
       }
     </tbody>
   );

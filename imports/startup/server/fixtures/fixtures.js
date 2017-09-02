@@ -2,9 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
 import { Branches } from '../../../api/branch/branchCollection';
-import { Offices } from '../../../api/offices/offices';
 import { Customers } from '../../../api/customers/customersCollection';
 import { Quotes } from '../../../api/quotes/quotesCollection';
+import { Shipments } from '../../../api/shipments/shipmentsCollection';
+import { Rates } from '../../../api/rates/rateCollection';
 
 import customerFixtures from './customer-fixtures';
 
@@ -12,16 +13,40 @@ import customerFixtures from './customer-fixtures';
 Meteor.startup(() => {
   console.log(Meteor.settings);
   if (Meteor.settings.reset) {
-    Offices.remove({});
-    Offices._ensureIndex({ search: 1 });
-
     Branches.remove({});
-    Branches.insert({ name: 'Basel' });
+    Branches.insert({ name: 'Basel', code: 'BSL' });
+    Branches.insert({ name: 'Thurrock', code: 'LWT' });
+    Branches.insert({ name: 'Dubai', code: 'DXB' });
+    Branches.insert({ name: 'Atlanta', code: 'ATL' });
+    Branches.insert({ name: 'Los Angeles', code: 'LAX' });
 
     Customers.remove({});
     Customers._ensureIndex({ search: 1 });
+    Meteor.call('customer.new', {
+      branch: Branches.findOne({ code: 'LWT' })._id,
+      name: 'Pyrotek Engineering Materials Ltd',
+      address: `Garamonde Drive
+Wymbush
+Milton Keynes MK8 8LN
+United Kingdom`,
+      emailAddress: 'user@example.com',
+      currency: 'GBP',
+    });
+    Meteor.call('customer.new', {
+      branch: Branches.findOne({ code: 'LWT' })._id,
+      name: 'European Music Co. Limited',
+      address: `Unit 6, Concorde Business Centre
+Main Road
+Biggin Hill TN16 3YN
+Kent
+United Kingdom`,
+      emailAddress: 'user@example.com',
+      currency: 'GBP',
+    });
 
     Quotes.remove({});
+
+    Shipments.remove({});
 
     Meteor.users.remove({});
     Accounts.createUser({
@@ -30,7 +55,7 @@ Meteor.startup(() => {
       password: 'user',
       profile: {
         admin: false,
-        branch: Branches.findOne({ name: 'Basel' })._id,
+        branch: Branches.findOne({ name: 'Thurrock' })._id,
         name: 'James Burgess',
         address: `Beim Goldenen Loewen 16
 4052 Basel
@@ -43,7 +68,7 @@ Switzerland`,
       password: 'admin',
       profile: {
         admin: true,
-        branch: Branches.findOne({ name: 'Basel' })._id,
+        branch: Branches.findOne({ name: 'Thurrock' })._id,
         name: 'James Burgess',
         address: `Beim Goldenen Loewen 16
 4052 Basel
@@ -53,22 +78,6 @@ Switzerland`,
   }
 
   if (Meteor.settings.testMode === 'structure' && Customers.find().count() === 0) {
-    const officeFixtures = [
-      {
-        name: 'Bangalore',
-        address: 'India',
-      },
-      {
-        name: 'Thurrock',
-        address: 'United Kingdom',
-      },
-    ];
-    _.each(officeFixtures, (doc) => {
-      const newDoc  = doc;
-      newDoc.search = `${doc.name}
-${doc.address}`;
-      Offices.insert(newDoc);
-    });
     customerFixtures.random(15);
   }
 

@@ -1,5 +1,5 @@
+import { set } from 'lodash/fp';
 import * as ACTION_TYPES from '../../actions/actionTypes';
-import { changeProp } from '../reducer-utils';
 
 export const defaultUserProfileState = {
   name: '',
@@ -8,30 +8,23 @@ export const defaultUserProfileState = {
 };
 
 export const userProfile = (state = defaultUserProfileState, action = { type: '' }) => {
-  let newState = {};
   switch (action.type) {
     case ACTION_TYPES.LOAD_USER_PROFILE:
       if (action.userProfile) {
-        newState = {
+        return {
           name: action.userProfile.name || defaultUserProfileState.name,
           emailAddress: action.userProfile.emailAddress || defaultUserProfileState.emailAddress,
           branch: action.userProfile.branch || defaultUserProfileState.branch,
         };
-      } else {
-        newState = defaultUserProfileState;
       }
-      break;
+      return defaultUserProfileState;
     case ACTION_TYPES.SET_USER_PROFILE_NAME:
-      newState = changeProp(state, 'name', action.name);
-      break;
+      return set('name', action.name, state);
     case ACTION_TYPES.SET_USER_PROFILE_EMAIL_ADDRESS:
-      newState = changeProp(state, 'emailAddress', action.emailAddress);
-      break;
+      return set('emailAddress', action.emailAddress, state);
     case ACTION_TYPES.SET_USER_PROFILE_BRANCH:
-      newState = changeProp(state, 'branch', action.branch);
-      break;
+      return set('branch', action.branch, state);
     default:
-      newState = state;
+      return state;
   }
-  return newState;
 };

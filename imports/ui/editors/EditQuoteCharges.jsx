@@ -8,11 +8,12 @@ import QuoteContainer from '../objects/QuoteContainer';
 import CurrencyField from '../fields/CurrencyField.jsx';
 
 import { Quotes } from '../../api/quotes/quotesCollection';
-import { UNLocations } from '../../api/unlocations/unlocationsCollection';
 import { Customers } from '../../api/customers/customersCollection';
 
 import { currencyFormat } from '../formatters/numberFormatters';
 import { resizeHeight } from '../formatters/resizeHeight';
+
+import { newChargeLine } from '../quoteUtils';
 
 class EditQuoteCharges extends React.Component {
   constructor(props) {
@@ -124,7 +125,7 @@ class EditQuoteCharges extends React.Component {
     return (
       <div className="edit-quote">
         <div className="process-header">
-          <div className="title">NEW QUOTE</div>
+          <div className="title">QUOTE {this.props.quote.reference}</div>
           <div className="breadcrumbs">
             <div
               className="breadcrumb"
@@ -153,10 +154,7 @@ class EditQuoteCharges extends React.Component {
                     <th className="icon-cell">
                       <button
                         className="cargo-row-icon"
-                        onClick={() => addChargeLine({
-                          id: new Mongo.ObjectID()._str,
-                          group: 'Origin',
-                        })}
+                        onClick={() => addChargeLine(newChargeLine('Origin', this.props.quote))}
                       >
                         <span className="fa fa-fw fa-plus-square" />
                       </button>
@@ -169,17 +167,14 @@ class EditQuoteCharges extends React.Component {
                     <th className="amount-final-column numeric-label">FINAL ({this.props.quote.charges.currency})</th>
                   </tr>
                 </tbody>
-                <EditQuoteChargeGroupConnect group="Origin" />
+                <EditQuoteChargeGroupConnect group="Origin" quote={this.props.quote} />
                 <tbody>
                   <tr className="empty-row" />
                   <tr className="column-title-row">
                     <th className="icon-cell">
                       <button
                         className="cargo-row-icon"
-                        onClick={() => addChargeLine({
-                          id: new Mongo.ObjectID()._str,
-                          group: 'International',
-                        })}
+                        onClick={() => addChargeLine(newChargeLine('International', this.props.quote))}
                       >
                         <span className="fa fa-fw fa-plus-square" />
                       </button>
@@ -187,17 +182,14 @@ class EditQuoteCharges extends React.Component {
                     <th colSpan="6" className="title">INTERNATIONAL</th>
                   </tr>
                 </tbody>
-                <EditQuoteChargeGroupConnect group="International" />
+                <EditQuoteChargeGroupConnect group="International" quote={this.props.quote} />
                 <tbody>
                   <tr className="empty-row" />
                   <tr className="column-title-row">
                     <th className="icon-cell">
                       <button
                         className="cargo-row-icon"
-                        onClick={() => addChargeLine({
-                          id: new Mongo.ObjectID()._str,
-                          group: 'Destination',
-                        })}
+                        onClick={() => addChargeLine(newChargeLine('Destination', this.props.quote))}
                       >
                         <span className="fa fa-fw fa-plus-square" />
                       </button>
@@ -205,7 +197,8 @@ class EditQuoteCharges extends React.Component {
                     <th colSpan="6" className="title">DESTINATION</th>
                   </tr>
                 </tbody>
-                <EditQuoteChargeGroupConnect group="Destination" />
+                <EditQuoteChargeGroupConnect group="Destination" quote={this.props.quote} />
+                {this.getFXRates()}
                 <tbody>
                   <tr className="column-title-row">
                     <td />
@@ -225,7 +218,6 @@ class EditQuoteCharges extends React.Component {
                     </td>
                   </tr>
                 </tbody>
-                {this.getFXRates()}
                 <tfoot>
                   <tr>
                     <td colSpan="5" />

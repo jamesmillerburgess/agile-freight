@@ -5,6 +5,8 @@ import { Customers } from '../../customers/customersCollection';
 import { Countries } from '../../countries/countriesCollection';
 import { Quotes } from '../../quotes/quotesCollection';
 import { UNLocations } from '../../unlocations/unlocationsCollection';
+import { Rates } from '../../rates/rateCollection';
+import { Shipments } from '../../shipments/shipmentsCollection';
 
 const publishBranchAll = () => Branches.find({});
 
@@ -13,10 +15,12 @@ Meteor.publish('branch.all', publishBranchAll);
 Meteor.publish('branch.active', function publishBranchActive() {
   const cursors = [];
   if (this.userId) {
-    cursors.push(Customers.find({}, { limit: 10 }));
+    cursors.push(Customers.find({}));
     cursors.push(Meteor.users.find({}, { fields: { profile: 1, emails: 1 } }));
     cursors.push(Countries.find());
     cursors.push(Quotes.find());
+    cursors.push(Rates.find());
+    cursors.push(Shipments.find());
     const quotes = Quotes.find().fetch();
     const locationIds = [];
     quotes.forEach((quote) => {

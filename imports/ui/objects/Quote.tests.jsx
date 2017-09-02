@@ -40,11 +40,11 @@ if (Meteor.isClient) {
     });
 
     describe('Header and Status', () => {
-      it('renders the header \'AGILITY FREIGHT QUOTATION\'', () => {
+      it('renders the header \'FREIGHT QUOTATION\'', () => {
         wrapper.contains((
           <span className="header">
-          AGILITY FREIGHT QUOTATION
-        </span>
+          FREIGHT QUOTATION
+          </span>
         )).should.equal(true);
       });
 
@@ -265,9 +265,9 @@ if (Meteor.isClient) {
       });
     });
 
-    describe('Routing Section', () => {
-      it('renders the routing title', () => {
-        wrapper.contains(<span className="title">ROUTING</span>).should.equal(true);
+    describe('Movement Section', () => {
+      it('renders the movement title', () => {
+        wrapper.contains(<span className="title">MOVEMENT</span>).should.equal(true);
       });
 
       it('renders a message if there is not a complete route', () => {
@@ -287,52 +287,40 @@ if (Meteor.isClient) {
         wrapper.contains(<span>Here – There</span>).should.equal(true);
       });
 
-      it('renders \'DOOR TO DOOR\' when neither location is a port', () => {
+      it('renders \'Door to Door\' when neither location is a port', () => {
         wrapper.setProps({
           quote: {
             movement: {
-              pickup: { locationName: 'Here', isPort: false },
-              delivery: { locationName: 'There', isPort: false },
+              pickup: { locationName: 'Here', locationType: 'Door' },
+              delivery: { locationName: 'There', locationType: 'Door' },
             },
           },
         });
         wrapper.contains(<span>Door to Door</span>).should.equal(true);
       });
 
-      it('renders \'PORT TO DOOR\' when only the pickup location is a port', () => {
+      it('renders \'Seaport to Seaport\' when both locations are seaports', () => {
         wrapper.setProps({
           quote: {
             movement: {
-              pickup: { locationName: 'Here', isPort: true },
-              delivery: { locationName: 'There', isPort: false },
+              pickup: { locationName: 'Here', locationType: 'Seaport' },
+              delivery: { locationName: 'There', locationType: 'Seaport' },
             },
           },
         });
-        wrapper.contains(<span>Port to Door</span>).should.equal(true);
+        wrapper.contains(<span>Seaport to Seaport</span>).should.equal(true);
       });
 
-      it('renders \'DOOR TO PORT\' when only the delivery location is a port', () => {
+      it('renders \'Airport to Airport\' when both locations are airports', () => {
         wrapper.setProps({
           quote: {
             movement: {
-              pickup: { locationName: 'Here', isPort: false },
-              delivery: { locationName: 'There', isPort: true },
+              pickup: { locationName: 'Here', locationType: 'Airport' },
+              delivery: { locationName: 'There', locationType: 'Airport' },
             },
           },
         });
-        wrapper.contains(<span>Door to Port</span>).should.equal(true);
-      });
-
-      it('renders \'PORT TO PORT\' when both locations are a port', () => {
-        wrapper.setProps({
-          quote: {
-            movement: {
-              pickup: { locationName: 'Here', isPort: true },
-              delivery: { locationName: 'There', isPort: true },
-            },
-          },
-        });
-        wrapper.contains(<span>Port to Port</span>).should.equal(true);
+        wrapper.contains(<span>Airport to Airport</span>).should.equal(true);
       });
     });
 
@@ -415,7 +403,7 @@ if (Meteor.isClient) {
                 unitPrice: 2,
                 amount: 3,
                 finalAmount: 4,
-                unitPriceCurrency: 'CHF',
+                currency: 'CHF',
               }],
               totalOriginCharges: 5,
             },
@@ -465,7 +453,7 @@ if (Meteor.isClient) {
                 unitPrice: 2,
                 amount: 3,
                 finalAmount: 4,
-                unitPriceCurrency: 'CHF',
+                currency: 'CHF',
               }],
               totalInternationalCharges: 5,
             },
@@ -515,7 +503,7 @@ if (Meteor.isClient) {
                 unitPrice: 2,
                 amount: 3,
                 finalAmount: 4,
-                unitPriceCurrency: 'CHF',
+                currency: 'CHF',
               }],
               totalDestinationCharges: 5,
             },

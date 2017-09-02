@@ -6,12 +6,13 @@ $panel-background-color: #ccd4d2;
 $home-accent-color: #ff9900;
 $customers-accent-color: #597eaa;
 $customers-selected-item-background-color: #9fc5f8;
-$rates-accent-color: #534B62;
+$rates-accent-color: #a69fcb;
 $profile-accent-color: #568259;
 
 
 
 $text-color: #666666;
+$light-text-color: #777777;
 $inverted-text-color: #f9fbfa;
 
 $submit-button-background-color: #6aa84f;
@@ -55,6 +56,8 @@ $remove-icon-color: #d0021b;
 // Utility Colors
 $shading-color: #D6CBD3;
 $shading-canvas-color: #D6CBD3;
+
+$disabled-panel-color: #999;
 
 // Alpha Values
 $very-low-alpha: .05;

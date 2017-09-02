@@ -62,12 +62,11 @@ if (Meteor.isServer) {
         Customers.findOne(customerId).currency.should.equal('1');
       });
 
-      // TODO: Fix timeout issue
-      // it('throws an error if other properties are passed', () => {
-      //   (() => Meteor.call('customer.save', customerId, { _id: 'x' }))
-      //     .should
-      //     .throw();
-      // });
+      it('throws an error if other properties are passed', () => {
+        (() => Meteor.call('customer.save', customerId, { _id: 'x' }))
+          .should
+          .throw();
+      });
     });
   });
 }

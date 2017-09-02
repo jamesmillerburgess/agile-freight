@@ -1,0 +1,94 @@
+@import 'styleGlobals';
+
+.movement-chart {
+  padding-left: 45px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.movement-node {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+.movement-node-icons {
+  display: flex;
+  flex-direction: row;
+}
+
+.movement-node-circle {
+  margin-left: -7px;
+  font-size: 32px;
+  color: $text-color;
+}
+
+.movement-node-check {
+  margin-left: -32px;
+  margin-top: 7px;
+  color: $panel-background-color;
+  font-size: 18px;
+}
+
+.movement-node .fa.complete {
+  color: $customers-accent-color;
+}
+
+.movement-location {
+  font-weight: bold;
+  font-size: 14px;
+  width: 90%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.movement-event {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 11px;
+  line-height: 1.2;
+  padding-right: 15px;
+}
+
+.movement-event-label {
+  color: $light-text-color;
+}
+
+.movement-node-connector-left {
+  margin-left: 2px;
+  margin-top: 13px;
+  height: 2px;
+  width: 64px;
+  background-color: $text-color;
+}
+
+.movement-node-connector-left.complete {
+  background-color: $customers-accent-color;
+}
+
+.movement-node-connector-right {
+  margin-left: 2px;
+  margin-top: 13px;
+  height: 2px;
+  width: 64px;
+  background-color: $text-color;
+}
+
+.movement-node-connector-right.complete {
+  background-color: $customers-accent-color;
+}
+
+.movement-node-connector-icon {
+  margin-left: 4px;
+  margin-top: 6px;
+  font-size: 16px;
+}
+
+.movement-chart .invis {
+  background-color: transparent;
+  color: transparent;
+}

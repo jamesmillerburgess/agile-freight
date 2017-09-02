@@ -39,7 +39,7 @@ const NavInner = ({ user, history }) => {
       <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
         <div className="navbar-brand">
           <Link to="/" className="brand">
-            <span className="brand-highlight">AGILITY</span> FREIGHT
+            <span className="brand-highlight">AGILE</span> FREIGHT
           </Link>
         </div>
         <ul className="navbar-nav mr-auto mt-2 mt-lg-0">

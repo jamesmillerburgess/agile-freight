@@ -19,7 +19,9 @@ class EditQuoteEmail extends React.Component {
   }
 
   componentWillMount() {
-    this.props.dispatchers.onLoad(Quotes.findOne(this.props.match.params.quoteId));
+    this.props.dispatchers.onLoad(
+      Quotes.findOne(this.props.match.params.quoteId),
+    );
   }
 
   componentDidUpdate() {
@@ -27,14 +29,15 @@ class EditQuoteEmail extends React.Component {
   }
 
   save() {
-    Meteor.call('quote.save', { ...this.props.quote, _id: this.props.match.params.quoteId });
+    Meteor.call('quote.save', {
+      ...this.props.quote,
+      _id: this.props.match.params.quoteId,
+    });
   }
 
   archive() {
-    Meteor.call(
-      'quote.archive',
-      this.props.match.params.quoteId,
-      () => this.props.history.push(
+    Meteor.call('quote.archive', this.props.match.params.quoteId, () =>
+      this.props.history.push(
         `/customers/view/${this.props.match.params.customerId}/overview`,
       ),
     );
@@ -50,20 +53,35 @@ class EditQuoteEmail extends React.Component {
         ...email,
         quoteId,
       },
-      () => Meteor.call('quote.submit', quoteId, email, moment().add(1, 'month').format()),
+      () =>
+        Meteor.call(
+          'quote.submit',
+          quoteId,
+          email,
+          moment().add(1, 'month').format(),
+        ),
     );
-    this.props.history.push(`/customers/view/${this.props.match.params.customerId}/overview`);
+    this.props.history.push(
+      `/customers/view/${this.props.match.params.customerId}/overview`,
+    );
   }
 
   render() {
     return (
       <div>
         <div className="process-header">
-          <div className="title">NEW QUOTE</div>
+          <div className="title">
+            QUOTE {this.props.quote.reference}
+          </div>
           <div className="breadcrumbs">
             <button
               className="breadcrumb"
-              onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/header`)}
+              onClick={() =>
+                this.props.history.push(
+                  `/customers/view/${this.props.match.params
+                    .customerId}/quotes/${this.props.match.params
+                    .quoteId}/header`,
+                )}
             >
               HEADER
             </button>
@@ -71,7 +89,12 @@ class EditQuoteEmail extends React.Component {
             <div className="breadcrumb-start" />
             <button
               className="breadcrumb"
-              onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/quotes/${this.props.match.params.quoteId}/charges`)}
+              onClick={() =>
+                this.props.history.push(
+                  `/customers/view/${this.props.match.params
+                    .customerId}/quotes/${this.props.match.params
+                    .quoteId}/charges`,
+                )}
             >
               CHARGES
             </button>
@@ -82,7 +105,11 @@ class EditQuoteEmail extends React.Component {
           </div>
           <button
             className="button-primary"
-            onClick={() => this.props.history.push(`/customers/view/${this.props.match.params.customerId}/overview`)}
+            onClick={() =>
+              this.props.history.push(
+                `/customers/view/${this.props.match.params
+                  .customerId}/overview`,
+              )}
           >
             BACK TO CUSTOMER
           </button>
@@ -94,7 +121,8 @@ class EditQuoteEmail extends React.Component {
               <input
                 id="to"
                 value={this.props.quote.email.to}
-                onChange={e => this.props.dispatchers.setEmailTo(e.target.value)}
+                onChange={e =>
+                  this.props.dispatchers.setEmailTo(e.target.value)}
               />
             </div>
             <div className="email-input">
@@ -102,7 +130,8 @@ class EditQuoteEmail extends React.Component {
               <input
                 id="cc"
                 value={this.props.quote.email.cc}
-                onChange={e => this.props.dispatchers.setEmailCC(e.target.value)}
+                onChange={e =>
+                  this.props.dispatchers.setEmailCC(e.target.value)}
               />
             </div>
             <div className="email-input">
@@ -110,27 +139,34 @@ class EditQuoteEmail extends React.Component {
               <input
                 id="subject"
                 value={this.props.quote.email.subject}
-                onChange={e => this.props.dispatchers.setEmailSubject(e.target.value)}
+                onChange={e =>
+                  this.props.dispatchers.setEmailSubject(e.target.value)}
               />
             </div>
             <div className="email-input">
               <span className="label">MESSAGE</span>
               <textarea
-                ref={(node) => {
+                ref={node => {
                   this.messageNode = node;
                 }}
                 id="message"
                 value={this.props.quote.email.message}
-                onChange={(e) => {
+                onChange={e => {
                   resizeHeight(this.messageNode);
                   this.props.dispatchers.setEmailMessage(e.target.value);
                 }}
               />
             </div>
             <div className="form-button-group">
-              <button className="delete-button" onClick={this.archive}>ARCHIVE</button>
-              <button className="save-button" onClick={this.save}>SAVE</button>
-              <button className="button-submit" onClick={this.sendEmail}>SEND EMAIL</button>
+              <button className="delete-button" onClick={this.archive}>
+                ARCHIVE
+              </button>
+              <button className="save-button" onClick={this.save}>
+                SAVE
+              </button>
+              <button className="button-submit" onClick={this.sendEmail}>
+                SEND EMAIL
+              </button>
             </div>
           </div>
         </div>

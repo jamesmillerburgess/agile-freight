@@ -124,14 +124,14 @@ const QuoteEmail = (props) => {
               {chargeLine.units} {chargeLine.rate}&nbsp;
               {
                 chargeLine.units !== 1 ?
-                  ` x ${currencyFormat(chargeLine.unitPrice)} ${chargeLine.unitPriceCurrency}` :
+                  ` x ${currencyFormat(chargeLine.unitPrice)} ${chargeLine.currency}` :
                   null
               }
             </td>
             <td style={{ ...STYLES.CELL, ...STYLES.CHARGE_CELL, ...STYLES.ALIGN_RIGHT }}>
               {
-                chargeLine.unitPriceCurrency !== props.quote.charges.currency ?
-                  `${currencyFormat(chargeLine.amount)} ${chargeLine.unitPriceCurrency}` :
+                chargeLine.currency !== props.quote.charges.currency ?
+                  `${currencyFormat(chargeLine.amount)} ${chargeLine.currency}` :
                   null
               }
             </td>
@@ -219,7 +219,7 @@ const QuoteEmail = (props) => {
         <table style={{ ...STYLES.TABLE, ...STYLES.SECTION }}>
           <tbody>
             <tr>
-              <td style={{ ...STYLES.CELL, ...STYLES.HEADER }}>AGILITY FREIGHT QUOTATION</td>
+              <td style={{ ...STYLES.CELL, ...STYLES.HEADER }}>FREIGHT QUOTATION</td>
               <td style={{ ...STYLES.CELL, ...STYLES.TITLE, ...STYLES.ALIGN_RIGHT }}>
                 EXPIRES {moment(props.quote.expiryDate).format('DD MMM YYYY').toUpperCase()}
               </td>

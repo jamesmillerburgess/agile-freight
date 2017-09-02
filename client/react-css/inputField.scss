@@ -4,7 +4,7 @@ input {
   padding: 5px;
   font-family: $application-font-family;
   border: 1px solid $input-border-color;
-  border-radius: 0;
+  border-radius: 0 !important;
   color: $text-color;
   font-weight: 400;
   outline: none;
@@ -12,6 +12,16 @@ input {
 
 .customer input {
   border-color: $customers-accent-color;
+}
+
+.rate {
+  input {
+    border-color: $rates-accent-color;
+  }
+  input:focus {
+    box-shadow: 0 0 3pt 2pt rgba($rates-accent-color, $high-alpha);
+    border: 1px solid $rates-accent-color;
+  }
 }
 
 input:focus {
@@ -57,4 +67,12 @@ input.fx-rate {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+}
+
+.field input {
+  width: 100%;
+}
+
+.small-numeric-input {
+  width: 60px !important;
 }

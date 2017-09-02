@@ -1,5 +1,130 @@
 export const APIGlobals = {
-  incotermOptions: ['CFR', 'CIF', 'CIP', 'CPT', 'DAF', 'DAP', 'DAT', 'DDP', 'DDU', 'EXW', 'FAS', 'FCA', 'FOB', ''],
+  // EXCHANGE RATES
+  fxRates: {
+    GBP: {
+      USD: 0.80590896,
+    },
+  },
+
+  // NOTES
+  notes: `Current Rates are based on shipment of cargo that is suitably packed for international shipment by Ocean shipment.
+Special attention is drawn to any Wood Packing Regulations applicable, failure to comply with these conditions: which can vary from Country to Country, could result in cargo being returned to origin at your expense.
+All quotations are subject to carrier available capacity.
+Any Transit Times quoted are for indicative purposes only, and are as per Shipping Lines advertised schedules. Agility cannot be held liable for any deviations from the Transit Times listed.
+Unless otherwise agreed in writing, the Company shall be, after acceptance, at liberty to revise quotations or charges with or without notice in the event of changes outside the Company's control occurring in currency exchange rates, rates of freight, insurance premiums or any charges applicable to the goods.
+Rates of Exchange are for indicative purposes only and do not represent actual rate of exchange which is variable.
+Surcharges shown as zero are either included or not currently applicable, however, all Surcharges are Valid At Time Of Shipment (VATOS) and subject to change.
+Rates quoted are current and carry validity as per quote, however are subject to change with / without notice.
+Our pricing proposal does not include insurance, we are happy to offer this cover on receipt of further specific details of commodity and values.
+Out of gauge, hazardous, perishable cargo may be subject to additional charges.
+Heavyweight Cargo may be subject to a surcharge.
+All shipments consigned to a bank shall be released against original bank endorsed bills of lading.
+Charge for the use of Agility Deferment on Import Entries will be quoted upon application.
+Estimates and quotations are given on the basis of immediate acceptance and are subject to withdrawl or revision.
+All business is undertaken subject to the current editions of our standard trading conditions which are UKWA (warehousing) and BIFA (all other business).`,
+
+  // CARRIERS
+  carrierOptions: [
+    { value: '', label: 'Forwarder\'s Choice' },
+    { value: 'MAEU', label: 'Maersk – MAEU' },
+    { value: 'SUDU', label: 'Hamburg Sud – SUDU' },
+  ],
+
+  // DEFAULT CHARGES
+  defaultCollectionCharges: [
+    {
+      name: 'Inland Transport',
+      group: 'Origin',
+      chargeCode: 'ITP',
+      route: ['receipt', 'departure'],
+    },
+    {
+      name: 'Terminal Handling Charge',
+      group: 'Origin',
+      chargeCode: 'THC',
+      route: ['departure'],
+    },
+  ],
+
+  defaultInternationalFreightCharges: [
+    {
+      name: 'Carrier Security',
+      group: 'Origin',
+      chargeCode: 'CSY',
+      route: ['departure'],
+    },
+    {
+      name: 'Verfied Gross Mass',
+      group: 'Origin',
+      chargeCode: 'VGM',
+      route: ['departure'],
+    },
+    {
+      name: 'Documentation',
+      group: 'Origin',
+      chargeCode: 'DOC',
+      route: ['departure'],
+    },
+    {
+      name: 'International Freight',
+      group: 'International',
+      chargeCode: 'IFR',
+      route: ['departure', 'arrival'],
+    },
+  ],
+
+  defaultDeliveryCharges: [
+    {
+      name: 'Terminal Handling Charge',
+      group: 'Destination',
+      chargeCode: 'THC',
+      route: ['arrival'],
+    },
+    {
+      name: 'Inland Transport',
+      group: 'Destination',
+      chargeCode: 'ITP',
+      route: ['arrival', 'delivery'],
+    },
+  ],
+
+  defaultExportClearanceCharges: [
+    {
+      name: 'Export Customs Clearance',
+      group: 'Origin',
+      chargeCode: 'ECC',
+      route: ['departure'],
+    },
+  ],
+
+  defaultImportClearanceCharges: [
+    {
+      name: 'Import Customs Clearance',
+      group: 'Destination',
+      chargeCode: 'ICC',
+      route: ['arrival'],
+    },
+  ],
+
+  incotermOptions: [
+    { value: 'CFR', label: 'CFR' },
+    { value: 'CIF', label: 'CIF' },
+    { value: 'CIP', label: 'CIP' },
+    { value: 'CPT', label: 'CPT' },
+    { value: 'DAF', label: 'DAF' },
+    { value: 'DAP', label: 'DAP' },
+    { value: 'DAT', label: 'DAT' },
+    { value: 'DDP', label: 'DDP' },
+    { value: 'DDU', label: 'DDU' },
+    { value: 'EXW', label: 'EXW' },
+    { value: 'FAS', label: 'FAS' },
+    { value: 'FCA', label: 'FCA' },
+    { value: 'FOB', label: 'FOB' },
+  ],
+  commercialPartyOptions: [
+    { value: 'Seller', label: 'Seller' },
+    { value: 'Buyer', label: 'Buyer' },
+  ],
   mblTypeOptions: ['Waybill', 'Original', ''],
   mblTermsOptions: ['Prepaid', 'Collect', ''],
   seaquestTypeOptions: ['Original', 'Express', ''],
@@ -183,14 +308,27 @@ export const APIGlobals = {
 
   // Cargo
   packageTypeOptions: [
-    'Packages',
-    'Boxes',
-    'Cartons',
-    'Bags',
-    'Bales',
-    'Bolts',
-    'Bottles',
-    '',
+    { value: 'Packages', label: 'Packages' },
+    { value: 'Boxes', label: 'Boxes' },
+    { value: 'Pallets', label: 'Pallets' },
+    { value: 'Cases', label: 'Cases' },
+    { value: 'Cartons', label: 'Cartons' },
+  ],
+
+  rateBasisOptions: [
+    { value: 'Shipment', label: 'Shipment' },
+    { value: 'KG', label: 'KG' },
+    { value: 'CBM', label: 'CBM' },
+    { value: 'Container', label: 'Container' },
+    { value: 'TEU', label: 'TEU' },
+    { value: 'Package', label: 'Package' },
+    { value: 'Declaration', label: 'Declaration' },
+    { value: 'HAWB', label: 'HAWB' },
+    { value: 'KM', label: 'KM' },
+    { value: 'Mile', label: 'Mile' },
+    { value: 'Bill of Lading', label: 'Bill of Lading' },
+    { value: 'Line', label: 'Line' },
+    { value: 'Weight Measure', label: 'Weight Measure' },
   ],
 
   // Quotes
@@ -199,7 +337,16 @@ export const APIGlobals = {
   quoteRateTypeOptions: ['Rated', 'Itemized'],
 
   // Shipments
-  shipmentStatusOptions: ['Received', 'Booked', 'Departed', 'Arrived', 'Released', 'Delivered', 'Closed', 'Canceled'],
+  shipmentStatusOptions: [
+    'Received',
+    'Booked',
+    'Departed',
+    'Arrived',
+    'Released',
+    'Delivered',
+    'Closed',
+    'Canceled',
+  ],
 
   // Invoices
   invoiceStatusOptions: ['Issued', 'Draft', 'Canceled'],
@@ -209,8 +356,18 @@ export const APIGlobals = {
 
   // TEMP!!!!
   cityOptions: ['Shanghai', 'Basel', 'Seoul', ''],
-  airportOptions: ['Shanghai Hongquiao - SHA', 'Shanghai Pudong - PVG', 'Frankfurt - FRA', 'Basel Mulhouse - BSL'],
-  portOptions: ['Rotterdam - NLROT', 'Hamburg - DEHAM', 'Singapore - SGSIN', ''],
+  airportOptions: [
+    'Shanghai Hongquiao - SHA',
+    'Shanghai Pudong - PVG',
+    'Frankfurt - FRA',
+    'Basel Mulhouse - BSL',
+  ],
+  portOptions: [
+    'Rotterdam - NLROT',
+    'Hamburg - DEHAM',
+    'Singapore - SGSIN',
+    '',
+  ],
   indiaPortOptions: ['INNSA', 'INMAA', 'INBOM'],
   ukPortOptions: ['GBFXT', 'GBSOU', 'GBLGW'],
 
