@@ -12,13 +12,38 @@ chai.should();
 
 if (Meteor.isServer) {
   describe('User Methods', () => {
-    let userId;
-    describe('users.save', () => {
-      Meteor.users.remove({});
-      userId = Meteor.users.insert({ profile: {} });
+    describe('user.saveProfile', () => {
+      let userId;
+      beforeEach(() => {
+        Meteor.users.remove({});
+        userId = Meteor.users.insert({
+          profile: {
+            name: 'x',
+            branch: 'y',
+            emails: [{ address: 'z', verified: false }],
+          },
+        });
+      });
       it('saves changes to the user name', () => {
-        Meteor.call('users.save', userId, { name: 'a' });
+        Meteor.call('user.saveProfile', userId, { name: 'a' });
         Meteor.users.findOne(userId).profile.name.should.equal('a');
+      });
+      it('saves changes to the user branch', () => {
+        Meteor.call('user.saveProfile', userId, { branch: 'a' });
+        Meteor.users.findOne(userId).profile.branch.should.equal('a');
+      });
+      it('saves changes to the user email address', () => {
+        Meteor.call('user.saveProfile', userId, { emailAddress: 'a' });
+        Meteor.users
+          .findOne(userId)
+          .profile.emails[0].address.should.equal('a');
+        Meteor.users
+          .findOne(userId)
+          .profile.emails[0].verified.should.equal(false);
+      });
+      it('throws if the user id does not match any user', function () {
+        this.timeout(10000);
+        (() => Meteor.call('user.saveProfile', 'x', { name: 'a' })).should.throw();
       });
     });
     describe('users.favoriteCustomer', () => {

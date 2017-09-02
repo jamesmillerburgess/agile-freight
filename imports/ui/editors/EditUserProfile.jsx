@@ -53,8 +53,8 @@ const EditUserProfile = (props) => {
             className="button-submit"
             onClick={() => {
               if (props.editMode) {
-                const { userId } = Meteor.user()._id;
-                Meteor.call('user.save', userId, props.userProfile, () => {
+                const userId = Meteor.user()._id;
+                Meteor.call('user.saveProfile', userId, props.userProfile, () => {
                   props.history.push('/');
                 });
               } else {
