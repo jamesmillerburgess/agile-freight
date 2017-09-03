@@ -443,10 +443,10 @@ export const BillOfLading = (shipment, cb) => {
       .text('-----CONTINUATION PAGE-----', { align: 'center' })
       .text(remainingDesc);
   }
-
-  doc.end();
-  stream.on(
-    'finish',
-    () => cb(stream.toBlobURL('application/pdf')),
-  );
+  doc.write(`AWB-${shipment.reference}.pdf`);
+  // doc.end();
+  // stream.on(
+  //   'finish',
+  //   () => cb(stream.toBlobURL('application/pdf')),
+  // );
 };
