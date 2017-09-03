@@ -1,0 +1,24 @@
+@import 'styleGlobals';
+
+.document-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.document-header .title {
+  font-size: $giant-font-size;
+}
+
+.document-header .reference {
+  color: $customers-accent-color;
+}
+
+.document-header .backslash {
+  opacity: 0.75;
+}
+
+.document-header .tabs {
+
+}
