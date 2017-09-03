@@ -389,9 +389,11 @@ export const AirWaybill = (shipment, cb) => {
     37,
     'right',
   );
-  doc.end();
-  stream.on(
-    'finish',
-    () => cb(stream.toBlobURL('application/pdf')),
-  );
+  doc.write(`AWB-${shipment.reference}.pdf`);
+  // doc.end();
+
+  // stream.on(
+  //   'finish',
+  //   // () => cb(stream.toBlobURL('application/pdf')),
+  // );
 };
