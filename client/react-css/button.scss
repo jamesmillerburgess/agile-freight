@@ -114,6 +114,7 @@ button:focus {
 
 .customer .button-primary {
   background-color: $customers-accent-color;
+  color: $inverted-text-color;
 }
 
 .rate .button-primary {
@@ -122,4 +123,9 @@ button:focus {
 
 .admin .button-primary {
   background-color: $home-accent-color;
+}
+
+.button-disabled {
+  background-color: #666666;
+  color: $inverted-text-color;
 }

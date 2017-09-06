@@ -1,0 +1,28 @@
+@import 'styleGlobals';
+
+.invoicing-buttons {
+  display: flex;
+  flex-direction: row;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  justify-content: space-between;
+}
+
+.invoice-button-group {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
+.invoice-button-group button {
+  height: 28px;
+  padding: 0 5px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  width: 100%;
+  text-align: left;
+}
+
+.invoice-button-group button .fa {
+  margin-right: 5px;
+}
