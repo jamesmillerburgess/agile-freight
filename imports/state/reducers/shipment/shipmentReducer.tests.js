@@ -80,8 +80,18 @@ if (Meteor.isClient) {
       shipment(state, action).blType.should.equal('b');
     });
     it('sets charges to empty if it is not an array when loading', () => {
-      const action = { type: ACTION_TYPES.LOAD_SHIPMENT, shipment: { charges: {} }};
+      const action = {
+        type: ACTION_TYPES.LOAD_SHIPMENT,
+        shipment: { charges: {} },
+      };
       shipment(null, action).charges.length.should.equal(0);
+    });
+    it('maintains the charges if it is an array when loading', () => {
+      const action = {
+        type: ACTION_TYPES.LOAD_SHIPMENT,
+        shipment: { charges: ['a'] },
+      };
+      shipment(null, action).charges.length.should.equal(1);
     });
     it('maintains the _id', () => {
       const state = { _id: 'a' };

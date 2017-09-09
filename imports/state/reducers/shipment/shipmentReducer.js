@@ -138,7 +138,7 @@ export const shipment = (state = {}, action = { type: '' }) => {
       let newCharges;
       if (action.shipment && action.shipment.charges) {
         newCharges = action.shipment.charges;
-        if (!Array.isArray(charges)) {
+        if (!Array.isArray(newCharges)) {
           newCharges = [];
         }
       }
