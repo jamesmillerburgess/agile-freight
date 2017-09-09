@@ -135,7 +135,14 @@ export const charges = (state = [], action = { type: '' }) => {
 export const shipment = (state = {}, action = { type: '' }) => {
   switch (action.type) {
     case ACTION_TYPES.LOAD_SHIPMENT:
-      return action.shipment;
+      let newCharges;
+      if (action.shipment && action.shipment.charges) {
+        newCharges = action.shipment.charges;
+        if (!Array.isArray(charges)) {
+          newCharges = [];
+        }
+      }
+      return { ...action.shipment, charges: newCharges };
     default:
       return {
         status: status(state.status, action),

@@ -79,6 +79,12 @@ if (Meteor.isClient) {
       };
       shipment(state, action).blType.should.equal('b');
     });
+    it('sets charges to empty if it is not an array when loading', () => {
+      const action = { type: ACTION_TYPES.LOAD_SHIPMENT, shipment: { charges: {} }};
+      shipment(null, action).charges.length.should.equal(0);
+    });
+  });
+  describe('Charges Reducer', () => {
     it('adds a charge', () => {
       const stateBefore = [];
       const action = {
