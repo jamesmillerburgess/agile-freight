@@ -5,11 +5,13 @@ import { Route, Link } from 'react-router-dom';
 import EditShipmentOperations from './EditShipmentOperations.jsx';
 import EditShipmentAccounting from './EditShipmentAccounting.jsx';
 
-import routerUtils from '../../utils/routerUtils';
-
-const { buildShipmentLink } = routerUtils;
-
-const EditShipment = ({ shipment, dispatchers, match, location }) =>
+const EditShipment = ({
+  shipment,
+  dispatchers,
+  activeTab,
+  toOperations,
+  toAccounting,
+}) =>
   <div className="new-quote">
     <div className="document-header">
       <div className="title">
@@ -18,37 +20,13 @@ const EditShipment = ({ shipment, dispatchers, match, location }) =>
         </span>
         <span className="backslash"> / </span>
         <span className="page">
-          {location.pathname.indexOf('operations') !== -1
-            ? 'OPERATIONS'
-            : 'ACCOUNTING'}
+          {activeTab}
         </span>
       </div>
       <div className="tabs">
-        <Link
-          to={{
-            pathname: buildShipmentLink(
-              match.params.customerId,
-              match.params.shipmentId,
-              'operations',
-            ),
-            state: { prevParams: match.params },
-          }}
-        >
-          operations
-        </Link>
+        <Link to={toOperations}>operations</Link>
         <span className="backslash"> / </span>
-        <Link
-          to={{
-            pathname: buildShipmentLink(
-              match.params.customerId,
-              match.params.shipmentId,
-              'accounting',
-            ),
-            state: { prevParams: match.params },
-          }}
-        >
-          accounting
-        </Link>
+        <Link to={toAccounting}>accounting</Link>
       </div>
     </div>
     <Route
@@ -58,7 +36,6 @@ const EditShipment = ({ shipment, dispatchers, match, location }) =>
           {...props}
           shipment={shipment}
           dispatchers={dispatchers}
-          match={match}
         />}
     />
     <Route
@@ -75,7 +52,6 @@ const EditShipment = ({ shipment, dispatchers, match, location }) =>
 EditShipment.propTypes = {
   shipment: PropTypes.object.isRequired,
   dispatchers: PropTypes.objectOf(PropTypes.func).isRequired,
-  match: PropTypes.object.isRequired,
 };
 
 export default EditShipment;

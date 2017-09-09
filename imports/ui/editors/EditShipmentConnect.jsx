@@ -1,18 +1,51 @@
 import { connect } from 'react-redux';
 import { Mongo } from 'meteor/mongo';
+import { createSelector } from 'reselect';
 
 import * as actions from '../../state/actions/quoteActions';
 import EditShipment from './EditShipment.jsx';
 
+import routerUtils from '../../utils/routerUtils';
 import { getChargeableWeight } from '../quoteUtils';
 
-const mapStateToProps = state => {
+const { buildShipmentLink } = routerUtils;
+
+const getPathname = location => location.pathname;
+const getActiveTab = createSelector(
+  getPathname,
+  pathname =>
+    pathname.indexOf('operations') !== -1 ? 'OPERATIONS' : 'ACCOUNTING',
+);
+
+const getCustomerId = match => match.params.customerId;
+const getShipmentId = match => match.params.shipmentId;
+const getToOperations = createSelector(
+  [getCustomerId, getShipmentId],
+  (customerId, shipmentId) => ({
+    pathname: buildShipmentLink(customerId, shipmentId, 'operations'),
+    state: { prevParams: { customerId, shipmentId } },
+  }),
+);
+const getToAccounting = createSelector(
+  [getCustomerId, getShipmentId],
+  (customerId, shipmentId) => ({
+    pathname: buildShipmentLink(customerId, shipmentId, 'accounting'),
+    state: { prevParams: { customerId, shipmentId } },
+  }),
+);
+
+const mapStateToProps = (state, ownProps) => {
   const { shipment } = state;
   if (!shipment.cargo) {
     shipment.cargo = {};
   }
   shipment.cargo.chargeableWeight = getChargeableWeight(state);
-  return { shipment };
+  return {
+    shipment,
+    activeTab: getActiveTab(ownProps.location),
+    toOperations: getToOperations(ownProps.match),
+    toAccounting: getToAccounting(ownProps.match),
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
