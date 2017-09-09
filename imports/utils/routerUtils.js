@@ -25,6 +25,12 @@ const routerUtils = {
     });
     return same;
   },
+  buildShipmentLink: (customerId, shipmentId, tab) => {
+    if (tab !== 'operations' && tab !== 'accounting') {
+      return `/customers/view/${customerId}/shipments/${shipmentId}`;
+    }
+    return `/customers/view/${customerId}/shipments/${shipmentId}/${tab}`;
+  },
 };
 
 export default routerUtils;

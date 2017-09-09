@@ -5,6 +5,10 @@ import { Route, Link } from 'react-router-dom';
 import EditShipmentOperations from './EditShipmentOperations.jsx';
 import EditShipmentAccounting from './EditShipmentAccounting.jsx';
 
+import routerUtils from '../../utils/routerUtils';
+
+const { buildShipmentLink } = routerUtils;
+
 const EditShipment = ({ shipment, dispatchers, match, location }) =>
   <div className="new-quote">
     <div className="document-header">
@@ -22,8 +26,11 @@ const EditShipment = ({ shipment, dispatchers, match, location }) =>
       <div className="tabs">
         <Link
           to={{
-            pathname: `/customers/view/${match.params
-              .customerId}/shipments/${match.params.shipmentId}/operations`,
+            pathname: buildShipmentLink(
+              match.params.customerId,
+              match.params.shipmentId,
+              'operations',
+            ),
             state: { prevParams: match.params },
           }}
         >
@@ -32,8 +39,11 @@ const EditShipment = ({ shipment, dispatchers, match, location }) =>
         <span className="backslash"> / </span>
         <Link
           to={{
-            pathname: `/customers/view/${match.params
-              .customerId}/shipments/${match.params.shipmentId}/accounting`,
+            pathname: buildShipmentLink(
+              match.params.customerId,
+              match.params.shipmentId,
+              'accounting',
+            ),
             state: { prevParams: match.params },
           }}
         >

@@ -9,7 +9,6 @@ import routerUtils from './routerUtils';
 if (Meteor.isClient) {
   describe('Router Utilities', () => {
     chai.should();
-
     describe('isSameParamsAsPrev', () => {
       const { isSameParamsAsPrev } = routerUtils;
       it('returns true if all params are equal', () => {
@@ -63,6 +62,21 @@ if (Meteor.isClient) {
           match: { params: { a: '1', b: '2' } },
         };
         isSameParamsAsPrev(props).should.equal(false);
+      });
+    });
+    describe('buildShipmentLink', () => {
+      const { buildShipmentLink } = routerUtils;
+      it('builds the url for operations', () => {
+        const url = '/customers/view/a/shipments/b/operations';
+        buildShipmentLink('a', 'b', 'operations').should.equal(url);
+      });
+      it('builds the url for accounting', () => {
+        const url = '/customers/view/a/shipments/b/accounting';
+        buildShipmentLink('a', 'b', 'accounting').should.equal(url);
+      });
+      it('drops invalid tabs', () => {
+        const url = '/customers/view/a/shipments/b';
+        buildShipmentLink('a', 'b', 'invalidTab').should.equal(url);
       });
     });
   });

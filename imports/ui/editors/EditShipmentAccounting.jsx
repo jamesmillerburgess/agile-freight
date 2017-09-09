@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const EditCharge = ({ charge, dispatchers }) =>
+const EditCharge = ({ charge, dispatchers }) =>
   <div className="header-row" key={charge.id}>
     <div className="revenue-side">
       <button
