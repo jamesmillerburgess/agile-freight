@@ -6,12 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import { shallow } from 'enzyme';
 import { chai } from 'meteor/practicalmeteor:chai';
 
-import EditShipment, {
-  EditShipmentOperations,
-  ConfirmBookingButton,
-  BillOfLadingButton,
-  AirWaybillButton,
-} from './EditShipment.jsx';
+import EditShipment from './EditShipment.jsx';
 
 if (Meteor.isClient) {
   chai.should();
@@ -34,91 +29,5 @@ if (Meteor.isClient) {
     it('renders a component', () => {
       wrapper.exists().should.equal(true);
     });
-  });
-  describe('EditShipmentOperations Component', () => {
-    let wrapper;
-    beforeEach(() => {
-      wrapper = shallow(
-        <EditShipmentOperations
-          shipment={{ cargo: {}, movement: {} }}
-          dispatchers={{}}
-          match={{ params: {} }}
-        />,
-      );
-    });
-    it('renders only confirm booking button if status is unconfirmed', () => {
-      wrapper.setProps({
-        shipment: {
-          status: 'Unconfirmed',
-          cargo: {},
-          movement: { mode: 'Sea' },
-        },
-      });
-      wrapper
-        .containsMatchingElement(<ConfirmBookingButton />)
-        .should.equal(true);
-      wrapper
-        .containsMatchingElement(<BillOfLadingButton />)
-        .should.equal(false);
-      wrapper.containsMatchingElement(<AirWaybillButton />).should.equal(false);
-      wrapper.setProps({
-        shipment: {
-          status: 'Unconfirmed',
-          cargo: {},
-          movement: { mode: 'Air' },
-        },
-      });
-      wrapper
-        .containsMatchingElement(<ConfirmBookingButton />)
-        .should.equal(true);
-      wrapper
-        .containsMatchingElement(<BillOfLadingButton />)
-        .should.equal(false);
-      wrapper.containsMatchingElement(<AirWaybillButton />).should.equal(false);
-    });
-    it(
-      'renders only bill of lading button if status is confirmed and mode ' +
-        'is sea',
-      () => {
-        wrapper.setProps({
-          shipment: {
-            status: 'Confirmed',
-            cargo: {},
-            movement: { mode: 'Sea' },
-          },
-        });
-        wrapper
-          .containsMatchingElement(<ConfirmBookingButton />)
-          .should.equal(false);
-        wrapper
-          .containsMatchingElement(<BillOfLadingButton />)
-          .should.equal(true);
-        wrapper
-          .containsMatchingElement(<AirWaybillButton />)
-          .should.equal(false);
-      },
-    );
-    it(
-      'renders only air waybill button if status is confirmed and mode is ' +
-        'air',
-      () => {
-        wrapper.setProps({
-          shipment: {
-            status: 'Confirmed',
-            cargo: {},
-            movement: { mode: 'Air' },
-          },
-        });
-        wrapper
-          .containsMatchingElement(<ConfirmBookingButton />)
-          .should.equal(false);
-        wrapper
-          .containsMatchingElement(<BillOfLadingButton />)
-          .should.equal(false);
-        wrapper
-          .containsMatchingElement(<AirWaybillButton />)
-          .should.equal(true);
-      },
-    );
   });
 }
