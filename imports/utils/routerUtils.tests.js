@@ -3,7 +3,6 @@
 
 import { Meteor } from 'meteor/meteor';
 import { chai } from 'meteor/practicalmeteor:chai';
-import deepFreeze from 'deep-freeze';
 
 import routerUtils from './routerUtils';
 
@@ -18,7 +17,6 @@ if (Meteor.isClient) {
           history: { location: { state: { prevParams: { a: '1', b: '2' } } } },
           match: { params: { a: '1', b: '2' } },
         };
-        deepFreeze(props);
         isSameParamsAsPrev(props).should.equal(true);
       });
       it('returns false if the params have different values', () => {
@@ -54,6 +52,16 @@ if (Meteor.isClient) {
         props.match.params = null;
         isSameParamsAsPrev(props).should.equal(false);
         props.history = null;
+        isSameParamsAsPrev(props).should.equal(false);
+      });
+      it("returns false if the action is 'POP' (browser refresh)", () => {
+        const props = {
+          history: {
+            action: 'POP',
+            location: { state: { prevParams: { a: '1', b: '2' } } },
+          },
+          match: { params: { a: '1', b: '2' } },
+        };
         isSameParamsAsPrev(props).should.equal(false);
       });
     });

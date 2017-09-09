@@ -9,6 +9,8 @@ import QuoteListItem from '../list-items/QuoteListItem.jsx';
 import { Customers } from '../../api/customers/customersCollection';
 import { Quotes } from '../../api/quotes/quotesCollection';
 
+import routerUtils from '../../utils/routerUtils';
+
 import Shipment from '../shipmentUtils';
 
 import ToggleButton from '../fields/ToggleButton.jsx';
@@ -134,7 +136,9 @@ export const CustomerInner = ({
         <Route
           path="/customers/view/:customerId/shipments/:shipmentId"
           render={props => {
-            dispatchers.loadShipment(props.match.params.shipmentId);
+            if (!routerUtils.isSameParamsAsPrev(props)) {
+              dispatchers.loadShipment(props.match.params.shipmentId);
+            }
             return <EditShipmentConnect {...props} />;
           }}
         />

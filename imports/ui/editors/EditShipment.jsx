@@ -342,15 +342,21 @@ const EditShipment = ({ shipment, dispatchers, history, match, location }) =>
       </div>
       <div className="tabs">
         <Link
-          to={`/customers/view/${match.params.customerId}/shipments/${match
-            .params.shipmentId}/operations`}
+          to={{
+            pathname: `/customers/view/${match.params
+              .customerId}/shipments/${match.params.shipmentId}/operations`,
+            state: { prevParams: match.params },
+          }}
         >
           operations
         </Link>
         <span className="backslash"> / </span>
         <Link
-          to={`/customers/view/${match.params.customerId}/shipments/${match
-            .params.shipmentId}/accounting`}
+          to={{
+            pathname: `/customers/view/${match.params
+              .customerId}/shipments/${match.params.shipmentId}/accounting`,
+            state: { prevParams: match.params },
+          }}
         >
           accounting
         </Link>

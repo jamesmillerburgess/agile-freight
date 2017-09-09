@@ -7,7 +7,8 @@ const routerUtils = {
       !props.history.location.state ||
       !props.history.location.state.prevParams ||
       !props.match ||
-      !props.match.params
+      !props.match.params ||
+      props.history.action === 'POP' // Browser refresh
     ) {
       return false;
     }
