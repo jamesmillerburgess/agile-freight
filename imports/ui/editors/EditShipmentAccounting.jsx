@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CurrencyField from '../fields/CurrencyField.jsx';
+import MonetaryFieldGroup from '../fields/MonetaryFieldGroup.jsx';
 
 const EditCharge = ({ charge, dispatchers }) =>
   <div className="header-row" key={charge.id}>
@@ -22,17 +22,12 @@ const EditCharge = ({ charge, dispatchers }) =>
         onChange={e =>
           dispatchers.changeChargeCustomer(charge.id, e.target.value)}
       />
-      <input
-        className=""
-        type="number"
-        value={charge.revenue}
-        onChange={e =>
+      <MonetaryFieldGroup
+        numericValue={charge.revenue}
+        currencyValue={charge.revenueCurrency}
+        onChangeNumeric={e =>
           dispatchers.changeChargeRevenue(charge.id, e.target.value)}
-      />
-      <CurrencyField
-        className=""
-        value={charge.revenueCurrency}
-        onChange={e =>
+        onChangeCurrency={e =>
           dispatchers.changeChargeRevenueCurrency(charge.id, e.value)}
       />
     </div>
@@ -43,16 +38,12 @@ const EditCharge = ({ charge, dispatchers }) =>
         onChange={e =>
           dispatchers.changeChargeSupplier(charge.id, e.target.value)}
       />
-      <input
-        className=""
-        type="number"
-        value={charge.cost}
-        onChange={e => dispatchers.changeChargeCost(charge.id, e.target.value)}
-      />
-      <CurrencyField
-        className=""
-        value={charge.costCurrency}
-        onChange={e =>
+      <MonetaryFieldGroup
+        numericValue={charge.cost}
+        currencyValue={charge.costCurrency}
+        onChangeNumeric={e =>
+          dispatchers.changeChargeCost(charge.id, e.target.value)}
+        onChangeCurrency={e =>
           dispatchers.changeChargeCostCurrency(charge.id, e.value)}
       />
     </div>

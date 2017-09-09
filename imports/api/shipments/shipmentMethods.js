@@ -84,7 +84,6 @@ const shipmentSave = shipment => {
       },
     },
   );
-  console.log(shipment);
 };
 
 const shipmentArchive = shipmentId => {
