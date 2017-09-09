@@ -96,16 +96,13 @@ const EditShipmentAccounting = ({ shipment, dispatchers }) =>
           <div className="title">Cost</div>
         </div>
       </div>
-      {(shipment.charges || [])
-        .filter(charge => charge.type === 'External')
-        .reverse()
-        .map(charge =>
-          <EditCharge
-            charge={charge}
-            dispatchers={dispatchers}
-            key={charge.id}
-          />,
-        )}
+      {shipment.externalCharges.map(charge =>
+        <EditCharge
+          charge={charge}
+          dispatchers={dispatchers}
+          key={charge.id}
+        />,
+      )}
     </div>
     <div className="charges-editor">
       <div className="header-row">
@@ -123,16 +120,13 @@ const EditShipmentAccounting = ({ shipment, dispatchers }) =>
           <div className="title">Bill From</div>
         </div>
       </div>
-      {(shipment.charges || [])
-        .filter(charge => charge.type === 'Internal')
-        .reverse()
-        .map(charge =>
-          <EditCharge
-            charge={charge}
-            dispatchers={dispatchers}
-            key={charge.id}
-          />,
-        )}
+      {shipment.internalCharges.map(charge =>
+        <EditCharge
+          charge={charge}
+          dispatchers={dispatchers}
+          key={charge.id}
+        />,
+      )}
     </div>
   </div>;
 

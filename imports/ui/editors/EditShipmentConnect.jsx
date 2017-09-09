@@ -38,6 +38,14 @@ const getToAccounting = createSelector(
   }),
 );
 
+const getCharges = state => state.shipment.charges || [];
+const getExternalCharges = createSelector(getCharges, charges =>
+  charges.filter(charge => charge.type === 'External').reverse(),
+);
+const getInternalCharges = createSelector(getCharges, charges =>
+  charges.filter(charge => charge.type === 'Internal').reverse(),
+);
+
 const mapStateToProps = (state, ownProps) => {
   const { shipment } = state;
   if (!shipment.cargo) {
@@ -45,7 +53,11 @@ const mapStateToProps = (state, ownProps) => {
   }
   shipment.cargo.chargeableWeight = getChargeableWeight(state);
   return {
-    shipment,
+    shipment: {
+      ...shipment,
+      externalCharges: getExternalCharges(state),
+      internalCharges: getInternalCharges(state),
+    },
     activeTab: getActiveTab(ownProps.location),
     toOperations: getToOperations(ownProps.match),
     toAccounting: getToAccounting(ownProps.match),
@@ -147,11 +159,31 @@ const mapDispatchToProps = dispatch => ({
     // CHARGES
     addExternalCharge: () =>
       dispatch(
-        actions.addCharge({ id: new Mongo.ObjectID()._str, type: 'External' }),
-      ),
+        actions.addCharge({
+          id: new Mongo.ObjectID()._str,
+          type: 'External',
+          name: '',
+          customer: '',
+          revenue: '',
+          revenueCurrency: '',
+          supplier: '',
+          cost: '',
+          costCurrency: '',
+        }),
+      ),                         
     addInternalCharge: () =>
       dispatch(
-        actions.addCharge({ id: new Mongo.ObjectID()._str, type: 'Internal' }),
+        actions.addCharge({
+          id: new Mongo.ObjectID()._str,
+          type: 'Internal',
+          name: '',
+          customer: '',
+          revenue: '',
+          revenueCurrency: '',
+          supplier: '',
+          cost: '',
+          costCurrency: '',
+        }),
       ),
     addCharge: charge => dispatch(actions.addCharge(charge)),
     removeCharge: id => dispatch(actions.removeCharge(id)),
