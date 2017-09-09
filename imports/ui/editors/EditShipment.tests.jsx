@@ -78,7 +78,7 @@ if (Meteor.isClient) {
     });
     it(
       'renders only bill of lading button if status is confirmed and mode ' +
-      'is sea',
+        'is sea',
       () => {
         wrapper.setProps({
           shipment: {
@@ -100,7 +100,7 @@ if (Meteor.isClient) {
     );
     it(
       'renders only air waybill button if status is confirmed and mode is ' +
-      'air',
+        'air',
       () => {
         wrapper.setProps({
           shipment: {
