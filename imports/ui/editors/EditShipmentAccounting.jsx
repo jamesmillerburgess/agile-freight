@@ -1,5 +1,7 @@
 import React from 'react';
 
+import CurrencyField from '../fields/CurrencyField.jsx';
+
 const EditCharge = ({ charge, dispatchers }) =>
   <div className="header-row" key={charge.id}>
     <div className="revenue-side">
@@ -27,11 +29,11 @@ const EditCharge = ({ charge, dispatchers }) =>
         onChange={e =>
           dispatchers.changeChargeRevenue(charge.id, e.target.value)}
       />
-      <input
-        className="currency-field"
+      <CurrencyField
+        className=""
         value={charge.revenueCurrency}
         onChange={e =>
-          dispatchers.changeChargeRevenueCurrency(charge.id, e.target.value)}
+          dispatchers.changeChargeRevenueCurrency(charge.id, e.value)}
       />
     </div>
     <div className="cost-side">
@@ -47,11 +49,11 @@ const EditCharge = ({ charge, dispatchers }) =>
         value={charge.cost}
         onChange={e => dispatchers.changeChargeCost(charge.id, e.target.value)}
       />
-      <input
-        className="currency-field"
+      <CurrencyField
+        className=""
         value={charge.costCurrency}
         onChange={e =>
-          dispatchers.changeChargeCostCurrency(charge.id, e.target.value)}
+          dispatchers.changeChargeCostCurrency(charge.id, e.value)}
       />
     </div>
   </div>;
