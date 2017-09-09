@@ -15,7 +15,12 @@ if (Meteor.isClient) {
     beforeEach(() => {
       wrapper = shallow(
         <EditShipmentAccounting
-          shipment={{ cargo: {}, movement: {} }}
+          shipment={{
+            cargo: {},
+            movement: {},
+            internalCharges: [],
+            externalCharges: [],
+          }}
           dispatchers={{}}
         />,
       );
