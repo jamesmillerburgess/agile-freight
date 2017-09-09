@@ -7,6 +7,7 @@ import { shallow } from 'enzyme';
 import { chai } from 'meteor/practicalmeteor:chai';
 
 import EditShipment, {
+  EditShipmentOperations,
   ConfirmBookingButton,
   BillOfLadingButton,
   AirWaybillButton,
@@ -22,7 +23,8 @@ if (Meteor.isClient) {
           shipment={{ cargo: {}, movement: {} }}
           dispatchers={{}}
           history={{}}
-          match={{}}
+          location={{ pathname: 'operations' }}
+          match={{ params: {} }}
         />,
       );
     });
@@ -31,6 +33,18 @@ if (Meteor.isClient) {
     });
     it('renders a component', () => {
       wrapper.exists().should.equal(true);
+    });
+  });
+  describe('EditShipmentOperations Component', () => {
+    let wrapper;
+    beforeEach(() => {
+      wrapper = shallow(
+        <EditShipmentOperations
+          shipment={{ cargo: {}, movement: {} }}
+          dispatchers={{}}
+          match={{ params: {} }}
+        />,
+      );
     });
     it('renders only confirm booking button if status is unconfirmed', () => {
       wrapper.setProps({
@@ -64,7 +78,7 @@ if (Meteor.isClient) {
     });
     it(
       'renders only bill of lading button if status is confirmed and mode ' +
-        'is sea',
+      'is sea',
       () => {
         wrapper.setProps({
           shipment: {
@@ -86,7 +100,7 @@ if (Meteor.isClient) {
     );
     it(
       'renders only air waybill button if status is confirmed and mode is ' +
-        'air',
+      'air',
       () => {
         wrapper.setProps({
           shipment: {
