@@ -170,7 +170,7 @@ const mapDispatchToProps = dispatch => ({
           cost: '',
           costCurrency: '',
         }),
-      ),                         
+      ),
     addInternalCharge: () =>
       dispatch(
         actions.addCharge({
