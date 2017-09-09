@@ -8,7 +8,11 @@ import EditShipment from './EditShipment.jsx';
 import routerUtils from '../../utils/routerUtils';
 import { getChargeableWeight } from '../quoteUtils';
 
-const { buildShipmentLink } = routerUtils;
+const {
+  buildShipmentLink,
+  shipmentAccountingPath,
+  shipmentOperationsPath,
+} = routerUtils;
 
 const getPathname = location => location.pathname;
 const getActiveTab = createSelector(
@@ -45,6 +49,8 @@ const mapStateToProps = (state, ownProps) => {
     activeTab: getActiveTab(ownProps.location),
     toOperations: getToOperations(ownProps.match),
     toAccounting: getToAccounting(ownProps.match),
+    shipmentOperationsPath,
+    shipmentAccountingPath,
   };
 };
 

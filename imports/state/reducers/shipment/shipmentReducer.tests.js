@@ -83,6 +83,10 @@ if (Meteor.isClient) {
       const action = { type: ACTION_TYPES.LOAD_SHIPMENT, shipment: { charges: {} }};
       shipment(null, action).charges.length.should.equal(0);
     });
+    it('maintains the _id', () => {
+      const state = { _id: 'a' };
+      shipment(state)._id.should.equal('a');
+    });
   });
   describe('Charges Reducer', () => {
     it('adds a charge', () => {

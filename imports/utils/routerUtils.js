@@ -31,6 +31,8 @@ const routerUtils = {
     }
     return `/customers/view/${customerId}/shipments/${shipmentId}/${tab}`;
   },
+  shipmentOperationsPath: '/customers/view/:customerId/shipments/:shipmentId/operations',
+  shipmentAccountingPath: '/customers/view/:customerId/shipments/:shipmentId/accounting',
 };
 
 export default routerUtils;

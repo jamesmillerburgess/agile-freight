@@ -11,6 +11,8 @@ const EditShipment = ({
   activeTab,
   toOperations,
   toAccounting,
+  shipmentOperationsPath,
+  shipmentAccountingPath,
 }) =>
   <div className="new-quote">
     <div className="document-header">
@@ -30,22 +32,12 @@ const EditShipment = ({
       </div>
     </div>
     <Route
-      path="/customers/view/:customerId/shipments/:shipmentId/operations"
-      render={props =>
-        <EditShipmentOperations
-          {...props}
-          shipment={shipment}
-          dispatchers={dispatchers}
-        />}
+      path={shipmentOperationsPath}
+      render={() => <EditShipmentOperations {...{ shipment, dispatchers }} />}
     />
     <Route
-      path="/customers/view/:customerId/shipments/:shipmentId/accounting"
-      render={props =>
-        <EditShipmentAccounting
-          {...props}
-          shipment={shipment}
-          dispatchers={dispatchers}
-        />}
+      path={shipmentAccountingPath}
+      render={() => <EditShipmentAccounting {...{ shipment, dispatchers }} />}
     />
   </div>;
 

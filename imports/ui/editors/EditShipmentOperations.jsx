@@ -9,11 +9,11 @@ import { BillOfLading } from '../../documents/billOfLading';
 import { AirWaybill } from '../../documents/airWaybill';
 import { APIGlobals } from '../../api/api-globals';
 
-export const ConfirmBookingButton = ({ match, shipment, dispatchers }) =>
+export const ConfirmBookingButton = ({ shipment, dispatchers }) =>
   <button
     className="button-submit"
     onClick={() =>
-      Shipment.confirm(match.params.shipmentId, shipment, confirmedShipment =>
+      Shipment.confirm(shipment._id, shipment, confirmedShipment =>
         dispatchers.loadShipment(confirmedShipment),
       )}
   >
@@ -50,7 +50,7 @@ export const AirWaybillButton = ({ shipment }) =>
     AIR WAYBILL
   </button>;
 
-const EditShipmentOperations = ({ shipment, dispatchers, match }) =>
+const EditShipmentOperations = ({ shipment, dispatchers }) =>
   <div className="panel container form-section">
     <div className="title">
       <div className="cargo-row-icon" />
@@ -160,7 +160,7 @@ const EditShipmentOperations = ({ shipment, dispatchers, match }) =>
       <button
         className="delete-button"
         onClick={() =>
-          Shipment.archive(match.params.shipmentId, archivedShipment =>
+          Shipment.archive(shipment._id, archivedShipment =>
             dispatchers.loadShipment(archivedShipment),
           )}
       >
@@ -168,16 +168,12 @@ const EditShipmentOperations = ({ shipment, dispatchers, match }) =>
       </button>
       <button
         className="save-button"
-        onClick={() => Shipment.save(match.params.shipmentId, shipment)}
+        onClick={() => Shipment.save(shipment._id, shipment)}
       >
         SAVE
       </button>
       {shipment.status === 'Unconfirmed'
-        ? <ConfirmBookingButton
-         shipment={shipment}
-         match={match}
-         dispatchers={dispatchers}
-       />
+        ? <ConfirmBookingButton shipment={shipment} dispatchers={dispatchers} />
         : null}
       {shipment.status === 'Confirmed' && shipment.movement.mode === 'Sea'
         ? <BillOfLadingButton shipment={shipment} />

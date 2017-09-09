@@ -145,6 +145,7 @@ export const shipment = (state = {}, action = { type: '' }) => {
       return { ...action.shipment, charges: newCharges };
     default:
       return {
+        _id: state._id || '',
         status: status(state.status, action),
         cargo: cargo(state.cargo || {}, action),
         movement: movement(state.movement || {}, action),
