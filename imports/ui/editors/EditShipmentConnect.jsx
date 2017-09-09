@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { Mongo } from 'meteor/mongo';
 
 import * as actions from '../../state/actions/quoteActions';
 import EditShipment from './EditShipment.jsx';
@@ -103,6 +104,30 @@ const mapDispatchToProps = dispatch => ({
     onClickImportCustomsClearance: () =>
       dispatch(actions.toggleImportCustomsClearance()),
     onClickInsurance: () => dispatch(actions.toggleInsurance()),
+
+    // CHARGES
+    addExternalCharge: () =>
+      dispatch(
+        actions.addCharge({ id: new Mongo.ObjectID()._str, type: 'External' }),
+      ),
+    addInternalCharge: () =>
+      dispatch(
+        actions.addCharge({ id: new Mongo.ObjectID()._str, type: 'Internal' }),
+      ),
+    addCharge: charge => dispatch(actions.addCharge(charge)),
+    removeCharge: id => dispatch(actions.removeCharge(id)),
+    changeChargeName: (id, name) => dispatch(actions.setChargeName(id, name)),
+    changeChargeCustomer: (id, customer) =>
+      dispatch(actions.setChargeCustomer(id, customer)),
+    changeChargeRevenue: (id, revenue) =>
+      dispatch(actions.setChargeRevenue(id, revenue)),
+    changeChargeRevenueCurrency: (id, revenueCurrency) =>
+      dispatch(actions.setChargeRevenueCurrency(id, revenueCurrency)),
+    changeChargeSupplier: (id, supplier) =>
+      dispatch(actions.setChargeSupplier(id, supplier)),
+    changeChargeCost: (id, cost) => dispatch(actions.setChargeCost(id, cost)),
+    changeChargeCostCurrency: (id, costCurrency) =>
+      dispatch(actions.setChargeCostCurrency(id, costCurrency)),
   },
 });
 

@@ -190,6 +190,62 @@ export const EditShipmentOperations = ({ shipment, dispatchers, match }) =>
     </div>
   </div>;
 
+const EditCharge = ({ charge, dispatchers }) =>
+  <div className="header-row" key={charge.id}>
+    <div className="revenue-side">
+      <button
+        className="cargo-row-icon"
+        onClick={() => dispatchers.removeCharge(charge.id)}
+      >
+        <span className="fa fa-fw fa-minus-square" />
+      </button>
+      <input
+        className="charge-name"
+        value={charge.name}
+        onChange={e => dispatchers.changeChargeName(charge.id, e.target.value)}
+      />
+      <input
+        className="charge-name"
+        value={charge.customer}
+        onChange={e =>
+          dispatchers.changeChargeCustomer(charge.id, e.target.value)}
+      />
+      <input
+        className=""
+        type="number"
+        value={charge.revenue}
+        onChange={e =>
+          dispatchers.changeChargeRevenue(charge.id, e.target.value)}
+      />
+      <input
+        className="currency-field"
+        value={charge.revenueCurrency}
+        onChange={e =>
+          dispatchers.changeChargeRevenueCurrency(charge.id, e.target.value)}
+      />
+    </div>
+    <div className="cost-side">
+      <input
+        className="charge-name"
+        value={charge.supplier}
+        onChange={e =>
+          dispatchers.changeChargeSupplier(charge.id, e.target.value)}
+      />
+      <input
+        className=""
+        type="number"
+        value={charge.cost}
+        onChange={e => dispatchers.changeChargeCost(charge.id, e.target.value)}
+      />
+      <input
+        className="currency-field"
+        value={charge.costCurrency}
+        onChange={e =>
+          dispatchers.changeChargeCostCurrency(charge.id, e.target.value)}
+      />
+    </div>
+  </div>;
+
 const EditShipmentAccounting = ({ shipment, dispatchers }) =>
   <div className="panel container form-section">
     <div className="invoicing-buttons">
@@ -217,7 +273,10 @@ const EditShipmentAccounting = ({ shipment, dispatchers }) =>
     <div className="charges-editor">
       <div className="header-row">
         <div className="revenue-side">
-          <button className="cargo-row-icon">
+          <button
+            className="cargo-row-icon"
+            onClick={dispatchers.addExternalCharge}
+          >
             <span className="fa fa-fw fa-plus-square" />
           </button>
           <div className="title charge-name">External Charges</div>
@@ -227,43 +286,24 @@ const EditShipmentAccounting = ({ shipment, dispatchers }) =>
           <div className="title">Cost</div>
         </div>
       </div>
-      <div className="header-row">
-        <div className="revenue-side">
-          <button className="cargo-row-icon">
-            <span className="fa fa-fw fa-minus-square" />
-          </button>
-          <input className="charge-name" value="International Freight" />
-          <input className="charge-name" value="Pyrotek Engineering Materials Ltd" />
-          <input className="" value="200" />
-          <input className="currency-field" value="USD" />
-        </div>
-        <div className="cost-side">
-          <input className="charge-name" value="British Airways" />
-          <input className="" value="150" />
-          <input className="currency-field" value="USD" />
-        </div>
-      </div>
-      <div className="header-row">
-        <div className="revenue-side">
-          <button className="cargo-row-icon">
-            <span className="fa fa-fw fa-minus-square" />
-          </button>
-          <input className="charge-name" value="Destination Transport" />
-          <input className="charge-name" value="Pyrotek Engineering Materials Ltd" />
-          <input className="" value="200" />
-          <input className="currency-field" value="USD" />
-        </div>
-        <div className="cost-side">
-          <input className="charge-name" value="ABC Truckers" />
-          <input className="" value="150" />
-          <input className="currency-field" value="USD" />
-        </div>
-      </div>
+      {(shipment.charges || [])
+        .filter(charge => charge.type === 'External')
+        .reverse()
+        .map(charge =>
+          <EditCharge
+            charge={charge}
+            dispatchers={dispatchers}
+            key={charge.id}
+          />,
+        )}
     </div>
     <div className="charges-editor">
       <div className="header-row">
         <div className="revenue-side">
-          <button className="cargo-row-icon">
+          <button
+            className="cargo-row-icon"
+            onClick={dispatchers.addInternalCharge}
+          >
             <span className="fa fa-fw fa-plus-square" />
           </button>
           <div className="title charge-name">Internal Charges</div>
@@ -273,22 +313,16 @@ const EditShipmentAccounting = ({ shipment, dispatchers }) =>
           <div className="title">Bill From</div>
         </div>
       </div>
-      <div className="header-row">
-        <div className="revenue-side">
-          <button className="cargo-row-icon">
-            <span className="fa fa-fw fa-minus-square" />
-          </button>
-          <input className="charge-name" value="Destination Transport" />
-          <input className="charge-name" value="Basel" />
-          <input className="" value="200" />
-          <input className="currency-field" value="USD" />
-        </div>
-        <div className="cost-side">
-          <input className="charge-name" value="Miami" />
-          <input className="" value="200" />
-          <input className="currency-field" value="USD" />
-        </div>
-      </div>
+      {(shipment.charges || [])
+        .filter(charge => charge.type === 'Internal')
+        .reverse()
+        .map(charge =>
+          <EditCharge
+            charge={charge}
+            dispatchers={dispatchers}
+            key={charge.id}
+          />,
+        )}
     </div>
   </div>;
 

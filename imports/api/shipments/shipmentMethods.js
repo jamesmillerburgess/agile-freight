@@ -28,7 +28,6 @@ const shipmentNew = quoteId => {
     cargo,
     movement,
     otherServices,
-    charges,
     quoteId,
     createdOn: new Date(),
     active: true,
@@ -65,6 +64,7 @@ const shipmentSave = shipment => {
     blType,
     cargo,
     movement,
+    charges,
   } = shipment;
   Shipments.update(
     { _id: shipment._id },
@@ -80,9 +80,11 @@ const shipmentSave = shipment => {
         blType,
         cargo,
         movement,
+        charges,
       },
     },
   );
+  console.log(shipment);
 };
 
 const shipmentArchive = shipmentId => {
