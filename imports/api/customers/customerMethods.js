@@ -2,6 +2,13 @@ import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
 import { Customers } from './customersCollection';
 
+import { buildSearchRegExp } from '../../ui/searchUtils';
+
+export const customerSearch = options => {
+  const query = { search: { $regex: buildSearchRegExp(options.search) } };
+  return Customers.find(query).fetch();
+};
+
 Meteor.methods({
   'customer.new': function customerNewMethod(options = {}) {
     // Check the parameters
