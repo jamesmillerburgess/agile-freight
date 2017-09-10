@@ -30,6 +30,8 @@ if (Meteor.isClient) {
     });
   });
   describe('loadStakeholders', () => {
-    // it('returns ')
+    it('calls customer.search with the given search term', () => {
+      
+    });
   });
 }

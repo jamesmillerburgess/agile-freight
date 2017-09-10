@@ -1,6 +1,7 @@
 import React from 'react';
 
 import MonetaryFieldGroup from '../fields/MonetaryFieldGroup.jsx';
+import StakeholderField from '../fields/StakeholderField.jsx';
 
 const EditCharge = ({ charge, dispatchers }) =>
   <div className="header-row" key={charge.id}>
@@ -22,6 +23,7 @@ const EditCharge = ({ charge, dispatchers }) =>
         onChange={e =>
           dispatchers.changeChargeCustomer(charge.id, e.target.value)}
       />
+      <StakeholderField />
       <MonetaryFieldGroup
         numericValue={charge.revenue}
         currencyValue={charge.revenueCurrency}

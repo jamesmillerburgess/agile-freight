@@ -5,7 +5,9 @@ import { Customers } from './customersCollection';
 import { buildSearchRegExp } from '../../ui/searchUtils';
 
 export const customerSearch = options => {
+  console.log(options);
   const query = { name: { $regex: buildSearchRegExp(options.search) } };
+  console.log(Customers.find(query).fetch());
   return Customers.find(query).fetch();
 };
 
@@ -40,4 +42,5 @@ Meteor.methods({
 
     Customers.update({ _id: customerId }, { $set: options });
   },
+  'customer.search': customerSearch,
 });
