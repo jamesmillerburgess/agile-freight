@@ -64,7 +64,7 @@ if (Meteor.isServer) {
     });
     describe('customerSearch', () => {
       it('returns customers matching part of a word', () => {
-        Customers.insert({ search: 'name' });
+        Customers.insert({ name: 'name' });
         customerSearch({ search: 'name' }).length.should.equal(1);
         customerSearch({ search: 'n' }).length.should.equal(1);
         customerSearch({ search: 'a' }).length.should.equal(1);
@@ -74,17 +74,17 @@ if (Meteor.isServer) {
         customerSearch({ search: 'name1' }).length.should.equal(0);
       });
       it('returns customers matching search words in any order', () => {
-        Customers.insert({ search: 'word1 word2 word3' });
-        Customers.insert({ search: 'word2 word3 word1' });
-        Customers.insert({ search: 'word3 word1 word2' });
-        Customers.insert({ search: 'aword3a bword2b bword1b notaword' });
-        Customers.insert({ search: 'word4 word2 word3' });
+        Customers.insert({ name: 'word1 word2 word3' });
+        Customers.insert({ name: 'word2 word3 word1' });
+        Customers.insert({ name: 'word3 word1 word2' });
+        Customers.insert({ name: 'aword3a bword2b bword1b notaword' });
+        Customers.insert({ name: 'word4 word2 word3' });
         const res = customerSearch({ search: 'word1 word2 word3' });
         res.length.should.equal(4);
-        res[0].search.should.equal('word1 word2 word3');
-        res[1].search.should.equal('word2 word3 word1');
-        res[2].search.should.equal('word3 word1 word2');
-        res[3].search.should.equal('aword3a bword2b bword1b notaword');
+        res[0].name.should.equal('word1 word2 word3');
+        res[1].name.should.equal('word2 word3 word1');
+        res[2].name.should.equal('word3 word1 word2');
+        res[3].name.should.equal('aword3a bword2b bword1b notaword');
       });
     });
   });

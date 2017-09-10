@@ -5,7 +5,7 @@ import { Customers } from './customersCollection';
 import { buildSearchRegExp } from '../../ui/searchUtils';
 
 export const customerSearch = options => {
-  const query = { search: { $regex: buildSearchRegExp(options.search) } };
+  const query = { name: { $regex: buildSearchRegExp(options.search) } };
   return Customers.find(query).fetch();
 };
 
