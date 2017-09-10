@@ -8,7 +8,7 @@ dependencies:
     - meteor update --release 1.6-beta.26
     - meteor npm install
   post:
-    - rm -r ~/node_modules
+    - rm -r ~/agile-freight/node_modules
 
 checkout:
   post:
