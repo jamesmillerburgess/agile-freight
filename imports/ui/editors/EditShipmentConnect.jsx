@@ -1,17 +1,69 @@
 import { connect } from 'react-redux';
+import { Mongo } from 'meteor/mongo';
+import { createSelector } from 'reselect';
 
 import * as actions from '../../state/actions/quoteActions';
 import EditShipment from './EditShipment.jsx';
 
+import routerUtils from '../../utils/routerUtils';
 import { getChargeableWeight } from '../quoteUtils';
 
-const mapStateToProps = state => {
+const {
+  buildShipmentLink,
+  shipmentAccountingPath,
+  shipmentOperationsPath,
+} = routerUtils;
+
+const getPathname = location => location.pathname;
+const getActiveTab = createSelector(
+  getPathname,
+  pathname =>
+    pathname.indexOf('operations') !== -1 ? 'OPERATIONS' : 'ACCOUNTING',
+);
+
+const getCustomerId = match => match.params.customerId;
+const getShipmentId = match => match.params.shipmentId;
+const getToOperations = createSelector(
+  [getCustomerId, getShipmentId],
+  (customerId, shipmentId) => ({
+    pathname: buildShipmentLink(customerId, shipmentId, 'operations'),
+    state: { prevParams: { customerId, shipmentId } },
+  }),
+);
+const getToAccounting = createSelector(
+  [getCustomerId, getShipmentId],
+  (customerId, shipmentId) => ({
+    pathname: buildShipmentLink(customerId, shipmentId, 'accounting'),
+    state: { prevParams: { customerId, shipmentId } },
+  }),
+);
+
+const getCharges = state => state.shipment.charges || [];
+const getExternalCharges = createSelector(getCharges, charges =>
+  charges.filter(charge => charge.type === 'External').reverse(),
+);
+const getInternalCharges = createSelector(getCharges, charges =>
+  charges.filter(charge => charge.type === 'Internal').reverse(),
+);
+
+const mapStateToProps = (state, ownProps) => {
   const { shipment } = state;
   if (!shipment.cargo) {
     shipment.cargo = {};
   }
   shipment.cargo.chargeableWeight = getChargeableWeight(state);
-  return { shipment };
+  return {
+    shipment: {
+      ...shipment,
+      externalCharges: getExternalCharges(state),
+      internalCharges: getInternalCharges(state),
+    },
+    activeTab: getActiveTab(ownProps.location),
+    toOperations: getToOperations(ownProps.match),
+    toAccounting: getToAccounting(ownProps.match),
+    shipmentOperationsPath,
+    shipmentAccountingPath,
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -103,6 +155,50 @@ const mapDispatchToProps = dispatch => ({
     onClickImportCustomsClearance: () =>
       dispatch(actions.toggleImportCustomsClearance()),
     onClickInsurance: () => dispatch(actions.toggleInsurance()),
+
+    // CHARGES
+    addExternalCharge: () =>
+      dispatch(
+        actions.addCharge({
+          id: new Mongo.ObjectID()._str,
+          type: 'External',
+          name: '',
+          customer: '',
+          revenue: '',
+          revenueCurrency: '',
+          supplier: '',
+          cost: '',
+          costCurrency: '',
+        }),
+      ),
+    addInternalCharge: () =>
+      dispatch(
+        actions.addCharge({
+          id: new Mongo.ObjectID()._str,
+          type: 'Internal',
+          name: '',
+          customer: '',
+          revenue: '',
+          revenueCurrency: '',
+          supplier: '',
+          cost: '',
+          costCurrency: '',
+        }),
+      ),
+    addCharge: charge => dispatch(actions.addCharge(charge)),
+    removeCharge: id => dispatch(actions.removeCharge(id)),
+    changeChargeName: (id, name) => dispatch(actions.setChargeName(id, name)),
+    changeChargeCustomer: (id, customer) =>
+      dispatch(actions.setChargeCustomer(id, customer)),
+    changeChargeRevenue: (id, revenue) =>
+      dispatch(actions.setChargeRevenue(id, revenue)),
+    changeChargeRevenueCurrency: (id, revenueCurrency) =>
+      dispatch(actions.setChargeRevenueCurrency(id, revenueCurrency)),
+    changeChargeSupplier: (id, supplier) =>
+      dispatch(actions.setChargeSupplier(id, supplier)),
+    changeChargeCost: (id, cost) => dispatch(actions.setChargeCost(id, cost)),
+    changeChargeCostCurrency: (id, costCurrency) =>
+      dispatch(actions.setChargeCostCurrency(id, costCurrency)),
   },
 });
 

@@ -1,0 +1,33 @@
+@import 'styleGlobals';
+
+.charges-editor {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.charges-editor .header-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.charges-editor .revenue-side {
+  display: flex;
+  width: 60%;
+}
+
+.charges-editor .charge-name {
+  width: 170px;
+  margin-right: 8px;
+}
+
+.charges-editor .cost-side {
+  display: flex;
+  width: 35%;
+}
+
+.charges-editor input {
+  margin-right: 8px;
+}

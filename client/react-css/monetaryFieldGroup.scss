@@ -1,0 +1,24 @@
+.monetary-field-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.monetary-field-group .numeric-field {
+  margin-right: 0;
+  border-right: 0;
+  width: 80px;
+  text-align: right;
+}
+
+.monetary-field-group .currency-field {
+  max-width: 50px;
+  width: 50px !important;
+  .Select-control {
+    background-color: #ccc;
+  }
+  input {
+    width: 29px !important;
+    max-width: 29px;
+    margin: 0;
+  }
+}

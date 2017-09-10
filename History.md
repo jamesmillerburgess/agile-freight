@@ -1,5 +1,10 @@
 ## v.NEXT
 
+## v2.1.0 – Accounting Tab
+
+* Added tab structure to shipment header split between operations and accounting tabs
+* Added basic accounting editor using primarily free-type fields
+
 ## v2.0.0 – Shipment
 
 * Basic quote-shipment workflow including documents, statuses, and movement visualization

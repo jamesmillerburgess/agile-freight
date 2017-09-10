@@ -6,20 +6,22 @@ import { Meteor } from 'meteor/meteor';
 import { shallow } from 'enzyme';
 import { chai } from 'meteor/practicalmeteor:chai';
 
-import EditShipment from './EditShipment.jsx';
+import EditShipmentAccounting from './EditShipmentAccounting.jsx';
 
 if (Meteor.isClient) {
   chai.should();
-  describe('EditShipment Component', () => {
+  describe('EditShipmentAccounting Component', () => {
     let wrapper;
     beforeEach(() => {
       wrapper = shallow(
-        <EditShipment
-          shipment={{ cargo: {}, movement: {} }}
+        <EditShipmentAccounting
+          shipment={{
+            cargo: {},
+            movement: {},
+            internalCharges: [],
+            externalCharges: [],
+          }}
           dispatchers={{}}
-          history={{}}
-          location={{ pathname: 'operations' }}
-          match={{ params: {} }}
         />,
       );
     });
