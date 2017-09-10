@@ -1,5 +1,7 @@
 ## v.NEXT
 
+## v2.2.0 – Stakeholder Fields
+
 ## v2.1.0 – Accounting Tab
 
 * Added tab structure to shipment header split between operations and accounting tabs
