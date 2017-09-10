@@ -9,13 +9,13 @@ export const setCargoType = makeActionCreator(
   'cargoType',
 );
 export const toggleRatedQuote = makeActionCreator(
-  ACTION_TYPES.TOGGLE_RATED_QUOTE);
+  ACTION_TYPES.TOGGLE_RATED_QUOTE,
+);
 export const setCargoDescription = makeActionCreator(
   ACTION_TYPES.SET_CARGO_DESCRIPTION,
   'description',
 );
-export const addPackageLine = makeActionCreator(
-  ACTION_TYPES.ADD_PACKAGE_LINE);
+export const addPackageLine = makeActionCreator(ACTION_TYPES.ADD_PACKAGE_LINE);
 export const removePackageLine = makeActionCreator(
   ACTION_TYPES.REMOVE_PACKAGE_LINE,
   'index',
@@ -61,7 +61,8 @@ export const setPackageLineWeightUOM = makeActionCreator(
   'weightUOM',
 );
 export const addContainerLine = makeActionCreator(
-  ACTION_TYPES.ADD_CONTAINER_LINE);
+  ACTION_TYPES.ADD_CONTAINER_LINE,
+);
 export const removeContainerLine = makeActionCreator(
   ACTION_TYPES.REMOVE_CONTAINER_LINE,
   'index',
@@ -84,10 +85,10 @@ export const setDensityRatio = makeActionCreator(
   ACTION_TYPES.SET_DENSITY_RATIO,
   'densityRatio',
 );
-export const toggleHazardous = makeActionCreator(
-  ACTION_TYPES.TOGGLE_HAZARDOUS);
+export const toggleHazardous = makeActionCreator(ACTION_TYPES.TOGGLE_HAZARDOUS);
 export const toggleTemperatureControlled = makeActionCreator(
-  ACTION_TYPES.TOGGLE_TEMPERATURE_CONTROLLED);
+  ACTION_TYPES.TOGGLE_TEMPERATURE_CONTROLLED,
+);
 
 // MOVEMENT
 export const setMovementMode = makeActionCreator(
@@ -152,10 +153,12 @@ export const toggleDeliveryStatus = makeActionCreator(
 );
 
 // OTHER SERVICES
-export const toggleExportCustomsClearance =
-  makeActionCreator(ACTION_TYPES.TOGGLE_EXPORT_CUSTOMS_CLEARANCE);
-export const toggleImportCustomsClearance =
-  makeActionCreator(ACTION_TYPES.TOGGLE_IMPORT_CUSTOMS_CLEARANCE);
+export const toggleExportCustomsClearance = makeActionCreator(
+  ACTION_TYPES.TOGGLE_EXPORT_CUSTOMS_CLEARANCE,
+);
+export const toggleImportCustomsClearance = makeActionCreator(
+  ACTION_TYPES.TOGGLE_IMPORT_CUSTOMS_CLEARANCE,
+);
 export const toggleInsurance = makeActionCreator(ACTION_TYPES.TOGGLE_INSURANCE);
 
 // CHARGES
@@ -258,3 +261,40 @@ export const setCustomerReference = makeActionCreator(
   'customerReference',
 );
 export const setBLType = makeActionCreator(ACTION_TYPES.SET_BL_TYPE, 'blType');
+export const addCharge = makeActionCreator(ACTION_TYPES.ADD_CHARGE, 'charge');
+export const removeCharge = makeActionCreator(ACTION_TYPES.REMOVE_CHARGE, 'id');
+export const setChargeName = makeActionCreator(
+  ACTION_TYPES.SET_CHARGE_NAME,
+  'id',
+  'name',
+);
+export const setChargeCustomer = makeActionCreator(
+  ACTION_TYPES.SET_CHARGE_CUSTOMER,
+  'id',
+  'customer',
+);
+export const setChargeRevenue = makeActionCreator(
+  ACTION_TYPES.SET_CHARGE_REVENUE,
+  'id',
+  'revenue',
+);
+export const setChargeRevenueCurrency = makeActionCreator(
+  ACTION_TYPES.SET_CHARGE_REVENUE_CURRENCY,
+  'id',
+  'revenueCurrency',
+);
+export const setChargeSupplier = makeActionCreator(
+  ACTION_TYPES.SET_CHARGE_SUPPLIER,
+  'id',
+  'supplier',
+);
+export const setChargeCost = makeActionCreator(
+  ACTION_TYPES.SET_CHARGE_COST,
+  'id',
+  'cost',
+);
+export const setChargeCostCurrency = makeActionCreator(
+  ACTION_TYPES.SET_CHARGE_COST_CURRENCY,
+  'id',
+  'costCurrency',
+);

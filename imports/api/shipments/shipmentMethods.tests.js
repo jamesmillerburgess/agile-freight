@@ -68,7 +68,6 @@ if (Meteor.isServer) {
         Shipments.findOne(shipmentId).cargo.should.equal('c');
         Shipments.findOne(shipmentId).movement.should.equal('d');
         Shipments.findOne(shipmentId).otherServices.should.equal('e');
-        Shipments.findOne(shipmentId).charges.should.equal('f');
       });
       it("sets the reference to the branch's next reference", () => {
         const reference = branchNextReference('c');
