@@ -19,7 +19,6 @@ if (Meteor.isClient) {
       wrapper.unmount();
     });
     it('renders a component', () => {
-      console.log(wrapper.debug());
       wrapper.exists().should.equal(true);
     });
     it('renders a Select.Async component', () => {

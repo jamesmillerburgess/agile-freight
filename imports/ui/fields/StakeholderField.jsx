@@ -4,7 +4,6 @@ import { Meteor } from 'meteor/meteor';
 
 export const loadStakeholders = (search, cb) =>
   Meteor.call('customer.search', { search }, (err, options) => {
-    console.log(options);
     cb(null, { options });
   });
 
