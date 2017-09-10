@@ -12,22 +12,19 @@ export const renderStakeholder = stakeholder =>
     {stakeholder.name}
   </div>;
 
-const StakeholderField = props => {
-  return (
-    <Select.Async
-      value={props.value}
-      onChange={props.onChange}
-      valueKey="_id"
-      loadOptions={loadStakeholders}
-      optionRenderer={renderStakeholder}
-      valueRenderer={renderStakeholder}
-      filterOption={() => true}
-      autoload
-      clearRenderer={() => null}
-      arrowRenderer={() => null}
-      placeholder=""
-    />
-  );
-};
+const StakeholderField = props =>
+  <Select.Async
+    value={props.value}
+    onChange={props.onChange}
+    valueKey="_id"
+    loadOptions={loadStakeholders}
+    optionRenderer={renderStakeholder}
+    valueRenderer={renderStakeholder}
+    filterOption={() => true}
+    autoload
+    clearRenderer={() => null}
+    arrowRenderer={() => null}
+    placeholder=""
+  />;
 
 export default StakeholderField;
