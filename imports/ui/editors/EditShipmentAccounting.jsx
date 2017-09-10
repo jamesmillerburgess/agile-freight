@@ -17,13 +17,12 @@ const EditCharge = ({ charge, dispatchers }) =>
         value={charge.name}
         onChange={e => dispatchers.changeChargeName(charge.id, e.target.value)}
       />
-      <input
+      <StakeholderField
         className="charge-name"
         value={charge.customer}
         onChange={e =>
-          dispatchers.changeChargeCustomer(charge.id, e.target.value)}
+          dispatchers.changeChargeCustomer(charge.id, e)}
       />
-      <StakeholderField />
       <MonetaryFieldGroup
         numericValue={charge.revenue}
         currencyValue={charge.revenueCurrency}
@@ -34,11 +33,11 @@ const EditCharge = ({ charge, dispatchers }) =>
       />
     </div>
     <div className="cost-side">
-      <input
+      <StakeholderField
         className="charge-name"
         value={charge.supplier}
         onChange={e =>
-          dispatchers.changeChargeSupplier(charge.id, e.target.value)}
+          dispatchers.changeChargeSupplier(charge.id, e)}
       />
       <MonetaryFieldGroup
         numericValue={charge.cost}
