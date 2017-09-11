@@ -3,7 +3,7 @@ import React from 'react';
 import MonetaryFieldGroup from '../fields/MonetaryFieldGroup.jsx';
 import StakeholderField from '../fields/StakeholderField.jsx';
 
-const EditCharge = ({ charge, dispatchers }) =>
+const EditCharge = ({ charge, dispatchers, external, internal }) =>
   <div className="header-row" key={charge.id}>
     <div className="revenue-side">
       <button
@@ -22,6 +22,8 @@ const EditCharge = ({ charge, dispatchers }) =>
         value={charge.customer}
         onChange={e =>
           dispatchers.changeChargeCustomer(charge.id, e)}
+        fetchCustomers={external}
+        fetchBranches={internal}
       />
       <MonetaryFieldGroup
         numericValue={charge.revenue}
@@ -38,6 +40,8 @@ const EditCharge = ({ charge, dispatchers }) =>
         value={charge.supplier}
         onChange={e =>
           dispatchers.changeChargeSupplier(charge.id, e)}
+        fetchSuppliers={external}
+        fetchBranches={internal}
       />
       <MonetaryFieldGroup
         numericValue={charge.cost}
@@ -95,6 +99,7 @@ const EditShipmentAccounting = ({ shipment, dispatchers }) =>
           charge={charge}
           dispatchers={dispatchers}
           key={charge.id}
+          external
         />,
       )}
     </div>
@@ -119,6 +124,7 @@ const EditShipmentAccounting = ({ shipment, dispatchers }) =>
           charge={charge}
           dispatchers={dispatchers}
           key={charge.id}
+          internal
         />,
       )}
     </div>

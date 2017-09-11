@@ -24,13 +24,5 @@ if (Meteor.isClient) {
     it('renders a Select.Async component', () => {
       wrapper.is('Async').should.equal(true);
     });
-    it('passes the loadStakeholders function', () => {
-      wrapper.prop('loadOptions').should.equal(loadStakeholders);
-    });
-  });
-  describe('loadStakeholders', () => {
-    it('calls customer.search with the given search term', () => {
-      
-    });
   });
 }
