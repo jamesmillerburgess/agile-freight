@@ -15,7 +15,6 @@ import EditRateConnect from '../editors/EditRateConnect.jsx';
 import UserProfileConnect from '../editors/EditUserProfileConnect.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
-import QuoteEmail from '../../ui/objects/QuoteEmail.jsx';
 import BranchList from '../lists/BranchList.jsx';
 import EditBranchConnect from '../editors/EditBranchConnect.jsx';
 
@@ -129,107 +128,6 @@ const MainInner = ({ loading }) => {
                    ...routeProps,
                    editMode: true,
                  })}
-               />
-               <Route
-                 path="/email-test"
-                 message={`Dear James,
-
-    Here is the quote you requested!`}
-                 render={routeProps =>
-                   <QuoteEmail
-                     {...routeProps}
-                     quote={{
-                       expiryDate: new Date('01 January 2017'),
-                       cargo: {
-                         cargoType: 'Loose',
-                         packageLines: [
-                           {
-                             numPackages: 1,
-                             packageType: 'Package',
-                             length: 123,
-                             width: 123,
-                             height: 123,
-                             weight: 123,
-                             weightUOM: 'kg',
-                             volume: 1.861,
-                             volumeUOM: 'cbm',
-                             totalWeight: 123,
-                           },
-                         ],
-                         containerLines: [],
-                         totalPackages: 1,
-                         totalVolume: 1.861,
-                         volumeUOM: 'cbm',
-                         totalWeight: 123,
-                         weightUOM: 'kg',
-                         hazardous: true,
-                         temperatureControlled: true,
-                       },
-                       movement: {
-                         pickup: {
-                           locationName: 'Berat',
-                           isPort: false,
-                         },
-                         delivery: {
-                           locationName: 'Fituita',
-                           isPort: false,
-                         },
-                       },
-                       otherServices: {
-                         insurance: true,
-                         customsClearance: true,
-                       },
-                       charges: {
-                         chargeLines: [
-                           {
-                             group: 'Origin',
-                             name: 'sdfaf',
-                             units: 1,
-                             rate: 'KG',
-                             unitPrice: 123,
-                             currency: 'AED',
-                             amount: 123,
-                             finalAmount: 98.40,
-                           },
-                           {
-                             group: 'International',
-                             name: '12',
-                             units: 12,
-                             rate: 'KG',
-                             unitPrice: 123,
-                             currency: 'ALL',
-                             amount: 1476,
-                             finalAmount: 1771.20,
-                           },
-                           {
-                             group: 'Destination',
-                             name: 'qwdqw',
-                             units: 1,
-                             rate: 'Container',
-                             unitPrice: 23,
-                             currency: 'AMD',
-                             amount: 23,
-                             finalAmount: 23,
-                           },
-                         ],
-                         currency: 'AMD',
-                         totalOriginCharges: 98.4,
-                         totalInternationalCharges: 1771.2,
-                         totalDestinationCharges: 23,
-                         totalCharges: '1892.60',
-                         notes: `adsgadsgsaFdsa
-G
-sdag
-sdg
-sd`,
-                         fxConversions: {
-                           AED: { rate: 0.8, active: true },
-                           ALL: { rate: 1.2, active: true },
-                         },
-                       },
-                     }}
-                   />
-                 }
                />
              </div>
             }
