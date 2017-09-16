@@ -50,6 +50,13 @@ const NavInner = ({ user, history }) => {
               </span>
             </button>
           </NavLink>
+          <NavLink to="/suppliers" className="nav-item">
+            <button className="button suppliers-button">
+              <span className="label">
+                SUPPLIERS
+              </span>
+            </button>
+          </NavLink>
           <NavLink to="/rates" className="nav-item">
             <button className="button rates-button">
               <span className="label">
