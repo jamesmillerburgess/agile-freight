@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Customers } from '../customers/customersCollection';
 import { Branches } from '../branch/branchCollection';
+import { Suppliers } from '../suppliers/supplierCollection';
 
 import { buildSearchRegExp } from '../../ui/searchUtils';
 
@@ -14,6 +15,9 @@ export const stakeholderSearch = options => {
   }
   if (options.fetchBranches) {
     results = results.concat(...Branches.find(query).fetch());
+  }
+  if (options.fetchSuppliers) {
+    results = results.concat(...Suppliers.find(query).fetch());
   }
   return results;
 };

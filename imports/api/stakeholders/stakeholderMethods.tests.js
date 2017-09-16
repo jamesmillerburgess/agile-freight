@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 
 import { Customers } from '../customers/customersCollection';
 import { Branches } from '../branch/branchCollection';
+import { Suppliers } from '../suppliers/supplierCollection';
 import { stakeholderSearch } from './stakeholderMethods';
 
 chai.should();
@@ -15,6 +16,7 @@ if (Meteor.isServer) {
     beforeEach(() => {
       Customers.remove({});
       Branches.remove({});
+      Suppliers.remove({});
     });
     describe('stakeholderSearch', () => {
       it('filters customers', () => {
@@ -38,6 +40,18 @@ if (Meteor.isServer) {
         stakeholderSearch({
           search: 'a',
           fetchBranches: false,
+        }).length.should.equal(0);
+        stakeholderSearch({ search: 'a' }).length.should.equal(0);
+      });
+      it('filters suppliers', () => {
+        Suppliers.insert({ name: 'a' });
+        stakeholderSearch({
+          search: 'a',
+          fetchSuppliers: true,
+        }).length.should.equal(1);
+        stakeholderSearch({
+          search: 'a',
+          fetchSuppliers: false,
         }).length.should.equal(0);
         stakeholderSearch({ search: 'a' }).length.should.equal(0);
       });

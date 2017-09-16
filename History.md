@@ -2,7 +2,7 @@
 
 ## v2.2.0 – Stakeholder Fields
 
-* Implemented generic stakeholder fields that filter by customers or branches
+* Implemented generic stakeholder fields that filter by customers, suppliers, or branches
 
 ## v2.1.0 – Accounting Tab
 
