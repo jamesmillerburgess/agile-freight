@@ -1,7 +1,11 @@
 import React from 'react';
-import BranchField from '../fields/BranchField.jsx';
+import { createContainer } from 'meteor/react-meteor-data';
 
-const SupplierList = (props) =>
+import BranchField from '../fields/BranchField.jsx';
+import SupplierListItem from '../list-items/SupplierListItem.jsx';
+import { Suppliers } from '../../api/suppliers/supplierCollection';
+
+const SupplierListInner = ({ suppliers, supplierList, history }) =>
   <div>
     <div className="content supplier">
       <div className="process-header">
@@ -24,19 +28,23 @@ const SupplierList = (props) =>
         </button>
       </div>
       {
-        // suppliers
-        //   .filter(customer => customer.branch === customerList.filter)
-        //   .sort((a, b) => compareSuppliers(a, b, Meteor.user()))
-        //   .map(customer => (
-        //     <SupplierListItem
-        //       key={supplier._id}
-        //       supplier={supplier}
-        //       history={history}
-        //     />
-        //   ))
+        suppliers
+          // .filter(supplier => supplier.branch === supplierList.filter)
+          .reverse()
+          .map(supplier => (
+            <SupplierListItem
+              key={supplier._id}
+              supplier={supplier}
+              history={history}
+            />
+          ))
       }
     </div>
     <div className="content-footer-accent suppliers-footer-accent" />
   </div>;
+
+const SupplierList = createContainer(() => ({
+  suppliers: Suppliers.find().fetch(),
+}), SupplierListInner);
 
 export default SupplierList;
