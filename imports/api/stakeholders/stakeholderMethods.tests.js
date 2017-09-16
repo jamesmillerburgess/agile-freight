@@ -5,6 +5,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
 
 import { Customers } from '../customers/customersCollection';
+import { Branches } from '../branch/branchCollection';
 import { stakeholderSearch } from './stakeholderMethods';
 
 chai.should();
@@ -13,8 +14,33 @@ if (Meteor.isServer) {
   describe('Stakeholder Methods', () => {
     beforeEach(() => {
       Customers.remove({});
+      Branches.remove({});
     });
     describe('stakeholderSearch', () => {
+      it('filters customers', () => {
+        Customers.insert({ name: 'a' });
+        stakeholderSearch({
+          search: 'a',
+          fetchCustomers: true,
+        }).length.should.equal(1);
+        stakeholderSearch({
+          search: 'a',
+          fetchCustomers: false,
+        }).length.should.equal(0);
+        stakeholderSearch({ search: 'a' }).length.should.equal(0);
+      });
+      it('filters branches', () => {
+        Branches.insert({ name: 'a' });
+        stakeholderSearch({
+          search: 'a',
+          fetchBranches: true,
+        }).length.should.equal(1);
+        stakeholderSearch({
+          search: 'a',
+          fetchBranches: false,
+        }).length.should.equal(0);
+        stakeholderSearch({ search: 'a' }).length.should.equal(0);
+      });
       it('returns customers matching part of a word', () => {
         Customers.insert({ name: 'name' });
         stakeholderSearch({
