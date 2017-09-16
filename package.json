@@ -20,7 +20,6 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-chartjs-2": "^2.6.2",
-    "react-create-class": "^1.0.0",
     "react-datetime": "^2.10.1",
     "react-dom": "^15.6.1",
     "react-loadable": "^3.3.1",
