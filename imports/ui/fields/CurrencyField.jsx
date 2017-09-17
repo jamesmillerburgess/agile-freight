@@ -22,12 +22,14 @@ CurrencyField.propTypes = {
   className: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 CurrencyField.defaultProps = {
   className: '',
   value: '',
   onChange: APIGlobals.noop,
+  disabled: false,
 };
 
 export default CurrencyField;
