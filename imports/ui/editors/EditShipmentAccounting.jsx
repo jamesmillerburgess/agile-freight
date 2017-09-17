@@ -20,8 +20,7 @@ const EditCharge = ({ charge, dispatchers, external, internal }) =>
       <StakeholderField
         className="charge-name"
         value={charge.customer}
-        onChange={e =>
-          dispatchers.changeChargeCustomer(charge.id, e)}
+        onChange={e => dispatchers.changeChargeCustomer(charge, e)}
         fetchCustomers={external}
         fetchBranches={internal}
       />
@@ -38,8 +37,7 @@ const EditCharge = ({ charge, dispatchers, external, internal }) =>
       <StakeholderField
         className="charge-name"
         value={charge.supplier}
-        onChange={e =>
-          dispatchers.changeChargeSupplier(charge.id, e)}
+        onChange={e => dispatchers.changeChargeSupplier(charge, e)}
         fetchSuppliers={external}
         fetchBranches={internal}
       />

@@ -66,7 +66,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   dispatchers: {
     loadShipment: shipment => dispatch(actions.loadShipment(shipment)),
     onChangeShipper: shipper => dispatch(actions.setShipper(shipper)),
@@ -188,14 +188,22 @@ const mapDispatchToProps = dispatch => ({
     addCharge: charge => dispatch(actions.addCharge(charge)),
     removeCharge: id => dispatch(actions.removeCharge(id)),
     changeChargeName: (id, name) => dispatch(actions.setChargeName(id, name)),
-    changeChargeCustomer: (id, customer) =>
-      dispatch(actions.setChargeCustomer(id, customer)),
+    changeChargeCustomer: (charge, customer) => {
+      if (!charge.revenueCurrency) {
+        dispatch(actions.setChargeRevenueCurrency(charge.id, customer.currency));
+      }
+      dispatch(actions.setChargeCustomer(charge.id, customer));
+    },
     changeChargeRevenue: (id, revenue) =>
       dispatch(actions.setChargeRevenue(id, revenue)),
     changeChargeRevenueCurrency: (id, revenueCurrency) =>
       dispatch(actions.setChargeRevenueCurrency(id, revenueCurrency)),
-    changeChargeSupplier: (id, supplier) =>
-      dispatch(actions.setChargeSupplier(id, supplier)),
+    changeChargeSupplier: (charge, supplier) => {
+      if (!charge.costCurrency && supplier) {
+        dispatch(actions.setChargeCostCurrency(charge.id, supplier.currency));
+      }
+      dispatch(actions.setChargeSupplier(charge.id, supplier));
+    },
     changeChargeCost: (id, cost) => dispatch(actions.setChargeCost(id, cost)),
     changeChargeCostCurrency: (id, costCurrency) =>
       dispatch(actions.setChargeCostCurrency(id, costCurrency)),
