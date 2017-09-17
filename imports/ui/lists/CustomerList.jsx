@@ -12,7 +12,7 @@ import { Branches } from '../../api/branch/branchCollection';
 
 import { compareCustomers } from '../../api/customers/customerUtils';
 
-export const CustomerListInner = (props) => {
+export const CustomerListInner = props => {
   const { customers, list, dispatchers, history } = props;
 
   const newCustomer = () => {
@@ -35,25 +35,22 @@ export const CustomerListInner = (props) => {
               />
             </div>
           </div>
-          <button
-            className="button-primary"
-            onClick={newCustomer}
-          >
+          <button className="button-primary" onClick={newCustomer}>
             NEW CUSTOMER
           </button>
         </div>
-        {
-          customers
-            .filter(customer => customer.branch === list.filter)
-            .sort((a, b) => compareCustomers(a, b, Meteor.user()))
-            .map(customer => (
-              <CustomerListItem
-                key={customer._id}
-                customer={customer}
-                history={history}
-              />
-            ))
-        }
+        {customers
+          .filter(
+            customer => !customer.branch || customer.branch === list.filter,
+          )
+          .sort((a, b) => compareCustomers(a, b, Meteor.user()))
+          .map(customer =>
+            <CustomerListItem
+              key={customer._id}
+              customer={customer}
+              history={history}
+            />,
+          )}
       </div>
       <div className="content-footer-accent customers-footer-accent" />
     </div>
@@ -72,8 +69,11 @@ CustomerListInner.defaultProps = {
   list: {},
 };
 
-const CustomerList = createContainer(() => ({
-  customers: Customers.find().fetch(),
-}), CustomerListInner);
+const CustomerList = createContainer(
+  () => ({
+    customers: Customers.find().fetch(),
+  }),
+  CustomerListInner,
+);
 
 export default CustomerList;

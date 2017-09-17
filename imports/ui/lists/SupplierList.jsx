@@ -19,9 +19,9 @@ const SupplierListInner = ({ suppliers, dispatchers, list, history }) => {
             <div className="label">BRANCH</div>
             <div className="field">
               <BranchField
-               value={list.filter}
-               options={Branches.find().fetch()}
-               onChange={option => dispatchers.setListFilter(option._id)}
+                value={list.filter}
+                options={Branches.find().fetch()}
+                onChange={option => dispatchers.setListFilter(option._id)}
               />
             </div>
           </div>
@@ -30,7 +30,9 @@ const SupplierListInner = ({ suppliers, dispatchers, list, history }) => {
           </button>
         </div>
         {suppliers
-          .filter(supplier => supplier.branch === list.filter)
+          .filter(
+            supplier => !supplier.branch || supplier.branch === list.filter,
+          )
           .reverse()
           .map(supplier =>
             <SupplierListItem
