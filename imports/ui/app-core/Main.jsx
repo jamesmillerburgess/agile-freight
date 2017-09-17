@@ -10,6 +10,7 @@ import Home from '../pages/Home.jsx';
 import CustomerListConnect from '../lists/CustomerListConnect.jsx';
 import SupplierList from '../lists/SupplierList.jsx';
 import EditCustomerConnect from '../editors/EditCustomerConnect';
+import EditSupplierConnect from '../editors/EditSupplierConnect';
 import CustomerConnect from '../pages/CustomerConnect';
 import RateList from '../lists/RateList.jsx';
 import EditRateConnect from '../editors/EditRateConnect.jsx';
@@ -86,6 +87,12 @@ const MainInner = ({ loading }) => {
                     exact
                     render={routeProps =>
                       verifyAuth(SupplierList, { ...routeProps })}
+                  />
+                  <Route
+                    path="/suppliers/new"
+                    exact
+                    render={routeProps =>
+                      verifyAuth(EditSupplierConnect, { ...routeProps })}
                   />
                   <Route
                     path="/rates"

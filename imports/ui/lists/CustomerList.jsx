@@ -13,10 +13,10 @@ import { Branches } from '../../api/branch/branchCollection';
 import { compareCustomers } from '../../api/customers/customerUtils';
 
 export const CustomerListInner = (props) => {
-  const { customers, customerList, dispatchers, history } = props;
+  const { customers, list, dispatchers, history } = props;
 
   const newCustomer = () => {
-    dispatchers.loadCustomer({ branch: customerList.filter });
+    dispatchers.loadCustomer({ branch: list.filter });
     history.push('/customers/new');
   };
 
@@ -29,9 +29,9 @@ export const CustomerListInner = (props) => {
             <div className="label">BRANCH</div>
             <div className="field">
               <BranchField
-                value={customerList.filter}
+                value={list.filter}
                 options={Branches.find().fetch()}
-                onChange={option => dispatchers.setCustomerListFilter(option._id)}
+                onChange={option => dispatchers.setListFilter(option._id)}
               />
             </div>
           </div>
@@ -44,7 +44,7 @@ export const CustomerListInner = (props) => {
         </div>
         {
           customers
-            .filter(customer => customer.branch === customerList.filter)
+            .filter(customer => customer.branch === list.filter)
             .sort((a, b) => compareCustomers(a, b, Meteor.user()))
             .map(customer => (
               <CustomerListItem
@@ -62,14 +62,14 @@ export const CustomerListInner = (props) => {
 
 CustomerListInner.propTypes = {
   customers: PropTypes.array,
-  customerList: PropTypes.object,
+  list: PropTypes.object,
   dispatchers: PropTypes.objectOf(PropTypes.func),
   history: PropTypes.object,
 };
 
 CustomerListInner.defaultProps = {
   customers: [],
-  customerList: {},
+  list: {},
 };
 
 const CustomerList = createContainer(() => ({

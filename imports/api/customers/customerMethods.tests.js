@@ -5,7 +5,7 @@ import { chai } from 'meteor/practicalmeteor:chai';
 import { Meteor } from 'meteor/meteor';
 
 import { Customers } from './customersCollection';
-import { customerSearch } from './customerMethods';
+import './customerMethods';
 
 chai.should();
 

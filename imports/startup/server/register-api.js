@@ -13,3 +13,4 @@ import '../../api/rates/rateMethods';
 import '../../api/shipments/shipmentMethods';
 import '../../api/stakeholders/stakeholderMethods';
 import '../../api/suppliers/supplierCollection';
+import '../../api/suppliers/supplierMethods';
