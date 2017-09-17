@@ -4,7 +4,6 @@ import { Route, Link } from 'react-router-dom';
 
 import EditShipmentOperations from './EditShipmentOperations.jsx';
 import EditShipmentAccounting from './EditShipmentAccounting.jsx';
-import Shipment from '../shipmentUtils';
 
 const EditShipment = ({
   shipment,
