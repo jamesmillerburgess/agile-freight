@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import Nav from '../../ui/app-core/Nav.jsx';
 import Home from '../pages/Home.jsx';
 import CustomerListConnect from '../lists/CustomerListConnect.jsx';
-import SupplierList from '../lists/SupplierList.jsx';
+import SupplierListConnect from '../lists/SupplierListConnect';
 import EditCustomerConnect from '../editors/EditCustomerConnect';
 import EditSupplierConnect from '../editors/EditSupplierConnect';
 import CustomerConnect from '../pages/CustomerConnect';
@@ -86,13 +86,21 @@ const MainInner = ({ loading }) => {
                     path="/suppliers"
                     exact
                     render={routeProps =>
-                      verifyAuth(SupplierList, { ...routeProps })}
+                      verifyAuth(SupplierListConnect, { ...routeProps })}
                   />
                   <Route
                     path="/suppliers/new"
                     exact
                     render={routeProps =>
                       verifyAuth(EditSupplierConnect, { ...routeProps })}
+                  />
+                  <Route
+                    path="/suppliers/edit/:supplierId"
+                    render={routeProps =>
+                      verifyAuth(EditSupplierConnect, {
+                        ...routeProps,
+                        editMode: true,
+                      })}
                   />
                   <Route
                     path="/rates"

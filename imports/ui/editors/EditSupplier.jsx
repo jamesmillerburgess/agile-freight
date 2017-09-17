@@ -68,7 +68,7 @@ const EditSupplier = props => (
             if (props.editMode) {
               const { supplierId } = props.match.params;
               Meteor.call('supplier.save', supplierId, props.supplier, () => {
-                props.history.push(`/suppliers/view/${supplierId}/overview`);
+                props.history.push('/suppliers');
               });
             } else {
               Meteor.call('supplier.new', props.supplier, (err, res) => {

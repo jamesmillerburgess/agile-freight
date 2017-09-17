@@ -4,8 +4,9 @@ import { createContainer } from 'meteor/react-meteor-data';
 import BranchField from '../fields/BranchField.jsx';
 import SupplierListItem from '../list-items/SupplierListItem.jsx';
 import { Suppliers } from '../../api/suppliers/supplierCollection';
+import { Branches } from '../../api/branch/branchCollection';
 
-const SupplierListInner = ({ suppliers, history }) => {
+const SupplierListInner = ({ suppliers, dispatchers, list, history }) => {
   const newSupplier = () => {
     history.push('/suppliers/new');
   };
@@ -18,9 +19,9 @@ const SupplierListInner = ({ suppliers, history }) => {
             <div className="label">BRANCH</div>
             <div className="field">
               <BranchField
-              // value={supplierList.filter}
-              // options={Branches.find().fetch()}
-              // onChange={option => dispatchers.setCustomerListFilter(option._id)}
+               value={list.filter}
+               options={Branches.find().fetch()}
+               onChange={option => dispatchers.setListFilter(option._id)}
               />
             </div>
           </div>
@@ -29,7 +30,7 @@ const SupplierListInner = ({ suppliers, history }) => {
           </button>
         </div>
         {suppliers
-          // .filter(supplier => supplier.branch === supplierList.filter)
+          .filter(supplier => supplier.branch === list.filter)
           .reverse()
           .map(supplier =>
             <SupplierListItem
