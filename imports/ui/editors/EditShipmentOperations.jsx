@@ -157,21 +157,6 @@ const EditShipmentOperations = ({ shipment, dispatchers }) =>
       useShipperConsignee
     />
     <div className="form-button-group">
-      <button
-        className="delete-button"
-        onClick={() =>
-          Shipment.archive(shipment._id, archivedShipment =>
-            dispatchers.loadShipment(archivedShipment),
-          )}
-      >
-        ARCHIVE
-      </button>
-      <button
-        className="save-button"
-        onClick={() => Shipment.save(shipment._id, shipment)}
-      >
-        SAVE
-      </button>
       {shipment.status === 'Unconfirmed'
         ? <ConfirmBookingButton shipment={shipment} dispatchers={dispatchers} />
         : null}

@@ -2,6 +2,7 @@
 /* eslint-disable func-names, prefer-arrow-callback */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import StubCollections from 'meteor/hwillson:stub-collections';
 import { mount } from 'enzyme';
@@ -72,7 +73,7 @@ if (Meteor.isClient) {
 
     const options = {
       context: { store },
-      childContextTypes: { store: React.PropTypes.object.isRequired },
+      childContextTypes: { store: PropTypes.object.isRequired },
     };
 
     let wrapper;

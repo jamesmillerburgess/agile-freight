@@ -1,5 +1,10 @@
 ## v.NEXT
 
+## v2.2.0 – Stakeholder Fields
+
+* Implemented generic stakeholder fields that filter by customers, suppliers, or branches
+* Ability to add and edit suppliers
+
 ## v2.1.0 – Accounting Tab
 
 * Added tab structure to shipment header split between operations and accounting tabs

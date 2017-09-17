@@ -1,8 +1,9 @@
 export { quote } from './quote/quoteReducers';
 export { customer } from './customer/customerReducers';
 export { branch } from './branch/branchReducers';
-export { customerList } from './customerList/customerListReducers';
+export { list } from './list/listReducers';
 export { userProfile } from './userProfile/userProfileReducers';
 export { rate } from './rate/rateReducer';
 export { shipment } from './shipment/shipmentReducer';
 export { filters } from './filters/filtersReducer';
+export { supplier } from './supplier/supplierReducer';

@@ -14,6 +14,7 @@ const CurrencyField = props => (
     searchable
     onChange={e => props.onChange(e)}
     placeholder={false}
+    disabled={props.disabled}
   />
 );
 
@@ -21,12 +22,14 @@ CurrencyField.propTypes = {
   className: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 CurrencyField.defaultProps = {
   className: '',
   value: '',
   onChange: APIGlobals.noop,
+  disabled: false,
 };
 
 export default CurrencyField;

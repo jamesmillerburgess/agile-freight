@@ -117,6 +117,11 @@ button:focus {
   color: $inverted-text-color;
 }
 
+.supplier .button-primary {
+  background-color: $suppliers-accent-color;
+  color: $inverted-text-color;
+}
+
 .rate .button-primary {
   background-color: $rates-accent-color;
 }

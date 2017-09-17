@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 
@@ -7,19 +6,19 @@ import BranchField from '../fields/BranchField.jsx';
 import CurrencyField from '../fields/CurrencyField.jsx';
 import { Branches } from '../../api/branch/branchCollection';
 
-const EditCustomer = props => (
+const EditSupplier = props => (
   <div>
     <div className="content customer">
       <div className="process-header">
         <div className="title">
           {
             props.editMode ?
-              'EDIT CUSTOMER' :
-              'NEW CUSTOMER'
+            'EDIT SUPPLIER' :
+            'NEW SUPPLIER'
           }
         </div>
         <Link to="/customers">
-          <button className="button-primary">BACK TO CUSTOMER LIST</button>
+          <button className="button-primary">BACK TO SUPPLIER LIST</button>
         </Link>
       </div>
       <div className="panel container">
@@ -28,38 +27,38 @@ const EditCustomer = props => (
             <div className="vertical-input-group">
               <span className="label">BRANCH</span>
               <BranchField
-                value={props.customer.branch}
+                value={props.supplier.branch}
                 options={Branches.find().fetch()}
-                onChange={value => props.dispatchers.setCustomerBranch(value._id)}
+                onChange={value => props.dispatchers.setBranch(value._id)}
               />
             </div>
             <div className="vertical-input-group">
               <span className="label">NAME</span>
               <input
-                value={props.customer.name}
-                onChange={e => props.dispatchers.setCustomerName(e.target.value)}
+                value={props.supplier.name}
+                onChange={e => props.dispatchers.setName(e.target.value)}
               />
             </div>
             <div className="vertical-input-group">
               <span className="label">ADDRESS</span>
               <textarea
                 className="address"
-                value={props.customer.address}
-                onChange={e => props.dispatchers.setCustomerAddress(e.target.value)}
+                value={props.supplier.address}
+                onChange={e => props.dispatchers.setAddress(e.target.value)}
               />
             </div>
             <div className="vertical-input-group">
               <span className="label">EMAIL ADDRESS</span>
               <input
-                value={props.customer.emailAddress}
-                onChange={e => props.dispatchers.setCustomerEmailAddress(e.target.value)}
+                value={props.supplier.emailAddress}
+                onChange={e => props.dispatchers.setEmailAddress(e.target.value)}
               />
             </div>
             <div className="vertical-input-group">
               <span className="label">CURRENCY</span>
               <CurrencyField
-                value={props.customer.currency}
-                onChange={e => props.dispatchers.setCustomerCurrency(e.value)}
+                value={props.supplier.currency}
+                onChange={e => props.dispatchers.setCurrency(e.value)}
               />
             </div>
           </div>
@@ -68,13 +67,13 @@ const EditCustomer = props => (
           className="button-submit"
           onClick={() => {
             if (props.editMode) {
-              const { customerId } = props.match.params;
-              Meteor.call('customer.save', customerId, props.customer, () => {
-                props.history.push(`/customers/view/${customerId}/overview`);
+              const { supplierId } = props.match.params;
+              Meteor.call('supplier.save', supplierId, props.supplier, () => {
+                props.history.push('/suppliers');
               });
             } else {
-              Meteor.call('customer.new', props.customer, (err, res) => {
-                props.history.push(`/customers/view/${res}/overview`);
+              Meteor.call('supplier.new', props.supplier, () => {
+                props.history.push('/suppliers');
               });
             }
           }}
@@ -87,27 +86,4 @@ const EditCustomer = props => (
   </div>
 );
 
-EditCustomer.propTypes = {
-  editMode: PropTypes.bool,
-  customer: PropTypes.shape({
-    name: PropTypes.string,
-    address: PropTypes.string,
-    emailAddress: PropTypes.string,
-    currency: PropTypes.string,
-    branch: PropTypes.string,
-  }),
-  dispatchers: PropTypes.objectOf(PropTypes.func),
-  history: PropTypes.object,
-};
-
-EditCustomer.defaultProps = {
-  customer: {
-    name: '',
-    address: '',
-    emailAddress: '',
-    currency: '',
-    branch: '',
-  },
-};
-
-export default EditCustomer;
+export default EditSupplier;

@@ -1,8 +1,9 @@
 import React from 'react';
 
 import MonetaryFieldGroup from '../fields/MonetaryFieldGroup.jsx';
+import StakeholderField from '../fields/StakeholderField.jsx';
 
-const EditCharge = ({ charge, dispatchers }) =>
+const EditCharge = ({ charge, dispatchers, external, internal }) =>
   <div className="header-row" key={charge.id}>
     <div className="revenue-side">
       <button
@@ -16,63 +17,66 @@ const EditCharge = ({ charge, dispatchers }) =>
         value={charge.name}
         onChange={e => dispatchers.changeChargeName(charge.id, e.target.value)}
       />
-      <input
+      <StakeholderField
         className="charge-name"
         value={charge.customer}
-        onChange={e =>
-          dispatchers.changeChargeCustomer(charge.id, e.target.value)}
+        onChange={e => dispatchers.changeChargeCustomer(charge, e)}
+        fetchCustomers={external}
+        fetchBranches={internal}
       />
       <MonetaryFieldGroup
         numericValue={charge.revenue}
         currencyValue={charge.revenueCurrency}
         onChangeNumeric={e =>
-          dispatchers.changeChargeRevenue(charge.id, e.target.value)}
+          dispatchers.changeChargeRevenue(charge, e.target.value)}
         onChangeCurrency={e =>
-          dispatchers.changeChargeRevenueCurrency(charge.id, e.value)}
+          dispatchers.changeChargeRevenueCurrency(charge, e.value)}
       />
     </div>
     <div className="cost-side">
-      <input
+      <StakeholderField
         className="charge-name"
         value={charge.supplier}
-        onChange={e =>
-          dispatchers.changeChargeSupplier(charge.id, e.target.value)}
+        onChange={e => dispatchers.changeChargeSupplier(charge, e)}
+        fetchSuppliers={external}
+        fetchBranches={internal}
       />
       <MonetaryFieldGroup
         numericValue={charge.cost}
         currencyValue={charge.costCurrency}
         onChangeNumeric={e =>
-          dispatchers.changeChargeCost(charge.id, e.target.value)}
+          dispatchers.changeChargeCost(charge, e.target.value)}
         onChangeCurrency={e =>
-          dispatchers.changeChargeCostCurrency(charge.id, e.value)}
+          dispatchers.changeChargeCostCurrency(charge, e.value)}
+        disabled={internal}
       />
     </div>
   </div>;
 
 const EditShipmentAccounting = ({ shipment, dispatchers }) =>
   <div className="panel container form-section">
-    <div className="invoicing-buttons">
-      <div className="invoice-button-group">
-        <div className="title">Sales Invoices</div>
-        <button className="button-primary">
-          <span className="fa fa-fw fa-check-circle" />
-          Pyrotek Engineering Materials Ltd
-        </button>
-        <button className="button-disabled">
-          <span className="fa fa-fw fa-ban" />ABC Widgets
-        </button>
-      </div>
-      <div className="invoice-button-group">
-        <div className="title">Purchase Invoices</div>
-        <button className="button-primary">
-          <span className="fa fa-fw fa-ellipsis-h" />
-          British Airways
-        </button>
-        <button className="button-primary">
-          <span className="fa fa-fw fa-ellipsis-h" />ABC Truckers
-        </button>
-      </div>
-    </div>
+    {/*<div className="invoicing-buttons">*/}
+      {/*<div className="invoice-button-group">*/}
+        {/*<div className="title">Sales Invoices</div>*/}
+        {/*<button className="button-primary">*/}
+          {/*<span className="fa fa-fw fa-check-circle" />*/}
+          {/*Pyrotek Engineering Materials Ltd*/}
+        {/*</button>*/}
+        {/*<button className="button-disabled">*/}
+          {/*<span className="fa fa-fw fa-ban" />ABC Widgets*/}
+        {/*</button>*/}
+      {/*</div>*/}
+      {/*<div className="invoice-button-group">*/}
+        {/*<div className="title">Purchase Invoices</div>*/}
+        {/*<button className="button-primary">*/}
+          {/*<span className="fa fa-fw fa-ellipsis-h" />*/}
+          {/*British Airways*/}
+        {/*</button>*/}
+        {/*<button className="button-primary">*/}
+          {/*<span className="fa fa-fw fa-ellipsis-h" />ABC Truckers*/}
+        {/*</button>*/}
+      {/*</div>*/}
+    {/*</div>*/}
     <div className="charges-editor">
       <div className="header-row">
         <div className="revenue-side">
@@ -94,6 +98,7 @@ const EditShipmentAccounting = ({ shipment, dispatchers }) =>
           charge={charge}
           dispatchers={dispatchers}
           key={charge.id}
+          external
         />,
       )}
     </div>
@@ -118,6 +123,7 @@ const EditShipmentAccounting = ({ shipment, dispatchers }) =>
           charge={charge}
           dispatchers={dispatchers}
           key={charge.id}
+          internal
         />,
       )}
     </div>

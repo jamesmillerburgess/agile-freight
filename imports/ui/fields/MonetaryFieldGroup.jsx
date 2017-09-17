@@ -6,6 +6,7 @@ const MonetaryFieldGroup = ({
   currencyValue,
   onChangeNumeric,
   onChangeCurrency,
+  disabled,
 }) =>
   <div className="monetary-field-group">
     <input
@@ -13,11 +14,13 @@ const MonetaryFieldGroup = ({
       type="number"
       value={numericValue}
       onChange={onChangeNumeric}
+      disabled={disabled}
     />
     <CurrencyField
       className="field-addon"
       value={currencyValue}
       onChange={onChangeCurrency}
+      disabled={disabled}
     />
   </div>;
 
