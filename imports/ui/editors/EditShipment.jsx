@@ -4,6 +4,7 @@ import { Route, Link } from 'react-router-dom';
 
 import EditShipmentOperations from './EditShipmentOperations.jsx';
 import EditShipmentAccounting from './EditShipmentAccounting.jsx';
+import Shipment from '../shipmentUtils';
 
 const EditShipment = ({
   shipment,
@@ -39,6 +40,23 @@ const EditShipment = ({
       path={shipmentAccountingPath}
       render={() => <EditShipmentAccounting {...{ shipment, dispatchers }} />}
     />
+    <div className="form-button-group">
+      <button
+        className="delete-button"
+        onClick={() =>
+          Shipment.archive(shipment._id, archivedShipment =>
+            dispatchers.loadShipment(archivedShipment),
+          )}
+      >
+        ARCHIVE
+      </button>
+      <button
+        className="save-button"
+        onClick={() => Shipment.save(shipment._id, shipment)}
+      >
+        SAVE
+      </button>
+    </div>
   </div>;
 
 EditShipment.propTypes = {
