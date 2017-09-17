@@ -54,28 +54,28 @@ const EditCharge = ({ charge, dispatchers, external, internal }) =>
 
 const EditShipmentAccounting = ({ shipment, dispatchers }) =>
   <div className="panel container form-section">
-    <div className="invoicing-buttons">
-      <div className="invoice-button-group">
-        <div className="title">Sales Invoices</div>
-        <button className="button-primary">
-          <span className="fa fa-fw fa-check-circle" />
-          Pyrotek Engineering Materials Ltd
-        </button>
-        <button className="button-disabled">
-          <span className="fa fa-fw fa-ban" />ABC Widgets
-        </button>
-      </div>
-      <div className="invoice-button-group">
-        <div className="title">Purchase Invoices</div>
-        <button className="button-primary">
-          <span className="fa fa-fw fa-ellipsis-h" />
-          British Airways
-        </button>
-        <button className="button-primary">
-          <span className="fa fa-fw fa-ellipsis-h" />ABC Truckers
-        </button>
-      </div>
-    </div>
+    {/*<div className="invoicing-buttons">*/}
+      {/*<div className="invoice-button-group">*/}
+        {/*<div className="title">Sales Invoices</div>*/}
+        {/*<button className="button-primary">*/}
+          {/*<span className="fa fa-fw fa-check-circle" />*/}
+          {/*Pyrotek Engineering Materials Ltd*/}
+        {/*</button>*/}
+        {/*<button className="button-disabled">*/}
+          {/*<span className="fa fa-fw fa-ban" />ABC Widgets*/}
+        {/*</button>*/}
+      {/*</div>*/}
+      {/*<div className="invoice-button-group">*/}
+        {/*<div className="title">Purchase Invoices</div>*/}
+        {/*<button className="button-primary">*/}
+          {/*<span className="fa fa-fw fa-ellipsis-h" />*/}
+          {/*British Airways*/}
+        {/*</button>*/}
+        {/*<button className="button-primary">*/}
+          {/*<span className="fa fa-fw fa-ellipsis-h" />ABC Truckers*/}
+        {/*</button>*/}
+      {/*</div>*/}
+    {/*</div>*/}
     <div className="charges-editor">
       <div className="header-row">
         <div className="revenue-side">
