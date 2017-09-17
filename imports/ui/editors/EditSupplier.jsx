@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 
 import BranchField from '../fields/BranchField.jsx';
+import CurrencyField from '../fields/CurrencyField.jsx';
 import { Branches } from '../../api/branch/branchCollection';
 
 const EditSupplier = props => (
@@ -55,9 +56,9 @@ const EditSupplier = props => (
             </div>
             <div className="vertical-input-group">
               <span className="label">CURRENCY</span>
-              <input
+              <CurrencyField
                 value={props.supplier.currency}
-                onChange={e => props.dispatchers.setCurrency(e.target.value)}
+                onChange={e => props.dispatchers.setCurrency(e.value)}
               />
             </div>
           </div>
