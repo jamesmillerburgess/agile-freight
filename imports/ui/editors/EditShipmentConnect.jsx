@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 
 import * as actions from '../../state/actions/quoteActions';
 import EditShipment from './EditShipment.jsx';
+import Shipment from '../shipmentUtils';
 
 import routerUtils from '../../utils/routerUtils';
 import { getChargeableWeight } from '../quoteUtils';
@@ -69,6 +70,11 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   dispatchers: {
     loadShipment: shipment => dispatch(actions.loadShipment(shipment)),
+    archive: shipment =>
+      Shipment.archive(shipment._id, archivedShipment =>
+        actions.loadShipment(archivedShipment),
+      ),
+    save: shipment => Shipment.save(ownProps.match.shipmentId, shipment),
     onChangeShipper: shipper => dispatch(actions.setShipper(shipper)),
     onChangeConsignee: consignee => dispatch(actions.setConsignee(consignee)),
     onChangeNotifyParty: notifyParty =>
@@ -190,7 +196,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     changeChargeName: (id, name) => dispatch(actions.setChargeName(id, name)),
     changeChargeCustomer: (charge, customer) => {
       if (!charge.revenueCurrency) {
-        dispatch(actions.setChargeRevenueCurrency(charge.id, customer.currency));
+        dispatch(
+          actions.setChargeRevenueCurrency(charge.id, customer.currency),
+        );
       }
       dispatch(actions.setChargeCustomer(charge.id, customer));
     },
