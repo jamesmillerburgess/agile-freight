@@ -72,8 +72,8 @@ const EditSupplier = props => (
                 props.history.push('/suppliers');
               });
             } else {
-              Meteor.call('supplier.new', props.supplier, (err, res) => {
-                props.history.push(`/suppliers/view/${res}/overview`);
+              Meteor.call('supplier.new', props.supplier, () => {
+                props.history.push('/suppliers');
               });
             }
           }}
