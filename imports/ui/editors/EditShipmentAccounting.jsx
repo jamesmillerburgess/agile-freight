@@ -28,9 +28,9 @@ const EditCharge = ({ charge, dispatchers, external, internal }) =>
         numericValue={charge.revenue}
         currencyValue={charge.revenueCurrency}
         onChangeNumeric={e =>
-          dispatchers.changeChargeRevenue(charge.id, e.target.value)}
+          dispatchers.changeChargeRevenue(charge, e.target.value)}
         onChangeCurrency={e =>
-          dispatchers.changeChargeRevenueCurrency(charge.id, e.value)}
+          dispatchers.changeChargeRevenueCurrency(charge, e.value)}
       />
     </div>
     <div className="cost-side">
@@ -45,9 +45,10 @@ const EditCharge = ({ charge, dispatchers, external, internal }) =>
         numericValue={charge.cost}
         currencyValue={charge.costCurrency}
         onChangeNumeric={e =>
-          dispatchers.changeChargeCost(charge.id, e.target.value)}
+          dispatchers.changeChargeCost(charge, e.target.value)}
         onChangeCurrency={e =>
-          dispatchers.changeChargeCostCurrency(charge.id, e.value)}
+          dispatchers.changeChargeCostCurrency(charge, e.value)}
+        disabled={internal}
       />
     </div>
   </div>;

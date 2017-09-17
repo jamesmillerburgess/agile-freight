@@ -202,19 +202,27 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       }
       dispatch(actions.setChargeCustomer(charge.id, customer));
     },
-    changeChargeRevenue: (id, revenue) =>
-      dispatch(actions.setChargeRevenue(id, revenue)),
-    changeChargeRevenueCurrency: (id, revenueCurrency) =>
-      dispatch(actions.setChargeRevenueCurrency(id, revenueCurrency)),
+    changeChargeRevenue: (charge, revenue) => {
+      dispatch(actions.setChargeRevenue(charge.id, revenue));
+      if (charge.type === 'Internal') {
+        dispatch(actions.setChargeCost(charge.id, revenue));
+      }
+    },
+    changeChargeRevenueCurrency: (charge, revenueCurrency) => {
+      dispatch(actions.setChargeRevenueCurrency(charge.id, revenueCurrency));
+      if (charge.type === 'Internal') {
+        dispatch(actions.setChargeCostCurrency(charge.id, revenueCurrency));
+      }
+    },
     changeChargeSupplier: (charge, supplier) => {
       if (!charge.costCurrency && supplier) {
         dispatch(actions.setChargeCostCurrency(charge.id, supplier.currency));
       }
       dispatch(actions.setChargeSupplier(charge.id, supplier));
     },
-    changeChargeCost: (id, cost) => dispatch(actions.setChargeCost(id, cost)),
-    changeChargeCostCurrency: (id, costCurrency) =>
-      dispatch(actions.setChargeCostCurrency(id, costCurrency)),
+    changeChargeCost: (charge, cost) => dispatch(actions.setChargeCost(charge.id, cost)),
+    changeChargeCostCurrency: (charge, costCurrency) =>
+      dispatch(actions.setChargeCostCurrency(charge.id, costCurrency)),
   },
 });
 

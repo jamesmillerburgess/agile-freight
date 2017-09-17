@@ -14,6 +14,7 @@ const CurrencyField = props => (
     searchable
     onChange={e => props.onChange(e)}
     placeholder={false}
+    disabled={props.disabled}
   />
 );
 
