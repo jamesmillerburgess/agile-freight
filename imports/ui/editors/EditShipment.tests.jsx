@@ -17,9 +17,8 @@ if (Meteor.isClient) {
         <EditShipment
           shipment={{ cargo: {}, movement: {} }}
           dispatchers={{}}
-          history={{}}
-          location={{ pathname: 'operations' }}
-          match={{ params: {} }}
+          toOperations=""
+          toAccounting=""
         />,
       );
     });
