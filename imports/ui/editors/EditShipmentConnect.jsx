@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 
 import * as actions from '../../state/actions/quoteActions';
 import EditShipment from './EditShipment.jsx';
+import Shipment from '../shipmentUtils';
 
 import routerUtils from '../../utils/routerUtils';
 import { getChargeableWeight } from '../quoteUtils';
@@ -66,9 +67,14 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   dispatchers: {
     loadShipment: shipment => dispatch(actions.loadShipment(shipment)),
+    archive: shipment =>
+      Shipment.archive(shipment._id, archivedShipment =>
+        actions.loadShipment(archivedShipment),
+      ),
+    save: shipment => Shipment.save(ownProps.match.shipmentId, shipment),
     onChangeShipper: shipper => dispatch(actions.setShipper(shipper)),
     onChangeConsignee: consignee => dispatch(actions.setConsignee(consignee)),
     onChangeNotifyParty: notifyParty =>
@@ -188,17 +194,35 @@ const mapDispatchToProps = dispatch => ({
     addCharge: charge => dispatch(actions.addCharge(charge)),
     removeCharge: id => dispatch(actions.removeCharge(id)),
     changeChargeName: (id, name) => dispatch(actions.setChargeName(id, name)),
-    changeChargeCustomer: (id, customer) =>
-      dispatch(actions.setChargeCustomer(id, customer)),
-    changeChargeRevenue: (id, revenue) =>
-      dispatch(actions.setChargeRevenue(id, revenue)),
-    changeChargeRevenueCurrency: (id, revenueCurrency) =>
-      dispatch(actions.setChargeRevenueCurrency(id, revenueCurrency)),
-    changeChargeSupplier: (id, supplier) =>
-      dispatch(actions.setChargeSupplier(id, supplier)),
-    changeChargeCost: (id, cost) => dispatch(actions.setChargeCost(id, cost)),
-    changeChargeCostCurrency: (id, costCurrency) =>
-      dispatch(actions.setChargeCostCurrency(id, costCurrency)),
+    changeChargeCustomer: (charge, customer) => {
+      if (!charge.revenueCurrency) {
+        dispatch(
+          actions.setChargeRevenueCurrency(charge.id, customer.currency),
+        );
+      }
+      dispatch(actions.setChargeCustomer(charge.id, customer));
+    },
+    changeChargeRevenue: (charge, revenue) => {
+      dispatch(actions.setChargeRevenue(charge.id, revenue));
+      if (charge.type === 'Internal') {
+        dispatch(actions.setChargeCost(charge.id, revenue));
+      }
+    },
+    changeChargeRevenueCurrency: (charge, revenueCurrency) => {
+      dispatch(actions.setChargeRevenueCurrency(charge.id, revenueCurrency));
+      if (charge.type === 'Internal') {
+        dispatch(actions.setChargeCostCurrency(charge.id, revenueCurrency));
+      }
+    },
+    changeChargeSupplier: (charge, supplier) => {
+      if (!charge.costCurrency && supplier) {
+        dispatch(actions.setChargeCostCurrency(charge.id, supplier.currency));
+      }
+      dispatch(actions.setChargeSupplier(charge.id, supplier));
+    },
+    changeChargeCost: (charge, cost) => dispatch(actions.setChargeCost(charge.id, cost)),
+    changeChargeCostCurrency: (charge, costCurrency) =>
+      dispatch(actions.setChargeCostCurrency(charge.id, costCurrency)),
   },
 });
 

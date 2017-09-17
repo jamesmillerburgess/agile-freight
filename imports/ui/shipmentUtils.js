@@ -7,7 +7,7 @@ import { Countries } from '../api/countries/countriesCollection';
 const save = (shipmentId, shipment) =>
   Meteor.call('shipment.save', { _id: shipmentId, ...shipment });
 
-const archive = (shipmentId, shipment, cb) =>
+const archive = (shipmentId, cb) =>
   Meteor.call('shipment.archive', shipmentId, (err, res) => cb(res));
 
 const confirm = (shipmentId, shipment, cb) =>

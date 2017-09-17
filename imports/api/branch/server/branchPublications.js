@@ -7,6 +7,7 @@ import { Quotes } from '../../quotes/quotesCollection';
 import { UNLocations } from '../../unlocations/unlocationsCollection';
 import { Rates } from '../../rates/rateCollection';
 import { Shipments } from '../../shipments/shipmentsCollection';
+import { Suppliers } from '../../suppliers/supplierCollection';
 
 const publishBranchAll = () => Branches.find({});
 
@@ -18,6 +19,7 @@ Meteor.publish('branch.active', function publishBranchActive() {
     cursors.push(Customers.find({}));
     cursors.push(Meteor.users.find({}, { fields: { profile: 1, emails: 1 } }));
     cursors.push(Countries.find());
+    cursors.push(Suppliers.find());
     cursors.push(Quotes.find());
     cursors.push(Rates.find());
     cursors.push(Shipments.find());

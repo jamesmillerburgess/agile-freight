@@ -51,16 +51,8 @@
     background-color: $customers-accent-color;
   }
 
-  a.active {
-    .customers-button {
-      background-color: $customers-accent-color;
-    }
-    .rates-button {
-      background-color: $rates-accent-color;
-    }
-    .label {
-      color: $inverted-text-color;
-    }
+  .suppliers-button:hover {
+    background-color: $suppliers-accent-color;
   }
 
   .rates-button:hover {
@@ -69,6 +61,21 @@
 
   .profile-button:hover {
     background-color: $profile-accent-color;
+  }
+
+  a.active {
+    .customers-button {
+      background-color: $customers-accent-color;
+    }
+    .rates-button {
+      background-color: $rates-accent-color;
+    }
+    .suppliers-button {
+      background-color: $suppliers-accent-color;
+    }
+    .label {
+      color: $inverted-text-color;
+    }
   }
 
   .form-inline {

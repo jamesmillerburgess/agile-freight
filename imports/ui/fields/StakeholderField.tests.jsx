@@ -6,27 +6,23 @@ import { Meteor } from 'meteor/meteor';
 import { shallow } from 'enzyme';
 import { chai } from 'meteor/practicalmeteor:chai';
 
-import EditShipment from './EditShipment.jsx';
+import StakeholderField, { loadStakeholders } from './StakeholderField.jsx';
 
 if (Meteor.isClient) {
   chai.should();
-  describe('EditShipment Component', () => {
+  describe('StakeholderField Component', () => {
     let wrapper;
     beforeEach(() => {
-      wrapper = shallow(
-        <EditShipment
-          shipment={{ cargo: {}, movement: {} }}
-          dispatchers={{}}
-          toOperations=""
-          toAccounting=""
-        />,
-      );
+      wrapper = shallow(<StakeholderField />);
     });
     afterEach(() => {
       wrapper.unmount();
     });
     it('renders a component', () => {
       wrapper.exists().should.equal(true);
+    });
+    it('renders a Select.Async component', () => {
+      wrapper.is('Async').should.equal(true);
     });
   });
 }

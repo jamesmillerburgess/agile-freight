@@ -18,7 +18,7 @@ before_install:
   # to remove your travis cache to get meteor updates
   - PATH=$PATH:$HOME/.meteor
   - if [ ! -e $HOME/.meteor/meteor ]; then curl https://install.meteor.com | sh; fi
-  - meteor update --release 1.6-beta.26
+  - meteor update --release 1.6-beta.27
 
   # Install dependencies
   - npm install -g node-gyp

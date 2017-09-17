@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { Meteor } from 'meteor/meteor';
 
-import CustomerList from './CustomerList.jsx';
+import SupplierList from './SupplierList.jsx';
 import { setListFilter } from '../../state/actions/listActions';
-import { loadCustomer } from '../../state/actions/customerActions';
+import { loadSupplier } from '../../state/actions/supplierActions';
 
 const mapStateToProps = ({ list }) => {
   let filter = list.filter;
@@ -21,12 +21,12 @@ const mapStateToProps = ({ list }) => {
 const mapDispatchToProps = dispatch => ({
   dispatchers: {
     setListFilter: filter => dispatch(setListFilter(filter)),
-    loadCustomer: customer => dispatch(loadCustomer(customer)),
+    loadSupplier: customer => dispatch(loadSupplier(customer)),
   },
 });
 
-const CustomerListConnect = connect(mapStateToProps, mapDispatchToProps)(
-  CustomerList,
+const SupplierListConnect = connect(mapStateToProps, mapDispatchToProps)(
+  SupplierList,
 );
 
-export default CustomerListConnect;
+export default SupplierListConnect;
