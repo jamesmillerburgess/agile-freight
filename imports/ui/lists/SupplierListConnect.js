@@ -5,23 +5,28 @@ import SupplierList from './SupplierList.jsx';
 import { setListFilter } from '../../state/actions/listActions';
 import { loadSupplier } from '../../state/actions/supplierActions';
 
-const mapStateToProps = ({ list }) => ({ list });
-
-const mapDispatchToProps = (dispatch) => {
-  if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.branch) {
-    dispatch(setListFilter(Meteor.user().profile.branch));
+const mapStateToProps = ({ list }) => {
+  let filter = list.filter;
+  if (
+    !list.filter &&
+    Meteor.user() &&
+    Meteor.user().profile &&
+    Meteor.user().profile.branch
+  ) {
+    filter = Meteor.user().profile.branch;
   }
-  return {
-    dispatchers: {
-      setListFilter: filter =>
-        dispatch(setListFilter(filter)),
-      loadSupplier: customer =>
-        dispatch(loadSupplier(customer)),
-    },
-  };
+  return { list: { filter } };
 };
 
-const SupplierListConnect =
-  connect(mapStateToProps, mapDispatchToProps)(SupplierList);
+const mapDispatchToProps = dispatch => ({
+  dispatchers: {
+    setListFilter: filter => dispatch(setListFilter(filter)),
+    loadSupplier: customer => dispatch(loadSupplier(customer)),
+  },
+});
+
+const SupplierListConnect = connect(mapStateToProps, mapDispatchToProps)(
+  SupplierList,
+);
 
 export default SupplierListConnect;
